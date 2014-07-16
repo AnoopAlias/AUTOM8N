@@ -7,7 +7,7 @@ args = parser.parse_args()
 cpaneluser = args.CPANELUSER
 
 cpuserdatayaml = "/var/cpanel/userdata/"+cpaneluser+"/main"
-xsuserdatayaml = "/opt/xstack/userdata/"+cpaneluser
+xsuserdatayaml = "../userdata/"+cpaneluser
 
 data_stream = open(cpuserdatayaml,'r')
 yaml_parsed = yaml.safe_load(data_stream)
