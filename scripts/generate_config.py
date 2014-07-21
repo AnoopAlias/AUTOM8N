@@ -13,28 +13,17 @@ data_stream = open(cpuserdatayaml,'r')
 yaml_parsed = yaml.safe_load(data_stream)
 
 
-main_domain = yaml_parsed.get('main_domain')
+main_domain = yaml_parsed.get('main_domain')   
 parked_domains = yaml_parsed.get('parked_domains')
-addon_domains = yaml_parsed.get('addon_domains')
+addon_domains = yaml_parsed.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
 sub_domains = yaml_parsed.get('sub_domains')
 
-#pass1 for the main domain and its Alias(parked)
 print main_domain
 ##nginx_confgen("domain_name")
-
 
 print parked_domains
 for domain in parked_domains:
         print domain
-        ##nginx_park_domain("domain_name")
-
-print addon_domains
-print(type(addon_domains))
-for domain in addon_domains.keys():
-        print domain
-        ##nginx_confgen("domain_name")
-        parked_of_addon = addon_domains.get(domain)
-        print parked_of_addon
         ##nginx_park_domain("domain_name")
 
 print sub_domains
