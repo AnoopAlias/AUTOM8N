@@ -23,31 +23,27 @@ def nginx_confgen(user_name,domain_name,config_template_code):
 	cpdomainyaml = "/var/cpanel/userdata/"+user_name+"/"+domain_name
 	data_dstream = open(cpdomainyaml,'r')
 	yaml_dparsed = yaml.safe_load(data_dstream)
+	cpanel_ipv4 = yaml_dparsed.get('ip')
+	print cpanel_ipv4
+	domain_sname = yaml_dparsed.get('servername')
+	print domain_sname
+	domain_aname = yaml_dparsed.get('serveralias')
+	print domain_aname
+	domain_list = domain_sname+" "+domain_aname
+	print domain_list
 	template_file = open("../conf/"+config_template_code+".tmpl",'r')
 	config_out = open("../sites-enabled/"+domain_name+".conf",'w')
 	for line in template_file:
-		config_out.write(line.replace('CPANELIP',cpanel_ipv4))
-		config_out.write(line.replace('DOMAINNAME',domain_name))
+		line = line.replace('CPANELIP',cpanel_ipv4)
+		line = line.replace('DOMAINNAME',domain_list)
+		config_out.write(line)
 	template_file.close()
 	config_out.close()
 
-
-
-
-
-
-
 print main_domain
-##nginx_confgen("domain_name")
-
-print parked_domains
-for domain in parked_domains:
-        print domain
-        ##nginx_park_domain("domain_name")
+nginx_confgen(cpaneluser,main_domain,str(1001))
 
 print sub_domains
 print(type(sub_domains))
-for domain in sub_domains:
-        print domain
-        ##nginx_confgen("domain_name")
-
+for domain_in_subdomains in sub_domains:
+	nginx_confgen(cpaneluser,domain_in_subdomains,str(1001))
