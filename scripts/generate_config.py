@@ -12,17 +12,20 @@ def nginx_confgen(user_name,domain_name,config_template_code):
 	cpaneldomain_data_stream = open(cpdomainyaml,'r')
 	yaml_parsed_cpaneldomain = yaml.safe_load(cpaneldomain_data_stream)
 	cpanel_ipv4 = yaml_parsed_cpaneldomain.get('ip')
-	if yaml_parsed_cpaneldomain.get('ipv6'):
-		cpanel_ipv6 = yaml_parsed_cpaneldomain.get('ipv6')
-	try:
-		cpanel_ipv6
-	except NameError:
-		ipv6_listen_conf = "#LISTENIPVSIX" 
-		print ipv6_listen_conf
+	if 'ipv6' in yaml_parsed_cpaneldomain.keys():
+		for ipv6_addr in yaml_parsed_cpaneldomain.get('ipv6').keys():
+			print ipv6_addr
+			cpanel_ipv6 = "listen ["+ipv6_addr+"]"
 	else:
-		for ipv6_key in cpanel_ipv6.keys():
-			ipv6_listen_conf = "listen ["+ipv6_key+"]:80;"
-			print ipv6_listen_conf
+		cpanel_ipv6 = "#CPIPVSIX"
+	if 'ssl' in yaml_parsed_cpaneldomain.keys():
+		cpdomainyaml_ssl = "/var/cpanel/userdata/"+user_name+"/"+domain_name+"_SSL"
+		cpaneldomain_ssl_data_stream = open(cpdomainyaml_ssl,'r')
+		yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpaneldomain_ssl_data_stream)
+		sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
+		sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
+		print sslcertificatefile
+		print sslcertificatekeyfile
 	domain_sname = yaml_parsed_cpaneldomain.get('servername')
 	domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
 	domain_list = domain_sname+" "+domain_aname
@@ -31,7 +34,7 @@ def nginx_confgen(user_name,domain_name,config_template_code):
 	for line in template_file:
 		line = line.replace('CPANELIP',cpanel_ipv4)
 		line = line.replace('DOMAINNAME',domain_list)
-		line = line.replace('#LISTENIPVSIX',ipv6_listen_conf)
+		line = line.replace('#CPIPVSIX',cpanel_ipv6)
 		config_out.write(line)
 	template_file.close()
 	config_out.close()
@@ -51,8 +54,8 @@ cpaneluser_data_stream = open(cpuserdatayaml,'r')
 yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
 
 main_domain = yaml_parsed_cpaneluser.get('main_domain')   
-parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   #This data is irrelevant as parked domain list is in ServerAlias
-addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
+#parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   #This data is irrelevant as parked domain list is in ServerAlias
+#addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
 sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
 
 nginx_confgen(cpaneluser,main_domain,str(1001)) #Generate conf for main domain
