@@ -2,6 +2,7 @@
 
 import yaml
 import argparse
+import os
 
 installation_path = "/opt/xstack" #Absolute Installation Path
 
@@ -12,9 +13,11 @@ def nginx_confgen(user_name,domain_name,config_template_code):
 	cpaneldomain_data_stream = open(cpdomainyaml,'r')
 	yaml_parsed_cpaneldomain = yaml.safe_load(cpaneldomain_data_stream)
 	cpanel_ipv4 = yaml_parsed_cpaneldomain.get('ip')
+	domain_sname = yaml_parsed_cpaneldomain.get('servername')
+	domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
+	domain_list = domain_sname+" "+domain_aname
 	if 'ipv6' in yaml_parsed_cpaneldomain.keys():
 		for ipv6_addr in yaml_parsed_cpaneldomain.get('ipv6').keys():
-			print ipv6_addr
 			cpanel_ipv6 = "listen ["+ipv6_addr+"]"
 	else:
 		cpanel_ipv6 = "#CPIPVSIX"
@@ -24,20 +27,35 @@ def nginx_confgen(user_name,domain_name,config_template_code):
 		yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpaneldomain_ssl_data_stream)
 		sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
 		sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
-		print sslcertificatefile
-		print sslcertificatekeyfile
-	domain_sname = yaml_parsed_cpaneldomain.get('servername')
-	domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
-	domain_list = domain_sname+" "+domain_aname
-	template_file = open(installation_path+"/conf/"+config_template_code+".tmpl",'r')
-	config_out = open(installation_path+"/sites-enabled/"+domain_name+".conf",'w')
-	for line in template_file:
-		line = line.replace('CPANELIP',cpanel_ipv4)
-		line = line.replace('DOMAINNAME',domain_list)
-		line = line.replace('#CPIPVSIX',cpanel_ipv6)
-		config_out.write(line)
-	template_file.close()
-	config_out.close()
+		sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile') 
+		sslcombinedcert = installation_path+"/nginx.include.d/"+domain_name+".crt"
+		os.system("cat /dev/null > "+sslcombinedcert)
+		if sslcacertificatefile:
+			os.system("cat "+sslcertificatefile+" "+sslcacertificatefile+" >> "+sslcombinedcert)
+		else:
+			os.system("cat "+sslcertificatefile+" >> "+sslcombinedcert)
+		template_file = open(installation_path+"/conf/server_ssl.tmpl",'r')
+		config_out = open(installation_path+"/sites-enabled/"+domain_name+"_SSL.conf",'w')
+		for line in template_file:
+			line = line.replace('CPANELIP',cpanel_ipv4)
+			line = line.replace('DOMAINNAME',domain_list)
+			line = line.replace('#CPIPVSIX',cpanel_ipv6)
+			line = line.replace('CPANELSSLKEY',sslcertificatekeyfile)
+			line = line.replace('CPANELSSLCRT',sslcombinedcert)
+			config_out.write(line)
+		template_file.close()
+		config_out.close()
+	else:
+		template_file = open(installation_path+"/conf/server.tmpl",'r')
+		config_out = open(installation_path+"/sites-enabled/"+domain_name+".conf",'w')
+		for line in template_file:
+			line = line.replace('CPANELIP',cpanel_ipv4)
+			line = line.replace('DOMAINNAME',domain_list)
+			line = line.replace('#CPIPVSIX',cpanel_ipv6)
+			config_out.write(line)
+		template_file.close()
+		config_out.close()
+
 
 
 #End Function defs
