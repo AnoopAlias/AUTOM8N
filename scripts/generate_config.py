@@ -38,7 +38,8 @@ def nginx_confgen(user_name,domain_name,config_template_code):
 		config_out = open(installation_path+"/sites-enabled/"+domain_name+"_SSL.conf",'w')
 		for line in template_file:
 			line = line.replace('CPANELIP',cpanel_ipv4)
-			line = line.replace('DOMAINNAME',domain_list)
+			line = line.replace('DOMAINLIST',domain_list)
+			line = line.replace('DOMAINNAME',domain_sname)
 			line = line.replace('#CPIPVSIX',cpanel_ipv6)
 			line = line.replace('CPANELSSLKEY',sslcertificatekeyfile)
 			line = line.replace('CPANELSSLCRT',sslcombinedcert)

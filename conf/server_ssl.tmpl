@@ -1,37 +1,20 @@
 server {
 
-  listen    CPANELIP:443;
-  #CPIPVSIX:443;
+  listen    CPANELIP:443 ssl;
+  #CPIPVSIX:443 ssl;
   ssl_certificate CPANELSSLCRT;
   ssl_certificate_key CPANELSSLKEY;
+
+  ssl_session_cache    shared:SSL:1m;
+  ssl_session_timeout  5m;
+
+  ssl_ciphers  HIGH:!aNULL:!MD5;
+  ssl_prefer_server_ciphers  on;
   
 
   # ServerNames
-  server_name  DOMAINNAME;
+  server_name  DOMAINLIST;
 
-
-########
-  #We turn off access logs for proxied domains
-  access_log off;
-
-  location / {
-
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-
-   proxy_connect_timeout 30s;
-
-   proxy_pass   http://CPANELIP:9999;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-########
-
+  include /opt/xstack/sites-enabled/DOMAINNAME.include;
 
  }
