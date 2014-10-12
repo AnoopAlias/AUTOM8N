@@ -1,3 +1,4 @@
 PHP:
-  '1002': Wordpress and Joomla
-  '1003': Owncloud
+  '1001': Wordpress,Joomla,Drupal etc
+PROXY:
+  '1000': Proxy to the Apache Backend (default)
