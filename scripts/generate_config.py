@@ -7,7 +7,46 @@ import os
 installation_path = "/opt/xstack" #Absolute Installation Path
 
 #Function defs
-def nginx_confgen(user_name,domain_name,config_template_code):
+def nginx_confgen_profilegen(domain_name,user_name,cpanelip,sslenabled):
+	"Function generating config include based on profile"
+	profileyaml = installation_path+"/domain-data/"+domain_name
+	if os.path.isfile(profileyaml):
+		if sslenabled = 1:
+			include_file = "/etc/nginx/sites-enabled/"+domain_name+"_ssl.include"
+		else:
+			include_file = "/etc/nginx/sites-enabled/"+domain_name+".include"
+		profileyaml_data_stream = open(profileyaml,'r')
+		yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+		profile_custom_status = yaml_parsed_profileyaml.get('customconf')
+		if profile_custom_status == 0:
+			profile_category = yaml_parsed_profileyaml.get('backend_category')
+			profile_code = yaml_parsed_profileyaml.get('profile') 
+			if profile_category == "PHP":
+				#Code to deal with php-fpm 
+			else:
+				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
+				profile_config_out = open(include_file,'w')
+				for line in profile_template_file:
+					line = line.replace('CPANELIP',cpanelip)
+					config_out.write(line)
+				profile_template_file.close()
+				profile_config_out.close()
+		elif profile_custom_status == 1:
+			#Code to validate nginx custom conf goes here
+		else:
+			return
+	else:
+		template_file = open(installation_path+"/conf/domain_data.yaml.tmpl",'r')
+		config_out = open(installation_path+"/domain-data/"+domain_name,'w')
+		for line in template_file:
+			line = line.replace('CPANELUSER',user_name)
+			config_out.write(line)
+		template_file.close()
+		config_out.close()
+		nginx_confgen_profilegen(domain_name,user_name,cpanelip,sslenabled)
+
+
+def nginx_confgen(user_name,domain_name):
 	"Function that generates nginx config given a domain name"
 	cpdomainyaml = "/var/cpanel/userdata/"+user_name+"/"+domain_name
 	cpaneldomain_data_stream = open(cpdomainyaml,'r')
@@ -28,14 +67,14 @@ def nginx_confgen(user_name,domain_name,config_template_code):
 		sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
 		sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
 		sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile') 
-		sslcombinedcert = installation_path+"/nginx.include.d/"+domain_name+".crt"
+		sslcombinedcert = "/etc/nginx/ssl/"+domain_name+".crt"
 		os.system("cat /dev/null > "+sslcombinedcert)
 		if sslcacertificatefile:
 			os.system("cat "+sslcertificatefile+" "+sslcacertificatefile+" >> "+sslcombinedcert)
 		else:
 			os.system("cat "+sslcertificatefile+" >> "+sslcombinedcert)
 		template_file = open(installation_path+"/conf/server_ssl.tmpl",'r')
-		config_out = open(installation_path+"/sites-enabled/"+domain_name+"_SSL.conf",'w')
+		config_out = open("/etc/nginx/sites-enabled/"+domain_name+"_SSL.conf",'w')
 		for line in template_file:
 			line = line.replace('CPANELIP',cpanel_ipv4)
 			line = line.replace('DOMAINLIST',domain_list)
@@ -48,7 +87,7 @@ def nginx_confgen(user_name,domain_name,config_template_code):
 		config_out.close()
 	else:
 		template_file = open(installation_path+"/conf/server.tmpl",'r')
-		config_out = open(installation_path+"/sites-enabled/"+domain_name+".conf",'w')
+		config_out = open("/etc/nginx/sites-enabled/"+domain_name+".conf",'w')
 		for line in template_file:
 			line = line.replace('CPANELIP',cpanel_ipv4)
 			line = line.replace('DOMAINNAME',domain_list)
@@ -77,7 +116,7 @@ main_domain = yaml_parsed_cpaneluser.get('main_domain')
 #addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
 sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
 
-nginx_confgen(cpaneluser,main_domain,str(1001)) #Generate conf for main domain
+nginx_confgen(cpaneluser,main_domain) #Generate conf for main domain
 
 for domain_in_subdomains in sub_domains:
-	nginx_confgen(cpaneluser,domain_in_subdomains,str(1001)) #Generate conf for sub domains which takes care of addon as well
+	nginx_confgen(cpaneluser,domain_in_subdomains) #Generate conf for sub domains which takes care of addon as well

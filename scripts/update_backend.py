@@ -10,6 +10,7 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 def update_backend(backend_category,backend_name,backend_path):
 	backend_data_yaml = open(backend_config_file,'r')
 	backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+	backend_data_yaml.close()
 	if backend_data_yaml_parsed:
 		if backend_data_yaml_parsed.has_key(backend_category):
 			branch_dict = backend_data_yaml_parsed[backend_category]
@@ -24,7 +25,7 @@ def update_backend(backend_category,backend_name,backend_path):
 		data_dict = {backend_category :{ backend_name  : backend_path }}
 		with open(backend_config_file,'w')as yaml_file:
 			yaml_file.write(yaml.dump(data_dict , default_flow_style=False))
-	backend_data_yaml.close()
+	yaml_file.close()
 
 
 parser = argparse.ArgumentParser(description = "Register a proxy/application backend for Xstack")
