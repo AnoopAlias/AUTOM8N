@@ -7,9 +7,23 @@ import os
 installation_path = "/opt/xstack" #Absolute Installation Path
 
 #Function defs
+def php_profile_set(user_name,phpversion,php_path):
+	"Function to setup php-fpm pool for user and restart the master php-fpm"
+	phppool_file = php_path+"/etc/fpm.d/"+user_name+".conf"
+	if os.path.isfile(phppool_file):
+		os.system("kill -USR2 `cat "+php_path+"/var/run/php-fpm.pid`")
+	else:
+		os.system('sed "s/CPANELUSER/'+user_name+'/g" '+installation_path+'/conf/php-fpm.pool.tmpl > '+phppool_file)
+		os.system("kill -USR2 `cat "+php_path+"/var/run/php-fpm.pid`")
+	return
+	
 def nginx_confgen_profilegen(domain_name,user_name,cpanelip,sslenabled):
 	"Function generating config include based on profile"
-	profileyaml = installation_path+"/domain-data/"+domain_name
+	with open("/var/cpanel/users/"+user_name) as users_file:
+		if "SUSPENDED=1" in users_file.read():
+			profileyaml = installation_path+"/conf/domain_data.suspended"
+		else:
+			profileyaml = installation_path+"/domain-data/"+domain_name
 	if os.path.isfile(profileyaml):
 		if sslenabled = 1:
 			include_file = "/etc/nginx/sites-enabled/"+domain_name+"_ssl.include"
@@ -22,7 +36,9 @@ def nginx_confgen_profilegen(domain_name,user_name,cpanelip,sslenabled):
 			profile_category = yaml_parsed_profileyaml.get('backend_category')
 			profile_code = yaml_parsed_profileyaml.get('profile') 
 			if profile_category == "PHP":
-				#Code to deal with php-fpm 
+				phpversion = yaml_parsed_profileyaml.get('backend_version')
+				php_path = yaml_parsed_profileyaml.get('backend_path')
+				php_profile_set(user_name,phpversion,php_path)
 			else:
 				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
 				profile_config_out = open(include_file,'w')
