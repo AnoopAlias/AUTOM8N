@@ -3,4 +3,4 @@ backend_path: none
 backend_version: apache
 customconf: 0
 profile: 1000
-user: CPANELUSER
+user: gnusys
