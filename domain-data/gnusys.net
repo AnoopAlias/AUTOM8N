@@ -4,3 +4,4 @@ backend_version: ruby-2.1.3
 customconf: '0'
 profile: '2001'
 user: gnusys
+pagespeed: '1'

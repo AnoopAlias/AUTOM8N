@@ -1,11 +1,8 @@
 #PAGESPEED_NOT_ENABLED;
-root DOCUMENTROOT;
-index index.php index.html index.htm;
+root DOCUMENTROOT/public;
 access_log /usr/local/apache/domlogs/DOMAINNAME;
-	location / {
-                try_files $uri $uri/ /index.php?q=$uri&$args;
-	}
-
+passenger_enabled on;
+passenger_ruby PATHTORUBY;
         location /mailman/ {
                 proxy_pass   http://CPANELIP:9999;
                 proxy_set_header   Host   $host;
@@ -30,9 +27,3 @@ access_log /usr/local/apache/domlogs/DOMAINNAME;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
-	location ~ \.php$ {
-                try_files $uri =404;
-                fastcgi_pass unix:SOCKETFILE;
-                fastcgi_index index.php;
-                include fastcgi_params;
-	}

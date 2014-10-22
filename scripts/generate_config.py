@@ -6,8 +6,13 @@ import os
 
 installation_path = "/opt/xstack" #Absolute Installation Path
 nginx_bin = "/usr/sbin/nginx"
+pagespeed_include_location="include /etc/nginx/conf.d/pagespeed.conf"
 
 #Function defs
+def nginx_server_reload():
+	os.system(nginx_bin+" -s reload")
+	return
+
 def php_profile_set(user_name,phpversion,php_path):
 	"Function to setup php-fpm pool for user and restart the master php-fpm"
 	phppool_file = php_path+"/etc/fpm.d/"+user_name+".conf"
@@ -18,7 +23,7 @@ def php_profile_set(user_name,phpversion,php_path):
 		os.system("kill -USR2 `cat "+php_path+"/var/run/php-fpm.pid`")
 	return
 
-def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslenabled):
+def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslenabled,domain_home):
 	"Function generating config include based on profile"
 	with open("/var/cpanel/users/"+user_name) as users_file:
 		if "SUSPENDED=1" in users_file.read():
@@ -39,6 +44,11 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 			if profile_category == "PHP":
 				phpversion = yaml_parsed_profileyaml.get('backend_version')
 				php_path = yaml_parsed_profileyaml.get('backend_path')
+				pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+				if pagespeed_status == "0":
+					pagespeed_include="#PAGESPEED_NOT_ENABLED"
+				else:
+					pagespeed_include=pagespeed_include_location
 				path_to_socket = php_path+"/var/run/"+user_name+".sock"
 				php_profile_set(user_name,phpversion,php_path)
 				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
@@ -48,41 +58,60 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 					line = line.replace('DOMAINNAME',domain_name)
 					line = line.replace('DOCUMENTROOT',document_root)
 					line = line.replace('SOCKETFILE',path_to_socket)
+					line = line.replace('#PAGESPEED_NOT_ENABLED',pagespeed_include)
 					profile_config_out.write(line)
 				profile_template_file.close()
 				profile_config_out.close()
 			elif profile_category == "RUBY":
 				ruby_path = yaml_parsed_profileyaml.get('backend_path')
+				pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+				if pagespeed_status == "0":
+					pagespeed_include="#PAGESPEED_NOT_ENABLED"
+				else:
+					pagespeed_include=pagespeed_include_location
 				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
 				profile_config_out = open(include_file,'w')
 				for line in profile_template_file:
 					line = line.replace('CPANELIP',cpanelip)
 					line = line.replace('DOMAINNAME',domain_name)
 					line = line.replace('DOCUMENTROOT',document_root)
+					line = line.replace('#PAGESPEED_NOT_ENABLED',pagespeed_include)
 					line = line.replace('PATHTORUBY',ruby_path)
 					profile_config_out.write(line)
 				profile_template_file.close()
 				profile_config_out.close()
 			elif profile_category == "PYTHON":
 				python_path = yaml_parsed_profileyaml.get('backend_path')
+				pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+				if pagespeed_status == "0":
+					pagespeed_include="#PAGESPEED_NOT_ENABLED"
+				else:
+					pagespeed_include=pagespeed_include_location
 				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
 				profile_config_out = open(include_file,'w')
 				for line in profile_template_file:
 					line = line.replace('CPANELIP',cpanelip)
 					line = line.replace('DOMAINNAME',domain_name)
 					line = line.replace('DOCUMENTROOT',document_root)
+					line = line.replace('#PAGESPEED_NOT_ENABLED',pagespeed_include)
 					line = line.replace('PATHTOPYTHON',python_path)
 					profile_config_out.write(line)
 				profile_template_file.close()
 				profile_config_out.close()
 			elif profile_category == "NODEJS":
 				nodejs_path = yaml_parsed_profileyaml.get('backend_path')
+				pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+				if pagespeed_status == "0":
+					pagespeed_include="#PAGESPEED_NOT_ENABLED"
+				else:
+					pagespeed_include=pagespeed_include_location
 				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
 				profile_config_out = open(include_file,'w')
 				for line in profile_template_file:
 					line = line.replace('CPANELIP',cpanelip)
 					line = line.replace('DOMAINNAME',domain_name)
 					line = line.replace('DOCUMENTROOT',document_root)
+					line = line.replace('#PAGESPEED_NOT_ENABLED',pagespeed_include)
 					line = line.replace('PATHTONODEJS',nodejs_path)
 					profile_config_out.write(line)
 				profile_template_file.close()
@@ -99,7 +128,8 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 				profile_template_file.close()
 				profile_config_out.close()
 		elif profile_custom_status == 1:
-			print "Code to validate custom conf"
+			custom_config_file = domain_home+'/nginx.include.custom.conf'
+			if os.isf
 		else:
 			return
 	else:
@@ -118,6 +148,7 @@ def nginx_confgen(user_name,domain_name):
 	cpaneldomain_data_stream = open(cpdomainyaml,'r')
 	yaml_parsed_cpaneldomain = yaml.safe_load(cpaneldomain_data_stream)
 	cpanel_ipv4 = yaml_parsed_cpaneldomain.get('ip')
+	domain_home = yaml_parsed_cpaneldomain.get('homedir')
 	document_root = yaml_parsed_cpaneldomain.get('documentroot')
 	domain_sname = yaml_parsed_cpaneldomain.get('servername')
 	domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
@@ -140,7 +171,7 @@ def nginx_confgen(user_name,domain_name):
 			os.system("cat "+sslcertificatefile+" "+sslcacertificatefile+" >> "+sslcombinedcert)
 		else:
 			os.system("cat "+sslcertificatefile+" >> "+sslcombinedcert)
-		nginx_confgen_profilegen(user_name,domain_sname,cpanel_ipv4,document_root,1)
+		nginx_confgen_profilegen(user_name,domain_sname,cpanel_ipv4,document_root,1,domain_home)
 		template_file = open(installation_path+"/conf/server_ssl.tmpl",'r')
 		config_out = open("/etc/nginx/sites-enabled/"+domain_name+"_SSL.conf",'w')
 		for line in template_file:
@@ -154,7 +185,7 @@ def nginx_confgen(user_name,domain_name):
 		template_file.close()
 		config_out.close()
 	else:
-		nginx_confgen_profilegen(user_name,domain_sname,cpanel_ipv4,document_root,0)
+		nginx_confgen_profilegen(user_name,domain_sname,cpanel_ipv4,document_root,0,domain_home)
 		template_file = open(installation_path+"/conf/server.tmpl",'r')
 		config_out = open("/etc/nginx/sites-enabled/"+domain_name+".conf",'w')
 		for line in template_file:
@@ -165,6 +196,7 @@ def nginx_confgen(user_name,domain_name):
 			config_out.write(line)
 		template_file.close()
 		config_out.close()
+	nginx_server_reload()
 
 #End Function defs
 
