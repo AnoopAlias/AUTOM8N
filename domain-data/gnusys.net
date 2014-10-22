@@ -1,6 +1,6 @@
-backend_category: PHP
-backend_path: /usr/local/phpbrew/php/php-5.4.33 
-backend_version: php-5.4.33
-customconf: 0
-profile: 1001
+backend_category: RUBY
+backend_path: /usr/local/rvm/wrappers/ruby-2.1.3/ruby
+backend_version: ruby-2.1.3
+customconf: '0'
+profile: '2001'
 user: gnusys

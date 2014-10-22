@@ -5,6 +5,7 @@ import argparse
 import os
 
 installation_path = "/opt/xstack" #Absolute Installation Path
+nginx_bin = "/usr/sbin/nginx"
 
 #Function defs
 def php_profile_set(user_name,phpversion,php_path):
@@ -32,7 +33,7 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 		profileyaml_data_stream = open(profileyaml,'r')
 		yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
 		profile_custom_status = yaml_parsed_profileyaml.get('customconf')
-		if profile_custom_status == 0:
+		if profile_custom_status == "0":
 			profile_category = yaml_parsed_profileyaml.get('backend_category')
 			profile_code = str(yaml_parsed_profileyaml.get('profile')) 
 			if profile_category == "PHP":
@@ -51,11 +52,41 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 				profile_template_file.close()
 				profile_config_out.close()
 			elif profile_category == "RUBY":
-				print ruby
+				ruby_path = yaml_parsed_profileyaml.get('backend_path')
+				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
+				profile_config_out = open(include_file,'w')
+				for line in profile_template_file:
+					line = line.replace('CPANELIP',cpanelip)
+					line = line.replace('DOMAINNAME',domain_name)
+					line = line.replace('DOCUMENTROOT',document_root)
+					line = line.replace('PATHTORUBY',ruby_path)
+					profile_config_out.write(line)
+				profile_template_file.close()
+				profile_config_out.close()
 			elif profile_category == "PYTHON":
-				print python
+				python_path = yaml_parsed_profileyaml.get('backend_path')
+				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
+				profile_config_out = open(include_file,'w')
+				for line in profile_template_file:
+					line = line.replace('CPANELIP',cpanelip)
+					line = line.replace('DOMAINNAME',domain_name)
+					line = line.replace('DOCUMENTROOT',document_root)
+					line = line.replace('PATHTOPYTHON',python_path)
+					profile_config_out.write(line)
+				profile_template_file.close()
+				profile_config_out.close()
 			elif profile_category == "NODEJS":
-				print nodejs
+				nodejs_path = yaml_parsed_profileyaml.get('backend_path')
+				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
+				profile_config_out = open(include_file,'w')
+				for line in profile_template_file:
+					line = line.replace('CPANELIP',cpanelip)
+					line = line.replace('DOMAINNAME',domain_name)
+					line = line.replace('DOCUMENTROOT',document_root)
+					line = line.replace('PATHTONODEJS',nodejs_path)
+					profile_config_out.write(line)
+				profile_template_file.close()
+				profile_config_out.close()
 			else:
 				proxy_port = str(yaml_parsed_profileyaml.get('backend_path'))
 				proxy_path = cpanelip+":"+proxy_port
