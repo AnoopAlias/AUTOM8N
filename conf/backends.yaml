@@ -1,4 +1,10 @@
+NODEJS:
+  v0.11.14: /usr/local/nvm/v0.11.14/bin/node
 PHP:
   php-5.4.33: /usr/local/phpbrew/php/php-5.4.33
 PROXY:
-  APACHE: none
+  apache: '9999'
+PYTHON:
+  CPython-2.7.8: /usr/local/pythonz/pythons/CPython-2.7.8/bin/python
+RUBY:
+  ruby-2.1.3: /usr/local/rvm/rubies/ruby-2.1.3/bin/ruby

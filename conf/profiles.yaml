@@ -1,4 +1,10 @@
+NODEJS:
+  '4001': A NodeJS application
 PHP:
   '1001': Wordpress,Joomla,Drupal etc
 PROXY:
   '1000': Proxy to the Apache Backend (default)
+PYTHON:
+  '3001': A Python application confirming to WSGI
+RUBY:
+  '2001': A Ruby application Rack/Ruby on Rails

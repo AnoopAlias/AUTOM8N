@@ -1,6 +1,6 @@
-backend_category: PROXY
-backend_path: none
-backend_version: apache
+backend_category: PHP
+backend_path: /usr/local/phpbrew/php/php-5.4.33 
+backend_version: php-5.4.33
 customconf: 0
-profile: 1000
+profile: 1001
 user: gnusys

@@ -1,7 +1,6 @@
 root DOCUMENTROOT;
 index index.php index.html index.htm;
 access_log /usr/local/apache/domlogs/DOMAINNAME;
-
 	location / {
                 try_files $uri $uri/ /index.php?q=$uri&$args;
 	}
@@ -12,29 +11,24 @@ access_log /usr/local/apache/domlogs/DOMAINNAME;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
-
                 location /cpanel {
                 proxy_pass   http://CPANELIP:2082;
                 proxy_set_header   Host   $host;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
-
         location /whm {
                 proxy_pass   http://CPANELIP:2086;
                 proxy_set_header   Host   $host;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
-
         location /webmail {
                 proxy_pass   http://CPANELIP:2095;
                 proxy_set_header   Host   $host;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
-
-
 	location ~ \.php$ {
                 try_files $uri =404;
                 fastcgi_pass unix:SOCKETFILE;

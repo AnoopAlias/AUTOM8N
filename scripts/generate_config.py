@@ -16,10 +16,9 @@ def php_profile_set(user_name,phpversion,php_path):
 		os.system('sed "s/CPANELUSER/'+user_name+'/g" '+installation_path+'/conf/php-fpm.pool.tmpl > '+phppool_file)
 		os.system("kill -USR2 `cat "+php_path+"/var/run/php-fpm.pid`")
 	return
-	
+
 def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslenabled):
 	"Function generating config include based on profile"
-	print user_name
 	with open("/var/cpanel/users/"+user_name) as users_file:
 		if "SUSPENDED=1" in users_file.read():
 			profileyaml = installation_path+"/conf/domain_data.suspended"
@@ -51,12 +50,20 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 					profile_config_out.write(line)
 				profile_template_file.close()
 				profile_config_out.close()
-
+			elif profile_category == "RUBY":
+				print ruby
+			elif profile_category == "PYTHON":
+				print python
+			elif profile_category == "NODEJS":
+				print nodejs
 			else:
+				proxy_port = str(yaml_parsed_profileyaml.get('backend_path'))
+				proxy_path = cpanelip+":"+proxy_port
 				profile_template_file = open(installation_path+"/conf/"+profile_code+".tmpl",'r')
 				profile_config_out = open(include_file,'w')
 				for line in profile_template_file:
 					line = line.replace('CPANELIP',cpanelip)
+					line = line.replace('PROXYLOCATION',proxy_path)
 					profile_config_out.write(line)
 				profile_template_file.close()
 				profile_config_out.close()
@@ -72,8 +79,7 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 			config_out.write(line)
 		template_file.close()
 		config_out.close()
-		nginx_confgen_profilegen(domain_name,user_name,cpanelip,document_root,sslenabled)
-
+		nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslenabled)
 
 def nginx_confgen(user_name,domain_name):
 	"Function that generates nginx config given a domain name"
@@ -128,8 +134,6 @@ def nginx_confgen(user_name,domain_name):
 			config_out.write(line)
 		template_file.close()
 		config_out.close()
-
-
 
 #End Function defs
 
