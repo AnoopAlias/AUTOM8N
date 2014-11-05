@@ -2,6 +2,7 @@
 
 import yaml
 import argparse
+import subprocess
 import os
 
 installation_path = "/opt/xstack" #Absolute Installation Path
@@ -9,18 +10,31 @@ nginx_bin = "/usr/sbin/nginx"
 pagespeed_include_location="include /etc/nginx/conf.d/pagespeed.conf"
 
 #Function defs
+
+def update_custom_profile(profile_yaml,value):
+	"Function to set custom profile status in domain data yaml"
+	yaml_data_stream_toupdate = open(profile_yaml,'r')
+	yaml_profile_datadict = yaml.safe_load(yaml_data_stream_toupdate)
+	yaml_data_stream_toupdate.close()
+	yaml_profile_datadict["customconf"] = str(value)
+	with open(profile_yaml,'w')as yaml_file:
+		yaml_file.write(yaml.dump(yaml_profile_datadict , default_flow_style=False))
+	yaml_file.close()
+	return
+
 def nginx_server_reload():
-	os.system(nginx_bin+" -s reload")
+	"Function to reload nginX config"
+	subprocess.call(nginx_bin+" -s reload",shell=True)
 	return
 
 def php_profile_set(user_name,phpversion,php_path):
 	"Function to setup php-fpm pool for user and restart the master php-fpm"
 	phppool_file = php_path+"/etc/fpm.d/"+user_name+".conf"
 	if os.path.isfile(phppool_file):
-		os.system("kill -USR2 `cat "+php_path+"/var/run/php-fpm.pid`")
+		subprocess.call("kill -USR2 `cat "+php_path+"/var/run/php-fpm.pid`",shell=True)
 	else:
-		os.system('sed "s/CPANELUSER/'+user_name+'/g" '+installation_path+'/conf/php-fpm.pool.tmpl > '+phppool_file)
-		os.system("kill -USR2 `cat "+php_path+"/var/run/php-fpm.pid`")
+		subprocess.call('sed "s/CPANELUSER/'+user_name+'/g" '+installation_path+'/conf/php-fpm.pool.tmpl > '+phppool_file,shell=True)
+		subprocess.call("kill -USR2 `cat "+php_path+"/var/run/php-fpm.pid`",shell=True)
 	return
 
 def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslenabled,domain_home):
@@ -28,13 +42,18 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 	with open("/var/cpanel/users/"+user_name) as users_file:
 		if "SUSPENDED=1" in users_file.read():
 			profileyaml = installation_path+"/conf/domain_data.suspended"
+			if sslenabled ==1:
+				include_file = "/etc/nginx/sites-enabled/"+domain_name+"_ssl.include"
+			else:
+				include_file = "/etc/nginx/sites-enabled/"+domain_name+".include"
 		else:
-			profileyaml = installation_path+"/domain-data/"+domain_name
+			if sslenabled ==1:
+				include_file = "/etc/nginx/sites-enabled/"+domain_name+"_ssl.include"
+				profileyaml = installation_path+"/domain-data/"+domain_name+"_ssl"
+			else:
+				include_file = "/etc/nginx/sites-enabled/"+domain_name+".include"
+				profileyaml = installation_path+"/domain-data/"+domain_name
 	if os.path.isfile(profileyaml):
-		if sslenabled == 1:
-			include_file = "/etc/nginx/sites-enabled/"+domain_name+"_ssl.include"
-		else:
-			include_file = "/etc/nginx/sites-enabled/"+domain_name+".include"
 		profileyaml_data_stream = open(profileyaml,'r')
 		yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
 		profile_custom_status = yaml_parsed_profileyaml.get('customconf')
@@ -127,20 +146,44 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 					profile_config_out.write(line)
 				profile_template_file.close()
 				profile_config_out.close()
-		elif profile_custom_status == 1:
-			custom_config_file = domain_home+'/nginx.include.custom.conf'
-			if os.isf
+		elif profile_custom_status == "1":
+			custom_config_file = domain_home+'/.'+domain_name+'_nginx.include.custom.conf'
+			print domain_name
+			if os.path.isfile(custom_config_file):
+				test_config_file = open(installation_path+"/conf/nginx.conf.test",'r')
+				test_config_out = open(installation_path+"/conf/nginx.conf."+domain_name+".test",'w')
+				config = installation_path+"/conf/nginx.conf."+domain_name+".test"
+				for line in test_config_file:
+					line = line.replace('NGINX_INCLUDE',custom_config_file)
+					test_config_out.write(line)
+				test_config_file.close()
+				test_config_file.close()
+				test_config_out.close()
+				nginx_conf_test = subprocess.call("/usr/sbin/nginx -c "+config+" -t",shell=True)
+				if nginx_conf_test == 0:
+					profile_config_out = open(include_file,'w')
+					profile_config_in = open(custom_config_file,'r')
+					for line in profile_config_in:
+						profile_config_out.write(line)
+					profile_config_out.close()
+					profile_config_in.close()
+					update_custom_profile(profileyaml,2)
+				else:
+					update_custom_profile(profileyaml,0)
+
+			else:
+				update_custom_profile(profileyaml,0)
 		else:
 			return
 	else:
 		template_file = open(installation_path+"/conf/domain_data.yaml.tmpl",'r')
-		config_out = open(installation_path+"/domain-data/"+domain_name,'w')
+		config_out = open(profileyaml,'w')
 		for line in template_file:
 			line = line.replace('CPANELUSER',user_name)
 			config_out.write(line)
 		template_file.close()
 		config_out.close()
-		nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslenabled)
+		nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslenabled,domain_home)
 
 def nginx_confgen(user_name,domain_name):
 	"Function that generates nginx config given a domain name"
@@ -158,7 +201,7 @@ def nginx_confgen(user_name,domain_name):
 			cpanel_ipv6 = "listen ["+ipv6_addr+"]"
 	else:
 		cpanel_ipv6 = "#CPIPVSIX"
-	if 'ssl' in yaml_parsed_cpaneldomain.keys():
+	if os.path.isfile("/var/cpanel/userdata/"+user_name+"/"+domain_name+"_SSL"):
 		cpdomainyaml_ssl = "/var/cpanel/userdata/"+user_name+"/"+domain_name+"_SSL"
 		cpaneldomain_ssl_data_stream = open(cpdomainyaml_ssl,'r')
 		yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpaneldomain_ssl_data_stream)
@@ -166,11 +209,11 @@ def nginx_confgen(user_name,domain_name):
 		sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
 		sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile') 
 		sslcombinedcert = "/etc/nginx/ssl/"+domain_name+".crt"
-		os.system("cat /dev/null > "+sslcombinedcert)
+		subprocess.call("cat /dev/null > "+sslcombinedcert,shell=True)
 		if sslcacertificatefile:
-			os.system("cat "+sslcertificatefile+" "+sslcacertificatefile+" >> "+sslcombinedcert)
+			subprocess.call("cat "+sslcertificatefile+" "+sslcacertificatefile+" >> "+sslcombinedcert,shell=True)
 		else:
-			os.system("cat "+sslcertificatefile+" >> "+sslcombinedcert)
+			subprocess.call("cat "+sslcertificatefile+" >> "+sslcombinedcert,shell=True)
 		nginx_confgen_profilegen(user_name,domain_sname,cpanel_ipv4,document_root,1,domain_home)
 		template_file = open(installation_path+"/conf/server_ssl.tmpl",'r')
 		config_out = open("/etc/nginx/sites-enabled/"+domain_name+"_SSL.conf",'w')
@@ -184,18 +227,17 @@ def nginx_confgen(user_name,domain_name):
 			config_out.write(line)
 		template_file.close()
 		config_out.close()
-	else:
-		nginx_confgen_profilegen(user_name,domain_sname,cpanel_ipv4,document_root,0,domain_home)
-		template_file = open(installation_path+"/conf/server.tmpl",'r')
-		config_out = open("/etc/nginx/sites-enabled/"+domain_name+".conf",'w')
-		for line in template_file:
-			line = line.replace('CPANELIP',cpanel_ipv4)
-			line = line.replace('DOMAINLIST',domain_list)
-			line = line.replace('DOMAINNAME',domain_sname)
-			line = line.replace('#CPIPVSIX',cpanel_ipv6)
-			config_out.write(line)
-		template_file.close()
-		config_out.close()
+	nginx_confgen_profilegen(user_name,domain_sname,cpanel_ipv4,document_root,0,domain_home)
+	template_file = open(installation_path+"/conf/server.tmpl",'r')
+	config_out = open("/etc/nginx/sites-enabled/"+domain_name+".conf",'w')
+	for line in template_file:
+		line = line.replace('CPANELIP',cpanel_ipv4)
+		line = line.replace('DOMAINLIST',domain_list)
+		line = line.replace('DOMAINNAME',domain_sname)
+		line = line.replace('#CPIPVSIX',cpanel_ipv6)
+		config_out.write(line)
+	template_file.close()
+	config_out.close()
 	nginx_server_reload()
 
 #End Function defs
