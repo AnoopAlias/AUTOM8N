@@ -5,7 +5,7 @@ import argparse
 import subprocess
 import os
 
-installation_path = "/opt/xstack" #Absolute Installation Path
+installation_path = "/opt/nDeploy" #Absolute Installation Path
 nginx_bin = "/usr/sbin/nginx"
 pagespeed_include_location="include /etc/nginx/conf.d/pagespeed.conf"
 
@@ -183,6 +183,7 @@ def nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslena
 			config_out.write(line)
 		template_file.close()
 		config_out.close()
+		subprocess.call("chown "+user_name+":"+user_name+" "+profileyaml,shell=True)
 		nginx_confgen_profilegen(user_name,domain_name,cpanelip,document_root,sslenabled,domain_home)
 
 def nginx_confgen(user_name,domain_name):

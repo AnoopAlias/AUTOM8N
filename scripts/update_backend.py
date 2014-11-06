@@ -3,7 +3,7 @@
 import yaml
 import argparse
 
-installation_path = "/opt/xstack" #Absolute Installation Path
+installation_path = "/opt/nDeploy" #Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 
 #Function defs
