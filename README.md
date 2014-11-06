@@ -4,15 +4,23 @@ nDeploy
 cpanel nginx plugin that lets users deploy multiple scripts .The current list of backends supported are 
 
 PHP - via PHP-FPM ( FastCGI protocol)
+
 Ruby - Rails application via Phusion Passenger
+
 Python - WSGI compliant apps via Phusion Passenger
+
 NodeJS - via Phusion Passenger
+
 ColdFusion - Generic Proxy to Railo/OpenBD 
 
 All script engines will be deployed using a popular multi version manager of the same.
+
 PHP - phpbrew
+
 RUBY - rvm
+
 Python - pythonz
+
 NodeJS - nvm
 
 This helps the server admins to provide virtually unlimited versions of the popular scripting engines to end users.
