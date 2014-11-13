@@ -4,6 +4,7 @@ PHP:
   php-5.4.33: /usr/local/phpbrew/php/php-5.4.33
 PROXY:
   apache: '9999'
+  railo: '8888'
 PYTHON:
   CPython-2.7.8: /usr/local/pythonz/pythons/CPython-2.7.8/bin/python
 RUBY:

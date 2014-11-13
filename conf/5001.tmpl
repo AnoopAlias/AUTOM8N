@@ -1,7 +1,10 @@
 #PAGESPEED_NOT_ENABLED;
-root DOCUMENTROOT/public;
-passenger_enabled on;
-passenger_ruby PATHTORUBY;
+root DOCUMENTROOT;
+index index.php index.html index.htm;
+	location / {
+                try_files $uri $uri/ /index.php?q=$uri&$args;
+	}
+
         location /mailman/ {
                 proxy_pass   http://CPANELIP:9999;
                 proxy_set_header   Host   $host;
@@ -26,3 +29,9 @@ passenger_ruby PATHTORUBY;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
+	location ~ \.php$ {
+                try_files $uri =404;
+                fastcgi_pass unix:SOCKETFILE;
+                fastcgi_index index.php;
+                include fastcgi_params;
+	}

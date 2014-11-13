@@ -1,38 +1,86 @@
 #PAGESPEED_NOT_ENABLED;
-root DOCUMENTROOT;
-index index.php index.html index.htm;
-access_log /usr/local/apache/domlogs/DOMAINNAME;
-	location / {
-                try_files $uri $uri/ /index.php?q=$uri&$args;
-	}
+index  index.cfm index.html index.htm;
 
-        location /mailman/ {
+#Proxy Pass to a railo appServer listening on port 8888
+location / {
+        # Rewrite rules and other criterias can go here
+        # Remember to avoid using if() where possible (http://wiki.nginx.org/IfIsEvil)
+        try_files $uri $uri/ @rewrites;
+}
+ 
+location @rewrites {
+        # Can put some of your own rewrite rules in here
+        # for example rewrite ^/~(.*)/(.*)/? /users/$1/$2 last;
+        rewrite ^/(.*)? /index.cfm/$1 last;
+        rewrite ^ /index.cfm last;
+}
+
+location ~* /railo-context/admin/ {
+	proxy_send_timeout   90;
+        proxy_read_timeout   90;
+
+        proxy_buffer_size    4k;
+        proxy_buffers     16 32k;
+        proxy_busy_buffers_size 64k;
+        proxy_temp_file_write_size 64k;
+
+        proxy_connect_timeout 30s;
+        proxy_pass      http://PROXYLOCATION;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Real-IP $remote_addr;
+}
+ 
+# Main Railo proxy handler
+location ~ \.(cfm|cfml|cfc|jsp|cfr)(.*)$ {
+	proxy_send_timeout   90;
+        proxy_read_timeout   90;
+
+        proxy_buffer_size    4k;
+        proxy_buffers     16 32k;
+        proxy_busy_buffers_size 64k;
+        proxy_temp_file_write_size 64k;
+
+        proxy_connect_timeout 30s;
+
+  	proxy_pass http://PROXYLOCATION;
+ 	proxy_redirect off;
+ 	proxy_set_header Host $host;
+ 	proxy_set_header X-Forwarded-Host $host;
+ 	proxy_set_header X-Forwarded-Server $host;
+ 	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+ 	proxy_set_header X-Real-IP $remote_addr;
+}
+        
+
+	location /mailman/ {
                 proxy_pass   http://CPANELIP:9999;
                 proxy_set_header   Host   $host;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
+
                 location /cpanel {
                 proxy_pass   http://CPANELIP:2082;
                 proxy_set_header   Host   $host;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
+
         location /whm {
                 proxy_pass   http://CPANELIP:2086;
                 proxy_set_header   Host   $host;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
+
         location /webmail {
                 proxy_pass   http://CPANELIP:2095;
                 proxy_set_header   Host   $host;
                 proxy_set_header   X-Real-IP  $remote_addr;
                 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         }
-	location ~ \.php$ {
-                try_files $uri =404;
-                fastcgi_pass unix:SOCKETFILE;
-                fastcgi_index index.php;
-                include fastcgi_params;
-	}
+

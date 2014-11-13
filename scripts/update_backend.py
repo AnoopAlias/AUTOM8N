@@ -28,7 +28,7 @@ def update_backend(backend_category,backend_name,backend_path):
 	yaml_file.close()
 
 
-parser = argparse.ArgumentParser(description = "Register a proxy/application backend for Xstack")
+parser = argparse.ArgumentParser(description = "Register a proxy/application backend for nDeploy")
 parser.add_argument("backend_category")
 parser.add_argument("backend_name")
 parser.add_argument("backend_path")

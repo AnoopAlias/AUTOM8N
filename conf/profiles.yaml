@@ -1,9 +1,10 @@
 NODEJS:
   '4001': A NodeJS application
 PHP:
-  '1001': Wordpress,Joomla,Drupal etc
+  '5001': Wordpress Website
 PROXY:
   '1000': Proxy to the Apache Backend (default)
+  '1001': ColdFusion - Railo Server
 PYTHON:
   '3001': A Python application confirming to WSGI
 RUBY:
