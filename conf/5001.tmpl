@@ -1,37 +1,16 @@
 #PAGESPEED_NOT_ENABLED;
 root DOCUMENTROOT;
 index index.php index.html index.htm;
-	location / {
-                try_files $uri $uri/ /index.php?q=$uri&$args;
-	}
 
-        location /mailman/ {
-                proxy_pass   http://CPANELIP:9999;
-                proxy_set_header   Host   $host;
-                proxy_set_header   X-Real-IP  $remote_addr;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-                location /cpanel {
-                proxy_pass   http://CPANELIP:2082;
-                proxy_set_header   Host   $host;
-                proxy_set_header   X-Real-IP  $remote_addr;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-        location /whm {
-                proxy_pass   http://CPANELIP:2086;
-                proxy_set_header   Host   $host;
-                proxy_set_header   X-Real-IP  $remote_addr;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-        location /webmail {
-                proxy_pass   http://CPANELIP:2095;
-                proxy_set_header   Host   $host;
-                proxy_set_header   X-Real-IP  $remote_addr;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-	location ~ \.php$ {
-                try_files $uri =404;
-                fastcgi_pass unix:SOCKETFILE;
-                fastcgi_index index.php;
-                include fastcgi_params;
-	}
+location / {
+        try_files $uri $uri/ /index.php?q=$uri&$args;
+}
+
+location ~ \.php$ {
+	try_files $uri =404;
+        fastcgi_pass unix:SOCKETFILE;
+        fastcgi_index index.php;
+        include fastcgi_params;
+}
+
+include /etc/nginx/conf.d/cpanel_services.conf;

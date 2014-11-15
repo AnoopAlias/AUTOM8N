@@ -2,27 +2,5 @@
 root DOCUMENTROOT/public;
 passenger_enabled on;
 passenger_python PATHTOPYTHON;
-        location /mailman/ {
-                proxy_pass   http://CPANELIP:9999;
-                proxy_set_header   Host   $host;
-                proxy_set_header   X-Real-IP  $remote_addr;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-                location /cpanel {
-                proxy_pass   http://CPANELIP:2082;
-                proxy_set_header   Host   $host;
-                proxy_set_header   X-Real-IP  $remote_addr;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-        location /whm {
-                proxy_pass   http://CPANELIP:2086;
-                proxy_set_header   Host   $host;
-                proxy_set_header   X-Real-IP  $remote_addr;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-        location /webmail {
-                proxy_pass   http://CPANELIP:2095;
-                proxy_set_header   Host   $host;
-                proxy_set_header   X-Real-IP  $remote_addr;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
+
+include /etc/nginx/conf.d/cpanel_services.conf;

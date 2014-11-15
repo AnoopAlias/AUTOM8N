@@ -29,7 +29,7 @@ def cpanel_nginx_awstats_fix(awstats_custom_conf,cpaneluser):
 
 def railo_vhost_add(domain_name, document_root, domain_aname):
 	"""Add a vhost to railo and restart railo app server"""
-	tomcat_conf = "/root/server.xml"
+	tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
 	s1='<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'" />'
 	s2=''
 	for domain in domain_aname:
