@@ -1,53 +1,62 @@
 #!/usr/bin/env python
 
+
 import yaml
 import argparse
 import subprocess
 import os
 from lxml import etree
 
+
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 nginx_bin = "/usr/sbin/nginx"
 pagespeed_include_location = "include /etc/nginx/conf.d/pagespeed.conf"
 
 # Function defs
-def cpanel_nginx_awstats_fix(awstats_custom_conf,cpaneluser):
-	"""cPanel nginx awstats fix .Thanks to https://github.com/lucasRolff/cpanel-nginx-awstats"""
-	file_content = """\
-	LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %extra1"
-	ExtraSectionName1="Time to serve requests (seconds)"
-	ExtraSectionCodeFilter1=""
-	ExtraSectionFirstColumnTitle1="Number of seconds to serve the request"
-	ExtraSectionFirstColumnValues1="extra1,(.*)"
-	ExtraSectionStatTypes1="H"
-	ExtraTrackedRowsLimit=100000
-	"""
-	with open(awstats_custom_conf,'w') as f:
+
+
+def cpanel_nginx_awstats_fix(awstats_custom_conf, cpaneluser):
+    """cPanel nginx awstats fix .Thanks to https://github.com/lucasRolff/cpanel-nginx-awstats"""
+    file_content = """\
+    LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %extra1"
+    ExtraSectionName1="Time to serve requests (seconds)"
+    ExtraSectionCodeFilter1=""
+    ExtraSectionFirstColumnTitle1="Number of seconds to serve the request"
+    ExtraSectionFirstColumnValues1="extra1,(.*)"
+    ExtraSectionStatTypes1="H"
+    ExtraTrackedRowsLimit=100000
+    """
+    with open(awstats_custom_conf, 'w') as f:
 		f.write(file_content)
-	subprocess.call("chown "+cpaneluser+":"+cpaneluser+" "+awstats_custom_conf, Shell=True)
+    f.close()
+    subprocess.call("chown "+cpaneluser+":"+cpaneluser+" "+awstats_custom_conf, Shell=True)
+    return
+
 
 
 def railo_vhost_add(domain_name, document_root, domain_aname):
-	"""Add a vhost to railo and restart railo app server"""
-	tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
-	s1='<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'" />'
-	s2=''
-	for domain in domain_aname:
-		s2=s2+'<Alias>'+domain+'</Alias>'
-	print(s2)
+    """Add a vhost to railo and restart railo app server"""
+    tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
+    s1='<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'" />'
+    s2=''
+    for domain in domain_aname:
+        s2=s2+'<Alias>'+domain+'</Alias>'
 	s3='</Host>'
 	if s2:
-		xmlstring = s1+s2+s3
+	    xmlstring = s1+s2+s3
 	else:
-		xmlstring = s1+s3
-	new_xml_element=etree.fromstring(xmlstring)
-	xml_data_stream = etree.parse(tomcat_conf)
-	xml_root = = xml_data_stream.getroot()
-	for node1 in xml_root.iter('Service'):
-		for node2 in node1.iter('Engine'):
-			node2.append(new_xml_element)
-			xml_data_stream.write(tomcat_conf)
-	subprocess.call('/opt/railo/railo_ctl restart', Shell=True)
+	    xmlstring = s1+s3
+            
+    new_xml_element=etree.fromstring(xmlstring)
+    xml_data_stream = etree.parse(tomcat_conf)
+    xml_root = xml_data_stream.getroot()
+    for node1 in xml_root.iter('Service'):
+	for node2 in node1.iter('Engine'):
+	    node2.append(new_xml_element)
+    xml_data_stream.write(tomcat_conf)
+    subprocess.call('/opt/railo/railo_ctl restart', Shell=True)
+    return
+
 
 def update_custom_profile(profile_yaml, value):
     """Function to set custom profile status in domain data yaml"""
@@ -55,7 +64,7 @@ def update_custom_profile(profile_yaml, value):
     yaml_profile_datadict = yaml.safe_load(yaml_data_stream_toupdate)
     yaml_data_stream_toupdate.close()
     yaml_profile_datadict["customconf"] = str(value)
-    with open(profile_yaml, 'w')as yaml_file:
+    with open(profile_yaml, 'w') as yaml_file:
         yaml_file.write(yaml.dump(yaml_profile_datadict, default_flow_style=False))
     yaml_file.close()
     return
@@ -73,9 +82,8 @@ def php_profile_set(user_name, phpversion, php_path):
     if os.path.isfile(phppool_file):
         subprocess.call("kill -USR2 `cat " + php_path + "/var/run/php-fpm.pid`", shell=True)
     else:
-        subprocess.call(
-            'sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file,
-            shell=True)
+        sed_string='sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
+        subprocess.call(sed_string, shell=True)
         subprocess.call("kill -USR2 `cat " + php_path + "/var/run/php-fpm.pid`", shell=True)
     return
 
@@ -252,8 +260,11 @@ def nginx_confgen(user_name, domain_name):
     domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
     domain_list = domain_sname + " " + domain_aname
     if 'ipv6' in yaml_parsed_cpaneldomain.keys():
-        for ipv6_addr in yaml_parsed_cpaneldomain.get('ipv6').keys():
-            cpanel_ipv6 = "listen [" + ipv6_addr + "]"
+	if yaml_parsed_cpaneldomain.get('ipv6'):
+        	for ipv6_addr in yaml_parsed_cpaneldomain.get('ipv6').keys():
+            		cpanel_ipv6 = "listen [" + ipv6_addr + "]"
+	else:
+		cpanel_ipv6 = "#CPIPVSIX"
     else:
         cpanel_ipv6 = "#CPIPVSIX"
     if os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
@@ -296,7 +307,9 @@ def nginx_confgen(user_name, domain_name):
     config_out.close()
     nginx_server_reload()
 
+
 # End Function defs
+
 
 parser = argparse.ArgumentParser(description="Regenerate nginX and app server configs for cpanel user")
 parser.add_argument("CPANELUSER")

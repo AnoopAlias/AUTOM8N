@@ -1,30 +1,37 @@
 #!/usr/bin/env python
 
+
 import yaml
 import argparse
+
 
 installation_path = "/opt/nDeploy" #Absolute Installation Path
 profile_config_file = installation_path+"/conf/profiles.yaml"
 
+
 #Function defs
-def update_profile(backend_category,profile_code,profile_description):
-	profile_data_yaml = open(profile_config_file,'r')
-	profile_data_yaml_parsed = yaml.safe_load(profile_data_yaml)
-	profile_data_yaml.close()
-	if profile_data_yaml_parsed:
-		if profile_data_yaml_parsed.has_key(backend_category):
-			branch_dict = profile_data_yaml_parsed[backend_category]
-			branch_dict[profile_code] = profile_description
-			with open(profile_config_file,'w')as yaml_file:
-				yaml_file.write(yaml.dump(profile_data_yaml_parsed , default_flow_style=False))
-		else:
-			profile_data_yaml_parsed[backend_category] = {profile_code : profile_description }
-			with open(profile_config_file,'w')as yaml_file:
-				yaml_file.write(yaml.dump(profile_data_yaml_parsed , default_flow_style=False))
+
+
+def update_profile(backend_category, profile_code, profile_description):
+    profile_data_yaml = open(profile_config_file,'r')
+    profile_data_yaml_parsed = yaml.safe_load(profile_data_yaml)
+    profile_data_yaml.close()
+    if profile_data_yaml_parsed:
+	if backend_category in profile_data_yaml_parsed:
+	    branch_dict = profile_data_yaml_parsed[backend_category]
+	    branch_dict[profile_code] = profile_description
+	    with open(profile_config_file, 'w') as yaml_file:
+		yaml_file.write(yaml.dump(profile_data_yaml_parsed, default_flow_style=False))
+            yaml_file.close()
 	else:
-		data_dict = {backend_category :{ profile_code  : profile_description }}
-		with open(profile_config_file,'w')as yaml_file:
-			yaml_file.write(yaml.dump(data_dict , default_flow_style=False))
+	    profile_data_yaml_parsed[backend_category] = {profile_code : profile_description }
+	    with open(profile_config_file, 'w') as yaml_file:
+		yaml_file.write(yaml.dump(profile_data_yaml_parsed , default_flow_style=False))
+            yaml_file.close()
+    else:
+        data_dict = {backend_category :{ profile_code  : profile_description }}
+	with open(profile_config_file,'w')as yaml_file:
+	    yaml_file.write(yaml.dump(data_dict , default_flow_style=False))
 	yaml_file.close()
 
 
