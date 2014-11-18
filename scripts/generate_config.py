@@ -29,17 +29,17 @@ def cpanel_nginx_awstats_fix(awstats_custom_conf, cpaneluser):
     with open(awstats_custom_conf, 'w') as f:
 		f.write(file_content)
     f.close()
-    subprocess.call("chown "+cpaneluser+":"+cpaneluser+" "+awstats_custom_conf, Shell=True)
+    subprocess.call("chown "+cpaneluser+":"+cpaneluser+" "+awstats_custom_conf, shell=True)
     return
 
 
 
-def railo_vhost_add(domain_name, document_root, domain_aname):
+def railo_vhost_add(domain_name, document_root, *domain_aname_list):
     """Add a vhost to railo and restart railo app server"""
     tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
-    s1='<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'" />'
+    s1='<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'/" />'
     s2=''
-    for domain in domain_aname:
+    for domain in domain_aname_list:
         s2=s2+'<Alias>'+domain+'</Alias>'
 	s3='</Host>'
 	if s2:
@@ -52,9 +52,12 @@ def railo_vhost_add(domain_name, document_root, domain_aname):
     xml_root = xml_data_stream.getroot()
     for node1 in xml_root.iter('Service'):
 	for node2 in node1.iter('Engine'):
+            for node3 in node2.iter('Host'):
+                if domain_name in node3.attrib.values():
+                    node2.remove(node3)
 	    node2.append(new_xml_element)
-    xml_data_stream.write(tomcat_conf)
-    subprocess.call('/opt/railo/railo_ctl restart', Shell=True)
+    xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
+    subprocess.call('/opt/railo/railo_ctl restart', shell=True)
     return
 
 
@@ -88,7 +91,7 @@ def php_profile_set(user_name, phpversion, php_path):
     return
 
 
-def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, domain_aname):
+def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list):
     """Function generating config include based on profile"""
     with open("/var/cpanel/users/" + user_name) as users_file:
         if "SUSPENDED=1" in users_file.read():
@@ -200,11 +203,9 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 profile_template_file.close()
                 profile_config_out.close()
 		if proxytype == "railo":
-			railo_vhost_add(domain_name,document_root,domain_aname)
+			railo_vhost_add(domain_name,document_root,*domain_aname_list)
         elif profile_custom_status == "1":
             custom_config_file = domain_home + '/.' + domain_name + '_nginx.include.custom.conf'
-            print
-            domain_name
             if os.path.isfile(custom_config_file):
                 test_config_file = open(installation_path + "/conf/nginx.conf.test", 'r')
                 test_config_out = open(installation_path + "/conf/nginx.conf." + domain_name + ".test", 'w')
@@ -240,7 +241,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         template_file.close()
         config_out.close()
         subprocess.call("chown " + user_name + ":" + user_name + " " + profileyaml, shell=True)
-        nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, domain_aname)
+        nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list)
 
 
 def nginx_confgen(user_name, domain_name):
@@ -258,6 +259,7 @@ def nginx_confgen(user_name, domain_name):
     document_root = yaml_parsed_cpaneldomain.get('documentroot')
     domain_sname = yaml_parsed_cpaneldomain.get('servername')
     domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
+    domain_aname_list = domain_aname.split(' ')
     domain_list = domain_sname + " " + domain_aname
     if 'ipv6' in yaml_parsed_cpaneldomain.keys():
 	if yaml_parsed_cpaneldomain.get('ipv6'):
@@ -281,7 +283,7 @@ def nginx_confgen(user_name, domain_name):
                             shell=True)
         else:
             subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
-        nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, domain_aname)
+        nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
         template_file = open(installation_path + "/conf/server_ssl.tmpl", 'r')
         config_out = open("/etc/nginx/sites-enabled/" + domain_name + "_SSL.conf", 'w')
         for line in template_file:
@@ -294,7 +296,7 @@ def nginx_confgen(user_name, domain_name):
             config_out.write(line)
         template_file.close()
         config_out.close()
-    nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, domain_aname)
+    nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, *domain_aname_list)
     template_file = open(installation_path + "/conf/server.tmpl", 'r')
     config_out = open("/etc/nginx/sites-enabled/" + domain_name + ".conf", 'w')
     for line in template_file:
