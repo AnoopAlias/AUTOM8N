@@ -7,6 +7,12 @@ import subprocess
 import os
 
 
+__author__ = "Anoop P Alias"
+__copyright__ = "Copyright 2014, PiServe Technologies Pvt Ltd , India"
+__license__ = "GPL"
+__email__ = "anoop.alias@piserve.com"
+
+
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 php_fpm_config = installation_path+"/conf/php-fpm.conf"

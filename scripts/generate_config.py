@@ -5,7 +5,16 @@ import yaml
 import argparse
 import subprocess
 import os
+import sys
+import pwd
+import grp
 from lxml import etree
+
+
+__author__ = "Anoop P Alias"
+__copyright__ = "Copyright 2014, PiServe Technologies Pvt Ltd , India"
+__license__ = "GPL"
+__email__ = "anoop.alias@piserve.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -34,8 +43,8 @@ def cpanel_nginx_awstats_fix(awstats_custom_conf, cpaneluser):
 
 
 
-def railo_vhost_add(domain_name, document_root, *domain_aname_list):
-    """Add a vhost to railo and restart railo app server"""
+def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
+    """Add a vhost to tomcat and restart railo-tomcat app server"""
     tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
     s1='<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'/" />'
     s2=''
@@ -58,6 +67,39 @@ def railo_vhost_add(domain_name, document_root, *domain_aname_list):
 	    node2.append(new_xml_element)
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
     subprocess.call('/opt/railo/railo_ctl restart', shell=True)
+    return
+
+
+def railo_vhost_add_resin(domain_name, document_root, *domain_aname_list):
+    """Add a vhost to resin and restart railo-resin app server"""
+    resin_conf_dir = "/var/resin/hosts/"
+    if not os.path.exists(document_root+"/../WEB-INF"):
+        os.mkdir(document_root+"/../WEB-INF", 0770)
+    if not os.path.exists(document_root+"/../log"):
+        os.mkdir(document_root+"/../log", 0770)
+    uid_nobody = pwd.getpwnam("nobody").pw_uid
+    gid_nobody = grp.getgrnam("nobody").gr_gid
+    os.chown(document_root+"/../WEB-INF", uid_nobody, gid_nobody)
+    os.chown(document_root+"/../log", uid_nobody, gid_nobody)
+    nsm = {None: "http://caucho.com/ns/resin"}
+    mydict = { 'id': "/",'root-directory':document_root }
+    page = etree.Element('host', nsmap=nsm)
+    doc = etree.ElementTree(page)
+    host_name = etree.SubElement(page, 'host-name')
+    host_name.text = domain_name
+    for domain in domain_aname_list:
+        host_alias = etree.SubElement(page, 'host-alias')
+        host_alias.text = domain
+    web_app = etree.SubElement(page, 'web-app', mydict)
+    if not os.path.exists(resin_conf_dir+domain_name):
+        os.mkdir(resin_conf_dir+domain_name, 0755)
+    os.chown(resin_conf_dir+domain_name, uid_nobody, gid_nobody)
+    host_xml_file = resin_conf_dir+domain_name+"/host.xml"
+    if not os.path.isfile(host_xml_file):
+        outFile = open(host_xml_file, 'w')
+        doc.write(host_xml_file, method='xml', pretty_print=True)
+        outFile.close()
+        os.chown(host_xml_file, uid_nobody, gid_nobody)
     return
 
 
@@ -192,6 +234,11 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
             else:
 		proxytype = yaml_parsed_profileyaml.get('backend_version')
                 proxy_port = str(yaml_parsed_profileyaml.get('backend_path'))
+                pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+                if pagespeed_status == "0":
+                    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+                else:
+                    pagespeed_include = pagespeed_include_location
                 proxy_path = cpanelip + ":" + proxy_port
                 profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
                 profile_config_out = open(include_file, 'w')
@@ -199,11 +246,15 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                     line = line.replace('CPANELIP', cpanelip)
 		    line = line.replace('DOMAINNAME', domain_name)
                     line = line.replace('PROXYLOCATION', proxy_path)
+                    line = line.replace('DOCUMENTROOT', document_root)
+                    line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
                     profile_config_out.write(line)
                 profile_template_file.close()
                 profile_config_out.close()
-		if proxytype == "railo":
-			railo_vhost_add(domain_name,document_root,*domain_aname_list)
+		if proxytype == "railo_tomcat":
+		    railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
+                elif proxytype == "railo_resin":
+                    railo_vhost_add_resin(domain_name, document_root, *domain_aname_list)
         elif profile_custom_status == "1":
             custom_config_file = domain_home + '/.' + domain_name + '_nginx.include.custom.conf'
             if os.path.isfile(custom_config_file):
