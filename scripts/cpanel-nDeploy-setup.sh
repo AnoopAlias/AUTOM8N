@@ -7,7 +7,7 @@ if [ ! -d /usr/local/rvm/gems/ruby-2.1.3/gems/passenger-4.0.53/ext/nginx ] ; the
 	echo -e '\e[93m Setting up rvm ruby and gem required for Phusion Passenger \e[0m'
 	sudo gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
 	\curl -sSL https://get.rvm.io | sudo bash -s stable --ruby=2.1.3 --gems=passenger
-	tar -xvf /etc/nginx/passenger-4.0.53_buildout.tgz -C /usr/local/rvm/gems/ruby-2.1.3/gems/passenger-4.0.53/
+	ln -s /usr/nginx/buildout /usr/local/rvm/gems/ruby-2.1.3/gems/passenger-4.0.53/
 	/opt/nDeploy/scripts/update_backend.py RUBY ruby-2.1.3 /usr/local/rvm/wrappers/ruby-2.1.3/ruby
 fi
 #####

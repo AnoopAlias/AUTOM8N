@@ -62,7 +62,7 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     for node1 in xml_root.iter('Service'):
 	for node2 in node1.iter('Engine'):
             for node3 in node2.iter('Host'):
-                if domain_name in node3.attrib.values():
+                if domain_name in list(node3.attrib.values()):
                     node2.remove(node3)
 	    node2.append(new_xml_element)
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
@@ -74,9 +74,9 @@ def railo_vhost_add_resin(domain_name, document_root, *domain_aname_list):
     """Add a vhost to resin and restart railo-resin app server"""
     resin_conf_dir = "/var/resin/hosts/"
     if not os.path.exists(document_root+"/../WEB-INF"):
-        os.mkdir(document_root+"/../WEB-INF", 0770)
+        os.mkdir(document_root+"/../WEB-INF", 0o770)
     if not os.path.exists(document_root+"/../log"):
-        os.mkdir(document_root+"/../log", 0770)
+        os.mkdir(document_root+"/../log", 0o770)
     uid_nobody = pwd.getpwnam("nobody").pw_uid
     gid_nobody = grp.getgrnam("nobody").gr_gid
     os.chown(document_root+"/../WEB-INF", uid_nobody, gid_nobody)
@@ -92,7 +92,7 @@ def railo_vhost_add_resin(domain_name, document_root, *domain_aname_list):
         host_alias.text = domain
     web_app = etree.SubElement(page, 'web-app', mydict)
     if not os.path.exists(resin_conf_dir+domain_name):
-        os.mkdir(resin_conf_dir+domain_name, 0755)
+        os.mkdir(resin_conf_dir+domain_name, 0o755)
     os.chown(resin_conf_dir+domain_name, uid_nobody, gid_nobody)
     host_xml_file = resin_conf_dir+domain_name+"/host.xml"
     if not os.path.isfile(host_xml_file):
@@ -139,13 +139,13 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         if "SUSPENDED=1" in users_file.read():
             profileyaml = installation_path + "/conf/domain_data.suspended"
             if sslenabled == 1:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + "_ssl.include"
+                include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
             else:
                 include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
         else:
             if sslenabled == 1:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + "_ssl.include"
-                profileyaml = installation_path + "/domain-data/" + domain_name + "_ssl"
+                include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
+                profileyaml = installation_path + "/domain-data/" + domain_name + "_SSL"
             else:
                 include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
                 profileyaml = installation_path + "/domain-data/" + domain_name
@@ -312,9 +312,9 @@ def nginx_confgen(user_name, domain_name):
     domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
     domain_aname_list = domain_aname.split(' ')
     domain_list = domain_sname + " " + domain_aname
-    if 'ipv6' in yaml_parsed_cpaneldomain.keys():
+    if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
 	if yaml_parsed_cpaneldomain.get('ipv6'):
-        	for ipv6_addr in yaml_parsed_cpaneldomain.get('ipv6').keys():
+        	for ipv6_addr in list(yaml_parsed_cpaneldomain.get('ipv6').keys()):
             		cpanel_ipv6 = "listen [" + ipv6_addr + "]"
 	else:
 		cpanel_ipv6 = "#CPIPVSIX"

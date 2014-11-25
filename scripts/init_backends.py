@@ -26,7 +26,7 @@ def control_php_fpm(trigger):
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         if trigger == "start":
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
-            for path in php_backends_dict.values():
+            for path in list(php_backends_dict.values()):
                 php_fpm_bin = path+"/sbin/php-fpm"
                 php_fpm_conf_d = path+"/etc/fpm.d"
                 if not os.path.exists(php_fpm_conf_d):
@@ -37,7 +37,7 @@ def control_php_fpm(trigger):
                     subprocess.call(sed_string+t_file+' > '+o_file, shell=True)
                 subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
         elif trigger == "stop":
-            for path in php_backends_dict.values():
+            for path in list(php_backends_dict.values()):
                 php_fpm_pid = path+"/var/run/php-fpm.pid"
                 subprocess.call("kill -9 $(cat "+php_fpm_pid+")", shell=True)
         else:
