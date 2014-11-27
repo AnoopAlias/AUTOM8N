@@ -95,11 +95,10 @@ def railo_vhost_add_resin(domain_name, document_root, *domain_aname_list):
         os.mkdir(resin_conf_dir+domain_name, 0o755)
     os.chown(resin_conf_dir+domain_name, uid_nobody, gid_nobody)
     host_xml_file = resin_conf_dir+domain_name+"/host.xml"
-    if not os.path.isfile(host_xml_file):
-        outFile = open(host_xml_file, 'w')
-        doc.write(host_xml_file, method='xml', pretty_print=True)
-        outFile.close()
-        os.chown(host_xml_file, uid_nobody, gid_nobody)
+    outFile = open(host_xml_file, 'w')
+    doc.write(host_xml_file, method='xml', pretty_print=True)
+    outFile.close()
+    os.chown(host_xml_file, uid_nobody, gid_nobody)
     return
 
 
@@ -139,15 +138,15 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         if "SUSPENDED=1" in users_file.read():
             profileyaml = installation_path + "/conf/domain_data.suspended"
             if sslenabled == 1:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
+                include_file = "/opt/nDeploy-sites-enabled/" + domain_name + "_SSL.include"
             else:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
+                include_file = "/opt/nDeploy-sites-enabled/" + domain_name + ".include"
         else:
             if sslenabled == 1:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
+                include_file = "/opt/nDeploy-sites-enabled/" + domain_name + "_SSL.include"
                 profileyaml = installation_path + "/domain-data/" + domain_name + "_SSL"
             else:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
+                include_file = "/opt/nDeploy-sites-enabled/" + domain_name + ".include"
                 profileyaml = installation_path + "/domain-data/" + domain_name
     if os.path.isfile(profileyaml):
         profileyaml_data_stream = open(profileyaml, 'r')
@@ -336,7 +335,7 @@ def nginx_confgen(user_name, domain_name):
             subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
         nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
         template_file = open(installation_path + "/conf/server_ssl.tmpl", 'r')
-        config_out = open("/etc/nginx/sites-enabled/" + domain_name + "_SSL.conf", 'w')
+        config_out = open("/opt/nDeploy-sites-enabled/" + domain_name + "_SSL.conf", 'w')
         for line in template_file:
             line = line.replace('CPANELIP', cpanel_ipv4)
             line = line.replace('DOMAINLIST', domain_list)
@@ -349,7 +348,7 @@ def nginx_confgen(user_name, domain_name):
         config_out.close()
     nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, *domain_aname_list)
     template_file = open(installation_path + "/conf/server.tmpl", 'r')
-    config_out = open("/etc/nginx/sites-enabled/" + domain_name + ".conf", 'w')
+    config_out = open("/opt/nDeploy-sites-enabled/" + domain_name + ".conf", 'w')
     for line in template_file:
         line = line.replace('CPANELIP', cpanel_ipv4)
         line = line.replace('DOMAINLIST', domain_list)
