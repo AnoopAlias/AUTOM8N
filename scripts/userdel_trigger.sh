@@ -6,7 +6,7 @@ if [[ $CPANELUSER == *.lock || $CPANELUSER == .* ]];then
 else
 	for file in $(find /opt/nDeploy/domain-data)
 	do
-    		grep -w "user: $CPANELUSER" $file && rm -f $file && rm -f /opt/nDeploy-sites-enabled/$(basename $file).conf ; rm -f /opt/nDeploy-sites-enabled/$(basename $file).include && rm -rf /var/resin/hosts/$(basename $file)
+    		grep -w "user: $CPANELUSER" $file && rm -f $file && rm -f /etc/nginx/sites-enabled/$(basename $file).conf ; rm -f /etc/nginx/sites-enabled/$(basename $file).include && rm -rf /var/resin/hosts/$(basename $file)
 	done 
 
 	/usr/sbin/nginx -s reload
