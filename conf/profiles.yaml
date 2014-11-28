@@ -1,7 +1,10 @@
 NODEJS:
   '4001': A NodeJS application
 PHP:
-  '5001': Wordpress Website
+  '5001': Wordpress or Drupal
+  '5002': Joomla
+  '5003': Magento
+  '5004': Wordpress with FastCGICache with nginx-helper plugin
 PROXY:
   '1000': Proxy to the Apache Backend (default)
   '1001': ColdFusion - Railo Server
