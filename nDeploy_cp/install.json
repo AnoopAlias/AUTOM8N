@@ -1,0 +1,17 @@
+[
+    {
+       "order" : 11,
+       "name" : "nginX Deployer",
+       "type" : "group",
+       "id" : "ndeploy_grp"
+    },
+    {
+       "icon" : "nDeploy.png",
+       "group_id" : "ndeploy_grp",
+       "order" : 1,
+       "name" : "nDeploy",
+       "type" : "link",
+       "id" : "ndeploy",
+       "uri" : "nDeploy_cp/ndeploy.live.cgi\"target=\"_blank\""
+    }
+] 
