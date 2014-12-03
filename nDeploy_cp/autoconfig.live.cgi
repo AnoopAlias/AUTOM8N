@@ -83,6 +83,10 @@ if form.getvalue('domain') and form.getvalue('custom'):
                 print('<input type="submit" value="Submit" />')
                 print('<input style="display:none" name="domain" value="'+mydomain+'">')
                 print('</form>')
+                print('<HR>')
+                print('<p style="color:grey; background-color:yellow">(!) You can use FASTCGICACHE as the cache zone for use with fastcgi_cache directive</p>')
+                print('<p style="color:grey; background-color:yellow">(!) You can use PROXYCACHE as the cache zone for use with proxy_cache directive</p>')
+
             else:
                 print('ERROR : Invalid POST data')
         else:

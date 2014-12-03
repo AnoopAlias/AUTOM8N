@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import os
 import socket
 import sys
@@ -60,6 +60,6 @@ print('<HR>')
 print('<input type="submit" value="CONFIGURE">')
 print('</form>')
 print('<p style="color:grey; background-color:yellow">(!) For Addon domain select the corresponding subdomain</p>')
-print('<p style="color:grey; background-color:yellow">(!) click on the gear icon above to restart the configuration process anytime</p>')
+print('<p style="color:grey; background-color:yellow">(!) click on the icon above to restart the configuration process anytime</p>')
 print('</body>')
 print('</html>')
