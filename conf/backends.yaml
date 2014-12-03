@@ -1,2 +1,4 @@
+PHP:
+  php-5.4.33: /usr/local/phpbrew/php/php-5.4.33
 PROXY:
   apache: '9999'

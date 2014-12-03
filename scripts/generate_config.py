@@ -139,15 +139,19 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
             profileyaml = installation_path + "/conf/domain_data.suspended"
             if sslenabled == 1:
                 include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
+                custom_config_file = domain_home + '/' + domain_name + '_SSL_nginx.include.custom.conf'
             else:
                 include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
+                custom_config_file = domain_home + '/' + domain_name + '_nginx.include.custom.conf'
         else:
             if sslenabled == 1:
                 include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
                 profileyaml = installation_path + "/domain-data/" + domain_name + "_SSL"
+                custom_config_file = domain_home + '/' + domain_name + '_SSL_nginx.include.custom.conf'
             else:
                 include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
                 profileyaml = installation_path + "/domain-data/" + domain_name
+                custom_config_file = domain_home + '/' + domain_name + '_nginx.include.custom.conf'
     if os.path.isfile(profileyaml):
         profileyaml_data_stream = open(profileyaml, 'r')
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
@@ -255,7 +259,6 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 elif proxytype == "railo_resin":
                     railo_vhost_add_resin(domain_name, document_root, *domain_aname_list)
         elif profile_custom_status == "1":
-            custom_config_file = domain_home + '/.' + domain_name + '_nginx.include.custom.conf'
             if os.path.isfile(custom_config_file):
                 test_config_file = open(installation_path + "/conf/nginx.conf.test", 'r')
                 test_config_out = open(installation_path + "/conf/nginx.conf." + domain_name + ".test", 'w')
