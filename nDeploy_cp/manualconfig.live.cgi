@@ -41,6 +41,18 @@ def update_custom_profile(profile_yaml, value):
     yaml_file.close()
     return
 
+def update_config_test_status(profile_yaml, value):
+    """Function to set custom profile status in domain data yaml"""
+    yaml_data_stream_toupdate = open(profile_yaml, 'r')
+    yaml_profile_datadict = yaml.safe_load(yaml_data_stream_toupdate)
+    yaml_data_stream_toupdate.close()
+    yaml_profile_datadict["testconf"] = str(value)
+    with open(profile_yaml, 'w') as yaml_file:
+        yaml_file.write(yaml.dump(yaml_profile_datadict, default_flow_style=False))
+    yaml_file.close()
+    return
+
+
 
 
 close_cpanel_liveapisock()
@@ -66,7 +78,7 @@ if form.getvalue('domain') and form.getvalue('custom'):
         profileyaml_data_stream.close()
         backend_category = yaml_parsed_profileyaml.get('backend_category')
         backend_version = yaml_parsed_profileyaml.get('backend_version')
-        print('<p style="background-color:grey">CONFIGURE:  '+mydomain+'</p>')
+        print(('<p style="background-color:grey">CONFIGURE:  '+mydomain+'</p>'))
         print('<HR>')
         if customconf == '1':
             print('<form action="update.live.cgi" method="post">')
@@ -78,7 +90,7 @@ if form.getvalue('domain') and form.getvalue('custom'):
             print('</textarea>')
             print('<HR>')
             print('<input type="submit" value="Submit" />')
-            print('<input style="display:none" name="domain" value="'+mydomain+'">')
+            print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
             print('</form>')
             print('<HR>')
             print('<p style="color:grey; background-color:yellow">(!) You can use FASTCGICACHE as the cache zone for use with fastcgi_cache directive</p>')
@@ -86,7 +98,7 @@ if form.getvalue('domain') and form.getvalue('custom'):
         elif customconf == '0':
             print('<HR>')
             update_custom_profile(profileyaml, 0)
-            print('<p style="color:grey; background-color:yellow">(!) config mode reset .You are using ' + backend_category + ' as backend and '+ backend_version + 'as type/version </p>') 
+            print(('<p style="color:grey; background-color:yellow">(!) config mode reset .You are using ' + backend_category + ' as backend and '+ backend_version + 'as type/version </p>')) 
         else:
             print('ERROR : Invalid POST data') 
 

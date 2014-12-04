@@ -114,6 +114,18 @@ def update_custom_profile(profile_yaml, value):
     return
 
 
+def update_config_test_status(profile_yaml, value):
+    """Function to set custom profile status in domain data yaml"""
+    yaml_data_stream_toupdate = open(profile_yaml, 'r')
+    yaml_profile_datadict = yaml.safe_load(yaml_data_stream_toupdate)
+    yaml_data_stream_toupdate.close()
+    yaml_profile_datadict["testconf"] = str(value)
+    with open(profile_yaml, 'w') as yaml_file:
+        yaml_file.write(yaml.dump(yaml_profile_datadict, default_flow_style=False))
+    yaml_file.close()
+    return
+
+
 def nginx_server_reload():
     """Function to reload nginX config"""
     subprocess.call(nginx_bin + " -s reload", shell=True)
@@ -156,7 +168,8 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         profileyaml_data_stream = open(profileyaml, 'r')
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         profile_custom_status = yaml_parsed_profileyaml.get('customconf')
-        if profile_custom_status == "0":
+        config_test_status = yaml_parsed_profileyaml.get('testconf')
+        if profile_custom_status and config_test_status == "0":
             profile_category = yaml_parsed_profileyaml.get('backend_category')
             profile_code = str(yaml_parsed_profileyaml.get('profile'))
             if profile_category == "PHP":
@@ -258,7 +271,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
 		    railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
                 elif proxytype == "railo_resin":
                     railo_vhost_add_resin(domain_name, document_root, *domain_aname_list)
-        elif profile_custom_status == "1":
+        elif config_test_status == "1":
             if os.path.isfile(custom_config_file):
                 test_config_file = open(installation_path + "/conf/nginx.conf.test", 'r')
                 test_config_out = open(installation_path + "/conf/nginx.conf." + domain_name + ".test", 'w')
@@ -277,10 +290,15 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                         profile_config_out.write(line)
                     profile_config_out.close()
                     profile_config_in.close()
-                    update_custom_profile(profileyaml, 2)
+                    update_custom_profile(profileyaml, 1)
+                    update_config_test_status(profileyaml, 0)
                 else:
-                    update_custom_profile(profileyaml, 0)
-
+                    if profile_custom_status == '0':
+                        update_custom_profile(profileyaml, 0)
+                        update_config_test_status(profileyaml, 0)
+                    else:
+                        update_custom_profile(profileyaml, 1)
+                        update_config_test_status(profileyaml, 0)
             else:
                 update_custom_profile(profileyaml, 0)
         else:
