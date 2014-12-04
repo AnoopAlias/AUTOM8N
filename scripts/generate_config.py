@@ -169,7 +169,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         profile_custom_status = yaml_parsed_profileyaml.get('customconf')
         config_test_status = yaml_parsed_profileyaml.get('testconf')
-        if profile_custom_status and config_test_status == "0":
+        if profile_custom_status == "0" and config_test_status == "0":
             profile_category = yaml_parsed_profileyaml.get('backend_category')
             profile_code = str(yaml_parsed_profileyaml.get('profile'))
             if profile_category == "PHP":
