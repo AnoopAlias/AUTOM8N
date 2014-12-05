@@ -52,13 +52,13 @@ if form.getvalue('domain'):
         backend_category = yaml_parsed_profileyaml.get('backend_category')
         backend_version = yaml_parsed_profileyaml.get('backend_version')
         myhome = os.environ["HOME"]
-        print(('<p style="background-color:grey">CONFIGURE:  '+mydomain+'</p>'))
+        print(('<p style="background-color:LightGrey">CONFIGURE:  '+mydomain+'</p>'))
         print('<HR>')
         if customconf == "1":
             print('<form action="manualconfig.live.cgi" method="post">')
-            print(('<p style="color:grey">Custom config is active for:  '+mydomain+'</p>'))
-            print('<p style="color:grey">Select EDIT to edit current config or RESET to reset the config</p>')
-            print(('<p style="color:grey; background-color:yellow">(!) All custom edits are saved in ' + myhome + '/' + mydomain + '_nginx.include.custom.conf'+'</p>'))
+            print(('<p style="background-color:LightGrey">Custom config is active for:  '+mydomain+'</p>'))
+            print('<p style="background-color:LightGrey">Select EDIT to edit current config or RESET to reset the config</p>')
+            print(('<p style="background-color:LightGrey">(!) All custom edits are saved in ' + myhome + '/' + mydomain + '_nginx.include.custom.conf'+'</p>'))
             print('<HR>')
             print('<input type="radio" name="custom" value="1" /> EDIT')
             print('<input type="radio" name="custom" value="0" /> RESET')
@@ -67,8 +67,8 @@ if form.getvalue('domain'):
             print('</form>')
         elif customconf == "0":
             print('<form action="autoconfig.live.cgi" method="post">')
-            print(('<p style="color:grey">You are currently using '+backend_category+' as backend with '+backend_version+' as type/version </p>'))
-            print('<p style="color:grey">Select AUTO for automatic configuration(recommended) or MANUAL for custom configuration</p>')
+            print(('<p style="background-color:LightGrey">You are currently using '+backend_category+' as backend with '+backend_version+' as type/version </p>'))
+            print('<p style="background-color:LightGrey">Select AUTO for automatic configuration(recommended) or MANUAL for custom configuration</p>')
             print('<HR>')
             print('<input type="radio" name="custom" value="0" /> AUTO')
             print('<input type="radio" name="custom" value="1" /> MANUAL')

@@ -66,7 +66,7 @@ if form.getvalue('domain'):
         backend_data_yaml = open(backend_config_file, 'r')
         backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
         backend_data_yaml.close()
-        print(('<p style="background-color:grey">CONFIGURE:  '+mydomain+'</p>'))
+        print(('<p style="background-color:LightGrey">CONFIGURE:  '+mydomain+'</p>'))
         print('<HR>')
         if form.getvalue('textcontent'):
             text_content = form.getvalue('textcontent')
@@ -75,8 +75,8 @@ if form.getvalue('domain'):
                 outfile.write(text_content)
             outfile.close()
             update_config_test_status(profileyaml, 1)
-            print('<p style="color:grey; background-color:yellow">(!) Custom config with errors will not be activated </p>')
-            print(('<p style="color:grey; background-color:yellow">(!) All custom edits are saved in ' + myhome + '/' + mydomain + '_nginx.include.custom.conf'+'</p>'))
+            print('<p style="background-color:LightGrey">(!) Custom config with errors will not be activated </p>')
+            print(('<p style="background-color:LightGrey">(!) All custom edits are saved in ' + myhome + '/' + mydomain + '_nginx.include.custom.conf'+'</p>'))
         elif form.getvalue('version') and form.getvalue('pcode') and form.getvalue('pagespeed') and form.getvalue('backend'):
             mypcode = form.getvalue('pcode')
             mypagespeed = form.getvalue('pagespeed')
@@ -92,7 +92,7 @@ if form.getvalue('domain'):
             with open(profileyaml, 'w') as yaml_file:
                 yaml_file.write(yaml.dump(yaml_parsed_profileyaml, default_flow_style=False))
             yaml_file.close()
-            print(('<p style="background-color:LightGray">CONFIGURATION SAVED FOR:  '+mydomain+'</p>'))
+            print(('<p style="background-color:LightGrey">CONFIGURATION SAVED FOR:  '+mydomain+'</p>'))
         else:
             print('ERROR : Invalid POST data')
     else:

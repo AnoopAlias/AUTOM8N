@@ -59,25 +59,25 @@ if form.getvalue('domain') and form.getvalue('backend'):
             profile_data_yaml = open(profile_config_file,'r')
             profile_data_yaml_parsed = yaml.safe_load(profile_data_yaml)
             profile_data_yaml.close()
-            print(('<p style="background-color:grey">CONFIGURE:  '+mydomain+'</p>'))
+            print(('<p style="background-color:LightGrey">CONFIGURE:  '+mydomain+'</p>'))
             print('<HR>')
             profile_branch_dict = profile_data_yaml_parsed[mybackend]
             backends_branch_dict = backend_data_yaml_parsed[mybackend]
             print('<form action="update.live.cgi" method="post">')
-            print('<p style="color:grey">Select backend version: </p>')
+            print('<p style="background-color:LightGrey">Select backend version: </p>')
             print('<select name="version">')
             for versions_defined in list(backends_branch_dict.keys()):
                 print(('<option value="'+versions_defined+'">'+versions_defined+'</option>'))
             print('</select>')
             print('<HR>')
-            print('<p style="background-color:grey">Select a configuration template: </p>')
+            print('<p style="background-color:LightGrey">Select a configuration template: </p>')
             print('<select name="pcode">')
             for profile_code in list(profile_branch_dict.keys()):
                 iter_profile_string = profile_branch_dict[profile_code]
                 print(('<option value="'+profile_code+'">'+iter_profile_string+'</option>'))
             print('</select>')
             print('<HR>')
-            print('<p style="background-color:grey">Enable/Disable Google PageSpeed Optimizations: </p>')
+            print('<p style="background-color:LightGrey">Enable/Disable Google PageSpeed Optimizations: </p>')
             print('<input type="radio" name="pagespeed" value="0" /> DISABLE')
             print('<input type="radio" name="pagespeed" value="1" /> ENABLE')
             print('<HR>')

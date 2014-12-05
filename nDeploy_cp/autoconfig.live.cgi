@@ -56,12 +56,12 @@ if form.getvalue('domain') and form.getvalue('custom'):
             backend_data_yaml = open(backend_config_file, 'r')
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
             backend_data_yaml.close()
-            print(('<p style="background-color:grey">CONFIGURE:  '+mydomain+'</p>'))
+            print(('<p style="background-color:LightGrey">CONFIGURE:  '+mydomain+'</p>'))
             print('<HR>')
             if customconf == "0":
                 print('<form action="autoconfig2.live.cgi" method="post">')
-                print(('<p style="color:grey">You are currently using '+backend_category+' as backend and '+ backend_version +' as version/type</p>'))
-                print('<p style="color:grey">Select a BACKEND from the drop down below to continue</p>')
+                print(('<p style="background-color:LightGrey">You are currently using '+backend_category+' as backend and '+ backend_version +' as version/type</p>'))
+                print('<p style="background-color:LightGrey">Select a BACKEND from the drop down below to continue</p>')
                 print('<HR>')
                 print('<select name="backend">')
                 for backends_defined in list(backend_data_yaml_parsed.keys()):
@@ -84,8 +84,8 @@ if form.getvalue('domain') and form.getvalue('custom'):
                 print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
                 print('</form>')
                 print('<HR>')
-                print('<p style="color:grey; background-color:yellow">(!) You can use FASTCGICACHE as the cache zone for use with fastcgi_cache directive</p>')
-                print('<p style="color:grey; background-color:yellow">(!) You can use PROXYCACHE as the cache zone for use with proxy_cache directive</p>')
+                print('<p style="background-color:LightGrey">(!) You can use FASTCGICACHE as the cache zone with fastcgi_cache directive</p>')
+                print('<p style="background-color:LightGrey">(!) You can use PROXYCACHE as the cache zone with proxy_cache directive</p>')
 
             else:
                 print('ERROR : Invalid POST data')
