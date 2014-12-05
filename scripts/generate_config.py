@@ -70,17 +70,20 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     return
 
 
-def railo_vhost_add_resin(domain_name, document_root, *domain_aname_list):
+def railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list):
     """Add a vhost to resin and restart railo-resin app server"""
     resin_conf_dir = "/var/resin/hosts/"
-    if not os.path.exists(document_root+"/../WEB-INF"):
-        os.mkdir(document_root+"/../WEB-INF", 0o770)
-    if not os.path.exists(document_root+"/../log"):
-        os.mkdir(document_root+"/../log", 0o770)
+    if not os.path.exists(document_root+"/WEB-INF"):
+        os.mkdir(document_root+"/WEB-INF", 0o770)
+    if not os.path.exists(document_root+"/log"):
+        os.mkdir(document_root+"/log", 0o770)
+    uid_user = pwd.getpwnam(user_name).pw_uid
     uid_nobody = pwd.getpwnam("nobody").pw_uid
     gid_nobody = grp.getgrnam("nobody").gr_gid
-    os.chown(document_root+"/../WEB-INF", uid_nobody, gid_nobody)
-    os.chown(document_root+"/../log", uid_nobody, gid_nobody)
+    os.chown(document_root+"/WEB-INF", uid_user, gid_nobody)
+    os.chown(document_root+"/log", uid_user, gid_nobody)
+    os.chmod(document_root+"/WEB-INF", 0o770)
+    os.chmod(document_root+"/log", 0o770)
     nsm = {None: "http://caucho.com/ns/resin"}
     mydict = { 'id': "/",'root-directory':document_root }
     page = etree.Element('host', nsmap=nsm)
@@ -270,7 +273,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
 		if proxytype == "railo_tomcat":
 		    railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
                 elif proxytype == "railo_resin":
-                    railo_vhost_add_resin(domain_name, document_root, *domain_aname_list)
+                    railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list)
         elif config_test_status == "1":
             if os.path.isfile(custom_config_file):
                 test_config_file = open(installation_path + "/conf/nginx.conf.test", 'r')
