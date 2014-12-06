@@ -52,4 +52,4 @@ if cpaneluser != cpanelnewuser:
     remove_php_fpm_pool(cpaneluser)
 subprocess.call("/usr/sbin/nginx -s reload", shell=True)
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
-print("1 nDeploy:postmodify:"+cpanelnewuser)
+print(("1 nDeploy:postmodify:"+cpanelnewuser))
