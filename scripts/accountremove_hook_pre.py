@@ -65,4 +65,4 @@ for domain_in_subdomains in sub_domains:
         os.remove(nginx_dir+domain_in_subdomains+"_SSL.include")
 remove_php_fpm_pool(cpaneluser)
 subprocess.call("/usr/sbin/nginx -s reload", shell=True)
-print(("1 nDeploy::remove::"+cpaneluser))
+print("1 nDeploy:remove:"+cpaneluser)
