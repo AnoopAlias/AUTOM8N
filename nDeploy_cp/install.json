@@ -1,7 +1,7 @@
 [
     {
        "order" : 11,
-       "name" : "nginX Deployer",
+       "name" : "P-a-a-S / Script Deploy",
        "type" : "group",
        "id" : "ndeploy_grp"
     },
