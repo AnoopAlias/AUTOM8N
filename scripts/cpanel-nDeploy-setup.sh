@@ -18,7 +18,7 @@ chkconfig nginx on
 chkconfig incrond on
 chkconfig ndeploy_backends on
 
-for CPANELUSER in `cat /etc/domainusers|cut -d: -f1`
+for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
 do
 	/opt/nDeploy/scripts/generate_config.py $CPANELUSER
 done
