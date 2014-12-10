@@ -353,8 +353,9 @@ def nginx_confgen(user_name, domain_name):
         sslcombinedcert = "/etc/nginx/ssl/" + domain_name + ".crt"
         subprocess.call("cat /dev/null > " + sslcombinedcert, shell=True)
         if sslcacertificatefile:
-            subprocess.call("cat " + sslcertificatefile + " " + sslcacertificatefile + " >> " + sslcombinedcert,
-                            shell=True)
+            subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
+            subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
+            subprocess.call("cat " + sslcacertificatefile + " >> " + sslcombinedcert, shell=True)
         else:
             subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
         nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)

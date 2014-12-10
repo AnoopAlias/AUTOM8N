@@ -39,7 +39,7 @@ def control_php_fpm(trigger):
         elif trigger == "stop":
             for path in list(php_backends_dict.values()):
                 php_fpm_pid = path+"/var/run/php-fpm.pid"
-                subprocess.call("kill -9 $(cat "+php_fpm_pid+")", shell=True)
+                subprocess.call("kill -QUIT $(cat "+php_fpm_pid+")", shell=True)
         else:
             return
 

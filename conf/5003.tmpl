@@ -48,7 +48,6 @@ location ~ \.php$ {
         fastcgi_index index.php;
 	#fastcgi_param  MAGE_RUN_CODE default; ## Store code is defined in administration > Configuration > Manage Stores
         #fastcgi_param  MAGE_RUN_TYPE store;
-	fastcgi_param  HTTPS $fastcgi_https;
         include fastcgi_params;
 }
 

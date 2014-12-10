@@ -43,7 +43,7 @@ listen = var/run/$pool.sock
 
 ; Set listen(2) backlog.
 ; Default Value: 128 (-1 on FreeBSD and OpenBSD)
-listen.backlog = 2048
+listen.backlog = 65535
 
 ; Set permissions for unix socket, if one is used. In Linux, read/write
 ; permissions must be set in order to allow connections from a web server. Many
