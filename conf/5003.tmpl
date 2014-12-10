@@ -48,7 +48,7 @@ location ~ \.php$ {
         fastcgi_index index.php;
 	#fastcgi_param  MAGE_RUN_CODE default; ## Store code is defined in administration > Configuration > Manage Stores
         #fastcgi_param  MAGE_RUN_TYPE store;
-        include fastcgi_params;
+        include /etc/nginx/fastcgi_params;
 }
 
 include /etc/nginx/conf.d/cpanel_services.conf;
