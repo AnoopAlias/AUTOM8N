@@ -5,6 +5,7 @@ import yaml
 import argparse
 import subprocess
 import os
+import signal
 
 
 __author__ = "Anoop P Alias"
@@ -39,7 +40,11 @@ def control_php_fpm(trigger):
         elif trigger == "stop":
             for path in list(php_backends_dict.values()):
                 php_fpm_pid = path+"/var/run/php-fpm.pid"
-                subprocess.call("kill -QUIT $(cat "+php_fpm_pid+")", shell=True)
+                if os.path.isfile(php_fpm_pid):
+                    with open(php_fpm_pid) as f:
+                        mypid = f.read()
+                    f.close()
+                    os.kill(int(mypid), signal.SIGQUIT)
         else:
             return
 

@@ -5,6 +5,7 @@ import yaml
 import argparse
 import subprocess
 import os
+import signal
 import sys
 import pwd
 import grp
@@ -141,13 +142,19 @@ def php_profile_set(user_name, phpversion, php_path):
     php_fpm_config = installation_path+"/conf/php-fpm.conf"
     php_fpm_bin = php_path + "/sbin/php-fpm"
     if os.path.isfile(phppool_file):
-        subprocess.call("kill -QUIT `cat " + php_path + "/var/run/php-fpm.pid`", shell=True)
-        subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+            with open(php_path + "/var/run/php-fpm.pid") as f:
+                mypid = f.read()
+            f.close()
+            os.kill(int(mypid), signal.SIGUSR2)
     else:
         sed_string='sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
-        subprocess.call("kill -QUIT `cat " + php_path + "/var/run/php-fpm.pid`", shell=True)
-        subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+            with open(php_path + "/var/run/php-fpm.pid") as f:
+                mypid = f.read()
+            f.close()
+            os.kill(int(mypid), signal.SIGUSR2)
     return
 
 
