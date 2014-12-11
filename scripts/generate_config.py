@@ -6,6 +6,7 @@ import argparse
 import subprocess
 import os
 import signal
+import time
 import sys
 import pwd
 import grp
@@ -147,6 +148,17 @@ def php_profile_set(user_name, phpversion, php_path):
                 mypid = f.read()
             f.close()
             os.kill(int(mypid), signal.SIGUSR2)
+        time.sleep(1)
+        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+            with open(php_path + "/var/run/php-fpm.pid") as f:
+                newpid = f.read()
+            f.close()
+            try:
+                os.kill(int(newpid), 0)
+            except OSError:
+                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+            else:
+                return True
     else:
         sed_string='sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
@@ -155,6 +167,17 @@ def php_profile_set(user_name, phpversion, php_path):
                 mypid = f.read()
             f.close()
             os.kill(int(mypid), signal.SIGUSR2)
+        time.sleep(1)
+        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+            with open(php_path + "/var/run/php-fpm.pid") as f:
+                newpid = f.read()
+            f.close()
+            try:
+                os.kill(int(newpid), 0)
+            except OSError:
+                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+            else:
+                return True
     return
 
 
