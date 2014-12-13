@@ -29,11 +29,27 @@ def remove_php_fpm_pool(user_name):
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         for php_path in list(php_backends_dict.values()):
             phppool_file = php_path + "/etc/fpm.d/" + user_name + ".conf"
+            php_fpm_bin = php_path + "/sbin/php-fpm"
+            php_fpm_config = installation_path+"/conf/php-fpm.conf"
             if os.path.isfile(phppool_file):
                 os.remove(phppool_file)
-                subprocess.call("kill -USR2 `cat " + php_path + "/var/run/php-fpm.pid`", shell=True)
+                if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+                    with open(php_path + "/var/run/php-fpm.pid") as f:
+                        mypid = f.read()
+                    f.close()
+                    os.kill(int(mypid), signal.SIGUSR2)
+                    time.sleep(1)
+                if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+                    with open(php_path + "/var/run/php-fpm.pid") as f:
+                        newpid = f.read()
+                    f.close()
+                    try:
+                        os.kill(int(newpid), 0)
+                    except OSError:
+                        subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                    else:
+                        return True
     return
-
 
 
 cpjson = json.load(sys.stdin)
