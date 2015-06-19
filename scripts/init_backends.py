@@ -29,7 +29,7 @@ def control_php_fpm(trigger):
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
             for path in list(php_backends_dict.values()):
                 php_fpm_bin = path+"/sbin/php-fpm"
-                php_fpm_conf_d = path+"/etc/fpm.d"
+                php_fpm_conf_d = path+"/etc/php-fpm.d"
                 if not os.path.exists(php_fpm_conf_d):
                     os.mkdir(php_fpm_conf_d)
                     t_file = installation_path+"/conf/php-fpm.pool.tmpl"

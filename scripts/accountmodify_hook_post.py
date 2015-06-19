@@ -30,7 +30,7 @@ def remove_php_fpm_pool(user_name):
     if "PHP" in backend_data_yaml_parsed:
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         for php_path in list(php_backends_dict.values()):
-            phppool_file = php_path + "/etc/fpm.d/" + user_name + ".conf"
+            phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
             php_fpm_bin = php_path + "/sbin/php-fpm"
             php_fpm_config = installation_path+"/conf/php-fpm.conf"
             if os.path.isfile(phppool_file):

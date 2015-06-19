@@ -139,7 +139,7 @@ def nginx_server_reload():
 
 def php_profile_set(user_name, phpversion, php_path):
     """Function to setup php-fpm pool for user and restart the master php-fpm"""
-    phppool_file = php_path + "/etc/fpm.d/" + user_name + ".conf"
+    phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
     php_fpm_config = installation_path+"/conf/php-fpm.conf"
     php_fpm_bin = php_path + "/sbin/php-fpm"
     if os.path.isfile(phppool_file):
