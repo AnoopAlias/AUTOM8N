@@ -9,29 +9,29 @@ sed -i "s/80/9999/" /etc/chkserv.d/httpd
 /usr/local/cpanel/libexec/tailwatchd --restart
 
 if [ -f /var/cpanel/templates/apache2_4/vhost.local ];then
-	sed -i "s/CustomLog/#CustomLog" /var/cpanel/templates/apache2_4/vhost.local
+	sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_4/vhost.local
 else
 	cp -p /var/cpanel/templates/apache2_4/vhost.default /var/cpanel/templates/apache2_4/vhost.local
-	sed -i "s/CustomLog/#CustomLog" /var/cpanel/templates/apache2_4/vhost.local
+	sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_4/vhost.local
 fi
 if [ -f /var/cpanel/templates/apache2_4/ssl_vhost.local ];then
-	sed -i "s/CustomLog/#CustomLog" /var/cpanel/templates/apache2_4/ssl_vhost.local
+	sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_4/ssl_vhost.local
 else
 	cp -p /var/cpanel/templates/apache2_4/ssl_vhost.default /var/cpanel/templates/apache2_4/ssl_vhost.local
-	sed -i "s/CustomLog/#CustomLog" /var/cpanel/templates/apache2_4/ssl_vhost.local
+	sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_4/ssl_vhost.local
 fi
 
 if [ -f /var/cpanel/templates/apache2_2/vhost.local ];then
-	sed -i "s/CustomLog/#CustomLog" /var/cpanel/templates/apache2_2/vhost.local
+	sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_2/vhost.local
 else
 	cp -p /var/cpanel/templates/apache2_2/vhost.default /var/cpanel/templates/apache2_2/vhost.local
-	sed -i "s/CustomLog/#CustomLog" /var/cpanel/templates/apache2_2/vhost.local
+	sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_2/vhost.local
 fi
 if [ -f /var/cpanel/templates/apache2_2/ssl_vhost.local ];then
-	sed -i "s/CustomLog/#CustomLog" /var/cpanel/templates/apache2_2/ssl_vhost.local
+	sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_2/ssl_vhost.local
 else
 	cp -p /var/cpanel/templates/apache2_2/ssl_vhost.default /var/cpanel/templates/apache2_2/ssl_vhost.local
-	sed -i "s/CustomLog/#CustomLog" /var/cpanel/templates/apache2_2/ssl_vhost.local
+	sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_2/ssl_vhost.local
 fi
 
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
