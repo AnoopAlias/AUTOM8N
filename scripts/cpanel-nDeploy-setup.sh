@@ -36,20 +36,33 @@ fi
 
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
 /scripts/rebuildhttpdconf
-/scripts/restartsrv http
-service nginx restart
-service incrond restart
-service ndeploy_backends restart
-chkconfig nginx on
-chkconfig incrond on
-chkconfig ndeploy_backends on
-
-for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
-do
-	/opt/nDeploy/scripts/generate_config.py $CPANELUSER
-done
-
-service nginx restart
+/scripts/restartsrv httpd
+osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
+if [ ${osversion} -le 6 ];then
+	service nginx restart
+	service incrond restart
+	service ndeploy_backends restart
+	chkconfig nginx on
+	chkconfig incrond on
+	chkconfig ndeploy_backends on
+	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
+	do
+		/opt/nDeploy/scripts/generate_config.py $CPANELUSER
+	done
+	service nginx restart
+else
+	systemctl restart nginx
+	systemctl restart incrond
+	systemctl restart ndeploy_backends
+	systemctl enable nginx
+	systemctl enable incrond
+	systemctl enable ndeploy_backends
+	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
+        do
+                /opt/nDeploy/scripts/generate_config.py $CPANELUSER
+        done
+	systemctl restart nginx
+fi
 
 }
 
@@ -68,14 +81,24 @@ sed -i "s/#CustomLog/CustomLog" /var/cpanel/templates/apache2_4/vhost.local
 sed -i "s/#CustomLog/CustomLog" /var/cpanel/templates/apache2_4/ssl_vhost.local
 
 echo -e '\e[93m Rebuilding Apache httpd backend configs.Apache will listen on default ports!  \e[0m'
-service nginx stop
-service incrond stop
-service ndeploy_backends stop
-chkconfig nginx off
-chkconfig incrond off
-chkconfig ndeploy_backends off
+osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
+if [ ${osversion} -le 6 ];then
+	service nginx stop
+	service incrond stop
+	service ndeploy_backends stop
+	chkconfig nginx off
+	chkconfig incrond off
+	chkconfig ndeploy_backends off
+else
+	systemctl stop nginx
+	systemctl stop incrond
+	systemctl stop ndeploy_backends
+	systemctl disable nginx
+	systemctl disable incrond
+	systemctl disable ndeploy_backends
+fi
 /scripts/rebuildhttpdconf
-/scripts/restartsrv http
+/scripts/restartsrv httpd
 
 }
 
