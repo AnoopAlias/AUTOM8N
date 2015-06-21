@@ -416,7 +416,7 @@ def nginx_confgen(user_name, domain_name):
         config_out.write(line)
     template_file.close()
     config_out.close()
-    nginx_server_reload()
+    #nginx_server_reload()
 
 
 # End Function defs
