@@ -1,7 +1,7 @@
 #
 %define nginx_home %{_localstatedir}/cache/nginx
-%define nginx_user nginx
-%define nginx_group nginx
+%define nginx_user nobody
+%define nginx_group nobody
 %define nginx_loggroup adm
 
 # distribution specific definitions
@@ -71,6 +71,7 @@ Source10: nginx.suse.logrotate
 Source11: testcookie-nginx-module
 Source12: conf.d
 Source13: testcookie
+Source14: fastcgi_params
 
 License: 2-clause BSD-like license
 
@@ -210,11 +211,12 @@ cd $RPM_BUILD_DIR/nginx-%{version}
 %{__mkdir} -p $RPM_BUILD_ROOT%{_localstatedir}/cache/nginx
 
 %{__mkdir} -p $RPM_BUILD_ROOT%{_sysconfdir}/nginx/conf.d
+%{__mkdir} -p $RPM_BUILD_ROOT%{_sysconfdir}/nginx/ssl
 %{__mkdir} -p $RPM_BUILD_ROOT%{_sysconfdir}/nginx/sites-enabled
-%{__mkdir} -p $RPM_BUILD_ROOT%{_sysconfdir}/nginx/sites-available
 
 %{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/nginx.conf
 %{__install} -m 644 -p %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/nginx.conf
+%{__install} -m 644 -p %{SOURCE14} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/fastcgi_params
 
 cp %{SOURCE12} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/ -Rv
 cp %{SOURCE13} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/ -Rv
@@ -268,7 +270,6 @@ cp %{SOURCE13} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/ -Rv
 %dir %{_sysconfdir}/nginx/conf.d
 %dir %{_sysconfdir}/nginx/testcookie
 %dir %{_sysconfdir}/nginx/testcookie/testcookie_html
-%dir %{_sysconfdir}/nginx/sites-available
 %dir %{_sysconfdir}/nginx/sites-enabled
 
 %config(noreplace) %{_sysconfdir}/nginx/nginx.conf
@@ -282,6 +283,7 @@ cp %{SOURCE13} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/ -Rv
 %{_sysconfdir}/nginx/testcookie/usecases.txt
 %{_sysconfdir}/nginx/testcookie/testcookie_example.conf
 %{_sysconfdir}/nginx/testcookie/update_whitelist.pl
+%{_sysconfdir}/nginx/testcookie/facebook_ips.sh
 %{_sysconfdir}/nginx/testcookie/whitelist_ips.custom.txt
 %{_sysconfdir}/nginx/testcookie/testcookie_html/cookies.html
 %{_sysconfdir}/nginx/testcookie/testcookie_html/aes.js

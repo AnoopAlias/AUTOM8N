@@ -8,6 +8,7 @@ our @list;
 our @urls = (
 	'http://www.iplists.com/google.txt',
 	'http://www.iplists.com/inktomi.txt',
+	'facebook_ips.txt',
 	'whitelist_ips.custom.txt'
 );
 
