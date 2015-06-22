@@ -1,14 +1,12 @@
 server {
+	listen CPANELIP:80;
+	#CPIPVSIX:80;
+	disable_symlinks if_not_owner from=DOCUMENTROOT;
 
-  listen    CPANELIP:80;
-  #CPIPVSIX:80;
+	# ServerNames
+	server_name  DOMAINLIST;
+	access_log /usr/local/apache/domlogs/DOMAINNAME main;
+	access_log /usr/local/apache/domlogs/DOMAINNAME-bytes_log bytes_log;
 
-  # ServerNames
-  server_name  DOMAINLIST;
-  access_log /usr/local/apache/domlogs/DOMAINNAME main;
-  access_log /usr/local/apache/domlogs/DOMAINNAME-bytes_log bytes_log;
-   
-
-  include /etc/nginx/sites-enabled/DOMAINNAME.include;
-
- }
+	include /etc/nginx/sites-enabled/DOMAINNAME.include;
+}

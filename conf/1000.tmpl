@@ -1,23 +1,33 @@
 #PAGESPEED_NOT_ENABLED;
 #Proxy Pass to a backend webserver listening on port 9999
+
+include /etc/nginx/testcookie/testcookie_aes.conf;
+
+# proxy_redirect off;
+
 location / {
+	testcookie on;
+	
+	set $loggable 1;
+	limit_req zone=rate_10 burst=25;
+	proxy_pass http://PROXYLOCATION;
+}
+location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|zip|tgz|gz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|bmp|rtf|swf)$ {
+	root    DOCUMENTROOT;
+	try_files $uri =404;
+	
+	expires 1d;
+	
+	# access_log /usr/local/apache/domlogs/DOMAINNAME main;
+	add_header X-Server "by nginx";
+	error_page 404 = @fallback;
+}
+location @fallback {
+	testcookie on;
+	
+	set $loggable 1;
+	limit_req zone=rate_10 burst=25;
+	proxy_pass http://PROXYLOCATION;
+}
 
- 	proxy_send_timeout   90;
-   	proxy_read_timeout   90;
-
-   	proxy_buffer_size    32k;
-   	proxy_buffers     16 32k;
-   	proxy_busy_buffers_size 64k;
-   	proxy_temp_file_write_size 64k;
-
-   	proxy_connect_timeout 30s;
-
-   	proxy_pass   http://PROXYLOCATION;
-   	proxy_set_header   Host   $host;
-   	proxy_set_header   X-Real-IP  $remote_addr;
-   	proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header   X-Forwarded-Proto $scheme;
-        proxy_redirect     off;
-  }
-
-include /etc/nginx/conf.d/cpanel_services.conf; 
+# include /etc/nginx/conf.d/cpanel_services.conf; 

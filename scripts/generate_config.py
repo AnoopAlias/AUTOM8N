@@ -10,6 +10,7 @@ import time
 import sys
 import pwd
 import grp
+import shutil
 from lxml import etree
 
 
@@ -38,7 +39,7 @@ def cpanel_nginx_awstats_fix(awstats_custom_conf, cpaneluser):
     ExtraTrackedRowsLimit=100000
     """
     with open(awstats_custom_conf, 'w') as f:
-		f.write(file_content)
+        f.write(file_content)
     f.close()
     subprocess.call("chown "+cpaneluser+":"+cpaneluser+" "+awstats_custom_conf, shell=True)
     return
@@ -52,21 +53,21 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     s2=''
     for domain in domain_aname_list:
         s2=s2+'<Alias>'+domain+'</Alias>'
-	s3='</Host>'
-	if s2:
-	    xmlstring = s1+s2+s3
-	else:
-	    xmlstring = s1+s3
+    s3='</Host>'
+    if s2:
+        xmlstring = s1+s2+s3
+    else:
+        xmlstring = s1+s3
             
     new_xml_element=etree.fromstring(xmlstring)
     xml_data_stream = etree.parse(tomcat_conf)
     xml_root = xml_data_stream.getroot()
     for node1 in xml_root.iter('Service'):
-	for node2 in node1.iter('Engine'):
+        for node2 in node1.iter('Engine'):
             for node3 in node2.iter('Host'):
                 if domain_name in list(node3.attrib.values()):
                     node2.remove(node3)
-	    node2.append(new_xml_element)
+        node2.append(new_xml_element)
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
     subprocess.call('/opt/railo/railo_ctl restart', shell=True)
     return
@@ -285,7 +286,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 profile_template_file.close()
                 profile_config_out.close()
             else:
-		proxytype = yaml_parsed_profileyaml.get('backend_version')
+                proxytype = yaml_parsed_profileyaml.get('backend_version')
                 proxy_port = str(yaml_parsed_profileyaml.get('backend_path'))
                 pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
                 if pagespeed_status == "0":
@@ -297,17 +298,17 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 profile_config_out = open(include_file, 'w')
                 for line in profile_template_file:
                     line = line.replace('CPANELIP', cpanelip)
-		    line = line.replace('DOMAINNAME', domain_name)
+                    line = line.replace('DOMAINNAME', domain_name)
                     line = line.replace('PROXYLOCATION', proxy_path)
                     line = line.replace('DOCUMENTROOT', document_root)
                     line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
                     profile_config_out.write(line)
                 profile_template_file.close()
                 profile_config_out.close()
-		if proxytype == "railo_tomcat":
-		    railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
-                elif proxytype == "railo_resin":
-                    railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list)
+        if proxytype == "railo_tomcat":
+            railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
+        elif proxytype == "railo_resin":
+            railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list)
         elif config_test_status == "1":
             if os.path.isfile(custom_config_file):
                 test_config_file = open(installation_path + "/conf/nginx.conf.test", 'r')
@@ -362,21 +363,22 @@ def nginx_confgen(user_name, domain_name):
     awstats_dir=domain_home+"/tmp/awstats"
     awstats_custom_conf=domain_home+"/tmp/awstats/awstats.conf.include"
     if os.path.exists(awstats_dir):
-    	if not os.path.isfile(awstats_custom_conf):
-		cpanel_nginx_awstats_fix(awstats_custom_conf, user_name)
+        if not os.path.isfile(awstats_custom_conf):
+            cpanel_nginx_awstats_fix(awstats_custom_conf, user_name)
     document_root = yaml_parsed_cpaneldomain.get('documentroot')
     domain_sname = yaml_parsed_cpaneldomain.get('servername')
     domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
     domain_aname_list = domain_aname.split(' ')
     domain_list = domain_sname + " " + domain_aname
     if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
-	if yaml_parsed_cpaneldomain.get('ipv6'):
-        	for ipv6_addr in list(yaml_parsed_cpaneldomain.get('ipv6').keys()):
-            		cpanel_ipv6 = "listen [" + ipv6_addr + "]"
-	else:
-		cpanel_ipv6 = "#CPIPVSIX"
+        if yaml_parsed_cpaneldomain.get('ipv6'):
+            for ipv6_addr in list(yaml_parsed_cpaneldomain.get('ipv6').keys()):
+                cpanel_ipv6 = "listen [" + ipv6_addr + "]"
+        else:
+            cpanel_ipv6 = "#CPIPVSIX"
     else:
         cpanel_ipv6 = "#CPIPVSIX"
+
     if os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
         cpdomainyaml_ssl = "/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"
         cpaneldomain_ssl_data_stream = open(cpdomainyaml_ssl, 'r')
@@ -392,7 +394,12 @@ def nginx_confgen(user_name, domain_name):
             subprocess.call("cat " + sslcacertificatefile + " >> " + sslcombinedcert, shell=True)
         else:
             subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
-        nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
+            
+        if os.path.isfile(installation_path+"/conf/custom/"+domain_name+"_SSL"):
+            shutil.copyfile(installation_path+"/conf/custom/"+domain_name+"_SSL", "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include")
+        else:
+            nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
+        
         template_file = open(installation_path + "/conf/server_ssl.tmpl", 'r')
         config_out = open("/etc/nginx/sites-enabled/" + domain_name + "_SSL.conf", 'w')
         for line in template_file:
@@ -400,12 +407,18 @@ def nginx_confgen(user_name, domain_name):
             line = line.replace('DOMAINLIST', domain_list)
             line = line.replace('DOMAINNAME', domain_sname)
             line = line.replace('#CPIPVSIX', cpanel_ipv6)
+            line = line.replace('DOCUMENTROOT', document_root)
             line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
             line = line.replace('CPANELSSLCRT', sslcombinedcert)
             config_out.write(line)
         template_file.close()
         config_out.close()
-    nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, *domain_aname_list)
+
+    if os.path.isfile(installation_path+"/conf/custom/"+domain_name):
+        shutil.copyfile(installation_path+"/conf/custom/"+domain_name, "/etc/nginx/sites-enabled/" + domain_name + ".include")
+    else:
+        nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, *domain_aname_list)
+    
     template_file = open(installation_path + "/conf/server.tmpl", 'r')
     config_out = open("/etc/nginx/sites-enabled/" + domain_name + ".conf", 'w')
     for line in template_file:
@@ -413,6 +426,7 @@ def nginx_confgen(user_name, domain_name):
         line = line.replace('DOMAINLIST', domain_list)
         line = line.replace('DOMAINNAME', domain_sname)
         line = line.replace('#CPIPVSIX', cpanel_ipv6)
+        line = line.replace('DOCUMENTROOT', document_root)
         config_out.write(line)
     template_file.close()
     config_out.close()

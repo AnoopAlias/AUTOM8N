@@ -1,0 +1,5 @@
+# cat /etc/httpd/conf/includes/post_virtualhost_global.conf
+
+SetEnvIf X-Forwarded-Proto https HTTPS=on
+
+echo "SetEnvIf X-Forwarded-Proto https HTTPS=on" >> /etc/httpd/conf/includes/post_virtualhost_global.conf
