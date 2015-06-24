@@ -366,8 +366,15 @@ def nginx_confgen(user_name, domain_name):
 		cpanel_nginx_awstats_fix(awstats_custom_conf, user_name)
     document_root = yaml_parsed_cpaneldomain.get('documentroot')
     domain_sname = yaml_parsed_cpaneldomain.get('servername')
-    domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
-    domain_aname_list = domain_aname.split(' ')
+    if domain_sname.startswith("*"):
+        domain_aname=domain_sname
+        domain_sname="_wildcard_."+domain_sname.replace('*.','')
+    else:
+        domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
+    if domain_aname:
+        domain_aname_list = domain_aname.split(' ')
+    else:
+        domain_aname_list = []
     domain_list = domain_sname + " " + domain_aname
     if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
 	if yaml_parsed_cpaneldomain.get('ipv6'):
@@ -394,7 +401,7 @@ def nginx_confgen(user_name, domain_name):
             subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
         nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
         template_file = open(installation_path + "/conf/server_ssl.tmpl", 'r')
-        config_out = open("/etc/nginx/sites-enabled/" + domain_name + "_SSL.conf", 'w')
+        config_out = open("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.conf", 'w')
         for line in template_file:
             line = line.replace('CPANELIP', cpanel_ipv4)
             line = line.replace('DOMAINLIST', domain_list)
@@ -407,7 +414,7 @@ def nginx_confgen(user_name, domain_name):
         config_out.close()
     nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, *domain_aname_list)
     template_file = open(installation_path + "/conf/server.tmpl", 'r')
-    config_out = open("/etc/nginx/sites-enabled/" + domain_name + ".conf", 'w')
+    config_out = open("/etc/nginx/sites-enabled/" + domain_sname + ".conf", 'w')
     for line in template_file:
         line = line.replace('CPANELIP', cpanel_ipv4)
         line = line.replace('DOMAINLIST', domain_list)
