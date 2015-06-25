@@ -78,7 +78,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('</select>')
             print('<HR>')
             print('<p style="background-color:LightGrey">Enable/Disable Google PageSpeed Optimizations: </p>')
-            print('<input type="radio" name="pagespeed" value="0" /> DISABLE')
+            print('<input type="radio" name="pagespeed" value="0" checked/> DISABLE')
             print('<input type="radio" name="pagespeed" value="1" /> ENABLE')
             print('<HR>')
             print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
