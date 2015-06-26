@@ -3,4 +3,4 @@ cpanel nginx plugin that lets you deploy PHP/Ruby/Python/NodeJS/ColdFusion and m
 
 
 # DOC
-https://github.com/AnoopAlias/nDeploy/wiki
+https://support.sysally.net/projects/ndeploy/wiki
