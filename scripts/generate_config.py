@@ -230,6 +230,24 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                     profile_config_out.write(line)
                 profile_template_file.close()
                 profile_config_out.close()
+            elif profile_category == "HHVM_NOBODY":
+                hhvm_nobody_socket = yaml_parsed_profileyaml.get('backend_path')
+                pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+		if pagespeed_status == "0":
+		    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+		else:
+		    pagespeed_include = pagespeed_include_location
+		profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
+                profile_config_out = open(include_file, 'w')
+                for line in profile_template_file:
+                    line = line.replace('CPANELIP', cpanelip)
+                    line = line.replace('DOMAINNAME', domain_name)
+                    line = line.replace('DOCUMENTROOT', document_root)
+                    line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
+                    line = line.replace('SOCKETFILE', hhvm_nobody_socket)
+                    profile_config_out.write(line)
+                profile_template_file.close()
+                profile_config_out.close()
             elif profile_category == "RUBY":
                 ruby_path = yaml_parsed_profileyaml.get('backend_path')
                 pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
