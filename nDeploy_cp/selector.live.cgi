@@ -39,7 +39,7 @@ print('<head>')
 print('<title>nDeploy</title>')
 print('</head>')
 print('<body>')
-print('<H2 style="color:grey"><a href="ndeploy.live.cgi"><img border="0" src="nDeploy.png" alt="nDeploy"></a>nDeploy</H2>')
+print('<a href="ndeploy.live.cgi"><img border="0" src="nDeploy.png" alt="nDeploy"></a>')
 print('<HR>')
 if form.getvalue('domain'):
     mydomain = form.getvalue('domain')
