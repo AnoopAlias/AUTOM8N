@@ -305,10 +305,10 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                     profile_config_out.write(line)
                 profile_template_file.close()
                 profile_config_out.close()
-        if proxytype == "railo_tomcat":
-            railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
-        elif proxytype == "railo_resin":
-            railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list)
+                if proxytype == "railo_tomcat":
+                    railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
+                elif proxytype == "railo_resin":
+                    railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list)
         elif config_test_status == "1":
             if os.path.isfile(custom_config_file):
                 test_config_file = open(installation_path + "/conf/nginx.conf.test", 'r')

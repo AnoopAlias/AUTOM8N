@@ -1,5 +1,7 @@
 #!/bin/sh
 
+yum install python-argparse PyYAML python-lxml incron -y
+
 touch /opt/nDeploy/conf/backends.yaml
 /opt/nDeploy/scripts/update_backend.py PROXY apache 8000
 touch /opt/nDeploy/conf/profiles.yaml
@@ -38,6 +40,8 @@ fi
 
 ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/x3/
 ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/paper_lantern/
+cp /opt/nDeploy/ndeploy_backends.init /etc/init.d/ndeploy_backends && chmod +x /etc/init.d/ndeploy_backends
+cp /opt/nDeploy/ndeploy.incron /etc/incron.d/nDeploy && chmod +x /etc/init.d/ndeploy_backends
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp --theme x3
 for CPANELUSER in `cat /etc/domainusers|cut -d: -f1`; do

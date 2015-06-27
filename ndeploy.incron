@@ -1,0 +1,2 @@
+/var/cpanel/users IN_MODIFY,IN_CREATE /opt/nDeploy/scripts/event_trigger.sh $# 0
+/opt/nDeploy/domain-data IN_MODIFY,IN_CREATE /opt/nDeploy/scripts/event_trigger.sh $# 1
