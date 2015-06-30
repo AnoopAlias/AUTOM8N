@@ -40,17 +40,19 @@ print('<head>')
 print('<title>nDeploy</title>')
 print('</head>')
 print('<body>')
-print('<a href="apache_fpm.live.cgi"><img border="0" src="php_fpm.png" alt="nDeploy"></a>')
+print('<a href="apache_fpm.live.cgi"><img border="0" src="php-fpm.png" alt="nDeploy - Apache php-fpm"></a>')
 print('<HR>')
 if form.getvalue('phpversion'):
-    if os.file.exist(installation_path+"/user-data/"+cpaneluser):
+    if os.path.isfile(installation_path+"/user-data/"+cpaneluser):
         userdatayaml = installation_path+"/user-data/"+cpaneluser
         userdatayaml_data_stream = open(userdatayaml,'r')
         yaml_parsed_userdata = yaml.safe_load(userdatayaml_data_stream)
         phpversion = form.getvalue('phpversion')
         yaml_parsed_userdata['PHP'] = phpversion
-        userdatayaml_data_stream.write(yaml.dump(yaml_parsed_userdata, default_flow_style=False))
         userdatayaml_data_stream.close()
+        with open(userdatayaml, 'w') as yaml_file:
+            yaml_file.write(yaml.dump(yaml_parsed_userdata, default_flow_style=False))
+        yaml_file.close()
         print('Apache will now use PHP-FPM version: '+ phpversion)
     else:
         print('ERROR : cannot access userdata')

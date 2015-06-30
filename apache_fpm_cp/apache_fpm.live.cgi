@@ -39,13 +39,13 @@ print('<head>')
 print('<title>nDeploy</title>')
 print('</head>')
 print('<body>')
-print('<a href="apache_fpm.live.cgi"><img border="0" src="php_fpm.png" alt="nDeploy"></a>')
+print('<a href="apache_fpm.live.cgi"><img border="0" src="php-fpm.png" alt="nDeploy - Apache php-fpm"></a>')
 print('<HR>')
 if os.path.isfile(backend_config_file):
     backend_data_yaml = open(backend_config_file, 'r')
     backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     backend_data_yaml.close()
-    if "PHP" in backend_data_yaml_parsed and os.file.exist(installation_path+"/user-data/"+cpaneluser):
+    if "PHP" in backend_data_yaml_parsed and os.path.isfile(installation_path+"/user-data/"+cpaneluser):
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         userdatayaml = installation_path+"/user-data/"+cpaneluser
         userdatayaml_data_stream = open(userdatayaml,'r')
@@ -55,8 +55,9 @@ if os.path.isfile(backend_config_file):
         print('Active PHP-FPM backend: '+myversion)
         print('<HR>')
         print('<form action="save_phpversion.live.cgi" method="post">')
+        print('Select new PHP version')
         print('<select name="phpversion">')
-        for versions_defined in list(backends_branch_dict.keys()):
+        for versions_defined in list(php_backends_dict.keys()):
             print(('<option value="'+versions_defined+'">'+versions_defined+'</option>'))
         print('</select>')
         print('<HR>')
@@ -67,5 +68,7 @@ if os.path.isfile(backend_config_file):
         print('<br>')
 else:
     print('ERROR: Unable to access backend config file')
+print('<HR>')
+print('<p style="background-color:LightGrey">(!) click on the php-fpm icon above to restart the configuration process anytime</p>')
 print('</body>')
 print('</html>')
