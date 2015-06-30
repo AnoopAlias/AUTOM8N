@@ -35,6 +35,7 @@ if cpanelnewuser != cpaneluser:
     subprocess.call("touch "+installation_path+"/lock/todel_"+cpaneluser, shell=True)
     fhandle = open(installation_path+"/lock/todel_"+cpaneluser, 'a')
     fhandle.write(installation_path+"/domain-data/"+main_domain+"\n")
+    fhandle.write(installation_path+"/user-data/"+cpaneluser+"\n")
     fhandle.write(nginx_dir+main_domain+".conf\n")
     fhandle.write(nginx_dir+main_domain+".include\n")
     subprocess.call("rm -rf /var/resin/hosts/"+main_domain, shell=True)
