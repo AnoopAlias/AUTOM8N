@@ -28,7 +28,6 @@ class PhpFpmConfig:
                 userdatayaml_data_stream.close()
                 myversion = yaml_parsed_userdata.get('PHP')
                 if os.path.islink(installation_path+"/sockets/"+self.username+".sock"):
-                    print('test')
                     os.remove(installation_path+"/sockets/"+self.username+".sock")
                 backend_config_file = installation_path+"/conf/backends.yaml"
                 backend_data_yaml = open(backend_config_file, 'r')
