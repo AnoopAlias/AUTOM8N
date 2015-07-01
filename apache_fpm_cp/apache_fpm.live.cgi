@@ -45,7 +45,7 @@ if os.path.isfile(backend_config_file):
     backend_data_yaml = open(backend_config_file, 'r')
     backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     backend_data_yaml.close()
-    if "PHP" in backend_data_yaml_parsed and os.path.isfile(installation_path+"/user-data/"+cpaneluser):
+    if "PHP" in backend_data_yaml_parsed and os.path.isfile(installation_path+"/user-data/"+cpaneluser) and os.path.isfile(installation_path+"/conf/user_data.yaml.tmpl"):
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         userdatayaml = installation_path+"/user-data/"+cpaneluser
         userdatayaml_data_stream = open(userdatayaml,'r')
