@@ -3,23 +3,25 @@
 
 function enable {
 
-myversion=$(httpd -v|grep "Server version:"|awk '{print $3}'|awk -F'/' '{print $2}')
-testresult=$(echo "$myversion > 2.4.10"|bc)
-if [ $testresult -ne 1 ];then
-    echo "Apache httpd version >= 2.4.10 required for this setup"
+minorver=$(httpd -v|grep "Server version:"|awk '{print $3}'|awk -F'/' '{print $2}'|awk -F'.' '{print $2}')
+patchlevel=$(httpd -v|grep "Server version:"|awk '{print $3}'|awk -F'/' '{print $2}'|awk -F'.' '{print $3}')
+
+if [ $minorver -lt 4 -o $patchlevel -lt 10 ];then
+    echo -e "Apache httpd version >= \e[93m 2.4.10 \e[0m required for this setup"
     echo "Please recompile Apache httpd using the EasyApache cPanel script"
     exit 1
 else
-    if [ ! /usr/local/apache/bin/apachectl -l|grep mod_proxy_fcgi ];then
-
+    /usr/local/apache/bin/apachectl -l|grep mod_proxy_fcgi
+    if [ $? -ne 0 ];then
         if [ -f /var/cpanel/easy/apache/rawopts/Apache2_4 ];then 
             grep 'enable-proxy-fcgi=static' /var/cpanel/easy/apache/rawopts/Apache2_4 || echo '--enable-proxy-fcgi=static' >> /var/cpanel/easy/apache/rawopts/Apache2_4
         else
             echo '--enable-proxy-fcgi=static' >> /var/cpanel/easy/apache/rawopts/Apache2_4
         fi
-        echo "Apache was not compiled with mod_proxy_fcgi"
-        echo "I have added the option to EasyApache . Please recompile Apache using EasyApache"
+        echo -e "Apache was \e[93m not \e[0m compiled with \e[93m mod_proxy_fcgi \e[0m"
+        echo "I have added this option to EasyApache . Please recompile Apache using EasyApache"
         echo "Rerun this script once EasyApache is complete"
+        echo -e "Select \e[93m MPM event \e[0m for better apache performance"
     else
         if [ -f /var/cpanel/templates/apache2_4/vhost.local ];then
             sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/vhost.local
