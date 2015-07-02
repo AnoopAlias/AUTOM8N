@@ -38,8 +38,8 @@ fi
 if [ ! -d /opt/nDeploy/user-data ] ; then
 	mkdir /opt/nDeploy/user-data
 fi
-if [ ! -d /opt/nDeploy/sockets ] ; then
-	mkdir /opt/nDeploy/sockets
+if [ ! -d /var/run/fpmsockets ] ; then
+	mkdir /var/run/fpmsockets
 fi
 ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/x3/
 ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/paper_lantern/

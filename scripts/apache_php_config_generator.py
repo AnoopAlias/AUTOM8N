@@ -27,8 +27,6 @@ class PhpFpmConfig:
                 yaml_parsed_userdata = yaml.safe_load(userdatayaml_data_stream)
                 userdatayaml_data_stream.close()
                 myversion = yaml_parsed_userdata.get('PHP')
-                if os.path.islink(installation_path+"/sockets/"+self.username+".sock"):
-                    os.remove(installation_path+"/sockets/"+self.username+".sock")
                 backend_config_file = installation_path+"/conf/backends.yaml"
                 backend_data_yaml = open(backend_config_file, 'r')
                 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
@@ -38,11 +36,11 @@ class PhpFpmConfig:
                     php_path = php_backends_dict.get(myversion)
                     php_profile_set(self.username, myversion, php_path)
                     path_to_socket = php_path + "/var/run/" + self.username + ".sock"
-                    if os.path.isfile(installation_path+"/sockets/"+self.username+".sock"):
-                        os.remove(installation_path+"/sockets/"+self.username+".sock")
-                        os.symlink(path_to_socket, installation_path+"/sockets/"+self.username+".sock")
+                    if os.path.islink("/var/run/fpmsockets/"+self.username+".sock"):
+                        os.remove("/var/run/fpmsockets/"+self.username+".sock")
+                        os.symlink(path_to_socket, "/var/run/fpmsockets/"+self.username+".sock")
                     else:
-                        os.symlink(path_to_socket, installation_path+"/sockets/"+self.username+".sock")
+                        os.symlink(path_to_socket, "/var/run/fpmsockets/"+self.username+".sock")
                 else:
                     print("ERROR:: PHP Backends missing")
             else:
