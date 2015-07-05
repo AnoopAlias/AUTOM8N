@@ -6,7 +6,7 @@ else
 	CPANELUSER=$(echo $1)
 fi
 
-if [[ $CPANELUSER == *.lock || $CPANELUSER == .* ]];then
+if [[ $CPANELUSER == root || $CPANELUSER == *.lock || $CPANELUSER == .* ]];then
 	exit 0
 else
 	(
