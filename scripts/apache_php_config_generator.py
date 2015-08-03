@@ -36,11 +36,11 @@ class PhpFpmConfig:
                     php_path = php_backends_dict.get(myversion)
                     php_profile_set(self.username, myversion, php_path)
                     path_to_socket = php_path + "/var/run/" + self.username + ".sock"
-                    if os.path.islink("/var/run/fpmsockets/"+self.username+".sock"):
-                        os.remove("/var/run/fpmsockets/"+self.username+".sock")
-                        os.symlink(path_to_socket, "/var/run/fpmsockets/"+self.username+".sock")
+                    if os.path.islink("/opt/fpmsockets/"+self.username+".sock"):
+                        os.remove("/opt/fpmsockets/"+self.username+".sock")
+                        os.symlink(path_to_socket, "/opt/fpmsockets/"+self.username+".sock")
                     else:
-                        os.symlink(path_to_socket, "/var/run/fpmsockets/"+self.username+".sock")
+                        os.symlink(path_to_socket, "/opt/fpmsockets/"+self.username+".sock")
                 else:
                     print("ERROR:: PHP Backends missing")
             else:
