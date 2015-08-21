@@ -44,22 +44,33 @@ print('<head>')
 print('<title>nDeploy</title>')
 print('</head>')
 print('<body>')
-print('<H2 style="color:grey"><a href="ndeploy.live.cgi"><img border="0" src="nDeploy.png" alt="nDeploy"></a>nDeploy</H2>')
+print('<a href="ndeploy.live.cgi"><img border="0" src="nDeploy.png" alt="nDeploy"></a>')
 print('<HR>')
 print('<form action="selector.live.cgi" method="post">')
 print('<select name="domain" size="5">')
-print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
-if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
-    print(('<option value="'+main_domain+'_SSL">'+main_domain+'(SSL)</option>'))
+if main_domain.startswith('*.'):
+    print(('<option value="_wildcard_.'+main_domain.replace('*.','')+'">'+main_domain+'</option>'))
+    if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
+        print(('<option value=_wildcard_."'+main_domain.replace('*.','')+'_SSL">'+main_domain+'(SSL)</option>'))
+else:
+    print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
+    if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
+        print(('<option value="'+main_domain+'_SSL">'+main_domain+'(SSL)</option>'))
+
 for domain_in_subdomains in sub_domains:
-    print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
-    if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
-        print(('<option value="'+domain_in_subdomains+'_SSL">'+domain_in_subdomains+'(SSL)</option>'))
+    if domain_in_subdomains.startswith('*.'):
+        print(('<option value="_wildcard_.'+domain_in_subdomains.replace('*.','')+'">'+domain_in_subdomains+'</option>'))
+        if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
+            print(('<option value=_wildcard_."'+domain_in_subdomains.replace('*.','')+'_SSL">'+domain_in_subdomains+'(SSL)</option>'))
+    else:
+        print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
+        if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
+            print(('<option value="'+domain_in_subdomains+'_SSL">'+domain_in_subdomains+'(SSL)</option>'))
 print('</select>')
 print('<HR>')
 print('<input type="submit" value="CONFIGURE">')
 print('</form>')
 print('<p style="background-color:LightGrey">(!) For Addon domain select the corresponding subdomain</p>')
-print('<p style="background-color:LightGrey">(!) click on the icon above to restart the configuration process anytime</p>')
+print('<p style="background-color:LightGrey">(!) click on the nginx icon above to restart the configuration process anytime</p>')
 print('</body>')
 print('</html>')

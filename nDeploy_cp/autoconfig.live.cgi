@@ -40,7 +40,7 @@ print('<head>')
 print('<title>nDeploy</title>')
 print('</head>')
 print('<body>')
-print('<H2 style="color:grey"><a href="ndeploy.live.cgi"><img border="0" src="nDeploy.png" alt="nDeploy"></a>nDeploy</H2>')
+print('<a href="ndeploy.live.cgi"><img border="0" src="nDeploy.png" alt="nDeploy"></a>')
 print('<HR>')
 if form.getvalue('domain') and form.getvalue('custom'):
     mydomain = form.getvalue('domain')
@@ -73,7 +73,7 @@ if form.getvalue('domain') and form.getvalue('custom'):
                 print('</form>')
             elif customconf == "1":
                 print('<form action="update.live.cgi" method="post">')
-                print('<textarea name="textcontent" cols="60" rows="10">')
+                print('<textarea name="textcontent" cols="120" rows="50">')
                 with open('/etc/nginx/sites-enabled/'+mydomain+'.include', 'r') as content_file:
                     content = content_file.read()
                 content_file.close()

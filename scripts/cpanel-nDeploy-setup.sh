@@ -34,6 +34,7 @@ function enable {
 		sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_2/ssl_vhost.local
 	fi
 	
+	echo "SetEnvIf X-Forwarded-Proto https HTTPS=on" >> /usr/local/apache/conf/includes/pre_virtualhost_global.conf
 	
 	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do
 		/opt/nDeploy/scripts/generate_config.py $CPANELUSER
@@ -76,7 +77,9 @@ function disable {
 	sed -i "s/#CustomLog/CustomLog/" /var/cpanel/templates/apache2_2/ssl_vhost.local
 	sed -i "s/#CustomLog/CustomLog/" /var/cpanel/templates/apache2_4/vhost.local
 	sed -i "s/#CustomLog/CustomLog/" /var/cpanel/templates/apache2_4/ssl_vhost.local
-
+	
+	sed -i '/SetEnvIf X-Forwarded-Proto https HTTPS=on/d' /usr/local/apache/conf/includes/pre_virtualhost_global.conf
+	
 	echo -e '\e[93m Rebuilding Apache httpd backend configs.Apache will listen on default ports!  \e[0m'
 	
 	/scripts/rebuildhttpdconf

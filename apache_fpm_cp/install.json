@@ -6,12 +6,12 @@
        "id" : "ndeploy_grp"
     },
     {
-       "icon" : "nDeploy.png",
+       "icon" : "php-fpm.png",
        "group_id" : "ndeploy_grp",
-       "order" : 1,
-       "name" : "nginX",
+       "order" : 2,
+       "name" : "Apache php-fpm",
        "type" : "link",
-       "id" : "ndeploy",
-       "uri" : "nDeploy_cp/ndeploy.live.cgi\"target=\"_blank\""
+       "id" : "ndeploy_apache",
+       "uri" : "apache_fpm_cp/apache_fpm.live.cgi\"target=\"_blank\""
     }
 ] 
