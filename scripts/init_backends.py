@@ -45,6 +45,14 @@ def control_php_fpm(trigger):
                         mypid = f.read()
                     f.close()
                     os.kill(int(mypid), signal.SIGQUIT)
+        elif trigger == "reload":
+            for path in list(php_backends_dict.values()):
+                php_fpm_pid = path+"/var/run/php-fpm.pid"
+                if os.path.isfile(php_fpm_pid):
+                    with open(php_fpm_pid) as f:
+                        mypid = f.read()
+                    f.close()
+                    os.kill(int(mypid), signal.SIGUSR2)
         else:
             return
 

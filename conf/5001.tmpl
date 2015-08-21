@@ -2,15 +2,35 @@
 root DOCUMENTROOT;
 index index.php index.html index.htm;
 
+include /etc/nginx/testcookie/testcookie_aes_locations.conf;
+
 location / {
-        try_files $uri $uri/ /index.php?q=$uri&$args;
+	testcookie on;
+	try_files $uri $uri/ /index.php?q=$uri&$args;
+}
+
+location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|zip|tgz|gz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|bmp|rtf|swf)$ {
+	testcookie off;
+	try_files $uri =404;
+	
+	expires 1d;
+	
+	# access_log /usr/local/apache/domlogs/DOMAINNAME main;
+	# add_header X-Server "by nginx";
+	error_page 404 = @fallback;
 }
 
 location ~ \.php$ {
+	testcookie on;
 	try_files $uri =404;
-        fastcgi_pass unix:SOCKETFILE;
-        fastcgi_index index.php;
-        include /etc/nginx/fastcgi_params;
+	fastcgi_pass unix:SOCKETFILE;
+	fastcgi_index index.php;
+	include /etc/nginx/fastcgi_params;
 }
 
-include /etc/nginx/conf.d/cpanel_services.conf;
+location @fallback {
+	testcookie on;
+	fastcgi_pass unix:SOCKETFILE;
+	fastcgi_index index.php;
+	include /etc/nginx/fastcgi_params;
+}

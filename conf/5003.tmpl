@@ -2,12 +2,15 @@
 root DOCUMENTROOT;
 index index.php index.html index.htm;
 
+include /etc/nginx/testcookie/testcookie_aes_locations.conf;
+
 location / {
-        try_files $uri $uri/ @handler; ## If missing pass the URI to Magento's front handler
-        expires 30d; ## Assume all files are cachable
+	testcookie on;
+	try_files $uri $uri/ @handler; ## If missing pass the URI to Magento's front handler
+	# expires 30d;
 }
- 
-    ## These locations would be hidden by .htaccess normally
+
+## These locations would be hidden by .htaccess normally
 location ^~ /app/                { deny all; }
 location ^~ /includes/           { deny all; }
 location ^~ /lib/                { deny all; }
@@ -23,32 +26,33 @@ location ^~ /var/                { deny all; }
 #}
  
 location  /. { ## Disable .htaccess and other hidden files
-        return 404;
+	return 404;
 }
  
 location @handler { ## Magento uses a common front handler
-        rewrite / /index.php;
+	testcookie on;
+	rewrite / /index.php;
 }
 
 location ~ .php/ { ## Forward paths like /js/index.php/x.js to relevant handler
-        rewrite ^(.*.php)/ $1 last;
+	testcookie on;
+	rewrite ^(.*.php)/ $1 last;
 }
 
 #Uncomment Following if you are using Fooman Speedster
 #rewrite ^/minify/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
-# rewrite ^/skin/m/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
+#rewrite ^/skin/m/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
 
 #location /lib/minify/ {
-#        allow all;
+#	allow all;
 #}
 
 location ~ \.php$ {
+	testcookie on;
 	try_files $uri =404;
-        fastcgi_pass unix:SOCKETFILE;
-        fastcgi_index index.php;
+	fastcgi_pass unix:SOCKETFILE;
+	fastcgi_index index.php;
 	#fastcgi_param  MAGE_RUN_CODE default; ## Store code is defined in administration > Configuration > Manage Stores
-        #fastcgi_param  MAGE_RUN_TYPE store;
-        include /etc/nginx/fastcgi_params;
+	#fastcgi_param  MAGE_RUN_TYPE store;
+	include /etc/nginx/fastcgi_params;
 }
-
-include /etc/nginx/conf.d/cpanel_services.conf;

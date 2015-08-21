@@ -1,6 +1,6 @@
 #!/bin/sh
 
-yum install libmcrypt-devel openssl-devel -y
+yum install libmcrypt-devel openssl-devel gmp-devel libcurl-devel libcurlssl-devel -y
 
 curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
 chmod +x phpbrew
@@ -21,10 +21,11 @@ read
 
 source ~/.phpbrew/bashrc
 
-php -n /usr/bin/phpbrew --debug install --jobs 4 --patch fpm-lve-php5.4.patch 5.4.42 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
+php -n /usr/bin/phpbrew --debug install --jobs 4 --patch fpm-lve-php5.4.patch 5.4.42 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
 
 phpbrew use php-5.4.42
 
+phpbrew ext install curl
 phpbrew ext install zendopcache
 phpbrew ext install memcached
 phpbrew ext install memcache

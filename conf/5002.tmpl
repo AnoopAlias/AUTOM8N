@@ -2,34 +2,45 @@
 root DOCUMENTROOT;
 
 index index.php index.html index.htm default.html default.htm;
+
+include /etc/nginx/testcookie/testcookie_aes_locations.conf;
+
 # Support Clean (aka Search Engine Friendly) URLs
 location / {
-        try_files $uri $uri/ /index.php?$args;
-        }
+	testcookie on;
+	try_files $uri $uri/ /index.php?$args;
+}
 
 # deny running scripts inside writable directories
 location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
-        return 403;
-        error_page 403 /403_error.html;
-        }
-
+	return 403;
+	error_page 403 /403_error.html;
+}
 
 # caching of files 
 location ~* \.(ico|pdf|flv)$ {
-        expires 1y;
-        }
-
+	testcookie off;
+	expires 1y;
+	access_log off;
+}
 location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|txt)$ {
-        expires 14d;
-        }
-
-
-
-location ~ \.php$ {
-	try_files $uri =404;
-        fastcgi_pass unix:SOCKETFILE;
-        fastcgi_index index.php;
-        include /etc/nginx/fastcgi_params;
+	testcookie off;
+	expires 1d;
+	access_log off;
 }
 
-include /etc/nginx/conf.d/cpanel_services.conf;
+location ~ \.php$ {
+	testcookie on;
+	try_files $uri @joomla;
+	fastcgi_pass unix:SOCKETFILE;
+	fastcgi_index index.php;
+	include /etc/nginx/fastcgi_params;
+}
+
+location @joomla {
+	testcookie on;
+	fastcgi_pass unix:SOCKETFILE;
+	fastcgi_index index.php;
+	include /etc/nginx/fastcgi_params;
+	fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+}

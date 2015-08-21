@@ -63,7 +63,7 @@ if form.getvalue('domain') and form.getvalue('custom'):
                 print(('<p style="background-color:LightGrey">You are currently using '+backend_category+' as backend and '+ backend_version +' as version/type</p>'))
                 print('<p style="background-color:LightGrey">Select a BACKEND from the drop down below to continue</p>')
                 print('<HR>')
-                print('<select name="backend">')
+                print('<select name="backend" size="5">')
                 for backends_defined in list(backend_data_yaml_parsed.keys()):
                     print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
                 print('</select>')

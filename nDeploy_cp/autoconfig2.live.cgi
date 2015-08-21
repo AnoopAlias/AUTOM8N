@@ -65,20 +65,20 @@ if form.getvalue('domain') and form.getvalue('backend'):
             backends_branch_dict = backend_data_yaml_parsed[mybackend]
             print('<form action="update.live.cgi" method="post">')
             print('<p style="background-color:LightGrey">Select backend version: </p>')
-            print('<select name="version">')
+            print('<select name="version" size="5">')
             for versions_defined in list(backends_branch_dict.keys()):
                 print(('<option value="'+versions_defined+'">'+versions_defined+'</option>'))
             print('</select>')
             print('<HR>')
             print('<p style="background-color:LightGrey">Select a configuration template: </p>')
-            print('<select name="pcode">')
+            print('<select name="pcode" size="5">')
             for profile_code in list(profile_branch_dict.keys()):
                 iter_profile_string = profile_branch_dict[profile_code]
                 print(('<option value="'+profile_code+'">'+iter_profile_string+'</option>'))
             print('</select>')
             print('<HR>')
             print('<p style="background-color:LightGrey">Enable/Disable Google PageSpeed Optimizations: </p>')
-            print('<input type="radio" name="pagespeed" value="0" /> DISABLE')
+            print('<input type="radio" name="pagespeed" value="0" checked/> DISABLE')
             print('<input type="radio" name="pagespeed" value="1" /> ENABLE')
             print('<HR>')
             print(('<input style="display:none" name="domain" value="'+mydomain+'">'))

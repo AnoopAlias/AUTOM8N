@@ -47,7 +47,7 @@ print('<body>')
 print('<H2 style="color:grey"><a href="ndeploy.live.cgi"><img border="0" src="nDeploy.png" alt="nDeploy"></a>nDeploy</H2>')
 print('<HR>')
 print('<form action="selector.live.cgi" method="post">')
-print('<select name="domain">')
+print('<select name="domain" size="5">')
 print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
 if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
     print(('<option value="'+main_domain+'_SSL">'+main_domain+'(SSL)</option>'))

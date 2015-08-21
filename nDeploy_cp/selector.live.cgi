@@ -70,7 +70,7 @@ if form.getvalue('domain'):
             print(('<p style="background-color:LightGrey">You are currently using '+backend_category+' as backend with '+backend_version+' as type/version </p>'))
             print('<p style="background-color:LightGrey">Select AUTO for automatic configuration(recommended) or MANUAL for custom configuration</p>')
             print('<HR>')
-            print('<input type="radio" name="custom" value="0" /> AUTO')
+            print('<input type="radio" name="custom" value="0" checked/> AUTO')
             print('<input type="radio" name="custom" value="1" /> MANUAL')
             print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
             print('<input type="submit" value="Submit">')

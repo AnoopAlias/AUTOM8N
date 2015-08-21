@@ -7,26 +7,32 @@
 . /etc/init.d/functions
 # Start
 start() {
-        /opt/nDeploy/scripts/init_backends.py start
+	/opt/nDeploy/scripts/init_backends.py start
 }
 # stop
 stop() {
-        /opt/nDeploy/scripts/init_backends.py stop
+	/opt/nDeploy/scripts/init_backends.py stop
+}
+reload() {
+	/opt/nDeploy/scripts/init_backends.py reload
 }
 ### main logic ###
 case "$1" in
-  start)
-        start
-        ;;
-  stop)
-        stop
-        ;;
-  restart)
-        stop
-        start
-        ;;
-  *)
-        echo $"Usage: $0 {start|stop|restart}"
-        exit 1
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	reload)
+		reload
+		;;
+	*)
+		echo $"Usage: $0 {start|stop|restart|reload}"
+		exit 1
 esac
 exit 0

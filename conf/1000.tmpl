@@ -1,33 +1,30 @@
 #PAGESPEED_NOT_ENABLED;
-#Proxy Pass to a backend webserver listening on port 9999
+#Proxy Pass to a backend webserver listening on port 8000
 
-include /etc/nginx/testcookie/testcookie_aes.conf;
+include /etc/nginx/testcookie/testcookie_aes_locations.conf;
 
 # proxy_redirect off;
 
 location / {
 	testcookie on;
 	
-	set $loggable 1;
 	limit_req zone=rate_10 burst=25;
 	proxy_pass http://PROXYLOCATION;
 }
 location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|zip|tgz|gz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|bmp|rtf|swf)$ {
+	testcookie off;
 	root    DOCUMENTROOT;
-	try_files $uri =404;
 	
 	expires 1d;
 	
 	# access_log /usr/local/apache/domlogs/DOMAINNAME main;
-	add_header X-Server "by nginx";
+	# add_header X-Server "by nginx";
 	error_page 404 = @fallback;
+	access_log off;
 }
 location @fallback {
 	testcookie on;
 	
-	set $loggable 1;
 	limit_req zone=rate_10 burst=25;
 	proxy_pass http://PROXYLOCATION;
 }
-
-# include /etc/nginx/conf.d/cpanel_services.conf; 

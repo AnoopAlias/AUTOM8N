@@ -10,8 +10,9 @@ if [[ $CPANELUSER == *.lock || $CPANELUSER == .* ]];then
 	exit 0
 else
 	(
-	         flock -x -w 300 500
-		 	/opt/nDeploy/scripts/generate_config.py $CPANELUSER
-	) 500>/opt/nDeploy/lock/$CPANELUSER.lock		
+		flock -x -w 300 500
+		/opt/nDeploy/scripts/generate_config.py $CPANELUSER
+		/opt/nDeploy/scripts/reload_nginx.sh
+	) 500>/opt/nDeploy/lock/$CPANELUSER.lock
 	rm -f /opt/nDeploy/lock/$CPANELUSER.lock
 fi
