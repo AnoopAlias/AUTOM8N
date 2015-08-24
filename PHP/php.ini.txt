@@ -1,0 +1,25 @@
+cgi.fix_pathinfo=1
+max_execution_time=120
+expose_php=Off
+allow_url_include=Off
+display_errors = Off
+date.timezone = Europe/Chisinau
+error_reporting = E_ALL & ~E_STRICT & ~E_NOTICE
+short_open_tag = On
+upload_max_filesize = 50M
+post_max_size = 50M
+disable_functions =
+;disable_functions = exec, popen, system, shell_exec, passthru, ini_alter, dl, openlog, syslog, readlink, symlink, link, pfsockopen, proc_nice, proc_open, proc_close, proc_terminate, pcntl_exec, escapeshellcmd, listen, show_source
+
+extension=xcache.so
+xcache.optimizer=On
+xcache.cacher=On
+xcache.size=1G
+xcache.var_size=8M
+xcache.count=8
+xcache.ttl=300
+xcache.slots=1K
+xcache.gc_interval = 300
+xcache.var_gc_interval = 300
+xcache.admin.user=admin
+xcache.admin.pass=21232f297a57a5a743894a0e4a801fc3

@@ -1,0 +1,5 @@
+wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+
+tar xvf ioncube_loaders_lin_x86-64.tar.gz
+cp *5.4* /usr/local/phpbrew/php/php-5.4.42/lib/php/extensions/no-debug-non-zts-20100525/ -v
+echo 'zend_extension=/usr/local/phpbrew/php/php-5.4.42/lib/php/extensions/no-debug-non-zts-20100525/ioncube_loader_lin_5.4.so' >> /usr/local/phpbrew/php/php-5.4.42/etc/php.ini

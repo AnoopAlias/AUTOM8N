@@ -138,47 +138,49 @@ def nginx_server_reload():
     return
 
 
-def php_profile_set(user_name, phpversion, php_path):
+def php_profile_set(user_name, phpversion, php_path, reload=True):
     """Function to setup php-fpm pool for user and restart the master php-fpm"""
     phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
     php_fpm_config = installation_path+"/conf/php-fpm.conf"
     php_fpm_bin = php_path + "/sbin/php-fpm"
     if os.path.isfile(phppool_file):
-        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-            with open(php_path + "/var/run/php-fpm.pid") as f:
-                mypid = f.read()
-            f.close()
-            os.kill(int(mypid), signal.SIGUSR2)
-        time.sleep(1)
-        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-            with open(php_path + "/var/run/php-fpm.pid") as f:
-                newpid = f.read()
-            f.close()
-            try:
-                os.kill(int(newpid), 0)
-            except OSError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
-            else:
-                return True
+        if reload is True:
+            if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+                with open(php_path + "/var/run/php-fpm.pid") as f:
+                    mypid = f.read()
+                f.close()
+                os.kill(int(mypid), signal.SIGUSR2)
+            time.sleep(1)
+            if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+                with open(php_path + "/var/run/php-fpm.pid") as f:
+                    newpid = f.read()
+                f.close()
+                try:
+                    os.kill(int(newpid), 0)
+                except OSError:
+                    subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                else:
+                    return True
     else:
         sed_string='sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
-        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-            with open(php_path + "/var/run/php-fpm.pid") as f:
-                mypid = f.read()
-            f.close()
-            os.kill(int(mypid), signal.SIGUSR2)
-        time.sleep(1)
-        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-            with open(php_path + "/var/run/php-fpm.pid") as f:
-                newpid = f.read()
-            f.close()
-            try:
-                os.kill(int(newpid), 0)
-            except OSError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
-            else:
-                return True
+        if reload is True:
+            if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+                with open(php_path + "/var/run/php-fpm.pid") as f:
+                    mypid = f.read()
+                f.close()
+                os.kill(int(mypid), signal.SIGUSR2)
+            time.sleep(1)
+            if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+                with open(php_path + "/var/run/php-fpm.pid") as f:
+                    newpid = f.read()
+                f.close()
+                try:
+                    os.kill(int(newpid), 0)
+                except OSError:
+                    subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                else:
+                    return True
     return
 
 
@@ -242,7 +244,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 profile_config_out = open(include_file, 'w')
                 for line in profile_template_file:
                     line = line.replace('CPANELIP', cpanelip)
-                    line = line.replace('DOMAINNAME',g domain_name)
+                    line = line.replace('DOMAINNAME', domain_name)
                     line = line.replace('DOCUMENTROOT', document_root)
                     line = line.replace('SOCKETFILE', hhvm_nobody_socket)
                     line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)

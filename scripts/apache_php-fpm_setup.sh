@@ -36,10 +36,12 @@ else
             sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/ssl_vhost.local
         fi
         python /opt/nDeploy/scripts/apache_default_php_setup.py
+        echo -n "Rebuild:"
         for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
         do
             /opt/nDeploy/scripts/apache_php_config_generator.py $CPANELUSER
-         done
+			echo -n " $CPANELUSER";
+		done
         /scripts/rebuildhttpdconf
         /scripts/restartsrv httpd
     fi

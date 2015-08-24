@@ -1,0 +1,11 @@
+cd ~
+wget http://xcache.lighttpd.net/pub/Releases/3.2.0/xcache-3.2.0.tar.gz
+source ~/.phpbrew/bashrc
+phpbrew use 5.4.42
+tar xvf xcache-3.2.0.tar.gz
+cd xcache-3.2.0
+phpize
+make clean
+./configure --enable-xcache --enable-xcache-optimizer
+make
+make install

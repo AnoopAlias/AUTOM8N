@@ -1,0 +1,5 @@
+;opcache.memory_consumption = 2000
+;opcache.max_accelerated_files = 5000
+;opcache.interned_strings_buffer = 32
+;opcache.restrict_api = /home/amplicatest
+;opcache.blacklist_filename = *config*.php

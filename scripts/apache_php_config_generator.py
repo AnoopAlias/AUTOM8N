@@ -16,8 +16,12 @@ __email__ = "anoop.alias@piserve.com"
 installation_path = "/opt/nDeploy"
 
 class PhpFpmConfig:
-    def __init__(self,cpaneluser):
+    def __init__(self, cpaneluser, reload):
         self.username = cpaneluser
+        if reload=='yes':
+            self.reload=True
+        else:
+            self.reload=False
 
     def configure(self):
         if os.path.isfile(installation_path+"/conf/user_data.yaml.tmpl"):
@@ -34,7 +38,7 @@ class PhpFpmConfig:
                 if "PHP" in backend_data_yaml_parsed:
                     php_backends_dict = backend_data_yaml_parsed["PHP"]
                     php_path = php_backends_dict.get(myversion)
-                    php_profile_set(self.username, myversion, php_path)
+                    php_profile_set(self.username, myversion, php_path, self.reload)
                     path_to_socket = php_path + "/var/run/" + self.username + ".sock"
                     if os.path.islink("/opt/fpmsockets/"+self.username+".sock"):
                         os.remove("/opt/fpmsockets/"+self.username+".sock")
@@ -53,10 +57,12 @@ class PhpFpmConfig:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Set PHP-FPM socket for cpanel user to be used with Apache HTTPD")
     parser.add_argument("CPANELUSER")
+    parser.add_argument('-r', '--reload', default=False)
     args = parser.parse_args()
     cpaneluser = args.CPANELUSER
+    reload = args.reload
     if os.path.isfile(installation_path+"/conf/user_data.yaml.tmpl"):
-        myconfig = PhpFpmConfig(cpaneluser)
+        myconfig = PhpFpmConfig(cpaneluser, reload)
         myconfig.configure()
     else:
         sys.exit(0)
