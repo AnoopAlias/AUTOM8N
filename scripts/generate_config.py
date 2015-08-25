@@ -138,49 +138,27 @@ def nginx_server_reload():
     return
 
 
-def php_profile_set(user_name, phpversion, php_path, reload=True):
+def php_profile_set(user_name, phpversion, php_path, restart=True):
     """Function to setup php-fpm pool for user and restart the master php-fpm"""
     phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
     php_fpm_config = installation_path+"/conf/php-fpm.conf"
     php_fpm_bin = php_path + "/sbin/php-fpm"
-    if os.path.isfile(phppool_file):
-        if reload is True:
-            if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-                with open(php_path + "/var/run/php-fpm.pid") as f:
-                    mypid = f.read()
-                f.close()
-                os.kill(int(mypid), signal.SIGUSR2)
-            time.sleep(1)
-            if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-                with open(php_path + "/var/run/php-fpm.pid") as f:
-                    newpid = f.read()
-                f.close()
-                try:
-                    os.kill(int(newpid), 0)
-                except OSError:
-                    subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
-                else:
-                    return True
-    else:
+    if os.path.isfile(phppool_file) == False:
         sed_string='sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
-        if reload is True:
-            if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-                with open(php_path + "/var/run/php-fpm.pid") as f:
-                    mypid = f.read()
-                f.close()
-                os.kill(int(mypid), signal.SIGUSR2)
-            time.sleep(1)
-            if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-                with open(php_path + "/var/run/php-fpm.pid") as f:
-                    newpid = f.read()
-                f.close()
-                try:
-                    os.kill(int(newpid), 0)
-                except OSError:
-                    subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
-                else:
-                    return True
+    
+    if restart is True:
+        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+            with open(php_path + "/var/run/php-fpm.pid") as f:
+                mypid = f.read()
+            f.close()
+            os.kill(int(mypid), signal.SIGQUIT)
+            print "Waiting to stop php-fpm ("+php_fpm_bin+") ",
+            while subprocess.call("kill -0 "+mypid, shell=True) == '0':
+                time.sleep(1)
+                print ".",
+            print "done"
+        subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
     return
 
 

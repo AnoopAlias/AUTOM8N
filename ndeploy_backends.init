@@ -5,31 +5,19 @@
 #
 # Get function from functions library
 . /etc/init.d/functions
-# Start
-start() {
-	/opt/nDeploy/scripts/init_backends.py start
-}
-# stop
-stop() {
-	/opt/nDeploy/scripts/init_backends.py stop
-}
-reload() {
-	/opt/nDeploy/scripts/init_backends.py reload
-}
 ### main logic ###
 case "$1" in
 	start)
-		start
+		/opt/nDeploy/scripts/init_backends.py start
 		;;
 	stop)
-		stop
+		/opt/nDeploy/scripts/init_backends.py stop
 		;;
 	restart)
-		stop
-		start
+		/opt/nDeploy/scripts/init_backends.py restart
 		;;
 	reload)
-		reload
+		/opt/nDeploy/scripts/init_backends.py reload
 		;;
 	*)
 		echo $"Usage: $0 {start|stop|restart|reload}"

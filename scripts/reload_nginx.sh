@@ -1,2 +1,3 @@
 #!/bin/bash
-/usr/sbin/nginx -s reload
+
+service nginx configtest && service nginx reload

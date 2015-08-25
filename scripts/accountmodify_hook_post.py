@@ -31,26 +31,9 @@ def remove_php_fpm_pool(user_name):
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         for php_path in list(php_backends_dict.values()):
             phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
-            php_fpm_bin = php_path + "/sbin/php-fpm"
-            php_fpm_config = installation_path+"/conf/php-fpm.conf"
             if os.path.isfile(phppool_file):
                 os.remove(phppool_file)
-                if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-                    with open(php_path + "/var/run/php-fpm.pid") as f:
-                        mypid = f.read()
-                    f.close()
-                    os.kill(int(mypid), signal.SIGUSR2)
-                    time.sleep(1)
-                if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-                    with open(php_path + "/var/run/php-fpm.pid") as f:
-                        newpid = f.read()
-                    f.close()
-                    try:
-                        os.kill(int(newpid), 0)
-                    except OSError:
-                        subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
-                    else:
-                        return True
+    os.remove("/opt/fpmsockets/"+user_name+".sock")
     return
 
 
@@ -69,7 +52,8 @@ if os.path.isfile(installation_path+"/lock/todel_"+cpaneluser):
     os.remove(installation_path+"/lock/todel_"+cpaneluser)
 if cpaneluser != cpanelnewuser:    
     remove_php_fpm_pool(cpaneluser)
-subprocess.call("/usr/sbin/nginx -s reload", shell=True)
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
 subprocess.call("/opt/nDeploy/scripts/apache_php_config_generator.py "+cpanelnewuser, shell=True)
+subprocess.call("/opt/nDeploy/scripts/init_backends.py reload", shell=True)
+subprocess.call("/opt/nDeploy/scripts/reload_nginx.sh", shell=True)
 print(("1 nDeploy:postmodify:"+cpanelnewuser))

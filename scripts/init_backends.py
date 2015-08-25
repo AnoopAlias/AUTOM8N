@@ -6,6 +6,7 @@ import argparse
 import subprocess
 import os
 import signal
+import time
 
 
 __author__ = "Anoop P Alias"
@@ -53,6 +54,28 @@ def control_php_fpm(trigger):
                         mypid = f.read()
                     f.close()
                     os.kill(int(mypid), signal.SIGUSR2)
+        elif trigger == "restart":
+            for path in list(php_backends_dict.values()):
+                php_fpm_bin = path+"/sbin/php-fpm"
+                php_fpm_conf_d = path+"/etc/php-fpm.d"
+                if not os.path.exists(php_fpm_conf_d):
+                    os.mkdir(php_fpm_conf_d)
+                    t_file = installation_path+"/conf/php-fpm.pool.tmpl"
+                    o_file = php_fpm_conf_d+"/nobody.conf"
+                    sed_string = 'sed "s/CPANELUSER/nobody/g" '
+                    subprocess.call(sed_string+t_file+' > '+o_file, shell=True)
+                php_fpm_pid = path+"/var/run/php-fpm.pid"
+                if os.path.isfile(php_fpm_pid):
+                    with open(php_fpm_pid) as f:
+                        mypid = f.read()
+                    f.close()
+                    os.kill(int(mypid), signal.SIGTERM)
+                    print "Waiting to stop php-fpm ("+php_fpm_bin+") ",
+                    while subprocess.call("kill -0 "+mypid, shell=True) == '0':
+                        time.sleep(1)
+                        print ".",
+                    print "done"
+                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
         else:
             return
 
