@@ -66,6 +66,6 @@ for domain_in_subdomains in sub_domains:
         os.remove(nginx_dir+domain_in_subdomains+"_SSL.conf")
         os.remove(nginx_dir+domain_in_subdomains+"_SSL.include")
 remove_php_fpm_pool(cpaneluser)
-subprocess.call("/opt/nDeploy/scripts/init_backends.py reload", shell=True)
+subprocess.call("/opt/nDeploy/scripts/init_backends.py --action=reload", shell=True)
 subprocess.call("/opt/nDeploy/scripts/reload_nginx.sh", shell=True)
 print(("1 nDeploy:remove:"+cpaneluser))

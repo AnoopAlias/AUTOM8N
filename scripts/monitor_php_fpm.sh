@@ -6,11 +6,10 @@ check() {
 	RESPONSE=`curl $URL 2>/dev/null`
 	echo "[`date`] URL=$URL Response=$RESPONSE"
 	if [ "$RESPONSE" != 'pong' ]; then
-		/etc/init.d/ndeploy_backends restart
-		check $1
+		/opt/nDeploy/scripts/init_backends.pl --action=restart --forced --php=$VER
 	fi
 }
 
-check 5.3
-check 5.4
-check 5.5
+#check 5.3
+#check 5.4
+#check 5.5

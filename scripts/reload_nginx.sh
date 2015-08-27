@@ -1,3 +1,3 @@
 #!/bin/bash
 
-service nginx configtest && service nginx reload
+/etc/init.d/nginx configtest && /etc/init.d/nginx reload

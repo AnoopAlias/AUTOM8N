@@ -54,6 +54,6 @@ if cpaneluser != cpanelnewuser:
     remove_php_fpm_pool(cpaneluser)
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
 subprocess.call("/opt/nDeploy/scripts/apache_php_config_generator.py "+cpanelnewuser, shell=True)
-subprocess.call("/opt/nDeploy/scripts/init_backends.py reload", shell=True)
+subprocess.call("/opt/nDeploy/scripts/init_backends.pl --action=reload", shell=True)
 subprocess.call("/opt/nDeploy/scripts/reload_nginx.sh", shell=True)
 print(("1 nDeploy:postmodify:"+cpanelnewuser))

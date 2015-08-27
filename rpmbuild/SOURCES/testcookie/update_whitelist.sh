@@ -47,6 +47,9 @@ for i in $AS; do parse_whois $i; done
 AS="AS60863 AS51286 AS47764 AS21051"
 for i in $AS; do parse_whois $i; done
 
+# bing microsoft
+AS="AS8075 AS8074 AS8073 AS8072 AS8071 AS8070 AS8069 AS8068 AS6584 AS63314 AS6291 AS6194 AS6182 AS5761 AS40066 AS36006 AS3598 AS32476 AS30575 AS30135 AS26222 AS25796 AS23468 AS20046 AS14719 AS13811 AS13399 AS12076"
+for i in $AS; do parse_whois $i; done
 
 # resort stored data
 cat whitelist_parsed.txt | xargs -n1 | xargs -I{} echo {}\; | sort | uniq > whitelist_parsed.txt.tmp

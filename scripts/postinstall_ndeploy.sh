@@ -41,12 +41,18 @@ if [ ! -d /opt/nDeploy/domain-data ] ; then
 	mkdir /opt/nDeploy/domain-data
 fi
 
-ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/x3/
-ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/paper_lantern/
 cp /opt/nDeploy/ndeploy_backends.init /etc/init.d/ndeploy_backends && chmod +x /etc/init.d/ndeploy_backends
 cp /opt/nDeploy/ndeploy.incron /etc/incron.d/nDeploy && chmod +x /etc/init.d/ndeploy_backends
+
+ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/x3/
+ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/paper_lantern/
+ln -s /opt/nDeploy/apache_fpm_cp /usr/local/cpanel/base/frontend/x3/
+ln -s /opt/nDeploy/apache_fpm_cp /usr/local/cpanel/base/frontend/paper_lantern/
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp --theme x3
+/usr/local/cpanel/scripts/install_plugin /opt/nDeploy/apache_fpm_cp
+/usr/local/cpanel/scripts/install_plugin /opt/nDeploy/apache_fpm_cp --theme x3
+
 for CPANELUSER in `cat /etc/domainusers|cut -d: -f1`; do
 	/opt/nDeploy/scripts/generate_config.py $CPANELUSER
 done

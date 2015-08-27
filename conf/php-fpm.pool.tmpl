@@ -9,13 +9,16 @@ listen.group = $pool
 listen.mode = 0666
 
 pm = ondemand
-pm.max_children = 20
+pm.max_children = 25
 pm.start_servers = 2
 pm.min_spare_servers = 1
 pm.max_spare_servers = 3
-pm.process_idle_timeout = 60s;
+pm.process_idle_timeout = 120s;
 pm.max_requests = 500
- 
+
+rlimit_core = 0
+catch_workers_output = yes
+
 ; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
 ; the current environment.
 ; Default Value: clean env
@@ -28,6 +31,6 @@ pm.max_requests = 500
 ;php_admin_value[open_basedir] = ".:/usr/local/phpbrew/php/php-5.4.42/lib/php::/tmp:/home/$pool"
 php_admin_value[disable_functions] = exec, popen, system, shell_exec, passthru, ini_alter, dl, openlog, syslog, readlink, symlink, link, pfsockopen, proc_nice, proc_open, proc_close, proc_terminate, pcntl_exec, escapeshellcmd, listen, show_source
 ;php_flag[display_errors] = off
-;php_flag[error_reporting] = E_ALL & ~E_STRICT & ~E_NOTICE
+;php_value[error_reporting] = E_ALL & ~E_STRICT & ~E_NOTICE
 ;php_flag[log_errors] = on
-;php_flag[memory_limit] = 32M
+;php_value[memory_limit] = 32M

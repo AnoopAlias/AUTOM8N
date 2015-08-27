@@ -1,0 +1,9 @@
+/usr/local/phpbrew/php/php-*/var/log/*.log {
+	daily
+	missingok
+	rotate 5
+	compress
+	delaycompress
+	notifempty
+	sharedscripts
+}

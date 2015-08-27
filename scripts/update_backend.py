@@ -24,21 +24,21 @@ def update_backend(backend_category, backend_name, backend_path):
     backend_data_yaml.close()
     if backend_data_yaml_parsed:
         if backend_category in backend_data_yaml_parsed:
-	    branch_dict = backend_data_yaml_parsed[backend_category]
-	    branch_dict[backend_name] = backend_path
-	    with open(backend_config_file, 'w')as yaml_file:
-		yaml_file.write(yaml.dump(backend_data_yaml_parsed, default_flow_style=False))
+            branch_dict = backend_data_yaml_parsed[backend_category]
+            branch_dict[backend_name] = backend_path
+            with open(backend_config_file, 'w')as yaml_file:
+                yaml_file.write(yaml.dump(backend_data_yaml_parsed, default_flow_style=False))
             yaml_file.close()
-	else:
-	    backend_data_yaml_parsed[backend_category] = {backend_name : backend_path }
-	    with open(backend_config_file,'w')as yaml_file:
-		yaml_file.write(yaml.dump(backend_data_yaml_parsed, default_flow_style=False))
+        else:
+            backend_data_yaml_parsed[backend_category] = {backend_name : backend_path }
+            with open(backend_config_file,'w')as yaml_file:
+                yaml_file.write(yaml.dump(backend_data_yaml_parsed, default_flow_style=False))
             yaml_file.close()
     else:
-	data_dict = {backend_category :{ backend_name  : backend_path }}
-	with open(backend_config_file,'w')as yaml_file:
-	    yaml_file.write(yaml.dump(data_dict, default_flow_style=False))
-	yaml_file.close()
+        data_dict = {backend_category :{ backend_name  : backend_path }}
+        with open(backend_config_file,'w')as yaml_file:
+            yaml_file.write(yaml.dump(data_dict, default_flow_style=False))
+        yaml_file.close()
 
 
 parser = argparse.ArgumentParser(description="Register a proxy/application backend for nDeploy")

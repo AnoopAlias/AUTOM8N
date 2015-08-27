@@ -8,16 +8,16 @@
 ### main logic ###
 case "$1" in
 	start)
-		/opt/nDeploy/scripts/init_backends.py start
+		/opt/nDeploy/scripts/init_backends.pl --action=start
 		;;
 	stop)
-		/opt/nDeploy/scripts/init_backends.py stop
+		/opt/nDeploy/scripts/init_backends.pl --action=stop
 		;;
 	restart)
-		/opt/nDeploy/scripts/init_backends.py restart
+		/opt/nDeploy/scripts/init_backends.pl --action=restart
 		;;
 	reload)
-		/opt/nDeploy/scripts/init_backends.py reload
+		/opt/nDeploy/scripts/init_backends.pl --action=reload
 		;;
 	*)
 		echo $"Usage: $0 {start|stop|restart|reload}"

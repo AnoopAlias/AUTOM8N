@@ -22,7 +22,7 @@ read
 
 source ~/.phpbrew/bashrc
 
-php -n /usr/bin/phpbrew --debug install --jobs 4 --patch fpm-lve-php5.4.patch 5.4.42 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
+php -n /usr/bin/phpbrew --debug install --jobs 4 --patch fpm-lve-php5.4.patch 5.4.44 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
 php -n /usr/bin/phpbrew --debug install --jobs 4 --patch fpm-lve-php5.3.patch 5.3.29 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
 
 
@@ -30,11 +30,10 @@ phpbrew use php-5.4.42
 
 phpbrew ext install imagick
 phpbrew ext install iconv
-phpbrew ext install mssql
 phpbrew ext install pdo_sqlite
 phpbrew ext install pdo_dblib
 phpbrew ext install pdo_firebird
-phpbrew ext install curl
+# phpbrew ext install curl
 phpbrew ext install memcached
 phpbrew ext install memcache
 phpbrew ext install gd

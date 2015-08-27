@@ -37,7 +37,7 @@ else
         fi
         python /opt/nDeploy/scripts/apache_default_php_setup.py
         echo -n "Rebuild:"
-        for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
+        for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1 | sort | uniq)
         do
             /opt/nDeploy/scripts/apache_php_config_generator.py $CPANELUSER
 			echo -n " $CPANELUSER";
