@@ -9,9 +9,11 @@ touch /opt/nDeploy/conf/profiles.yaml
 /opt/nDeploy/scripts/update_profiles.py PHP 5001 "Wordpress or Drupal"
 /opt/nDeploy/scripts/update_profiles.py PHP 5002 "Joomla"
 /opt/nDeploy/scripts/update_profiles.py PHP 5003 "Magento"
+/opt/nDeploy/scripts/update_profiles.py PHP 5500 "High Performance Wordpress"
 /opt/nDeploy/scripts/update_profiles.py HHVM_NOBODY 5001 "Wordpress or Drupal"
 /opt/nDeploy/scripts/update_profiles.py HHVM_NOBODY 5002 "Joomla"
 /opt/nDeploy/scripts/update_profiles.py HHVM_NOBODY 5003 "Magento"
+/opt/nDeploy/scripts/update_profiles.py HHVM_NOBODY 5500 "High Performance Wordpress"
 
 echo -e '\e[93m Adding cpanel hooks \e[0m'
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/reload_nginx.sh --category Stats --event RunAll --stage post --manual

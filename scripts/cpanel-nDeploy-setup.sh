@@ -43,10 +43,10 @@ echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 if [ ${osversion} -le 6 ];then
 	service nginx restart
-	service incrond restart
+	service ndeploy_watcher restart
 	service ndeploy_backends restart
 	chkconfig nginx on
-	chkconfig incrond on
+	chkconfig ndeploy_watcher on
 	chkconfig ndeploy_backends on
 	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
 	do
@@ -55,10 +55,10 @@ if [ ${osversion} -le 6 ];then
 	service nginx restart
 else
 	systemctl restart nginx
-	systemctl restart incrond
+	systemctl restart ndeploy_watcher
 	systemctl restart ndeploy_backends
 	systemctl enable nginx
-	systemctl enable incrond
+	systemctl enable ndeploy_watcher
 	systemctl enable ndeploy_backends
 	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
         do
@@ -89,17 +89,17 @@ echo -e '\e[93m Rebuilding Apache httpd backend configs.Apache will listen on de
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 if [ ${osversion} -le 6 ];then
 	service nginx stop
-	service incrond stop
+	service ndeploy_watcher stop
 	service ndeploy_backends stop
 	chkconfig nginx off
-	chkconfig incrond off
+	chkconfig ndeploy_watcher off
 	chkconfig ndeploy_backends off
 else
 	systemctl stop nginx
-	systemctl stop incrond
+	systemctl stop ndeploy_watcher
 	systemctl stop ndeploy_backends
 	systemctl disable nginx
-	systemctl disable incrond
+	systemctl disable ndeploy_watcher
 	systemctl disable ndeploy_backends
 fi
 /scripts/rebuildhttpdconf

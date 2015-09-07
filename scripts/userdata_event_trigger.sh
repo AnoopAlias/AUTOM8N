@@ -1,10 +1,6 @@
 #!/bin/bash
 
-if [ $2 -eq 1 ] ; then
-	CPANELUSER=$(stat -c "%U" /opt/nDeploy/user-data/$1)
-else
-	CPANELUSER=$(echo $1)
-fi
+CPANELUSER=$(stat -c "%U" $1)
 
 if [[ $CPANELUSER == root || $CPANELUSER == .* ]];then
 	exit 0
