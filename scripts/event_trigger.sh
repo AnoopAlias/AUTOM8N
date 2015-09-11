@@ -7,7 +7,7 @@ if [ $2 -eq 1 ] ; then
 else
 	if [ $3 == "IN_DELETE" ]; then
 		THEDOMAIN=$(echo $1|awk -F'/' '{print $6}')
-		rm -f /etc/nginx/sites-enabled/$THEDOMAIN\.* && rm -f /opt/nDeploy/domain-data/$THEDOMAIN
+		rm -f /etc/nginx/sites-enabled/$THEDOMAIN\.* /opt/nDeploy/domain-data/$THEDOMAIN
 	fi
 	CPANELUSER=$(echo $1|awk -F'/' '{print $5}')
 fi
