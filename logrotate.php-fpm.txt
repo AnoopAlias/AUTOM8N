@@ -6,4 +6,7 @@
 	delaycompress
 	notifempty
 	sharedscripts
+	postrotate
+		/etc/init.d/ndeploy_backends reload
+	endscript
 }

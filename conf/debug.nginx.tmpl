@@ -1,0 +1,13 @@
+ 
+add_header  QUERY_STRING      "$query_string" always;
+add_header  REQUEST_METHOD    "$request_method" always;
+add_header  CONTENT_TYPE      "$content_type" always;
+add_header  CONTENT_LENGTH    "$content_length" always;
+
+add_header  SCRIPT_NAME       "$fastcgi_script_name" always;
+add_header  SCRIPT_FILENAME   "$document_root$fastcgi_script_name" always;
+add_header  REQUEST_URI       "$request_uri" always;
+add_header  DOCUMENT_URI      "$document_uri" always;
+add_header  DOCUMENT_ROOT     "$document_root" always;
+add_header  SERVER_PROTOCOL   "$server_protocol" always;
+add_header  HTTPS             "$https" always;

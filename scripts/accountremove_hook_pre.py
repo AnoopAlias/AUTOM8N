@@ -21,6 +21,14 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 nginx_dir = "/etc/nginx/sites-enabled/"
 
 
+def remove_file(fn):
+    if os.path.isfile(fn):
+        os.remove(fn)
+        print("Removing file "+fn)
+    else:
+        print(("Cant remove file "+fn))
+    return
+
 # Function defs
 def remove_php_fpm_pool(user_name):
     """Remove the php-fpm pools of deleted accounts"""
@@ -32,8 +40,9 @@ def remove_php_fpm_pool(user_name):
         for php_path in list(php_backends_dict.values()):
             phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
             if os.path.isfile(phppool_file):
+	        print("Removing file "+phppool_file)
                 os.remove(phppool_file)
-    os.remove("/opt/fpmsockets/"+user_name+".sock")
+    subprocess.call("rm -v /opt/fpmsockets/"+user_name+".sock >/dev/null 2>&1", shell=True)
     return
 
 
@@ -46,26 +55,30 @@ yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
 cpaneluser_data_stream.close()
 main_domain = yaml_parsed_cpaneluser.get('main_domain')
 sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
-if os.path.isfile(installation_path+"/user-data/"+cpaneluser):
-    os.remove(installation_path+"/user-data/"+cpaneluser)
-os.remove(installation_path+"/domain-data/"+main_domain)
-os.remove(nginx_dir+main_domain+".conf")
-os.remove(nginx_dir+main_domain+".include")
+
+remove_file(installation_path+"/user-data/"+cpaneluser)
+remove_file(installation_path+"/domain-data/"+main_domain)
+remove_file(nginx_dir+main_domain+".conf")
+remove_file(nginx_dir+main_domain+".include")
+
 subprocess.call("rm -rf /var/resin/hosts/"+main_domain, shell=True)
 if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
-    os.remove(installation_path+"/domain-data/"+main_domain+"_SSL")
-    os.remove(nginx_dir+main_domain+"_SSL.conf")
-    os.remove(nginx_dir+main_domain+"_SSL.include")
+    remove_file(installation_path+"/domain-data/"+main_domain+"_SSL")
+    remove_file(nginx_dir+main_domain+"_SSL.conf")
+    remove_file(nginx_dir+main_domain+"_SSL.include")
 for domain_in_subdomains in sub_domains:
-    os.remove(installation_path+"/domain-data/"+domain_in_subdomains)
-    os.remove(nginx_dir+domain_in_subdomains+".conf")
-    os.remove(nginx_dir+domain_in_subdomains+".include")
+    if domain_in_subdomains.startswith("*"):
+        domain_in_subdomains_orig=domain_in_subdomains
+        domain_in_subdomains="_wildcard_."+domain_in_subdomains.replace('*.','')
+    remove_file(installation_path+"/domain-data/"+domain_in_subdomains)
+    remove_file(nginx_dir+domain_in_subdomains+".conf")
+    remove_file(nginx_dir+domain_in_subdomains+".include")
     subprocess.call("rm -rf /var/resin/hosts/"+domain_in_subdomains, shell=True)
     if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
-        os.remove(installation_path+"/domain-data/"+domain_in_subdomains+"_SSL")
-        os.remove(nginx_dir+domain_in_subdomains+"_SSL.conf")
-        os.remove(nginx_dir+domain_in_subdomains+"_SSL.include")
+        remove_file(installation_path+"/domain-data/"+domain_in_subdomains_orig+"_SSL")
+        remove_file(nginx_dir+domain_in_subdomains+"_SSL.conf")
+        remove_file(nginx_dir+domain_in_subdomains+"_SSL.include")
 remove_php_fpm_pool(cpaneluser)
-subprocess.call("/opt/nDeploy/scripts/init_backends.py --action=reload", shell=True)
-subprocess.call("/opt/nDeploy/scripts/reload_nginx.sh", shell=True)
+subprocess.call("/opt/nDeploy/scripts/init_backends.pl --action=reload", shell=True)
+subprocess.call("/opt/nDeploy/scripts/reload_nginx.sh >/dev/null 2>&1", shell=True)
 print(("1 nDeploy:remove:"+cpaneluser))

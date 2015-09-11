@@ -1,0 +1,6 @@
+diagnose:
+	php-fpm cloudlinux crash if some pool children is out of memory
+
+fix:
+	disable memory limit
+	lvectl list-user | awk '{ print $1}' | while read i; do echo $i; lvectl set-user $i --speed=100% --pmem=0 --vmem=0; done

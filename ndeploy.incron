@@ -1,2 +1,0 @@
-/opt/nDeploy/domain-data IN_MODIFY,IN_CREATE /opt/nDeploy/scripts/event_trigger.sh $# 1
-/opt/nDeploy/user-data IN_MODIFY,IN_CREATE /opt/nDeploy/scripts/userdata_event_trigger.sh $# 1

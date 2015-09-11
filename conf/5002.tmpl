@@ -19,11 +19,13 @@ location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
 
 # caching of files 
 location ~* \.(ico|pdf|flv)$ {
+	gzip on;
 	testcookie off;
 	expires 1y;
 	access_log off;
 }
 location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|txt)$ {
+	gzip on;
 	testcookie off;
 	expires 1d;
 	access_log off;
@@ -35,12 +37,10 @@ location ~ \.php$ {
 	fastcgi_pass unix:SOCKETFILE;
 	fastcgi_index index.php;
 	include /etc/nginx/fastcgi_params;
+	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 }
 
 location @joomla {
-	testcookie on;
-	fastcgi_pass unix:SOCKETFILE;
-	fastcgi_index index.php;
-	include /etc/nginx/fastcgi_params;
-	fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+	# send to \.php location
+	rewrite ^ /index.php?$args;
 }

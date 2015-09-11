@@ -185,6 +185,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
     if os.path.isfile(profileyaml):
         profileyaml_data_stream = open(profileyaml, 'r')
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+        profileyaml_data_stream.close()
         profile_custom_status = yaml_parsed_profileyaml.get('customconf')
         config_test_status = yaml_parsed_profileyaml.get('testconf')
         if profile_custom_status == "0" and config_test_status == "0":
@@ -308,7 +309,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 elif proxytype == "railo_resin":
                     railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list)
         elif config_test_status == "1":
-            if os.path.isfile(custom_config_file):
+	    if os.path.isfile(custom_config_file) and 'server_name' not in open(custom_config_file).read():
                 test_config_file = open(installation_path + "/conf/nginx.conf.test", 'r')
                 test_config_out = open(installation_path + "/conf/nginx.conf." + domain_name + ".test", 'w')
                 config = installation_path + "/conf/nginx.conf." + domain_name + ".test"
@@ -337,6 +338,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                         update_config_test_status(profileyaml, 0)
             else:
                 update_custom_profile(profileyaml, 0)
+                update_config_test_status(profileyaml, 0)
         else:
             return
     else:
@@ -447,6 +449,9 @@ if __name__ == "__main__":
     cpaneluser = args.CPANELUSER
     
     cpuserdatayaml = "/var/cpanel/userdata/" + cpaneluser + "/main"
+    if os.path.isfile(cpuserdatayaml) == False:
+       print "userdata main file is not found"
+       sys.exit(0)
     cpaneluser_data_stream = open(cpuserdatayaml, 'r')
     yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
     

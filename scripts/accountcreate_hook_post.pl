@@ -2,6 +2,7 @@
 use IO::Select;
 use JSON::Syck;
 use Data::Dumper;
+use YAML::Tiny;
 
 open(FH, ">>/opt/nDeploy/hook.log");
 $input = get_passed_data();
@@ -17,8 +18,14 @@ sub do_something {
 	
 	system("/opt/nDeploy/scripts/generate_config.py ".$input{'data'}{'user'});
 	system("/opt/nDeploy/scripts/apache_php_config_generator.py ".$input{'data'}{'user'});
-	system("/etc/init.d/ndeploy_backends restart");
-	system("/opt/nDeploy/scripts/reload_nginx.sh");
+	
+	my $user_data_file = "/opt/nDeploy/user-data/".$input{'data'}{'user'};
+	my $udf_parsed = YAML::Tiny->read($user_data_file);
+	
+	my $php_ver = $udf_parsed->[0]->{'PHP'};
+	
+	system("/opt/nDeploy/scripts/init_backends.pl --action=reload --php=".$php_ver);
+	system("/opt/nDeploy/scripts/reload_nginx.sh 2>&1");
 	
 	$status = 1;
 	$msg    = "Successful.";

@@ -1,3 +1,0 @@
-# cat /etc/chkserv.d/ndeploy
-
-service[ndeploy_backends]=x,x,x,service ndeploy_backends restart,php-fpm,root

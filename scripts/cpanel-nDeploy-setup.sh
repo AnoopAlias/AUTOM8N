@@ -48,19 +48,19 @@ function enable {
 	
 	if [ ${osversion} -le 6 ];then
 		chkconfig nginx on
-		chkconfig incrond on
+		chkconfig ndeploy_watcher on
 		chkconfig ndeploy_backends on
 		
 		service nginx restart
-		service incrond restart
+		service ndeploy_watcher restart
 		service ndeploy_backends restart
 	else
 		systemctl enable nginx
-		systemctl enable incrond
+		systemctl enable ndeploy_watcher
 		systemctl enable ndeploy_backends
 		
 		systemctl restart nginx
-		systemctl restart incrond
+		systemctl restart ndeploy_watcher
 		systemctl restart ndeploy_backends
 	fi
 }
@@ -86,17 +86,17 @@ function disable {
 	osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 	if [ ${osversion} -le 6 ];then
 		service nginx stop
-		service incrond stop
+		service ndeploy_watcher stop
 		service ndeploy_backends stop
 		chkconfig nginx off
-		chkconfig incrond off
+		chkconfig ndeploy_watcher off
 		chkconfig ndeploy_backends off
 	else
 		systemctl stop nginx
-		systemctl stop incrond
+		systemctl stop ndeploy_watcher
 		systemctl stop ndeploy_backends
 		systemctl disable nginx
-		systemctl disable incrond
+		systemctl disable ndeploy_watcher
 		systemctl disable ndeploy_backends
 	fi
 	#/scripts/restartsrv httpd
