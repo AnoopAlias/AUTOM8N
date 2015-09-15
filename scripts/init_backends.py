@@ -27,6 +27,7 @@ def control_php_fpm(trigger):
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         if trigger == "start":
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
+            subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
             for path in list(php_backends_dict.values()):
                 php_fpm_bin = path+"/sbin/php-fpm"
                 php_fpm_conf_d = path+"/etc/php-fpm.d"
