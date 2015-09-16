@@ -361,7 +361,10 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         else:
             return
     else:
-        template_file = open(installation_path + "/conf/domain_data.yaml.tmpl", 'r')
+	if sslenabled == 1:
+            template_file = open(installation_path + "/conf/domain_data_SSL.yaml.tmpl", 'r')
+        else:
+	    template_file = open(installation_path + "/conf/domain_data.yaml.tmpl", 'r')
         config_out = open(profileyaml, 'w')
         for line in template_file:
             line = line.replace('CPANELUSER', user_name)
