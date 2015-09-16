@@ -52,7 +52,3 @@ ln -s /opt/nDeploy/apache_fpm_cp /usr/local/cpanel/base/frontend/paper_lantern/
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp --theme x3
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/apache_fpm_cp
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/apache_fpm_cp --theme x3
-for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
-do
-	echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/generate_config.py $CPANELUSER
-done
