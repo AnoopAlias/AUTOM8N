@@ -71,6 +71,7 @@ compile_php55
 compile_php56
 
 
+
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 echo ${osversion}
 if [ ${osversion} -eq 6 ];then

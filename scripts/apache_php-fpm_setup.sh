@@ -38,8 +38,9 @@ else
         python /opt/nDeploy/scripts/apache_default_php_setup.py
         for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
         do
-            /opt/nDeploy/scripts/apache_php_config_generator.py $CPANELUSER
+            echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/apache_php_config_generator.py $CPANELUSER
          done
+	which cagefsctl && cagefsctl --force-update
         /scripts/rebuildhttpdconf
         /scripts/restartsrv httpd
     fi

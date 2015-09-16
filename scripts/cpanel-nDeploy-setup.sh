@@ -50,7 +50,7 @@ if [ ${osversion} -le 6 ];then
 	chkconfig ndeploy_backends on
 	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
 	do
-		/opt/nDeploy/scripts/generate_config.py $CPANELUSER
+		echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/generate_config.py $CPANELUSER
 	done
 	service nginx restart
 else
@@ -62,7 +62,7 @@ else
 	systemctl enable ndeploy_backends
 	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
         do
-                /opt/nDeploy/scripts/generate_config.py $CPANELUSER
+                echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/generate_config.py $CPANELUSER
         done
 	systemctl restart nginx
 fi
