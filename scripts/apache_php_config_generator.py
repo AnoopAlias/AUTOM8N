@@ -4,6 +4,7 @@ import yaml
 import os
 import sys
 import argparse
+import pwd
 from generate_config import php_profile_set
 import subprocess
 
@@ -55,8 +56,13 @@ if __name__ == "__main__":
     parser.add_argument("CPANELUSER")
     args = parser.parse_args()
     cpaneluser = args.CPANELUSER
-    if os.path.isfile(installation_path+"/conf/user_data.yaml.tmpl"):
-        myconfig = PhpFpmConfig(cpaneluser)
-        myconfig.configure()
-    else:
+    try:
+        pwd.getpwnam(cpaneluser)
+    except KeyError:
         sys.exit(0)
+    else:
+        if os.path.isfile(installation_path+"/conf/user_data.yaml.tmpl"):
+            myconfig = PhpFpmConfig(cpaneluser)
+            myconfig.configure()
+        else:
+            sys.exit(0)

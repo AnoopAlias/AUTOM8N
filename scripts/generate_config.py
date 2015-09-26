@@ -57,7 +57,7 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
 	    xmlstring = s1+s2+s3
 	else:
 	    xmlstring = s1+s3
-            
+
     new_xml_element=etree.fromstring(xmlstring)
     xml_data_stream = etree.parse(tomcat_conf)
     xml_root = xml_data_stream.getroot()
@@ -457,16 +457,21 @@ if __name__ == "__main__":
     args = parser.parse_args()
     cpaneluser = args.CPANELUSER
 
-    cpuserdatayaml = "/var/cpanel/userdata/" + cpaneluser + "/main"
-    cpaneluser_data_stream = open(cpuserdatayaml, 'r')
-    yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
+    try:
+        pwd.getpwnam(cpaneluser)
+    except KeyError:
+        sys.exit(0)
+    else:
+        cpuserdatayaml = "/var/cpanel/userdata/" + cpaneluser + "/main"
+        cpaneluser_data_stream = open(cpuserdatayaml, 'r')
+        yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
 
-    main_domain = yaml_parsed_cpaneluser.get('main_domain')
-    #parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   #This data is irrelevant as parked domain list is in ServerAlias
-    #addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
-    sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
+        main_domain = yaml_parsed_cpaneluser.get('main_domain')
+        #parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   #This data is irrelevant as parked domain list is in ServerAlias
+        #addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
+        sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
 
-    nginx_confgen(cpaneluser, main_domain)  #Generate conf for main domain
+        nginx_confgen(cpaneluser, main_domain)  #Generate conf for main domain
 
-    for domain_in_subdomains in sub_domains:
-        nginx_confgen(cpaneluser, domain_in_subdomains)  #Generate conf for sub domains which takes care of addon as well
+        for domain_in_subdomains in sub_domains:
+            nginx_confgen(cpaneluser, domain_in_subdomains)  #Generate conf for sub domains which takes care of addon as well
