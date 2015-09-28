@@ -32,11 +32,11 @@ def close_cpanel_liveapisock():
 
 
 close_cpanel_liveapisock()
-form = cgi.FieldStorage() 
+form = cgi.FieldStorage()
 
 
 print('Content-Type: text/html')
-print('') 
+print('')
 print('<html>')
 print('<head>')
 print('<title>nDeploy</title>')
@@ -64,7 +64,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
             profile_branch_dict = profile_data_yaml_parsed[mybackend]
             backends_branch_dict = backend_data_yaml_parsed[mybackend]
             print('<form action="update.live.cgi" method="post">')
-            print('<p style="background-color:LightGrey">Select backend version: </p>')
+            print('<p style="background-color:LightGrey">Select backend type: </p>')
             print('<select name="version">')
             for versions_defined in list(backends_branch_dict.keys()):
                 print(('<option value="'+versions_defined+'">'+versions_defined+'</option>'))

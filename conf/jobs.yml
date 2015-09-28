@@ -38,15 +38,15 @@ job2:
   label: Watch /opt/nDeploy/domain-data
   watch: /opt/nDeploy/domain-data
   exclude: []
-  events: ['create', 'modify']
+  events: ['modify']
   options: []
   recursive: false
-  command: /opt/nDeploy/scripts/event_trigger.sh $filename 1
+  command: /opt/nDeploy/scripts/event_trigger.sh $filename 1 $tflags
 job3:
   label: Watch /opt/nDeploy/user-data
   watch: /opt/nDeploy/user-data
   exclude: []
-  events: ['create', 'modify']
+  events: ['modify']
   options: []
   recursive: false
-  command: /opt/nDeploy/scripts/userdata_event_trigger.sh $filename
+  command: /opt/nDeploy/scripts/event_trigger.sh $filename 2 $tflags

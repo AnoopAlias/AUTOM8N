@@ -44,7 +44,6 @@ def cpanel_nginx_awstats_fix(awstats_custom_conf, cpaneluser):
     return
 
 
-
 def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     """Add a vhost to tomcat and restart railo-tomcat app server"""
     tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
@@ -414,14 +413,15 @@ def nginx_confgen(user_name, domain_name):
         sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
         sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
         sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
-        sslcombinedcert = "/etc/nginx/ssl/" + domain_name + ".crt"
-        subprocess.call("cat /dev/null > " + sslcombinedcert, shell=True)
         if sslcacertificatefile:
+            sslcombinedcert = "/etc/nginx/ssl/" + domain_name + ".crt"
+            subprocess.call("cat /dev/null > " + sslcombinedcert, shell=True)
             subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
             subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
             subprocess.call("cat " + sslcacertificatefile + " >> " + sslcombinedcert, shell=True)
+            subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
         else:
-            subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
+            sslcombinedcert = sslcertificatefile
         nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
         template_file = open(installation_path + "/conf/server_ssl.tmpl", 'r')
         config_out = open("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.conf", 'w')

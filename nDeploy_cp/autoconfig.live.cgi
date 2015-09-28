@@ -30,11 +30,11 @@ def close_cpanel_liveapisock():
 
 
 close_cpanel_liveapisock()
-form = cgi.FieldStorage() 
+form = cgi.FieldStorage()
 
 
 print('Content-Type: text/html')
-print('') 
+print('')
 print('<html>')
 print('<head>')
 print('<title>nDeploy</title>')
@@ -60,7 +60,7 @@ if form.getvalue('domain') and form.getvalue('custom'):
             print('<HR>')
             if customconf == "0":
                 print('<form action="autoconfig2.live.cgi" method="post">')
-                print(('<p style="background-color:LightGrey">You are currently using '+backend_category+' as backend and '+ backend_version +' as version/type</p>'))
+                print(('<p style="background-color:LightGrey">You are currently using '+backend_category+' as backend</p>'))
                 print('<p style="background-color:LightGrey">Select a BACKEND from the drop down below to continue</p>')
                 print('<HR>')
                 print('<select name="backend">')
