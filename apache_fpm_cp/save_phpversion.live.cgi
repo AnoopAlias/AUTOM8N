@@ -17,7 +17,6 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 
 
-
 cgitb.enable()
 
 
@@ -34,7 +33,7 @@ cpaneluser = os.environ["USER"]
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
-print('') 
+print('')
 print('<html>')
 print('<head>')
 print('<title>nDeploy</title>')
@@ -45,7 +44,7 @@ print('<HR>')
 if form.getvalue('phpversion'):
     if os.path.isfile(installation_path+"/user-data/"+cpaneluser):
         userdatayaml = installation_path+"/user-data/"+cpaneluser
-        userdatayaml_data_stream = open(userdatayaml,'r')
+        userdatayaml_data_stream = open(userdatayaml, 'r')
         yaml_parsed_userdata = yaml.safe_load(userdatayaml_data_stream)
         phpversion = form.getvalue('phpversion')
         yaml_parsed_userdata['PHP'] = phpversion
@@ -53,7 +52,7 @@ if form.getvalue('phpversion'):
         with open(userdatayaml, 'w') as yaml_file:
             yaml_file.write(yaml.dump(yaml_parsed_userdata, default_flow_style=False))
         yaml_file.close()
-        print('Apache will now use PHP-FPM version: '+ phpversion)
+        print('Apache will now use PHP-FPM version: ' + phpversion)
     else:
         print('ERROR : cannot access userdata')
 else:

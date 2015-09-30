@@ -38,7 +38,7 @@ def cpanel_nginx_awstats_fix(awstats_custom_conf, cpaneluser):
     ExtraTrackedRowsLimit=100000
     """
     with open(awstats_custom_conf, 'w') as f:
-		f.write(file_content)
+        f.write(file_content)
     f.close()
     subprocess.call("chown "+cpaneluser+":"+cpaneluser+" "+awstats_custom_conf, shell=True)
     return
@@ -47,25 +47,25 @@ def cpanel_nginx_awstats_fix(awstats_custom_conf, cpaneluser):
 def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     """Add a vhost to tomcat and restart railo-tomcat app server"""
     tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
-    s1='<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'/" />'
-    s2=''
+    s1 = '<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'/" />'
+    s2 = ''
     for domain in domain_aname_list:
-        s2=s2+'<Alias>'+domain+'</Alias>'
-	s3='</Host>'
-	if s2:
-	    xmlstring = s1+s2+s3
-	else:
-	    xmlstring = s1+s3
+        s2 = s2+'<Alias>'+domain+'</Alias>'
+        s3 = '</Host>'
+        if s2:
+            xmlstring = s1+s2+s3
+        else:
+            xmlstring = s1+s3
 
-    new_xml_element=etree.fromstring(xmlstring)
+    new_xml_element = etree.fromstring(xmlstring)
     xml_data_stream = etree.parse(tomcat_conf)
     xml_root = xml_data_stream.getroot()
     for node1 in xml_root.iter('Service'):
-	for node2 in node1.iter('Engine'):
+        for node2 in node1.iter('Engine'):
             for node3 in node2.iter('Host'):
                 if domain_name in list(node3.attrib.values()):
                     node2.remove(node3)
-	    node2.append(new_xml_element)
+            node2.append(new_xml_element)
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
     subprocess.call('/opt/railo/railo_ctl restart', shell=True)
     return
@@ -86,7 +86,7 @@ def railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_l
     os.chmod(document_root+"/WEB-INF", 0o770)
     os.chmod(document_root+"/log", 0o770)
     nsm = {None: "http://caucho.com/ns/resin"}
-    mydict = { 'id': "/",'root-directory':document_root }
+    mydict = {'id': "/", 'root-directory': document_root}
     page = etree.Element('host', nsmap=nsm)
     doc = etree.ElementTree(page)
     host_name = etree.SubElement(page, 'host-name')
@@ -159,7 +159,7 @@ def php_profile_set(user_name, phpversion, php_path):
             else:
                 return True
     else:
-        sed_string='sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
+        sed_string = 'sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
         if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
             with open(php_path + "/var/run/php-fpm.pid") as f:
@@ -203,7 +203,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
     if os.path.isfile(profileyaml):
         profileyaml_data_stream = open(profileyaml, 'r')
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-	profileyaml_data_stream.close()
+        profileyaml_data_stream.close()
         profile_custom_status = yaml_parsed_profileyaml.get('customconf')
         config_test_status = yaml_parsed_profileyaml.get('testconf')
         if profile_custom_status == "0" and config_test_status == "0":
@@ -233,11 +233,11 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
             elif profile_category == "HHVM_NOBODY":
                 hhvm_nobody_socket = yaml_parsed_profileyaml.get('backend_path')
                 pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
-		if pagespeed_status == "0":
-		    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
-		else:
-		    pagespeed_include = pagespeed_include_location
-		profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
+                if pagespeed_status == "0":
+                    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+                else:
+                    pagespeed_include = pagespeed_include_location
+                profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
                 profile_config_out = open(include_file, 'w')
                 for line in profile_template_file:
                     line = line.replace('CPANELIP', cpanelip)
@@ -303,7 +303,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 profile_template_file.close()
                 profile_config_out.close()
             else:
-		proxytype = yaml_parsed_profileyaml.get('backend_version')
+                proxytype = yaml_parsed_profileyaml.get('backend_version')
                 proxy_port = str(yaml_parsed_profileyaml.get('backend_path'))
                 pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
                 if pagespeed_status == "0":
@@ -315,15 +315,15 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 profile_config_out = open(include_file, 'w')
                 for line in profile_template_file:
                     line = line.replace('CPANELIP', cpanelip)
-		    line = line.replace('DOMAINNAME', domain_name)
+                    line = line.replace('DOMAINNAME', domain_name)
                     line = line.replace('PROXYLOCATION', proxy_path)
                     line = line.replace('DOCUMENTROOT', document_root)
                     line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
                     profile_config_out.write(line)
                 profile_template_file.close()
                 profile_config_out.close()
-		if proxytype == "railo_tomcat":
-		    railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
+                if proxytype == "railo_tomcat":
+                    railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
                 elif proxytype == "railo_resin":
                     railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list)
         elif config_test_status == "1":
@@ -356,14 +356,14 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                         update_config_test_status(profileyaml, 0)
             else:
                 update_custom_profile(profileyaml, 0)
-		update_config_test_status(profileyaml, 0)
+                update_config_test_status(profileyaml, 0)
         else:
             return
     else:
-	if sslenabled == 1:
+        if sslenabled == 1:
             template_file = open(installation_path + "/conf/domain_data_SSL.yaml.tmpl", 'r')
         else:
-	    template_file = open(installation_path + "/conf/domain_data.yaml.tmpl", 'r')
+            template_file = open(installation_path + "/conf/domain_data.yaml.tmpl", 'r')
         config_out = open(profileyaml, 'w')
         for line in template_file:
             line = line.replace('CPANELUSER', user_name)
@@ -381,16 +381,16 @@ def nginx_confgen(user_name, domain_name):
     yaml_parsed_cpaneldomain = yaml.safe_load(cpaneldomain_data_stream)
     cpanel_ipv4 = yaml_parsed_cpaneldomain.get('ip')
     domain_home = yaml_parsed_cpaneldomain.get('homedir')
-    awstats_dir=domain_home+"/tmp/awstats"
-    awstats_custom_conf=domain_home+"/tmp/awstats/awstats.conf.include"
+    awstats_dir = domain_home+"/tmp/awstats"
+    awstats_custom_conf = domain_home+"/tmp/awstats/awstats.conf.include"
     if os.path.exists(awstats_dir):
-    	if not os.path.isfile(awstats_custom_conf):
-		cpanel_nginx_awstats_fix(awstats_custom_conf, user_name)
+        if not os.path.isfile(awstats_custom_conf):
+            cpanel_nginx_awstats_fix(awstats_custom_conf, user_name)
     document_root = yaml_parsed_cpaneldomain.get('documentroot')
     domain_sname = yaml_parsed_cpaneldomain.get('servername')
     if domain_sname.startswith("*"):
-        domain_aname=domain_sname
-        domain_sname="_wildcard_."+domain_sname.replace('*.','')
+        domain_aname = domain_sname
+        domain_sname = "_wildcard_."+domain_sname.replace('*.', '')
     else:
         domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
     if domain_aname:
@@ -399,11 +399,11 @@ def nginx_confgen(user_name, domain_name):
         domain_aname_list = []
     domain_list = domain_sname + " " + domain_aname
     if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
-	if yaml_parsed_cpaneldomain.get('ipv6'):
-        	for ipv6_addr in list(yaml_parsed_cpaneldomain.get('ipv6').keys()):
-            		cpanel_ipv6 = "listen [" + ipv6_addr + "]"
-	else:
-		cpanel_ipv6 = "#CPIPVSIX"
+        if yaml_parsed_cpaneldomain.get('ipv6'):
+            for ipv6_addr in list(yaml_parsed_cpaneldomain.get('ipv6').keys()):
+                cpanel_ipv6 = "listen [" + ipv6_addr + "]"
+        else:
+            cpanel_ipv6 = "#CPIPVSIX"
     else:
         cpanel_ipv6 = "#CPIPVSIX"
     if os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
@@ -467,11 +467,11 @@ if __name__ == "__main__":
         yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
 
         main_domain = yaml_parsed_cpaneluser.get('main_domain')
-        #parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   #This data is irrelevant as parked domain list is in ServerAlias
-        #addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
+        # parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   #This data is irrelevant as parked domain list is in ServerAlias
+        # addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
         sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
 
-        nginx_confgen(cpaneluser, main_domain)  #Generate conf for main domain
+        nginx_confgen(cpaneluser, main_domain)  # Generate conf for main domain
 
         for domain_in_subdomains in sub_domains:
-            nginx_confgen(cpaneluser, domain_in_subdomains)  #Generate conf for sub domains which takes care of addon as well
+            nginx_confgen(cpaneluser, domain_in_subdomains)  # Generate conf for sub domains which takes care of addon as well

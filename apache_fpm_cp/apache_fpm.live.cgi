@@ -17,7 +17,6 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 
 
-
 cgitb.enable()
 
 
@@ -33,7 +32,7 @@ close_cpanel_liveapisock()
 cpaneluser = os.environ["USER"]
 
 print('Content-Type: text/html')
-print('') 
+print('')
 print('<html>')
 print('<head>')
 print('<title>nDeploy</title>')
@@ -48,7 +47,7 @@ if os.path.isfile(backend_config_file):
     if "PHP" in backend_data_yaml_parsed and os.path.isfile(installation_path+"/user-data/"+cpaneluser) and os.path.isfile(installation_path+"/conf/user_data.yaml.tmpl"):
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         userdatayaml = installation_path+"/user-data/"+cpaneluser
-        userdatayaml_data_stream = open(userdatayaml,'r')
+        userdatayaml_data_stream = open(userdatayaml, 'r')
         yaml_parsed_userdata = yaml.safe_load(userdatayaml_data_stream)
         userdatayaml_data_stream.close()
         myversion = yaml_parsed_userdata.get('PHP')

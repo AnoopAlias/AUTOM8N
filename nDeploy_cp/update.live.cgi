@@ -44,11 +44,11 @@ def update_config_test_status(profile_yaml, value):
 
 
 close_cpanel_liveapisock()
-form = cgi.FieldStorage() 
+form = cgi.FieldStorage()
 
 
 print('Content-Type: text/html')
-print('') 
+print('')
 print('<html>')
 print('<head>')
 print('<title>nDeploy</title>')

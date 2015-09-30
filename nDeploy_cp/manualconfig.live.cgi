@@ -30,6 +30,7 @@ def close_cpanel_liveapisock():
     sock.close()
     return
 
+
 def update_custom_profile(profile_yaml, value):
     """Function to set custom profile status in domain data yaml"""
     yaml_data_stream_toupdate = open(profile_yaml, 'r')
@@ -40,6 +41,7 @@ def update_custom_profile(profile_yaml, value):
         yaml_file.write(yaml.dump(yaml_profile_datadict, default_flow_style=False))
     yaml_file.close()
     return
+
 
 def update_config_test_status(profile_yaml, value):
     """Function to set custom profile status in domain data yaml"""
@@ -53,14 +55,12 @@ def update_config_test_status(profile_yaml, value):
     return
 
 
-
-
 close_cpanel_liveapisock()
-form = cgi.FieldStorage() 
+form = cgi.FieldStorage()
 
 
 print('Content-Type: text/html')
-print('') 
+print('')
 print('<html>')
 print('<head>')
 print('<title>nDeploy</title>')
@@ -98,9 +98,9 @@ if form.getvalue('domain') and form.getvalue('custom'):
         elif customconf == '0':
             print('<HR>')
             update_custom_profile(profileyaml, 0)
-            print(('<p style="background-color:LightGrey">(!) config mode reset .You are using ' + backend_category + ' as backend and '+ backend_version + ' as type/version </p>')) 
+            print(('<p style="background-color:LightGrey">(!) config mode reset .You are using ' + backend_category + ' as backend and ' + backend_version + ' as type/version </p>'))
         else:
-            print('ERROR : Invalid POST data') 
+            print('ERROR : Invalid POST data')
 
     else:
         print('ERROR : domain-data file i/o error')
