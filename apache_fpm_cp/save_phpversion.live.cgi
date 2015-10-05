@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 import socket
-import sys
 import yaml
 import cgi
 import cgitb

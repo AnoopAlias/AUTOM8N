@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 import os
 import socket
-import sys
 import yaml
-import cgi
 import cgitb
 
 
@@ -51,7 +49,8 @@ if os.path.isfile(backend_config_file):
         yaml_parsed_userdata = yaml.safe_load(userdatayaml_data_stream)
         userdatayaml_data_stream.close()
         myversion = yaml_parsed_userdata.get('PHP')
-        print('Active PHP-FPM backend: '+myversion)
+        print('<HR>')
+        print('Active PHP-FPM backend for Apache httpd : '+myversion)
         print('<HR>')
         print('<form action="save_phpversion.live.cgi" method="post">')
         print('Select new PHP version')
@@ -69,5 +68,8 @@ else:
     print('ERROR: Unable to access backend config file')
 print('<HR>')
 print('<p style="background-color:LightGrey">(!) click on the php-fpm icon above to restart the configuration process anytime</p>')
+print('<p style="background-color:LightGrey">(!) Apache PHP-FPM plugin works only if you set nginX plugin to PROXY mode</p>')
+print('<p style="background-color:LightGrey">(!) and set template : Proxy to cPanel httpd / cPanel httpd(SSL)</p>')
+
 print('</body>')
 print('</html>')
