@@ -51,8 +51,8 @@ listen.backlog = 65535
 ; Default Values: user and group are set as the running user
 ;                 mode is set to 0660
 listen.owner = $pool
-listen.group = $pool
-listen.mode = 0666
+listen.group = nobody
+listen.mode = 0660
  
 ; List of ipv4 addresses of FastCGI clients which are allowed to connect.
 ; Equivalent to the FCGI_WEB_SERVER_ADDRS environment variable in the original
