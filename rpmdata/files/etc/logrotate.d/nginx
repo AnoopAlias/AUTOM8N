@@ -5,7 +5,7 @@
         compress
         delaycompress
         notifempty
-        create 640 nginx adm
+        create 640 nobody adm
         sharedscripts
         postrotate
                 [ -f /var/run/nginx.pid ] && kill -USR1 `cat /var/run/nginx.pid`
