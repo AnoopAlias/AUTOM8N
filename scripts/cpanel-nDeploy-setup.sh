@@ -36,7 +36,6 @@ else
 	sed -i "s/CustomLog/#CustomLog/" /var/cpanel/templates/apache2_2/ssl_vhost.local
 fi
 
-echo "SetEnvIf X-Forwarded-Proto https HTTPS=on" >> /usr/local/apache/conf/includes/pre_virtualhost_global.conf
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
 /scripts/rebuildhttpdconf
 /scripts/restartsrv httpd
@@ -83,8 +82,6 @@ sed -i "s/#CustomLog/CustomLog" /var/cpanel/templates/apache2_2/ssl_vhost.local
 sed -i "s/#CustomLog/CustomLog" /var/cpanel/templates/apache2_4/vhost.local
 sed -i "s/#CustomLog/CustomLog" /var/cpanel/templates/apache2_4/ssl_vhost.local
 
-sed -i '/SetEnvIf X-Forwarded-Proto https HTTPS=on/d' /usr/local/apache/conf/includes/pre_virtualhost_global.conf
-
 echo -e '\e[93m Rebuilding Apache httpd backend configs.Apache will listen on default ports!  \e[0m'
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 if [ ${osversion} -le 6 ];then
@@ -112,12 +109,12 @@ case "$1" in
         enable)
             enable
             ;;
-         
+
         disable)
             disable
             ;;
         *)
             echo $"Usage: $0 {enable|disable}"
             exit 1
- 
+
 esac
