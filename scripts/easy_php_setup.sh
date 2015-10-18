@@ -10,10 +10,10 @@ if [ -f /etc/cpanel/ea4/is_ea4 ];then
 		ln -s /opt/cpanel/ea-php$ver/root/usr/sbin/php-fpm /opt/cpanel/ea-php$ver/root/sbin/php-fpm
 		ln -s /opt/cpanel/ea-php$ver/root/etc/php-fpm.d /opt/cpanel/ea-php$ver/root/usr/etc/php-fpm.d
 		ln -s /opt/cpanel/ea-php$ver/root/var /opt/cpanel/ea-php$ver/root/usr/var
-		/opt/nDeploy/scripts/update_backend.py CPANELPHP$ver /opt/cpanel/ea-php$ver/root
-		systemctl stop ndeploy_backends || service ndeploy_backends stop
-		systemctl start ndeploy_backends || service ndeploy_backends start
-		systemctl enable ndeploy_backends || chkconfig ndeploy_backends on
+		/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
+		service ndeploy_backends stop || systemctl stop ndeploy_backends
+		service ndeploy_backends start || systemctl start ndeploy_backends
+		chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
 	done
 else
 	yum -y install scl-utils
