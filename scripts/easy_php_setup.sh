@@ -7,9 +7,11 @@ if [ -f /etc/cpanel/ea4/is_ea4 ];then
 	do
 		/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root/
 		sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/cpanel/ea-php$ver/root/etc/php-fpm.d/www.conf
+		mkdir /opt/cpanel/ea-php$ver/root/sbin
+		mkdir /opt/cpanel/ea-php$ver/root/usr/etc
 		ln -s /opt/cpanel/ea-php$ver/root/usr/sbin/php-fpm /opt/cpanel/ea-php$ver/root/sbin/php-fpm
 		ln -s /opt/cpanel/ea-php$ver/root/etc/php-fpm.d /opt/cpanel/ea-php$ver/root/usr/etc/php-fpm.d
-		ln -s /opt/cpanel/ea-php$ver/root/var /opt/cpanel/ea-php$ver/root/usr/var
+		ln -s /opt/cpanel/ea-php$ver/root/usr/var /opt/cpanel/ea-php$ver/root/
 		/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 		service ndeploy_backends stop || systemctl stop ndeploy_backends
 		service ndeploy_backends start || systemctl start ndeploy_backends
