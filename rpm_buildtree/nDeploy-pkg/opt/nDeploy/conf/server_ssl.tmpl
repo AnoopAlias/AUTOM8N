@@ -19,6 +19,9 @@ server {
   access_log /usr/local/apache/domlogs/DOMAINNAME-bytes_log bytes_log;
   access_log /usr/local/apache/domlogs/DOMAINNAME-ssl_log main;
 
+  client_body_timeout 10s;
+  client_header_timeout 10s;
+
   include /etc/nginx/sites-enabled/DOMAINNAME_SSL.include;
 
  }
