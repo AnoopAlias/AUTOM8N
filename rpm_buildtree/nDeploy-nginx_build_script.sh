@@ -59,4 +59,7 @@ sed -i "s/PASSENGER_VERSION/$PASSENGER_VERSION/g" ../nginx-pkg-64/usr/nginx/scri
 rm -rf ../nginx-pkg-64/usr/nginx/buildout
 cp -pvr /usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/buildout ../nginx-pkg-64/usr/nginx/buildout
 cd ../nginx-pkg-64
+mkdir -p var/cache/nginx/ngx_pagespeed
+mkdir -p var/log/nginx
+mkdir -p var/run
 fpm -s dir -t rpm -C ../nginx-pkg-64 --vendor "PiServe Technologies" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m info@piserve.com -e --description "nDeploy custom nginx package" --url http://piserve.com --conflicts nginx -d zlib -d openssl -d pcre -d libcurl --after-install ../after_nginx_install --name nginx-nDeploy .
