@@ -10,6 +10,9 @@ PASSENGER_VERSION="5.0.20"
 CACHE_PURGE_VERSION="2.3"
 NAXSI_VERSION="0.54"
 
+rm -f nginx-pkg-64/nginx-nDeploy*
+rm -rf nginx-${NGINX_VERSION}*
+
 rsync -av --exclude 'usr/lib' nginx-pkg-64-common/ nginx-pkg-64/
 
 yum install rpm-build libcurl-devel pcre-devel
@@ -46,14 +49,13 @@ make DESTDIR=./tempo install
 rsync -av naxsi-${NAXSI_VERSION}/naxsi_config/naxsi_core.rules ../nginx-pkg-64/etc/nginx/conf.d/naxsi_core.rules
 rm -rf ../nginx-pkg-64/usr/nginx/nxapi
 rsync -av naxsi-${NAXSI_VERSION}/nxapi ../nginx-pkg-64/usr/nginx/
+rsync -av tempo/usr/sbin ../nginx-pkg-64/usr/
 
 sed -i "s/RUBY_VERSION/$MY_RUBY_VERSION/g" ../nginx-pkg-64/etc/nginx/conf.d/passenger.conf
 sed -i "s/PASSENGER_VERSION/$PASSENGER_VERSION/g" ../nginx-pkg-64/etc/nginx/conf.d/passenger.conf
 sed -i "s/RUBY_VERSION/$MY_RUBY_VERSION/g" ../nginx-pkg-64/usr/nginx/scripts/nginx-passenger-setup.sh
 sed -i "s/PASSENGER_VERSION/$PASSENGER_VERSION/g" ../nginx-pkg-64/usr/nginx/scripts/nginx-passenger-setup.sh
 
-rm -f ../nginx-pkg-64/usr/sbin/nginx
-cp -p ./tempo/usr/sbin/nginx ../nginx-pkg-64/usr/sbin/nginx
 rm -rf ../nginx-pkg-64/usr/nginx/buildout
 cp -pvr /usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/buildout ../nginx-pkg-64/usr/nginx/buildout
 cd ../nginx-pkg-64
