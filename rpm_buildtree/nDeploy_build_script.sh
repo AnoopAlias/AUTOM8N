@@ -2,6 +2,8 @@
 #Author: Anoop P Alias
 
 RPM_ITERATION="40"
+
+rm -f nDeploy-pkg/nDeploy-* nDeploy-pkg-centos7/nDeploy-*
 rsync -av ../scripts/ nDeploy-pkg/opt/nDeploy/scripts/
 rsync -av ../scripts/ nDeploy-pkg-centos7/opt/nDeploy/scripts/
 rsync -av ../conf/ nDeploy-pkg/opt/nDeploy/conf/
