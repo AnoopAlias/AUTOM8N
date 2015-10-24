@@ -11,15 +11,35 @@ http {
 
 	include /etc/nginx/mime.types;
 	default_type application/octet-stream;
-	##
+    
+    #NAXSI
+    ##
+    include /etc/nginx/conf.d/naxsi_core.rules;
+    ##
+
+    ##
+    #Limit Request Zone conf
+    ##
+    include /etc/nginx/conf.d/limit_request.conf;
+    ##
+
+    ##
+    #CloudFare RealIP conf
+    ##
+    include /etc/nginx/conf.d/cloudfare_realip.conf;
+    ##
+
     #FastCGI and PROXY cache config
     ##
     include /etc/nginx/conf.d/nginx_cache.conf;
+    ##
+
     ##
     #Phusion Passenger Setting
     ##
     include /etc/nginx/conf.d/passenger.conf;
     ##
+
 	access_log /dev/null;
 	error_log /dev/null;
 
