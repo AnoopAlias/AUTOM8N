@@ -3,5 +3,4 @@
 yum -y install python-pip
 pip install --upgrade pip
 pip install -r /usr/nginx/nxapi/requirements.txt
-cd /usr/nginx/nxapi/
-python setup.py install
+echo "NXAPI setup in /usr/nginx/nxapi//usr/nginx/nxapi/"
