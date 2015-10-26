@@ -6,7 +6,7 @@ location / {
         try_files $uri $uri/ @handler; ## If missing pass the URI to Magento's front handler
         expires 30d; ## Assume all files are cachable
 }
- 
+
     ## These locations would be hidden by .htaccess normally
 location ^~ /app/                { deny all; }
 location ^~ /includes/           { deny all; }
@@ -15,17 +15,17 @@ location ^~ /media/downloadable/ { deny all; }
 location ^~ /pkginfo/            { deny all; }
 location ^~ /report/config.xml   { deny all; }
 location ^~ /var/                { deny all; }
- 
+
 #location /var/export/ { ## Allow admins only to view export folder
 #        auth_basic           "Restricted"; ## Message shown in login window
 #        auth_basic_user_file htpasswd; ## See /etc/nginx/htpassword
 #        autoindex            on;
 #}
- 
+
 location  /. { ## Disable .htaccess and other hidden files
         return 404;
 }
- 
+
 location @handler { ## Magento uses a common front handler
         rewrite / /index.php;
 }
@@ -43,6 +43,9 @@ location ~ .php/ { ## Forward paths like /js/index.php/x.js to relevant handler
 #}
 
 location ~ \.php$ {
+    #NAXSI_INCLUDE_FILE;
+    #NAXSI_DOMAIN_WHITELISTS;
+
 	try_files $uri =404;
         fastcgi_pass unix:SOCKETFILE;
         fastcgi_index index.php;

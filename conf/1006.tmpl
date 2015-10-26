@@ -2,6 +2,8 @@
 #Proxy Pass to a backend webserver listening on port 4430
 #proxy_cache enabled
 location / {
+    #NAXSI_INCLUDE_FILE;
+    #NAXSI_DOMAIN_WHITELISTS;
 
  	proxy_send_timeout   90;
    	proxy_read_timeout   90;

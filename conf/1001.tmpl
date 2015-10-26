@@ -6,7 +6,7 @@ root DOCUMENTROOT;
 location / {
         try_files $uri $uri/ /index.cfm;
 }
- 
+
 location ~* /railo-context/admin/ {
 	proxy_send_timeout   90;
         proxy_read_timeout   90;
@@ -25,9 +25,12 @@ location ~* /railo-context/admin/ {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Real-IP $remote_addr;
 }
- 
+
 # Main Railo proxy handler
 location ~ \.(cfm|cfml|cfc|jsp|cfr)(.*)$ {
+    #NAXSI_INCLUDE_FILE;
+    #NAXSI_DOMAIN_WHITELISTS;
+
 	proxy_send_timeout   90;
         proxy_read_timeout   90;
 

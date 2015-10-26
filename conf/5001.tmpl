@@ -7,6 +7,9 @@ location / {
 }
 
 location ~ \.php$ {
+    #NAXSI_INCLUDE_FILE;
+    #NAXSI_DOMAIN_WHITELISTS;
+
 	try_files $uri =404;
         fastcgi_pass unix:SOCKETFILE;
         fastcgi_index index.php;

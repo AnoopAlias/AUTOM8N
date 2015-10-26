@@ -14,7 +14,7 @@ location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
         }
 
 
-# caching of files 
+# caching of files
 location ~* \.(ico|pdf|flv)$ {
         expires 1y;
         }
@@ -26,6 +26,9 @@ location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|txt)$ {
 
 
 location ~ \.php$ {
+    #NAXSI_INCLUDE_FILE;
+    #NAXSI_DOMAIN_WHITELISTS;
+
 	try_files $uri =404;
         fastcgi_pass unix:SOCKETFILE;
         fastcgi_index index.php;
