@@ -21,3 +21,6 @@ location / {
     proxy_set_header   X-Forwarded-Proto $scheme;
     proxy_redirect     off;
   }
+  location /NaxsiRequestDenied {
+         return 418;
+     }

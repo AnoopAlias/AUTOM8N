@@ -26,6 +26,10 @@ location ~* /railo-context/admin/ {
         proxy_set_header X-Real-IP $remote_addr;
 }
 
+location /NaxsiRequestDenied {
+       return 418;
+   }
+
 # Main Railo proxy handler
 location ~ \.(cfm|cfml|cfc|jsp|cfr)(.*)$ {
     #NAXSI_INCLUDE_FILE;

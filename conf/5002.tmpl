@@ -23,7 +23,9 @@ location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|txt)$ {
         expires 14d;
         }
 
-
+        location /NaxsiRequestDenied {
+               return 418;
+           }
 
 location ~ \.php$ {
     #NAXSI_INCLUDE_FILE;

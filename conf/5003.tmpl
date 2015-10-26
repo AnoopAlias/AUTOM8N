@@ -42,6 +42,10 @@ location ~ .php/ { ## Forward paths like /js/index.php/x.js to relevant handler
 #        allow all;
 #}
 
+location /NaxsiRequestDenied {
+       return 418;
+   }
+
 location ~ \.php$ {
     #NAXSI_INCLUDE_FILE;
     #NAXSI_DOMAIN_WHITELISTS;

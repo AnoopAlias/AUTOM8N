@@ -6,6 +6,10 @@ location / {
         try_files $uri $uri/ /index.php?q=$uri&$args;
 }
 
+location /NaxsiRequestDenied {
+       return 418;
+   }
+
 location ~ \.php$ {
     #NAXSI_INCLUDE_FILE;
     #NAXSI_DOMAIN_WHITELISTS;
