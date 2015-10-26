@@ -11,10 +11,10 @@ http {
 
 	include /etc/nginx/mime.types;
 	default_type application/octet-stream;
-    
+
     #NAXSI
     ##
-    include /etc/nginx/conf.d/naxsi_core.rules;
+    include /etc/nginx/naxsi_core.rules;
     ##
 
     ##
