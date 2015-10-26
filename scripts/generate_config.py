@@ -204,15 +204,15 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         profileyaml_data_stream = open(profileyaml, 'r')
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         profileyaml_data_stream.close()
-        if yaml_parsed_profileyaml.has_key("naxsi")
-            naxsi_whitelist_file = "/etc/nginx/sites-enabled/" + domain_name + ".nxapi.wl"
-            if not os.path.isfile(naxsi_whitelist_file):
-                subprocess.call("touch "+naxsi_whitelist_file, shell=True)
-            naxsi_status = yaml_parsed_profileyaml.get('naxsi')
-            if naxsi_status == "0":
-                naxsi_rules_file = "/etc/nginx/conf.d/naxsi_learn.rules"
-            else:
-                naxsi_rules_file = "/etc/nginx/conf.d/naxsi_active.rules"
+        naxsi_whitelist = "/etc/nginx/sites-enabled/" + domain_name + ".nxapi.wl"
+        if not os.path.isfile(naxsi_whitelist):
+            subprocess.call("touch "+naxsi_whitelist, shell=True)
+        naxsi_whitelist_file = "include "+naxsi_whitelist
+        naxsi_status = yaml_parsed_profileyaml.get('naxsi', None)
+        if naxsi_status == "1":
+            naxsi_rules_file = "include /etc/nginx/conf.d/naxsi_active.rules"
+        else:
+            naxsi_rules_file = "include /etc/nginx/conf.d/naxsi_learn.rules"
         profile_custom_status = yaml_parsed_profileyaml.get('customconf')
         config_test_status = yaml_parsed_profileyaml.get('testconf')
         if profile_custom_status == "0" and config_test_status == "0":
