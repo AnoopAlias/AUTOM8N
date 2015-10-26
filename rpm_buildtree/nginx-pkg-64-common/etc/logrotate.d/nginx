@@ -7,7 +7,10 @@
         notifempty
         create 640 nobody adm
         sharedscripts
+        prerotate
+            [ -f /usr/nginx/scripts/nxapi-learn.sh ] && /usr/nginx/scripts/nxapi-learn.sh
+        endscript
         postrotate
-                [ -f /var/run/nginx.pid ] && kill -USR1 `cat /var/run/nginx.pid`
+            [ -f /var/run/nginx.pid ] && kill -USR1 `cat /var/run/nginx.pid`
         endscript
 }
