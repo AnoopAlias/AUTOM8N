@@ -1,7 +1,7 @@
 #!/bin/bash
 wget -O /tmp/phpversion.hint http://rpm.piserve.com/phpversion.hint
 
-#Compile PHP54 
+#Compile PHP54
 compile_php54(){
 
 php54_ver=$(cat /tmp/phpversion.hint|grep "^5.4")
@@ -10,7 +10,7 @@ wget -O /usr/local/src/php-${php54_ver}.tar.bz2 http://us2.php.net/distributions
 tar -xvjf /usr/local/src/php-${php54_ver}.tar.bz2 -C /usr/local/src/
 wget -O /usr/local/src/cl-apache-patches.tar.gz http://repo.cloudlinux.com/cloudlinux/sources/da/cl-apache-patches.tar.gz
 cd /usr/local/src/php-${php54_ver}
-tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.4_autoconf.patch 
+tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.4_autoconf.patch
 patch -p1 --fuzz=10 < fpm-lve-php5.4_autoconf.patch
 autoconf
 config_args=$(php-config --configure-options|sed "s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
@@ -66,9 +66,13 @@ rm -rf /usr/local/src/php-${php56_ver} /usr/local/src/php-${php56_ver}.tar.bz2 /
 
 
 #Uncomment any of the functions below to prevent that version from compiling
-compile_php54
-compile_php55
-compile_php56
+#compile_php54
+#compile_php55
+#compile_php56
+echo "Functionality of this script is moved to"
+echo "/opt/nDeploy/scripts/easy_php_setup.sh"
+echo "Please use the above script instead"
+
 
 
 
@@ -85,7 +89,3 @@ elif [ ${osversion} -eq 7 ];then
 else
 	echo "ndeploy_backends not restarted"
 fi
-
-
-
-	
