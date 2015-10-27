@@ -2,10 +2,10 @@
 #Author: Anoop P Alias
 
 cd /usr/nginx/nxapi/
-./nxtool.py -c nxapi.json --files=/var/log/nginx/error.log
+./nxtool.py --colors -c nxapi.json --files=/var/log/nginx/error.log
 for DOMAIN in $(cat /etc/userdomains |cut -d: -f1|grep -v "*")
 do
-./nxtool.py -c nxapi.json -s ${DOMAIN} -w /etc/nginx/sites-enabled/${DOMAIN}.nxapi.wl --tag
-./nxtool.py -c nxapi.json -s ${DOMAIN} -f --slack|grep BasicRule >> /etc/nginx/sites-enabled/${DOMAIN}.nxapi.wl
+./nxtool.py --colors -c nxapi.json -s ${DOMAIN} -w /etc/nginx/sites-enabled/${DOMAIN}.nxapi.wl --tag
+./nxtool.py --colors -c nxapi.json -s ${DOMAIN} -f --slack|grep BasicRule >> /etc/nginx/sites-enabled/${DOMAIN}.nxapi.wl
 done
 /usr/sbin/nginx -s reload
