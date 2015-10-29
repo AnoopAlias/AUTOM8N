@@ -3,7 +3,11 @@ touch /opt/nDeploy/conf/backends.yaml
 /opt/nDeploy/scripts/update_backend.py PROXY apache_SSL 4430
 touch /opt/nDeploy/conf/profiles.yaml
 /opt/nDeploy/scripts/update_profiles.py PROXY 1000 "Proxy to cPanel httpd"
+/opt/nDeploy/scripts/update_profiles.py PROXY 1020 "Proxy to httpd+Drupal Firewall"
+/opt/nDeploy/scripts/update_profiles.py PROXY 1021 "Proxy to httpd+Wordpress Firewall"
 /opt/nDeploy/scripts/update_profiles.py PROXY 1004 "Proxy to cPanel httpd(SSL)"
+/opt/nDeploy/scripts/update_profiles.py PROXY 1022 "Proxy to httpd(SSL)+Drupal Firewall"
+/opt/nDeploy/scripts/update_profiles.py PROXY 1023 "Proxy to httpd(SSL)+Wordpress Firewall"
 /opt/nDeploy/scripts/update_profiles.py PROXY 1005 "Proxy+cache to cPanel httpd"
 /opt/nDeploy/scripts/update_profiles.py PROXY 1006 "Proxy+cache to cPanel httpd(SSL)"
 /opt/nDeploy/scripts/update_profiles.py PROXY 1003 "nginX redirect http to https"
