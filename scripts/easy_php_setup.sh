@@ -105,7 +105,7 @@ else
 			chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
 		done
 	else
-		yum -y install scl-utils
+		yum -y install scl-utils libmcrypt
 		osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 		echo ${osversion}
 		if [ ${osversion} -eq 6 ];then
