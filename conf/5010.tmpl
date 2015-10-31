@@ -10,6 +10,12 @@ location /NaxsiRequestDenied {
        return 418;
    }
 
+location ~ ^/pingphpfpm$ {
+            include /etc/nginx/fastcgi_params;
+            fastcgi_pass unix:SOCKETFILE;
+        }
+
+
 location ~ \.php$ {
     #NAXSI_INCLUDE_FILE;
     #NAXSI_DOMAIN_WHITELISTS;

@@ -23,9 +23,15 @@ location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|txt)$ {
         expires 14d;
         }
 
-        location /NaxsiRequestDenied {
+location ~ ^/pingphpfpm$ {
+            include /etc/nginx/fastcgi_params;
+            fastcgi_pass unix:SOCKETFILE;
+        }
+
+
+location /NaxsiRequestDenied {
                return 418;
-           }
+        }
 
 location ~ \.php$ {
     #NAXSI_INCLUDE_FILE;

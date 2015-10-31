@@ -42,6 +42,12 @@ location ~ .php/ { ## Forward paths like /js/index.php/x.js to relevant handler
 #        allow all;
 #}
 
+location ~ ^/pingphpfpm$ {
+            include /etc/nginx/fastcgi_params;
+            fastcgi_pass unix:SOCKETFILE;
+        }
+
+
 location /NaxsiRequestDenied {
        return 418;
    }
