@@ -67,7 +67,7 @@ if os.path.isfile(installation_path+"/lock/todel_"+cpaneluser):
         os.remove(line)
     fhandle.close()
     os.remove(installation_path+"/lock/todel_"+cpaneluser)
-if cpaneluser != cpanelnewuser:    
+if cpaneluser != cpanelnewuser:
     remove_php_fpm_pool(cpaneluser)
 subprocess.call("/usr/sbin/nginx -s reload", shell=True)
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)

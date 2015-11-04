@@ -68,6 +68,7 @@ if os.path.isfile(installation_path+"/user-data/"+cpaneluser):
 os.remove(installation_path+"/domain-data/"+main_domain)
 os.remove(nginx_dir+main_domain+".conf")
 os.remove(nginx_dir+main_domain+".include")
+os.remove(nginx_dir+main_domain+".nxapi.wl")
 subprocess.call("rm -rf /var/resin/hosts/"+main_domain, shell=True)
 if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
     os.remove(installation_path+"/domain-data/"+main_domain+"_SSL")
@@ -77,6 +78,7 @@ for domain_in_subdomains in sub_domains:
     os.remove(installation_path+"/domain-data/"+domain_in_subdomains)
     os.remove(nginx_dir+domain_in_subdomains+".conf")
     os.remove(nginx_dir+domain_in_subdomains+".include")
+    os.remove(nginx_dir+domain_in_subdomains+".nxapi.wl")
     subprocess.call("rm -rf /var/resin/hosts/"+domain_in_subdomains, shell=True)
     if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
         os.remove(installation_path+"/domain-data/"+domain_in_subdomains+"_SSL")

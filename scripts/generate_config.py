@@ -496,7 +496,10 @@ if __name__ == "__main__":
         sys.exit(0)
     else:
         cpuserdatayaml = "/var/cpanel/userdata/" + cpaneluser + "/main"
-        cpaneluser_data_stream = open(cpuserdatayaml, 'r')
+        try:
+            cpaneluser_data_stream = open(cpuserdatayaml, 'r')
+        except IOError:
+            sys.exit(0)
         yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
 
         main_domain = yaml_parsed_cpaneluser.get('main_domain')
