@@ -16,7 +16,7 @@ touch /opt/nDeploy/conf/profiles.yaml
 /opt/nDeploy/scripts/update_profiles.py RUBY 2001 "Rack or Ruby on Rails"
 /opt/nDeploy/scripts/update_profiles.py PYTHON 3001 "Python WSGI Application"
 /opt/nDeploy/scripts/update_profiles.py PHP 5001 "Wordpress or Drupal"
-/opt/nDeploy/scripts/update_profiles.py PHP 5010 "Wordpress+NAXSI "
+/opt/nDeploy/scripts/update_profiles.py PHP 5010 "Wordpress+NAXSI"
 /opt/nDeploy/scripts/update_profiles.py PHP 5011 "Drupal+NAXSI"
 /opt/nDeploy/scripts/update_profiles.py PHP 5501 "High Performance Wordpress+NAXSI"
 /opt/nDeploy/scripts/update_profiles.py PHP 5002 "Joomla"
