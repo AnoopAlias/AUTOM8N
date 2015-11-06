@@ -15,3 +15,6 @@ fi
 if [ -f /usr/nginx/scripts/nxapi-learn.sh ]; then
 	cp -p /usr/nginx/scripts/nxapi-learn.sh.disabled /usr/nginx/scripts/nxapi-learn.sh
 fi
+if [ -f /etc/nginx/ssl/dhparam.pem ];then
+	openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+fi
