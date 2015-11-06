@@ -459,10 +459,11 @@ def nginx_confgen(user_name, domain_name):
             subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
             subprocess.call("cat " + sslcacertificatefile + " >> " + sslcombinedcert, shell=True)
             subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
+            template_file = open(installation_path + "/conf/server_ssl_ocsp.tmpl", 'r')
         else:
             sslcombinedcert = sslcertificatefile
+            template_file = open(installation_path + "/conf/server_ssl.tmpl", 'r')
         nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
-        template_file = open(installation_path + "/conf/server_ssl.tmpl", 'r')
         config_out = open("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.conf", 'w')
         for line in template_file:
             line = line.replace('CPANELIP', cpanel_ipv4)
@@ -471,6 +472,8 @@ def nginx_confgen(user_name, domain_name):
             line = line.replace('#CPIPVSIX', cpanel_ipv6)
             line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
             line = line.replace('CPANELSSLCRT', sslcombinedcert)
+            if sslcacertificatefile:
+                line = line.replace('CPANELCACERT', sslcacertificatefile)
             config_out.write(line)
         template_file.close()
         config_out.close()

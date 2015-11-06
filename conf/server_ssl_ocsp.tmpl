@@ -13,6 +13,13 @@ server {
   ssl_session_cache shared:SSL:10m;
   ssl_session_timeout  5m;
 
+  #OCSP stapling
+  ssl_stapling on;
+  ssl_stapling_verify on;
+  ssl_trusted_certificate CPANELCACERT;
+  resolver 8.8.8.8 8.8.4.4 valid=300s;
+  resolver_timeout 5s;
+
   # ServerNames
 
   server_name  DOMAINLIST;

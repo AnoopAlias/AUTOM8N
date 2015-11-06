@@ -12,3 +12,6 @@ fi
 if [ ! -d /etc/nginx/ssl ] ; then
 	mkdir /etc/nginx/ssl
 fi
+if [ -f /usr/nginx/scripts/nxapi-learn.sh ]; then
+	cp -p /usr/nginx/scripts/nxapi-learn.sh.disabled /usr/nginx/scripts/nxapi-learn.sh
+fi
