@@ -14,16 +14,19 @@ if [ ! -f "cl-apache-patches.tar.gz" ]; then
 	wget http://repo.cloudlinux.com/cloudlinux/sources/da/cl-apache-patches.tar.gz -O cl-apache-patches.tar.gz
 fi
 
-tar xvzf cl-apache-patches.tar.gz fpm-lve-php5.4.patch
-
 read
 
 # patch -p1 < fpm-lve-php5.4.patch
 
 source ~/.phpbrew/bashrc
 
-php -n /usr/bin/phpbrew --debug install --jobs 4 --patch fpm-lve-php5.4.patch 5.4.44 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
-php -n /usr/bin/phpbrew --debug install --jobs 4 --patch fpm-lve-php5.3.patch 5.3.29 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
+export PHPBREW_ROOT=/usr/local/phpbrew
+mkdir $PHPBREW_ROOT -v
+
+php -n /usr/bin/phpbrew --debug install --jobs 12 --patch fpm-lve-php5.4_fixed.patch 5.6.15 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap +opcache -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
+php -n /usr/bin/phpbrew --debug install --jobs 12 --patch fpm-lve-php5.4_fixed.patch 5.5.30 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
+php -n /usr/bin/phpbrew --debug install --jobs 12 --patch fpm-lve-php5.4_fixed.patch 5.4.45 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
+php -n /usr/bin/phpbrew --debug install --jobs 12 --patch fpm-lve-php5.4_fixed.patch 5.3.29 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
 
 
 phpbrew use php-5.4.42
@@ -42,4 +45,12 @@ phpbrew ext install sqlite3
 phpbrew ext install xhprof 0.9.4
 phpbrew ext disable xhprof
 
-/opt/nDeploy/scripts/update_backend.py PHP php-5.4.42 /usr/local/phpbrew/php/php-5.4.42
+# for bnpmd
+phpbrew ext install gettext
+
+http://www.directadmin.com/imap.txt
+yum install libc-client-devel uw-imap.x86_64
+phpbrew ext install imap
+
+
+/opt/nDeploy/scripts/update_backend.py PHP php-5.4.45 /usr/local/phpbrew/php/php-5.4.45
