@@ -17,9 +17,11 @@ rsync -av ../nDeploy_cp/ nDeploy-pkg-centos7/opt/nDeploy/nDeploy_cp/
 cd nDeploy-pkg
 mkdir opt/nDeploy/lock
 fpm -s dir -t rpm -C ../nDeploy-pkg --vendor "PiServe Technologies" --iteration ${RPM_ITERATION}.el6 -d python-inotify -d nginx-nDeploy -d python-argparse -d PyYAML -d python-lxml -a noarch -m info@piserve.com -e --description "nDeploy cPanel plugin" --url http://piserve.com --after-install ../after_ndeploy_install --before-remove ../after_ndeploy_uninstall --name nDeploy .
+cp nDeploy-* /home/rpmrepo/public_html/CentOS/6/x86_64/
 
 cd ..
 cd nDeploy-pkg-centos7
 mkdir opt/nDeploy/lock
 fpm -s dir -t rpm -C ../nDeploy-pkg-centos7 --vendor "PiServe Technologies" --iteration ${RPM_ITERATION}.el7 -d python-inotify -d nginx-nDeploy -d python-argparse -d PyYAML -d python-lxml -a noarch -m info@piserve.com -e --description "nDeploy cPanel plugin" --url http://piserve.com --after-install ../after_ndeploy_install --before-remove ../after_ndeploy_uninstall --name nDeploy .
+cp nDeploy-* /home/rpmrepo/public_html/CentOS/7/x86_64/
 cd ..
