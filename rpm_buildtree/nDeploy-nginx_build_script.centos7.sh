@@ -31,7 +31,8 @@ cd nginx-${NGINX_VERSION}/
 
 wget https://github.com/nbs-system/naxsi/archive/${NAXSI_VERSION}.tar.gz
 tar -xvzf ${NAXSI_VERSION}.tar.gz
-
+sed -i 's/hash_init.bucket_size = 512/hash_init.bucket_size = 2048/' naxsi-${NAXSI_VERSION}/naxsi_src/naxsi_utils.c
+sed -i 's/hash_init.max_size  = 1024/hash_init.max_size  = 256000/' naxsi-${NAXSI_VERSION}/naxsi_src/naxsi_utils.c
 
 wget http://labs.frickle.com/files/ngx_cache_purge-${CACHE_PURGE_VERSION}.tar.gz
 tar -xvzf ngx_cache_purge-${CACHE_PURGE_VERSION}.tar.gz

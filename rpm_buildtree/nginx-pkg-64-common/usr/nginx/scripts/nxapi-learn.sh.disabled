@@ -8,8 +8,8 @@ cd /usr/nginx/nxapi/
 
 for DOMAIN in $(cat /etc/userdomains |cut -d: -f1|grep -v "*")
     do
-        ./nxtool.py --colors -c nxapi.json -s ${DOMAIN} -f --slack|grep BasicRule >> /etc/nginx/sites-enabled/test.nxapi.wl.tmp
-        ./nxtool.py --colors -c nxapi.json -s www.${DOMAIN} -f --slack|grep BasicRule >> /etc/nginx/sites-enabled/test.nxapi.wl.tmp
+        ./nxtool.py --colors -c nxapi.json -s ${DOMAIN} -f --slack|grep BasicRule |egrep -v '"mz:\$URL:.*\|+.*\|URL"' >> /etc/nginx/sites-enabled/test.nxapi.wl.tmp
+        ./nxtool.py --colors -c nxapi.json -s www.${DOMAIN} -f --slack|grep BasicRule |egrep -v '"mz:\$URL:.*\|+.*\|URL"'>> /etc/nginx/sites-enabled/test.nxapi.wl.tmp
         if nginx -t -c /opt/nDeploy/conf/nginx.conf.test.naxsi ; then
             cat /etc/nginx/sites-enabled/test.nxapi.wl.tmp /etc/nginx/sites-enabled/${DOMAIN}.nxapi.wl | sort | uniq > /etc/nginx/sites-enabled/${DOMAIN}.nxapi.wl
             rm -f /etc/nginx/sites-enabled/test.nxapi.wl.tmp
