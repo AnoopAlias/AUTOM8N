@@ -67,5 +67,7 @@ cd ../nginx-pkg-64
 #mkdir -p var/cache/nginx/ngx_pagespeed
 mkdir -p var/log/nginx
 mkdir -p var/run
+chmod +x etc/rc.d/init.d/nginx
+chmod 644 etc/nginx/testcookie/testcookie_html/*
 
 fpm -s dir -t rpm -C ../nginx-pkg-64 --vendor "AMPLICA" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m admin@amplica.md -e --description "nDeploy custom nginx package" --url http://amplica.md --conflicts nginx -d zlib -d openssl -d pcre -d libcurl --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .

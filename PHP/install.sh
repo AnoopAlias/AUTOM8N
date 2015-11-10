@@ -24,7 +24,7 @@ source ~/.phpbrew/bashrc
 export PHPBREW_ROOT=/usr/local/phpbrew
 mkdir $PHPBREW_ROOT -v
 
-default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap +iconv +sqlite +gettext
+# default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap +iconv +sqlite +gettext
 php -n /usr/bin/phpbrew --debug install --jobs 12 --patch fpm-lve-php5.4_fixed.patch 5.6.15 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap +iconv +sqlite +gettext -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
 php -n /usr/bin/phpbrew --debug install --jobs 12 --patch fpm-lve-php5.4_fixed.patch 5.5.30 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap +iconv +sqlite +gettext -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr
 php -n /usr/bin/phpbrew --debug install --jobs 12 --patch fpm-lve-php5.4_fixed.patch 5.4.45 +default +fpm +mysql +exif +ftp +gd +intl +soap +pdo +curl +gmp +imap +iconv +sqlite +gettext -- --with-libdir=lib64 --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr

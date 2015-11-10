@@ -31,7 +31,7 @@ def remove_php_fpm_pool(user_name):
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         for php_path in list(php_backends_dict.values()):
             phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
-            if os.path.isfile(phppool_file):
+            if os.path.islink(phppool_file):
                 os.remove(phppool_file)
     os.remove("/opt/fpmsockets/"+user_name+".sock")
     return

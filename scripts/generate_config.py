@@ -140,13 +140,16 @@ def nginx_server_reload():
 
 def php_profile_set(user_name, phpversion, php_path, restart=True):
     """Function to setup php-fpm pool for user and restart the master php-fpm"""
-    phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
+    phppool_file = "/opt/nDeploy/conf/php-fpm.d/" + user_name + ".conf"
+    phppool_link = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
     php_fpm_config = installation_path+"/conf/php-fpm.conf"
     php_fpm_bin = php_path + "/sbin/php-fpm"
     if os.path.isfile(phppool_file) == False:
         sed_string='sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
-    
+    if os.path.islink(phppool_link) == True:
+        os.remove(phppool_link)
+    os.symlink(phppool_file, phppool_link)
     if restart is True:
         if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
             with open(php_path + "/var/run/php-fpm.pid") as f:
