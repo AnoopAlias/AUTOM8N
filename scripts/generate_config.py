@@ -40,7 +40,9 @@ def cpanel_nginx_awstats_fix(awstats_custom_conf, cpaneluser):
     with open(awstats_custom_conf, 'w') as f:
         f.write(file_content)
     f.close()
-    subprocess.call("chown "+cpaneluser+":"+cpaneluser+" "+awstats_custom_conf, shell=True)
+    cpuser_uid = pwd.getpwnam(cpaneluser).pw_uid
+    cpuser_gid = grp.getgrnam(cpaneluser).gr_gid
+    os.chown(awstats_custom_conf, cpuser_uid, cpuser_gid)
     return
 
 
@@ -130,6 +132,41 @@ def update_config_test_status(profile_yaml, value):
     return
 
 
+def update_naxsi_test_status(profile_yaml, value):
+    """Function to update naxsi wl test status"""
+    yaml_data_stream_toupdate = open(profile_yaml, 'r')
+    yaml_profile_datadict = yaml.safe_load(yaml_data_stream_toupdate)
+    yaml_data_stream_toupdate.close()
+    yaml_profile_datadict["testnaxsi"] = str(value)
+    with open(profile_yaml, 'w') as yaml_file:
+        yaml_file.write(yaml.dump(yaml_profile_datadict, default_flow_style=False))
+    yaml_file.close()
+    return
+
+
+def naxsi_wl_update(domain_home, naxsi_wl_domain):
+    """Function to test and accept a naxsi whitelist config file"""
+    naxsi_whitelist = "/etc/nginx/sites-enabled/" + naxsi_wl_domain + ".nxapi.wl"
+    wl_test_file = domain_home + '/' + naxsi_wl_domain + '.naxsi.wl.test.conf'
+    if os.path.isfile(wl_test_file):
+        test_config_file = open(installation_path + "/conf/nginx.conf.test.naxsi", 'r')
+        test_config_out = open(installation_path + "/conf/nginx.conf." + naxsi_wl_domain + ".naxsi.test", 'w')
+        config = installation_path + "/conf/nginx.conf." + naxsi_wl_domain + ".naxsi.test"
+        for line in test_config_file:
+            line = line.replace('NAXSI_WL_INCLUDE', wl_test_file)
+            test_config_out.write(line)
+        test_config_file.close()
+        test_config_out.close()
+        nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + config + " -t", shell=True)
+        if nginx_conf_test == 0:
+            wl_config_out = open(naxsi_whitelist, 'w')
+            wl_config_in = open(wl_test_file, 'r')
+            for line in wl_config_in:
+                wl_config_out.write(line)
+            wl_config_out.close()
+            wl_config_in.close()
+
+
 def nginx_server_reload():
     """Function to reload nginX config"""
     subprocess.call(nginx_bin + " -s reload", shell=True)
@@ -209,10 +246,14 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
             subprocess.call("touch "+naxsi_whitelist, shell=True)
         naxsi_whitelist_file = "include "+naxsi_whitelist
         naxsi_status = yaml_parsed_profileyaml.get('naxsi', None)
+        naxsi_test = yaml_parsed_profileyaml.get('testnaxsi', None)
         if naxsi_status == "1":
             naxsi_rules_file = "include /etc/nginx/conf.d/naxsi_active.rules"
         else:
             naxsi_rules_file = "include /etc/nginx/conf.d/naxsi_learn.rules"
+        if naxsi_test == "1":
+            naxsi_test_result = naxsi_wl_update(domain_home, domain_name)
+            update_naxsi_test_status(profileyaml, 0)
         profile_custom_status = yaml_parsed_profileyaml.get('customconf')
         config_test_status = yaml_parsed_profileyaml.get('testconf')
         if profile_custom_status == "0" and config_test_status == "0":
@@ -409,7 +450,10 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
             config_out.write(line)
         template_file.close()
         config_out.close()
-        subprocess.call("chown " + user_name + ":" + user_name + " " + profileyaml, shell=True)
+        cpuser_uid = pwd.getpwnam(user_name).pw_uid
+        cpuser_gid = grp.getgrnam(user_name).gr_gid
+        os.chown(profileyaml, cpuser_uid, cpuser_gid)
+        os.chmod(profileyaml, 0660)
         nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list)
 
 

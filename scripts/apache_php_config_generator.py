@@ -5,6 +5,7 @@ import os
 import sys
 import argparse
 import pwd
+import grp
 from generate_config import php_profile_set
 import subprocess
 
@@ -46,7 +47,10 @@ class PhpFpmConfig:
                     print("ERROR:: PHP Backends missing")
             else:
                 subprocess.call("cp "+installation_path+"/conf/user_data.yaml.tmpl "+userdatayaml, shell=True)
-                subprocess.call("chown "+self.username+":"+self.username+" "+userdatayaml, shell=True)
+                cpuser_uid = pwd.getpwnam(self.username).pw_uid
+                cpuser_gid = grp.getgrnam(self.username).gr_gid
+                os.chown(userdatayaml, cpuser_uid, cpuser_gid)
+                os.chmod(userdatayaml, 0660)
                 self.configure()
         else:
             sys.exit(0)

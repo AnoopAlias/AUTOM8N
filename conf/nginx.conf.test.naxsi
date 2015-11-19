@@ -48,7 +48,7 @@ http {
     	server_name  localhost;
         location / {
             include /etc/nginx/conf.d/naxsi_active.rules;
-            include /etc/nginx/sites-enabled/test.nxapi.wl.tmp;
+            include NAXSI_WL_INCLUDE;
             }
 	}
 
