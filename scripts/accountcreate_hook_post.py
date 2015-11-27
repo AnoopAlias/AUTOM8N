@@ -8,7 +8,7 @@ import os
 import signal
 import time
 import subprocess
-
+from fabric.api import *
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright 2014, PiServe Technologies Pvt Ltd , India"
@@ -17,17 +17,19 @@ __email__ = "anoop.alias@piserve.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-backend_config_file = installation_path+"/conf/backends.yaml"
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 nginx_dir = "/etc/nginx/sites-enabled/"
-
-
-# Function defs
-
+cluster_data_yaml = open(cluster_config_file, 'r')
+cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+cluster_data_yaml.close()
+serverlist = cluster_data_yaml_parsed.keys()
 cpjson = json.load(sys.stdin)
-print(cpjson)
 mydict = cpjson["data"]
-cpanelnewuser = mydict["newuser"]
 cpaneluser = mydict["user"]
-maindomain = mydict["domain"]
+cpaneluserhome = mydict["homedir"]
+cpaneldocroot = cpaneluserhome + "/public_html"
+for server in serverlist:
+    connect_server_dict = cluster_data_yaml_parsed.get(server)
+    connect_ip = connect_server_dict.get("connect")
 
-print(("1 nDeploy:postaccountcreate:"+cpanelnewuser))
+print(("1 nDeploy:clusteraccountcreate:"+cpaneluser))
