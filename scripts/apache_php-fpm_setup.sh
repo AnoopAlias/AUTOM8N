@@ -13,17 +13,17 @@ function enable {
             yum -y install ea-apache24-mod_proxy_fcgi
 
             if [ -f /var/cpanel/templates/apache2_4/vhost.local ];then
-                sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/vhost.local
+                grep -w "#nDeploy#" /var/cpanel/templates/apache2_4/vhost.local || sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/vhost.local
             else
                 cp -p /var/cpanel/templates/apache2_4/vhost.default /var/cpanel/templates/apache2_4/vhost.local
-                sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/vhost.local
+                grep -w "#nDeploy#" /var/cpanel/templates/apache2_4/vhost.local || sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/vhost.local
             fi
 
             if [ -f /var/cpanel/templates/apache2_4/ssl_vhost.local ];then
-                sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/ssl_vhost.local
+                grep -w "#nDeploy#" /var/cpanel/templates/apache2_4/ssl_vhost.local || sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/ssl_vhost.local
             else
                 cp -p /var/cpanel/templates/apache2_4/ssl_vhost.default /var/cpanel/templates/apache2_4/ssl_vhost.local
-                sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/ssl_vhost.local
+                grep -w "#nDeploy#" /var/cpanel/templates/apache2_4/ssl_vhost.local || sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/ssl_vhost.local
             fi
             python /opt/nDeploy/scripts/apache_default_php_setup.py
             for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
@@ -48,17 +48,17 @@ function enable {
                 exit 1
             else
                 if [ -f /var/cpanel/templates/apache2_4/vhost.local ];then
-                    sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/vhost.local
+                    grep -w "#nDeploy#" /var/cpanel/templates/apache2_4/vhost.local || sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/vhost.local
                 else
                     cp -p /var/cpanel/templates/apache2_4/vhost.default /var/cpanel/templates/apache2_4/vhost.local
-                    sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/vhost.local
+                    grep -w "#nDeploy#" /var/cpanel/templates/apache2_4/vhost.local || sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/vhost.local
                 fi
 
                 if [ -f /var/cpanel/templates/apache2_4/ssl_vhost.local ];then
-                    sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/ssl_vhost.local
+                    grep -w "#nDeploy#" /var/cpanel/templates/apache2_4/ssl_vhost.local || sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/ssl_vhost.local
                 else
                     cp -p /var/cpanel/templates/apache2_4/ssl_vhost.default /var/cpanel/templates/apache2_4/ssl_vhost.local
-                    sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/ssl_vhost.local
+                    grep -w "#nDeploy#" /var/cpanel/templates/apache2_4/ssl_vhost.local || sed -i '/DocumentRoot/ r /opt/nDeploy/conf/apache_vhost_include_php.tmpl' /var/cpanel/templates/apache2_4/ssl_vhost.local
                 fi
                 python /opt/nDeploy/scripts/apache_default_php_setup.py
                 for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
