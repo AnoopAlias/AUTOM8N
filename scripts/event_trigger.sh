@@ -10,6 +10,7 @@ if [[ $2 -eq 0 ]]; then
 		THEDOMAIN=$(echo $1|awk -F'/' '{print $6}')
 		echo "Conf:Del /etc/nginx/sites-enabled/${THEDOMAIN}.* /opt/nDeploy/domain-data/${THEDOMAIN}"
 		rm -f /etc/nginx/sites-enabled/${THEDOMAIN}\.* /opt/nDeploy/domain-data/${THEDOMAIN}
+		/usr/sbin/nginx -s reload
 	else
 		CPANELUSER=$(echo $1|awk -F'/' '{print $5}')
 		echo "Conf:Gen $CPANELUSER"
