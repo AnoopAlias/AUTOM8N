@@ -8,7 +8,7 @@ import os
 import signal
 import time
 import subprocess
-from fabric.api import *
+import cuisine
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright 2014, PiServe Technologies Pvt Ltd , India"
@@ -31,5 +31,7 @@ cpaneldocroot = cpaneluserhome + "/public_html"
 for server in serverlist:
     connect_server_dict = cluster_data_yaml_parsed.get(server)
     connect_ip = connect_server_dict.get("connect")
+    cuisine.connect(connect_ip)
+    cuisine.user_create_linux(cpaneluser, home=cpaneluserhome)
 
 print(("1 nDeploy:clusteraccountcreate:"+cpaneluser))
