@@ -131,7 +131,7 @@ setup_remi_php(){
 				fi
 				if [ ! -d /opt/remi/php$ver/root/etc ];then
 					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/usr/etc
+					ln -s /etc/opt/remi/php$ver/php-fpm.d /opt/remi/php$ver/root/usr/etc/
 				else
 					ln -s /opt/remi/php$ver/root/etc/php-fpm.d /opt/remi/php$ver/root/usr/etc/
 				fi
@@ -155,7 +155,7 @@ setup_remi_php(){
 				fi
 				if [ ! -d /opt/remi/php$ver/root/etc ];then
 					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/usr/etc
+					ln -s /etc/opt/remi/php$ver/php-fpm.d /opt/remi/php$ver/root/usr/etc/
 				else
 					ln -s /opt/remi/php$ver/root/etc/php-fpm.d /opt/remi/php$ver/root/usr/etc/
 				fi
