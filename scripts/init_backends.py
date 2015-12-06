@@ -45,7 +45,10 @@ def control_php_fpm(trigger):
                     with open(php_fpm_pid) as f:
                         mypid = f.read()
                     f.close()
-                    os.kill(int(mypid), signal.SIGQUIT)
+                    try:
+                        os.kill(int(mypid), signal.SIGQUIT)
+                    except OSError:
+                        break
         else:
             return
 

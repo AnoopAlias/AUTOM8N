@@ -49,7 +49,7 @@ print('<select name="domain">')
 if main_domain.startswith('*.'):
     print(('<option value="_wildcard_.'+main_domain.replace('*.', '')+'">'+main_domain+'</option>'))
     if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
-        print(('<option value=_wildcard_."'+main_domain.replace('*.', '')+'_SSL">'+main_domain+'(SSL)</option>'))
+        print(('<option value="_wildcard_.'+main_domain.replace('*.', '')+'_SSL">'+main_domain+'(SSL)</option>'))
 else:
     print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
     if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
