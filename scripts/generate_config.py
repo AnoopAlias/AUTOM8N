@@ -184,7 +184,7 @@ def php_profile_set(user_name, phpversion, php_path):
                 mypid = f.read()
             f.close()
             os.kill(int(mypid), signal.SIGUSR2)
-        time.sleep(1)
+        time.sleep(3)
         if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
             with open(php_path + "/var/run/php-fpm.pid") as f:
                 newpid = f.read()
@@ -203,7 +203,7 @@ def php_profile_set(user_name, phpversion, php_path):
                 mypid = f.read()
             f.close()
             os.kill(int(mypid), signal.SIGUSR2)
-        time.sleep(1)
+        time.sleep(3)
         if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
             with open(php_path + "/var/run/php-fpm.pid") as f:
                 newpid = f.read()
