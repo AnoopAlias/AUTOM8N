@@ -70,7 +70,7 @@ setup_lve_patched_php(){
 	}
 
 
-	#Uncomment any of the functions below to prevent that version from compiling
+	#comment any of the functions below to prevent that version from compiling
 	compile_php54
 	compile_php55
 	compile_php56
@@ -121,7 +121,7 @@ setup_remi_php(){
 			for ver in 54 55 56 70
 			do
 				yum -y --disableexcludes=main --enablerepo=remi install php$ver php$ver-php-fpm php$ver-php-opcache php$ver-php-mysqlnd php$ver-php-gd php$ver-php-imap php$ver-php-intl php$ver-php-ioncube-loader php$ver-php-xmlrpc php$ver-php-xml php$ver-php-mcrypt php$ver-php-mbstring php$ver-php-ioncube-loader php$ver-php-intl php$ver-php-imap php$ver-php-gd
-				ln -s /opt/remi/php$ver/root/usr/sbin/php-fpm /opt/remi/php$ver/root/sbin/php-fpm
+				ln -s /opt/remi/php$ver/root/usr/sbin /opt/remi/php$ver/root/
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/usr/var
@@ -130,9 +130,9 @@ setup_remi_php(){
 				fi
 				if [ ! -d /opt/remi/php$ver/root/etc ];then
 					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-					ln -s /etc/opt/remi/php$ver/php-fpm.d /opt/remi/php$ver/root/usr/etc/
+					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/usr/etc
 				else
-					ln -s /opt/remi/php$ver/root/etc/php-fpm.d /opt/remi/php$ver/root/usr/etc/
+					ln -s /opt/remi/php$ver/root/etc /opt/remi/php$ver/root/usr/
 				fi
 				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
 				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root
@@ -145,8 +145,7 @@ setup_remi_php(){
 			for ver in 54 55 56 70
 			do
 				yum -y --disableexcludes=main --enablerepo=remi install php$ver php$ver-php-fpm php$ver-php-opcache php$ver-php-mysqlnd php$ver-php-gd php$ver-php-imap php$ver-php-intl php$ver-php-ioncube-loader php$ver-php-xmlrpc php$ver-php-xml php$ver-php-mcrypt php$ver-php-mbstring php$ver-php-ioncube-loader php$ver-php-intl php$ver-php-imap php$ver-php-gd
-				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
-				ln -s /opt/remi/php$ver/root/usr/sbin/php-fpm /opt/remi/php$ver/root/sbin/php-fpm
+				ln -s /opt/remi/php$ver/root/usr/sbin /opt/remi/php$ver/root/
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/usr/var
@@ -155,10 +154,11 @@ setup_remi_php(){
 				fi
 				if [ ! -d /opt/remi/php$ver/root/etc ];then
 					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-					ln -s /etc/opt/remi/php$ver/php-fpm.d /opt/remi/php$ver/root/usr/etc/
+					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/usr/etc
 				else
-					ln -s /opt/remi/php$ver/root/etc/php-fpm.d /opt/remi/php$ver/root/usr/etc/
+					ln -s /opt/remi/php$ver/root/etc /opt/remi/php$ver/root/usr/
 				fi
+				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
 				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root
 				systemctl stop ndeploy_backends
 				systemctl start ndeploy_backends
