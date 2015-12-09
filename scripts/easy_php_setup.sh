@@ -18,7 +18,7 @@ setup_lve_patched_php(){
 	tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.4_autoconf.patch
 	patch -p1 --fuzz=10 < fpm-lve-php5.4_autoconf.patch
 	autoconf
-	config_args=$(php-config --configure-options|sed "s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
+	config_args=$(php-config --configure-options|sed "s/LDFLAGS= /LDFLAGS=/;s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
 	./configure ${config_args} --enable-fpm --prefix=/usr/local/php54_fpm
 	make
 	make install
@@ -39,7 +39,7 @@ setup_lve_patched_php(){
 	tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.5_autoconf.patch
 	patch -p1 --fuzz=10 < fpm-lve-php5.5_autoconf.patch
 	autoconf
-	config_args=$(php-config --configure-options|sed "s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
+	config_args=$(php-config --configure-options|sed "s/LDFLAGS= /LDFLAGS=/;s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
 	./configure ${config_args} --enable-fpm --enable-opcache --prefix=/usr/local/php55_fpm
 	make
 	make install
@@ -60,7 +60,7 @@ setup_lve_patched_php(){
 	tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.6_autoconf.patch
 	patch -p1 --fuzz=10 < fpm-lve-php5.6_autoconf.patch
 	autoconf
-	config_args=$(php-config --configure-options|sed "s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
+	config_args=$(php-config --configure-options|sed "s/LDFLAGS= /LDFLAGS=/;s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
 	./configure ${config_args} --enable-fpm --enable-opcache --prefix=/usr/local/php56_fpm
 	make
 	make install
