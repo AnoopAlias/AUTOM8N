@@ -100,11 +100,6 @@ setup_ea4_php(){
 		do
 			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root/
 			sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/cpanel/ea-php$ver/root/etc/php-fpm.d/www.conf
-			mkdir /opt/cpanel/ea-php$ver/root/sbin
-			mkdir /opt/cpanel/ea-php$ver/root/usr/etc
-			ln -s /opt/cpanel/ea-php$ver/root/usr/sbin/php-fpm /opt/cpanel/ea-php$ver/root/sbin/php-fpm
-			ln -s /opt/cpanel/ea-php$ver/root/etc/php-fpm.d /opt/cpanel/ea-php$ver/root/usr/etc/php-fpm.d
-			ln -s /opt/cpanel/ea-php$ver/root/usr/var /opt/cpanel/ea-php$ver/root/
 			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 			service ndeploy_backends stop || systemctl stop ndeploy_backends
 			service ndeploy_backends start || systemctl start ndeploy_backends
@@ -124,15 +119,9 @@ setup_remi_php(){
 				ln -s /opt/remi/php$ver/root/usr/sbin /opt/remi/php$ver/root/
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
-					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/usr/var
-				else
-					ln -s /opt/remi/php$ver/root/var /opt/remi/php$ver/root/usr/
 				fi
 				if [ ! -d /opt/remi/php$ver/root/etc ];then
 					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/usr/etc
-				else
-					ln -s /opt/remi/php$ver/root/etc /opt/remi/php$ver/root/usr/
 				fi
 				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
 				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root
@@ -145,18 +134,11 @@ setup_remi_php(){
 			for ver in 54 55 56 70
 			do
 				yum -y --disableexcludes=main --enablerepo=remi install php$ver php$ver-php-fpm php$ver-php-opcache php$ver-php-mysqlnd php$ver-php-gd php$ver-php-imap php$ver-php-intl php$ver-php-ioncube-loader php$ver-php-xmlrpc php$ver-php-xml php$ver-php-mcrypt php$ver-php-mbstring php$ver-php-ioncube-loader php$ver-php-intl php$ver-php-imap php$ver-php-gd
-				ln -s /opt/remi/php$ver/root/usr/sbin /opt/remi/php$ver/root/
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
-					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/usr/var
-				else
-					ln -s /opt/remi/php$ver/root/var /opt/remi/php$ver/root/usr/
 				fi
 				if [ ! -d /opt/remi/php$ver/root/etc ];then
 					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/usr/etc
-				else
-					ln -s /opt/remi/php$ver/root/etc /opt/remi/php$ver/root/usr/
 				fi
 				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
 				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root

@@ -177,7 +177,10 @@ def php_profile_set(user_name, phpversion, php_path):
     """Function to setup php-fpm pool for user and restart the master php-fpm"""
     phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
     php_fpm_config = installation_path+"/conf/php-fpm.conf"
-    php_fpm_bin = php_path + "/sbin/php-fpm"
+    if os.path.isfile(php_path+"/sbin/php-fpm"):
+        php_fpm_bin = php_path + "/sbin/php-fpm"
+    else:
+        php_fpm_bin = php_path + "/usr/sbin/php-fpm"
     if os.path.isfile(phppool_file):
         if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
             with open(php_path + "/var/run/php-fpm.pid") as f:
@@ -192,7 +195,7 @@ def php_profile_set(user_name, phpversion, php_path):
             try:
                 os.kill(int(newpid), 0)
             except OSError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
             else:
                 return True
     else:
@@ -211,7 +214,7 @@ def php_profile_set(user_name, phpversion, php_path):
             try:
                 os.kill(int(newpid), 0)
             except OSError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
             else:
                 return True
     return

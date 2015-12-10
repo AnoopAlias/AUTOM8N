@@ -29,7 +29,10 @@ def control_php_fpm(trigger):
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
             subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
             for path in list(php_backends_dict.values()):
-                php_fpm_bin = path+"/sbin/php-fpm"
+                if os.path.isfile(path+"/sbin/php-fpm"):
+                    php_fpm_bin = path+"/sbin/php-fpm"
+                else:
+                    php_fpm_bin = path+"/usr/sbin/php-fpm"
                 php_fpm_conf_d = path+"/etc/php-fpm.d"
                 if not os.path.exists(php_fpm_conf_d):
                     os.mkdir(php_fpm_conf_d)
@@ -37,7 +40,7 @@ def control_php_fpm(trigger):
                     o_file = php_fpm_conf_d+"/nobody.conf"
                     sed_string = 'sed "s/CPANELUSER/nobody/g" '
                     subprocess.call(sed_string+t_file+' > '+o_file, shell=True)
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
         elif trigger == "stop":
             for path in list(php_backends_dict.values()):
                 php_fpm_pid = path+"/var/run/php-fpm.pid"
