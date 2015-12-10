@@ -96,8 +96,13 @@ setup_lve_patched_php(){
 
 setup_ea4_php(){
 		yum -y install ea-php54-php-fpm ea-php55-php-fpm ea-php56-php-fpm
+
 		for ver in 54 55 56
 		do
+			if [ ! -d /opt/cpanel/php$ver/root/var ];then
+				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
+				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
+			fi
 			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root/
 			sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/cpanel/ea-php$ver/root/etc/php-fpm.d/www.conf
 			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
