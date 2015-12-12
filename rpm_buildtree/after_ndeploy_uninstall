@@ -13,3 +13,6 @@ echo -e '\e[93m Uninstalling Apache_PHP-FPM plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp --theme x3
 fi
+echo -e '\e[93m Uninstalling Apache_PHP-FPM plugin in cPanel \e[0m'
+/usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp
+/usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp --theme x3
