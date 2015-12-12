@@ -1,7 +1,7 @@
 server {
 
-  listen    CPANELIP:443 ssl;
-  #CPIPVSIX:443 ssl;
+  listen    CPANELIP:443 ssl spdy;
+  #CPIPVSIX:443 ssl spdy;
   ssl_certificate CPANELSSLCRT;
   ssl_certificate_key CPANELSSLKEY;
 
