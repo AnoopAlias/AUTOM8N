@@ -8,8 +8,6 @@ rsync -av ../scripts/ nDeploy-pkg/opt/nDeploy/scripts/
 rsync -av ../scripts/ nDeploy-pkg-centos7/opt/nDeploy/scripts/
 rsync -av ../conf/ nDeploy-pkg/opt/nDeploy/conf/
 rsync -av ../conf/ nDeploy-pkg-centos7/opt/nDeploy/conf/
-rsync -av ../apache_fpm_cp/ nDeploy-pkg/opt/nDeploy/apache_fpm_cp/
-rsync -av ../apache_fpm_cp/ nDeploy-pkg-centos7/opt/nDeploy/apache_fpm_cp/
 rsync -av ../nDeploy_cp/ nDeploy-pkg/opt/nDeploy/nDeploy_cp/
 rsync -av ../nDeploy_cp/ nDeploy-pkg-centos7/opt/nDeploy/nDeploy_cp/
 
