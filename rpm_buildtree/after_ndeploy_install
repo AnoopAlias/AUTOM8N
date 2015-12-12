@@ -18,6 +18,7 @@ touch /opt/nDeploy/conf/profiles.yaml
 /opt/nDeploy/scripts/update_profiles.py PHP 5001 "Wordpress or Drupal"
 /opt/nDeploy/scripts/update_profiles.py PHP 5010 "Wordpress+NAXSI"
 /opt/nDeploy/scripts/update_profiles.py PHP 5011 "Drupal+NAXSI"
+/opt/nDeploy/scripts/update_profiles.py PHP 5012 "X-Cart"
 /opt/nDeploy/scripts/update_profiles.py PHP 5501 "High Performance Wordpress+NAXSI"
 /opt/nDeploy/scripts/update_profiles.py PHP 5002 "Joomla"
 /opt/nDeploy/scripts/update_profiles.py PHP 5003 "Magento"
@@ -66,15 +67,7 @@ fi
 if [ ! -L /usr/local/cpanel/base/frontend/paper_lantern/nDeploy_cp  ];then
 	ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/paper_lantern/
 fi
-if [ ! -L /usr/local/cpanel/base/frontend/x3/apache_fpm_cp  ];then
-	ln -s /opt/nDeploy/apache_fpm_cp /usr/local/cpanel/base/frontend/x3/
-fi
-if [ ! -L /usr/local/cpanel/base/frontend/paper_lantern/apache_fpm_cp  ];then
-	ln -s /opt/nDeploy/apache_fpm_cp /usr/local/cpanel/base/frontend/paper_lantern/
-fi
+
 echo -e '\e[93m Installing nDeploy plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp --theme x3
-echo -e '\e[93m Installing Apache_PHP-FPM plugin in cPanel \e[0m'
-/usr/local/cpanel/scripts/install_plugin /opt/nDeploy/apache_fpm_cp
-/usr/local/cpanel/scripts/install_plugin /opt/nDeploy/apache_fpm_cp --theme x3
