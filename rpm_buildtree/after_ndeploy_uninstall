@@ -1,5 +1,6 @@
 if [ $1 -eq 0 ];then
 echo -e '\e[93m Removing cpanel stats processing hooks \e[0m'
+/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/reload_watcher.sh --category System --event upcp --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/reload_nginx.sh --category Stats --event RunAll --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/reload_nginx.sh --category Stats --event RunUser --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/accountmodify_hook_pre.py --category Whostmgr --event Accounts::Modify --stage pre --manual
@@ -8,7 +9,7 @@ echo -e '\e[93m Removing cpanel stats processing hooks \e[0m'
 echo -e '\e[93m Uninstalling nDeploy plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp --theme x3
-echo -e '\e[93m Uninstalling Apache_PHP-FPM plugin in cPanel \e[0m'
-/usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp
-/usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp --theme x3
 fi
+echo -e '\e[93m Removing Obsolete Apache_PHP-FPM plugin in cPanel \e[0m'
+/usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp.tar
+/usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp.tar --theme x3

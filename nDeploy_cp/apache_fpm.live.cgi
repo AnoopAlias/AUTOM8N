@@ -36,7 +36,7 @@ print('<head>')
 print('<title>nDeploy</title>')
 print('</head>')
 print('<body>')
-print('<a href="apache_fpm.live.cgi"><img border="0" src="php-fpm.png" alt="nDeploy - Apache php-fpm"></a>')
+print('<a href="ndeploy.live.cgi"><img border="0" src="php-fpm.png" alt="nDeploy - Apache php-fpm"></a>')
 print('<HR>')
 if os.path.isfile(backend_config_file):
     backend_data_yaml = open(backend_config_file, 'r')
@@ -67,9 +67,5 @@ if os.path.isfile(backend_config_file):
 else:
     print('ERROR: Unable to access backend config file')
 print('<HR>')
-print('<p style="background-color:LightGrey">(!) click on the php-fpm icon above to restart the configuration process anytime</p>')
-print('<p style="background-color:LightGrey">(!) Apache PHP-FPM plugin works only if you set nginX plugin to PROXY mode</p>')
-print('<p style="background-color:LightGrey">(!) and set template : Proxy to cPanel httpd / cPanel httpd(SSL)</p>')
-
 print('</body>')
 print('</html>')
