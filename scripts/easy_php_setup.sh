@@ -69,12 +69,33 @@ setup_lve_patched_php(){
 	/opt/nDeploy/scripts/update_backend.py PHP PHP56_LVE /usr/local/php56_fpm
 	}
 
+	#Compile PHP56
+	compile_php70(){
+
+	php70_ver=$(cat /tmp/phpversion.hint|grep "^7.0")
+	echo "Compiling .... ${php70_ver}"
+	wget -O /usr/local/src/php-${php70_ver}.tar.bz2 http://us2.php.net/distributions/php-${php70_ver}.tar.bz2
+	tar -xvjf /usr/local/src/php-${php70_ver}.tar.bz2 -C /usr/local/src/
+	wget -O /usr/local/src/cl-apache-patches.tar.gz http://repo.cloudlinux.com/cloudlinux/sources/da/cl-apache-patches.tar.gz
+	cd /usr/local/src/php-${php70_ver}
+	tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.6_autoconf.patch
+	patch -p1 --fuzz=10 < fpm-lve-php5.6_autoconf.patch
+	autoconf
+	config_args=$(php-config --configure-options|sed "s/LDFLAGS= /LDFLAGS=/;s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
+	./configure ${config_args} --enable-fpm --enable-opcache --prefix=/usr/local/php70_fpm
+	make
+	make install
+	cd -
+	rm -rf /usr/local/src/php-${php70_ver} /usr/local/src/php-${php70_ver}.tar.bz2 /usr/local/src/cl-apache-patches.tar.gz
+	sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /usr/local/php70_fpm/etc/php-fpm.d/nobody.conf
+	/opt/nDeploy/scripts/update_backend.py PHP PHP70_LVE /usr/local/php70_fpm
+	}
 
 	#comment any of the functions below to prevent that version from compiling
 	compile_php54
 	compile_php55
 	compile_php56
-	#compile_php70  #As an when its available
+	compile_php70
 
 
 
