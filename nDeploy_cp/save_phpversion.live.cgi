@@ -38,7 +38,7 @@ print('<head>')
 print('<title>nDeploy</title>')
 print('</head>')
 print('<body>')
-print('<a href="apache_fpm.live.cgi"><img border="0" src="php-fpm.png" alt="nDeploy - Apache php-fpm"></a>')
+print('<a href="ndeploy.live.cgi"><img border="0" src="php-fpm.png" alt="nDeploy - Apache php-fpm"></a>')
 print('<HR>')
 if form.getvalue('phpversion'):
     if os.path.isfile(installation_path+"/user-data/"+cpaneluser):

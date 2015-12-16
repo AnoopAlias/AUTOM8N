@@ -18,7 +18,7 @@ setup_lve_patched_php(){
 	tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.4_autoconf.patch
 	patch -p1 --fuzz=10 < fpm-lve-php5.4_autoconf.patch
 	autoconf
-	config_args=$(php-config --configure-options|sed "s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
+	config_args=$(php-config --configure-options|sed "s/LDFLAGS= /LDFLAGS=/;s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
 	./configure ${config_args} --enable-fpm --prefix=/usr/local/php54_fpm
 	make
 	make install
@@ -39,7 +39,7 @@ setup_lve_patched_php(){
 	tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.5_autoconf.patch
 	patch -p1 --fuzz=10 < fpm-lve-php5.5_autoconf.patch
 	autoconf
-	config_args=$(php-config --configure-options|sed "s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
+	config_args=$(php-config --configure-options|sed "s/LDFLAGS= /LDFLAGS=/;s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
 	./configure ${config_args} --enable-fpm --enable-opcache --prefix=/usr/local/php55_fpm
 	make
 	make install
@@ -60,7 +60,7 @@ setup_lve_patched_php(){
 	tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.6_autoconf.patch
 	patch -p1 --fuzz=10 < fpm-lve-php5.6_autoconf.patch
 	autoconf
-	config_args=$(php-config --configure-options|sed "s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
+	config_args=$(php-config --configure-options|sed "s/LDFLAGS= /LDFLAGS=/;s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
 	./configure ${config_args} --enable-fpm --enable-opcache --prefix=/usr/local/php56_fpm
 	make
 	make install
@@ -69,12 +69,33 @@ setup_lve_patched_php(){
 	/opt/nDeploy/scripts/update_backend.py PHP PHP56_LVE /usr/local/php56_fpm
 	}
 
+	#Compile PHP56
+	compile_php70(){
 
-	#Uncomment any of the functions below to prevent that version from compiling
+	php70_ver=$(cat /tmp/phpversion.hint|grep "^7.0")
+	echo "Compiling .... ${php70_ver}"
+	wget -O /usr/local/src/php-${php70_ver}.tar.bz2 http://us2.php.net/distributions/php-${php70_ver}.tar.bz2
+	tar -xvjf /usr/local/src/php-${php70_ver}.tar.bz2 -C /usr/local/src/
+	wget -O /usr/local/src/cl-apache-patches.tar.gz http://repo.cloudlinux.com/cloudlinux/sources/da/cl-apache-patches.tar.gz
+	cd /usr/local/src/php-${php70_ver}
+	tar -xvzf /usr/local/src/cl-apache-patches.tar.gz fpm-lve-php5.6_autoconf.patch
+	patch -p1 --fuzz=10 < fpm-lve-php5.6_autoconf.patch
+	autoconf
+	config_args=$(php-config --configure-options|sed "s/LDFLAGS= /LDFLAGS=/;s/--prefix=\/usr\/local //;s/--with-apxs2=\/usr\/local\/apache\/bin\/apxs//;s/--with-config-file-path=\/usr\/local\/lib//;s/--with-config-file-scan-dir=\/usr\/local\/lib\/php\.ini\.d//")
+	./configure ${config_args} --enable-fpm --enable-opcache --prefix=/usr/local/php70_fpm
+	make
+	make install
+	cd -
+	rm -rf /usr/local/src/php-${php70_ver} /usr/local/src/php-${php70_ver}.tar.bz2 /usr/local/src/cl-apache-patches.tar.gz
+	sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /usr/local/php70_fpm/etc/php-fpm.d/nobody.conf
+	/opt/nDeploy/scripts/update_backend.py PHP PHP70_LVE /usr/local/php70_fpm
+	}
+
+	#comment any of the functions below to prevent that version from compiling
 	compile_php54
 	compile_php55
 	compile_php56
-	#compile_php70  #As an when its available
+	compile_php70
 
 
 
@@ -96,15 +117,15 @@ setup_lve_patched_php(){
 
 setup_ea4_php(){
 		yum -y install ea-php54-php-fpm ea-php55-php-fpm ea-php56-php-fpm
+
 		for ver in 54 55 56
 		do
+			if [ ! -d /opt/cpanel/php$ver/root/var ];then
+				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
+				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
+			fi
 			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root/
 			sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/cpanel/ea-php$ver/root/etc/php-fpm.d/www.conf
-			mkdir /opt/cpanel/ea-php$ver/root/sbin
-			mkdir /opt/cpanel/ea-php$ver/root/usr/etc
-			ln -s /opt/cpanel/ea-php$ver/root/usr/sbin/php-fpm /opt/cpanel/ea-php$ver/root/sbin/php-fpm
-			ln -s /opt/cpanel/ea-php$ver/root/etc/php-fpm.d /opt/cpanel/ea-php$ver/root/usr/etc/php-fpm.d
-			ln -s /opt/cpanel/ea-php$ver/root/usr/var /opt/cpanel/ea-php$ver/root/
 			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 			service ndeploy_backends stop || systemctl stop ndeploy_backends
 			service ndeploy_backends start || systemctl start ndeploy_backends
@@ -121,18 +142,12 @@ setup_remi_php(){
 			for ver in 54 55 56 70
 			do
 				yum -y --disableexcludes=main --enablerepo=remi install php$ver php$ver-php-fpm php$ver-php-opcache php$ver-php-mysqlnd php$ver-php-gd php$ver-php-imap php$ver-php-intl php$ver-php-ioncube-loader php$ver-php-xmlrpc php$ver-php-xml php$ver-php-mcrypt php$ver-php-mbstring php$ver-php-ioncube-loader php$ver-php-intl php$ver-php-imap php$ver-php-gd
-				ln -s /opt/remi/php$ver/root/usr/sbin/php-fpm /opt/remi/php$ver/root/sbin/php-fpm
+				ln -s /opt/remi/php$ver/root/usr/sbin /opt/remi/php$ver/root/
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
-					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/usr/var
-				else
-					ln -s /opt/remi/php$ver/root/var /opt/remi/php$ver/root/usr/
 				fi
 				if [ ! -d /opt/remi/php$ver/root/etc ];then
 					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-					ln -s /etc/opt/remi/php$ver/php-fpm.d /opt/remi/php$ver/root/usr/etc/
-				else
-					ln -s /opt/remi/php$ver/root/etc/php-fpm.d /opt/remi/php$ver/root/usr/etc/
 				fi
 				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
 				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root
@@ -145,20 +160,13 @@ setup_remi_php(){
 			for ver in 54 55 56 70
 			do
 				yum -y --disableexcludes=main --enablerepo=remi install php$ver php$ver-php-fpm php$ver-php-opcache php$ver-php-mysqlnd php$ver-php-gd php$ver-php-imap php$ver-php-intl php$ver-php-ioncube-loader php$ver-php-xmlrpc php$ver-php-xml php$ver-php-mcrypt php$ver-php-mbstring php$ver-php-ioncube-loader php$ver-php-intl php$ver-php-imap php$ver-php-gd
-				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
-				ln -s /opt/remi/php$ver/root/usr/sbin/php-fpm /opt/remi/php$ver/root/sbin/php-fpm
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
-					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/usr/var
-				else
-					ln -s /opt/remi/php$ver/root/var /opt/remi/php$ver/root/usr/
 				fi
 				if [ ! -d /opt/remi/php$ver/root/etc ];then
 					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-					ln -s /etc/opt/remi/php$ver/php-fpm.d /opt/remi/php$ver/root/usr/etc/
-				else
-					ln -s /opt/remi/php$ver/root/etc/php-fpm.d /opt/remi/php$ver/root/usr/etc/
 				fi
+				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
 				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root
 				systemctl stop ndeploy_backends
 				systemctl start ndeploy_backends

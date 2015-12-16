@@ -59,7 +59,7 @@ for domain_in_subdomains in sub_domains:
     if domain_in_subdomains.startswith('*.'):
         print(('<option value="_wildcard_.'+domain_in_subdomains.replace('*.', '')+'">'+domain_in_subdomains+'</option>'))
         if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
-            print(('<option value=_wildcard_."'+domain_in_subdomains.replace('*.', '')+'_SSL">'+domain_in_subdomains+'(SSL)</option>'))
+            print(('<option value="_wildcard_.'+domain_in_subdomains.replace('*.', '')+'_SSL">'+domain_in_subdomains+'(SSL)</option>'))
     else:
         print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
         if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
