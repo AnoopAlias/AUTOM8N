@@ -12,6 +12,7 @@
        "name" : "nginX",
        "type" : "link",
        "id" : "ndeploy",
-       "uri" : "nDeploy_cp/ndeploy.live.cgi\"target=\"_blank\""
+       "uri" : "nDeploy_cp/ndeploy.live.cgi"
+       "target" : "_blank"
     }
 ]

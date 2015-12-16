@@ -66,7 +66,7 @@ if form.getvalue('domain'):
             print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
             print('<input type="submit" value="Submit">')
             print('</form>')
-            if backend_category == "PROXY":
+            if backend_category == "PROXY" and (backend_version == "apache_SSL" or backend_version == "apache"):
                 print('<HR>')
                 print(('<p style="background-color:LightGrey">Proxying to Apache httpd? .You can configure PHP-FPM for apache httpd below</p>'))
                 print(('<p style="background-color:LightGrey">(!)This will work only if PHP-FPM is configured for Apache httpd</p>'))
@@ -96,7 +96,7 @@ if form.getvalue('domain'):
                 print('</form>')
             else:
                 print('ERROR : profile-config file i/o error')
-            if backend_category == "PROXY":
+            if backend_category == "PROXY" and (backend_version == "apache_SSL" or backend_version == "apache"):
                 print('<HR>')
                 print(('<p style="background-color:LightGrey">Proxying to Apache httpd? .You can configure PHP-FPM for apache httpd below</p>'))
                 print(('<p style="background-color:LightGrey">(!)This will work only if PHP-FPM is configured for Apache httpd</p>'))
