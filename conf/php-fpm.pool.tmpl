@@ -20,7 +20,7 @@
 ; - 'chdir'
 ; - 'php_values'
 ; - 'php_admin_values'
-; When not set, the global prefix (or /usr/local/phpbrew/php/php-5.4.33) applies instead.
+; When not set, the global prefix  applies instead.
 ; Note: This directive can also be relative to the global prefix.
 ; Default Value: none
 ;prefix = /path/to/pools/$pool
@@ -131,7 +131,7 @@ pm.max_spare_servers = 3
 ; This can be useful to work around memory leaks in 3rd party libraries. For
 ; endless request processing specify '0'. Equivalent to PHP_FCGI_MAX_REQUESTS.
 ; Default Value: 0
-pm.max_requests = 500
+pm.max_requests = 5000
 
 ; The URI to view the FPM status page. If this value is not set, no URI will be
 ; recognized as a status page. It shows the following informations:
@@ -373,7 +373,7 @@ ping.path = /pingphpfpm
 ; exectute php code.
 ; Note: set an empty value to allow all extensions.
 ; Default Value: .php
-;security.limit_extensions = .php .php3 .php4 .php5
+security.limit_extensions = .php .php3 .php4 .php5
 
 ; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
 ; the current environment.
@@ -399,7 +399,7 @@ ping.path = /pingphpfpm
 ; instead.
 
 ; Note: path INI options can be relative and will be expanded with the prefix
-; (pool, global or /usr/local/phpbrew/php/php-5.4.33)
+; (pool, global or php Installation prefix)
 
 ; Default Value: nothing is defined by default except the values in php.ini and
 ;                specified at startup with the -d argument

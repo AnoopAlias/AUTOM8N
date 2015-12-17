@@ -68,8 +68,8 @@ if form.getvalue('domain'):
             print('</form>')
             if backend_category == "PROXY" and (backend_version == "apache_SSL" or backend_version == "apache"):
                 print('<HR>')
-                print(('<p style="background-color:LightGrey">Proxying to Apache httpd? .You can configure PHP-FPM for apache httpd below</p>'))
-                print(('<p style="background-color:LightGrey">(!)This will work only if PHP-FPM is configured for Apache httpd</p>'))
+                print(('<p style="background-color:LightGrey">Proxying to Apache httpd? .You can select PHP version for httpd below</p>'))
+                print(('<p style="background-color:LightGrey">(!)This will work only if PHP-FPM Server API is configured for Apache httpd</p>'))
                 print('<form action="apache_fpm.live.cgi" method="post">')
                 print('<input type="submit" value="SELECT PHP-FPM VERSION FOR APACHE">')
                 print('</form>')
@@ -98,8 +98,8 @@ if form.getvalue('domain'):
                 print('ERROR : profile-config file i/o error')
             if backend_category == "PROXY" and (backend_version == "apache_SSL" or backend_version == "apache"):
                 print('<HR>')
-                print(('<p style="background-color:LightGrey">Proxying to Apache httpd? .You can configure PHP-FPM for apache httpd below</p>'))
-                print(('<p style="background-color:LightGrey">(!)This will work only if PHP-FPM is configured for Apache httpd</p>'))
+                print(('<p style="background-color:LightGrey">Proxying to Apache httpd? .You can select PHP version for httpd below</p>'))
+                print(('<p style="background-color:LightGrey">(!)This will work only if PHP-FPM Server API is configured for Apache httpd</p>'))
                 print('<form action="apache_fpm.live.cgi" method="post">')
                 print('<input type="submit" value="SELECT PHP-FPM VERSION FOR APACHE">')
                 print('</form>')
