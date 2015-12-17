@@ -38,7 +38,7 @@ job2:
   label: Watch /opt/nDeploy/domain-data
   watch: /opt/nDeploy/domain-data
   exclude: []
-  events: ['modify']
+  events: ['modify' , 'atrribute_change']
   options: []
   recursive: false
   command: /opt/nDeploy/scripts/event_trigger.sh $filename 1 $tflags

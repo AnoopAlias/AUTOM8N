@@ -37,13 +37,14 @@ touch /opt/nDeploy/conf/profiles.yaml
 echo -e '\e[93m Adding cpanel hooks \e[0m'
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/reload_nginx.sh --category Stats --event RunAll --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/reload_nginx.sh --category Stats --event RunUser --stage post --manual
+/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/runuserstats_hook_post.py --category Stats --event RunUser --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/reload_watcher.sh --category System --event upcp --stage post --manual
-/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/reload_watcher.sh --category System --event upcp --stage post --manual
-/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/reload_nginx.sh --category Stats --event RunAll --stage post --manual
-/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/reload_nginx.sh --category Stats --event RunUser --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/accountmodify_hook_pre.py --category Whostmgr --event Accounts::Modify --stage pre --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/accountmodify_hook_post.py --category Whostmgr --event Accounts::Modify --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/accountremove_hook_pre.py --category Whostmgr --event Accounts::Remove --stage pre --manual
+/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/reload_watcher.sh --category System --event upcp --stage post --manual
+/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/reload_nginx.sh --category Stats --event RunAll --stage post --manual
+/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/runuserstats_hook_post.py --category Stats --event RunUser --stage post --manual
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountmodify_hook_pre.py --category Whostmgr --event Accounts::Modify --stage pre --manual
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountmodify_hook_post.py --category Whostmgr --event Accounts::Modify --stage post --manual
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_pre.py --category Whostmgr --event Accounts::Remove --stage pre --manual
@@ -63,6 +64,10 @@ if [ ! -d /opt/nDeploy/user-data ] ; then
 fi
 if [ ! -d /opt/fpmsockets ] ; then
 	mkdir /opt/fpmsockets
+fi
+if [ ! -d /opt/nDeploy/php-fpm.d ] ; then
+	mkdir /opt/nDeploy/php-fpm.d
+	sed 's/CPANELUSER/nobody/g' /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/nDeploy/php-fpm.d/nobody.conf
 fi
 if [ ! -L /usr/local/cpanel/base/frontend/x3/nDeploy_cp  ];then
 	ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/x3/
