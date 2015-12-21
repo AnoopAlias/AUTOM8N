@@ -62,7 +62,9 @@ if os.path.isfile(backend_config_file):
         print('<input type="submit" value="SUBMIT">')
         print('</form>')
     else:
-        print('Apache PHP-FPM plugin not enabled')
+        print('Apache PHP-FPM Server API not enabled')
+        print('<br>')
+        print("Please contact your server admin")
         print('<br>')
 else:
     print('ERROR: Unable to access backend config file')

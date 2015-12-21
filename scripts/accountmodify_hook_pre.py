@@ -19,7 +19,6 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 nginx_dir = "/etc/nginx/sites-enabled/"
 
 
-
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
 cpanelnewuser = mydict["newuser"]
