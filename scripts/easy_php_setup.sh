@@ -87,7 +87,6 @@ setup_lve_patched_php(){
 	make install
 	cd -
 	rm -rf /usr/local/src/php-${php70_ver} /usr/local/src/php-${php70_ver}.tar.bz2 /usr/local/src/cl-apache-patches.tar.gz
-	sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /usr/local/php70_fpm/etc/php-fpm.d/nobody.conf
 	/opt/nDeploy/scripts/update_backend.py PHP PHP70_LVE /usr/local/php70_fpm
 	}
 
@@ -124,8 +123,6 @@ setup_ea4_php(){
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
 			fi
-			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root/
-			sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/cpanel/ea-php$ver/root/etc/php-fpm.d/www.conf
 			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 			service ndeploy_backends stop || systemctl stop ndeploy_backends
 			service ndeploy_backends start || systemctl start ndeploy_backends
@@ -146,10 +143,6 @@ setup_remi_php(){
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
 				fi
-				if [ ! -d /opt/remi/php$ver/root/etc ];then
-					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-				fi
-				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
 				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root
 				/etc/init.d/ndeploy_backends stop
 				/etc/init.d/ndeploy_backends start
@@ -163,10 +156,6 @@ setup_remi_php(){
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
 				fi
-				if [ ! -d /opt/remi/php$ver/root/etc ];then
-					ln -s /etc/opt/remi/php$ver /opt/remi/php$ver/root/etc
-				fi
-				sed "s/CPANELUSER/nobody/g" /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/remi/php$ver/root/etc/php-fpm.d/www.conf
 				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root
 				systemctl stop ndeploy_backends
 				systemctl start ndeploy_backends
