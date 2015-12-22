@@ -34,7 +34,7 @@ function enable {
             /scripts/rebuildhttpdconf
             /scripts/restartsrv httpd
         else
-            apachectl -l|grep mod_proxy_fcgi
+            httpd -l|grep mod_proxy_fcgi
             if [ $? -ne 0 ];then
                 if [ -f /var/cpanel/easy/apache/rawopts/Apache2_4 ];then
                     grep 'enable-proxy-fcgi=static' /var/cpanel/easy/apache/rawopts/Apache2_4 || echo '--enable-proxy-fcgi=static' >> /var/cpanel/easy/apache/rawopts/Apache2_4
