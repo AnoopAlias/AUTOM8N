@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: Anoop P Alias
 
-RPM_ITERATION="71"
+RPM_ITERATION="72"
 
 rm -f nDeploy-pkg/nDeploy-* nDeploy-pkg-centos7/nDeploy-*
 rsync -av ../scripts/ nDeploy-pkg/opt/nDeploy/scripts/
