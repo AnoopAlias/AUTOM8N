@@ -6,6 +6,8 @@ import argparse
 import subprocess
 import os
 import signal
+import time
+import pwd
 
 
 __author__ = "Anoop P Alias"
@@ -26,6 +28,15 @@ def control_php_fpm(trigger):
     if "PHP" in backend_data_yaml_parsed:
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         if trigger == "start":
+            conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
+            for filename in conf_list:
+                user, extension = filename.split('.')
+                try:
+                    pwd.getpwnam(user)
+                except KeyError:
+                    os.remove("/opt/nDeploy/php-fpm.d/"+filename)
+                else:
+                    pass
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
             subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
             for path in list(php_backends_dict.values()):
@@ -33,13 +44,6 @@ def control_php_fpm(trigger):
                     php_fpm_bin = path+"/sbin/php-fpm"
                 else:
                     php_fpm_bin = path+"/usr/sbin/php-fpm"
-                php_fpm_conf_d = path+"/etc/php-fpm.d"
-                if not os.path.exists(php_fpm_conf_d):
-                    os.mkdir(php_fpm_conf_d)
-                    t_file = installation_path+"/conf/php-fpm.pool.tmpl"
-                    o_file = php_fpm_conf_d+"/nobody.conf"
-                    sed_string = 'sed "s/CPANELUSER/nobody/g" '
-                    subprocess.call(sed_string+t_file+' > '+o_file, shell=True)
                 subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
         elif trigger == "stop":
             for path in list(php_backends_dict.values()):
@@ -50,6 +54,7 @@ def control_php_fpm(trigger):
                     f.close()
                     try:
                         os.kill(int(mypid), signal.SIGQUIT)
+                        time.sleep(3)  # Give enough time for all child process to exit
                     except OSError:
                         break
         else:
