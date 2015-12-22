@@ -193,15 +193,15 @@ def php_profile_set(user_name, phpversion, php_path):
                     newpid = f.read()
                 f.close()
             except IOError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
             try:
                 os.kill(int(newpid), 0)
             except OSError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
             else:
                 return True
         else:
-            subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+            subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
     else:
         sed_string = 'sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
@@ -216,15 +216,15 @@ def php_profile_set(user_name, phpversion, php_path):
                     newpid = f.read()
                 f.close()
             except IOError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
             try:
                 os.kill(int(newpid), 0)
             except OSError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
             else:
                 return True
         else:
-            subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+            subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
 
 
 def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list):
