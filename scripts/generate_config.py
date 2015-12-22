@@ -524,6 +524,30 @@ def nginx_confgen(user_name, domain_name):
             config_out.write(line)
         template_file.close()
         config_out.close()
+        cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+        if os.path.isfile(cluster_config_file):
+            cluster_data_yaml = open(cluster_config_file, 'r')
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+            cluster_data_yaml.close()
+            serverlist = cluster_data_yaml_parsed.keys()
+            for serverid in serverlist:
+                config_out = open("/etc/nginx/"+serverid+"/" + domain_sname + "_SSL.conf", 'w')
+                server_dict = cluster_data_yaml_parsed.get(serverid)
+                ipmap_dict = server_dict.get("ipmap")
+                new_ipv4 = ipmap_dict.get(cpanel_ipv4)
+                new_ipv6 = ipmap_dict.get(cpanel_ipv6)
+                for line in template_file:
+                    line = line.replace('CPANELIP', cpanel_ipv4)
+                    line = line.replace('DOMAINLIST', domain_list)
+                    line = line.replace('DOMAINNAME', domain_sname)
+                    line = line.replace('#CPIPVSIX', cpanel_ipv6)
+                    line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
+                    line = line.replace('CPANELSSLCRT', sslcombinedcert)
+                    if sslcacertificatefile:
+                        line = line.replace('CPANELCACERT', sslcacertificatefile)
+                    config_out.write(line)
+
+
     nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, *domain_aname_list)
     template_file = open(installation_path + "/conf/server.tmpl", 'r')
     config_out = open("/etc/nginx/sites-enabled/" + domain_sname + ".conf", 'w')

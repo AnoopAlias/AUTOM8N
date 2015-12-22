@@ -1,7 +1,7 @@
 # Unison preferences file
 root = /home
 root = ssh://root@104.131.36.8//home
-ignore = Path virtfs 
+ignore = Path virtfs
 ignore = Path */mail
 ignore = Path .cpanm
 ignore = Path .cpan
@@ -10,3 +10,8 @@ ignore = Path cpeasyapache
 ignore = Path cPanelInstall
 batch = true
 auto = true
+fastcheck=true
+group=true
+owner=true
+silent=true
+times=true
