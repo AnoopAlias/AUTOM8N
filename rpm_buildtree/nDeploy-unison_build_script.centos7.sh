@@ -6,6 +6,7 @@ yum install ocaml
 mkdir nDeploy-unison-pkg-centos7
 rm -rf unison-*
 rm -f nDeploy-unison-pkg-centos7/usr/bin/unison*
+rm -f nDeploy-unison-pkg-centos7/*.rpm
 wget http://www.seas.upenn.edu/~bcpierce/unison//download/releases/stable/unison-${UNISON_VERSION}.tar.gz
 tar -xvzf unison-${UNISON_VERSION}.tar.gz
 cd unison-${UNISON_VERSION}

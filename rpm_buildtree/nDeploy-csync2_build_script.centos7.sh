@@ -5,6 +5,7 @@ CSYNC2_RPM_ITER="1.el7"
 yum install librsync gnutls sqlite librsync-devel gnutls-devel sqlite-devel
 rm -rf csync2-*
 rm -f nDeploy-csync2-pkg-centos7/usr/sbin/csync2*
+rm -f rm -f nDeploy-csync2-pkg-centos7/*.rpm
 wget http://oss.linbit.com/csync2/csync2-${CSYNC2_VERSION}.tar.gz
 tar -xvzf csync2-${CSYNC2_VERSION}.tar.gz
 cd csync2-${CSYNC2_VERSION}
