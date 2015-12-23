@@ -12,5 +12,5 @@ cd unison-${UNISON_VERSION}
 make UISTYLE=text NATIVE=true STATIC=true
 mkdir -p ../nDeploy-unison-pkg-centos7/usr/bin
 rsync -av unison ../nDeploy-unison-pkg-centos7/usr/bin/
-
+cd ../nDeploy-unison-pkg-centos7
 fpm -s dir -t rpm -C ../nDeploy-unison-pkg-centos7 --vendor "PiServe Technologies" --version ${UNISON_VERSION} --iteration ${UNISON_RPM_ITER} -a $(arch) -m info@piserve.com -e --description "nDeploy custom unison package" --url http://piserve.com --conflicts unison -d ocaml --name unison-nDeploy .
