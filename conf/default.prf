@@ -1,6 +1,6 @@
 # Unison preferences file
 root = /home
-root = ssh://root@104.131.36.8//home
+root = ssh://root@SLAVESERVER//home
 ignore = Path virtfs
 ignore = Path */mail
 ignore = Path .cpanm
@@ -15,3 +15,4 @@ group=true
 owner=true
 silent=true
 times=true
+log=false
