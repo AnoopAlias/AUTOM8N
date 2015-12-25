@@ -39,26 +39,27 @@ def remove_php_fpm_pool(user_name):
             if os.path.isfile(phppool_file):
                 os.remove(phppool_file)
             if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
+                with open(php_path + "/var/run/php-fpm.pid") as f:
+                    mypid = f.read()
+                f.close()
+                os.kill(int(mypid), signal.SIGUSR2)
+                time.sleep(3)
+                try:
                     with open(php_path + "/var/run/php-fpm.pid") as f:
-                        mypid = f.read()
+                        newpid = f.read()
                     f.close()
-                    os.kill(int(mypid), signal.SIGUSR2)
-                    time.sleep(3)
-                    try:
-                        with open(php_path + "/var/run/php-fpm.pid") as f:
-                            newpid = f.read()
-                        f.close()
-                    except IOError:
-                        subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
-                    try:
-                        os.kill(int(newpid), 0)
-                    except OSError:
-                        subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
-                    else:
-                        return True
+                except IOError:
+                    subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
+                try:
+                    os.kill(int(newpid), 0)
+                except OSError:
+                    subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
+                else:
+                    return True
             else:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
     return
+
 
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
