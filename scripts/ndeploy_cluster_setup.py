@@ -55,6 +55,7 @@ if __name__ == "__main__":
     subprocess.call(sed_cmd2, shell=True)
     cuisine.connect(slaveserver)
     cuisine.run("yum --enablerepo=ndeploy -y install lsyncd csync2-nDeploy unison-nDeploy nginx-nDeploy")
+    subprocess.call('csync2 -k /etc/csync2/csync2.key', shell=True)
     cuisine.rsync("/etc/csync2/", "/etc/csync2/")
     if not os.path.isdir("/root/.unison"):
         os.mkdir("/root/.unison")
@@ -84,13 +85,14 @@ if __name__ == "__main__":
     cuisine.run('systemctl start csync2.socket')
     # Do a Manual csync2 sync
     subprocess.call("/usr/sbin/csync2 -xv", shell=True)
-    subprocess.call('echo "* * * * * root /usr/sbin/csync2 -x" >> /etc/crontab', shell=True)
+    subprocess.call('grep "/usr/sbin/csync2" /etc/crontab || echo "* * * * * root /usr/sbin/csync2 -x" >> /etc/crontab', shell=True)
     subprocess.call('systemctl restart crond.service', shell=True)
-
     subprocess.call('systemctl enable  lsyncd.service', shell=True)
     subprocess.call('systemctl start lsyncd.service', shell=True)
     cuisine.run('systemctl enable  lsyncd.service')
     cuisine.run('systemctl start lsyncd.service')
+    cuisine.run('systemctl enable nginx.service')
+    cuisine.run('systemctl start nginx.service')
     # Creating the cluster config file
     mydict = {slaveserver: {'connect': slaveip, 'ipmap': {masterip: slaveip}}}
     with open(installation_path+'/conf/ndeploy_cluster.yaml', 'w') as cluster_conf:
