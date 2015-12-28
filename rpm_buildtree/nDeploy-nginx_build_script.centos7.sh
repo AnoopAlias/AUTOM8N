@@ -3,10 +3,10 @@
 
 ##Vars
 NGINX_VERSION="1.8.0"
-NGINX_RPM_ITER="27.el7"
-NPS_VERSION="1.9.32.10"
+NGINX_RPM_ITER="28.el7"
+NPS_VERSION="1.10.33.2"
 MY_RUBY_VERSION="2.2.3"
-PASSENGER_VERSION="5.0.22"
+PASSENGER_VERSION="5.0.23"
 CACHE_PURGE_VERSION="2.3"
 NAXSI_VERSION="0.54"
 
@@ -68,4 +68,4 @@ mkdir -p var/log/nginx
 mkdir -p var/run
 
 fpm -s dir -t rpm -C ../nginx-pkg-64-centos7 --vendor "PiServe Technologies" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m info@piserve.com -e --description "nDeploy custom nginx package" --url http://piserve.com --conflicts nginx -d zlib -d openssl -d pcre -d libcurl --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
-scp nginx-nDeploy-* root@rpm.piserve.com:/home/rpmrepo/public_html/CentOS/7/x86_64/
+rsync -av nginx-nDeploy-* root@rpm.piserve.com:/home/rpmrepo/public_html/CentOS/7/x86_64/
