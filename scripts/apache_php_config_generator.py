@@ -17,15 +17,16 @@ __email__ = "anoop.alias@piserve.com"
 
 installation_path = "/opt/nDeploy"
 
+
 class PhpFpmConfig:
-    def __init__(self,cpaneluser):
+    def __init__(self, cpaneluser):
         self.username = cpaneluser
 
     def configure(self):
         if os.path.isfile(installation_path+"/conf/user_data.yaml.tmpl"):
             userdatayaml = installation_path+"/user-data/"+self.username
             if os.path.isfile(userdatayaml):
-                userdatayaml_data_stream = open(userdatayaml,'r')
+                userdatayaml_data_stream = open(userdatayaml, 'r')
                 yaml_parsed_userdata = yaml.safe_load(userdatayaml_data_stream)
                 userdatayaml_data_stream.close()
                 myversion = yaml_parsed_userdata.get('PHP')
