@@ -42,7 +42,10 @@ def remove_php_fpm_pool(user_name):
                 with open(php_path + "/var/run/php-fpm.pid") as f:
                     mypid = f.read()
                 f.close()
-                os.kill(int(mypid), signal.SIGUSR2)
+                try:
+                    os.kill(int(mypid), signal.SIGUSR2)
+                except OSError:
+                    subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
                 time.sleep(3)
                 try:
                     with open(php_path + "/var/run/php-fpm.pid") as f:
