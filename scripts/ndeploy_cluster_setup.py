@@ -54,6 +54,7 @@ if __name__ == "__main__":
     subprocess.call(sed_cmd1, shell=True)
     subprocess.call(sed_cmd2, shell=True)
     cuisine.connect(slaveserver)
+    cuisine.run("yum -y install epel-release http://rpm.piserve.com/nDeploy-release-centos-1.0-1.noarch.rpm")
     cuisine.run("yum --enablerepo=ndeploy -y install lsyncd csync2-nDeploy unison-nDeploy nginx-nDeploy")
     subprocess.call('csync2 -k /etc/csync2/csync2.key', shell=True)
     cuisine.rsync("/etc/csync2/", "/etc/csync2/")
@@ -96,6 +97,6 @@ if __name__ == "__main__":
     # Creating the cluster config file
     mydict = {slaveserver: {'connect': slaveip, 'ipmap': {masterip: slaveip}}}
     with open(installation_path+'/conf/ndeploy_cluster.yaml', 'w') as cluster_conf:
-        cluster_conf.write(yaml.dump(mydict, default_flow_style=True))
+        cluster_conf.write(yaml.dump(mydict, default_flow_style=False))
     # Doing the initial unison sync of /home
     subprocess.Popen('/usr/bin/unison', shell=True)
