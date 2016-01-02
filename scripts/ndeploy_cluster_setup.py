@@ -35,8 +35,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     slavedata = args.SLAVEDATA
     masterdata = args.MASTERDATA
-    masterserver, masterip = masterdata.split(":")
-    slaveserver, slaveip = slavedata.split(":")
+    masterserver, masterip = masterdata.split("::")
+    masteripalone, masterport = masterip.split(":")
+    slaveserver, slaveip = slavedata.split("::")
+    slaveipalone, slaveport = slaveip.split(":")
     if is_valid_hostname(masterserver):
         pass
     else:
@@ -55,12 +57,12 @@ if __name__ == "__main__":
     subprocess.call(sed_cmd2, shell=True)
     cuisine.connect(slaveserver)
     cuisine.run("yum -y install epel-release http://rpm.piserve.com/nDeploy-release-centos-1.0-1.noarch.rpm")
-    cuisine.run("yum --enablerepo=ndeploy -y install lsyncd csync2-nDeploy unison-nDeploy nginx-nDeploy")
+    cuisine.run("yum --enablerepo=ndeploy -y install lsyncd csync2-nDeploy unison-nDeploy nginx-nDeploy nDeploy-cluster-slave")
     subprocess.call('csync2 -k /etc/csync2/csync2.key', shell=True)
     cuisine.rsync("/etc/csync2/", "/etc/csync2/")
     if not os.path.isdir("/root/.unison"):
         os.mkdir("/root/.unison")
-    sed_cmd3 = 'sed "s/SLAVESERVER/'+slaveserver+'/g" '+installation_path+'/conf/default.prf > /root/.unison/default.prf'
+    sed_cmd3 = 'sed "s/SLAVESERVER/'+slaveip+'/g" '+installation_path+'/conf/default.prf > /root/.unison/default.prf'
     subprocess.call(sed_cmd3, shell=True)
     rsync_cmd1 = 'rsync -av '+installation_path+'/conf/lsyncd_master.conf /etc/lsyncd.conf'
     subprocess.call(rsync_cmd1, shell=True)
@@ -95,8 +97,10 @@ if __name__ == "__main__":
     cuisine.run('systemctl enable nginx.service')
     cuisine.run('systemctl start nginx.service')
     # Creating the cluster config file
-    mydict = {slaveserver: {'connect': slaveip, 'ipmap': {masterip: slaveip}}}
+    mydict = {slaveserver: {'connect': slaveip, 'ipmap': {masterip: slaveipalone}}}
     with open(installation_path+'/conf/ndeploy_cluster.yaml', 'w') as cluster_conf:
         cluster_conf.write(yaml.dump(mydict, default_flow_style=False))
+    subprocess.call("/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual", shell=True)
+    subprocess.call("/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_post.py --category Whostmgr --event Accounts::Remove --stage post --manual", shell=True)
     # Doing the initial unison sync of /home
     subprocess.Popen('/usr/bin/unison', shell=True)
