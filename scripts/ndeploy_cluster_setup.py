@@ -57,6 +57,7 @@ if __name__ == "__main__":
     subprocess.call(sed_cmd2, shell=True)
     cuisine.connect(slaveserver)
     cuisine.run("yum -y install epel-release http://rpm.piserve.com/nDeploy-release-centos-1.0-1.noarch.rpm")
+    print("Next operation may take some time to complete. Please wait till it completes...")
     cuisine.run("yum --enablerepo=ndeploy -y install lsyncd csync2-nDeploy unison-nDeploy nginx-nDeploy nDeploy-cluster-slave")
     subprocess.call('csync2 -k /etc/csync2/csync2.key', shell=True)
     cuisine.rsync("/etc/csync2/", "/etc/csync2/")
@@ -66,7 +67,7 @@ if __name__ == "__main__":
     subprocess.call(sed_cmd3, shell=True)
     rsync_cmd1 = 'rsync -av '+installation_path+'/conf/lsyncd_master.conf /etc/lsyncd.conf'
     subprocess.call(rsync_cmd1, shell=True)
-    sed_cmd4 = 'sed "s/MASTERSERVER/'+masterserver+'/g" '+installation_path+'/conf/lsyncd_slave.conf > /tmp/nDeploy_lsyncd.conf'
+    sed_cmd4 = 'sed -e "s/MASTERSERVER/'+masterserver+'/g" -e "s/MASTERSSHPORT/'+masterport+'/g" '+installation_path+'/conf/lsyncd_slave.conf > /tmp/nDeploy_lsyncd.conf'
     subprocess.call(sed_cmd4, shell=True)
     cuisine.rsync("/tmp/nDeploy_lsyncd.conf", "/etc/lsyncd.conf")
     os.remove("/tmp/nDeploy_lsyncd.conf")
@@ -79,9 +80,8 @@ if __name__ == "__main__":
     if not os.path.isdir("/etc/nginx/"+slaveserver):
         os.mkdir("/etc/nginx/"+slaveserver)
     cuisine.dir_ensure("/etc/nginx/"+slaveserver)
-    filecontent = cuisine.file_read('/etc/nginx/conf.d/custom_include.conf')
-    if not re.search('include /etc/nginx/'+slaveserver+'/\*.conf;', filecontent, re.MULTILINE):
-        cuisine.file_append("/etc/nginx/conf.d/custom_include.conf", "include /etc/nginx/"+slaveserver+"/*.conf;\n")
+    cuisine.dir_remove("/etc/nginx/sites-enabled", recursive=True)
+    cuisine.file_link("/etc/nginx/"+slaveserver, "/etc/nginx/sites-enabled", symbolic=True)
     subprocess.call('systemctl enable  csync2.socket', shell=True)
     subprocess.call('systemctl start csync2.socket', shell=True)
     cuisine.run('systemctl enable  csync2.socket')
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     cuisine.run('systemctl enable nginx.service')
     cuisine.run('systemctl start nginx.service')
     # Creating the cluster config file
-    mydict = {slaveserver: {'connect': slaveip, 'ipmap': {masterip: slaveipalone}}}
+    mydict = {slaveserver: {'connect': slaveip, 'ipmap': {masteripalone: slaveipalone}}}
     with open(installation_path+'/conf/ndeploy_cluster.yaml', 'w') as cluster_conf:
         cluster_conf.write(yaml.dump(mydict, default_flow_style=False))
     subprocess.call("/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual", shell=True)
