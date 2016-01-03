@@ -9,6 +9,6 @@ rsync -av ../conf/php-fpm.conf ../conf/php-fpm.pool.tmpl nDeploy-cluster-slave-p
 
 cd nDeploy-cluster-slave-pkg-centos7
 mkdir opt/nDeploy/lock
-fpm -s dir -t rpm -C ../nDeploy-cluster-slave-pkg-centos7 --vendor "PiServe Technologies" --iteration ${RPM_ITERATION}.el7 -d python-inotify -d nginx-nDeploy -d python-argparse -d PyYAML -d python-lxml -a noarch -m info@piserve.com -e --description "nDeploy cluster slave" --url http://piserve.com --after-install ../after_ndeploy_custer_slave_install --name nDeploy-cluster-slave .
+fpm -s dir -t rpm -C ../nDeploy-cluster-slave-pkg-centos7 --vendor "PiServe Technologies" --iteration ${RPM_ITERATION}.el7 -d python-inotify -d nginx-nDeploy -d python-argparse -d PyYAML -d python-lxml -a noarch -m info@piserve.com -e --description "nDeploy cluster slave" --url http://piserve.com --after-install ../after_ndeploy_cluster_slave_install --name nDeploy-cluster-slave .
 cp nDeploy-* /home/rpmrepo/public_html/CentOS/7/x86_64/
 cd ..
