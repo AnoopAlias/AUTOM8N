@@ -5,7 +5,7 @@
 use strict;
 use LWP::UserAgent;
 use LWP::Protocol::https;
-use Cpanel::JSON::XS qw(encode_json decode_json);
+use Cpanel::JSON::XS qw(decode_json);
 my $hash;
  if ( -e "/root/.accesshash")
  {
@@ -40,9 +40,9 @@ my $ip = $ARGV[2];
            deldns();
          }
         else
-        {
-         print "Invalid num of args\n";
-        }
+         {
+          print "Invalid num of args\n";
+         }
    }
 
 
@@ -53,14 +53,33 @@ else
 
 sub adddns
 {
-  my $auth = "WHM root:" . $hash;
-  my $ua = LWP::UserAgent->new(
+ my $auth = "WHM root:" . $hash;
+ my $ua = LWP::UserAgent->new(
     ssl_opts   => { verify_hostname => 0, SSL_verify_mode => 'SSL_VERIFY_NONE', SSL_use_cert => 0 },
  );
- my $request = HTTP::Request->new( GET => "https://127.0.0.1:2087/json-api/addzonerecord?api.version=1&domain=$domain&name=$domain.&type=A&address=$ip" );
+ my $request = HTTP::Request->new( GET => "https://127.0.0.1:2087/json-api/dumpzone?domain=$domain");
  $request->header( Authorization => $auth );
  my $response = $ua->request($request);
  my $result = $response->content;
+ $result = decode_json ($result);
+ my $address;
+ my $line;
+ my $dnsrec;
+  foreach my $record ( @{ $result->{result}[0]{record} } )
+  {
+   $address = $record->{address};
+   if ($address =~ $ip)
+   {
+    $dnsrec = $record->{name};
+    print "Ip is already set for $dnsrec\n";
+    exit;
+   }
+  }
+
+ $request = HTTP::Request->new( GET => "https://127.0.0.1:2087/json-api/addzonerecord?api.version=1&domain=$domain&name=$domain.&type=A&address=$ip" );
+ $request->header( Authorization => $auth );
+ $response = $ua->request($request);
+ $result = $response->content;
  $result = decode_json $result;
  my $status = $result->{metadata}{result};
   if ( $status )
@@ -109,9 +128,9 @@ sub deldns
       print "Successfully removed the record\n";
      }
      else
-    {
-     print $result->{metadata}{reason},"\n";
-    }
+     {
+      print $result->{metadata}{reason},"\n";
+     }
   }
   else
   {
