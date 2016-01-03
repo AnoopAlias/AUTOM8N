@@ -496,12 +496,7 @@ def nginx_confgen(user_name, domain_name):
     domain_list = domain_sname + " " + domain_aname
     if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
         if yaml_parsed_cpaneldomain.get('ipv6'):
-            for ipv6_addr in list(yaml_parsed_cpaneldomain.get('ipv6').keys()):
-                cpanel_ipv6 = "listen [" + ipv6_addr + "]"
-        else:
-            cpanel_ipv6 = "#CPIPVSIX"
-    else:
-        cpanel_ipv6 = "#CPIPVSIX"
+            ipv6_addr = str(yaml_parsed_cpaneldomain.get('ipv6').keys()[0])
     if os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
         cpdomainyaml_ssl = "/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"
         cpaneldomain_ssl_data_stream = open(cpdomainyaml_ssl, 'r')
@@ -527,7 +522,8 @@ def nginx_confgen(user_name, domain_name):
                 line = line.replace('CPANELIP', cpanel_ipv4)
                 line = line.replace('DOMAINLIST', domain_list)
                 line = line.replace('DOMAINNAME', domain_sname)
-                line = line.replace('#CPIPVSIX', cpanel_ipv6)
+                if ipv6_addr:
+                    line = line.replace('#CPIPVSIX', "listen [" + ipv6_addr + "]")
                 line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
                 line = line.replace('CPANELSSLCRT', sslcombinedcert)
                 if sslcacertificatefile:
@@ -539,23 +535,17 @@ def nginx_confgen(user_name, domain_name):
             for server in serverlist:
                 connect_server_dict = cluster_data_yaml_parsed.get(server)
                 ipmap_dict = connect_server_dict.get("ipmap")
-                remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4)
-                if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
-                    if yaml_parsed_cpaneldomain.get('ipv6'):
-                        for ipv6_addr in list(yaml_parsed_cpaneldomain.get('ipv6').keys()):
-                            remote_ipv6 = ipmap_dict.get(ipv6_addr)
-                            remote_domain_ipv6 = "listen [" + remote_ipv6 + "]"
-                    else:
-                        remote_domain_ipv6 = "#CPIPVSIX"
-                else:
-                    remote_domain_ipv6 = "#CPIPVSIX"
+                remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4, "127.0.0.1")
+                if ipv6_addr:
+                    remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
                 config_out = open("/etc/nginx/"+server+"/" + domain_sname + "_SSL.conf", 'w')
                 with open(template_file) as my_template_file:
                     for line in template_file:
                         line = line.replace('CPANELIP', remote_domain_ipv4)
                         line = line.replace('DOMAINLIST', domain_list)
                         line = line.replace('DOMAINNAME', domain_sname)
-                        line = line.replace('#CPIPVSIX', remote_domain_ipv6)
+                        if ipv6_addr:
+                            line = line.replace('#CPIPVSIX', "listen [" + remote_domain_ipv6 + "]")
                         line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
                         line = line.replace('CPANELSSLCRT', sslcombinedcert)
                         if sslcacertificatefile:
@@ -570,7 +560,8 @@ def nginx_confgen(user_name, domain_name):
             line = line.replace('CPANELIP', cpanel_ipv4)
             line = line.replace('DOMAINLIST', domain_list)
             line = line.replace('DOMAINNAME', domain_sname)
-            line = line.replace('#CPIPVSIX', cpanel_ipv6)
+            if ipv6_addr:
+                line = line.replace('#CPIPVSIX', "listen [" + ipv6_addr + "]")
             config_out.write(line)
         config_out.close()
     my_template_file.close()
@@ -578,23 +569,17 @@ def nginx_confgen(user_name, domain_name):
         for server in serverlist:
             connect_server_dict = cluster_data_yaml_parsed.get(server)
             ipmap_dict = connect_server_dict.get("ipmap")
-            remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4)
-            if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
-                if yaml_parsed_cpaneldomain.get('ipv6'):
-                    for ipv6_addr in list(yaml_parsed_cpaneldomain.get('ipv6').keys()):
-                        remote_ipv6 = ipmap_dict.get(ipv6_addr)
-                        remote_domain_ipv6 = "listen [" + remote_ipv6 + "]"
-                else:
-                    remote_domain_ipv6 = "#CPIPVSIX"
-            else:
-                remote_domain_ipv6 = "#CPIPVSIX"
+            remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4, "127.0.0.1")
+            if ipv6_addr:
+                remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
             config_out = open("/etc/nginx/"+server+"/" + domain_sname + ".conf", 'w')
             with open(installation_path + "/conf/server.tmpl", 'r') as my_template_file:
                 for line in my_template_file:
                     line = line.replace('CPANELIP', remote_domain_ipv4)
                     line = line.replace('DOMAINLIST', domain_list)
                     line = line.replace('DOMAINNAME', domain_sname)
-                    line = line.replace('#CPIPVSIX', remote_domain_ipv6)
+                    if ipv6_addr:
+                        line = line.replace('#CPIPVSIX', "listen [" + remote_domain_ipv6 + "]")
                     config_out.write(line)
                 config_out.close()
             my_template_file.close()
