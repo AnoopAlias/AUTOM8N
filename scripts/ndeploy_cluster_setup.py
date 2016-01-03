@@ -80,8 +80,9 @@ if __name__ == "__main__":
     if not os.path.isdir("/etc/nginx/"+slaveserver):
         os.mkdir("/etc/nginx/"+slaveserver)
     cuisine.dir_ensure("/etc/nginx/"+slaveserver)
-    cuisine.dir_remove("/etc/nginx/sites-enabled", recursive=True)
-    cuisine.file_link("/etc/nginx/"+slaveserver, "/etc/nginx/sites-enabled", symbolic=True)
+    if not cuisine.file_is_link("/etc/nginx/sites-enabled"):
+        cuisine.dir_remove("/etc/nginx/sites-enabled")
+        cuisine.file_link("/etc/nginx/"+slaveserver, "/etc/nginx/sites-enabled", symbolic=True)
     subprocess.call('systemctl enable  csync2.socket', shell=True)
     subprocess.call('systemctl start csync2.socket', shell=True)
     cuisine.run('systemctl enable  csync2.socket')
