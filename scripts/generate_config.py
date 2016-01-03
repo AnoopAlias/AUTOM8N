@@ -497,6 +497,10 @@ def nginx_confgen(user_name, domain_name):
     if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
         if yaml_parsed_cpaneldomain.get('ipv6'):
             ipv6_addr = str(yaml_parsed_cpaneldomain.get('ipv6').keys()[0])
+        else:
+            ipv6_addr = None
+    else:
+        ipv6_addr = None
     if os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
         cpdomainyaml_ssl = "/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"
         cpaneldomain_ssl_data_stream = open(cpdomainyaml_ssl, 'r')
