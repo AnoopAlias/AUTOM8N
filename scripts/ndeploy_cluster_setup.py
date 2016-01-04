@@ -7,7 +7,6 @@ import argparse
 import subprocess
 import re
 import cuisine
-import pwd
 
 
 __author__ = "Anoop P Alias"
@@ -67,16 +66,11 @@ if __name__ == "__main__":
     subprocess.call(sed_cmd3, shell=True)
     rsync_cmd1 = 'rsync -av '+installation_path+'/conf/lsyncd_master.conf /etc/lsyncd.conf'
     subprocess.call(rsync_cmd1, shell=True)
-    sed_cmd4 = 'sed -e "s/MASTERSERVER/'+masterserver+'/g" -e "s/MASTERSSHPORT/'+masterport+'/g" '+installation_path+'/conf/lsyncd_slave.conf > /tmp/nDeploy_lsyncd.conf'
+    sed_cmd4 = 'sed -e "s/MASTERSERVER/'+masteripalone+'/g" -e "s/MASTERSSHPORT/'+masterport+'/g" '+installation_path+'/conf/lsyncd_slave.conf > /tmp/nDeploy_lsyncd.conf'
     subprocess.call(sed_cmd4, shell=True)
     cuisine.rsync("/tmp/nDeploy_lsyncd.conf", "/etc/lsyncd.conf")
     os.remove("/tmp/nDeploy_lsyncd.conf")
-    with open("/etc/domainusers", 'r') as domainusers:
-        for line in domainusers:
-            cpaneluser, domain = line.split(":")
-            user_info = pwd.getpwnam(cpaneluser)
-            cpaneluserhome = user_info.pw_dir
-            cuisine.user_ensure_linux(cpaneluser, home=cpaneluserhome)
+    cuisine.run('sed -i "s/^UMASK/#UMASK/" /etc/login.defs')
     if not os.path.isdir("/etc/nginx/"+slaveserver):
         os.mkdir("/etc/nginx/"+slaveserver)
     cuisine.dir_ensure("/etc/nginx/"+slaveserver)
@@ -103,5 +97,3 @@ if __name__ == "__main__":
         cluster_conf.write(yaml.dump(mydict, default_flow_style=False))
     subprocess.call("/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual", shell=True)
     subprocess.call("/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_post.py --category Whostmgr --event Accounts::Remove --stage post --manual", shell=True)
-    # Doing the initial unison sync of /home
-    subprocess.Popen('/usr/bin/unison', shell=True)
