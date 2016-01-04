@@ -1,0 +1,18 @@
+if [ ! -f /etc/csync2/csync2_ssl_key.pem ]; then
+/usr/bin/openssl genrsa -rand /proc/apm:/proc/cpuinfo:/proc/dma:/proc/filesystems:/proc/interrupts:/proc/ioports:/proc/pci:/proc/rtc:/proc/uptime 1024 > /etc/csync2/csync2_ssl_key.pem 2>/dev/null
+fi
+FQDN=`hostname`
+if [ "x${FQDN}" = "x" ]; then
+   FQDN=localhost.localdomain
+fi
+if [ ! -f /etc/csync2/csync2_ssl_cert.pem ]; then
+cat << EOF | /usr/bin/openssl req -new -key /etc/csync2/csync2_ssl_key.pem -x509 -days 3000 -out /etc/csync2/csync2_ssl_cert.pem 2>/dev/null
+--
+SomeState
+SomeCity
+SomeOrganization
+SomeOrganization
+SomeName
+name@example.com
+EOF
+fi

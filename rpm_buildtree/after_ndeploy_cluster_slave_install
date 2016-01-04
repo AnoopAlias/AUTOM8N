@@ -1,0 +1,17 @@
+touch /opt/nDeploy/conf/backends.yaml
+
+if [ -z "$PHPBREW_ROOT" ] ; then
+	export PHPBREW_ROOT=/usr/local/phpbrew
+	echo "export PHPBREW_ROOT=/usr/local/phpbrew" >> /root/.bashrc
+fi
+if [ -z "$NVM_DIR" ] ; then
+	export NVM_DIR="/usr/local/nvm"
+	echo "export NVM_DIR=/usr/local/nvm" >> /root/.bashrc
+fi
+if [ ! -d /opt/nDeploy/domain-data ] ; then
+	mkdir /opt/nDeploy/domain-data
+fi
+if [ ! -d /opt/nDeploy/php-fpm.d ] ; then
+	mkdir /opt/nDeploy/php-fpm.d
+	sed 's/CPANELUSER/nobody/g' /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/nDeploy/php-fpm.d/nobody.conf
+fi
