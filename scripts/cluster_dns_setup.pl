@@ -71,8 +71,12 @@ sub adddns
    if ($address =~ $ip)
    {
     $dnsrec = $record->{name};
+    chop($dnsrec);
+    if ($dnsrec eq $domain)
+    {
     print "Ip is already set for $dnsrec\n";
     exit;
+    }
    }
   }
 
@@ -106,15 +110,21 @@ sub deldns
  my $address;
  my $line;
  my $found;
+ my $dnsrec;
   foreach my $record ( @{ $result->{result}[0]{record} } )
   {
    $address = $record->{address};
    if ($address =~ $ip)
    {
+    $dnsrec = $record->{name};
+    chop($dnsrec);
+    if ($dnsrec eq $domain)
+    {
     $line = $record->{Line};
     $found +=1;
+    }
    }
-  }
+ }
   if ($found)
   {
     $request = HTTP::Request->new( POST => "https://127.0.0.1:2087/json-api/removezonerecord?api.version=1&zone=$domain&line=$line");
