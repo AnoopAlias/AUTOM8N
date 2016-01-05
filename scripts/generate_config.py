@@ -624,6 +624,8 @@ if __name__ == "__main__":
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             cluster_data_yaml.close()
             serverlist = cluster_data_yaml_parsed.keys()
+        else:
+            clusterenabled = None
 
         nginx_confgen(cpaneluser, main_domain)  # Generate conf for main domain
 
