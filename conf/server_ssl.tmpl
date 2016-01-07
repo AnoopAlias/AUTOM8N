@@ -1,7 +1,7 @@
 server {
 
-  listen    CPANELIP:443 ssl;
-  #CPIPVSIX:443 ssl;
+  listen    CPANELIP:443 ssl spdy;
+  #CPIPVSIX:443 ssl spdy;
   ssl_certificate CPANELSSLCRT;
   ssl_certificate_key CPANELSSLKEY;
 
@@ -16,9 +16,9 @@ server {
   # ServerNames
 
   server_name  DOMAINLIST;
-  access_log /usr/local/apache/domlogs/DOMAINNAME main;
-  access_log /usr/local/apache/domlogs/DOMAINNAME-bytes_log bytes_log;
+
   access_log /usr/local/apache/domlogs/DOMAINNAME-ssl_log main;
+  access_log /usr/local/apache/domlogs/DOMAINNAME-bytes_log bytes_log;
 
   include /etc/nginx/sites-enabled/DOMAINNAME_SSL.include;
 

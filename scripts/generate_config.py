@@ -175,26 +175,36 @@ def nginx_server_reload():
 
 def php_profile_set(user_name, phpversion, php_path):
     """Function to setup php-fpm pool for user and restart the master php-fpm"""
-    phppool_file = php_path + "/etc/php-fpm.d/" + user_name + ".conf"
+    phppool_file = installation_path + "/php-fpm.d/" + user_name + ".conf"
     php_fpm_config = installation_path+"/conf/php-fpm.conf"
-    php_fpm_bin = php_path + "/sbin/php-fpm"
+    if os.path.isfile(php_path+"/sbin/php-fpm"):
+        php_fpm_bin = php_path + "/sbin/php-fpm"
+    else:
+        php_fpm_bin = php_path + "/usr/sbin/php-fpm"
     if os.path.isfile(phppool_file):
         if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
             with open(php_path + "/var/run/php-fpm.pid") as f:
                 mypid = f.read()
             f.close()
-            os.kill(int(mypid), signal.SIGUSR2)
-        time.sleep(1)
-        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-            with open(php_path + "/var/run/php-fpm.pid") as f:
-                newpid = f.read()
-            f.close()
+            try:
+                os.kill(int(mypid), signal.SIGUSR2)
+            except OSError:
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
+            time.sleep(3)
+            try:
+                with open(php_path + "/var/run/php-fpm.pid") as f:
+                    newpid = f.read()
+                f.close()
+            except IOError:
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
             try:
                 os.kill(int(newpid), 0)
             except OSError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
             else:
                 return True
+        else:
+            subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
     else:
         sed_string = 'sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
@@ -203,18 +213,21 @@ def php_profile_set(user_name, phpversion, php_path):
                 mypid = f.read()
             f.close()
             os.kill(int(mypid), signal.SIGUSR2)
-        time.sleep(1)
-        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-            with open(php_path + "/var/run/php-fpm.pid") as f:
-                newpid = f.read()
-            f.close()
+            time.sleep(3)
+            try:
+                with open(php_path + "/var/run/php-fpm.pid") as f:
+                    newpid = f.read()
+                f.close()
+            except IOError:
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
             try:
                 os.kill(int(newpid), 0)
             except OSError:
-                subprocess.call(php_fpm_bin+" --fpm-config "+php_fpm_config, shell=True)
+                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
             else:
                 return True
-    return
+        else:
+            subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
 
 
 def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list):
@@ -483,12 +496,11 @@ def nginx_confgen(user_name, domain_name):
     domain_list = domain_sname + " " + domain_aname
     if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
         if yaml_parsed_cpaneldomain.get('ipv6'):
-            for ipv6_addr in list(yaml_parsed_cpaneldomain.get('ipv6').keys()):
-                cpanel_ipv6 = "listen [" + ipv6_addr + "]"
+            ipv6_addr = str(yaml_parsed_cpaneldomain.get('ipv6').keys()[0])
         else:
-            cpanel_ipv6 = "#CPIPVSIX"
+            ipv6_addr = None
     else:
-        cpanel_ipv6 = "#CPIPVSIX"
+        ipv6_addr = None
     if os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
         cpdomainyaml_ssl = "/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"
         cpaneldomain_ssl_data_stream = open(cpdomainyaml_ssl, 'r')
@@ -503,35 +515,81 @@ def nginx_confgen(user_name, domain_name):
             subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
             subprocess.call("cat " + sslcacertificatefile + " >> " + sslcombinedcert, shell=True)
             subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
-            template_file = open(installation_path + "/conf/server_ssl_ocsp.tmpl", 'r')
+            template_file = installation_path + "/conf/server_ssl_ocsp.tmpl"
         else:
             sslcombinedcert = sslcertificatefile
-            template_file = open(installation_path + "/conf/server_ssl.tmpl", 'r')
+            template_file = installation_path + "/conf/server_ssl.tmpl"
         nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
         config_out = open("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.conf", 'w')
-        for line in template_file:
+        with open(template_file) as my_template_file:
+            for line in my_template_file:
+                line = line.replace('CPANELIP', cpanel_ipv4)
+                line = line.replace('DOMAINLIST', domain_list)
+                line = line.replace('DOMAINNAME', domain_sname)
+                if ipv6_addr:
+                    line = line.replace('#CPIPVSIX', "listen [" + ipv6_addr + "]")
+                line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
+                line = line.replace('CPANELSSLCRT', sslcombinedcert)
+                if sslcacertificatefile:
+                    line = line.replace('CPANELCACERT', sslcacertificatefile)
+                config_out.write(line)
+        config_out.close()
+        my_template_file.close()
+        if clusterenabled:
+            for server in serverlist:
+                connect_server_dict = cluster_data_yaml_parsed.get(server)
+                ipmap_dict = connect_server_dict.get("ipmap")
+                remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4, "127.0.0.1")
+                if ipv6_addr:
+                    remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
+                config_out = open("/etc/nginx/"+server+"/" + domain_sname + "_SSL.conf", 'w')
+                with open(template_file) as my_template_file:
+                    for line in template_file:
+                        line = line.replace('CPANELIP', remote_domain_ipv4)
+                        line = line.replace('DOMAINLIST', domain_list)
+                        line = line.replace('DOMAINNAME', domain_sname)
+                        if ipv6_addr:
+                            line = line.replace('#CPIPVSIX', "listen [" + remote_domain_ipv6 + "]")
+                        line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
+                        line = line.replace('CPANELSSLCRT', sslcombinedcert)
+                        if sslcacertificatefile:
+                            line = line.replace('CPANELCACERT', sslcacertificatefile)
+                        config_out.write(line)
+                    config_out.close()
+                my_template_file.close()
+    nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, *domain_aname_list)
+    config_out = open("/etc/nginx/sites-enabled/" + domain_sname + ".conf", 'w')
+    with open(installation_path + "/conf/server.tmpl", 'r') as my_template_file:
+        for line in my_template_file:
             line = line.replace('CPANELIP', cpanel_ipv4)
             line = line.replace('DOMAINLIST', domain_list)
             line = line.replace('DOMAINNAME', domain_sname)
-            line = line.replace('#CPIPVSIX', cpanel_ipv6)
-            line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
-            line = line.replace('CPANELSSLCRT', sslcombinedcert)
-            if sslcacertificatefile:
-                line = line.replace('CPANELCACERT', sslcacertificatefile)
+            if ipv6_addr:
+                line = line.replace('#CPIPVSIX', "listen [" + ipv6_addr + "]")
             config_out.write(line)
-        template_file.close()
         config_out.close()
-    nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, *domain_aname_list)
-    template_file = open(installation_path + "/conf/server.tmpl", 'r')
-    config_out = open("/etc/nginx/sites-enabled/" + domain_sname + ".conf", 'w')
-    for line in template_file:
-        line = line.replace('CPANELIP', cpanel_ipv4)
-        line = line.replace('DOMAINLIST', domain_list)
-        line = line.replace('DOMAINNAME', domain_sname)
-        line = line.replace('#CPIPVSIX', cpanel_ipv6)
-        config_out.write(line)
-    template_file.close()
-    config_out.close()
+    my_template_file.close()
+    if clusterenabled:
+        for server in serverlist:
+            connect_server_dict = cluster_data_yaml_parsed.get(server)
+            ipmap_dict = connect_server_dict.get("ipmap")
+            remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4, "127.0.0.1")
+            if ipv6_addr:
+                remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
+            config_out = open("/etc/nginx/"+server+"/" + domain_sname + ".conf", 'w')
+            with open(installation_path + "/conf/server.tmpl", 'r') as my_template_file:
+                for line in my_template_file:
+                    line = line.replace('CPANELIP', remote_domain_ipv4)
+                    line = line.replace('DOMAINLIST', domain_list)
+                    line = line.replace('DOMAINNAME', domain_sname)
+                    if ipv6_addr:
+                        line = line.replace('#CPIPVSIX', "listen [" + remote_domain_ipv6 + "]")
+                    config_out.write(line)
+                config_out.close()
+            my_template_file.close()
+    if clusterenabled:
+        for server in serverlist:
+            subprocess.call("rsync -a /etc/nginx/sites-enabled/*.{include,nxapi.wl} /etc/nginx/"+server+"/", shell=True)
     nginx_server_reload()
 
 
@@ -559,6 +617,15 @@ if __name__ == "__main__":
         # parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   #This data is irrelevant as parked domain list is in ServerAlias
         # addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
         sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
+        if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
+            clusterenabled = True
+            cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+            cluster_data_yaml = open(cluster_config_file, 'r')
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+            cluster_data_yaml.close()
+            serverlist = cluster_data_yaml_parsed.keys()
+        else:
+            clusterenabled = None
 
         nginx_confgen(cpaneluser, main_domain)  # Generate conf for main domain
 

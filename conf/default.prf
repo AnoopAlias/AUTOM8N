@@ -1,0 +1,23 @@
+# Unison preferences file
+root = /home
+root = ssh://root@SLAVESERVER//home
+ignore = Path virtfs
+ignore = Path */mail
+ignore = Path */.cpanel
+ignore = Path */.cphorde
+ignore = Path */etc
+ignore = Path */public_ftp
+ignore = Path */tmp
+ignore = Path .cpanm
+ignore = Path .cpan
+ignore = Path .cpcpan
+ignore = Path cpeasyapache
+ignore = Path cPanelInstall
+batch = true
+auto = true
+fastcheck=true
+group=true
+owner=true
+silent=true
+times=true
+log=false
