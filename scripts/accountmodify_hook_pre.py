@@ -31,6 +31,10 @@ cpaneluser_data_stream.close()
 main_domain = yaml_parsed_cpaneluser.get('main_domain')
 sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
 if cpanelnewuser != cpaneluser:
+    try:
+        os.remove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
+    except OSError:
+        pass
     subprocess.call("touch "+installation_path+"/lock/todel_"+cpaneluser, shell=True)
     fhandle = open(installation_path+"/lock/todel_"+cpaneluser, 'a')
     fhandle.write(installation_path+"/domain-data/"+main_domain+"\n")

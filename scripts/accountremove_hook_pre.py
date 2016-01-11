@@ -94,6 +94,10 @@ for domain_in_subdomains in sub_domains:
         os.remove(installation_path+"/domain-data/"+domain_in_subdomains+"_SSL")
         os.remove(nginx_dir+domain_in_subdomains+"_SSL.conf")
         os.remove(nginx_dir+domain_in_subdomains+"_SSL.include")
-remove_php_fpm_pool(cpaneluser)
+try:
+    os.remove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
+except OSError:
+    pass
+# remove_php_fpm_pool(cpaneluser)
 subprocess.call("/usr/sbin/nginx -s reload", shell=True)
 print(("1 nDeploy:remove:"+cpaneluser))
