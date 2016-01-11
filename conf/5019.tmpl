@@ -1,0 +1,28 @@
+#PAGESPEED_NOT_ENABLED;
+root DOCUMENTROOT;
+index index.php index.html index.htm;
+
+location / {
+        rewrite ^/(.*.php)(/)(.*)$ /$1?file=/$3 last;
+}
+
+location /NaxsiRequestDenied {
+       return 418;
+   }
+
+location ~ ^/pingphpfpm$ {
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:SOCKETFILE;
+}
+
+location ~ \.php$ {
+    #NAXSI_INCLUDE_FILE;
+    #NAXSI_DOMAIN_WHITELISTS;
+
+	try_files $uri =404;
+        fastcgi_pass unix:SOCKETFILE;
+        fastcgi_index index.php;
+        include /etc/nginx/fastcgi_params;
+}
+
+include /etc/nginx/conf.d/cpanel_services.conf;
