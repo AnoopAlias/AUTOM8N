@@ -6,9 +6,6 @@ import sys
 import json
 import os
 import subprocess
-import signal
-import time
-
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright 2014, PiServe Technologies Pvt Ltd , India"
