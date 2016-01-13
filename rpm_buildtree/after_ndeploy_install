@@ -27,6 +27,7 @@ touch /opt/nDeploy/conf/profiles.yaml
 /opt/nDeploy/scripts/update_profiles.py PHP 5017 "Drupal6 or lower"
 /opt/nDeploy/scripts/update_profiles.py PHP 5018 "Prestashop"
 /opt/nDeploy/scripts/update_profiles.py PHP 5019 "Moodle"
+/opt/nDeploy/scripts/update_profiles.py PHP 5020 "OwnCloud"
 /opt/nDeploy/scripts/update_profiles.py PHP 5501 "High Performance Wordpress+NAXSI"
 /opt/nDeploy/scripts/update_profiles.py PHP 5002 "Joomla"
 /opt/nDeploy/scripts/update_profiles.py PHP 5003 "Magento"
