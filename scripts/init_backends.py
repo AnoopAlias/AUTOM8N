@@ -57,6 +57,32 @@ def control_php_fpm(trigger):
                         time.sleep(3)  # Give enough time for all child process to exit
                     except OSError:
                         break
+        elif trigger == "reload":
+            for path in list(php_backends_dict.values()):
+                php_fpm_pid = path+"/var/run/php-fpm.pid"
+                if os.path.isfile(path+"/sbin/php-fpm"):
+                    php_fpm_bin = path+"/sbin/php-fpm"
+                else:
+                    php_fpm_bin = path+"/usr/sbin/php-fpm"
+            if os.path.isfile(php_fpm_pid):
+                    with open(php_fpm_pid) as f:
+                        mypid = f.read()
+                    try:
+                        os.kill(int(mypid), signal.SIGUSR2)
+                    except OSError:
+                        subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
+                    time.sleep(3)
+                    try:
+                        with open(path + "/var/run/php-fpm.pid") as f:
+                            newpid = f.read()
+                    except IOError:
+                        subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
+                    try:
+                        os.kill(int(newpid), 0)
+                    except OSError:
+                        subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
+            else:
+                    subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
         else:
             return
 

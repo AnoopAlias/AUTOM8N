@@ -37,7 +37,7 @@ class PhpFpmConfig:
                 if "PHP" in backend_data_yaml_parsed:
                     php_backends_dict = backend_data_yaml_parsed["PHP"]
                     php_path = php_backends_dict.get(myversion)
-                    php_profile_set(self.username, myversion, php_path)
+                    php_profile_set(self.username, php_path)
                     path_to_socket = php_path + "/var/run/" + self.username + ".sock"
                     if os.path.islink("/opt/fpmsockets/"+self.username+".sock"):
                         os.remove("/opt/fpmsockets/"+self.username+".sock")

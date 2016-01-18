@@ -85,6 +85,8 @@ fi
 echo -e '\e[93m Installing nDeploy plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp --theme x3
+#Following 3 lines are left here to remove the Obsolete apache+php-fpm plugin .It might be removed
+#in future versions for cleaning up code.
 echo -e '\e[93m Removing Obsolete Apache_PHP-FPM plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp.tar
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/apache_fpm_cp.tar --theme x3

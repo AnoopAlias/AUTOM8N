@@ -153,8 +153,8 @@ def nginx_server_reload():
     return
 
 
-def php_profile_set(user_name, phpversion, php_path):
-    """Function to setup php-fpm pool for user and restart the master php-fpm"""
+def php_profile_set(user_name, php_path):
+    """Function to setup php-fpm pool for user and reload the master php-fpm"""
     phppool_file = installation_path + "/php-fpm.d/" + user_name + ".conf"
     php_fpm_config = installation_path+"/conf/php-fpm.conf"
     if os.path.isfile(php_path+"/sbin/php-fpm"):
@@ -165,7 +165,6 @@ def php_profile_set(user_name, phpversion, php_path):
         if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
             with open(php_path + "/var/run/php-fpm.pid") as f:
                 mypid = f.read()
-            f.close()
             try:
                 os.kill(int(mypid), signal.SIGUSR2)
             except OSError:
@@ -174,43 +173,18 @@ def php_profile_set(user_name, phpversion, php_path):
             try:
                 with open(php_path + "/var/run/php-fpm.pid") as f:
                     newpid = f.read()
-                f.close()
             except IOError:
                 subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
             try:
                 os.kill(int(newpid), 0)
             except OSError:
                 subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
-            else:
-                return True
         else:
             subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
     else:
         sed_string = 'sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
-        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-            with open(php_path + "/var/run/php-fpm.pid") as f:
-                mypid = f.read()
-            f.close()
-            try:
-                os.kill(int(mypid), signal.SIGUSR2)
-            except OSError:
-                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
-            time.sleep(3)
-            try:
-                with open(php_path + "/var/run/php-fpm.pid") as f:
-                    newpid = f.read()
-                f.close()
-            except IOError:
-                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
-            try:
-                os.kill(int(newpid), 0)
-            except OSError:
-                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
-            else:
-                return True
-        else:
-            subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
+        php_profile_set(user_name, php_path)
 
 
 def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list):
@@ -264,7 +238,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 else:
                     pagespeed_include = pagespeed_include_location
                 path_to_socket = php_path + "/var/run/" + user_name + ".sock"
-                php_profile_set(user_name, phpversion, php_path)
+                php_profile_set(user_name, php_path)
                 profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
                 profile_config_out = open(include_file, 'w')
                 for line in profile_template_file:

@@ -35,6 +35,7 @@ if cpanelnewuser != cpaneluser:
         os.remove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
     except OSError:
         pass
+    subprocess.call(installation_path+"/scripts/init_backends.py reload")
     if os.path.isfile(installation_path+"/user-data/"+cpaneluser):
         os.remove(installation_path+"/user-data/"+cpaneluser)
     os.remove(installation_path+"/domain-data/"+main_domain)

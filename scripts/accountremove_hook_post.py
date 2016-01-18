@@ -28,5 +28,5 @@ for server in serverlist:
     cuisine.connect(connect_ip)
     cuisine.user_remove_linux(cpaneluser, rmhome=True)
     cuisine.run('if [ -f '+installation_path+'/php-fpm.d/'+cpaneluser+'.conf ] ;then rm -f '+installation_path+'/php-fpm.d/'+cpaneluser+'.conf ;fi')
-    cuisine.run("systemctl restart ndeploy_backends")
+    cuisine.run(installation_path+"/scripts/init_backends.py reload")
 print("1 nDeploy:clusteraccountdelete:"+cpaneluser)
