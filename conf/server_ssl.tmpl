@@ -17,7 +17,7 @@ server {
 
   server_name  DOMAINLIST;
 
-  access_log /usr/local/apache/domlogs/DOMAINNAME-ssl_log main;
+  access_log /usr/local/apache/domlogs/DOMAINNAME-ssl_log;
   access_log /usr/local/apache/domlogs/DOMAINNAME-bytes_log bytes_log;
 
   include /etc/nginx/sites-enabled/DOMAINNAME_SSL.include;

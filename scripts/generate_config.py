@@ -26,26 +26,6 @@ pagespeed_include_location = "include /etc/nginx/conf.d/pagespeed.conf"
 # Function defs
 
 
-def cpanel_nginx_awstats_fix(awstats_custom_conf, cpaneluser):
-    """cPanel nginx awstats fix .Thanks to https://github.com/lucasRolff/cpanel-nginx-awstats"""
-    file_content = """\
-    LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %extra1"
-    ExtraSectionName1="Time to serve requests (seconds)"
-    ExtraSectionCodeFilter1=""
-    ExtraSectionFirstColumnTitle1="Number of seconds to serve the request"
-    ExtraSectionFirstColumnValues1="extra1,(.*)"
-    ExtraSectionStatTypes1="H"
-    ExtraTrackedRowsLimit=100000
-    """
-    with open(awstats_custom_conf, 'w') as f:
-        f.write(file_content)
-    f.close()
-    cpuser_uid = pwd.getpwnam(cpaneluser).pw_uid
-    cpuser_gid = grp.getgrnam(cpaneluser).gr_gid
-    os.chown(awstats_custom_conf, cpuser_uid, cpuser_gid)
-    return
-
-
 def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     """Add a vhost to tomcat and restart railo-tomcat app server"""
     tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
@@ -258,18 +238,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         profileyaml_data_stream.close()
         profile_category = yaml_parsed_profileyaml.get('backend_category')
-        profile_backend_version = yaml_parsed_profileyaml.get('backend_version')
         profile_code = str(yaml_parsed_profileyaml.get('profile'))
-        awstats_dir = domain_home+"/tmp/awstats"
-        awstats_custom_conf = domain_home+"/tmp/awstats/awstats.conf.include"
-        if os.path.exists(awstats_dir) and (profile_backend_version != "apache_SSL" or profile_backend_version != "apache"):
-            if not os.path.isfile(awstats_custom_conf):
-                cpanel_nginx_awstats_fix(awstats_custom_conf, user_name)
-        else:
-            try:
-                os.remove(awstats_custom_conf)
-            except OSError:
-                pass
         naxsi_whitelist = "/etc/nginx/sites-enabled/" + domain_name + ".nxapi.wl"
         if not os.path.isfile(naxsi_whitelist):
             subprocess.call("touch "+naxsi_whitelist, shell=True)
