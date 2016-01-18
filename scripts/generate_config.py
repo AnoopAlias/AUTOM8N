@@ -257,6 +257,19 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         profileyaml_data_stream = open(profileyaml, 'r')
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         profileyaml_data_stream.close()
+        profile_category = yaml_parsed_profileyaml.get('backend_category')
+        profile_backend_version = yaml_parsed_profileyaml.get('backend_version')
+        profile_code = str(yaml_parsed_profileyaml.get('profile'))
+        awstats_dir = domain_home+"/tmp/awstats"
+        awstats_custom_conf = domain_home+"/tmp/awstats/awstats.conf.include"
+        if os.path.exists(awstats_dir) and (profile_backend_version != "apache_SSL" or profile_backend_version != "apache"):
+            if not os.path.isfile(awstats_custom_conf):
+                cpanel_nginx_awstats_fix(awstats_custom_conf, user_name)
+        else:
+            try:
+                os.remove(awstats_custom_conf)
+            except OSError:
+                pass
         naxsi_whitelist = "/etc/nginx/sites-enabled/" + domain_name + ".nxapi.wl"
         if not os.path.isfile(naxsi_whitelist):
             subprocess.call("touch "+naxsi_whitelist, shell=True)
@@ -273,8 +286,6 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         profile_custom_status = yaml_parsed_profileyaml.get('customconf')
         config_test_status = yaml_parsed_profileyaml.get('testconf')
         if profile_custom_status == "0" and config_test_status == "0":
-            profile_category = yaml_parsed_profileyaml.get('backend_category')
-            profile_code = str(yaml_parsed_profileyaml.get('profile'))
             if profile_category == "PHP":
                 phpversion = yaml_parsed_profileyaml.get('backend_version')
                 php_path = yaml_parsed_profileyaml.get('backend_path')
@@ -480,11 +491,6 @@ def nginx_confgen(user_name, domain_name):
     yaml_parsed_cpaneldomain = yaml.safe_load(cpaneldomain_data_stream)
     cpanel_ipv4 = yaml_parsed_cpaneldomain.get('ip')
     domain_home = yaml_parsed_cpaneldomain.get('homedir')
-    awstats_dir = domain_home+"/tmp/awstats"
-    awstats_custom_conf = domain_home+"/tmp/awstats/awstats.conf.include"
-    if os.path.exists(awstats_dir):
-        if not os.path.isfile(awstats_custom_conf):
-            cpanel_nginx_awstats_fix(awstats_custom_conf, user_name)
     document_root = yaml_parsed_cpaneldomain.get('documentroot')
     domain_sname = yaml_parsed_cpaneldomain.get('servername')
     if domain_sname.startswith("*"):
