@@ -423,7 +423,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         cpuser_uid = pwd.getpwnam(user_name).pw_uid
         cpuser_gid = grp.getgrnam(user_name).gr_gid
         os.chown(profileyaml, cpuser_uid, cpuser_gid)
-        os.chmod(profileyaml, 0660)
+        os.chmod(profileyaml, 0o660)
         nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list)
 
 
