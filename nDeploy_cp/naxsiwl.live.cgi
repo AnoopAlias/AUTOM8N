@@ -69,7 +69,7 @@ if form.getvalue('domain'):
         subprocess.call('/usr/nginx/nxapi/nxtool.py --colors -c /usr/nginx/nxapi/nxapi.json -s ' + aliases + ' -f --slack >> ' + outputfile, shell=True)
     print('<p style="background-color:LightGrey"> Whitelist generated . Download whitelist file  ' + outputfile + ' using FTP</p>')
     print('<p style="background-color:LightGrey">You must analyze the file and copy genuine whitelist rules starting with BasicRule </p>')
-    print('<p style="background-color:LightGrey">Update new rules below and click "UPDATE WHITELIST"</p>')
+    print('<p style="background-color:LightGrey">Update new rules along with existing ones below and click "UPDATE WHITELIST"</p>')
     print('<HR>')
     try:
         shutil.copyfile(naxsiwlconffile, naxsiwlsaved)
