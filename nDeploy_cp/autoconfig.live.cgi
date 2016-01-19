@@ -4,6 +4,7 @@ import socket
 import yaml
 import cgi
 import cgitb
+import shutil
 
 
 __author__ = "Anoop P Alias"
@@ -14,7 +15,7 @@ __email__ = "anoop.alias@piserve.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
-
+myhome = os.environ["HOME"]
 
 cgitb.enable()
 
@@ -71,12 +72,12 @@ if form.getvalue('domain') and form.getvalue('custom'):
                 print('<input type="submit" value="PROCEED">')
                 print('</form>')
             elif customconf == "1":
+                try:
+                    shutil.copyfile('/etc/nginx/sites-enabled/'+mydomain+'.include', myhome + '/' + mydomain + '_nginx.include.custom.conf')
+                except IOError:
+                    print("IOError in config file copying")
                 print('<form action="update.live.cgi" method="post">')
-                print('<textarea name="textcontent" cols="120" rows="50">')
-                with open('/etc/nginx/sites-enabled/'+mydomain+'.include', 'r') as content_file:
-                    content = content_file.read()
-                content_file.close()
-                print(content)
+                print('<textarea name="textcontent" placeholder="Copy contents of '+ myhome + '/' + mydomain + '_nginx.include.custom.conf here and edit" cols="120" rows="50">')
                 print('</textarea>')
                 print('<HR>')
                 print('<input type="submit" value="Submit" />')

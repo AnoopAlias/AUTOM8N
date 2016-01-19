@@ -5,6 +5,7 @@ import yaml
 import subprocess
 import cgi
 import cgitb
+import shutil
 
 
 __author__ = "Anoop P Alias"
@@ -56,8 +57,10 @@ if form.getvalue('domain'):
     if main_domain.startswith('*.'):
         outputfile = homedir + '/_wildcard_.'+main_domain.replace('*.', '') + '.naxsi.wl'
         naxsiwlconffile = '/etc/nginx/sites-enabled' + '/_wildcard_.'+main_domain.replace('*.', '') + '.nxapi.wl'
+        naxsiwlsaved = homedir + '/_wildcard_.'+main_domain.replace('*.', '') + '.naxsi.wl.saved'
     else:
         outputfile = homedir + '/' + main_domain + '.naxsi.wl'
+        naxsiwlsaved = homedir + '/' + main_domain + '.naxsi.wl.saved'
         naxsiwlconffile = '/etc/nginx/sites-enabled/' + main_domain + '.nxapi.wl'
     subprocess.call('/usr/nginx/nxapi/nxtool.py --colors -c /usr/nginx/nxapi/nxapi.json -s '+main_domain+' -w /etc/nginx/sites-enabled/' + main_domain + '.nxapi.wl --tag > /dev/null', shell=True)
     subprocess.call('/usr/nginx/nxapi/nxtool.py --colors -c /usr/nginx/nxapi/nxapi.json -s ' + main_domain + ' -f --slack >> ' + outputfile, shell=True)
@@ -68,12 +71,12 @@ if form.getvalue('domain'):
     print('<p style="background-color:LightGrey">You must analyze the file and copy genuine whitelist rules starting with BasicRule </p>')
     print('<p style="background-color:LightGrey">Update new rules below and click "UPDATE WHITELIST"</p>')
     print('<HR>')
+    try:
+        shutil.copyfile(naxsiwlconffile, naxsiwlsaved)
+    except IOError:
+        print("IOError in naxsi whitelist file copying")
     print('<form action="naxsiupdate.live.cgi" method="post">')
-    print('<textarea name="textcontent" cols="120" rows="50">')
-    with open(naxsiwlconffile, 'r') as content_file:
-                content = content_file.read()
-    content_file.close()
-    print(content)
+    print('<textarea name="textcontent" placeholder="Copy contents of '+naxsiwlsaved+' and append new rules generated below it" cols="120" rows="50">')
     print('</textarea>')
     print('<HR>')
     print('<input type="submit" value="UPDATE WHITELIST" />')
