@@ -7,6 +7,10 @@ echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 sed -i "s/apache_port.*/apache_port=0.0.0.0:9999/" /var/cpanel/cpanel.config
 sed -i "s/apache_ssl_port.*/apache_ssl_port=0.0.0.0:4430/" /var/cpanel/cpanel.config
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
+for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
+do
+	echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/generate_config.py $CPANELUSER
+done
 /usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings > /dev/null
 /usr/local/cpanel/libexec/tailwatchd --restart
 
@@ -23,11 +27,6 @@ if [ ${osversion} -le 6 ];then
 	chkconfig ndeploy_watcher on
 	chkconfig ndeploy_backends on
 	chkconfig memcached on
-	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
-	do
-		echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/generate_config.py $CPANELUSER
-	done
-	service nginx restart
 else
 	systemctl restart nginx
 	systemctl restart ndeploy_watcher
@@ -37,11 +36,6 @@ else
 	systemctl enable ndeploy_watcher
 	systemctl enable ndeploy_backends
 	systemctl enable memcached
-	for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
-        do
-                echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/generate_config.py $CPANELUSER
-        done
-	systemctl restart nginx
 fi
 
 }
