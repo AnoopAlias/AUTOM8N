@@ -5,13 +5,17 @@
 #
 # Get function from functions library
 . /etc/init.d/functions
-# Start 
+# Start
 start() {
 	/opt/nDeploy/scripts/init_backends.py start
 }
 # stop
 stop() {
 	/opt/nDeploy/scripts/init_backends.py stop
+}
+#Conf reload
+reload() {
+	/opt/nDeploy/scripts/init_backends.py reload
 }
 ### main logic ###
 case "$1" in
@@ -21,12 +25,15 @@ case "$1" in
   stop)
         stop
         ;;
+  reload)
+  		reload
+		;;
   restart)
         stop
         start
         ;;
   *)
-        echo $"Usage: $0 {start|stop|restart}"
+        echo $"Usage: $0 {start|stop|reload|restart}"
         exit 1
 esac
 exit 0
