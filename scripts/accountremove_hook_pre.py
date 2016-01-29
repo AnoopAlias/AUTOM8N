@@ -52,6 +52,6 @@ try:
     os.remove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
 except OSError:
     pass
-subprocess.call(installation_path+"/scripts/init_backends.py reload")
+subprocess.call(installation_path+"/scripts/init_backends.py reload", shell=True)
 subprocess.call("/usr/sbin/nginx -s reload", shell=True)
 print(("1 nDeploy:remove:"+cpaneluser))
