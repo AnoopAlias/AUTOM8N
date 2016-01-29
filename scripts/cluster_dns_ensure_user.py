@@ -5,12 +5,8 @@ import yaml
 import argparse
 import subprocess
 import os
-import signal
-import time
 import sys
 import pwd
-import grp
-from lxml import etree
 
 
 __author__ = "Anoop P Alias"
