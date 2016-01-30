@@ -54,7 +54,7 @@ if [ $? -eq 0 ];then
         slavename=$(echo ${slave}|cut -d":" -f1)
         slaveport=$(echo ${slave}|cut -d":" -f2)
         mkdir /etc/nginx/${slavename}
-        sed -e 's/SLAVESERVER/${slavename}/g' -e 's/SSHPORT/${slaveport}/g' /opt/nDeploy/conf/default.prf > /root/.unison/${slavename}.prf
+        sed -e "s/SLAVESERVER/${slavename}/g" -e "s/SSHPORT/${slaveport}/g" /opt/nDeploy/conf/default.prf > /root/.unison/${slavename}.prf
     done
     ansible ndeploycluster -m copy -a "src=/opt/nDeploy/conf/lsyncd_slave.conf dest=/etc/lsyncd.conf"
     ansible ndeploycluster -m synchronize -a "src=/etc/csync2/ dest=/etc/csync2/ recursive=yes archive=yes"
