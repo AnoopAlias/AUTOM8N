@@ -15,3 +15,8 @@ if [ ! -d /opt/nDeploy/php-fpm.d ] ; then
 	mkdir /opt/nDeploy/php-fpm.d
 	sed 's/CPANELUSER/nobody/g' /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/nDeploy/php-fpm.d/nobody.conf
 fi
+if [ ! -L /etc/nginx/sites-enabled ] ; then
+	mkdir /etc/nginx/$(hostname)
+	rm -rf /etc/nginx/sites-enabled
+	ln -s /etc/nginx/$(hostname) /etc/nginx/sites-enabled
+fi
