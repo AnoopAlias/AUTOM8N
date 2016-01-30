@@ -1,6 +1,6 @@
 #!/bin/bash
 UNISON_VERSION="2.48.3"
-UNISON_RPM_ITER="1.el7"
+UNISON_RPM_ITER="2.el7"
 
 yum install ocaml
 mkdir nDeploy-unison-pkg-centos7

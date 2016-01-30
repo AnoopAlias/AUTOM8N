@@ -1,6 +1,6 @@
 # Unison preferences file
 root = /home
-root = ssh://root@SLAVESERVER//home
+root = ssh://root@SLAVESERVER:SSHPORT//home
 ignore = Path virtfs
 ignore = Path */mail
 ignore = Path */.cpanel

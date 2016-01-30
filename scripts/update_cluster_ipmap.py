@@ -30,13 +30,15 @@ def update_ip_map(server, iphere, ipthere):
             ipmap_dict[iphere] = ipthere
             with open(cluster_config_file, 'w') as yaml_file:
                 yaml_file.write(yaml.dump(cluster_data_yaml_parsed, default_flow_style=False))
-            yaml_file.close()
         else:
-            print(server+" is not present in the cluster")
+            mydict = {server: {'ipmap': {iphere: ipthere}}}
+            cluster_data_yaml_parsed.update(mydict)
+            with open(cluster_config_file, 'w') as yaml_file:
+                yaml_file.write(yaml.dump(cluster_data_yaml_parsed, default_flow_style=False))
     else:
         print("Invalid cluster data")
 
-parser = argparse.ArgumentParser(description="Register an nginX config profile for nDeploy")
+parser = argparse.ArgumentParser(description="create/update nDeploy-cluster ipmap")
 parser.add_argument("slave_hostname")
 parser.add_argument("ip_here")
 parser.add_argument("remote_ip")
@@ -47,4 +49,6 @@ remote_ip = args.remote_ip
 if os.path.isfile(cluster_config_file):
     update_ip_map(server_key, ip_here, remote_ip)
 else:
-    print("nDeploy cluster is not setup")
+    mydict = {server_key: {'ipmap': {ip_here: remote_ip}}}
+    with open(cluster_config_file, 'w') as cluster_conf:
+        cluster_conf.write(yaml.dump(mydict, default_flow_style=False))
