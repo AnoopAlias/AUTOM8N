@@ -18,15 +18,14 @@ directio 50m;  #Serve Large files like media files using directio
 
 tcp_nopush on;
 tcp_nodelay on;
-keepalive_timeout 65;
 types_hash_max_size 2048;
 server_tokens off;
 client_max_body_size 128m;
 client_body_buffer_size    128k;
 
 #Tweak timeout settings below in case of a DOS attack
-client_header_timeout  1m;
-client_body_timeout 1m;
+client_header_timeout  5s;
+client_body_timeout 5s;
 
 connection_pool_size  256;
 client_header_buffer_size 4k;
@@ -72,6 +71,9 @@ include /etc/nginx/naxsi_core.rules;
 #Limit Request Zone conf
 ##
 include /etc/nginx/conf.d/limit_request.conf;
+limit_req zone=FLOODPROTECT burst=5 nodelay;
+limit_req zone=FLOODVHOST burst=10;
+
 ##
 
 ##
