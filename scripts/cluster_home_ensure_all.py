@@ -10,4 +10,4 @@ with open("/etc/domainusers", 'r') as domainusers:
         user_info = pwd.getpwnam(cpaneluser)
         cpaneluserhome = user_info.pw_dir
         subprocess.call('ansible ndeploycluster -m user -a "name='+cpaneluser+' home='+cpaneluserhome+'"', shell=True)
-subprocess.call('/usr/bin/unison', shell=True)
+        

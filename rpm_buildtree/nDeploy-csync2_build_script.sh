@@ -1,6 +1,6 @@
 #!/bin/bash
 CSYNC2_VERSION="2.0"
-CSYNC2_RPM_ITER="3.el6"
+CSYNC2_RPM_ITER="4.el6"
 
 yum install librsync gnutls sqlite librsync-devel gnutls-devel sqlite-devel
 rm -rf csync2-*

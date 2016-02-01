@@ -7,12 +7,11 @@
 ##  Ensure Mater <=> Slave can login via SSH key based authentication without a passphrase for user root
 ##  you can do this by running "ssh-copy-id the-other-host" on each server
 ##  Ensure both hostnames resolve via DNS or you must add both names in /etc/hosts file for local resolution
-## This script will work only for a single Master<=>Slave setup. Refer https://support.sysally.net/projects/ndeploy/wiki for
-## instructions on setting up on Single Master and multiple slaves
 ##  BEGIN settings to edit
 #######################################################
 MASTERHOST="server1.example.com:sshport"  #This is your master server having cPanel.
-SLAVEHOST="slave1.example.com:sshport slave2.example.com:sshport" #This is a space seperated list of slaves
+SLAVEHOST="slave1.example.com:sshport slave2.example.com:sshport" #This is a space seperated list of slaves including their sshport
+SLAVELIST="slave1.example.com slave2.example.com" #This is a space seperated list of slave hostnames.
 ########################################################
 ## END settings to edit
 
@@ -47,18 +46,41 @@ if [ $? -eq 0 ];then
     ansible ndeploycluster -m yum -a "name=nginx-nDeploy enablerepo=ndeploy state=present"
     ansible ndeploycluster -m yum -a "name=nDeploy-cluster-slave enablerepo=ndeploy state=present"
     ansible ndeploycluster -m shell -a 'sed -i "s/^UMASK/#UMASK/" /etc/login.defs'
+    echo "csync2          30865/tcp               #csync2" >> /etc/services
+    ansible ndeploycluster -m shell -a "echo 'csync2          30865/tcp               #csync2' >> /etc/services"
 
+
+    mastername=$(echo ${MASTERHOST}|cut -d":" -f1)
+    masterport=$(echo ${MASTERHOST}|cut -d":" -f2)
+
+    #Setting up csync2
+    sed -i -e "s/MASTERSERVER/${mastername}/" -e "s/SLAVESERVERLIST/${SLAVELIST}/" /etc/csync2/csync2.cfg
+    ansible ndeploycluster -m synchronize -a "src=/etc/csync2/ dest=/etc/csync2/ recursive=yes archive=yes"
+    for slavemc in $(echo ${SLAVELIST})
+    do
+        slaveshort=$(echo ${slavemc}|cut -d"." -f1)
+        sed -e "s/MASTERSERVER/${mastername}/" -e "s/SLAVESERVER/${slavemc}/g" -e "s/GROUPNAME/${slaveshort}/" /opt/nDeploy/conf/csync2.cfg.nginx >> /etc/csync2/csync2.cfg
+        mkdir /tmp/${slavemc}
+        sed -e "s/MASTERSERVER/${mastername}/" -e "s/SLAVESERVER/${slavemc}/g" -e "s/GROUPNAME/${slaveshort}/" /opt/nDeploy/conf/csync2.cfg.nginx >> /tmp/${slavemc}/csync2.cfg
+        ansible ${slavemc} -m assemble -a "src=/tmp/${slavemc} dest=/etc/csync2/csync2.cfg"
+        rm -rf /tmp/${slavemc}
+        mkdir /etc/nginx/${slavemc}
+    done
+
+    #Setting up unison and lsyncd
     mkdir /root/.unison
+    cat /opt/nDeploy/conf/lsyncd_master.conf > /etc/lsyncd.conf
     for slave in $(echo ${SLAVEHOST})
     do
         slavename=$(echo ${slave}|cut -d":" -f1)
         slaveport=$(echo ${slave}|cut -d":" -f2)
-        mkdir /etc/nginx/${slavename}
+        slaveshrtname=$(echo ${slavename}|cut -d"." -f1)
         sed -e "s/SLAVESERVER/${slavename}/g" -e "s/SSHPORT/${slaveport}/g" /opt/nDeploy/conf/default.prf > /root/.unison/${slavename}.prf
+        sed -e "s/GROUPNAME/${slaveshrtname}/" -e "s/SLAVESERVER/${slavename}/" /opt/nDeploy/conf/lsyncd_master.conf.unison >> /etc/lsyncd.conf
+        sed -e "s/MASTERSSHPORT/${masterport}/" -e "s/MASTERSERVER/${mastername}/" -e "s/SLAVESERVER/${slavename}/" /opt/nDeploy/conf/lsyncd_slave.conf >> /tmp/${slavename}.lsyncd.conf
+        ansible ${slavename} -m copy -a "src=/tmp/${slavename}.lsyncd.conf dest=/etc/lsyncd.conf"
+        rm -f /tmp/${slavename}.lsyncd.conf
     done
-    ansible ndeploycluster -m copy -a "src=/opt/nDeploy/conf/lsyncd_slave.conf dest=/etc/lsyncd.conf"
-    ansible ndeploycluster -m synchronize -a "src=/etc/csync2/ dest=/etc/csync2/ recursive=yes archive=yes"
-    rsync -av /opt/nDeploy/conf/lsyncd_master.conf /etc/lsyncd.conf
 
     /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual
     /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_post.py --category Whostmgr --event Accounts::Remove --stage post --manual
