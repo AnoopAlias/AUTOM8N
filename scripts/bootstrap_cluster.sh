@@ -75,16 +75,18 @@ if [ $? -eq 0 ];then
     #Setting up unison and lsyncd
     mkdir /root/.unison
     cat /opt/nDeploy/conf/lsyncd_master.conf > /etc/lsyncd.conf
+    n=1
     for slave in $(echo ${SLAVEHOST})
     do
         slavename=$(echo ${slave}|cut -d":" -f1)
         slaveport=$(echo ${slave}|cut -d":" -f2)
         slaveshrtname=$(echo ${slavename}|cut -d"." -f1)
         sed -e "s/SLAVESERVER/${slavename}/g" -e "s/SSHPORT/${slaveport}/g" /opt/nDeploy/conf/default.prf > /root/.unison/${slavename}.prf
-        sed -e "s/GROUPNAME/${slaveshrtname}/" -e "s/SLAVESERVER/${slavename}/" /opt/nDeploy/conf/lsyncd_master.conf.unison >> /etc/lsyncd.conf
+        sed -e "s/GROUPNAME/runUnison${n}/" -e "s/SLAVESERVER/${slavename}/" /opt/nDeploy/conf/lsyncd_master.conf.unison >> /etc/lsyncd.conf
         sed -e "s/MASTERSSHPORT/${masterport}/" -e "s/MASTERSERVER/${mastername}/" -e "s/SLAVESERVER/${slavename}/" /opt/nDeploy/conf/lsyncd_slave.conf >> /tmp/${slavename}.lsyncd.conf
         ansible ${slavename} -m copy -a "src=/tmp/${slavename}.lsyncd.conf dest=/etc/lsyncd.conf"
         rm -f /tmp/${slavename}.lsyncd.conf
+        n=$(($n+1))
     done
 
     /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual
