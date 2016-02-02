@@ -59,12 +59,17 @@ if [ $? -eq 0 ];then
     for slavemc in $(echo ${SLAVELIST})
     do
         slaveshort=$(echo ${slavemc}|cut -d"." -f1)
-        sed -e "s/MASTERSERVER/${mastername}/" -e "s/SLAVESERVER/${slavemc}/g" -e "s/GROUPNAME/${slaveshort}/" /opt/nDeploy/conf/csync2.cfg.nginx >> /etc/csync2/csync2.cfg
         mkdir /tmp/${slavemc}
-        sed -e "s/MASTERSERVER/${mastername}/" -e "s/SLAVESERVER/${slavemc}/g" -e "s/GROUPNAME/${slaveshort}/" /opt/nDeploy/conf/csync2.cfg.nginx >> /tmp/${slavemc}/csync2.cfg
-        ansible ${slavemc} -m assemble -a "src=/tmp/${slavemc}/csync2.cfg dest=/etc/csync2/csync2.cfg"
+        cp /etc/csync2/csync2.cfg /tmp/${slavemc}/
+        sed -e "s/MASTERSERVER/${mastername}/" -e "s/SLAVESERVER/${slavemc}/g" -e "s/GROUPNAME/${slaveshort}/" /opt/nDeploy/conf/csync2.cfg.nginx >> /tmp/${slavemc}/csync2.cfg.nginx
+        ansible ${slavemc} -m assemble -a "src=/tmp/${slavemc}/ dest=/etc/csync2/csync2.cfg remote_src=False"
         rm -rf /tmp/${slavemc}
         mkdir /etc/nginx/${slavemc}
+    done
+    for slavemc in $(echo ${SLAVELIST})
+    do
+        slaveshort=$(echo ${slavemc}|cut -d"." -f1)
+        sed -e "s/MASTERSERVER/${mastername}/" -e "s/SLAVESERVER/${slavemc}/g" -e "s/GROUPNAME/${slaveshort}/" /opt/nDeploy/conf/csync2.cfg.nginx >> /etc/csync2/csync2.cfg
     done
 
     #Setting up unison and lsyncd
