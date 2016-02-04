@@ -5,8 +5,6 @@ import yaml
 import argparse
 import subprocess
 import os
-import signal
-import time
 import sys
 import pwd
 import grp
@@ -156,35 +154,13 @@ def nginx_server_reload():
 def php_profile_set(user_name, php_path):
     """Function to setup php-fpm pool for user and reload the master php-fpm"""
     phppool_file = installation_path + "/php-fpm.d/" + user_name + ".conf"
-    php_fpm_config = installation_path+"/conf/php-fpm.conf"
-    if os.path.isfile(php_path+"/sbin/php-fpm"):
-        php_fpm_bin = php_path + "/sbin/php-fpm"
-    else:
-        php_fpm_bin = php_path + "/usr/sbin/php-fpm"
-    if os.path.isfile(phppool_file):
-        if os.path.isfile(php_path + "/var/run/php-fpm.pid"):
-            with open(php_path + "/var/run/php-fpm.pid") as f:
-                mypid = f.read()
-            try:
-                os.kill(int(mypid), signal.SIGUSR2)
-            except OSError:
-                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
-            time.sleep(3)
-            try:
-                with open(php_path + "/var/run/php-fpm.pid") as f:
-                    newpid = f.read()
-            except IOError:
-                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
-            try:
-                os.kill(int(newpid), 0)
-            except OSError:
-                subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
-        else:
-            subprocess.call(php_fpm_bin+" --prefix "+php_path+" --fpm-config "+php_fpm_config, shell=True)
-    else:
+    if not os.path.isfile(phppool_file):
         sed_string = 'sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
         subprocess.call(sed_string, shell=True)
-        php_profile_set(user_name, php_path)
+        subprocess.call(installation_path+"/scripts/init_backends.py reload", shell=True)
+        return
+    else:
+        return
 
 
 def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list):
