@@ -89,6 +89,23 @@ if [ $? -eq 0 ];then
         n=$(($n+1))
     done
 
+    service xinetd start
+    chkconfig xinetd on
+    chkconfig csync2 on
+    systemctl enable csync2.socket
+    systemctl start csync2.socket
+    grep csync2 /etc/crontab || echo "* * * * * root /usr/sbin/csync2 -x" >> /etc/crontab
+    systemctl restart crond || service crond restart
+    /opt/nDeploy/scripts/cluster_home_ensure_all.py
+    service lsyncd start
+    chkconfig lsyncd on
+    systemctl enable lsyncd
+    systemctl start lsyncd
+    ansible ndeploycluster -m service -a "name=xinetd enabled=yes state=started"
+    ansible ndeploycluster -m service -a "name=csync2.socket enabled=yes state=started"
+    ansible ndeploycluster -m service -a "name=lsyncd enabled=yes state=started"
+
+
     /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual
     /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_post.py --category Whostmgr --event Accounts::Remove --stage post --manual
 else
