@@ -472,7 +472,7 @@ def nginx_confgen(user_name, domain_name):
                     remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
                 config_out = open("/etc/nginx/"+server+"/" + domain_sname + "_SSL.conf", 'w')
                 with open(template_file) as my_template_file:
-                    for line in template_file:
+                    for line in my_template_file:
                         line = line.replace('CPANELIP', remote_domain_ipv4)
                         line = line.replace('DOMAINLIST', domain_list)
                         line = line.replace('DOMAINNAME', domain_sname)

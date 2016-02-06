@@ -19,7 +19,6 @@ SLAVELIST="slave1.example.com slave2.example.com" #This is a space seperated lis
 ##Do not edit anything below this line
 ##Bootstrapping Python pip
 curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python
-pip install --upgrade pipcurl --retry 5 https://bootstrap.pypa.io/get-pip.py | python
 pip install --upgrade pip
 
 ##Installing https://github.com/sebastien/cuisine
