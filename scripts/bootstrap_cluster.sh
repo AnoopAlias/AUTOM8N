@@ -19,7 +19,7 @@ SLAVELIST="slave1.example.com slave2.example.com" #This is a space seperated lis
 ##Do not edit anything below this line
 ##Bootstrapping Python pip
 curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python
-pip install --upgrade pipcurl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python
+pip install --upgrade pipcurl --retry 5 https://bootstrap.pypa.io/get-pip.py | python
 pip install --upgrade pip
 
 ##Installing https://github.com/sebastien/cuisine
@@ -104,7 +104,7 @@ if [ $? -eq 0 ];then
     ansible ndeploycluster -m service -a "name=xinetd enabled=yes state=started"
     ansible ndeploycluster -m service -a "name=csync2.socket enabled=yes state=started"
     ansible ndeploycluster -m service -a "name=lsyncd enabled=yes state=started"
-
+    ansible ndeploycluster -m service -a "name=nginx enabled=yes state=started"
 
     /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual
     /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_post.py --category Whostmgr --event Accounts::Remove --stage post --manual
