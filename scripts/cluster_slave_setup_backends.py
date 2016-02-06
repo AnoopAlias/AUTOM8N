@@ -52,4 +52,4 @@ if __name__ == "__main__":
                 phpversion = yaml_parsed_profileyaml.get('backend_version')
                 php_path = yaml_parsed_profileyaml.get('backend_path')
                 user_name = yaml_parsed_profileyaml.get('user')
-                php_profile_set(user_name, phpversion, php_path)
+                php_profile_set(user_name, php_path)
