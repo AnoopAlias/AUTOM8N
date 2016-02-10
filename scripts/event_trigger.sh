@@ -10,6 +10,12 @@ if [[ $2 -eq 0 ]]; then
 		THEDOMAIN=$(echo $1|awk -F'/' '{print $6}')
 		echo "Conf:Del /etc/nginx/sites-enabled/${THEDOMAIN}.* /opt/nDeploy/domain-data/${THEDOMAIN}"
 		rm -f /etc/nginx/sites-enabled/${THEDOMAIN}\.* /opt/nDeploy/domain-data/${THEDOMAIN}
+		if [ -f /opt/nDeploy/conf/ndeploy_cluster_slaves ];then
+			for slave in $(cat /opt/nDeploy/conf/ndeploy_cluster_slaves)
+			do
+				rm -f /etc/nginx/${slave}/${THEDOMAIN}\.*
+			done
+		fi
 		/usr/sbin/nginx -s reload
 	else
 		CPANELUSER=$(echo $1|awk -F'/' '{print $5}')

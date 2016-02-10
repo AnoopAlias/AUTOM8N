@@ -33,21 +33,43 @@ os.remove(installation_path+"/domain-data/"+main_domain)
 os.remove(nginx_dir+main_domain+".conf")
 os.remove(nginx_dir+main_domain+".include")
 os.remove(nginx_dir+main_domain+".nxapi.wl")
+if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
+    with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
+        for line in cluster_slave_list:
+            os.remove("/etc/nginx/"+line+"/"+main_domain+".conf")
+            os.remove("/etc/nginx/"+line+"/"+main_domain+".include")
+            os.remove("/etc/nginx/"+line+"/"+main_domain+".nxapi.wl")
 subprocess.call("rm -rf /var/resin/hosts/"+main_domain, shell=True)
 if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
     os.remove(installation_path+"/domain-data/"+main_domain+"_SSL")
     os.remove(nginx_dir+main_domain+"_SSL.conf")
     os.remove(nginx_dir+main_domain+"_SSL.include")
+    if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
+        with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
+            for line in cluster_slave_list:
+                os.remove("/etc/nginx/"+line+"/"+main_domain+"_SSL.conf")
+                os.remove("/etc/nginx/"+line+"/"+main_domain+"_SSL.include")
 for domain_in_subdomains in sub_domains:
     os.remove(installation_path+"/domain-data/"+domain_in_subdomains)
     os.remove(nginx_dir+domain_in_subdomains+".conf")
     os.remove(nginx_dir+domain_in_subdomains+".include")
     os.remove(nginx_dir+domain_in_subdomains+".nxapi.wl")
+    if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
+        with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
+            for line in cluster_slave_list:
+                os.remove("/etc/nginx/"+line+"/"+domain_in_subdomains+".conf")
+                os.remove("/etc/nginx/"+line+"/"+domain_in_subdomains+".include")
+                os.remove("/etc/nginx/"+line+"/"+domain_in_subdomains+".nxapi.wl")
     subprocess.call("rm -rf /var/resin/hosts/"+domain_in_subdomains, shell=True)
     if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
         os.remove(installation_path+"/domain-data/"+domain_in_subdomains+"_SSL")
         os.remove(nginx_dir+domain_in_subdomains+"_SSL.conf")
         os.remove(nginx_dir+domain_in_subdomains+"_SSL.include")
+        if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
+            with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
+                for line in cluster_slave_list:
+                    os.remove("/etc/nginx/"+line+"/"+domain_in_subdomains+"_SSL.conf")
+                    os.remove("/etc/nginx/"+line+"/"+domain_in_subdomains+"_SSL.include")
 try:
     os.remove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
 except OSError:

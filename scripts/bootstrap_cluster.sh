@@ -64,6 +64,7 @@ if [ $? -eq 0 ];then
         ansible ${slavemc} -m assemble -a "src=/tmp/${slavemc}/ dest=/etc/csync2/csync2.cfg remote_src=False"
         rm -rf /tmp/${slavemc}
         mkdir /etc/nginx/${slavemc}
+        echo ${slavemc} >> /opt/nDeploy/conf/ndeploy_cluster_slaves
     done
     for slavemc in $(echo ${SLAVELIST})
     do
@@ -107,6 +108,7 @@ if [ $? -eq 0 ];then
 
     /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual
     /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_post.py --category Whostmgr --event Accounts::Remove --stage post --manual
+    /usr/local/cpanel/bin/mkaccesshash
 else
     echo "Something went wrong in setting up ansible. Aborting setup"
 fi
