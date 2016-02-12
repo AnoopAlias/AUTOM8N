@@ -50,6 +50,8 @@ if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_S
                 os.remove("/etc/nginx/"+line+"/"+main_domain+"_SSL.conf")
                 os.remove("/etc/nginx/"+line+"/"+main_domain+"_SSL.include")
 for domain_in_subdomains in sub_domains:
+    if domain_in_subdomains.startswith("*"):
+        domain_in_subdomains = "_wildcard_."+domain_in_subdomains.replace('*.', '')
     os.remove(installation_path+"/domain-data/"+domain_in_subdomains)
     os.remove(nginx_dir+domain_in_subdomains+".conf")
     os.remove(nginx_dir+domain_in_subdomains+".include")

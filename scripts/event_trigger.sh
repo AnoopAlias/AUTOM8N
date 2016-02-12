@@ -7,7 +7,7 @@ echo $1 |egrep ".*main$|.*cache$|.*\.cache$|.*\.lock$|.*\.cache\.tmp\.[0-9]*\.[0
 
 if [[ $2 -eq 0 ]]; then
 	if [[ $3 == "IN_DELETE" ]];then
-		THEDOMAIN=$(echo $1|awk -F'/' '{print $6}')
+		THEDOMAIN=$(echo $1|awk -F'/' '{print $6}'|sed "s/\*/_wildcard_/")
 		echo "Conf:Del /etc/nginx/sites-enabled/${THEDOMAIN}.* /opt/nDeploy/domain-data/${THEDOMAIN}"
 		rm -f /etc/nginx/sites-enabled/${THEDOMAIN}\.* /opt/nDeploy/domain-data/${THEDOMAIN}
 		if [ -f /opt/nDeploy/conf/ndeploy_cluster_slaves ];then
