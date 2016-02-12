@@ -3,7 +3,7 @@ if [[ $# -ne 3 ]];then
 	exit 1
 fi
 
-echo $1 |egrep ".*main$|.*cache$|.*\.cache$|.*\.lock$|.*\.cache\.tmp\.[0-9]*\.[0-9]*$|/opt/nDeploy/domain-data/\..*" > /dev/null && exit 0
+echo $1 |egrep ".*main$|.*cache$|.*\.cache$|.*\.lock$|.*\.cache\.tmp\.[0-9]*\.[0-9]*$|/opt/nDeploy/domain-data/\..*|.*\.cache\.tmp\.[0-9]*" > /dev/null && exit 0
 
 if [[ $2 -eq 0 ]]; then
 	if [[ $3 == "IN_DELETE" ]];then
