@@ -105,9 +105,6 @@ if [ $? -eq 0 ];then
     ansible ndeploycluster -m service -a "name=csync2.socket enabled=yes state=started"
     ansible ndeploycluster -m service -a "name=lsyncd enabled=yes state=started"
     ansible ndeploycluster -m service -a "name=nginx enabled=yes state=started"
-
-    /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual
-    /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_post.py --category Whostmgr --event Accounts::Remove --stage post --manual
     /usr/local/cpanel/bin/mkaccesshash
 else
     echo "Something went wrong in setting up ansible. Aborting setup"

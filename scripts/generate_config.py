@@ -165,24 +165,34 @@ def php_profile_set(user_name, php_path):
 
 def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list):
     """Function generating config include based on profile"""
-    with open("/var/cpanel/users/" + user_name) as users_file:
-        if "SUSPENDED=1" in users_file.read():
-            profileyaml = installation_path + "/conf/domain_data.suspended"
-            if sslenabled == 1:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
-                custom_config_file = domain_home + '/' + domain_name + '_SSL_nginx.include.custom.conf'
+    if os.path.exists("/var/cpanel/users/" + user_name):
+        with open("/var/cpanel/users/" + user_name) as users_file:
+            if "SUSPENDED=1" in users_file.read():
+                profileyaml = installation_path + "/conf/domain_data.suspended"
+                if sslenabled == 1:
+                    include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
+                    custom_config_file = domain_home + '/' + domain_name + '_SSL_nginx.include.custom.conf'
+                else:
+                    include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
+                    custom_config_file = domain_home + '/' + domain_name + '_nginx.include.custom.conf'
             else:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
-                custom_config_file = domain_home + '/' + domain_name + '_nginx.include.custom.conf'
+                if sslenabled == 1:
+                    include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
+                    profileyaml = installation_path + "/domain-data/" + domain_name + "_SSL"
+                    custom_config_file = domain_home + '/' + domain_name + '_SSL_nginx.include.custom.conf'
+                else:
+                    include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
+                    profileyaml = installation_path + "/domain-data/" + domain_name
+                    custom_config_file = domain_home + '/' + domain_name + '_nginx.include.custom.conf'
+    else:
+        if sslenabled == 1:
+            include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
+            profileyaml = installation_path + "/domain-data/" + domain_name + "_SSL"
+            custom_config_file = domain_home + '/' + domain_name + '_SSL_nginx.include.custom.conf'
         else:
-            if sslenabled == 1:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
-                profileyaml = installation_path + "/domain-data/" + domain_name + "_SSL"
-                custom_config_file = domain_home + '/' + domain_name + '_SSL_nginx.include.custom.conf'
-            else:
-                include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
-                profileyaml = installation_path + "/domain-data/" + domain_name
-                custom_config_file = domain_home + '/' + domain_name + '_nginx.include.custom.conf'
+            include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
+            profileyaml = installation_path + "/domain-data/" + domain_name
+            custom_config_file = domain_home + '/' + domain_name + '_nginx.include.custom.conf'
     if os.path.isfile(profileyaml):
         profileyaml_data_stream = open(profileyaml, 'r')
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
