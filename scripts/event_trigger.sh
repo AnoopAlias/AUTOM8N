@@ -7,13 +7,13 @@ echo $1 |egrep ".*main$|.*cache$|.*\.cache$|.*\.lock$|.*\.cache\.tmp\.[0-9]*\.[0
 
 if [[ $2 -eq 0 ]]; then
 	if [[ $3 == "IN_DELETE" ]];then
-		THEDOMAIN=$(echo $1|awk -F'/' '{print $6}'|sed "s/\*/_wildcard_/")
-		echo "Conf:Del /etc/nginx/sites-enabled/${THEDOMAIN}.* /opt/nDeploy/domain-data/${THEDOMAIN}"
-		rm -f /etc/nginx/sites-enabled/${THEDOMAIN}\.* /opt/nDeploy/domain-data/${THEDOMAIN}
+		THEDOMAIN=$(echo "${1}"|awk -F'/' '{print $6}'|sed "s/\*/_wildcard_/")
+		echo "Conf:Del /etc/nginx/sites-enabled/${THEDOMAIN} /opt/nDeploy/domain-data/${THEDOMAIN}"
+		rm -f /etc/nginx/sites-enabled/${THEDOMAIN}{.conf,.include,.nxapi.wl,_SSL.conf,_SSL.include} /opt/nDeploy/domain-data/${THEDOMAIN}
 		if [ -f /opt/nDeploy/conf/ndeploy_cluster_slaves ];then
 			for slave in $(cat /opt/nDeploy/conf/ndeploy_cluster_slaves)
 			do
-				rm -f /etc/nginx/${slave}/${THEDOMAIN}\.*
+				rm -f /etc/nginx/${slave}/${THEDOMAIN}{.conf,.include,.nxapi.wl,_SSL.conf,_SSL.include}
 			done
 		fi
 		/usr/sbin/nginx -s reload
@@ -28,8 +28,12 @@ elif [[ $2 -eq 1 ]]; then
 	if [[ $CPANELUSER == root ]];then
 		exit 0
 	else
-		echo "Domain::Data::Modify ${CPANELUSER}"
-		/opt/nDeploy/scripts/generate_config.py $CPANELUSER
+		if [ $3 = "IN_ATTRIB" ];then
+			/usr/sbin/nginx -s reload
+		else
+			echo "Domain::Data::Modify ${CPANELUSER}"
+			/opt/nDeploy/scripts/generate_config.py $CPANELUSER
+		fi
 	fi
 elif [[ $2 -eq 2 ]];then
 	CPANELUSER=$(stat -c "%U" $1)
