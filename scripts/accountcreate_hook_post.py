@@ -36,6 +36,7 @@ if os.path.exists(cluster_config_file):
         ipmap_dict = connect_server_dict.get("ipmap")
         remote_domain_ip = ipmap_dict.get(cpanel_ipv4)
         subprocess.call(installation_path+"/scripts/cluster_dns_setup.pl add "+cpaneldomain+" "+remote_domain_ip, shell=True)
+    subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
     print("1 nDeploy:clusteraccountcreate:"+cpaneluser)
 else:
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
