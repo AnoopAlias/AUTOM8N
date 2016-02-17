@@ -38,7 +38,7 @@ if [ $? -eq 0 ];then
     csync2 -k /etc/csync2/csync2.key
 
     ansible ndeploycluster -m yum -a "name=epel-release state=present"
-    ansible ndeploycluster -m yum -a "name=http://rpm.piserve.com/nDeploy-release-centos-1.0-1.noarch.rpm state=present"
+    ansible ndeploycluster -m yum -a "name=https://rpm.piserve.com/nDeploy-release-centos-1.0-2.noarch.rpm state=present disable_gpg_check=yes"
     ansible ndeploycluster -m yum -a "name=lsyncd enablerepo=ndeploy state=present"
     ansible ndeploycluster -m yum -a "name=csync2-nDeploy enablerepo=ndeploy state=present"
     ansible ndeploycluster -m yum -a "name=unison-nDeploy enablerepo=ndeploy state=present"
