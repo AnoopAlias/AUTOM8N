@@ -4,7 +4,7 @@
 #Function defs
 
 setup_lve_patched_php(){
-	wget -O /tmp/phpversion.hint http://rpm.piserve.com/phpversion.hint
+	wget -O /tmp/phpversion.hint https://rpm.piserve.com/phpversion.hint
 
 	#Compile PHP54
 	compile_php54(){
