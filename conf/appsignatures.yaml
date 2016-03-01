@@ -1,0 +1,5 @@
+PHP:
+  'wp_config.php': '5001'
+  'libraries/joomla/version.php': '5002'
+  'sites/default/settings.php': '5017'
+  'app/etc/local.xml': '5003'
