@@ -55,7 +55,7 @@ def nginx_conf_switch(user_name, domain_name):
     yaml_parsed_prefphpyaml = yaml.safe_load(prefphpyaml_data_stream)
     prefphpyaml_data_stream.close()
     phpversion = yaml_parsed_prefphpyaml.get('PHP')
-    my_phpversion = str(phpversion.keys())
+    my_phpversion = str(phpversion.keys()[0])
     my_phppath = str(phpversion.get(my_phpversion))
     sigsyaml = installation_path+"/conf/appsignatures.yaml"
     sigs_data_stream = open(sigsyaml, 'r')
