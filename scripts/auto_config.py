@@ -61,8 +61,21 @@ def nginx_conf_switch(user_name, domain_name):
     sigs_data_stream = open(sigsyaml, 'r')
     yaml_parsed_sigs = yaml.safe_load(sigs_data_stream)
     sigs_data_stream.close()
-    for domain_data_file in installation_path+"/domain-data/"+domain_name, installation_path+"/domain-data/"+domain_name+"_SSL":
-        if os.path.isfile(domain_data_file):
+    redirect_to_ssl = yaml_parsed_sigs.get("SSLREDIRECT")
+    if redirect_to_ssl == "1":
+        if os.path.isfile(installation_path+"/domain-data/"+domain_name+"_SSL"):
+            domain_data_file = installation_path+"/domain-data/"+domain_name
+            domaindata_data_stream = open(domain_data_file, 'r')
+            yaml_parsed_domaindata = yaml.safe_load(domaindata_data_stream)
+            domaindata_data_stream.close()
+            yaml_parsed_domaindata["backend_category"] = "PROXY"
+            yaml_parsed_domaindata["backend_version"] = "redirect"
+            yaml_parsed_domaindata["backend_path"] = "0"
+            yaml_parsed_domaindata["profile"] = "1003"
+            with open(domain_data_file, 'w') as yaml_file:
+                yaml_file.write(yaml.dump(yaml_parsed_domaindata, default_flow_style=False))
+            yaml_file.close()
+            domain_data_file = installation_path+"/domain-data/"+domain_name+"_SSL"
             domaindata_data_stream = open(domain_data_file, 'r')
             yaml_parsed_domaindata = yaml.safe_load(domaindata_data_stream)
             domaindata_data_stream.close()
@@ -78,6 +91,42 @@ def nginx_conf_switch(user_name, domain_name):
                         with open(domain_data_file, 'w') as yaml_file:
                             yaml_file.write(yaml.dump(yaml_parsed_domaindata, default_flow_style=False))
                         yaml_file.close()
+        else:
+            domain_data_file = installation_path+"/domain-data/"+domain_name
+            domaindata_data_stream = open(domain_data_file, 'r')
+            yaml_parsed_domaindata = yaml.safe_load(domaindata_data_stream)
+            domaindata_data_stream.close()
+            backend_category = yaml_parsed_domaindata.get('backend_category')
+            if backend_category == "PROXY":
+                phpsigs = yaml_parsed_sigs.get("PHP")
+                for app_path in list(phpsigs.keys()):
+                    if os.path.isfile(document_root+app_path):
+                        yaml_parsed_domaindata["backend_category"] = "PHP"
+                        yaml_parsed_domaindata["backend_version"] = my_phpversion
+                        yaml_parsed_domaindata["backend_path"] = my_phppath
+                        yaml_parsed_domaindata["profile"] = phpsigs.get(app_path)
+                        with open(domain_data_file, 'w') as yaml_file:
+                            yaml_file.write(yaml.dump(yaml_parsed_domaindata, default_flow_style=False))
+                        yaml_file.close()
+
+    else:
+        for domain_data_file in installation_path+"/domain-data/"+domain_name, installation_path+"/domain-data/"+domain_name+"_SSL":
+            if os.path.isfile(domain_data_file):
+                domaindata_data_stream = open(domain_data_file, 'r')
+                yaml_parsed_domaindata = yaml.safe_load(domaindata_data_stream)
+                domaindata_data_stream.close()
+                backend_category = yaml_parsed_domaindata.get('backend_category')
+                if backend_category == "PROXY":
+                    phpsigs = yaml_parsed_sigs.get("PHP")
+                    for app_path in list(phpsigs.keys()):
+                        if os.path.isfile(document_root+app_path):
+                            yaml_parsed_domaindata["backend_category"] = "PHP"
+                            yaml_parsed_domaindata["backend_version"] = my_phpversion
+                            yaml_parsed_domaindata["backend_path"] = my_phppath
+                            yaml_parsed_domaindata["profile"] = phpsigs.get(app_path)
+                            with open(domain_data_file, 'w') as yaml_file:
+                                yaml_file.write(yaml.dump(yaml_parsed_domaindata, default_flow_style=False))
+                            yaml_file.close()
 # End Function defs
 
 

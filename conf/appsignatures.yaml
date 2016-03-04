@@ -1,3 +1,4 @@
+SSLREDIRECT: "0"
 PHP:
   '/wp-config.php': '5001'
   '/libraries/joomla/version.php': '5002'
