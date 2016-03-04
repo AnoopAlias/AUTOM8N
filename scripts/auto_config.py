@@ -138,7 +138,7 @@ if __name__ == "__main__":
     if os.path.isfile(installation_path+"/conf/auto_config.exclude"):
         with open(installation_path+"/conf/auto_config.exclude") as excludes:
             for line in excludes:
-                if str(line) == cpaneluser:
+                if str(line).rstrip() == cpaneluser:
                     sys.exit(0)
     try:
         pwd.getpwnam(cpaneluser)
