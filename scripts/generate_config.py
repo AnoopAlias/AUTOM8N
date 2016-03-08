@@ -24,6 +24,21 @@ pagespeed_include_location = "include /etc/nginx/conf.d/pagespeed.conf"
 # Function defs
 
 
+def letsencrypt_cert_setup(domain_name, document_root, *domain_aname_list):
+    letsencrypt_conf = installation_path+"/conf/letsencrypt.yaml"
+    letsencrypt_data_stream = open(letsencrypt_conf, 'r')
+    yaml_parsed_letsencrypt = yaml.safe_load(letsencrypt_data_stream)
+    letsencrypt_data_stream.close()
+    letsencrypt_bin = yaml_parsed_letsencrypt.get("letsencrypt")
+    domain_aname_list_copy = list(domain_aname_list)
+    if "ipv6."+domain_name in domain_aname_list_copy:
+        domain_aname_list_copy.remove("ipv6."+domain_name)
+    the_command = letsencrypt_bin+" --text --renew-by-default --agree-tos --server https://acme-v01.api.letsencrypt.org/directory certonly -a webroot --webroot-path "+document_root+"/ -d "+domain_name
+    for item in domain_aname_list_copy:
+        the_command = the_command+" -d "+item
+    subprocess.call(the_command, shell=True)
+
+
 def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     """Add a vhost to tomcat and restart railo-tomcat app server"""
     tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
@@ -212,6 +227,10 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
         if naxsi_test == "1":
             naxsi_test_result = naxsi_wl_update(domain_home, domain_name)
             update_naxsi_test_status(profileyaml, 0)
+        if os.path.isfile(installation_path+"/conf/letsencrypt.yaml") and not os.path.isfile("/etc/letsencrypt/live/"+domain_name+"/fullchain.pem") and profileyaml is not installation_path + "/domain-data/" + domain_name + "_SSL":
+            letsencrypt_value = yaml_parsed_profileyaml.get('letsencrypt', None)
+            if letsencrypt_value == "1":
+                letsencrypt_cert_setup(domain_name, document_root, *domain_aname_list)
         profile_custom_status = yaml_parsed_profileyaml.get('customconf')
         config_test_status = yaml_parsed_profileyaml.get('testconf')
         if profile_custom_status == "0" and config_test_status == "0":
@@ -439,62 +458,114 @@ def nginx_confgen(user_name, domain_name):
             ipv6_addr = None
     else:
         ipv6_addr = None
-    if os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
-        cpdomainyaml_ssl = "/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"
-        cpaneldomain_ssl_data_stream = open(cpdomainyaml_ssl, 'r')
-        yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpaneldomain_ssl_data_stream)
-        sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
-        sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
-        sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
-        if sslcacertificatefile:
-            sslcombinedcert = "/etc/nginx/ssl/" + domain_name + ".crt"
-            subprocess.call("cat /dev/null > " + sslcombinedcert, shell=True)
-            subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
-            subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
-            subprocess.call("cat " + sslcacertificatefile + " >> " + sslcombinedcert, shell=True)
-            subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
-            template_file = installation_path + "/conf/server_ssl_ocsp.tmpl"
+    if os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL") or os.path.isfile(installation_path+"/conf/letsencrypt.yaml"):
+        if not domain_name.startswith("*") and os.path.isfile(installation_path+"/domain-data/"+domain_name) and not os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
+            profileyaml_data_stream = open(installation_path+"/domain-data/"+domain_name, 'r')
+            yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+            profileyaml_data_stream.close()
+            letsencrypt = yaml_parsed_profileyaml.get('letsencrypt', None)
+            if letsencrypt == "1":
+                if os.path.isfile("/etc/letsencrypt/live/"+domain_name+"/fullchain.pem") and os.path.isfile("/etc/letsencrypt/live/"+domain_name+"/privkey.pem") and os.path.isfile("/etc/letsencrypt/live/"+domain_name+"/chain.pem"):
+                    letsencrypt_status = True
+                    ssl_status = True
+                else:
+                    letsencrypt_status = False
+                    ssl_status = False
+            else:
+                letsencrypt_status = False
+                ssl_status = False
         else:
-            sslcombinedcert = sslcertificatefile
-            template_file = installation_path + "/conf/server_ssl.tmpl"
-        nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
-        config_out = open("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.conf", 'w')
-        with open(template_file) as my_template_file:
-            for line in my_template_file:
-                line = line.replace('CPANELIP', cpanel_ipv4)
-                line = line.replace('DOMAINLIST', domain_list)
-                line = line.replace('DOMAINNAME', domain_sname)
-                if ipv6_addr:
-                    line = line.replace('#CPIPVSIX', "listen [" + ipv6_addr + "]")
-                line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
-                line = line.replace('CPANELSSLCRT', sslcombinedcert)
-                if sslcacertificatefile:
-                    line = line.replace('CPANELCACERT', sslcacertificatefile)
-                config_out.write(line)
-        config_out.close()
-        my_template_file.close()
-        if clusterenabled:
-            for server in serverlist:
-                connect_server_dict = cluster_data_yaml_parsed.get(server)
-                ipmap_dict = connect_server_dict.get("ipmap")
-                remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4, "127.0.0.1")
-                if ipv6_addr:
-                    remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
-                config_out = open("/etc/nginx/"+server+"/" + domain_sname + "_SSL.conf", 'w')
-                with open(template_file) as my_template_file:
-                    for line in my_template_file:
-                        line = line.replace('CPANELIP', remote_domain_ipv4)
-                        line = line.replace('DOMAINLIST', domain_list)
-                        line = line.replace('DOMAINNAME', domain_sname)
-                        if ipv6_addr:
-                            line = line.replace('#CPIPVSIX', "listen [" + remote_domain_ipv6 + "]")
-                        line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
-                        line = line.replace('CPANELSSLCRT', sslcombinedcert)
-                        if sslcacertificatefile:
-                            line = line.replace('CPANELCACERT', sslcacertificatefile)
-                        config_out.write(line)
-                    config_out.close()
-                my_template_file.close()
+            letsencrypt_status = False
+            ssl_status = False
+        if letsencrypt_status is True:
+            sslcombinedcert = "/etc/letsencrypt/live/"+domain_name+"/fullchain.pem"
+            sslcertificatekeyfile = "/etc/letsencrypt/live/"+domain_name+"/privkey.pem"
+            sslcacertificatefile = "/etc/letsencrypt/live/"+domain_name+"/chain.pem"
+            template_file = installation_path + "/conf/server_ssl_ocsp.tmpl"
+        elif os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
+            ssl_status = True
+            cpdomainyaml_ssl = "/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"
+            cpaneldomain_ssl_data_stream = open(cpdomainyaml_ssl, 'r')
+            yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpaneldomain_ssl_data_stream)
+            cpaneldomain_ssl_data_stream.close()
+            sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
+            sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
+            sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
+            if sslcacertificatefile:
+                sslcombinedcert = "/etc/nginx/ssl/" + domain_name + ".crt"
+                subprocess.call("cat /dev/null > " + sslcombinedcert, shell=True)
+                subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
+                subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
+                subprocess.call("cat " + sslcacertificatefile + " >> " + sslcombinedcert, shell=True)
+                subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
+                template_file = installation_path + "/conf/server_ssl_ocsp.tmpl"
+            else:
+                sslcombinedcert = sslcertificatefile
+                template_file = installation_path + "/conf/server_ssl.tmpl"
+        else:
+            ssl_status = False
+        if ssl_status is True:
+            nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
+            config_out = open("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.conf", 'w')
+            with open(template_file) as my_template_file:
+                for line in my_template_file:
+                    line = line.replace('CPANELIP', cpanel_ipv4)
+                    line = line.replace('DOMAINLIST', domain_list)
+                    line = line.replace('DOMAINNAME', domain_sname)
+                    if ipv6_addr:
+                        line = line.replace('#CPIPVSIX', "listen [" + ipv6_addr + "]")
+                    line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
+                    line = line.replace('CPANELSSLCRT', sslcombinedcert)
+                    if sslcacertificatefile:
+                        line = line.replace('CPANELCACERT', sslcacertificatefile)
+                    config_out.write(line)
+            config_out.close()
+            my_template_file.close()
+            if clusterenabled:
+                for server in serverlist:
+                    connect_server_dict = cluster_data_yaml_parsed.get(server)
+                    ipmap_dict = connect_server_dict.get("ipmap")
+                    remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4, "127.0.0.1")
+                    if ipv6_addr:
+                        remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
+                    config_out = open("/etc/nginx/"+server+"/" + domain_sname + "_SSL.conf", 'w')
+                    with open(template_file) as my_template_file:
+                        for line in my_template_file:
+                            line = line.replace('CPANELIP', remote_domain_ipv4)
+                            line = line.replace('DOMAINLIST', domain_list)
+                            line = line.replace('DOMAINNAME', domain_sname)
+                            if ipv6_addr:
+                                line = line.replace('#CPIPVSIX', "listen [" + remote_domain_ipv6 + "]")
+                            line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
+                            line = line.replace('CPANELSSLCRT', sslcombinedcert)
+                            if sslcacertificatefile:
+                                line = line.replace('CPANELCACERT', sslcacertificatefile)
+                            config_out.write(line)
+                        config_out.close()
+                    my_template_file.close()
+        else:
+            try:
+                os.remove(installation_path+"/domain-data/"+domain_sname+"_SSL")
+            except OSError:
+                pass
+            try:
+                os.remove("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.conf")
+            except OSError:
+                pass
+            try:
+                os.remove("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.include")
+            except OSError:
+                pass
+            if clusterenabled:
+                for server in serverlist:
+                    try:
+                        os.remove("/etc/nginx/"+server+"/" + domain_sname + "_SSL.conf")
+                    except OSError:
+                        pass
+                    try:
+                        os.remove("/etc/nginx/"+server+"/" + domain_sname + "_SSL.include")
+                    except OSError:
+                        pass
     nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 0, domain_home, *domain_aname_list)
     config_out = open("/etc/nginx/sites-enabled/" + domain_sname + ".conf", 'w')
     with open(installation_path + "/conf/server.tmpl", 'r') as my_template_file:
