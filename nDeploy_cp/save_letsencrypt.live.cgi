@@ -48,6 +48,8 @@ if form.getvalue('letsencrypt_status') and form.getvalue('domain'):
         domaindatayaml_data_stream = open(domaindatayaml, 'r')
         yaml_parsed_domaindata = yaml.safe_load(domaindatayaml_data_stream)
         yaml_parsed_domaindata['letsencrypt'] = letsencrypt_status
+        if letsencrypt_status == "0":
+            yaml_parsed_domaindata['leretry'] = "0"
         domaindatayaml_data_stream.close()
         with open(domaindatayaml, 'w') as yaml_file:
             yaml_file.write(yaml.dump(yaml_parsed_domaindata, default_flow_style=False))

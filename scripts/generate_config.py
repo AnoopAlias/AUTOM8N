@@ -8,6 +8,7 @@ import os
 import sys
 import pwd
 import grp
+import time
 from lxml import etree
 
 
@@ -24,7 +25,18 @@ pagespeed_include_location = "include /etc/nginx/conf.d/pagespeed.conf"
 # Function defs
 
 
-def letsencrypt_cert_setup(domain_name, document_root, *domain_aname_list):
+def letsencrypt_cert_setup(user_name, domain_name, document_root, *domain_aname_list):
+    profileyaml = installation_path + "/domain-data/" + domain_name
+    profileyaml_data_stream = open(profileyaml, 'r')
+    yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+    profileyaml_data_stream.close()
+    leretry = yaml_parsed_profileyaml.get('leretry', "0")
+    trynum = int(leretry) + 1
+    yaml_parsed_profileyaml['leretry'] = str(trynum)
+    with open(profileyaml, 'w') as yaml_file:
+        yaml_file.write(yaml.dump(yaml_parsed_profileyaml, default_flow_style=False))
+    yaml_file.close()
+    time.sleep(10)
     letsencrypt_conf = installation_path+"/conf/letsencrypt.yaml"
     letsencrypt_data_stream = open(letsencrypt_conf, 'r')
     yaml_parsed_letsencrypt = yaml.safe_load(letsencrypt_data_stream)
@@ -37,6 +49,18 @@ def letsencrypt_cert_setup(domain_name, document_root, *domain_aname_list):
     for item in domain_aname_list_copy:
         the_command = the_command+" -d "+item
     subprocess.call(the_command, shell=True)
+    time.sleep(10)
+    profileyaml = installation_path + "/domain-data/" + domain_name
+    profileyaml_data_stream = open(profileyaml, 'r')
+    yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+    profileyaml_data_stream.close()
+    leretry = yaml_parsed_profileyaml.get('leretry', "0")
+    if leretry == "0":
+        yaml_parsed_profileyaml['leretry'] = "1"
+        with open(profileyaml, 'w') as yaml_file:
+            yaml_file.write(yaml.dump(yaml_parsed_profileyaml, default_flow_style=False))
+        yaml_file.close()
+
 
 
 def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
@@ -229,8 +253,9 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
             update_naxsi_test_status(profileyaml, 0)
         if os.path.isfile(installation_path+"/conf/letsencrypt.yaml") and not os.path.isfile("/etc/letsencrypt/live/"+domain_name+"/fullchain.pem") and profileyaml is not installation_path + "/domain-data/" + domain_name + "_SSL":
             letsencrypt_value = yaml_parsed_profileyaml.get('letsencrypt', None)
-            if letsencrypt_value == "1":
-                letsencrypt_cert_setup(domain_name, document_root, *domain_aname_list)
+            leretry = yaml_parsed_profileyaml.get('leretry', None)
+            if letsencrypt_value == "1" and not leretry == "1":
+                letsencrypt_cert_setup(user_name, domain_name, document_root, *domain_aname_list)
         profile_custom_status = yaml_parsed_profileyaml.get('customconf')
         config_test_status = yaml_parsed_profileyaml.get('testconf')
         if profile_custom_status == "0" and config_test_status == "0":
