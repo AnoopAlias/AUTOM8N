@@ -42,10 +42,11 @@ def letsencrypt_cert_setup(user_name, domain_name, document_root, *domain_aname_
     yaml_parsed_letsencrypt = yaml.safe_load(letsencrypt_data_stream)
     letsencrypt_data_stream.close()
     letsencrypt_bin = yaml_parsed_letsencrypt.get("letsencrypt")
+    letsencrypt_email = yaml_parsed_letsencrypt.get("email")
     domain_aname_list_copy = list(domain_aname_list)
     if "ipv6."+domain_name in domain_aname_list_copy:
         domain_aname_list_copy.remove("ipv6."+domain_name)
-    the_command = letsencrypt_bin+" --text --renew-by-default --agree-tos --server https://acme-v01.api.letsencrypt.org/directory certonly -a webroot --webroot-path "+document_root+"/ -d "+domain_name
+    the_command = letsencrypt_bin+" --email "+letsencrypt_email+" --text --renew-by-default --agree-tos --server https://acme-v01.api.letsencrypt.org/directory certonly -a webroot --webroot-path "+document_root+"/ -d "+domain_name
     for item in domain_aname_list_copy:
         the_command = the_command+" -d "+item
     subprocess.call(the_command, shell=True)
