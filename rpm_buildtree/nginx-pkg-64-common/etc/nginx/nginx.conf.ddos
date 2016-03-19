@@ -27,6 +27,8 @@ client_body_buffer_size    128k;
 client_header_timeout  5s;
 client_body_timeout 5s;
 
+reset_timedout_connection on;
+
 connection_pool_size  256;
 client_header_buffer_size 4k;
 large_client_header_buffers 4 32k;
