@@ -1,7 +1,6 @@
 user  nobody;
 worker_processes  auto;
 thread_pool iopool threads=32 max_queue=65536;
-error_log  /var/log/nginx/error.log warn;
 pid        /var/run/nginx.pid;
 events {
 worker_connections  1024;
@@ -60,8 +59,8 @@ open_file_cache_errors   on;
 # Logging Settings
 ##
 log_format bytes_log "$msec $bytes_sent .";
-access_log /var/log/nginx/access.log;
-error_log /var/log/nginx/error.log;
+access_log /var/log/nginx/access_log;
+error_log /var/log/nginx/error_log;
 
 ##
 #NAXSI
