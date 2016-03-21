@@ -33,6 +33,8 @@ location /NaxsiRequestDenied {
                return 418;
         }
 
+location ~ /\. { deny all; access_log off; log_not_found off; }
+
 location ~ \.php$ {
     #NAXSI_INCLUDE_FILE;
     #NAXSI_DOMAIN_WHITELISTS;
