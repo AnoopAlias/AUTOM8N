@@ -18,7 +18,8 @@ location ~ ^/pingphpfpm$ {
     fastcgi_pass unix:SOCKETFILE;
 }
 
-location ~ /\. { deny all; access_log off; log_not_found off; }
+location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
+
 
 location ~ \.php$ {
     #NAXSI_INCLUDE_FILE;
