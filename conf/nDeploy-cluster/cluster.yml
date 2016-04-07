@@ -1,0 +1,17 @@
+---
+- name: Setup nDeploy cluster on master cPanel server
+  hosts: 127.0.0.1
+  connection: local
+  roles:
+    - install_master
+    - csync2_master
+    - unison_master
+    - lsyncd_master
+
+- name: Setup nDeploy cluster on slaves
+  hosts: ndeploycluster
+  roles:
+    - install_slave
+    - csync2_slave
+    - unison_slave
+    - lsyncd_slave
