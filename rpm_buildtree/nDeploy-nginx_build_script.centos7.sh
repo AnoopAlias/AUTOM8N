@@ -54,6 +54,7 @@ rm -rf ../nginx-pkg-64-centos7/usr/nginx/nxapi
 rsync -av naxsi-${NAXSI_VERSION}/nxapi ../nginx-pkg-64-centos7/usr/nginx/
 rsync -av ../nxapi.json ../nginx-pkg-64-centos7/usr/nginx/nxapi/
 rsync -av tempo/usr/sbin ../nginx-pkg-64-centos7/usr/
+rsync -av tempo/usr/lib64 ../nginx-pkg-64/usr/
 
 sed -i "s/RUBY_VERSION/$MY_RUBY_VERSION/g" ../nginx-pkg-64-centos7/etc/nginx/conf.d/passenger.conf
 sed -i "s/PASSENGER_VERSION/$PASSENGER_VERSION/g" ../nginx-pkg-64-centos7/etc/nginx/conf.d/passenger.conf
