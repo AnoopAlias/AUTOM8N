@@ -15,7 +15,7 @@ rm -rf nginx-${NGINX_VERSION}*
 
 rsync -av --exclude 'etc/rc.d' nginx-pkg-64-common/ nginx-pkg-64-centos7/
 
-yum -y install rpm-build libcurl-devel pcre-devel git
+yum -y install rpm-build libcurl-devel pcre-devel git xz-devel
 
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 \curl -sSL https://get.rvm.io | sudo bash -s stable --ruby=${MY_RUBY_VERSION}

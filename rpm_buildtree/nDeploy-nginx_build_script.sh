@@ -16,7 +16,7 @@ rm -rf nginx-${NGINX_VERSION}*
 
 rsync -av --exclude 'usr/lib' nginx-pkg-64-common/ nginx-pkg-64/
 
-yum -y install rpm-build libcurl-devel pcre-devel git
+yum -y install rpm-build libcurl-devel pcre-devel git xz-devel
 rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
 wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
 yum install devtoolset-2-gcc-c++ devtoolset-2-binutils
