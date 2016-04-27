@@ -1,0 +1,6 @@
+---
+#This playbook will install and setup unison on nDeploy cluster(master)
+
+
+- name: Install and setup unison in nDeploy cluster master
+  file: path=/root/.unison state=directory

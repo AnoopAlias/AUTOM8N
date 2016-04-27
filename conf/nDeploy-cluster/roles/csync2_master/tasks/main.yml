@@ -1,0 +1,7 @@
+---
+#This playbook will install and setup csync2 on nDeploy master
+
+- name: Setup csync2 on master
+  shell: csync2 -k /etc/csync2/csync2.key
+  lineinfile: dest=/etc/services line="csync2          30865/tcp               # csync2"
+  
