@@ -88,6 +88,9 @@ fi
 if [ ! -L /usr/local/cpanel/base/frontend/paper_lantern/nDeploy_cp  ];then
 	ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/paper_lantern/
 fi
+if [ -f /usr/bin/systemctl ];then
+  systemctl daemon-reload
+fi
 
 echo -e '\e[93m Installing nDeploy plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp

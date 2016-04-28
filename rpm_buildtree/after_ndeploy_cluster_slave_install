@@ -20,3 +20,6 @@ if [ ! -L /etc/nginx/sites-enabled ] ; then
 	rm -rf /etc/nginx/sites-enabled
 	ln -s /etc/nginx/$(hostname) /etc/nginx/sites-enabled
 fi
+if [ -f /usr/bin/systemctl ];then
+  systemctl daemon-reload
+fi

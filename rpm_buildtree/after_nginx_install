@@ -32,3 +32,6 @@ fi
 if [ ! -f /etc/nginx/ssl/dhparam.pem ];then
 	openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
 fi
+if [ -f /usr/bin/systemctl ];then
+  systemctl daemon-reload
+fi

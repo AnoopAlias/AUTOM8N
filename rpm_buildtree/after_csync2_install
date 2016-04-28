@@ -16,3 +16,6 @@ SomeName
 name@example.com
 EOF
 fi
+if [ -f /usr/bin/systemctl ];then
+  systemctl daemon-reload
+fi
