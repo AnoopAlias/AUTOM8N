@@ -44,18 +44,18 @@ wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
 tar -xzvf ${NPS_VERSION}.tar.gz
 cd ..
 
-rm -rf /usr/nginx/ssl
+rm -rf /usr/nginx/openssl-1.0.2
 wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
 tar -zxf openssl-1.0.2g.tar.gz
 cd openssl-1.0.2g
-./config shared no-ssl2 no-ssl3 no-comp --openssldir=/usr/nginx/ssl
+./config shared no-ssl2 no-ssl3 no-comp --prefix=/usr/nginx/openssl-1.0.2
 make depend
 make
 make install
 cd ..
 
 
-./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-path=/etc/nginx/modules --with-openssl=/usr/nginx/ssl --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error_log --http-log-path=/var/log/nginx/access_log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nobody --group=nobody --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --add-dynamic-module=naxsi-${NAXSI_VERSION}/naxsi_src --with-file-aio --with-threads --with-stream --with-stream_ssl_module --with-http_slice_module --with-ipv6 --with-http_v2_module --add-dynamic-module=ngx_pagespeed-release-${NPS_VERSION}-beta --add-dynamic-module=/usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/src/nginx_module --add-module=ngx_cache_purge-${CACHE_PURGE_VERSION} --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic' --with-ld-opt=-Wl,-E
+./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-path=/etc/nginx/modules --with-openssl=/usr/nginx/openssl-1.0.2 --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error_log --http-log-path=/var/log/nginx/access_log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nobody --group=nobody --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --add-dynamic-module=naxsi-${NAXSI_VERSION}/naxsi_src --with-file-aio --with-threads --with-stream --with-stream_ssl_module --with-http_slice_module --with-ipv6 --with-http_v2_module --add-dynamic-module=ngx_pagespeed-release-${NPS_VERSION}-beta --add-dynamic-module=/usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/src/nginx_module --add-module=ngx_cache_purge-${CACHE_PURGE_VERSION} --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic' --with-ld-opt=-Wl,-E
 make DESTDIR=./tempo install
 
 git clone https://github.com/nbs-system/naxsi-rules.git
@@ -63,7 +63,7 @@ rsync -av naxsi-rules/*.rules ../nginx-pkg-64-centos7/etc/nginx/conf.d/
 rsync -av naxsi-${NAXSI_VERSION}/naxsi_config/naxsi_core.rules ../nginx-pkg-64-centos7/etc/nginx/naxsi_core.rules
 rm -rf ../nginx-pkg-64-centos7/usr/nginx/nxapi
 rsync -av naxsi-${NAXSI_VERSION}/nxapi ../nginx-pkg-64-centos7/usr/nginx/
-rsync -av /usr/nginx/ssl ../nginx-pkg-64-centos7/usr/nginx/
+rsync -av --exclude 'ssl' /usr/nginx/openssl-1.0.2 ../nginx-pkg-64-centos7/usr/nginx/
 rsync -av ../nxapi.json ../nginx-pkg-64-centos7/usr/nginx/nxapi/
 rsync -av tempo/usr/sbin ../nginx-pkg-64-centos7/usr/
 rsync -av tempo/etc/nginx/modules ../nginx-pkg-64-centos7/etc/nginx/
