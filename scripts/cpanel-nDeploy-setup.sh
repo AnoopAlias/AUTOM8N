@@ -4,14 +4,14 @@
 
 function enable {
 echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
-sed -i "s/apache_port.*/apache_port=0.0.0.0:9999/" /var/cpanel/cpanel.config
-sed -i "s/apache_ssl_port.*/apache_ssl_port=0.0.0.0:4430/" /var/cpanel/cpanel.config
+/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_port value=0.0.0.0:9999
+/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:4430
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
 for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
 do
 	echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/generate_config.py $CPANELUSER
 done
-/usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings > /dev/null
+
 /usr/local/cpanel/libexec/tailwatchd --restart
 
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
@@ -43,9 +43,10 @@ fi
 function disable {
 
 echo -e '\e[93m Reverting apache http and https port in cpanel \e[0m'
-sed -i "s/apache_port.*/apache_port=0.0.0.0:80/" /var/cpanel/cpanel.config
-sed -i "s/apache_ssl_port.*/apache_ssl_port=0.0.0.0:443/" /var/cpanel/cpanel.config
+/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_port value=0.0.0.0:80
+/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:443
 sed -i "s/9999/80/" /etc/chkserv.d/httpd
+
 /usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings > /dev/null
 /usr/local/cpanel/libexec/tailwatchd --restart
 
