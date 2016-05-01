@@ -1,6 +1,12 @@
 worker_processes  1;
 pid /dev/null;
 error_log /dev/null;
+##
+#Load Dynamic Modules
+##
+include /etc/nginx/conf.d/dynamic_modules.conf;
+
+
 events {
     worker_connections  1024;
 }

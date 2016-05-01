@@ -4,4 +4,5 @@
 - name: Setup csync2 on master
   shell: csync2 -k /etc/csync2/csync2.key
   lineinfile: dest=/etc/services line="csync2          30865/tcp               # csync2"
+  template: src=csync2.conf.j2 dest=/etc/csync2/csync2.cfg
   
