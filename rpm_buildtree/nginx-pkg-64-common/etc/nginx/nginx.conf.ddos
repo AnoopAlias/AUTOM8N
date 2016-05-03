@@ -7,6 +7,11 @@ pid        /var/run/nginx.pid;
 ##
 include /etc/nginx/conf.d/dynamic_modules.conf;
 
+#Custom Include File where you can include any custom settings
+##
+include /etc/nginx/conf.d/main_custom_include.conf;
+##
+
 events {
 worker_connections  1024;
 use epoll;
