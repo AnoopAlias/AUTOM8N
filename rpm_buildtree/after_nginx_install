@@ -22,6 +22,9 @@ fi
 if [ ! -f /etc/nginx/conf.d/custom_include.conf ] ; then
 	touch /etc/nginx/conf.d/custom_include.conf
 fi
+if [ ! -f /etc/nginx/conf.d/main_custom_include.conf ] ; then
+	touch /etc/nginx/conf.d/main_custom_include.conf
+fi
 if [ ! -d /etc/nginx/ssl ] ; then
 	mkdir /etc/nginx/ssl
 fi
