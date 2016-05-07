@@ -19,9 +19,8 @@ if [[ $2 -eq 0 ]]; then
 		/usr/sbin/nginx -s reload
 	else
 		CPANELUSER=$(echo $1|awk -F'/' '{print $5}')
-		echo "Conf:Gen $CPANELUSER"
-		/opt/nDeploy/scripts/generate_config.py $CPANELUSER
-		/opt/nDeploy/scripts/apache_php_config_generator.py $CPANELUSER
+		echo "Conf:Gen Queued ${CPANELUSER}"
+		echo ${CPANELUSER} >> /opt/nDeploy/lock/config_generation_queue
 	fi
 elif [[ $2 -eq 1 ]]; then
 	CPANELUSER=$(stat -c "%U" $1)
