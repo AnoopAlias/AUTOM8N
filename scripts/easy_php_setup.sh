@@ -115,9 +115,9 @@ setup_lve_patched_php(){
 
 
 setup_ea4_php(){
-		yum -y install ea-php54-php-fpm ea-php55-php-fpm ea-php56-php-fpm
+		yum -y install ea-php54-php-fpm ea-php55-php-fpm ea-php56-php-fpm ea-php70-php-fpm
 
-		for ver in 54 55 56
+		for ver in 54 55 56 70
 		do
 			if [ ! -d /opt/cpanel/php$ver/root/var ];then
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
