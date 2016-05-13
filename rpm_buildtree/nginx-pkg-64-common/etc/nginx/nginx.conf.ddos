@@ -5,6 +5,10 @@ worker_processes  auto;
 thread_pool iopool threads=32 max_queue=65536;
 pid        /var/run/nginx.pid;
 error_log /var/log/nginx/error_log;
+
+#Load Dynamic Modules
+include /etc/nginx/conf.d/dynamic_modules.conf;
+
 events {
 worker_connections  1024;
 use epoll;
@@ -12,11 +16,8 @@ multi_accept on;
 accept_mutex off;
 }
 
-#Load Dynamic Modules
-include /etc/nginx/conf.d/dynamic_modules.conf;
-
 #Settings For other core modules like for example the stream module
 include /etc/nginx/conf.d/main_custom_include.conf;
 
 #Settings for the http core module optimized to mitigate a DOS attack
-include /etc/nginx/conf.d/http_settings_ddos.conf
+include /etc/nginx/conf.d/http_settings_ddos.conf;
