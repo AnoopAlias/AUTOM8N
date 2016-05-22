@@ -4,9 +4,3 @@
 
 - name: Install and setup unison in nDeploy cluster master
   file: path=/root/.unison state=directory
-
-- name: Setup nDeploy preference file
-  template:
-    src: default.prf.j2
-    dest: /root/.unison/{{ ndeploy_slave_connection[0] }}
-  with_items: {{ ndeploy_slave_connection }}
