@@ -1,4 +1,8 @@
 ---
+- name: Gather facts about the slaves
+  hosts: ndeploycluster
+  tasks: []
+  
 - name: Setup nDeploy cluster on master cPanel server
   hosts: 127.0.0.1
   connection: local
