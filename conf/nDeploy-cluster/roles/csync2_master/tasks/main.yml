@@ -8,8 +8,7 @@
 
 - name: Setup csync2 on master
   shell: csync2 -k /etc/csync2/csync2.key
-  when:
-    csync2_isok.stat.exists: True
+  when: csync2_isok.stat.exists == False
 
 - name: Add csync2 port in services file
   lineinfile:
