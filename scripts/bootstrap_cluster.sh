@@ -9,7 +9,7 @@
 ##  Ensure both hostnames resolve via DNS or you must add both names in /etc/hosts file for local resolution
 ##  BEGIN settings to edit
 #######################################################
-MASTERHOST="server1.example.com:sshport"  #This is your master server having cPanel.
+MASTERHOST="server1.example.com:sshport"  #This is your master server having cPanel .
 SLAVEHOST="slave1.example.com:sshport slave2.example.com:sshport" #This is a space seperated list of slaves including their sshport
 SLAVELIST="slave1.example.com slave2.example.com" #This is a space seperated list of slave hostnames.
 ########################################################

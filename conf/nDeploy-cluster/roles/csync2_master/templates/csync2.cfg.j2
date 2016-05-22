@@ -6,6 +6,13 @@ group nDeployCluster
         include /var/cpanel/ssl/installed;
         include /etc/letsencrypt;
 	      include /opt/nDeploy/domain-data;
+        include /etc/localdomains;
+        action
+        {
+                pattern /etc/localdomains;
+                exec "/opt/nDeploy/scripts/postfix_backupmx_update.sh";
+                logfile "/var/log/csync2_action.log";
+        }
         action
         {
                 pattern /opt/nDeploy/domain-data/*;
