@@ -5,8 +5,10 @@
 - name: Install and setup unison in nDeploy cluster master
   file: path=/root/.unison state=directory
 
-- name: create the unison prefrence file
+- name: create the unison preference file
   template:
     src: default.prf.j2
     dest: /root/.unison/{{ item }}.prf
+    vars:
+      the_host: "{{ item }}"
     with_items: groups['ndeployslaves']
