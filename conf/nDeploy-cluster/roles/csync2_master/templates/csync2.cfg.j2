@@ -26,7 +26,7 @@ group nDeployCluster
  }
 
 
-{% for host in groups['ndeploycluster'] %}
+{% for host in groups['ndeployslaves'] %}
 group {{ hostvars[host]['ansible_hostname'] }}
 {
       host {{ ansible_nodename }} ({{ hostvars[host]['ansible_nodename'] }});
