@@ -1,0 +1,14 @@
+---
+#This playbook will install and setup csync2 on nDeploy master
+
+- name: Add csync2 port in services file
+  lineinfile:
+    dest: /etc/services
+    line: "csync2          30865/tcp               # csync2"
+
+- name: Synchronize csync2 keys and configuration
+  synchronize:
+    src: /etc/csync2/
+    dest: /etc/csync2/
+    recursive: yes
+    archive: yes

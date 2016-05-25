@@ -1,0 +1,18 @@
+---
+- name: Install nDeploy repo
+  yum: name={{ item }} state=present disable_gpg_check=yes
+  with_items:
+    - https://rpm.piserve.com/nDeploy-release-centos-1.0-2.noarch.rpm
+
+- name: Install nDeploy cluster slave packages
+  yum: name={{ item }} enablerepo=ndeploy state=present
+  with_items:
+   - lsyncd
+   - csync2-nDeploy
+   - unison-nDeploy
+   - nginx-nDeploy
+   - nDeploy-cluster-slave
+
+- name: comment out umask settings for correct homedir permission
+  shell: sed -i "s/^UMASK/#UMASK/" /etc/login.defs
+  

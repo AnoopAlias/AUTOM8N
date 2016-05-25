@@ -1,6 +1,6 @@
 group nDeployCluster
  {
-        host {{ ansible_nodename }} ({% for host in groups['ndeploycluster'] %}{{ hostvars[host]['ansible_nodename'] }}{% endfor %});
+        host {{ ansible_nodename }} ({% for host in groups['ndeployslaves'] %}{{ hostvars[host]['ansible_nodename'] }}{% endfor %});
         key /etc/csync2/csync2.key;
         include /etc/nginx/ssl;
         include /var/cpanel/ssl/installed;
@@ -22,4 +22,31 @@ group nDeployCluster
         backup-directory /var/backups/csync2;
         backup-generations 3;
         auto none;
+
  }
+
+
+{% for host in groups['ndeploycluster'] %}
+group {{ hostvars[host]['ansible_hostname'] }}
+{
+      host {{ ansible_nodename }} ({{ hostvars[host]['ansible_nodename'] }});
+      key /etc/csync2/csync2.key;
+      include /etc/nginx/{{ hostvars[host]['ansible_nodename'] }};
+      action
+      {
+                pattern /etc/nginx/{{ hostvars[host]['ansible_nodename'] }}/*;
+                exec "/usr/sbin/nginx -s reload";
+                logfile "/var/log/csync2_action.log";
+      }
+      include /etc/localdomains;
+      action
+      {
+                pattern /etc/localdomains;
+                exec "/opt/nDeploy/scripts/postfix_backupmx_update.sh";
+                logfile "/var/log/csync2_action.log";
+      }
+      backup-directory /var/backups/csync2;
+      backup-generations 3;
+      auto none;
+}
+{% endfor %}

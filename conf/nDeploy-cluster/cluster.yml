@@ -1,8 +1,8 @@
 ---
 - name: Gather facts about the slaves
-  hosts: ndeploycluster
+  hosts: ndeployslaves
   tasks: []
-  
+
 - name: Setup nDeploy cluster on master cPanel server
   hosts: 127.0.0.1
   connection: local
@@ -13,7 +13,7 @@
     - lsyncd_master
 
 - name: Setup nDeploy cluster on slaves
-  hosts: ndeploycluster
+  hosts: ndeployslaves
   roles:
     - install_slave
     - csync2_slave

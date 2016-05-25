@@ -1,10 +1,8 @@
 ---
-#This playbook will install and setup nDeploy cluster
-
 
 - name: Install nDeploy cluster master packages
   yum: name={{ item }} enablerepo=ndeploy state=present
   with_items:
    - lsyncd
    - csync2-nDeploy
-   - unison-nDeploy  
+   - unison-nDeploy
