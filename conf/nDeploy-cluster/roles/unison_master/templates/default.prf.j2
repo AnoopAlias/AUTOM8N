@@ -1,6 +1,6 @@
 # Unison preferences file
 root = /home
-root = ssh://root@{{ item }}:{% for host in {{ item }} %}{{ hostvars[host]['ansible_port'] }}{% endfor %}//home
+root = ssh://root@{{ item }}:{{ hostvars[item]['ansible_port'] }}//home
 ignore = Path virtfs
 ignore = Path */mail
 ignore = Path */.cpanel
