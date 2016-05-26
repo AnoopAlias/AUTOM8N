@@ -9,6 +9,4 @@
   template:
     src: default.prf.j2
     dest: /root/.unison/{{ item }}.prf
-    vars:
-      the_host: "{{ item }}"
-    with_items: groups['ndeployslaves']
+  with_items: groups['ndeployslaves']
