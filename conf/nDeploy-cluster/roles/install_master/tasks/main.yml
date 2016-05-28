@@ -1,7 +1,13 @@
 ---
 
-- name: Install nDeploy cluster master packages
-  yum: name={{ item }} enablerepo=ndeploy state=present
+- name: Ensure EPEL and nDeploy repo is present
+  yum: name={{ item }} state=present
+  with_items:
+    - nDeploy-release-centos
+    - epel-release
+
+- name: Install nDeploy rpm's on master
+  yum: name={{ item }} enablerepo=ndeploy,epel state=present
   with_items:
    - lsyncd
    - csync2-nDeploy

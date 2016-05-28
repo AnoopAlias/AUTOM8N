@@ -1,11 +1,17 @@
 ---
+
+- name: Ensure EPEL repo is present
+  yum: name={{ item }} state=present
+  with_items:
+    - epel-release
+
 - name: Install nDeploy repo
   yum: name={{ item }} state=present disable_gpg_check=yes
   with_items:
     - https://rpm.piserve.com/nDeploy-release-centos-1.0-2.noarch.rpm
 
-- name: Install nDeploy cluster slave packages
-  yum: name={{ item }} enablerepo=ndeploy state=present
+- name: Install nDeploy cluster slave rpm packages
+  yum: name={{ item }} enablerepo=ndeploy,epel state=present
   with_items:
    - lsyncd
    - csync2-nDeploy
@@ -13,6 +19,5 @@
    - nginx-nDeploy
    - nDeploy-cluster-slave
 
-- name: comment out umask settings for correct homedir permission
-  shell: sed -i "s/^UMASK/#UMASK/" /etc/login.defs
-  
+- name: ensure default UMASK is in place
+  lineinfile: dest=/etc/login.defs state=absent regexp="^UMASK"
