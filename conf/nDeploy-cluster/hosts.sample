@@ -1,0 +1,6 @@
+[ndeployslaves]
+slave1.example.com ansible_port=4000
+slave2.example.com ansible_port=22
+
+[ndeploymaster]
+master.example.com ansible_port=22 ansible_connection=local

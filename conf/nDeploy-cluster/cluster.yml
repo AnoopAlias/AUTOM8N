@@ -19,6 +19,7 @@
     - csync2_slave
     - lsyncd_slave
     - services_slave
+    - backupmx_slave
 
 - name: setup csync2 service on master
   hosts: ndeploymaster

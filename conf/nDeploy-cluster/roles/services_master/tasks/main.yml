@@ -10,3 +10,15 @@
     - xinetd
     - csync2
   when: ansible_distribution_major_version == "6"
+
+- name: Add csync2 cron job
+  cron: name="nDeploy csync2" user=root job="/usr/sbin/csync2 -x"
+
+- name: Restart crond on master
+  service: name=crond enabled=yes state=restarted
+
+- name: Create user and homedir across the slaves
+  shell: /opt/nDeploy/scripts/cluster_home_ensure_all.py
+
+- name: Start lsyncd on master
+  service: name=lsyncd enabled=yes state=started

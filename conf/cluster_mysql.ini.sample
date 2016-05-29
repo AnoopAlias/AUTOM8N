@@ -1,0 +1,22 @@
+[mysqld]
+
+# MySQL master-master replication related settings
+# We change the port to 13306 so that nginX can listen on 3306
+# binlog and relaylog size is set to 52 Mb
+
+socket = /var/lib/mysql/mysql_original.sock
+port = 13306
+server-id               = 1
+auto_increment_increment = 10
+auto_increment_offset = 1
+
+log_bin
+max_binlog_size=52428800
+expire_logs_days=3
+binlog-format=row
+
+log-slave-updates
+max-relay-log-size = 52428800
+relay-log-recovery = 1
+relay_log_purge = 1
+relay_log_space_limit = 5368709120
