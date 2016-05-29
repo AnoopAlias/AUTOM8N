@@ -4,7 +4,7 @@
   tasks: []
 
 - name: Setup nDeploy cluster on master cPanel server
-  hosts: 127.0.0.1
+  hosts: ndeploymaster
   connection: local
   roles:
     - install_master

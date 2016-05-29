@@ -21,3 +21,4 @@
 
 - name: ensure default UMASK is in place
   lineinfile: dest=/etc/login.defs state=absent regexp="^UMASK"
+  

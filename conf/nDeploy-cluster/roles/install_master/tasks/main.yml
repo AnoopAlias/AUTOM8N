@@ -12,3 +12,13 @@
    - lsyncd
    - csync2-nDeploy
    - unison-nDeploy
+
+- name: Setup nginx config directories on master
+  file: path=/etc/nginx/{{ item }} state=directory
+  with_items:
+    - "{{ groups['ndeployslaves'] }}"
+
+- name: create the ndeploy_cluster_slaves file
+  template:
+    src: ndeploy_cluster_slaves.j2
+    dest: /opt/nDeploy/conf/ndeploy_cluster_slaves
