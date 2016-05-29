@@ -1,0 +1,12 @@
+---
+
+- name: Ensure csync2 on slave is started
+  service: name=csync2.socket enabled=yes state=started
+  when: ansible_distribution_major_version == "7"
+
+- name: Ensure csync2 on slave is started
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - xinetd
+    - csync2
+  when: ansible_distribution_major_version == "6"
