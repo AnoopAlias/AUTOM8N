@@ -1,0 +1,18 @@
+settings {
+logfile = "/var/log/lsyncd.log",
+statusFile = "/var/log/lsyncd.status",
+maxDelays = 15,
+}
+{% for host in groups['ndeploymaster'] %}
+{{ host | checksum }} = {
+maxProcesses = 1,
+delay = 15,
+onAttrib = "ssh -p {{ hostvars[host]['ansible_port'] }} root@{{ host }} /usr/bin/touch /home/{{ ansible_hostname }}",
+onCreate = "ssh -p {{ hostvars[host]['ansible_port'] }} root@{{ host }} /usr/bin/touch /home/{{ ansible_hostname }}",
+onDelete = "ssh -p {{ hostvars[host]['ansible_port'] }} root@{{ host }} /usr/bin/touch /home/{{ ansible_hostname }}",
+onModify = "ssh -p {{ hostvars[host]['ansible_port'] }} root@{{ host }} /usr/bin/touch /home/{{ ansible_hostname }}",
+onMove = "ssh -p {{ hostvars[host]['ansible_port'] }} root@{{ host }} /usr/bin/touch /home/{{ ansible_hostname }}",
+exitcodes = {[0] = "ok", [1] = "ok", [2] = "ok", [3] = "ok"}
+}
+sync{% raw %}{{% endraw %}{{ host | checksum }}, source="/home"}
+{% endfor %}

@@ -17,5 +17,4 @@
   roles:
     - install_slave
     - csync2_slave
-    - unison_slave
     - lsyncd_slave
