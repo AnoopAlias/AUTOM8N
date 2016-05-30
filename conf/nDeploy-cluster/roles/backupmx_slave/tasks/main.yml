@@ -2,7 +2,8 @@
 
 - name: Stop Exim service
   service: name=exim state=stopped
-  
+  ignore_errors: yes
+
 - name: remove exim from slave
   yum: name=exim state=absent
 

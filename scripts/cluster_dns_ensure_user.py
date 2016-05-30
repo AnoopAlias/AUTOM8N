@@ -27,7 +27,7 @@ def cluster_ensure_arecord(zone_name, hostname, domain_ip):
                 connect_server_dict = cluster_data_yaml_parsed.get(server)
                 ipmap_dict = connect_server_dict.get("ipmap")
                 remote_domain_ipv4 = ipmap_dict.get(domain_ip)
-                subprocess.call("/usr/local/cpanel/bin/whmapi1 --output=json addzonerecord domain="+zone_name+" type=A class=IN name="+hostname+". address="+remote_domain_ipv4,shell=True)
+                subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=A class=IN name="+hostname+". address="+remote_domain_ipv4,shell=True)
 
 
 if __name__ == "__main__":
