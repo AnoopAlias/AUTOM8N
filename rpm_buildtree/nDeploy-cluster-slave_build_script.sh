@@ -2,7 +2,7 @@
 #Author: Anoop P Alias
 
 NDEPLOY_VERSION="2.0"
-RPM_ITERATION="15"
+RPM_ITERATION="16"
 
 rm -f nDeploy-cluster-slave-pkg-centos7/nDeploy-*
 rsync -av ../scripts/ddos_mitigate.sh ../scripts/postfix_backupmx_setup.sh ../scripts/postfix_backupmx_update.sh ../scripts/cluster_slave_setup_backends.py ../scripts/easy_php_setup.sh ../scripts/init_backends.py ../scripts/update_backend.py nDeploy-cluster-slave-pkg-centos7/opt/nDeploy/scripts/
