@@ -6,7 +6,7 @@
     - epel-release
 
 - name: Install nDeploy repo
-  yum: name={{ item }} state=present disable_gpg_check=yes
+  yum: name={{ item }} state=present disable_gpg_check=yes validate_certs=False
   with_items:
     - https://rpm.piserve.com/nDeploy-release-centos-1.0-2.noarch.rpm
 
@@ -21,4 +21,3 @@
 
 - name: ensure default UMASK is in place
   lineinfile: dest=/etc/login.defs state=absent regexp="^UMASK"
-  
