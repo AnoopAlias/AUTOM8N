@@ -1,10 +1,10 @@
-LearningMode; #Enables learning mode
-SecRulesEnabled;
-#SecRulesDisabled;
-DeniedUrl "/NaxsiRequestDenied";
-## check rules
-CheckRule "$SQL >= 8" BLOCK;
-CheckRule "$RFI >= 8" BLOCK;
-CheckRule "$TRAVERSAL >= 4" BLOCK;
-CheckRule "$EVADE >= 4" BLOCK;
-CheckRule "$XSS >= 8" BLOCK;
+#LearningMode; #Enables learning mode
+#SecRulesEnabled;
+##SecRulesDisabled;
+#DeniedUrl "/NaxsiRequestDenied";
+### check rules
+#CheckRule "$SQL >= 8" BLOCK;
+#CheckRule "$RFI >= 8" BLOCK;
+#CheckRule "$TRAVERSAL >= 4" BLOCK;
+#CheckRule "$EVADE >= 4" BLOCK;
+#CheckRule "$XSS >= 8" BLOCK;

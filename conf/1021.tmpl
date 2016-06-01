@@ -5,7 +5,7 @@ location / {
     access_log  off;
     #NAXSI_INCLUDE_FILE;
     #NAXSI_DOMAIN_WHITELISTS;
-    include /etc/nginx/conf.d/wordpress.rules;
+    #include /etc/nginx/conf.d/wordpress.rules;
 
  	proxy_send_timeout   90;
    	proxy_read_timeout   90;

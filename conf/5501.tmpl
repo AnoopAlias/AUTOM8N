@@ -40,7 +40,7 @@ location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
 location ~ \.php$ {
 	#NAXSI_INCLUDE_FILE;
 	#NAXSI_DOMAIN_WHITELISTS;
-	include /etc/nginx/conf.d/wordpress.rules;
+	#include /etc/nginx/conf.d/wordpress.rules;
 
 	try_files $uri =404;
         fastcgi_pass unix:SOCKETFILE;
