@@ -12,7 +12,7 @@ onCreate = "export HOME=/root;/usr/bin/unison {{ host }}",
 onDelete = "export HOME=/root;/usr/bin/unison {{ host }}",
 onModify = "export HOME=/root;/usr/bin/unison {{ host }}",
 onMove = "export HOME=/root;/usr/bin/unison {{ host }}",
-exitcodes = {[0] = "ok", [1] = "ok", [2] = "ok", [3] = "ok"}
+exitcodes = {[0] = "ok", [1] = "ok", [2] = "ok", [3] = "ok", [127] = "ok"}
 }
 
 sync{% raw %}{{% endraw %}u{{ host | checksum }}, source="/home"}

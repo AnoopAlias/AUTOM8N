@@ -12,7 +12,7 @@ onCreate = "ssh -p {{ hostvars[host]['ansible_port'] }} root@{{ host }} /usr/bin
 onDelete = "ssh -p {{ hostvars[host]['ansible_port'] }} root@{{ host }} /usr/bin/touch /home/{{ ansible_nodename }}",
 onModify = "ssh -p {{ hostvars[host]['ansible_port'] }} root@{{ host }} /usr/bin/touch /home/{{ ansible_nodename }}",
 onMove = "ssh -p {{ hostvars[host]['ansible_port'] }} root@{{ host }} /usr/bin/touch /home/{{ ansible_nodename }}",
-exitcodes = {[0] = "ok", [1] = "ok", [2] = "ok", [3] = "ok"}
+exitcodes = {[0] = "ok", [1] = "ok", [2] = "ok", [3] = "ok", [127] = "ok"}
 }
 sync{% raw %}{{% endraw %}u{{ host | checksum }}, source="/home"}
 {% endfor %}
