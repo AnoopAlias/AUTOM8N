@@ -8,7 +8,10 @@
         create 640 nobody adm
         sharedscripts
         prerotate
-            [ -f /usr/nginx/scripts/nxapi-learn.sh ] && /usr/nginx/scripts/nxapi-learn.sh
+            if [ -f /usr/nginx/scripts/nxapi-learn.sh ]; then
+              /usr/nginx/scripts/nxapi-learn.sh; exit 0
+            else
+              exit 0
         endscript
         postrotate
             [ -f /var/run/nginx.pid ] && kill -USR1 `cat /var/run/nginx.pid`
