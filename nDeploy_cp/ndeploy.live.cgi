@@ -70,28 +70,29 @@ print('<input type="submit" value="CONFIGURE">')
 print('</form>')
 print('<p style="background-color:LightGrey">(!) For Addon domain select the corresponding subdomain</p>')
 print('<p style="background-color:LightGrey">(!) click on the nginx icon above to restart the configuration process anytime</p>')
-print('<HR>')
-print('<form action="naxsiwl.live.cgi" method="post">')
-print('<select name="domain">')
-print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
-for domain_in_subdomains in sub_domains:
-    print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
-print('</select>')
-print('<HR>')
-print('<input type="submit" value="GENERATE NAXSI WHITELIST">')
-print('</form>')
-
-print('<HR>')
-print('<form action="letsencrypt.live.cgi" method="post">')
-print('<select name="domain">')
-print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
-for domain_in_subdomains in sub_domains:
-    if not domain_in_subdomains.startswith('*.'):
-        print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
-print('</select>')
-print('<HR>')
-print('<input type="submit" value="LETSENCRYPT CERT INSTALL">')
-print('</form>')
+if os.path.isfile("/usr/nginx/scripts/nxapi-learn.sh"):
+  print('<HR>')
+  print('<form action="naxsiwl.live.cgi" method="post">')
+  print('<select name="domain">')
+  print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
+  for domain_in_subdomains in sub_domains:
+      print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
+  print('</select>')
+  print('<HR>')
+  print('<input type="submit" value="GENERATE NAXSI WHITELIST">')
+  print('</form>')
+if os.path.isfile("/opt/nDeploy/conf/letsencrypt.yaml"):
+  print('<HR>')
+  print('<form action="letsencrypt.live.cgi" method="post">')
+  print('<select name="domain">')
+  print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
+  for domain_in_subdomains in sub_domains:
+      if not domain_in_subdomains.startswith('*.'):
+          print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
+  print('</select>')
+  print('<HR>')
+  print('<input type="submit" value="LETSENCRYPT CERT INSTALL">')
+  print('</form>')
 
 print('</body>')
 print('</html>')
