@@ -42,11 +42,3 @@ job2:
   options: []
   recursive: false
   command: /opt/nDeploy/scripts/event_trigger.sh $filename 1 $tflags
-job3:
-  label: Watch /opt/nDeploy/user-data
-  watch: /opt/nDeploy/user-data
-  exclude: []
-  events: ['modify']
-  options: []
-  recursive: false
-  command: /opt/nDeploy/scripts/event_trigger.sh $filename 2 $tflags

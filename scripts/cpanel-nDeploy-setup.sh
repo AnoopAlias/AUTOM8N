@@ -50,13 +50,6 @@ sed -i "s/9999/80/" /etc/chkserv.d/httpd
 /usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings > /dev/null
 /usr/local/cpanel/libexec/tailwatchd --restart
 
-#Check is there to remove the disabling of CustomLog in earlier versions of nDeploy.
-#Following 4 lines will be removed in future
-sed -i "s/#CustomLog/CustomLog/" /var/cpanel/templates/apache2_2/vhost.local
-sed -i "s/#CustomLog/CustomLog/" /var/cpanel/templates/apache2_2/ssl_vhost.local
-sed -i "s/#CustomLog/CustomLog/" /var/cpanel/templates/apache2_4/vhost.local
-sed -i "s/#CustomLog/CustomLog/" /var/cpanel/templates/apache2_4/ssl_vhost.local
-
 echo -e '\e[93m Rebuilding Apache httpd backend configs.Apache will listen on default ports!  \e[0m'
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 if [ ${osversion} -le 6 ];then

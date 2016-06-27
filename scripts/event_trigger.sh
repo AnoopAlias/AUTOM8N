@@ -34,14 +34,6 @@ elif [[ $2 -eq 1 ]]; then
 			/opt/nDeploy/scripts/generate_config.py $CPANELUSER
 		fi
 	fi
-elif [[ $2 -eq 2 ]];then
-	CPANELUSER=$(stat -c "%U" $1)
-	if [[ $CPANELUSER == root ]];then
-		exit 0
-	else
-		echo "User::Data::Modify ${CPANELUSER}"
-		 /opt/nDeploy/scripts/apache_php_config_generator.py $CPANELUSER
-	fi
 else
 	exit 1
 fi

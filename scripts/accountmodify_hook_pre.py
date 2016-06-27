@@ -36,8 +36,6 @@ if cpanelnewuser != cpaneluser:
     except OSError:
         pass
     subprocess.call(installation_path+"/scripts/init_backends.py reload", shell=True)
-    if os.path.isfile(installation_path+"/user-data/"+cpaneluser):
-        os.remove(installation_path+"/user-data/"+cpaneluser)
     os.remove(installation_path+"/domain-data/"+main_domain)
     os.remove(nginx_dir+main_domain+".conf")
     os.remove(nginx_dir+main_domain+".include")

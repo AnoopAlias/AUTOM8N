@@ -24,5 +24,4 @@ cpaneluser = mydict["user"]
 maindomain = mydict["domain"]
 subprocess.call("/usr/sbin/nginx -s reload", shell=True)
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
-subprocess.call("/opt/nDeploy/scripts/apache_php_config_generator.py "+cpanelnewuser, shell=True)
 print(("1 nDeploy:postmodify:"+cpanelnewuser))

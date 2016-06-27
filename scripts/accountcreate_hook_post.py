@@ -24,9 +24,7 @@ if os.path.exists(cluster_config_file):
     subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' home='+cpaneluserhome+'"', shell=True)
     subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
-    subprocess.call(installation_path+"/scripts/apache_php_config_generator.py "+cpaneluser, shell=True)
     print("1 nDeploy:clusteraccountcreate:"+cpaneluser)
 else:
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
-    subprocess.call(installation_path+"/scripts/apache_php_config_generator.py "+cpaneluser, shell=True)
     print("1 nDeploy:accountcreate:"+cpaneluser)

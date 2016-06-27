@@ -28,8 +28,6 @@ if os.path.exists(cluster_config_file):
     subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m file -a "path='+installation_path+'/php-fpm.d/'+cpaneluser+'.conf state=absent"', shell=True)
     subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a "'+installation_path+'/scripts/init_backends.py reload"', shell=True)
     print("1 nDeploy:clusteraccountdelete:"+cpaneluser)
-if os.path.isfile(installation_path+"/user-data/"+cpaneluser):
-    os.remove(installation_path+"/user-data/"+cpaneluser)
 try:
     os.remove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
 except OSError:

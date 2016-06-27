@@ -27,8 +27,6 @@ yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
 cpaneluser_data_stream.close()
 main_domain = yaml_parsed_cpaneluser.get('main_domain')
 sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
-if os.path.isfile(installation_path+"/user-data/"+cpaneluser):
-    os.remove(installation_path+"/user-data/"+cpaneluser)
 os.remove(installation_path+"/domain-data/"+main_domain)
 os.remove(nginx_dir+main_domain+".conf")
 os.remove(nginx_dir+main_domain+".include")
