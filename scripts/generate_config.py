@@ -63,7 +63,6 @@ def letsencrypt_cert_setup(user_name, domain_name, document_root, *domain_aname_
         yaml_file.close()
 
 
-
 def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     """Add a vhost to tomcat and restart railo-tomcat app server"""
     tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
@@ -191,12 +190,20 @@ def nginx_server_reload():
     return
 
 
-def php_profile_set(user_name, php_path):
+def php_profile_set(user_name, php_path, document_root):
     """Function to setup php-fpm pool for user and reload the master php-fpm"""
     phppool_file = installation_path + "/php-fpm.d/" + user_name + ".conf"
     if not os.path.isfile(phppool_file):
-        sed_string = 'sed "s/CPANELUSER/' + user_name + '/g" ' + installation_path + '/conf/php-fpm.pool.tmpl > ' + phppool_file
-        subprocess.call(sed_string, shell=True)
+        fpmpool_template_file = open(installation_path+'/conf/php-fpm.pool.tmpl', 'r')
+        phpfpm_config_out = open(phppool_file, 'w')
+        for line in fpmpool_template_file:
+            line = line.replace('CPANELUSER', user_name)
+            line = line.replace('DOCUMENTROOT', document_root+"/")
+            line = line.replace('ERRORLOGFILE', document_root+"/logs/php_error_log")
+            line = line.replace('OPCACHEBLACKLIST', document_root+"/opcache-blacklist.txt")
+            phpfpm_config_out.write(line)
+        fpmpool_template_file.close()
+        phpfpm_config_out.close()
         subprocess.call(installation_path+"/scripts/init_backends.py reload", shell=True)
         return
     else:
@@ -269,7 +276,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 else:
                     pagespeed_include = pagespeed_include_location
                 path_to_socket = php_path + "/var/run/" + user_name + ".sock"
-                php_profile_set(user_name, php_path)
+                php_profile_set(user_name, php_path, document_root)
                 profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
                 profile_config_out = open(include_file, 'w')
                 for line in profile_template_file:
