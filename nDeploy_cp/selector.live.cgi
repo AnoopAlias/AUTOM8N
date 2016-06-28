@@ -87,7 +87,7 @@ if form.getvalue('domain'):
             else:
               print('<p style="background-color:LightGrey">NAXSI is in learning mode</p>')
             print('</div>')
-            print('.boxed {border: 1px solid black ;}')
+            print('.boxed {border: 1px solid black ;font-size: small;}')
             print('<HR>')
             print('<input type="radio" name="custom" value="1" checked/> EDIT')
             print('<input type="radio" name="custom" value="0" /> RESET')
@@ -112,7 +112,7 @@ if form.getvalue('domain'):
             else:
               print('<p style="background-color:LightGrey">NAXSI is in learning mode</p>')
             print('</div>')
-            print('.boxed {border: 1px solid black ;}')
+            print('.boxed {border: 1px solid black;font-size: small;}')
             print('<HR>')
             print('<p style="background-color:LightGrey">Select AUTO to select a configuration suitable for your application</p>')
             print('<p style="background-color:LightGrey">Select MANUAL to make small changes to an AUTO configuration</p>')
