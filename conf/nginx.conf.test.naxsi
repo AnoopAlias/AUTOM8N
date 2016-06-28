@@ -1,61 +1,42 @@
 worker_processes  1;
 pid /dev/null;
 error_log /dev/null;
-##
-#Load Dynamic Modules
-##
-include /etc/nginx/conf.d/dynamic_modules.conf;
 
+#Load Dynamic Modules
+include /etc/nginx/conf.d/dynamic_modules.conf;
 
 events {
     worker_connections  1024;
 }
 
 http {
-
 	server_names_hash_bucket_size 128;
-
 	include /etc/nginx/mime.types;
 	default_type application/octet-stream;
 
-    #NAXSI
-    ##
-    include /etc/nginx/naxsi_core.rules;
-    ##
+  # NAXSI is disabled
+  #include /etc/nginx/naxsi_core.rules;
 
-    ##
-    #Limit Request Zone conf
-    ##
-    include /etc/nginx/conf.d/limit_request.conf;
-    ##
+  #Limit Request Zone conf
+  include /etc/nginx/conf.d/limit_request.conf;
 
-    ##
-    #CloudFare RealIP conf
-    ##
-    include /etc/nginx/conf.d/cloudfare_realip.conf;
-    ##
+  #CloudFare RealIP conf
+  include /etc/nginx/conf.d/cloudfare_realip.conf;
 
-    #FastCGI and PROXY cache config
-    ##
-    include /etc/nginx/conf.d/nginx_cache.conf;
-    ##
+  #FastCGI and PROXY cache config
+  include /etc/nginx/conf.d/nginx_cache.conf;
 
-    ##
-    #Phusion Passenger Setting
-    ##
-    include /etc/nginx/conf.d/passenger.conf;
-    ##
+  #Phusion Passenger Setting
+  include /etc/nginx/conf.d/passenger.conf;
 
-	access_log /dev/null;
-	error_log /dev/null;
+  access_log /dev/null;
 
 	server {
     	listen       16000;
     	server_name  localhost;
-        location / {
-            include /etc/nginx/conf.d/naxsi_active.rules;
-            include NAXSI_WL_INCLUDE;
-            }
+      location / {
+        include /etc/nginx/conf.d/naxsi_active.rules;
+        include NAXSI_WL_INCLUDE;
+      }
 	}
-
 }

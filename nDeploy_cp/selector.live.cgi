@@ -68,9 +68,11 @@ if form.getvalue('domain'):
         if customconf == "1":
             print('<form action="manualconfig.live.cgi" method="post">')
             print(('<p style="background-color:LightGrey">There are some MANUAL changes in the AUTO template for:  '+mydomain+'</p>'))
-            print('<p style="background-color:LightGrey">Select EDIT to edit current config or RESET to reset the config to its AUTO configured state</p>')
+            print('<p style="background-color:LightGrey">Select EDIT to edit current config or RESET to reset the config to its last AUTO configured state</p>')
             print(('<p style="background-color:LightGrey">(!) All custom edits are saved in ' + myhome + '/' + mydomain + '_nginx.include.custom.conf'+'</p>'))
             print('<p style="background-color:LightGrey">Last used AUTO configured state:</p>')
+
+            yyyyyyyy
             print(('<p style="background-color:LightGrey">NGINX >> '+backend_category+'('+backend_version+') </p>'))
             print(('<p style="background-color:LightGrey">Config template : '+profile_description+'</p>'))
             if pagespeed_status == "1":
