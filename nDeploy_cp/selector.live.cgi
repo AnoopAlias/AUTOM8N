@@ -76,7 +76,7 @@ if form.getvalue('domain'):
             if backend_category == "PROXY":
               print(('<p style="background-color:LightGrey">NGINX is proxying to '+backend_version+'</p>'))
             else:
-              print(('<p style="background-color:LightGrey">NGINX is directly serving content using '+backend_category+'as application server(version: '+backend_version') </p>'))
+              print(('<p style="background-color:LightGrey">NGINX is directly serving content using '+backend_category+'as application server(version: '+backend_version+') </p>'))
             print(('<p style="background-color:LightGrey">Config template : '+profile_description+'</p>'))
             if pagespeed_status == "1":
               print('<p style="background-color:LightGrey">Google pagespeed is ACTIVE</p>')
