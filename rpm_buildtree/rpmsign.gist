@@ -1,0 +1,1 @@
+rpmsign -D '_gpg_name PiServe Technologies Pvt Ltd <info@piserve.com>' --addsign *.rpm
