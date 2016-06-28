@@ -72,8 +72,11 @@ if form.getvalue('domain'):
             print(('<p style="background-color:LightGrey">(!) All custom edits are saved in ' + myhome + '/' + mydomain + '_nginx.include.custom.conf'+'</p>'))
             print('<p style="background-color:LightGrey">Last used AUTO configured state:</p>')
 
-            yyyyyyyy
-            print(('<p style="background-color:LightGrey">NGINX >> '+backend_category+'('+backend_version+') </p>'))
+            print('<div class="boxed">')
+            if backend_category == "PROXY":
+              print(('<p style="background-color:LightGrey">NGINX is proxying to '+backend_version+'</p>'))
+            else:
+              print(('<p style="background-color:LightGrey">NGINX is directly serving content using '+backend_category+'as application server(version: '+backend_version') </p>'))
             print(('<p style="background-color:LightGrey">Config template : '+profile_description+'</p>'))
             if pagespeed_status == "1":
               print('<p style="background-color:LightGrey">Google pagespeed is ACTIVE</p>')
@@ -83,6 +86,8 @@ if form.getvalue('domain'):
               print('<p style="background-color:LightGrey">NAXSI is in enforce mode</p>')
             else:
               print('<p style="background-color:LightGrey">NAXSI is in learning mode</p>')
+            print('</div>')
+            print('.boxed {border: 1px solid black ;}')
             print('<HR>')
             print('<input type="radio" name="custom" value="1" checked/> EDIT')
             print('<input type="radio" name="custom" value="0" /> RESET')
@@ -92,7 +97,11 @@ if form.getvalue('domain'):
         elif customconf == "0":
             print('<form action="autoconfig.live.cgi" method="post">')
             print('<p style="background-color:LightGrey">Current AUTO configuration:</p>')
-            print(('<p style="background-color:LightGrey">NGINX >> '+backend_category+'('+backend_version+') </p>'))
+            print('<div class="boxed">')
+            if backend_category == "PROXY":
+              print(('<p style="background-color:LightGrey">NGINX is proxying to '+backend_version+'</p>'))
+            else:
+              print(('<p style="background-color:LightGrey">NGINX is directly serving content using '+backend_category+' as application server(version: '+backend_version+') </p>'))
             print(('<p style="background-color:LightGrey">Config template : '+profile_description+'</p>'))
             if pagespeed_status == "1":
               print('<p style="background-color:LightGrey">Google pagespeed is ACTIVE</p>')
@@ -102,6 +111,8 @@ if form.getvalue('domain'):
               print('<p style="background-color:LightGrey">NAXSI is in enforce mode</p>')
             else:
               print('<p style="background-color:LightGrey">NAXSI is in learning mode</p>')
+            print('</div>')
+            print('.boxed {border: 1px solid black ;}')
             print('<HR>')
             print('<p style="background-color:LightGrey">Select AUTO to select a configuration suitable for your application</p>')
             print('<p style="background-color:LightGrey">Select MANUAL to make small changes to an AUTO configuration</p>')
