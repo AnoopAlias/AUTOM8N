@@ -59,13 +59,11 @@ if form.getvalue('letsencrypt_status') and form.getvalue('domain'):
             yaml_file.write(yaml.dump(yaml_parsed_domaindata, default_flow_style=False))
         yaml_file.close()
         if letsencrypt_status == "1":
-            print('<p style="background-color:LightGrey">(!) LetsEncrypt cert is now enabled</p>')
-            print('<p style="background-color:LightGrey">(!) Certificates installed via WHM/cPanel will have precedence</p>')
-            print('<p style="background-color:LightGrey">(!) You must delete the SSL host in WHM to ensure LetsEncrypt cert usage</p>')
-            print('<HR>')
-            print('<p style="background-color:LightGrey">(!) Cert is only enabled in nginX</p>')
-            print('<p style="background-color:LightGrey">(!) So if you are PROXY-ing to cPanel httpd</p>')
-            print('<p style="background-color:LightGrey">(!) Ensure backend is "apache" and template is "Proxy to cPanel httpd"</p>')
+            print('<div class="boxedblue">')
+            print('LetsEncrypt cert setup is now initiated<br>')
+            print('The _SSL vhost is only enabled in nginX<br>')
+            print('PROXY to apache_SSL will not work . PROXY to apache instead<br>')
+            print('</div>')
         else:
             print('<p style="background-color:LightGrey">(!) LetsEncrypt cert is disabled</p>')
     else:
