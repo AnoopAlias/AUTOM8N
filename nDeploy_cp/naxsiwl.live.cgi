@@ -74,7 +74,6 @@ if form.getvalue('domain'):
     print('<div class="boxedyellow">')
     print('Whitelist generated . Download whitelist file  ' + outputfile + ' using FTP<br>')
     print('You must analyze the file and copy genuine whitelist rules starting with BasicRule <br>')
-    print('Update new rules along with existing ones below and click "UPDATE WHITELIST"<br>')
     print('</div>')
     print('<HR>')
     try:
