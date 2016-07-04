@@ -8,6 +8,7 @@ rm -f nDeploy-unison-pkg/usr/bin/unison*
 rm -f nDeploy-unison-pkg/*.rpm
 wget http://www.seas.upenn.edu/~bcpierce/unison//download/releases/stable/unison-${UNISON_VERSION}.tar.gz
 tar -xvzf unison-${UNISON_VERSION}.tar.gz
+mv src unison-${UNISON_VERSION}
 cd unison-${UNISON_VERSION}
 make UISTYLE=text NATIVE=true STATIC=true
 mkdir -p ../nDeploy-unison-pkg/usr/bin
