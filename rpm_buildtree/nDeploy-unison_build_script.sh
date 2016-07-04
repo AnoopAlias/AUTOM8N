@@ -1,6 +1,6 @@
 #!/bin/bash
-UNISON_VERSION="2.48.3"
-UNISON_RPM_ITER="2.el6"
+UNISON_VERSION="2.48.4"
+UNISON_RPM_ITER="1.el6"
 
 yum install ocaml ocaml-ssl-devel
 rm -rf unison-*
