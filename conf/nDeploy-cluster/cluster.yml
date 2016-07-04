@@ -10,14 +10,12 @@
     - install_master
     - csync2_master
     - unison_master
-    - lsyncd_master
 
 - name: Setup nDeploy cluster on slaves
   hosts: ndeployslaves
   roles:
     - install_slave
     - csync2_slave
-    - lsyncd_slave
     - services_slave
     - backupmx_slave
 

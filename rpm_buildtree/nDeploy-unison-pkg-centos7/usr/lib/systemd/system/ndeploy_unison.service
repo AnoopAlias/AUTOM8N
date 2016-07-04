@@ -1,0 +1,16 @@
+[Unit]
+Description=nDeploy Unison
+After=network.target remote-fs.target nss-lookup.target sshd.service
+
+[Service]
+Type=forking
+ExecStart=/opt/nDeploy/scripts/init_unison.py start
+ExecStop=/opt/nDeploy/scripts/init_unison.py stop
+User=root
+Group=root
+TimeoutSec=300
+StandardOutput=tty
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

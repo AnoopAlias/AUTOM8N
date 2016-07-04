@@ -17,5 +17,5 @@
 - name: Create user and homedir across the slaves
   shell: /opt/nDeploy/scripts/cluster_home_ensure_all.py
 
-- name: Start lsyncd on master
-  service: name=lsyncd enabled=yes state=started
+- name: Start unison on master
+  service: name=ndeploy_unison enabled=yes state=started

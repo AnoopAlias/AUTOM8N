@@ -3,7 +3,6 @@ UNISON_VERSION="2.48.3"
 UNISON_RPM_ITER="2.el7"
 
 yum install ocaml ocaml-ssl-devel
-mkdir nDeploy-unison-pkg-centos7
 rm -rf unison-*
 rm -f nDeploy-unison-pkg-centos7/usr/bin/unison*
 rm -f nDeploy-unison-pkg-centos7/*.rpm

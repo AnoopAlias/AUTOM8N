@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# chkconfig: 35 90 12
+# description: nDeploy Unison init and stop script
+#
+# Get function from functions library
+. /etc/init.d/functions
+# Start
+start() {
+	/opt/nDeploy/scripts/init_unison.py start
+}
+# stop
+stop() {
+	/opt/nDeploy/scripts/init_unison.py stop
+}
+### main logic ###
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  restart)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+exit 0
