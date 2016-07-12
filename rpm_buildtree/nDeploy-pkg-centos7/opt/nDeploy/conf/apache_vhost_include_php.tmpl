@@ -1,8 +1,0 @@
-#nDeploy#
-    <IfModule mod_proxy_fcgi.c>
-        ProxyTimeout 1800
-        <FilesMatch \.php$>
-            SetHandler "proxy:unix:/opt/fpmsockets/[% vhost.user %].sock|fcgi://localhost"
-        </FilesMatch>
-    </IfModule>
-#nDeploy#
