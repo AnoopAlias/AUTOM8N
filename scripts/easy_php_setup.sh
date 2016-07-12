@@ -3,10 +3,9 @@
 
 #Function defs
 setup_ea4_php_cloudlinux(){
-		yum -y --enablerepo=cloudlinux-updates-testing install ea-php54-php-fpm ea-php55-php-fpm ea-php56-php-fpm ea-php70-php-fpm
-
 		for ver in 54 55 56 70
 		do
+			yum -y --enablerepo=cloudlinux-updates-testing install ea-php$ver ea-php$ver-php-fpm ea-php$ver-php-opcache ea-php$ver-php-mysqlnd ea-php$ver-php-gd ea-php$ver-php-imap ea-php$ver-php-intl ea-php$ver-php-ioncube-loader ea-php$ver-php-xmlrpc ea-php$ver-php-xml ea-php$ver-php-mcrypt ea-php$ver-php-mbstring
 			if [ ! -d /opt/cpanel/php$ver/root/var ];then
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
@@ -19,10 +18,9 @@ setup_ea4_php_cloudlinux(){
 	}
 
 setup_ea4_php(){
-		yum -y install ea-php54-php-fpm ea-php55-php-fpm ea-php56-php-fpm ea-php70-php-fpm
-
 		for ver in 54 55 56 70
 		do
+			yum -y install ea-php$ver ea-php$ver-php-fpm ea-php$ver-php-opcache ea-php$ver-php-mysqlnd ea-php$ver-php-gd ea-php$ver-php-imap ea-php$ver-php-intl ea-php$ver-php-ioncube-loader ea-php$ver-php-xmlrpc ea-php$ver-php-xml ea-php$ver-php-mcrypt ea-php$ver-php-mbstring
 			if [ ! -d /opt/cpanel/php$ver/root/var ];then
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
@@ -42,7 +40,7 @@ setup_remi_php(){
 			yum -y install http://rpms.remirepo.net/enterprise/remi-release-6.rpm
 			for ver in 54 55 56 70
 			do
-				yum -y --disableexcludes=main --enablerepo=remi install php$ver php$ver-php-fpm php$ver-php-opcache php$ver-php-mysqlnd php$ver-php-gd php$ver-php-imap php$ver-php-intl php$ver-php-ioncube-loader php$ver-php-xmlrpc php$ver-php-xml php$ver-php-mcrypt php$ver-php-mbstring php$ver-php-ioncube-loader php$ver-php-intl php$ver-php-imap php$ver-php-gd
+				yum -y --disableexcludes=main --enablerepo=remi install php$ver php$ver-php-fpm php$ver-php-opcache php$ver-php-mysqlnd php$ver-php-gd php$ver-php-imap php$ver-php-intl php$ver-php-ioncube-loader php$ver-php-xmlrpc php$ver-php-xml php$ver-php-mcrypt php$ver-php-mbstring
 				ln -s /opt/remi/php$ver/root/usr/sbin /opt/remi/php$ver/root/
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
