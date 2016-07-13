@@ -31,6 +31,7 @@ touch /opt/nDeploy/conf/profiles.yaml
 /opt/nDeploy/scripts/update_profiles.py PHP 5020 "OwnCloud"
 /opt/nDeploy/scripts/update_profiles.py PHP 5021 "WHMCS"
 /opt/nDeploy/scripts/update_profiles.py PHP 5022 "Laravel"
+/opt/nDeploy/scripts/update_profiles.py PHP 5023 "Snipe-IT"
 /opt/nDeploy/scripts/update_profiles.py PHP 5501 "High Performance Wordpress+NAXSI"
 /opt/nDeploy/scripts/update_profiles.py PHP 5002 "Joomla"
 /opt/nDeploy/scripts/update_profiles.py PHP 5003 "Magento"
