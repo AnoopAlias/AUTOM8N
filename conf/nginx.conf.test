@@ -20,7 +20,7 @@ http {
 
     #NAXSI
     ##
-    include /etc/nginx/naxsi_core.rules;
+    #include /etc/nginx/naxsi_core.rules;
     ##
 
     ##
