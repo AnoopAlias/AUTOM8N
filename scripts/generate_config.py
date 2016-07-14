@@ -190,7 +190,7 @@ def nginx_server_reload():
     return
 
 
-def php_profile_set(user_name, php_path, document_root):
+def php_profile_set(user_name, php_path, domain_home):
     """Function to setup php-fpm pool for user and reload the master php-fpm"""
     phppool_file = installation_path + "/php-fpm.d/" + user_name + ".conf"
     if not os.path.isfile(phppool_file):
@@ -198,9 +198,9 @@ def php_profile_set(user_name, php_path, document_root):
         phpfpm_config_out = open(phppool_file, 'w')
         for line in fpmpool_template_file:
             line = line.replace('CPANELUSER', user_name)
-            line = line.replace('DOCUMENTROOT', document_root+"/")
-            line = line.replace('ERRORLOGFILE', document_root+"/logs/php_error_log")
-            line = line.replace('OPCACHEBLACKLIST', document_root+"/opcache-blacklist.txt")
+            line = line.replace('DOCUMENTROOT', domain_home+"/")
+            line = line.replace('ERRORLOGFILE', domain_home+"/logs/php_error_log")
+            line = line.replace('OPCACHEBLACKLIST', domain_home+"/opcache-blacklist.txt")
             phpfpm_config_out.write(line)
         fpmpool_template_file.close()
         phpfpm_config_out.close()
@@ -276,7 +276,7 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                 else:
                     pagespeed_include = pagespeed_include_location
                 path_to_socket = php_path + "/var/run/" + user_name + ".sock"
-                php_profile_set(user_name, php_path, document_root)
+                php_profile_set(user_name, php_path, domain_home)
                 profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
                 profile_config_out = open(include_file, 'w')
                 for line in profile_template_file:
