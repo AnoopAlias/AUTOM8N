@@ -25,6 +25,7 @@ location / {
     proxy_cache            PROXYCACHE;
     proxy_cache_valid      200  1d;
     proxy_cache_use_stale  error timeout invalid_header updating http_500 http_502 http_503 http_504;
+    proxy_set_header   Proxy "";
   }
   location /NaxsiRequestDenied {
          return 418;
