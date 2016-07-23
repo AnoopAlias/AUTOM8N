@@ -13,7 +13,6 @@
 - name: Install nDeploy cluster slave rpm packages
   yum: name={{ item }} enablerepo=ndeploy,epel state=present
   with_items:
-   - lsyncd
    - csync2-nDeploy
    - unison-nDeploy
    - nginx-nDeploy

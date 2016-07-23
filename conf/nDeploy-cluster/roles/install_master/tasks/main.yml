@@ -9,7 +9,6 @@
 - name: Install nDeploy rpm's on master
   yum: name={{ item }} enablerepo=ndeploy,epel state=present
   with_items:
-   - lsyncd
    - csync2-nDeploy
    - unison-nDeploy
 
