@@ -63,29 +63,29 @@
 </div>
 <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>Requirement : cPanel 11.48+ server with Centos6/Centos7/CloudLinux6/CloudLinux7 64 bit OS installed
-nDeploy 3.x is available via yum (Supports PHP-FPM from EasyApache4 or REMI repo)</p>
-<p>nDeploy 2.0.65 is available as an RPM package for manual install .
-CentOS6/CloudLinux6 - <a class="reference external" href="https://rpm.piserve.com/CentOS/6/x86_64/">https://rpm.piserve.com/CentOS/6/x86_64/</a>
-CentOS7/CloudLinux7 - <a class="reference external" href="https://rpm.piserve.com/CentOS/7/x86_64/">https://rpm.piserve.com/CentOS/7/x86_64/</a></p>
+<p>Requirement : cPanel 11.48+ server with Centos6/Centos7/CloudLinux6/CloudLinux7 64 bit OS installed</p>
+<p>nDeploy 3.x is available via yum (Supports PHP-FPM from EasyApache4 or REMI repo)</p>
+<p>nDeploy 2.0.65 is available as an RPM package for manual install</p>
+<p>CentOS6/CloudLinux6 - <a class="reference external" href="https://rpm.piserve.com/CentOS/6/x86_64/">https://rpm.piserve.com/CentOS/6/x86_64/</a></p>
+<p>CentOS7/CloudLinux7 - <a class="reference external" href="https://rpm.piserve.com/CentOS/7/x86_64/">https://rpm.piserve.com/CentOS/7/x86_64/</a></p>
 <ol class="arabic simple">
-<li>Install EPEL repo:</li>
+<li>Install EPEL repo</li>
 </ol>
 <blockquote>
 <div>yum -y install epel-release</div></blockquote>
 <ol class="arabic simple" start="2">
-<li>Install nDeploy yum repo:</li>
+<li>Install nDeploy yum repo</li>
 </ol>
 <blockquote>
 <div>rpm &#8211;import <a class="reference external" href="https://rpm.piserve.com/RPM-GPG-KEY-ndeploy">https://rpm.piserve.com/RPM-GPG-KEY-ndeploy</a>
 yum -y install <a class="reference external" href="https://rpm.piserve.com/nDeploy-release-centos-1.0-2.noarch.rpm">https://rpm.piserve.com/nDeploy-release-centos-1.0-2.noarch.rpm</a></div></blockquote>
 <ol class="arabic simple" start="3">
-<li>Install nDeploy plugin and nginx .Be patient as this may take sometime to complete:</li>
+<li>Install nDeploy plugin and nginx .Be patient as this may take sometime to complete</li>
 </ol>
 <blockquote>
 <div>yum &#8211;enablerepo=ndeploy install nginx-nDeploy nDeploy</div></blockquote>
 <ol class="arabic simple" start="4">
-<li>Install or enable Application servers .You can skip any step below as per your app server requirement:</li>
+<li>Install or enable Application servers .You can skip any step below as per your app server requirement</li>
 </ol>
 <blockquote>
 <div><p>#Install PHP-FPM Application server for PHP
@@ -94,24 +94,19 @@ yum -y install <a class="reference external" href="https://rpm.piserve.com/nDepl
 /usr/nginx/scripts/nginx-passenger-setup.sh</p>
 </div></blockquote>
 <ol class="arabic simple" start="5">
-<li>Enable the plugin. This will make nginX your frontend webServer:</li>
+<li>Enable the plugin. This will make nginX your frontend webServer</li>
 </ol>
 <blockquote>
 <div>/opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable</div></blockquote>
 <ol class="arabic simple" start="6">
-<li>Step4(Optional) : Setup NAXSI learning .This is required to generate NAXSI whitelist rules:</li>
+<li>Step4(Optional) : Setup NAXSI learning .This is required to generate NAXSI whitelist rules</li>
 </ol>
 <blockquote>
 <div>#Note that this step will install JAVA and ElasticSearch daemon for NXAPI
 /usr/nginx/scripts/nxapi-setup.sh</div></blockquote>
 <div class="toctree-wrapper compound">
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
 </div>
@@ -127,7 +122,6 @@ yum -y install <a class="reference external" href="https://rpm.piserve.com/nDepl
 <li><a class="reference internal" href="#">Welcome to nDeploy&#8217;s documentation!</a></li>
 <li><a class="reference internal" href="#features">Features</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>
