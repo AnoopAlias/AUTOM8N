@@ -68,42 +68,36 @@
 <p>nDeploy 2.0.65 is available as an RPM package for manual install</p>
 <p>CentOS6/CloudLinux6 - <a class="reference external" href="https://rpm.piserve.com/CentOS/6/x86_64/">https://rpm.piserve.com/CentOS/6/x86_64/</a></p>
 <p>CentOS7/CloudLinux7 - <a class="reference external" href="https://rpm.piserve.com/CentOS/7/x86_64/">https://rpm.piserve.com/CentOS/7/x86_64/</a></p>
-<ol class="arabic simple">
-<li>Install EPEL repo</li>
-</ol>
-<blockquote>
-<div>yum -y install epel-release</div></blockquote>
-<ol class="arabic simple" start="2">
-<li>Install nDeploy yum repo</li>
-</ol>
-<blockquote>
-<div>rpm &#8211;import <a class="reference external" href="https://rpm.piserve.com/RPM-GPG-KEY-ndeploy">https://rpm.piserve.com/RPM-GPG-KEY-ndeploy</a>
-yum -y install <a class="reference external" href="https://rpm.piserve.com/nDeploy-release-centos-1.0-2.noarch.rpm">https://rpm.piserve.com/nDeploy-release-centos-1.0-2.noarch.rpm</a></div></blockquote>
-<ol class="arabic simple" start="3">
-<li>Install nDeploy plugin and nginx .Be patient as this may take sometime to complete</li>
-</ol>
-<blockquote>
-<div>yum &#8211;enablerepo=ndeploy install nginx-nDeploy nDeploy</div></blockquote>
-<ol class="arabic simple" start="4">
-<li>Install or enable Application servers .You can skip any step below as per your app server requirement</li>
-</ol>
-<blockquote>
-<div><p>#Install PHP-FPM Application server for PHP
-/opt/nDeploy/scripts/easy_php_setup.sh</p>
-<p>#Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJs
-/usr/nginx/scripts/nginx-passenger-setup.sh</p>
-</div></blockquote>
-<ol class="arabic simple" start="5">
-<li>Enable the plugin. This will make nginX your frontend webServer</li>
-</ol>
-<blockquote>
-<div>/opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable</div></blockquote>
-<ol class="arabic simple" start="6">
-<li>Step4(Optional) : Setup NAXSI learning .This is required to generate NAXSI whitelist rules</li>
-</ol>
-<blockquote>
-<div>#Note that this step will install JAVA and ElasticSearch daemon for NXAPI
-/usr/nginx/scripts/nxapi-setup.sh</div></blockquote>
+<p>1. Install EPEL repo</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
+</pre></div>
+</div>
+<p>2. Install nDeploy yum repo</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rpm</span> <span class="o">--</span><span class="kn">import</span> <span class="nn">https</span><span class="p">:</span><span class="o">//</span><span class="n">rpm</span><span class="o">.</span><span class="n">piserve</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">RPM</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">-</span><span class="n">ndeploy</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">rpm</span><span class="o">.</span><span class="n">piserve</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">2.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+</pre></div>
+</div>
+<p>3. Install nDeploy plugin and nginx .Be patient as this may take sometime to complete</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span>
+</pre></div>
+</div>
+<p>4. Install or enable Application servers .You can skip any step below as per your app server requirement</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Install PHP-FPM Application server for PHP</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="c1">#Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJs</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">passenger</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>5. Enable the plugin. This will make nginX your frontend webServer</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
+</pre></div>
+</div>
+<p>6. Step4(Optional) : Setup NAXSI learning .This is required to generate NAXSI whitelist rules</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Note that this step will install JAVA and ElasticSearch daemon for NXAPI</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">nxapi</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
 <div class="toctree-wrapper compound">
 </div>
 <ul class="simple">
