@@ -3,6 +3,7 @@ LetsEncrypt with nDeploy
 
 Note that this feature will be depricated in future versions as and when  LetsEncrypt is available in cPanel AUTOSSL
 
+
 1. You need to install the certbot official client from https://certbot.eff.org/
 
 2. create the file /opt/nDeploy/conf/letsencrypt.yaml which should contain
