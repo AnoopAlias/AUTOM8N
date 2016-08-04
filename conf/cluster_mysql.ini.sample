@@ -4,7 +4,8 @@
 #You can add these settings in the default my.cnf
 
 # nginX will listen on /var/lib/mysql/mysql.sock so we change the socket for MySQL
-# to /var/lib/mysql/mysql_original.sock below .
+# to /var/lib/mysql/mysql_original.sock below
+
 socket = /var/lib/mysql/mysql_original.sock
 
 # We change the port to 13306 so that nginX can listen on 3306
@@ -23,11 +24,15 @@ max_binlog_size=52428800
 expire_logs_days=3
 binlog-format=row
 
+
 log-slave-updates
 max-relay-log-size = 52428800
 relay-log-recovery = 1
 relay_log_purge = 1
 relay_log_space_limit = 5368709120
+
+binlog-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
+replicate-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
 
 [mysql]
 socket = /var/lib/mysql/mysql_original.sock

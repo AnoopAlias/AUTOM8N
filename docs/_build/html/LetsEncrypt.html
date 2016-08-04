@@ -1,0 +1,166 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>LetsEncrypt with nDeploy &mdash; nDeploy 3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="nDeploy 3.0 documentation" href="index.html" />
+    <link rel="next" title="&lt;no title&gt;" href="http_to_https_redirect.html" />
+    <link rel="prev" title="mod_remoteip" href="mod_remoteip.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="http_to_https_redirect.html" title="&lt;no title&gt;"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mod_remoteip.html" title="mod_remoteip"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">nDeploy 3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mod_remoteip.html"
+                        title="previous chapter">mod_remoteip</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="http_to_https_redirect.html"
+                        title="next chapter">&lt;no title&gt;</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/LetsEncrypt.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="letsencrypt-with-ndeploy">
+<h1>LetsEncrypt with nDeploy<a class="headerlink" href="#letsencrypt-with-ndeploy" title="Permalink to this headline">¶</a></h1>
+<p>Note that this feature will be depricated in future versions as and when  LetsEncrypt is available in cPanel AUTOSSL</p>
+<ol class="arabic simple">
+<li>You need to install the certbot official client from <a class="reference external" href="https://certbot.eff.org/">https://certbot.eff.org/</a></li>
+<li>create the file /opt/nDeploy/conf/letsencrypt.yaml which should contain</li>
+</ol>
+<dl class="docutils">
+<dt>::</dt>
+<dd>letsencrypt: &#8220;path to letsencrypt or certbot binary in quotes&#8221;
+email: &#8220;admin email address in quotes&#8221;</dd>
+</dl>
+<p>For example</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd><a class="reference external" href="mailto:root&#37;&#52;&#48;cpanel">root<span>&#64;</span>cpanel</a> [~]# cat /opt/nDeploy/conf/letsencrypt.yaml
+letsencrypt: &#8220;/usr/bin/certbot&#8221;
+email: &#8220;<a class="reference external" href="mailto:cert_renewels&#37;&#52;&#48;sysally&#46;net">cert_renewels<span>&#64;</span>sysally<span>&#46;</span>net</a>&#8220;</dd>
+</dl>
+<p>3. Once step 2 is complete. the nDeploy GUI will show up LetsEncrypt cert setup
+Note that the GUI is running the following command</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd>/usr/bin/certbot &#8211;email  <a class="reference external" href="mailto:cert_renewels&#37;&#52;&#48;sysally&#46;net">cert_renewels<span>&#64;</span>sysally<span>&#46;</span>net</a> &#8211;text &#8211;renew-by-default &#8211;agree-tos &#8211;server <a class="reference external" href="https://acme-v01.api.letsencrypt.org/directory">https://acme-v01.api.letsencrypt.org/directory</a> certonly -a webroot &#8211;webroot-path /home/user/public_html/ -d cpanel_main_domain -d cpanel_alias1 -d cpanel_alias2</dd>
+</dl>
+<p>So the command will fail unless the main_domain along with all aliases resolve to the server</p>
+<ol class="arabic simple" start="4">
+<li>Check the auto-renew setting</li>
+</ol>
+<dl class="docutils">
+<dt>::</dt>
+<dd>/usr/bin/certbot renew</dd>
+</dl>
+<p>Once you find it error free ;add the command to roots cron and run it once daily</p>
+<p>5. If you are proxying to cPanel http server note that the SSL vhost is only present in nginX and not apache in nDeploys LetsEncrypt implementation.
+So You will need to use PROXY &gt;&gt; apache &gt;&gt; Proxy to cPanel httpd rather than PROXY &gt;&gt; apache_SSL &gt;&gt; Proxy to cPanel httpd(SSL)</p>
+<ol class="arabic simple" start="6">
+<li>For generating the Cert</li>
+</ol>
+<dl class="docutils">
+<dt>::</dt>
+<dd><p class="first">Login to cPanel and select the nginX plugin</p>
+<p>Select domain.com &gt;&gt; CONFIGURE &gt;&gt; AUTO &gt;&gt; SUBMIT</p>
+<p>BACKEND : PROXY
+Backend Type : You can select anything here
+Select a configuration template: LetsEncrypt</p>
+<p>and SAVE</p>
+<p>This will make your site config suitable for ACME challenge response (it will make the <a class="reference external" href="http://domain.com">http://domain.com</a> inaccessible for security reasons)</p>
+<p>Once this is done reload the config generator by clicking on the nginX icon</p>
+<p>domain.com &gt;&gt; LETSENCRYPT CERT INSTALL &gt;&gt; ENABLE &gt;&gt; SUBMIT</p>
+<p class="last">The cert will now get setup . You can revert the config template for non-SSL domain to the original setting now . You will also find that that there is a domain.com_SSL vhost to configure now .</p>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="http_to_https_redirect.html" title="&lt;no title&gt;"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mod_remoteip.html" title="mod_remoteip"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">nDeploy 3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Anoop P Alias.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

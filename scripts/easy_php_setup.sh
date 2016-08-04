@@ -74,7 +74,8 @@ auto_setup(){
 			setup_ea4_php_cloudlinux
 		else
 			echo "EasyApache4 is not enabled.Please enable EasyApache4 and rerun this script"
-			echo "https://documentation.cpanel.net/display/EA4/Current+Status+of+EasyApache+4#CurrentStatusofEasyApache4-CloudLinux"
+			echo "You need ea-php* from the cloudlinux-updates-testing repo"
+			echo "https://cloudlinux.com/cloudlinux-os-blog/entry/beta-easyapache-4-released-for-cloudlinux"
 		fi
 	elif [ -f /etc/cpanel/ea4/is_ea4 ];then
 		setup_ea4_php
