@@ -18,15 +18,15 @@ Features
 * NAXSI Web Application Firewall
 * IPv6 support
 * SSL support
-* HTTP2 support
-* Fast installation,upgrade and uninstall via yum
+* HTTP/2 support
+* Fast installation, upgrade and easy uninstall available via yum
 * High Available WebStack
 * High Available SMTP service
-* High Available DataBase (MariaDB/MySQL)
+* High Available Database (MariaDB/MySQL)
 
 Installation
 ============
-Requirement : cPanel 11.48+ server with Centos6/Centos7/CloudLinux6/CloudLinux7 64 bit OS installed
+Requirement : cPanel 11.48+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed
 
 nDeploy 3.x is available via yum (Supports PHP-FPM from EasyApache4 or REMI repo)
 
@@ -61,7 +61,7 @@ CentOS7/CloudLinux7 - https://rpm.piserve.com/CentOS/7/x86_64/
   #Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJs
   /usr/nginx/scripts/nginx-passenger-setup.sh
 
-5. Enable the plugin. This will make nginX your frontend webServer
+5. Enable the plugin. This will make nginX your frontend webserver
 ::
 
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
@@ -82,7 +82,6 @@ CentOS7/CloudLinux7 - https://rpm.piserve.com/CentOS/7/x86_64/
    mod_remoteip
    LetsEncrypt
    http_to_https_redirect
-
    HHVM
    PHP
    PYTHON_WSGI
@@ -90,8 +89,6 @@ CentOS7/CloudLinux7 - https://rpm.piserve.com/CentOS/7/x86_64/
    NodeJS
    Meteor
    ColdFusion_Java
-
-
    nDeploy_Administration
    Monitoring
    Logs
