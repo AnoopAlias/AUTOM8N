@@ -3,9 +3,9 @@ LetsEncrypt with nDeploy
 
 Note that this feature will be depricated in future versions
 
-  1. You need to install the certbot official client from https://certbot.eff.org/
+1. You need to install the certbot official client from https://certbot.eff.org/
 
-  2. create the file /opt/nDeploy/conf/letsencrypt.yaml which should contain
+2. create the file /opt/nDeploy/conf/letsencrypt.yaml which should contain
 ::
 
   letsencrypt: "path to letsencrypt or certbot binary in quotes"
@@ -18,7 +18,7 @@ For example
   letsencrypt: "/usr/bin/certbot"
   email: "cert_renewels@sysally.net"
 
-  3. Once step 2 is complete. the nDeploy GUI will show up LetsEncrypt cert setup
+3. Once step 2 is complete. the nDeploy GUI will show up LetsEncrypt cert setup
 Note that the GUI is running the following command
 ::
 
@@ -26,7 +26,7 @@ Note that the GUI is running the following command
 
 So the command will fail unless the main_domain along with all aliases resolve to the server
 
-  4. Check the auto-renew setting
+4. Check the auto-renew setting
 ::
 
   /usr/bin/certbot renew
@@ -34,10 +34,10 @@ So the command will fail unless the main_domain along with all aliases resolve t
 
 Once you find it error free ;add the command to roots cron and run it once daily
 
-  5. If you are proxying to cPanel http server note that the SSL vhost is only present in nginX and not apache in nDeploys LetsEncrypt implementation.
+5. If you are proxying to cPanel http server note that the SSL vhost is only present in nginX and not apache in nDeploys LetsEncrypt implementation.
 So You will need to use PROXY >> apache >> Proxy to cPanel httpd rather than PROXY >> apache_SSL >> Proxy to cPanel httpd(SSL)
 
-  6. For generating the Cert
+6. For generating the Cert
 ::
 
   Login to cPanel and select the nginX plugin
