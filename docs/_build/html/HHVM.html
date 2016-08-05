@@ -86,6 +86,7 @@
 <li class="toctree-l1"><a class="reference internal" href="LetsEncrypt.html">LetsEncrypt with nDeploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http_to_https_redirect.html">http to https redirection</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up HHVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#hhvm-install-and-setup-on-centos7">HHVM install and setup on CentOS7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
@@ -142,6 +143,36 @@
             
   <div class="section" id="setting-up-hhvm">
 <h1>Setting up HHVM<a class="headerlink" href="#setting-up-hhvm" title="Permalink to this headline">¶</a></h1>
+<p>HHVM manages new connections in threads of single process unlike PHP-FPM that handles new connections
+by forking a new process . So unlike PHP-FPM there is no process pool in HHVM</p>
+<p>nDeploy only supports HHVM running as a single user (nobody) using a single process .The recommended way
+of running HHVM for multiple users is to create a process for each user which then require a third party process manager
+to manage the process creation and shutdown</p>
+</div>
+<div class="section" id="hhvm-install-and-setup-on-centos7">
+<h1>HHVM install and setup on CentOS7<a class="headerlink" href="#hhvm-install-and-setup-on-centos7" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>Install HHVM as per <a class="reference external" href="https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.x">https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.x</a></li>
+<li>Setup HHVM as an nDeploy backend app server</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">hhvm_nobody_server</span><span class="o">.</span><span class="n">ini</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hhvm</span><span class="o">/</span><span class="n">server</span><span class="o">.</span><span class="n">ini</span>
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">hhvm</span><span class="o">/</span>
+<span class="n">chown</span> <span class="n">nobody</span><span class="p">:</span><span class="n">nobody</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">hhvm</span><span class="o">/</span>
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">hhvm</span><span class="o">/</span>
+<span class="n">chown</span> <span class="n">nobody</span><span class="p">:</span><span class="n">nobody</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">hhvm</span><span class="o">/</span>
+
+<span class="n">edit</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">hhvm</span><span class="o">.</span><span class="n">service</span> <span class="ow">and</span> <span class="n">change</span> <span class="o">--</span><span class="n">user</span> <span class="n">hhvm</span> <span class="n">to</span> <span class="o">--</span><span class="n">user</span> <span class="n">nobody</span>
+
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">hhvm</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">hhvm</span>
+
+<span class="n">You</span> <span class="n">can</span> <span class="n">check</span> <span class="n">hhvm</span> <span class="n">status</span> <span class="n">using</span>
+<span class="n">systemctl</span> <span class="n">status</span> <span class="n">hhvm</span>
+
+<span class="n">Register</span> <span class="n">the</span> <span class="n">HHVM</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">nDeploy</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="n">HHVM_NOBODY</span> <span class="n">hhvm</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">hhvm</span><span class="o">/</span><span class="n">hhvm</span><span class="o">.</span><span class="n">sock</span>
+</pre></div>
+</div>
 </div>
 
 

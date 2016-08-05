@@ -86,6 +86,7 @@
 <li class="toctree-l1"><a class="reference internal" href="LetsEncrypt.html">LetsEncrypt with nDeploy</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">http to https redirection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HHVM.html#hhvm-install-and-setup-on-centos7">HHVM install and setup on CentOS7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
@@ -142,6 +143,17 @@
             
   <div class="section" id="http-to-https-redirection">
 <h1>http to https redirection<a class="headerlink" href="#http-to-https-redirection" title="Permalink to this headline">¶</a></h1>
+<p>for domains having _SSL vhost one can easily redirect the non-SSL domain to SSL</p>
+<p>1. Configure the non SSL domain with AUTO</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Backend</span> <span class="p">:</span> <span class="n">PROXY</span>
+<span class="n">backend</span> <span class="n">version</span><span class="p">:</span> <span class="n">redirect</span>
+<span class="n">Select</span> <span class="n">a</span> <span class="n">configuration</span> <span class="n">template</span><span class="p">:</span> <span class="n">nginX</span> <span class="n">redirect</span> <span class="n">http</span> <span class="n">to</span> <span class="n">https</span>
+<span class="n">Enable</span><span class="o">/</span><span class="n">Disable</span> <span class="n">Google</span> <span class="n">PageSpeed</span> <span class="n">Optimizations</span><span class="p">:</span> <span class="n">DISABLE</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Configure the SSL domain normally with whatever back-end you need.</li>
+</ol>
 </div>
 
 
