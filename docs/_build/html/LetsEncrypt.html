@@ -131,10 +131,12 @@
   <div class="section" id="letsencrypt-with-ndeploy">
 <h1>LetsEncrypt with nDeploy<a class="headerlink" href="#letsencrypt-with-ndeploy" title="Permalink to this headline">¶</a></h1>
 <p>Note that this feature will be depricated in future versions</p>
-<ol class="arabic simple">
+<blockquote>
+<div><ol class="arabic simple">
 <li>You need to install the certbot official client from <a class="reference external" href="https://certbot.eff.org/">https://certbot.eff.org/</a></li>
+<li>create the file /opt/nDeploy/conf/letsencrypt.yaml which should contain</li>
 </ol>
-<p>2. create the file /opt/nDeploy/conf/letsencrypt.yaml which should contain</p>
+</div></blockquote>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">letsencrypt</span><span class="p">:</span> <span class="s2">&quot;path to letsencrypt or certbot binary in quotes&quot;</span>
 <span class="n">email</span><span class="p">:</span> <span class="s2">&quot;admin email address in quotes&quot;</span>
 </pre></div>
@@ -143,22 +145,35 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># cat /opt/nDeploy/conf/letsencrypt.yaml</span>
 <span class="n">letsencrypt</span><span class="p">:</span> <span class="s2">&quot;/usr/bin/certbot&quot;</span>
 <span class="n">email</span><span class="p">:</span> <span class="s2">&quot;cert_renewels@sysally.net&quot;</span>
+
+<span class="mf">3.</span> <span class="n">Once</span> <span class="n">step</span> <span class="mi">2</span> <span class="ow">is</span> <span class="n">complete</span><span class="o">.</span> <span class="n">the</span> <span class="n">nDeploy</span> <span class="n">GUI</span> <span class="n">will</span> <span class="n">show</span> <span class="n">up</span> <span class="n">LetsEncrypt</span> <span class="n">cert</span> <span class="n">setup</span>
 </pre></div>
 </div>
-<p>3. Once step 2 is complete. the nDeploy GUI will show up LetsEncrypt cert setup
-Note that the GUI is running the following command</p>
+<p>Note that the GUI is running the following command</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">certbot</span> <span class="o">--</span><span class="n">email</span>  <span class="n">cert_renewels</span><span class="nd">@sysally</span><span class="o">.</span><span class="n">net</span> <span class="o">--</span><span class="n">text</span> <span class="o">--</span><span class="n">renew</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">default</span> <span class="o">--</span><span class="n">agree</span><span class="o">-</span><span class="n">tos</span> <span class="o">--</span><span class="n">server</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">acme</span><span class="o">-</span><span class="n">v01</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">directory</span> <span class="n">certonly</span> <span class="o">-</span><span class="n">a</span> <span class="n">webroot</span> <span class="o">--</span><span class="n">webroot</span><span class="o">-</span><span class="n">path</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">public_html</span><span class="o">/</span> <span class="o">-</span><span class="n">d</span> <span class="n">cpanel_main_domain</span> <span class="o">-</span><span class="n">d</span> <span class="n">cpanel_alias1</span> <span class="o">-</span><span class="n">d</span> <span class="n">cpanel_alias2</span>
 </pre></div>
 </div>
 <p>So the command will fail unless the main_domain along with all aliases resolve to the server</p>
-<p>4. Check the auto-renew setting</p>
+<blockquote>
+<div><ol class="arabic simple" start="4">
+<li>Check the auto-renew setting</li>
+</ol>
+</div></blockquote>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">certbot</span> <span class="n">renew</span>
 </pre></div>
 </div>
 <p>Once you find it error free ;add the command to roots cron and run it once daily</p>
-<p>5. If you are proxying to cPanel http server note that the SSL vhost is only present in nginX and not apache in nDeploys LetsEncrypt implementation.
-So You will need to use PROXY &gt;&gt; apache &gt;&gt; Proxy to cPanel httpd rather than PROXY &gt;&gt; apache_SSL &gt;&gt; Proxy to cPanel httpd(SSL)</p>
-<p>6. For generating the Cert</p>
+<blockquote>
+<div><ol class="arabic simple" start="5">
+<li>If you are proxying to cPanel http server note that the SSL vhost is only present in nginX and not apache in nDeploys LetsEncrypt implementation.</li>
+</ol>
+</div></blockquote>
+<p>So You will need to use PROXY &gt;&gt; apache &gt;&gt; Proxy to cPanel httpd rather than PROXY &gt;&gt; apache_SSL &gt;&gt; Proxy to cPanel httpd(SSL)</p>
+<blockquote>
+<div><ol class="arabic simple" start="6">
+<li>For generating the Cert</li>
+</ol>
+</div></blockquote>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Login</span> <span class="n">to</span> <span class="n">cPanel</span> <span class="ow">and</span> <span class="n">select</span> <span class="n">the</span> <span class="n">nginX</span> <span class="n">plugin</span>
 
 <span class="n">Select</span> <span class="n">domain</span><span class="o">.</span><span class="n">com</span> <span class="o">&gt;&gt;</span> <span class="n">CONFIGURE</span> <span class="o">&gt;&gt;</span> <span class="n">AUTO</span> <span class="o">&gt;&gt;</span> <span class="n">SUBMIT</span>
