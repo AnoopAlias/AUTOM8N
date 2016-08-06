@@ -142,6 +142,65 @@
             
   <div class="section" id="setting-up-php">
 <h1>Setting up PHP<a class="headerlink" href="#setting-up-php" title="Permalink to this headline">¶</a></h1>
+<p><strong>On CentOS6/CentOS7</strong></p>
+<p>nDeploy can work with PHP installed from the following Software Collection( SCL)</p>
+<p>1. cPanel EA-PHP repo
+<code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/easy_php_setup.sh</span></code></p>
+<p>Additional PHP modules from ea-php repo can be added similar to example below</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">search</span> <span class="n">ea</span><span class="o">-</span><span class="n">php</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">ea</span><span class="o">-</span><span class="n">php70</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">intl</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p>2. REMI repo
+<code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/easy_php_setup.sh</span> <span class="pre">remi</span></code></p>
+<p>Additional PHP modules from remi repo can be added similar to example below</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">disableexcludes</span><span class="o">=</span><span class="nb">all</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">remi</span> <span class="n">search</span> <span class="n">php</span>
+<span class="n">yum</span> <span class="o">--</span><span class="n">disableexcludes</span><span class="o">=</span><span class="nb">all</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">remi</span> <span class="n">install</span> <span class="n">php56</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">pecl</span><span class="o">-</span><span class="n">memcached</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p><strong>On CloudLinux6/CloudLinux7</strong></p>
+<p>nDeploy can work with ea-php packages installed from the CloudLinux cloudlinux-updates-testing repo
+Note that remi repo may work but the php in remi is not compiled with the CloudLinux patches so it
+may not adhere to limits setup in CloudLinux</p>
+<p>1. CloudLinux EA-PHP repo</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">cloudlinux</span><span class="o">-</span><span class="n">updates</span><span class="o">-</span><span class="n">testing</span> <span class="n">search</span> <span class="n">ea</span><span class="o">-</span><span class="n">php</span>
+<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">cloudlinux</span><span class="o">-</span><span class="n">updates</span><span class="o">-</span><span class="n">testing</span> <span class="n">install</span> <span class="n">ea</span><span class="o">-</span><span class="n">php70</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">intl</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p><strong>Where are my php logs?</strong></p>
+<p>nDeploy creates php-fpm pool files for each user with the PHP error log file set to</p>
+<p><code class="docutils literal"><span class="pre">/home/CPANELUSER/logs/php_error_log</span></code>
+Users can check the logs from their FileManager/FTP/SSH login</p>
+<p>Note that this feature was added in Version 3.x . If you are upgrading from previous releases . You must run</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="o">.</span><span class="n">d</span><span class="o">/</span> <span class="o">-</span><span class="n">iname</span> <span class="s2">&quot;*.conf&quot;</span> <span class="o">-</span><span class="ow">not</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;nobody.conf&quot;</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="p">{}</span> \<span class="p">;</span>
+
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p>The above commands will recreate all php-fpm pool config with the logging setting in place.</p>
+<p><strong>ZendOpcache and security consideration</strong>
+PHP-FPM shares the OpCache memory with all the user pools. On a shared hosting setup where users dont trust one another
+this can be a security risk . The workaround is to run one PHP-FPM master process per user which need
+more resource overhead and a process manager . nDeploy currently offers the following settings
+that can mitigate the security risk of a shared OpCache memory to some extend</p>
+<p>1. opcache.restrict_api</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">opcache</span><span class="o">.</span><span class="n">restrict_api</span>
+<span class="n">Allows</span> <span class="n">calling</span> <span class="n">OPcache</span> <span class="n">API</span> <span class="n">functions</span> <span class="n">only</span> <span class="kn">from</span> <span class="nn">PHP</span> <span class="n">scripts</span> <span class="n">which</span> <span class="n">path</span> <span class="ow">is</span> <span class="n">started</span> <span class="kn">from</span> <span class="nn">specified</span> <span class="n">string</span><span class="o">.</span> <span class="n">The</span> <span class="n">default</span> <span class="s2">&quot;&quot;</span> <span class="n">means</span> <span class="n">no</span> <span class="n">restriction</span><span class="o">.</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="nb">set</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">CPANELUSER</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>2. opcache.blacklist_filename</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">opcache</span><span class="o">.</span><span class="n">blacklist_filename</span>
+<span class="n">The</span> <span class="n">location</span> <span class="n">of</span> <span class="n">the</span> <span class="n">OPcache</span> <span class="n">blacklist</span> <span class="n">file</span><span class="o">.</span> <span class="n">A</span> <span class="n">blacklist</span> <span class="n">file</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">text</span> <span class="n">file</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">names</span> <span class="n">of</span> <span class="n">files</span> <span class="n">that</span> <span class="n">should</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">accelerated</span><span class="p">,</span> <span class="n">one</span> <span class="n">per</span> <span class="n">line</span><span class="o">.</span> <span class="n">Wildcards</span> <span class="n">are</span> <span class="n">allowed</span><span class="p">,</span> <span class="ow">and</span> <span class="n">prefixes</span> <span class="n">can</span> <span class="n">also</span> <span class="n">be</span> <span class="n">provided</span><span class="o">.</span> <span class="n">Lines</span> <span class="n">starting</span> <span class="k">with</span> <span class="n">a</span> <span class="n">semi</span><span class="o">-</span><span class="n">colon</span> <span class="n">are</span> <span class="n">ignored</span> <span class="k">as</span> <span class="n">comments</span><span class="o">.</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="nb">set</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">CPANELUSER</span><span class="o">/</span><span class="n">opcache</span><span class="o">-</span><span class="n">blacklist</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">User</span> <span class="n">can</span> <span class="n">upload</span> <span class="n">the</span> <span class="n">opcache</span><span class="o">-</span><span class="n">blacklist</span><span class="o">.</span><span class="n">txt</span> <span class="n">to</span> <span class="n">his</span> <span class="n">homedir</span> <span class="n">via</span> <span class="n">FTP</span> <span class="ow">or</span> <span class="n">ssh</span> <span class="ow">and</span> <span class="n">paths</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">file</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">cached</span><span class="o">.</span>
+</pre></div>
+</div>
 </div>
 
 
