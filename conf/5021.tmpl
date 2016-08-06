@@ -4,17 +4,17 @@ index index.php index.html index.htm;
 
 
 # Announcements
-rewrite ^/announcements/([0-9]+)/[a-zA-Z0-9-]+\.html$ /./announcements.php?id=$1 last;
-rewrite ^/announcements$ /./announcements.php last;
+rewrite ^/announcements/([0-9]+)/[a-zA-Z0-9-]+\.html$ /announcements.php?id=$1 last;
+rewrite ^/announcements$ /announcements.php last;
 
 # Downloads
-rewrite ^/downloads/([0-9]+)/([^/]*)$ /./downloads.php?action=displaycat&catid=$1 last;
-rewrite ^/downloads$ /./downloads.php last;
+rewrite ^/downloads/([0-9]+)/([^/]*)$ /downloads.php?action=displaycat&catid=$1 last;
+rewrite ^/downloads$ /downloads.php last;
 
 #Knowledgebase
-rewrite ^/knowledgebase/([0-9]+)/[a-zA-Z0-9-]+\.html$ /./knowledgebase.php?action=displayarticle&id=$1 last;
-rewrite ^/knowledgebase/([0-9]+)/([^/]*)$ /./knowledgebase.php?action=displaycat&catid=$1 last;
-rewrite ^/knowledgebase$ /./knowledgebase.php last;
+rewrite ^/knowledgebase/([0-9]+)/[a-zA-Z0-9-]+\.html$ /knowledgebase.php?action=displayarticle&id=$1 last;
+rewrite ^/knowledgebase/([0-9]+)/([^/]*)$ /knowledgebase.php?action=displaycat&catid=$1 last;
+rewrite ^/knowledgebase$ /knowledgebase.php last;
 
 
 location / {
