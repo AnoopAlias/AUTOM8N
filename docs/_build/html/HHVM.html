@@ -147,8 +147,7 @@ by forking a new process . So unlike PHP-FPM there is no process pool in HHVM</p
 <p>nDeploy only supports HHVM running as a single user (nobody) using a single process .The recommended way
 of running HHVM for multiple users is to create a process for each user which then require a third party process manager
 to manage the process creation and shutdown</p>
-<div class="section" id="hhvm-install-and-setup-on-centos7">
-<h2>HHVM install and setup on CentOS7<a class="headerlink" href="#hhvm-install-and-setup-on-centos7" title="Permalink to this headline">¶</a></h2>
+<p><strong>HHVM install and setup on CentOS7</strong></p>
 <ol class="arabic simple">
 <li>Install HHVM as per <a class="reference external" href="https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.x">https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.x</a></li>
 <li>Setup HHVM as an nDeploy backend app server</li>
@@ -170,7 +169,6 @@ to manage the process creation and shutdown</p>
 <span class="n">Register</span> <span class="n">the</span> <span class="n">HHVM</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">nDeploy</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="n">HHVM_NOBODY</span> <span class="n">hhvm</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">hhvm</span><span class="o">/</span><span class="n">hhvm</span><span class="o">.</span><span class="n">sock</span>
 </pre></div>
-</div>
 </div>
 </div>
 
