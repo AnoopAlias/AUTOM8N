@@ -77,7 +77,7 @@ CentOS7/CloudLinux7 - https://rpm.piserve.com/CentOS/7/x86_64/
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :titlesonly:
 
    mod_remoteip
