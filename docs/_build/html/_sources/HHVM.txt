@@ -9,7 +9,7 @@ of running HHVM for multiple users is to create a process for each user which th
 to manage the process creation and shutdown
 
 HHVM install and setup on CentOS7
-=================================
+----------------------------------
 
 #. Install HHVM as per https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.x
 #. Setup HHVM as an nDeploy backend app server
