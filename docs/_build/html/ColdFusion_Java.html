@@ -84,6 +84,156 @@
             
   <div class="section" id="setting-up-coldfusion-or-java">
 <h1>Setting up ColdFusion or Java<a class="headerlink" href="#setting-up-coldfusion-or-java" title="Permalink to this headline">¶</a></h1>
+<p>There are 2 ways to setup ColdFusion supported by nDeploy</p>
+<p>￼
+<strong>Using Tomcat</strong></p>
+<p>This is the simplest to setup. The downside is that this setup is
+not suited for a shared environment as the app server will be restarted for domain
+addition and removal etc.</p>
+<ol class="arabic simple">
+<li>Install the railo bundled with tomcat Railo Server with Tomcat 7 from <a class="reference external" href="http://www.getrailo.org/index.cfm/download/">http://www.getrailo.org/index.cfm/download/</a></li>
+<li>Register the backend with backend_name railo_tomcat as type PROXY and path 8888 (this is default port for the above installer!)</li>
+</ol>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/update_backend.py</span> <span class="pre">PROXY</span> <span class="pre">railo_tomcat</span> <span class="pre">8888</span></code></div></blockquote>
+<p><strong>Using Caucho resin</strong></p>
+<p>This is perfect for shared coldfusion hosting providers</p>
+<p>Resin or Resin Pro is supported . Resin has a watchdog that helps to dynamically add/remove webapps without restart</p>
+<p>Install resin or resin pro and deploy railo war to the ROOT context and add it as a servelet loaded by default in all webapps</p>
+<p>1. Setup JAVA</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># yum install java-1.8.0-openjdk-javadoc.noarch java-1.8.0-openjdk-src.x86_64 java-1.8.0-openjdk-devel.x86_64 java-1.8.0-openjdk-headless.x86_64</span>
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># java -version</span>
+<span class="n">openjdk</span> <span class="n">version</span> <span class="s2">&quot;1.8.0_25&quot;</span>
+<span class="n">OpenJDK</span> <span class="n">Runtime</span> <span class="n">Environment</span> <span class="p">(</span><span class="n">build</span> <span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span><span class="n">_25</span><span class="o">-</span><span class="n">b17</span><span class="p">)</span>
+<span class="n">OpenJDK</span> <span class="mi">64</span><span class="o">-</span><span class="n">Bit</span> <span class="n">Server</span> <span class="n">VM</span> <span class="p">(</span><span class="n">build</span> <span class="mf">25.20</span><span class="o">-</span><span class="n">b23</span><span class="p">,</span> <span class="n">mixed</span> <span class="n">mode</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Install Resin RPM</li>
+</ol>
+<p><code class="docutils literal"><span class="pre">root&#64;cpanel1</span> <span class="pre">[~]#</span> <span class="pre">rpm</span> <span class="pre">-ivh</span> <span class="pre">http://caucho.com/download/rpm-6.5/4.0.41/x86_64/resin-4.0.41-1.x86_64.rpm</span></code></p>
+<p>3. You will see resin running in ps output</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span>      <span class="mi">3656</span> <span class="mf">45.4</span>  <span class="mf">4.1</span> <span class="mi">2513972</span> <span class="mi">85136</span> <span class="n">pts</span><span class="o">/</span><span class="mi">0</span>   <span class="n">Sl</span>   <span class="mi">03</span><span class="p">:</span><span class="mi">41</span>   <span class="mi">0</span><span class="p">:</span><span class="mi">06</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">jvm</span><span class="o">/</span><span class="n">java</span><span class="o">-</span><span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">openjdk</span><span class="o">-</span><span class="mf">1.8</span><span class="o">.</span><span class="mf">0.25</span><span class="o">-</span><span class="mf">3.</span><span class="n">b17</span><span class="o">.</span><span class="n">el6_6</span><span class="o">.</span><span class="n">x86_64</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">java</span> <span class="o">-</span><span class="n">Dresin</span><span class="o">.</span><span class="n">watc</span>
+<span class="n">resin</span>     <span class="mi">3708</span> <span class="mf">67.8</span>  <span class="mf">6.5</span> <span class="mi">2796608</span> <span class="mi">135580</span> <span class="n">pts</span><span class="o">/</span><span class="mi">0</span>  <span class="n">Sl</span>   <span class="mi">03</span><span class="p">:</span><span class="mi">41</span>   <span class="mi">0</span><span class="p">:</span><span class="mi">06</span>  \<span class="n">_</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">jvm</span><span class="o">/</span><span class="n">java</span><span class="o">-</span><span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">openjdk</span><span class="o">-</span><span class="mf">1.8</span><span class="o">.</span><span class="mf">0.25</span><span class="o">-</span><span class="mf">3.</span><span class="n">b17</span><span class="o">.</span><span class="n">el6_6</span><span class="o">.</span><span class="n">x86_64</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">java</span> <span class="o">-</span><span class="n">Dresin</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>4. Stop resin and edit /etc/resin/resin.properties</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># For security, Resin can switch to a non-root user after binding to port 80</span>
+<span class="o">--</span> <span class="n">setuid_user</span> <span class="p">:</span> <span class="n">resin</span>
+<span class="o">--</span> <span class="n">setuid_group</span> <span class="p">:</span> <span class="n">resin</span>
+<span class="o">++</span> <span class="n">setuid_user</span> <span class="p">:</span> <span class="n">nobody</span>
+<span class="o">++</span> <span class="n">setuid_group</span> <span class="p">:</span> <span class="n">nobody</span>
+
+<span class="c1"># Web-apps named with numeric suffixes, e.g. foo-10.0.war and can be browsed</span>
+<span class="c1"># as /foo. When a new version of the web-app is deployed, Resin continues</span>
+<span class="c1"># to route active session requests to the previous web-app version while</span>
+<span class="c1"># new sessions go to the new version, so users will not be aware of the</span>
+<span class="c1"># application upgrade.</span>
+<span class="n">webapp_multiversion_routing</span> <span class="p">:</span> <span class="n">true</span>
+
+<span class="c1"># Arg passed directly to the JVM</span>
+<span class="n">jvm_args</span>  <span class="p">:</span> <span class="o">-</span><span class="n">Xmx512m</span>
+<span class="n">jvm_mode</span>    <span class="p">:</span> <span class="o">-</span><span class="n">server</span>
+
+<span class="c1"># disable the quercus *.php mapping when using Apache for PHP</span>
+<span class="n">quercus_disable</span> <span class="p">:</span> <span class="n">true</span>
+
+<span class="c1"># Enable remote admin (for remote CLI and for EC2 ext: triad discovery)</span>
+<span class="n">remote_admin_enable</span> <span class="p">:</span> <span class="n">true</span>
+
+<span class="c1"># Enable /resin-admin web administration console</span>
+<span class="n">web_admin_enable</span> <span class="p">:</span> <span class="n">true</span>
+<span class="n">web_admin_host</span>   <span class="p">:</span>
+
+<span class="c1"># Permit access to /resin-admin from non-local network ip-addresses</span>
+<span class="c1"># web_admin_external : true</span>
+
+<span class="c1"># Require HTTPS to access /resin-admin</span>
+<span class="c1"># web_admin_ssl : true</span>
+
+<span class="c1"># Enable Resin REST Admin</span>
+<span class="n">rest_admin_enable</span> <span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+<p>5. Generate and setup the ADMINISTRATOR user login</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># resinctl generate-password --user ADMINISTRATOR</span>
+<span class="n">Enter</span> <span class="n">password</span><span class="p">:</span>
+<span class="n">Verify</span> <span class="n">password</span><span class="p">:</span>
+<span class="n">admin_user</span> <span class="p">:</span> <span class="n">ADMINISTRATOR</span>
+<span class="n">admin_password</span> <span class="p">:</span> <span class="p">{</span><span class="n">SSHA</span><span class="p">}</span><span class="n">R4irpW6LJiUtnnW4PAebEYXHhZLgy7w4</span>
+</pre></div>
+</div>
+<p>6. Set up permissions for nobody user</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">var</span>
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">/</span><span class="n">var</span><span class="p">]</span><span class="c1"># chown -R nobody:nobody resin</span>
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">/</span><span class="n">var</span><span class="p">]</span><span class="c1"># chown -R root:root resin/watchdog-data</span>
+
+<span class="n">cd</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">resin</span>
+
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">resin</span><span class="p">]</span><span class="c1"># mkdir hosts</span>
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">resin</span><span class="p">]</span><span class="c1"># chown -R nobody:nobody hosts</span>
+</pre></div>
+</div>
+<p>7. Download and install RAILO</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>root@cpanel1 [/var/resin/webapp-jars]# ls
+./  ../
+root@cpanel1 [/var/resin/webapp-jars]# wget http://www.getrailo.org/railo/remote/download42/4.2.1.008/custom/all/railo-4.2.1.008-jars.tar.gz
+--2014-12-05 04:09:29--  http://www.getrailo.org/railo/remote/download42/4.2.1.008/custom/all/railo-4.2.1.008-jars.tar.gz
+Resolving www.getrailo.org... 188.138.56.135
+Connecting to www.getrailo.org|188.138.56.135|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 61704841 (59M) [application/x-gzip]
+Saving to: `railo-4.2.1.008-jars.tar.gz&#39;
+
+100%[========================================================================================================&gt;] 6,17,04,841 11.2M/s   in 5.4s
+
+2014-12-05 04:09:35 (10.9 MB/s) - `railo-4.2.1.008-jars.tar.gz&#39; saved [61704841/61704841]
+
+root@cpanel1 [/var/resin/webapp-jars]#
+
+root@cpanel1 [/var/resin/webapp-jars]# tar -xvzf railo-4.2.1.008-jars.tar.gz
+
+root@cpanel1 [/var/resin/webapp-jars]# mv railo-4.2.1.008-jars/* ./
+
+root@cpanel1 [/var/resin/webapp-jars]# rm -rf railo-4.2.1.008-jars railo-4.2.1.008-jars.tar.gz
+</pre></div>
+</div>
+<p>8. Edit file /etc/resin/app-default.xml</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">servlet</span> <span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CFMLServlet&quot;</span> <span class="n">servlet</span><span class="o">-</span><span class="n">class</span><span class="o">=</span><span class="s2">&quot;railo.loader.servlet.CFMLServlet&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">init</span><span class="o">-</span><span class="n">param</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">param</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">railo</span><span class="o">-</span><span class="n">web</span><span class="o">-</span><span class="n">directory</span><span class="o">&lt;/</span><span class="n">param</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">param</span><span class="o">-</span><span class="n">value</span><span class="o">&gt;</span><span class="p">{</span><span class="n">web</span><span class="o">-</span><span class="n">root</span><span class="o">-</span><span class="n">directory</span><span class="p">}</span><span class="o">/</span><span class="n">WEB</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">railo</span><span class="o">/&lt;/</span><span class="n">param</span><span class="o">-</span><span class="n">value</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">description</span><span class="o">&gt;</span><span class="n">Railo</span> <span class="n">Web</span> <span class="n">Directory</span> <span class="n">directory</span><span class="o">&lt;/</span><span class="n">description</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">init</span><span class="o">-</span><span class="n">param</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">load</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">startup</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">load</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">startup</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">servlet</span><span class="o">&gt;</span>
+
+  <span class="o">&lt;</span><span class="n">servlet</span> <span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;AMFServlet&quot;</span> <span class="n">servlet</span><span class="o">-</span><span class="n">class</span><span class="o">=</span><span class="s2">&quot;railo.loader.servlet.AMFServlet&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">load</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">startup</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">&lt;/</span><span class="n">load</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">startup</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">servlet</span><span class="o">&gt;</span>
+
+  <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">mapping</span> <span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;*.cfm&quot;</span> <span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CFMLServlet&quot;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">mapping</span> <span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;*.cfml&quot;</span> <span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CFMLServlet&quot;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">mapping</span> <span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;*.cfc&quot;</span> <span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CFMLServlet&quot;</span><span class="o">/&gt;</span>
+
+  <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="nb">list</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="n">index</span><span class="o">.</span><span class="n">cfm</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="n">index</span><span class="o">.</span><span class="n">cfml</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="n">index</span><span class="o">.</span><span class="n">jsp</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="n">index</span><span class="o">.</span><span class="n">php</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="nb">list</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>9. Set railo server-context and web-context password</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">cpanel1</span><span class="o">.</span><span class="n">sysally</span><span class="o">.</span><span class="n">net</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">railo</span><span class="o">-</span><span class="n">context</span><span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">server</span><span class="o">.</span><span class="n">cfm</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">cpanel1</span><span class="o">.</span><span class="n">sysally</span><span class="o">.</span><span class="n">net</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">railo</span><span class="o">-</span><span class="n">context</span><span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">web</span><span class="o">.</span><span class="n">cfm</span>
+</pre></div>
+</div>
+<p>10. Register the railo server as a PROXY backend</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># /opt/nDeploy/scripts/update_backend.py PROXY railo_resin 8080</span>
+</pre></div>
+</div>
 </div>
 
 

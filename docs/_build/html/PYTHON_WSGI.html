@@ -84,6 +84,42 @@
             
   <div class="section" id="setting-up-python-wsgi-app">
 <h1>Setting up Python (WSGI app)<a class="headerlink" href="#setting-up-python-wsgi-app" title="Permalink to this headline">¶</a></h1>
+<p>1. Enable the Phusion Passenger module
+<code class="docutils literal"><span class="pre">/usr/nginx/scripts/nginx-passenger-setup.sh</span></code></p>
+<p>2. To setup python install <a class="reference external" href="https://github.com/saghul/pythonz">https://github.com/saghul/pythonz</a></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># pythonz install 3.4.2</span>
+
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># pythonz list</span>
+<span class="c1"># Installed Python versions</span>
+  <span class="n">CPython</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mi">8</span>
+  <span class="n">CPython</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">2</span>
+
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># pythonz locate 3.4.2</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">pythonz</span><span class="o">/</span><span class="n">pythons</span><span class="o">/</span><span class="n">CPython</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span>
+</pre></div>
+</div>
+<p>3. Register the python backend</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># /opt/nDeploy/scripts/update_backend.py PYTHON CPython-3.4.2 /usr/local/pythonz/pythons/CPython-3.4.2/bin/python3</span>
+</pre></div>
+</div>
+<p><strong>Bootstrapping PIP</strong></p>
+<p>PIP can be used to add additional python modules by cPanel user</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bootstrap</span><span class="o">.</span><span class="n">pypa</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">get</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span><span class="n">py</span>
+
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># pythonz locate 3.4.2</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">pythonz</span><span class="o">/</span><span class="n">pythons</span><span class="o">/</span><span class="n">CPython</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span>
+
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># /usr/local/pythonz/pythons/CPython-3.4.2/bin/python3 get-pip.py</span>
+</pre></div>
+</div>
+<p>To install PIP packages as user add the &#8211;user flag</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gnusys</span><span class="nd">@gnusys</span><span class="o">.</span><span class="n">net</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># /usr/local/pythonz/pythons/CPython-2.7.8/bin/pip install --user PyYAML</span>
+</pre></div>
+</div>
+<p>Additional Reference
+<a class="reference external" href="https://www.phusionpassenger.com/library/deploy/nginx/deploy/python/">https://www.phusionpassenger.com/library/deploy/nginx/deploy/python/</a></p>
+<p>Additonal Environment variables can be set per application by the cPanel user in MANUAL edit mode from nDeploy
+<a class="reference external" href="https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_env_var">https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_env_var</a></p>
 </div>
 
 

@@ -84,6 +84,26 @@
             
   <div class="section" id="managing-logs">
 <h1>Managing Logs<a class="headerlink" href="#managing-logs" title="Permalink to this headline">¶</a></h1>
+<p><strong>nDeploy logs</strong></p>
+<p>watcher logs <code class="docutils literal"><span class="pre">/opt/nDeploy/watcher.log</span></code></p>
+<p>cPanel hooks log</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>WHM:: Home »Server Configuration »Tweak Settings
+  Standardized Hooks - Debug Mode on
+Log is available at /usr/local/cpanel/logs/error_log
+</pre></div>
+</div>
+<p><strong>nginx logs</strong></p>
+<p>nginx logs include the webserver log , stdout from application servers like
+php-fpm ,phusion passenger etc</p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">/var/log/nginx/error_log</span></code></div></blockquote>
+<p><strong>PHP-FPM master process log</strong></p>
+<p>Note that this is not php log ;but logging related to php-fpm master process
+php errors will be logged to the webserver&#8217;s error log</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PHPROOT</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="o">.</span><span class="n">log</span>
+<span class="n">eg</span> <span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">remi</span><span class="o">/</span><span class="n">php56</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
 </div>
 
 

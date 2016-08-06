@@ -84,6 +84,189 @@
             
   <div class="section" id="administration-of-ndeploy-plugin">
 <h1>Administration of nDeploy plugin<a class="headerlink" href="#administration-of-ndeploy-plugin" title="Permalink to this headline">¶</a></h1>
+<p>As a server administrator the following scripts are available for administration of the nDeploy plugin
+All tools are to be used from commandline as root</p>
+<p><strong>Layer7(Application layer) DDOS mitigation</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">To</span> <span class="n">mitigate</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">ddos_mitigate</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
+
+<span class="n">To</span> <span class="k">return</span> <span class="n">config</span> <span class="n">to</span> <span class="n">normal</span> <span class="n">mode</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">ddos_mitigate</span><span class="o">.</span><span class="n">sh</span> <span class="n">disable</span>
+</pre></div>
+</div>
+<p><strong>Automatic fixing of most errors</strong></p>
+<dl class="docutils">
+<dt>The following script rebuilds all config and restarts backend app servers</dt>
+<dd><code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/attempt_autofix.sh</span></code></dd>
+</dl>
+<p><strong>Managing default config for nginx vhosts</strong></p>
+<p>The default config generation in nDeploy is governed by</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data</span><span class="o">.</span><span class="n">yaml</span><span class="o">.</span><span class="n">tmpl</span>    <span class="o">===&gt;</span> <span class="n">For</span> <span class="n">non</span><span class="o">-</span><span class="n">SSL</span> <span class="n">domains</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_SSL</span><span class="o">.</span><span class="n">yaml</span><span class="o">.</span><span class="n">tmpl</span>   <span class="o">==&gt;</span> <span class="k">for</span> <span class="n">SSL</span> <span class="n">domains</span>
+</pre></div>
+</div>
+<p>It is set to PROXY to httpd and PROXY to httpd_SSL</p>
+<p>You can change that behavior by creating the same filename ending in .local</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>cp -p /opt/nDeploy/conf/domain_data_SSL.yaml.tmpl /opt/nDeploy/conf/domain_data_SSL.yaml.tmpl.local
+cp -p /opt/nDeploy/conf/domain_data.yaml.tmpl /opt/nDeploy/conf/domain_data.yaml.tmpl.local
+
+change profile: &#39;1000&#39;   to profile: &#39;1005&#39; in /opt/nDeploy/conf/domain_data.yaml.tmpl.local
+change profile: &#39;1004&#39;   to profile: &#39;1006&#39; in /opt/nDeploy/conf/domain_data_SSL.yaml.tmpl.local
+
+rm -f /opt/nDeploy/domain-data/*   #will remove all domain-data files
+
+for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
+    do
+        echo &quot;ConfGen:: $CPANELUSER&quot; &amp;&amp; /opt/nDeploy/scripts/generate_config.py $CPANELUSER
+    done
+    service nginx restart
+</pre></div>
+</div>
+<p>Similar to above ;if you change the backend to PHP and use Wordpress template;
+all your domain will be served by nginx+php-fpm bypassing apache .
+Of course, all your web apps must be WordPress in such cases .</p>
+<p><strong>Automatic selection of template based on application detection</strong></p>
+<p>The following script can detect the application installed in the webroot(only!) based on filenames</p>
+<p>While cPanel users can always change the vhost configuration for nginX
+anytime from their cPanel login
+sometimes the server administrator want to automatically switch supporting applications
+to be directly served by nginX instead of apache.</p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/auto_config.py</span> <span class="pre">CPANELUSER</span></code></div></blockquote>
+<p>does this.</p>
+<p>The script works by checking the presence of certain files like for example the wp-config.php in case of wordpress and switches the profile accordingly</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># cat /opt/nDeploy/conf/appsignatures.yaml</span>
+<span class="n">SSLREDIRECT</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span>
+<span class="n">PHP</span><span class="p">:</span>
+  <span class="s1">&#39;/wp-config.php&#39;</span><span class="p">:</span> <span class="s1">&#39;5001&#39;</span>
+  <span class="s1">&#39;/libraries/joomla/version.php&#39;</span><span class="p">:</span> <span class="s1">&#39;5002&#39;</span>
+  <span class="s1">&#39;/sites/default/settings.php&#39;</span><span class="p">:</span> <span class="s1">&#39;5017&#39;</span>
+  <span class="s1">&#39;/app/etc/local.xml&#39;</span><span class="p">:</span> <span class="s1">&#39;5003&#39;</span>
+</pre></div>
+</div>
+<p>Admin can update the appsignatures.yaml file with file names and the corresponding
+profile that auto_config.py switch the domain to if the file exists.
+The default list provided by us is not extensive.
+Admins can also remove entries from the file above to negate auto-switching should there be a need for it . SSLREDIRECT is a switch that can have value 0 or 1 and if it is set to 1 .All the non-ssl vhost conf generated by Nginx will have the redirect http to https template .
+The file</p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">/opt/nDeploy/conf/auto_config.exclude</span></code></div></blockquote>
+<p>if present and contain the CPANELUSERNAME in it will prevent auto switching of profiles
+for any domain (addon,subdomain etc) of the cpanel user.
+This is useful while running the auto_config script in a for loop over a list of
+cpanel users and if the script should omit any user.
+To make this all work</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>1. Edit /opt/nDeploy/conf/appsignatures.yaml . Add or remove filenames (relative to document root) and the corresponding profile names to switch to should the file be present in document root
+
+2. set SSLREDIRECT to 0 or 1 depending on how you want the non-ssl vhost to behave .We recommend the value be set to 1 as https:// is the norm of the modern world and redirecting non-ssl domains to ssl ones are good.
+
+3.Create a file named /opt/nDeploy/conf/auto_config.exclude and add any cpanelusername for which you wish to exclude auto_config. If the file is not present or is empty ;no user is excluded
+
+4.run
+
+for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
+    do
+        echo &quot;Auto ConfGen:: $CPANELUSER&quot; &amp;&amp; /opt/nDeploy/scripts/auto_config.py $CPANELUSER
+    done
+    service nginx restart
+</pre></div>
+</div>
+<p>The first time auto_config.py runs it will ask your preference of PHP version
+that automatic switching should use.
+On cpanel servers you can safely use the same version as the default installed PHP
+as most of your domains will be running that version without issues</p>
+<p>A very IMPORTANT thing to note here is that auto_config.py is doing an educated guess work
+and determining the application that is installed .
+It MAY NOT! be always accurate . The administrator must be aware of this .
+Of course, any change made by the auto_config can be reverted by the end user
+or the admin from the cPanel plugin UI.</p>
+<p><strong>Providing more config templates or profiles</strong></p>
+<p>To avoid clashes between user defined template and rpm provided ones . the following numbers will be reserved for user defined templates</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">N600</span> <span class="o">-</span><span class="n">N999</span>
+<span class="mi">9000</span> <span class="o">-</span> <span class="mi">10000</span>
+</pre></div>
+</div>
+<p>Where N is an integer . So, for example, the rpm provided templates will never use the range 2600 - 2999
+New config templates can be provided to end users by the admin by simply adding
+a file with all the location blocks, rewrite rules etc for an application .</p>
+<p>The default template files can be found in</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@web</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># ls -l /opt/nDeploy/conf/*.tmpl</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">596</span> <span class="n">Jun</span> <span class="mi">26</span> <span class="mi">04</span><span class="p">:</span><span class="mi">42</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="mf">1000.</span><span class="n">tmpl</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">1452</span> <span class="n">Jun</span> <span class="mi">26</span> <span class="mi">04</span><span class="p">:</span><span class="mi">42</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="mf">1001.</span><span class="n">tmpl</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">148</span> <span class="n">Jun</span> <span class="mi">26</span> <span class="mi">04</span><span class="p">:</span><span class="mi">42</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="mf">2001.</span><span class="n">tmpl</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">152</span> <span class="n">Jun</span> <span class="mi">26</span> <span class="mi">04</span><span class="p">:</span><span class="mi">42</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="mf">3001.</span><span class="n">tmpl</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">152</span> <span class="n">Jun</span> <span class="mi">26</span> <span class="mi">04</span><span class="p">:</span><span class="mi">42</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="mf">4001.</span><span class="n">tmpl</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">210</span> <span class="n">Jun</span> <span class="mi">26</span> <span class="mi">04</span><span class="p">:</span><span class="mi">42</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="mf">4002.</span><span class="n">tmpl</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">359</span> <span class="n">Jun</span> <span class="mi">26</span> <span class="mi">04</span><span class="p">:</span><span class="mi">42</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="mf">5001.</span><span class="n">tmpl</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">806</span> <span class="n">Jun</span> <span class="mi">26</span> <span class="mi">04</span><span class="p">:</span><span class="mi">42</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="mf">5002.</span><span class="n">tmpl</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">1810</span> <span class="n">Jun</span> <span class="mi">26</span> <span class="mi">04</span><span class="p">:</span><span class="mi">42</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="mf">5003.</span><span class="n">tmpl</span>
+</pre></div>
+</div>
+<p>Each programming language should begin with a specific number ( eg: 5xxx for PHP ) for clarity purpose</p>
+<p>You can easily base a new template on an existing template by adding or removing new location blocks, rewrite rules etc</p>
+<p>Once a template file is added in /opt/nDeploy/conf/ .</p>
+<p>It needs to be registered using the following command which is an example of how we registered the Magento template</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@web</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># /opt/nDeploy/scripts/update_profiles.py -h</span>
+<span class="n">usage</span><span class="p">:</span> <span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span>
+                          <span class="n">backend_category</span> <span class="n">profile_code</span>
+                          <span class="n">profile_description_in_doublequotes</span>
+
+<span class="n">Register</span> <span class="n">a</span> <span class="n">nginX</span> <span class="n">config</span> <span class="n">profile</span> <span class="k">for</span> <span class="n">nDeploy</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">backend_category</span>
+  <span class="n">profile_code</span>
+  <span class="n">profile_description_in_doublequotes</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+
+<span class="n">root</span><span class="nd">@web</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># /opt/nDeploy/scripts/update_profiles.py PHP 5003 &quot;Magento&quot;</span>
+</pre></div>
+</div>
+<p><strong>Upgrading nDeploy and nginx</strong></p>
+<p>nDeploy-nginx is mated with a phusion passenger ruby gem .
+So we don&#8217;t encourage unmanned upgrades and have therefore set enable=0 in the yum repository .
+The upgrade must be done manually by running the following commands</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span>
+<span class="c1">#For setups using Phusion Passenger app server</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">passenger</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+<span class="c1">#For upgrading PHP application server(additional packages are to upgraded via yum)</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p><strong>Temporarily disable the plugin</strong></p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/cpanel-nDeploy-setup.sh</span> <span class="pre">disable</span></code></div></blockquote>
+<p><strong>Uninstall the plugin</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">disable</span>
+<span class="n">yum</span> <span class="n">remove</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span>
+</pre></div>
+</div>
+<p><strong>Building nginx-nDeploy from source</strong></p>
+<p>nDeploy is a collection of scripts and contains no binary file.
+nginx-nDeploy is distributed as a binary application .</p>
+<p>While using the nDeploy RPM repository is the easiest and fastest way to get nDeploy on your server . You may sometimes wish to compile your own RPM&#8217;s</p>
+<p>The reason why one may wish to do this is</p>
+<ol class="arabic simple">
+<li>Add /extend nginX with more plugins</li>
+<li>If you don&#8217;t trust the nginX binary compiled on our server.</li>
+<li>You notice an error and wish to debug nginX . <a class="reference external" href="https://www.nginx.com/resources/wiki/start/topics/tutorials/debugging/">https://www.nginx.com/resources/wiki/start/topics/tutorials/debugging/</a> , which requires that you compile Nginx with the –with-debug flag .</li>
+<li>For the fun (and knowledge) of doing it</li>
+</ol>
+<p>The instructions for creating your own nginX rpms are listed below. Run the following on your cPanel server</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">nDeploy</span><span class="o">/</span><span class="n">rpm_buildtree</span><span class="o">/</span>
+<span class="c1">#Open nDeploy-nginx_build_script.sh (for CentOS6 rpm) or nDeploy-nginx_build_script.centos7.sh (centos7) in a text editor</span>
+<span class="c1">#The line starting with ./configure --prefix=/etc/nginx</span>
+<span class="c1">#is what you have to modify to add or remove configure arguments</span>
+<span class="c1"># comment out the line rsync -av nginx-nDeploy-* root@rpm.piserve.com:/home/rpmrepo/public_html/CentOS/7/x86_64</span>
+<span class="n">root</span><span class="nd">@cpanel</span> <span class="p">[</span><span class="o">~/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">rpm_buildtree</span><span class="p">]</span><span class="c1"># ./nDeploy-nginx_build_script.centos7.sh</span>
+
+<span class="n">It</span> <span class="n">will</span> <span class="n">take</span> <span class="n">some</span> <span class="n">time</span> <span class="n">to</span> <span class="n">build</span> <span class="o">.</span> <span class="n">Once</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">complete</span> <span class="n">you</span> <span class="n">will</span> <span class="n">have</span> <span class="n">the</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">rpm</span> <span class="n">inside</span> <span class="n">nginx</span><span class="o">-</span><span class="n">pkg</span><span class="o">-</span><span class="mi">64</span><span class="o">-</span><span class="n">centos7</span><span class="o">/</span> <span class="p">(</span><span class="k">for</span> <span class="n">centos7</span><span class="p">)</span>
+<span class="ow">or</span> <span class="n">nginx</span><span class="o">-</span><span class="n">pkg</span><span class="o">-</span><span class="mi">64</span><span class="o">/</span> <span class="p">(</span><span class="n">centos6</span><span class="p">)</span> <span class="n">folder</span> <span class="o">.</span> <span class="n">which</span> <span class="n">you</span> <span class="n">can</span> <span class="n">install</span> <span class="n">using</span> <span class="n">rpm</span> <span class="o">-</span><span class="n">Uvh</span> <span class="n">command</span>
+</pre></div>
+</div>
 </div>
 
 
