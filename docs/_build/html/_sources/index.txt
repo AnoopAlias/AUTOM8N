@@ -77,12 +77,16 @@ CentOS7/CloudLinux7 - https://rpm.piserve.com/CentOS/7/x86_64/
 
 
 .. toctree::
-   :maxdepth: 1
-   :titlesonly:
+   :maxdepth: 2
 
    mod_remoteip
    LetsEncrypt
    http_to_https_redirect
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Backends Setup
+
    HHVM
    PHP
    PYTHON_WSGI
@@ -90,6 +94,11 @@ CentOS7/CloudLinux7 - https://rpm.piserve.com/CentOS/7/x86_64/
    NodeJS
    Meteor
    ColdFusion_Java
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Administration & Monitoring
+    
    nDeploy_Administration
    Monitoring
    Logs
