@@ -1,5 +1,6 @@
 
 # DOCUMENTATION
-https://support.sysally.net/projects/ndeploy/wiki
+http://ndeploy.readthedocs.io/en/latest/
 
-[![Codewake](https://www.codewake.com/badges/codewake.svg)](https://www.codewake.com/p/ndeploy)
+# FORUM
+https://groups.google.com/forum/#!forum/ndeploy
