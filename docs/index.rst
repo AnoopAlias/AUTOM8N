@@ -98,11 +98,25 @@ CentOS7/CloudLinux7 - https://rpm.piserve.com/CentOS/7/x86_64/
 .. toctree::
    :maxdepth: 2
    :caption: Administration & Monitoring
-    
+
    nDeploy_Administration
    Monitoring
    Logs
+
+.. toctree::
+   :maxdepth: 2
+   :caption: nDeploy Cluster
+
+   cluster_architecture
+   nDeploy_cluster_setup
+   Upgrade_cluster
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Support
+
    support
+
 
 
 

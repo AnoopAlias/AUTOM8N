@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; nDeploy 3.0 documentation</title>
+  <title>nDeploy cluster architecture &mdash; nDeploy 3.0 documentation</title>
   
 
   
@@ -30,7 +30,9 @@
   
 
   
-    <link rel="top" title="nDeploy 3.0 documentation" href="index.html"/> 
+    <link rel="top" title="nDeploy 3.0 documentation" href="index.html"/>
+        <link rel="next" title="nDeploy cluster setup" href="nDeploy_cluster_setup.html"/>
+        <link rel="prev" title="Managing Logs" href="Logs.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -65,7 +67,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -101,8 +103,13 @@
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
 <p class="caption"><span class="caption-text">nDeploy Cluster</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="cluster_architecture.html">nDeploy cluster architecture</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">nDeploy cluster architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#software-components">Software components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loadbalancing">LoadBalancing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#highavailability">HighAvailability</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="nDeploy_cluster_setup.html">nDeploy cluster setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">nDeploy cluster upgrade</a></li>
 </ul>
@@ -131,7 +138,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -139,8 +146,12 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li></li>
+    <li>nDeploy cluster architecture</li>
       <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/cluster_architecture.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
@@ -149,23 +160,53 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="ndeploy-cluster-architecture">
+<h1>nDeploy cluster architecture<a class="headerlink" href="#ndeploy-cluster-architecture" title="Permalink to this headline">¶</a></h1>
+<img alt="_images/DuEt_cPanel.jpg" src="_images/DuEt_cPanel.jpg" />
+<div class="section" id="software-components">
+<h2>Software components<a class="headerlink" href="#software-components" title="Permalink to this headline">¶</a></h2>
+<p>nDeploy (Script that generates nginx configuration for all nginx servers in the cluster)
+nDeploy-cluster-slave (A trimmed down version of nDeploy that is useful on the slave)</p>
+<p>csync2 - <a class="reference external" href="http://oss.linbit.com/csync2/">http://oss.linbit.com/csync2/</a> - Synchronize the nginx config on the cluster
+unison - <a class="reference external" href="https://www.cis.upenn.edu/~bcpierce/unison/">https://www.cis.upenn.edu/~bcpierce/unison/</a> - Synchronize /home/user directory</p>
+<p>cPanel DNS cluster - DNS clustering and LoadBalancing</p>
+<p>MySQL Replication or a Dedicated MySQL server - For providing a redundant MySQL database</p>
+</div>
+<div class="section" id="loadbalancing">
+<h2>LoadBalancing<a class="headerlink" href="#loadbalancing" title="Permalink to this headline">¶</a></h2>
+<p>This happens at the DNS layer. The DNS server return multiple A records in round-robin fashion
+making each successive request to point to different servers in the cluster .</p>
+<p>Thus you achieve horizontal scalability as each server is doing request processing on its own</p>
+</div>
+<div class="section" id="highavailability">
+<h2>HighAvailability<a class="headerlink" href="#highavailability" title="Permalink to this headline">¶</a></h2>
+<p>High availability for the webstack:</p>
+<p>Modern browsers are smart enough to query DNS and redirect to next A record if it is unable
+to connect to one . There may be slight delays in connections and this may not
+work with old web browsers or commandline http clients. But Our tests with modern
+Chrome/Safari/FireFox etc returned positive results</p>
+<p>High availability for MySQL:</p>
+<p>Each nginx server is configured to connect to one or more upstream mysql servers
+thus creating a failover for scripts accessing MySQL</p>
+<p>High availability for Email:</p>
+<p>PostFix server configured on the slave acts as a queue and forward backupMX for the exim MTA on the
+cPanel master and thus provide uninterrupted SMTP for the domains</p>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nDeploy_cluster_setup.html" class="btn btn-neutral float-right" title="nDeploy cluster setup" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Logs.html" class="btn btn-neutral" title="Managing Logs" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -203,7 +244,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -219,14 +259,7 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nDeploy cluster setup &mdash; nDeploy 3.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="nDeploy 3.0 documentation" href="index.html"/>
+        <link rel="next" title="nDeploy cluster upgrade" href="Upgrade_cluster.html"/>
+        <link rel="prev" title="nDeploy cluster architecture" href="cluster_architecture.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> nDeploy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LetsEncrypt.html">LetsEncrypt with nDeploy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http_to_https_redirect.html">http to https redirection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Backends Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion or Java</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nDeploy_Administration.html">Administration of nDeploy plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">nDeploy Cluster</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cluster_architecture.html">nDeploy cluster architecture</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">nDeploy cluster setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-2-server-setup">Basic 2 server setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-rest-of-the-system-to-work-as-a-cluster">Configuring the rest of the system to work as a cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">nDeploy cluster upgrade</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">nDeploy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>nDeploy cluster setup</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/nDeploy_cluster_setup.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ndeploy-cluster-setup">
+<h1>nDeploy cluster setup<a class="headerlink" href="#ndeploy-cluster-setup" title="Permalink to this headline">¶</a></h1>
+<p>Your business is critical - Never Lose an email . Never Show a &#8220;WebSite Down!&#8221; message to a client .</p>
+<p>Never worry how your server will handle the next high profile product launch</p>
+<p>DuET cPanel provides a horizontally scalable high-performance web stack on a cPanel server that makes 3 critical infrastructure high available</p>
+<ol class="arabic simple">
+<li>High Available web stack using Round Robin DNS</li>
+<li>High Available MySQL/MariaDB using master-master replication</li>
+<li>PostFix backup MX that will accept and queue up emails in case the master goes down and deliver it to master once master is online</li>
+</ol>
+<p>DuET cPanel needs at least 2 servers ( thus the name! ) .It is best that they be identical , but except for the drives, it is not mandatory.</p>
+<ol class="arabic simple">
+<li>cPanel Licenced server (master)</li>
+<li>cPanel DNS only server (slave)</li>
+</ol>
+<p>You can add more cPanel DNS only installed slave servers at any time and scale your infrastructure horizontally</p>
+<p>The recommended method to switch to DuET cPanel is set up the DuET cpanel in a cloud ( Why Cloud?) and migrate your domains over. You can Also migrate your existing cPanel server setup to DuET cPanel , but this is not discussed here.</p>
+<div class="section" id="basic-2-server-setup">
+<h2>Basic 2 server setup<a class="headerlink" href="#basic-2-server-setup" title="Permalink to this headline">¶</a></h2>
+<p>1. Setup cPanel</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">master</span><span class="o">.</span><span class="n">sysally</span><span class="o">.</span><span class="n">net</span>  <span class="o">==&gt;</span> <span class="n">CentOS7</span> <span class="p">,</span><span class="n">cPanel</span> <span class="p">,</span><span class="n">MariaDB</span> <span class="mf">10.1</span>
+<span class="n">Install</span> <span class="n">cPanel</span> <span class="o">-</span> <span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span>
+
+<span class="n">slave</span><span class="o">.</span><span class="n">sysally</span><span class="o">.</span><span class="n">net</span> <span class="o">==&gt;</span> <span class="n">CentOS7</span> <span class="p">,</span><span class="n">cPanel</span> <span class="n">DNS</span> <span class="n">only</span>
+<span class="n">Install</span> <span class="n">DNS</span> <span class="n">Only</span> <span class="o">-</span> <span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Install nDeploy on the master . Follow <a class="reference external" href="http://ndeploy.readthedocs.io/en/latest/#installation">http://ndeploy.readthedocs.io/en/latest/#installation</a></li>
+</ol>
+<p>3. Install ansible</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span> <span class="n">libffi</span><span class="o">-</span><span class="n">devel</span> <span class="n">python</span><span class="o">-</span><span class="n">paramiko</span> <span class="n">python</span><span class="o">-</span><span class="n">jinja2</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">ansible</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>Ensure master and slave can communicate via SSH without password (SSH key based login must work from both ends)</li>
+</ol>
+<p>Login at least once from both ends and ensure the SSH key signatures are accepted and SSH login works without any prompt</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">On</span> <span class="n">Slave</span><span class="p">:</span>
+<span class="n">ssh</span> <span class="n">root</span><span class="nd">@masters</span><span class="o">-</span><span class="n">FQDN</span> <span class="o">-</span><span class="n">p</span> <span class="n">port</span>
+
+<span class="n">On</span> <span class="n">Master</span><span class="p">:</span>
+<span class="n">ssh</span> <span class="n">root</span><span class="nd">@slaves</span><span class="o">-</span><span class="n">FQDN</span> <span class="o">-</span><span class="n">p</span> <span class="n">port</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li>Setup the cluster</li>
+</ol>
+<p>On the dnsonly slave remove the cpanel installed MySQL* rpms as these prevent the postfix server to be installed</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">eg</span><span class="p">:</span>
+<span class="n">root</span><span class="nd">@slave</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa|grep MySQL</span>
+<span class="n">MySQL55</span><span class="o">-</span><span class="n">test</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">48</span><span class="o">-</span><span class="mf">1.</span><span class="n">cp1148</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">MySQL55</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">48</span><span class="o">-</span><span class="mf">1.</span><span class="n">cp1148</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">MySQL55</span><span class="o">-</span><span class="n">devel</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">48</span><span class="o">-</span><span class="mf">1.</span><span class="n">cp1148</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">MySQL55</span><span class="o">-</span><span class="n">shared</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">48</span><span class="o">-</span><span class="mf">1.</span><span class="n">cp1148</span><span class="o">.</span><span class="n">x86_64</span>
+
+<span class="n">yum</span> <span class="n">remove</span> <span class="n">MySQL55</span><span class="o">-*</span>
+</pre></div>
+</div>
+<p>On Master</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="n">hosts</span><span class="o">.</span><span class="n">sample</span> <span class="n">hosts</span>
+
+<span class="c1">#Modify the hosts file created above as required .Use FQDN&#39;s for hostnames</span>
+
+<span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">hosts</span> <span class="n">cluster</span><span class="o">.</span><span class="n">yml</span>
+
+<span class="c1">#If any of the tasks fail; you will need to check it and rerun the playbook</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-the-rest-of-the-system-to-work-as-a-cluster">
+<h2>Configuring the rest of the system to work as a cluster<a class="headerlink" href="#configuring-the-rest-of-the-system-to-work-as-a-cluster" title="Permalink to this headline">¶</a></h2>
+<p><strong>EMAIL</strong></p>
+<p>6. Setup the BackupMX</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>WHM &gt;&gt; Home »DNS Functions »Edit Zone Templates
+Modify the DNS zone template on master and set slave as a second MX entry with lower priority
+%domain%. IN A %ip%
+%domain%. IN AAAA %ipv6%
+
+%domain%. IN MX 0 %domain%.
+%domain%. IN MX 5 slave.sysally.net.
+
+WHM &gt;&gt; Home »Service Configuration »Exim Configuration Manager
+Access Lists
+Backup MX hosts =&gt; Edit
+
+and add the hostname of the slave to this list
+</pre></div>
+</div>
+<p><strong>DNS</strong></p>
+<ol class="arabic simple" start="7">
+<li>WHM &gt;&gt; Home »Clusters »DNS Cluster</li>
+</ol>
+<p>Setup DNS clustering between master and slave with DNS role as &#8220;Synchronize Changes&#8221;</p>
+<p><strong>MYSQL</strong></p>
+<p>There are 2 ways to setup MySQL to be used with nDeploy cluster.</p>
+<p>Dedicated MySQL server(recommended):</p>
+<p><em>This setup is recommeded for its simplicity .The downside is that the MySQL server is a</em>
+<em>single point of failure and Sites will show database error on the database server outage.But</em>
+<em>since the dedicated mysql server runs only mysql it can be fine tuned and downtime can be limited</em>
+<em>to cases where there is a planned downtime by the host itself (which are very few in modern cloud)</em></p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Upgrade_cluster.html" class="btn btn-neutral float-right" title="nDeploy cluster upgrade" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="cluster_architecture.html" class="btn btn-neutral" title="nDeploy cluster architecture" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Anoop P Alias.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
