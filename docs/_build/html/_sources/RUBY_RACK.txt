@@ -46,4 +46,4 @@ We can install any version of ruby using rvm
   or
   bundle install --deployment
 
-sphinxcontrib-disqus
+.. disqus::

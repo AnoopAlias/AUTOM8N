@@ -218,4 +218,5 @@ The instructions for creating your own nginX rpms are listed below. Run the foll
   It will take some time to build . Once this is complete you will have the nginx-nDeploy rpm inside nginx-pkg-64-centos7/ (for centos7)
   or nginx-pkg-64/ (centos6) folder . which you can install using rpm -Uvh command
 
-sphinxcontrib-disqus
+
+.. disqus::

@@ -79,4 +79,4 @@ that can mitigate the security risk of a shared OpCache memory to some extend
   This is set to /home/CPANELUSER/opcache-blacklist.txt
   User can upload the opcache-blacklist.txt to his homedir via FTP or ssh and paths in this file will not be cached.
 
-sphinxcontrib-disqus
+.. disqus::

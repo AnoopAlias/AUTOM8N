@@ -7,4 +7,4 @@ Refer: https://www.phusionpassenger.com/library/walkthroughs/deploy/meteor/ownse
 
 nDeploy should be set to use NODEJS backend for running meteor apps
 
-sphinxcontrib-disqus
+.. disqus::

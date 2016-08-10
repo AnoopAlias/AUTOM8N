@@ -25,4 +25,4 @@ You must setup mod_remoteip to provide httpd with the correct IP of clients and 
 
 3. Click Update , which will then make the above settings active
 
-sphinxcontrib-disqus
+.. disqus::

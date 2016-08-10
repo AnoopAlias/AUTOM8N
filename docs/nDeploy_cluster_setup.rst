@@ -127,5 +127,4 @@ Note that all the replication settings should be commented out .
 
 ::
 
-
-sphinxcontrib-disqus
+.. disqus::

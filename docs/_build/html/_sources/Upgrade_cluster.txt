@@ -17,4 +17,4 @@ On master
   cd /opt/nDeploy/conf/nDeploy-cluster
   ansible-playbook -i ./hosts cluster.yml
 
-sphinxcontrib-disqus
+.. disqus::

@@ -22,7 +22,7 @@ and the fpm pool is setup to respond with a pong
 http://domain.com/pingphpfpm
 
 will return with a pong output if php-fpm pool is working fine .
-This can be easily configured for status checking.
 
-￼
-sphinxcontrib-disqus
+This can be easily configured for status checking
+
+￼.. disqus::

@@ -13,4 +13,4 @@ for domains having _SSL vhost one can easily redirect the non-SSL domain to SSL
 
 2. Configure the SSL domain normally with whatever back-end you need.
 
-sphinxcontrib-disqus
+.. disqus::
