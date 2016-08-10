@@ -44,3 +44,4 @@ https://www.phusionpassenger.com/library/deploy/nginx/deploy/python/
 
 Additonal Environment variables can be set per application by the cPanel user in MANUAL edit mode from nDeploy
 https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_env_var
+sphinxcontrib-disqus

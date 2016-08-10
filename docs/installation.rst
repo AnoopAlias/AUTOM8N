@@ -42,3 +42,4 @@ Requirements: cPanel 11.48+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 
 
   #Note that this step will install JAVA and ElasticSearch daemon for NXAPI
   /usr/nginx/scripts/nxapi-setup.sh
+sphinxcontrib-disqus

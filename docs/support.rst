@@ -19,3 +19,4 @@ at `https://sysally.net/plans/ <https://sysally.net/plans/>`_.
 * DISCUSSION BOARDS: `https://support.sysally.net/projects/ndeploy/boards <https://support.sysally.net/projects/ndeploy/boards>`_
 * REPORT BUGS: `https://github.com/AnoopAlias/nDeploy/issues <https://github.com/AnoopAlias/nDeploy/issues>`_
 * CONTRIBUTE CODE: `https://github.com/AnoopAlias/nDeploy <https://github.com/AnoopAlias/nDeploy>`_
+sphinxcontrib-disqus

@@ -27,3 +27,4 @@ This can be easily configured for status checking.
 
 
 ￼
+sphinxcontrib-disqus

@@ -81,7 +81,9 @@
           
             
             
-                <ul>
+                <p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LetsEncrypt.html">LetsEncrypt with nDeploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http_to_https_redirect.html">http to https redirection</a></li>
@@ -167,8 +169,8 @@
 <h2>Software components<a class="headerlink" href="#software-components" title="Permalink to this headline">¶</a></h2>
 <p>nDeploy (Script that generates nginx configuration for all nginx servers in the cluster)
 nDeploy-cluster-slave (A trimmed down version of nDeploy that is useful on the slave)</p>
-<p>csync2 - <a class="reference external" href="http://oss.linbit.com/csync2/">http://oss.linbit.com/csync2/</a> - Synchronize the nginx config on the cluster
-unison - <a class="reference external" href="https://www.cis.upenn.edu/~bcpierce/unison/">https://www.cis.upenn.edu/~bcpierce/unison/</a> - Synchronize /home/user directory</p>
+<p>csync2 - <a class="reference external" href="http://oss.linbit.com/csync2/">http://oss.linbit.com/csync2/</a> - Synchronize the nginx config on the cluster</p>
+<p>unison - <a class="reference external" href="https://www.cis.upenn.edu/~bcpierce/unison/">https://www.cis.upenn.edu/~bcpierce/unison/</a> - Synchronize /home/user directory</p>
 <p>cPanel DNS cluster - DNS clustering and LoadBalancing</p>
 <p>MySQL Replication or a Dedicated MySQL server - For providing a redundant MySQL database</p>
 </div>
@@ -190,7 +192,8 @@ Chrome/Safari/FireFox etc returned positive results</p>
 thus creating a failover for scripts accessing MySQL</p>
 <p>High availability for Email:</p>
 <p>PostFix server configured on the slave acts as a queue and forward backupMX for the exim MTA on the
-cPanel master and thus provide uninterrupted SMTP for the domains</p>
+cPanel master and thus provide uninterrupted SMTP for the domains
+sphinxcontrib-disqus</p>
 </div>
 </div>
 

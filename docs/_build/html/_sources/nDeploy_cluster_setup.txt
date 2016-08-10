@@ -120,3 +120,12 @@ Dedicated MySQL server(recommended):
 *single point of failure and Sites will show database error on the database server outage.But*
 *since the dedicated mysql server runs only mysql it can be fine tuned and downtime can be limited*
 *to cases where there is a planned downtime by the host itself (which are very few in modern cloud)*
+
+In each server the /var/lib/mysql/mysql.sock and 127.0.0.1:3306 sockets are bound by nginx stream proxy.
+copy the file   /opt/nDeploy/conf/cluster_mysql.ini.sample as /etc/my.cnf and adjust accordingly.
+Note that all the replication settings should be commented out .
+
+::
+
+  
+sphinxcontrib-disqus

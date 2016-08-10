@@ -45,3 +45,4 @@ We can install any version of ruby using rvm
   bundle install --path vendor/bundle
   or
   bundle install --deployment
+sphinxcontrib-disqus

@@ -10,6 +10,7 @@ nDeploy (Script that generates nginx configuration for all nginx servers in the 
 nDeploy-cluster-slave (A trimmed down version of nDeploy that is useful on the slave)
 
 csync2 - http://oss.linbit.com/csync2/ - Synchronize the nginx config on the cluster
+
 unison - https://www.cis.upenn.edu/~bcpierce/unison/ - Synchronize /home/user directory
 
 cPanel DNS cluster - DNS clustering and LoadBalancing
@@ -31,7 +32,7 @@ High availability for the webstack:
 Modern browsers are smart enough to query DNS and redirect to next A record if it is unable
 to connect to one . There may be slight delays in connections and this may not
 work with old web browsers or commandline http clients. But Our tests with modern
-Chrome/Safari/FireFox etc returned positive results 
+Chrome/Safari/FireFox etc returned positive results
 
 High availability for MySQL:
 
@@ -42,3 +43,4 @@ High availability for Email:
 
 PostFix server configured on the slave acts as a queue and forward backupMX for the exim MTA on the
 cPanel master and thus provide uninterrupted SMTP for the domains
+sphinxcontrib-disqus

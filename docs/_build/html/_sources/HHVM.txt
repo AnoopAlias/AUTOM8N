@@ -31,3 +31,4 @@ to manage the process creation and shutdown
 
   Register the HHVM backend in nDeploy
   /opt/nDeploy/scripts/update_backend.py HHVM_NOBODY hhvm /var/run/hhvm/hhvm.sock
+sphinxcontrib-disqus
