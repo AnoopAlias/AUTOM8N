@@ -58,4 +58,5 @@ So You will need to use PROXY >> apache >> Proxy to cPanel httpd rather than PRO
   domain.com >> LETSENCRYPT CERT INSTALL >> ENABLE >> SUBMIT
 
   The cert will now get setup . You can revert the config template for non-SSL domain to the original setting now . You will also find that that there is a domain.com_SSL vhost to configure now .
+
 sphinxcontrib-disqus

@@ -24,7 +24,5 @@ http://domain.com/pingphpfpm
 will return with a pong output if php-fpm pool is working fine .
 This can be easily configured for status checking.
 
-
-
 ￼
 sphinxcontrib-disqus

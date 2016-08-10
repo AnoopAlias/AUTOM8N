@@ -78,4 +78,5 @@ that can mitigate the security risk of a shared OpCache memory to some extend
   The location of the OPcache blacklist file. A blacklist file is a text file containing the names of files that should not be accelerated, one per line. Wildcards are allowed, and prefixes can also be provided. Lines starting with a semi-colon are ignored as comments.
   This is set to /home/CPANELUSER/opcache-blacklist.txt
   User can upload the opcache-blacklist.txt to his homedir via FTP or ssh and paths in this file will not be cached.
+
 sphinxcontrib-disqus

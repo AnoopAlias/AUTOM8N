@@ -27,7 +27,7 @@ Features
 .. toctree::
    :maxdepth: 2
    :caption: Installation & Basic Configuration
-   
+
    installation
    mod_remoteip
    LetsEncrypt
@@ -72,4 +72,5 @@ Features
 
 
 * :ref:`search`
+
 sphinxcontrib-disqus
