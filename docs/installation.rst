@@ -7,7 +7,7 @@ Requirements: cPanel 11.48+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 
 * CentOS6/CloudLinux6 RPM - `https://rpm.piserve.com/CentOS/6/x86_64/ <https://rpm.piserve.com/CentOS/6/x86_64/>`_
 * CentOS7/CloudLinux7 RPM - `https://rpm.piserve.com/CentOS/7/x86_64/ <https://rpm.piserve.com/CentOS/7/x86_64/>`_
 
-#. Install EPEL repo
+1. Install EPEL repo
 ::
 
   yum -y install epel-release
