@@ -73,4 +73,4 @@ Features
 
 * :ref:`search`
 
-sphinxcontrib-disqus
+.. disqus::
