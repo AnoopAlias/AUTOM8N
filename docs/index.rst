@@ -72,5 +72,3 @@ Features
 
 
 * :ref:`search`
-
-.. disqus::
