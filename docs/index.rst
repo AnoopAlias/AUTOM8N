@@ -30,7 +30,6 @@ Features
 
    installation
    mod_remoteip
-   LetsEncrypt
    http_to_https_redirect
 
 .. toctree::

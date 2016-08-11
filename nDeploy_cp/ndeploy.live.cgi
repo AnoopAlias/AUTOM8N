@@ -85,16 +85,5 @@ if os.path.isfile("/usr/nginx/scripts/nxapi-learn.sh"):
   print('</select>')
   print('<input type="submit" value="GENERATE NAXSI WHITELIST">')
   print('</form>')
-if os.path.isfile("/opt/nDeploy/conf/letsencrypt.yaml"):
-  print('<HR>')
-  print('<form action="letsencrypt.live.cgi" method="post">')
-  print('<select name="domain">')
-  print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
-  for domain_in_subdomains in sub_domains:
-      if not domain_in_subdomains.startswith('*.'):
-          print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
-  print('</select>')
-  print('<input type="submit" value="LETSENCRYPT CERT INSTALL">')
-  print('</form>')
 print('</body>')
 print('</html>')

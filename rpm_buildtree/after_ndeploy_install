@@ -12,7 +12,6 @@ touch /opt/nDeploy/conf/profiles.yaml
 /opt/nDeploy/scripts/update_profiles.py PROXY 1005 "Proxy+cache to cPanel httpd"
 /opt/nDeploy/scripts/update_profiles.py PROXY 1006 "Proxy+cache to cPanel httpd(SSL)"
 /opt/nDeploy/scripts/update_profiles.py PROXY 1003 "nginX redirect http to https"
-/opt/nDeploy/scripts/update_profiles.py PROXY 1100 "LetsEncrypt"
 /opt/nDeploy/scripts/update_profiles.py NODEJS 4001 "A NodeJS application"
 /opt/nDeploy/scripts/update_profiles.py NODEJS 4002 "Ghost Blog"
 /opt/nDeploy/scripts/update_profiles.py RUBY 2001 "Rack or Ruby on Rails"
