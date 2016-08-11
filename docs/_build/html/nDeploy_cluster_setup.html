@@ -110,6 +110,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">nDeploy cluster setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-2-server-setup">Basic 2 server setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuring-the-rest-of-the-system-to-work-as-a-cluster">Configuring the rest of the system to work as a cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#start-the-cluster">Start the cluster</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">nDeploy cluster upgrade</a></li>
@@ -230,6 +231,10 @@
 <span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">hosts</span> <span class="n">cluster</span><span class="o">.</span><span class="n">yml</span>
 
 <span class="c1">#If any of the tasks fail; you will need to check it and rerun the playbook</span>
+
+<span class="c1">#Copy rpm repos on master to slave for php and mysql</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span>
+<span class="n">rsync</span> <span class="o">-</span><span class="n">av</span> <span class="n">EA4</span><span class="o">.</span><span class="n">repo</span> <span class="n">MariaDB101</span><span class="o">.</span><span class="n">repo</span> <span class="n">root</span><span class="nd">@slave</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
@@ -258,19 +263,150 @@ and add the hostname of the slave to this list
 </ol>
 <p>Setup DNS clustering between master and slave with DNS role as &#8220;Synchronize Changes&#8221;</p>
 <p><strong>MYSQL</strong></p>
-<p>There are 2 ways to setup MySQL to be used with nDeploy cluster.</p>
+<ol class="arabic simple" start="8">
+<li>There are 3 ways to setup MySQL to be used with nDeploy cluster.</li>
+</ol>
 <p>Dedicated MySQL server(recommended):</p>
 <p><em>This setup is recommeded for its simplicity .The downside is that the MySQL server is a</em>
 <em>single point of failure and Sites will show database error on the database server outage.But</em>
 <em>since the dedicated mysql server runs only mysql it can be fine tuned and downtime can be limited</em>
 <em>to cases where there is a planned downtime by the host itself (which are very few in modern cloud)</em></p>
-<p>In each server the /var/lib/mysql/mysql.sock and 127.0.0.1:3306 sockets are bound by nginx stream proxy.
-copy the file   /opt/nDeploy/conf/cluster_mysql.ini.sample as /etc/my.cnf and adjust accordingly.
-Note that all the replication settings should be commented out .</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">disqus</span><span class="p">::</span>
+<p>In each server the /var/lib/mysql/mysql.sock and 127.0.0.1:3306 sockets are bound by nginx stream proxy.</p>
+<p>MySQL master-master replication with nginx as proxy:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">MariaDB</span><span class="o">-</span><span class="n">server</span> <span class="n">MariaDB</span><span class="o">-</span><span class="n">client</span> <span class="n">MariaDB</span><span class="o">-</span><span class="n">shared</span> <span class="n">MariaDB</span><span class="o">-</span><span class="n">common</span> <span class="n">MariaDB</span><span class="o">-</span><span class="n">devel</span>
+
+<span class="n">On</span> <span class="n">master</span> <span class="ow">and</span> <span class="n">slave</span> <span class="n">setup</span> <span class="n">the</span> <span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="n">file</span> <span class="p">(</span> <span class="n">sample</span> <span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="n">file</span> <span class="ow">is</span> <span class="n">provided</span> <span class="k">as</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">cluster_mysql</span><span class="o">.</span><span class="n">ini</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+<span class="n">server</span><span class="o">-</span><span class="nb">id</span> <span class="ow">and</span> <span class="n">auto_increment_offset</span> <span class="n">must</span> <span class="n">be</span> <span class="n">different</span> <span class="n">on</span> <span class="n">both</span> <span class="n">servers</span> <span class="o">.</span><span class="n">Dump</span> <span class="ow">and</span> <span class="n">restore</span> <span class="nb">all</span> <span class="n">data</span> <span class="n">on</span> <span class="n">master</span> <span class="n">on</span> <span class="n">the</span> <span class="n">slave</span><span class="o">.</span>
+
+<span class="n">On</span> <span class="n">Master</span><span class="p">:</span>
+
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">grant</span> <span class="n">replication</span> <span class="n">slave</span> <span class="n">on</span> <span class="o">*.*</span> <span class="n">to</span> <span class="n">replicator</span><span class="o">@</span><span class="s1">&#39;slaves-ip&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;thesecretpass&#39;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+
+<span class="n">On</span> <span class="n">Slave</span><span class="p">:</span>
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">grant</span> <span class="n">replication</span> <span class="n">slave</span> <span class="n">on</span> <span class="o">*.*</span> <span class="n">to</span> <span class="n">replicator</span><span class="o">@</span><span class="s1">&#39;masters-ip&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;thesecretpass&#39;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+
+<span class="n">Verify</span> <span class="n">the</span> <span class="n">master</span> <span class="n">log</span> <span class="n">file</span> <span class="ow">and</span> <span class="n">position</span> <span class="n">on</span> <span class="n">both</span> <span class="n">servers</span> <span class="ow">and</span> <span class="n">configure</span> <span class="n">each</span> <span class="n">other</span> <span class="n">to</span> <span class="n">be</span> <span class="n">a</span> <span class="n">slave</span>
+
+<span class="n">On</span> <span class="n">Master</span><span class="p">:</span>
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">master</span> <span class="n">status</span><span class="p">;</span>
+<span class="o">+-------------------+----------+--------------+------------------+</span>
+<span class="o">|</span> <span class="n">File</span>              <span class="o">|</span> <span class="n">Position</span> <span class="o">|</span> <span class="n">Binlog_Do_DB</span> <span class="o">|</span> <span class="n">Binlog_Ignore_DB</span> <span class="o">|</span>
+<span class="o">+-------------------+----------+--------------+------------------+</span>
+<span class="o">|</span> <span class="n">master</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000002</span> <span class="o">|</span>      <span class="mi">641</span> <span class="o">|</span>              <span class="o">|</span>                  <span class="o">|</span>
+<span class="o">+-------------------+----------+--------------+------------------+</span>
+
+<span class="n">On</span> <span class="n">Slave</span><span class="p">:</span>
+
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">CHANGE</span> <span class="n">MASTER</span> <span class="n">TO</span> <span class="n">master_host</span><span class="o">=</span><span class="s1">&#39;masters-ip&#39;</span><span class="p">,</span> <span class="n">master_port</span><span class="o">=</span><span class="mi">13306</span><span class="p">,</span> <span class="n">master_user</span><span class="o">=</span><span class="s1">&#39;replicator&#39;</span><span class="p">,</span> <span class="n">master_password</span><span class="o">=</span><span class="s1">&#39;thesecretpass&#39;</span><span class="p">,</span> <span class="n">master_log_file</span><span class="o">=</span><span class="s1">&#39;master-bin.000002&#39;</span><span class="p">,</span> <span class="n">master_log_pos</span><span class="o">=</span><span class="mi">641</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.03</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">start</span> <span class="n">slave</span><span class="p">;</span>
+
+<span class="n">Do</span> <span class="n">the</span> <span class="n">same</span> <span class="n">by</span> <span class="n">reversing</span> <span class="n">the</span> <span class="n">server</span> <span class="n">roles</span> <span class="n">thus</span> <span class="n">making</span> <span class="n">each</span> <span class="n">server</span> <span class="n">master</span> <span class="n">to</span> <span class="ow">and</span> <span class="n">slave</span> <span class="n">of</span> <span class="n">the</span> <span class="n">other</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Setup nginX as a proxy to the MySQL service and serve the port and socket where PHP expects it to be</p>
+<p>Sample config files /etc/nginx/conf.d/mysql_stream_master.conf and /etc/nginx/conf.d/mysql_stream_slave.conf is already supplied by the RPM
+Copy and adjust it according to your setup and include it in nginx.conf from the file /etc/nginx/conf.d/main_custom_include.conf</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">On</span> <span class="n">Master</span><span class="p">:</span>
+
+<span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql_stream_master</span><span class="o">.</span><span class="n">conf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql_stream_master</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">local</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /etc/nginx/conf.d/main_custom_include.conf</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql_stream_master</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">local</span><span class="p">;</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /etc/nginx/conf.d/mysql_stream_master.conf.local</span>
+<span class="n">stream</span> <span class="p">{</span>
+    <span class="n">upstream</span> <span class="n">mysql_backend</span> <span class="p">{</span>
+        <span class="n">server</span> <span class="n">unix</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql_original</span><span class="o">.</span><span class="n">sock</span><span class="p">;</span>
+        <span class="n">server</span> <span class="n">slaves</span><span class="o">-</span><span class="n">ip</span><span class="p">:</span><span class="mi">13306</span> <span class="n">backup</span><span class="p">;</span>  <span class="c1"># Use Slaves IP here</span>
+    <span class="p">}</span>
+
+    <span class="n">server</span> <span class="p">{</span>
+        <span class="n">listen</span>     <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">3306</span><span class="p">;</span>
+        <span class="n">listen</span>     <span class="n">unix</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span><span class="p">;</span>
+        <span class="n">proxy_pass</span> <span class="n">mysql_backend</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">On</span> <span class="n">Slave</span><span class="p">:</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql_stream_slave</span><span class="o">.</span><span class="n">conf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql_stream_slave</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">local</span>
+
+<span class="n">root</span><span class="nd">@slave</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># cat /etc/nginx/conf.d/main_custom_include.conf</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql_stream_slave</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">local</span><span class="p">;</span>
+<span class="n">root</span><span class="nd">@slave</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># cat /etc/nginx/conf.d/mysql_stream_slave.conf.local</span>
+<span class="n">stream</span> <span class="p">{</span>
+    <span class="n">upstream</span> <span class="n">mysql_backend</span> <span class="p">{</span>
+        <span class="n">server</span> <span class="n">masters</span><span class="o">-</span><span class="n">ip</span><span class="p">:</span><span class="mi">13306</span><span class="p">;</span> <span class="c1"># Use Masters IP here</span>
+        <span class="n">server</span> <span class="n">unix</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql_original</span><span class="o">.</span><span class="n">sock</span> <span class="n">backup</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">server</span> <span class="p">{</span>
+        <span class="n">listen</span>     <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">3306</span><span class="p">;</span>
+        <span class="n">listen</span>     <span class="n">unix</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span><span class="p">;</span>
+        <span class="n">proxy_pass</span> <span class="n">mysql_backend</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">restart</span> <span class="n">Nginx</span> <span class="n">on</span> <span class="n">both</span> <span class="n">master</span> <span class="ow">and</span> <span class="n">slave</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="9">
+<li>Ensure database access work from both servers.</li>
+</ol>
+<p>WHM &gt;&gt; Home »SQL Services »Additional MySQL Access Hosts</p>
+<p>Add both master and slave servers IP address here</p>
+<p><strong>APPLICATION SERVERS</strong></p>
+<p>10. Setup PHP-FPM backends (for PHP) and Phusion Passenger ( RUBY , PYTHON , NODEJS) on all servers in the cluster</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">For</span> <span class="n">PHP</span> <span class="n">support</span>
+<span class="o">================</span>
+
+<span class="n">On</span> <span class="n">Master</span><span class="p">:</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="n">On</span> <span class="n">Slave</span><span class="p">:</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="n">For</span> <span class="n">RUBY</span><span class="p">,</span> <span class="n">PYTHON</span> <span class="ow">and</span> <span class="n">NODEJS</span> <span class="n">support</span>
+<span class="o">======================</span>
+<span class="n">On</span> <span class="n">Master</span><span class="p">:</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">passenger</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="n">On</span> <span class="n">Slave</span><span class="p">:</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">passenger</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 </div>
+<div class="section" id="start-the-cluster">
+<h2>Start the cluster<a class="headerlink" href="#start-the-cluster" title="Permalink to this headline">¶</a></h2>
+<p>As a last step you must provide nDeploy with a ipmap file that maps IP address on master to IP address on
+slave server for configuration generation</p>
+<ol class="arabic simple" start="11">
+<li>Make the ipmap file that maps each IP on the master to an ip on the slave</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_cluster_ipmap</span><span class="o">.</span><span class="n">py</span>
+<span class="n">usage</span><span class="p">:</span> <span class="n">update_cluster_ipmap</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">slave_hostname</span> <span class="n">ip_here</span> <span class="n">remote_ip</span>
+<span class="n">update_cluster_ipmap</span><span class="o">.</span><span class="n">py</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">too</span> <span class="n">few</span> <span class="n">arguments</span>
+
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_cluster_ipmap</span><span class="o">.</span><span class="n">py</span> <span class="n">slavehostname</span> <span class="n">ip</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">master</span> <span class="n">corresponding</span><span class="o">-</span><span class="n">ip</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">slave</span>
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">step</span> <span class="n">creates</span> <span class="n">the</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">ndeploy_cluster</span><span class="o">.</span><span class="n">yaml</span>
+
+<span class="n">Example</span><span class="p">:</span>
+
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_cluster_ipmap</span><span class="o">.</span><span class="n">py</span> <span class="n">slave</span><span class="o">.</span><span class="n">sysally</span><span class="o">.</span><span class="n">net</span> <span class="mf">162.243</span><span class="o">.</span><span class="mf">56.192</span> <span class="mf">162.243</span><span class="o">.</span><span class="mf">54.157</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /opt/nDeploy/conf/ndeploy_cluster.yaml</span>
+<span class="n">slave</span><span class="o">.</span><span class="n">sysally</span><span class="o">.</span><span class="n">net</span><span class="p">:</span>
+  <span class="n">ipmap</span><span class="p">:</span>
+    <span class="mf">162.243</span><span class="o">.</span><span class="mf">56.192</span><span class="p">:</span> <span class="mf">162.243</span><span class="o">.</span><span class="mf">54.157</span>
+</pre></div>
+</div>
+<div data-disqus-identifier="nDeploy cluster setup" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 </div>
 
 
@@ -323,6 +459,7 @@ Note that all the replication settings should be commented out .</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/disqus.js"></script>
 
   
 
