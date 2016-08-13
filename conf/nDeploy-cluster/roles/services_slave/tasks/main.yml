@@ -4,7 +4,6 @@
   service: name={{ item }} enabled=yes state=started
   with_items:
     - nginx
-    - lsyncd
 
 - name: Ensure csync2 on slave is started
   service: name=csync2.socket enabled=yes state=started
