@@ -486,7 +486,11 @@ def nginx_confgen(user_name, domain_name):
     domain_list = domain_sname + " " + domain_aname
     if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
         if yaml_parsed_cpaneldomain.get('ipv6'):
-            ipv6_addr = str(yaml_parsed_cpaneldomain.get('ipv6').keys()[0])
+            try:
+                ipv6_addr_list = yaml_parsed_cpaneldomain.get('ipv6').keys()
+                ipv6_addr = str(ipv6_addr_list[0])
+            except AttributeError:
+                ipv6_addr = None
         else:
             ipv6_addr = None
     else:
