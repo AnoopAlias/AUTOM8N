@@ -4,7 +4,9 @@ Administration of nDeploy plugin
 As a server administrator the following scripts are available for administration of the nDeploy plugin
 All tools are to be used from commandline as root
 
-**Layer7(Application layer) DDOS mitigation**
+Layer7(Application layer) DDOS mitigation
+-----------------------------------------
+
 ::
 
   To mitigate
@@ -13,12 +15,15 @@ All tools are to be used from commandline as root
   To return config to normal mode
   /opt/nDeploy/scripts/ddos_mitigate.sh disable
 
-**Automatic fixing of most errors**
+Automatic fixing of most errors
+--------------------------------
 
 The following script rebuilds all config and restarts backend app servers
+
   ``/opt/nDeploy/scripts/attempt_autofix.sh``
 
-**Managing default config for nginx vhosts**
+Managing default config for nginx vhosts
+-----------------------------------------
 
 The default config generation in nDeploy is governed by
 ::
@@ -49,7 +54,8 @@ Similar to above ;if you change the backend to PHP and use Wordpress template;
 all your domain will be served by nginx+php-fpm bypassing apache .
 Of course, all your web apps must be WordPress in such cases .
 
-**Automatic selection of template based on application detection**
+Automatic selection of template based on application detection
+---------------------------------------------------------------
 
 The following script can detect the application installed in the webroot(only!) based on filenames
 
@@ -114,7 +120,8 @@ It MAY NOT! be always accurate . The administrator must be aware of this .
 Of course, any change made by the auto_config can be reverted by the end user
 or the admin from the cPanel plugin UI.
 
-**Providing more config templates or profiles**
+Providing more config templates or profiles
+--------------------------------------------
 
 To avoid clashes between user defined template and rpm provided ones . the following numbers will be reserved for user defined templates
 ::
@@ -166,31 +173,36 @@ It needs to be registered using the following command which is an example of how
 
   root@web [~]# /opt/nDeploy/scripts/update_profiles.py PHP 5003 "Magento"
 
-**Upgrading nDeploy and nginx**
+Upgrading nDeploy and nginx
+----------------------------
 
 nDeploy-nginx is mated with a phusion passenger ruby gem .
 So we don't encourage unmanned upgrades and have therefore set enable=0 in the yum repository .
 The upgrade must be done manually by running the following commands
 ::
 
+  yum -y install https://github.com/AnoopAlias/nDeploy/raw/master/nDeploy-release-centos-1.0-3.noarch.rpm
   yum --enablerepo=ndeploy install nginx-nDeploy nDeploy
   #For setups using Phusion Passenger app server
   /usr/nginx/scripts/nginx-passenger-setup.sh
   #For upgrading PHP application server(additional packages are to upgraded via yum)
   /opt/nDeploy/scripts/easy_php_setup.sh
 
-**Temporarily disable the plugin**
+Temporarily disable the plugin
+-------------------------------
 
   ``/opt/nDeploy/scripts/cpanel-nDeploy-setup.sh disable``
 
-**Uninstall the plugin**
+Uninstall the plugin
+---------------------
 
 ::
 
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh disable
   yum remove nginx-nDeploy nDeploy
 
-**Building nginx-nDeploy from source**
+Building nginx-nDeploy from source
+-----------------------------------
 
 nDeploy is a collection of scripts and contains no binary file.
 nginx-nDeploy is distributed as a binary application .
