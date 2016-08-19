@@ -1,6 +1,6 @@
 [ndeploy]
 name=ndeploy repo
-baseurl=https://rpm.piserve.com/CentOS/$releasever/$basearch/
+baseurl=https://gnusys.net/CentOS/$releasever/$basearch/
 gpgcheck=1
-gpgkey=https://rpm.piserve.com/RPM-GPG-KEY-ndeploy
+gpgkey=https://raw.githubusercontent.com/AnoopAlias/nDeploy/master/RPM-GPG-KEY-ndeploy
 enabled=0
