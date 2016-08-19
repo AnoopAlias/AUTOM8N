@@ -15,7 +15,7 @@ Requirements: cPanel 11.48+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 
 #. Install nDeploy yum repo
 ::
 
-  yum -y install https://rpm.piserve.com/nDeploy-release-centos-1.0-3.noarch.rpm
+  yum -y install https://github.com/AnoopAlias/nDeploy/raw/master/nDeploy-release-centos-1.0-3.noarch.rpm
 
 #. Install nDeploy plugin and nginx. Be patient as this may take several minutes to complete.
 ::
