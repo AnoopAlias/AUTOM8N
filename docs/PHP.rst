@@ -1,7 +1,8 @@
 Setting up PHP
 ================
 
-**On CentOS6/CentOS7**
+On CentOS6/CentOS7
+-------------------
 
 nDeploy can work with PHP installed from the following Software Collection( SCL)
 
@@ -25,7 +26,8 @@ Additional PHP modules from remi repo can be added similar to example below
   yum --disableexcludes=all --enablerepo=remi install php56-php-pecl-memcached
   systemctl restart ndeploy_backends || service ndeploy_backends restart
 
-**On CloudLinux6/CloudLinux7**
+On CloudLinux6/CloudLinux7
+------------------------------
 
 nDeploy can work with ea-php packages installed from the CloudLinux cloudlinux-updates-testing repo
 Note that remi repo may work but the php in remi is not compiled with the CloudLinux patches so it
@@ -39,14 +41,17 @@ may not adhere to limits setup in CloudLinux
   systemctl restart ndeploy_backends || service ndeploy_backends restart
 
 
-**Where are my php logs?**
+Where are my php logs?
+*************************
 
 nDeploy creates php-fpm pool files for each user with the PHP error log file set to
 
 ``/home/CPANELUSER/logs/php_error_log``
 Users can check the logs from their FileManager/FTP/SSH login
 
-Note that this feature was added in Version 3.x . If you are upgrading from previous releases . You must run
+.. tip:: Note that this feature was added in nDeploy version 3.x. If you are upgrading from a prior release of nDeploy please see the commands below. 
+
+You must run
 ::
 
   find /opt/nDeploy/php-fpm.d/ -iname "*.conf" -not -name "nobody.conf" -exec rm -f {} \;
@@ -58,7 +63,9 @@ Note that this feature was added in Version 3.x . If you are upgrading from prev
 The above commands will recreate all php-fpm pool config with the logging setting in place.
 
 
-**ZendOpcache and security consideration**
+ZendOpcache and security considerations
+****************************************
+
 PHP-FPM shares the OpCache memory with all the user pools. On a shared hosting setup where users dont trust one another
 this can be a security risk . The workaround is to run one PHP-FPM master process per user which need
 more resource overhead and a process manager . nDeploy currently offers the following settings
