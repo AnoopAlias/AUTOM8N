@@ -192,237 +192,228 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
                     include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
                     profileyaml = installation_path + "/domain-data/" + domain_name
                     custom_config_file = domain_home + '/' + domain_name + '_nginx.include.custom.conf'
-    else:
-        if sslenabled == 1:
-            include_file = "/etc/nginx/sites-enabled/" + domain_name + "_SSL.include"
-            profileyaml = installation_path + "/domain-data/" + domain_name + "_SSL"
-            custom_config_file = domain_home + '/' + domain_name + '_SSL_nginx.include.custom.conf'
-        else:
-            include_file = "/etc/nginx/sites-enabled/" + domain_name + ".include"
-            profileyaml = installation_path + "/domain-data/" + domain_name
-            custom_config_file = domain_home + '/' + domain_name + '_nginx.include.custom.conf'
-    if os.path.isfile(profileyaml):
-        profileyaml_data_stream = open(profileyaml, 'r')
-        yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        profileyaml_data_stream.close()
-        profile_category = yaml_parsed_profileyaml.get('backend_category')
-        profile_code = str(yaml_parsed_profileyaml.get('profile'))
-        naxsi_whitelist = "/etc/nginx/sites-enabled/" + domain_name + ".nxapi.wl"
-        if not os.path.isfile(naxsi_whitelist):
-            subprocess.call("touch "+naxsi_whitelist, shell=True)
-        naxsi_whitelist_file = "include "+naxsi_whitelist
-        naxsi_status = yaml_parsed_profileyaml.get('naxsi', None)
-        naxsi_test = yaml_parsed_profileyaml.get('testnaxsi', None)
-        if naxsi_status == "1":
-            naxsi_rules_file = "include /etc/nginx/conf.d/naxsi_active.rules"
-        else:
-            naxsi_rules_file = "include /etc/nginx/conf.d/naxsi_learn.rules"
-        if naxsi_test == "1":
-            naxsi_test_result = naxsi_wl_update(domain_home, domain_name)
-            update_naxsi_test_status(profileyaml, 0)
-        profile_custom_status = yaml_parsed_profileyaml.get('customconf')
-        config_test_status = yaml_parsed_profileyaml.get('testconf')
-        if profile_custom_status == "0" and config_test_status == "0":
-            if profile_category == "PHP":
-                phpversion = yaml_parsed_profileyaml.get('backend_version')
-                php_path = yaml_parsed_profileyaml.get('backend_path')
-                pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
-                if pagespeed_status == "0":
-                    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+            if os.path.isfile(profileyaml):
+                profileyaml_data_stream = open(profileyaml, 'r')
+                yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+                profileyaml_data_stream.close()
+                profile_category = yaml_parsed_profileyaml.get('backend_category')
+                profile_code = str(yaml_parsed_profileyaml.get('profile'))
+                naxsi_whitelist = "/etc/nginx/sites-enabled/" + domain_name + ".nxapi.wl"
+                if not os.path.isfile(naxsi_whitelist):
+                    subprocess.call("touch "+naxsi_whitelist, shell=True)
+                naxsi_whitelist_file = "include "+naxsi_whitelist
+                naxsi_status = yaml_parsed_profileyaml.get('naxsi', None)
+                naxsi_test = yaml_parsed_profileyaml.get('testnaxsi', None)
+                if naxsi_status == "1":
+                    naxsi_rules_file = "include /etc/nginx/conf.d/naxsi_active.rules"
                 else:
-                    pagespeed_include = pagespeed_include_location
-                path_to_socket = php_path + "/var/run/" + user_name + ".sock"
-                php_profile_set(user_name, domain_home)
-                profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
-                profile_config_out = open(include_file, 'w')
-                for line in profile_template_file:
-                    if 'naxsi_status' in locals():
-                        line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
-                        line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
-                    line = line.replace('CPANELIP', cpanelip)
-                    line = line.replace('CPANELUSER', user_name)
-                    line = line.replace('DOMAINNAME', domain_name)
-                    line = line.replace('DOCUMENTROOT', document_root)
-                    line = line.replace('SOCKETFILE', path_to_socket)
-                    line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
-                    profile_config_out.write(line)
-                profile_template_file.close()
-                profile_config_out.close()
-            elif profile_category == "HHVM_NOBODY":
-                hhvm_nobody_socket = yaml_parsed_profileyaml.get('backend_path')
-                pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
-                if pagespeed_status == "0":
-                    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
-                else:
-                    pagespeed_include = pagespeed_include_location
-                profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
-                profile_config_out = open(include_file, 'w')
-                for line in profile_template_file:
-                    if 'naxsi_status' in locals():
-                        line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
-                        line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
-                    line = line.replace('CPANELIP', cpanelip)
-                    line = line.replace('CPANELUSER', user_name)
-                    line = line.replace('DOMAINNAME', domain_name)
-                    line = line.replace('DOCUMENTROOT', document_root)
-                    line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
-                    line = line.replace('SOCKETFILE', hhvm_nobody_socket)
-                    profile_config_out.write(line)
-                profile_template_file.close()
-                profile_config_out.close()
-            elif profile_category == "RUBY":
-                ruby_path = yaml_parsed_profileyaml.get('backend_path')
-                pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
-                if pagespeed_status == "0":
-                    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
-                else:
-                    pagespeed_include = pagespeed_include_location
-                profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
-                profile_config_out = open(include_file, 'w')
-                for line in profile_template_file:
-                    if 'naxsi_status' in locals():
-                        line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
-                        line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
-                    line = line.replace('CPANELIP', cpanelip)
-                    line = line.replace('CPANELUSER', user_name)
-                    line = line.replace('DOMAINNAME', domain_name)
-                    line = line.replace('DOCUMENTROOT', document_root)
-                    line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
-                    line = line.replace('PATHTORUBY', ruby_path)
-                    profile_config_out.write(line)
-                profile_template_file.close()
-                profile_config_out.close()
-            elif profile_category == "PYTHON":
-                python_path = yaml_parsed_profileyaml.get('backend_path')
-                pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
-                if pagespeed_status == "0":
-                    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
-                else:
-                    pagespeed_include = pagespeed_include_location
-                profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
-                profile_config_out = open(include_file, 'w')
-                for line in profile_template_file:
-                    if 'naxsi_status' in locals():
-                        line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
-                        line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
-                    line = line.replace('CPANELIP', cpanelip)
-                    line = line.replace('CPANELUSER', user_name)
-                    line = line.replace('DOMAINNAME', domain_name)
-                    line = line.replace('DOCUMENTROOT', document_root)
-                    line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
-                    line = line.replace('PATHTOPYTHON', python_path)
-                    profile_config_out.write(line)
-                profile_template_file.close()
-                profile_config_out.close()
-            elif profile_category == "NODEJS":
-                nodejs_path = yaml_parsed_profileyaml.get('backend_path')
-                pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
-                if pagespeed_status == "0":
-                    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
-                else:
-                    pagespeed_include = pagespeed_include_location
-                profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
-                profile_config_out = open(include_file, 'w')
-                for line in profile_template_file:
-                    if 'naxsi_status' in locals():
-                        line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
-                        line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
-                    line = line.replace('CPANELIP', cpanelip)
-                    line = line.replace('CPANELUSER', user_name)
-                    line = line.replace('DOMAINNAME', domain_name)
-                    line = line.replace('DOCUMENTROOT', document_root)
-                    line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
-                    line = line.replace('PATHTONODEJS', nodejs_path)
-                    profile_config_out.write(line)
-                profile_template_file.close()
-                profile_config_out.close()
-            else:
-                proxytype = yaml_parsed_profileyaml.get('backend_version')
-                proxy_port = str(yaml_parsed_profileyaml.get('backend_path'))
-                pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
-                if pagespeed_status == "0":
-                    pagespeed_include = "#PAGESPEED_NOT_ENABLED"
-                else:
-                    pagespeed_include = pagespeed_include_location
-                proxy_path = cpanelip + ":" + proxy_port
-                profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
-                profile_config_out = open(include_file, 'w')
-                for line in profile_template_file:
-                    if 'naxsi_status' in locals():
-                        line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
-                        line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
-                    line = line.replace('CPANELIP', cpanelip)
-                    line = line.replace('CPANELUSER', user_name)
-                    line = line.replace('DOMAINNAME', domain_name)
-                    line = line.replace('PROXYLOCATION', proxy_path)
-                    line = line.replace('DOCUMENTROOT', document_root)
-                    line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
-                    profile_config_out.write(line)
-                profile_template_file.close()
-                profile_config_out.close()
-                if proxytype == "railo_tomcat":
-                    railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
-                elif proxytype == "railo_resin":
-                    railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list)
-        elif config_test_status == "1":
-            if os.path.isfile(custom_config_file) and 'server_name' not in open(custom_config_file).read():
-                test_config_file = open(installation_path + "/conf/nginx.conf.test", 'r')
-                test_config_out = open(installation_path + "/conf/nginx.conf." + domain_name + ".test", 'w')
-                config = installation_path + "/conf/nginx.conf." + domain_name + ".test"
-                for line in test_config_file:
-                    line = line.replace('NGINX_INCLUDE', custom_config_file)
-                    test_config_out.write(line)
-                test_config_file.close()
-                test_config_file.close()
-                test_config_out.close()
-                nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + config + " -t", shell=True)
-                if nginx_conf_test == 0:
-                    profile_config_out = open(include_file, 'w')
-                    profile_config_in = open(custom_config_file, 'r')
-                    for line in profile_config_in:
-                        profile_config_out.write(line)
-                    profile_config_out.close()
-                    profile_config_in.close()
-                    update_custom_profile(profileyaml, 1)
-                    update_config_test_status(profileyaml, 0)
-                else:
-                    if profile_custom_status == '0':
+                    naxsi_rules_file = "include /etc/nginx/conf.d/naxsi_learn.rules"
+                if naxsi_test == "1":
+                    naxsi_test_result = naxsi_wl_update(domain_home, domain_name)
+                    update_naxsi_test_status(profileyaml, 0)
+                profile_custom_status = yaml_parsed_profileyaml.get('customconf')
+                config_test_status = yaml_parsed_profileyaml.get('testconf')
+                if profile_custom_status == "0" and config_test_status == "0":
+                    if profile_category == "PHP":
+                        phpversion = yaml_parsed_profileyaml.get('backend_version')
+                        php_path = yaml_parsed_profileyaml.get('backend_path')
+                        pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+                        if pagespeed_status == "0":
+                            pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+                        else:
+                            pagespeed_include = pagespeed_include_location
+                        path_to_socket = php_path + "/var/run/" + user_name + ".sock"
+                        php_profile_set(user_name, domain_home)
+                        profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
+                        profile_config_out = open(include_file, 'w')
+                        for line in profile_template_file:
+                            if 'naxsi_status' in locals():
+                                line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
+                                line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
+                            line = line.replace('CPANELIP', cpanelip)
+                            line = line.replace('CPANELUSER', user_name)
+                            line = line.replace('DOMAINNAME', domain_name)
+                            line = line.replace('DOCUMENTROOT', document_root)
+                            line = line.replace('SOCKETFILE', path_to_socket)
+                            line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
+                            profile_config_out.write(line)
+                        profile_template_file.close()
+                        profile_config_out.close()
+                    elif profile_category == "HHVM_NOBODY":
+                        hhvm_nobody_socket = yaml_parsed_profileyaml.get('backend_path')
+                        pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+                        if pagespeed_status == "0":
+                            pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+                        else:
+                            pagespeed_include = pagespeed_include_location
+                        profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
+                        profile_config_out = open(include_file, 'w')
+                        for line in profile_template_file:
+                            if 'naxsi_status' in locals():
+                                line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
+                                line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
+                            line = line.replace('CPANELIP', cpanelip)
+                            line = line.replace('CPANELUSER', user_name)
+                            line = line.replace('DOMAINNAME', domain_name)
+                            line = line.replace('DOCUMENTROOT', document_root)
+                            line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
+                            line = line.replace('SOCKETFILE', hhvm_nobody_socket)
+                            profile_config_out.write(line)
+                        profile_template_file.close()
+                        profile_config_out.close()
+                    elif profile_category == "RUBY":
+                        ruby_path = yaml_parsed_profileyaml.get('backend_path')
+                        pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+                        if pagespeed_status == "0":
+                            pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+                        else:
+                            pagespeed_include = pagespeed_include_location
+                        profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
+                        profile_config_out = open(include_file, 'w')
+                        for line in profile_template_file:
+                            if 'naxsi_status' in locals():
+                                line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
+                                line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
+                            line = line.replace('CPANELIP', cpanelip)
+                            line = line.replace('CPANELUSER', user_name)
+                            line = line.replace('DOMAINNAME', domain_name)
+                            line = line.replace('DOCUMENTROOT', document_root)
+                            line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
+                            line = line.replace('PATHTORUBY', ruby_path)
+                            profile_config_out.write(line)
+                        profile_template_file.close()
+                        profile_config_out.close()
+                    elif profile_category == "PYTHON":
+                        python_path = yaml_parsed_profileyaml.get('backend_path')
+                        pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+                        if pagespeed_status == "0":
+                            pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+                        else:
+                            pagespeed_include = pagespeed_include_location
+                        profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
+                        profile_config_out = open(include_file, 'w')
+                        for line in profile_template_file:
+                            if 'naxsi_status' in locals():
+                                line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
+                                line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
+                            line = line.replace('CPANELIP', cpanelip)
+                            line = line.replace('CPANELUSER', user_name)
+                            line = line.replace('DOMAINNAME', domain_name)
+                            line = line.replace('DOCUMENTROOT', document_root)
+                            line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
+                            line = line.replace('PATHTOPYTHON', python_path)
+                            profile_config_out.write(line)
+                        profile_template_file.close()
+                        profile_config_out.close()
+                    elif profile_category == "NODEJS":
+                        nodejs_path = yaml_parsed_profileyaml.get('backend_path')
+                        pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+                        if pagespeed_status == "0":
+                            pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+                        else:
+                            pagespeed_include = pagespeed_include_location
+                        profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
+                        profile_config_out = open(include_file, 'w')
+                        for line in profile_template_file:
+                            if 'naxsi_status' in locals():
+                                line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
+                                line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
+                            line = line.replace('CPANELIP', cpanelip)
+                            line = line.replace('CPANELUSER', user_name)
+                            line = line.replace('DOMAINNAME', domain_name)
+                            line = line.replace('DOCUMENTROOT', document_root)
+                            line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
+                            line = line.replace('PATHTONODEJS', nodejs_path)
+                            profile_config_out.write(line)
+                        profile_template_file.close()
+                        profile_config_out.close()
+                    else:
+                        proxytype = yaml_parsed_profileyaml.get('backend_version')
+                        proxy_port = str(yaml_parsed_profileyaml.get('backend_path'))
+                        pagespeed_status = str(yaml_parsed_profileyaml.get('pagespeed'))
+                        if pagespeed_status == "0":
+                            pagespeed_include = "#PAGESPEED_NOT_ENABLED"
+                        else:
+                            pagespeed_include = pagespeed_include_location
+                        proxy_path = cpanelip + ":" + proxy_port
+                        profile_template_file = open(installation_path + "/conf/" + profile_code + ".tmpl", 'r')
+                        profile_config_out = open(include_file, 'w')
+                        for line in profile_template_file:
+                            if 'naxsi_status' in locals():
+                                line = line.replace('#NAXSI_INCLUDE_FILE', naxsi_rules_file)
+                                line = line.replace('#NAXSI_DOMAIN_WHITELISTS', naxsi_whitelist_file)
+                            line = line.replace('CPANELIP', cpanelip)
+                            line = line.replace('CPANELUSER', user_name)
+                            line = line.replace('DOMAINNAME', domain_name)
+                            line = line.replace('PROXYLOCATION', proxy_path)
+                            line = line.replace('DOCUMENTROOT', document_root)
+                            line = line.replace('#PAGESPEED_NOT_ENABLED', pagespeed_include)
+                            profile_config_out.write(line)
+                        profile_template_file.close()
+                        profile_config_out.close()
+                        if proxytype == "railo_tomcat":
+                            railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list)
+                        elif proxytype == "railo_resin":
+                            railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list)
+                elif config_test_status == "1":
+                    if os.path.isfile(custom_config_file) and 'server_name' not in open(custom_config_file).read():
+                        test_config_file = open(installation_path + "/conf/nginx.conf.test", 'r')
+                        test_config_out = open(installation_path + "/conf/nginx.conf." + domain_name + ".test", 'w')
+                        config = installation_path + "/conf/nginx.conf." + domain_name + ".test"
+                        for line in test_config_file:
+                            line = line.replace('NGINX_INCLUDE', custom_config_file)
+                            test_config_out.write(line)
+                        test_config_file.close()
+                        test_config_file.close()
+                        test_config_out.close()
+                        nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + config + " -t", shell=True)
+                        if nginx_conf_test == 0:
+                            profile_config_out = open(include_file, 'w')
+                            profile_config_in = open(custom_config_file, 'r')
+                            for line in profile_config_in:
+                                profile_config_out.write(line)
+                            profile_config_out.close()
+                            profile_config_in.close()
+                            update_custom_profile(profileyaml, 1)
+                            update_config_test_status(profileyaml, 0)
+                        else:
+                            if profile_custom_status == '0':
+                                update_custom_profile(profileyaml, 0)
+                                update_config_test_status(profileyaml, 0)
+                            else:
+                                update_custom_profile(profileyaml, 1)
+                                update_config_test_status(profileyaml, 0)
+                    else:
                         update_custom_profile(profileyaml, 0)
                         update_config_test_status(profileyaml, 0)
+                else:
+                    if profile_category == "PHP":
+                        php_profile_set(user_name, domain_home)
+                        return
                     else:
-                        update_custom_profile(profileyaml, 1)
-                        update_config_test_status(profileyaml, 0)
+                        return
             else:
-                update_custom_profile(profileyaml, 0)
-                update_config_test_status(profileyaml, 0)
-        else:
-            if profile_category == "PHP":
-                php_profile_set(user_name, domain_home)
-                return
-            else:
-                return
-    else:
-        if sslenabled == 1:
-            try:
-                template_file = open(installation_path + "/conf/domain_data_SSL.yaml.tmpl.local", 'r')
-            except IOError:
-                template_file = open(installation_path + "/conf/domain_data_SSL.yaml.tmpl", 'r')
-        else:
-            try:
-                template_file = open(installation_path + "/conf/domain_data.yaml.tmpl.local", 'r')
-            except IOError:
-                template_file = open(installation_path + "/conf/domain_data.yaml.tmpl", 'r')
-        config_out = open(profileyaml, 'w')
-        for line in template_file:
-            line = line.replace('CPANELUSER', user_name)
-            config_out.write(line)
-        template_file.close()
-        config_out.close()
-        cpuser_uid = pwd.getpwnam(user_name).pw_uid
-        cpuser_gid = grp.getgrnam(user_name).gr_gid
-        os.chown(profileyaml, cpuser_uid, cpuser_gid)
-        os.chmod(profileyaml, 0o660)
-        nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list)
+                if sslenabled == 1:
+                    try:
+                        template_file = open(installation_path + "/conf/domain_data_SSL.yaml.tmpl.local", 'r')
+                    except IOError:
+                        template_file = open(installation_path + "/conf/domain_data_SSL.yaml.tmpl", 'r')
+                else:
+                    try:
+                        template_file = open(installation_path + "/conf/domain_data.yaml.tmpl.local", 'r')
+                    except IOError:
+                        template_file = open(installation_path + "/conf/domain_data.yaml.tmpl", 'r')
+                config_out = open(profileyaml, 'w')
+                for line in template_file:
+                    line = line.replace('CPANELUSER', user_name)
+                    config_out.write(line)
+                template_file.close()
+                config_out.close()
+                cpuser_uid = pwd.getpwnam(user_name).pw_uid
+                cpuser_gid = grp.getgrnam(user_name).gr_gid
+                os.chown(profileyaml, cpuser_uid, cpuser_gid)
+                os.chmod(profileyaml, 0o660)
+                nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list)
 
 
 def nginx_confgen(user_name, domain_name):
