@@ -85,13 +85,20 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
-<li class="toctree-l1"><a class="reference internal" href="LetsEncrypt.html">LetsEncrypt with nDeploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http_to_https_redirect.html">http to https redirection</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up PHP</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#on-centos6-centos7">On CentOS6/CentOS7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#where-are-my-php-logs">Where are my php logs?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zendopcache-and-security-considerations">ZendOpcache and security considerations</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
@@ -159,7 +166,8 @@
             
   <div class="section" id="setting-up-php">
 <h1>Setting up PHP<a class="headerlink" href="#setting-up-php" title="Permalink to this headline">¶</a></h1>
-<p><strong>On CentOS6/CentOS7</strong></p>
+<div class="section" id="on-centos6-centos7">
+<h2>On CentOS6/CentOS7<a class="headerlink" href="#on-centos6-centos7" title="Permalink to this headline">¶</a></h2>
 <p>nDeploy can work with PHP installed from the following Software Collection( SCL)</p>
 <p>1. cPanel EA-PHP repo
 <code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/easy_php_setup.sh</span></code></p>
@@ -177,7 +185,9 @@
 <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
 </pre></div>
 </div>
-<p><strong>On CloudLinux6/CloudLinux7</strong></p>
+</div>
+<div class="section" id="on-cloudlinux6-cloudlinux7">
+<h2>On CloudLinux6/CloudLinux7<a class="headerlink" href="#on-cloudlinux6-cloudlinux7" title="Permalink to this headline">¶</a></h2>
 <p>nDeploy can work with ea-php packages installed from the CloudLinux cloudlinux-updates-testing repo
 Note that remi repo may work but the php in remi is not compiled with the CloudLinux patches so it
 may not adhere to limits setup in CloudLinux</p>
@@ -187,11 +197,16 @@ may not adhere to limits setup in CloudLinux</p>
 <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
 </pre></div>
 </div>
-<p><strong>Where are my php logs?</strong></p>
+<div class="section" id="where-are-my-php-logs">
+<h3>Where are my php logs?<a class="headerlink" href="#where-are-my-php-logs" title="Permalink to this headline">¶</a></h3>
 <p>nDeploy creates php-fpm pool files for each user with the PHP error log file set to</p>
 <p><code class="docutils literal"><span class="pre">/home/CPANELUSER/logs/php_error_log</span></code>
 Users can check the logs from their FileManager/FTP/SSH login</p>
-<p>Note that this feature was added in Version 3.x . If you are upgrading from previous releases . You must run</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Note that this feature was added in nDeploy version 3.x. If you are upgrading from a prior release of nDeploy please see the commands below.</p>
+</div>
+<p>You must run</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="o">.</span><span class="n">d</span><span class="o">/</span> <span class="o">-</span><span class="n">iname</span> <span class="s2">&quot;*.conf&quot;</span> <span class="o">-</span><span class="ow">not</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;nobody.conf&quot;</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="p">{}</span> \<span class="p">;</span>
 
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
@@ -200,8 +215,10 @@ Users can check the logs from their FileManager/FTP/SSH login</p>
 </pre></div>
 </div>
 <p>The above commands will recreate all php-fpm pool config with the logging setting in place.</p>
-<p><strong>ZendOpcache and security consideration</strong>
-PHP-FPM shares the OpCache memory with all the user pools. On a shared hosting setup where users dont trust one another
+</div>
+<div class="section" id="zendopcache-and-security-considerations">
+<h3>ZendOpcache and security considerations<a class="headerlink" href="#zendopcache-and-security-considerations" title="Permalink to this headline">¶</a></h3>
+<p>PHP-FPM shares the OpCache memory with all the user pools. On a shared hosting setup where users dont trust one another
 this can be a security risk . The workaround is to run one PHP-FPM master process per user which need
 more resource overhead and a process manager . nDeploy currently offers the following settings
 that can mitigate the security risk of a shared OpCache memory to some extend</p>
@@ -219,6 +236,8 @@ that can mitigate the security risk of a shared OpCache memory to some extend</p
 </pre></div>
 </div>
 <div data-disqus-identifier="Setting up PHP" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
+</div>
 
 
            </div>
