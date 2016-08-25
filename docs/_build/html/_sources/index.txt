@@ -31,6 +31,8 @@ Features
    installation
    mod_remoteip
    http_to_https_redirect
+   brotli_compression
+   
 
 .. toctree::
    :maxdepth: 2
