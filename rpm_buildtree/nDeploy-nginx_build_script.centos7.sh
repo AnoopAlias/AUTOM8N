@@ -74,5 +74,5 @@ mkdir -p var/cache/nginx/ngx_pagespeed
 mkdir -p var/log/nginx
 mkdir -p var/run
 
-fpm -s dir -t rpm -C ../nginx-pkg-64-centos7 --vendor "PiServe Technologies" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m info@piserve.com -e --description "nDeploy custom nginx package" --url http://piserve.com --conflicts nginx -d GeoIP -d GeoIP-update -d libbrotli-nDeploy -d zlib -d openssl -d pcre -d libcurl -d memcached --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
+fpm -s dir -t rpm -C ../nginx-pkg-64-centos7 --vendor "PiServe Technologies" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m info@piserve.com -e --description "nDeploy custom nginx package" --url http://piserve.com --conflicts nginx -d GeoIP -d libbrotli-nDeploy -d zlib -d openssl -d pcre -d libcurl -d memcached --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
 rsync -av nginx-nDeploy-* root@rpm.piserve.com:/home/gnusys/public_html/CentOS/7/x86_64/
