@@ -17,12 +17,16 @@ Features
 * limit_req, limit_conn support
 * NAXSI Web Application Firewall
 * IPv6 support
-* SSL support
+* TLS(HTTPS) support
 * HTTP/2 support
+* Brotli Compression support
+* GeoIP support
 * Fast installation, upgrade and easy uninstall available via yum
 * High Available WebStack
 * High Available SMTP service
 * High Available Database (MariaDB/MySQL)
+
+.. tip:: nDeploy does not modify any files setup by cPanel .All it does is change httpd listening ports 
 
 .. toctree::
    :maxdepth: 2
