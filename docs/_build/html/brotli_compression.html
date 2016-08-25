@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="nDeploy 3.0 documentation" href="index.html"/>
-        <link rel="next" title="Setting up HHVM" href="HHVM.html"/>
+        <link rel="next" title="http2" href="http2.html"/>
         <link rel="prev" title="http to https redirection" href="http_to_https_redirect.html"/> 
 
   
@@ -87,6 +87,7 @@
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http_to_https_redirect.html">http to https redirection</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">brotli_compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
 <ul>
@@ -165,6 +166,7 @@
 a bit more CPU intensive than gzip. If your clients want more faster pageload and you have CPU resources to spare,
 brotli can be enabled using the following command</p>
 <p><code class="docutils literal"><span class="pre">echo</span> <span class="pre">&quot;include</span> <span class="pre">/etc/nginx/conf.d/brotli.conf;&quot;</span> <span class="pre">&gt;&gt;</span> <span class="pre">/etc/nginx/conf.d/custom_include.conf</span></code></p>
+<p>You can check if brotli is enabled using : <a class="reference external" href="https://tools.keycdn.com/brotli-test">https://tools.keycdn.com/brotli-test</a></p>
 <p>All newer Versions of Chrome,FireFox,Opera support brotli and prefers brotli over other compression if enabled</p>
 <div data-disqus-identifier="brotli_compression" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 
@@ -175,7 +177,7 @@ brotli can be enabled using the following command</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="HHVM.html" class="btn btn-neutral float-right" title="Setting up HHVM" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="http2.html" class="btn btn-neutral float-right" title="http2" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="http_to_https_redirect.html" class="btn btn-neutral" title="http to https redirection" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

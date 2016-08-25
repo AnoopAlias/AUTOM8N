@@ -11,6 +11,8 @@ brotli can be enabled using the following command
 
 ``echo "include /etc/nginx/conf.d/brotli.conf;" >> /etc/nginx/conf.d/custom_include.conf``
 
+You can check if brotli is enabled using : https://tools.keycdn.com/brotli-test
+
 All newer Versions of Chrome,FireFox,Opera support brotli and prefers brotli over other compression if enabled
 
 .. disqus::

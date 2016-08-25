@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; nDeploy 3.0 documentation</title>
+  <title>http2 &mdash; nDeploy 3.0 documentation</title>
   
 
   
@@ -30,7 +30,9 @@
   
 
   
-    <link rel="top" title="nDeploy 3.0 documentation" href="index.html"/> 
+    <link rel="top" title="nDeploy 3.0 documentation" href="index.html"/>
+        <link rel="next" title="Setting up HHVM" href="HHVM.html"/>
+        <link rel="prev" title="brotli_compression" href="brotli_compression.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -65,7 +67,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -80,12 +82,12 @@
             
             
                 <p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http_to_https_redirect.html">http to https redirection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">http2</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
 <ul>
@@ -134,7 +136,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -142,8 +144,12 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li></li>
+    <li>http2</li>
       <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/http2.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
@@ -152,23 +158,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="http2">
+<h1>http2<a class="headerlink" href="#http2" title="Permalink to this headline">¶</a></h1>
+<p>http2 <a class="reference external" href="https://http2.github.io/faq/">https://http2.github.io/faq/</a> is enabled by default in nDeploy generated configuration.</p>
+<p>Note that the protocol will be active only for TLS enabled websites over <a class="reference external" href="https://">https://</a></p>
+<p>You can test websites online using : <a class="reference external" href="https://tools.keycdn.com/http2-test">https://tools.keycdn.com/http2-test</a></p>
+<div data-disqus-identifier="http2" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="HHVM.html" class="btn btn-neutral float-right" title="Setting up HHVM" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="brotli_compression.html" class="btn btn-neutral" title="brotli_compression" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -206,7 +215,7 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
+      <script type="text/javascript" src="_static/disqus.js"></script>
 
   
 
@@ -222,14 +231,7 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

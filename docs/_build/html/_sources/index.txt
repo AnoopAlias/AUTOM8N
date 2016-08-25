@@ -32,7 +32,7 @@ Features
    mod_remoteip
    http_to_https_redirect
    brotli_compression
-   
+   http2
 
 .. toctree::
    :maxdepth: 2
