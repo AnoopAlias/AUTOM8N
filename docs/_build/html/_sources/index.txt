@@ -6,7 +6,7 @@
 nDeploy
 =======
 
-
+.. tip:: nDeploy does not modify any files or configuration  setup by cPanel other than httpd listening port
 
 Features
 ========
@@ -26,7 +26,6 @@ Features
 * High Available SMTP service
 * High Available Database (MariaDB/MySQL)
 
-.. tip:: nDeploy does not modify any files setup by cPanel .All it does is change httpd listening ports 
 
 .. toctree::
    :maxdepth: 2
