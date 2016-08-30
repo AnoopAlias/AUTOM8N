@@ -86,17 +86,18 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http_to_https_redirect.html">http to https redirection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up PHP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#on-centos6-centos7">On CentOS6/CentOS7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#where-are-my-php-logs">Where are my php logs?</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#zendopcache-and-security-considerations">ZendOpcache and security considerations</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#where-are-my-php-logs">Where are my php logs?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#zendopcache-and-security-considerations">ZendOpcache and security considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#per-user-php-ini-custom-settings">Per user php.ini custom settings</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
@@ -197,8 +198,9 @@ may not adhere to limits setup in CloudLinux</p>
 <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
 </pre></div>
 </div>
+</div>
 <div class="section" id="where-are-my-php-logs">
-<h3>Where are my php logs?<a class="headerlink" href="#where-are-my-php-logs" title="Permalink to this headline">¶</a></h3>
+<h2>Where are my php logs?<a class="headerlink" href="#where-are-my-php-logs" title="Permalink to this headline">¶</a></h2>
 <p>nDeploy creates php-fpm pool files for each user with the PHP error log file set to</p>
 <p><code class="docutils literal"><span class="pre">/home/CPANELUSER/logs/php_error_log</span></code>
 Users can check the logs from their FileManager/FTP/SSH login</p>
@@ -217,7 +219,7 @@ Users can check the logs from their FileManager/FTP/SSH login</p>
 <p>The above commands will recreate all php-fpm pool config with the logging setting in place.</p>
 </div>
 <div class="section" id="zendopcache-and-security-considerations">
-<h3>ZendOpcache and security considerations<a class="headerlink" href="#zendopcache-and-security-considerations" title="Permalink to this headline">¶</a></h3>
+<h2>ZendOpcache and security considerations<a class="headerlink" href="#zendopcache-and-security-considerations" title="Permalink to this headline">¶</a></h2>
 <p>PHP-FPM shares the OpCache memory with all the user pools. On a shared hosting setup where users dont trust one another
 this can be a security risk . The workaround is to run one PHP-FPM master process per user which need
 more resource overhead and a process manager . nDeploy currently offers the following settings
@@ -235,8 +237,13 @@ that can mitigate the security risk of a shared OpCache memory to some extend</p
 <span class="n">User</span> <span class="n">can</span> <span class="n">upload</span> <span class="n">the</span> <span class="n">opcache</span><span class="o">-</span><span class="n">blacklist</span><span class="o">.</span><span class="n">txt</span> <span class="n">to</span> <span class="n">his</span> <span class="n">homedir</span> <span class="n">via</span> <span class="n">FTP</span> <span class="ow">or</span> <span class="n">ssh</span> <span class="ow">and</span> <span class="n">paths</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">file</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">cached</span><span class="o">.</span>
 </pre></div>
 </div>
-<div data-disqus-identifier="Setting up PHP" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 </div>
+<div class="section" id="per-user-php-ini-custom-settings">
+<h2>Per user php.ini custom settings<a class="headerlink" href="#per-user-php-ini-custom-settings" title="Permalink to this headline">¶</a></h2>
+<p>php-fpm lets users configure settings of type PHP_INI_PERDIR and PHP_INI_USER in .user.ini files</p>
+<p>Ref: <a class="reference external" href="http://php.net/manual/en/configuration.file.per-user.php">http://php.net/manual/en/configuration.file.per-user.php</a></p>
+<p>the settings can be provided in ini format(same as php.ini) and the file must be named .user.ini</p>
+<div data-disqus-identifier="Setting up PHP" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 </div>
 
 

@@ -44,7 +44,7 @@ RETVAL=0
 
 start() {
     echo -n $"Starting $prog: "
-
+    ulimit -n 64000
     daemon --pidfile=${pidfile} ${nginx} -c ${conffile}
     RETVAL=$?
     echo

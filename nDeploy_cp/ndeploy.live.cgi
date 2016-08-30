@@ -52,7 +52,7 @@ print('<form action="selector.live.cgi" method="post">')
 print('<select name="domain">')
 if main_domain.startswith('*.'):
     print(('<option value="_wildcard_.'+main_domain.replace('*.', '')+'">'+main_domain+'</option>'))
-    if os.path.isfile(installation_path+"/domain-data/"+main_domain+"_SSL"):
+    if os.path.isfile(installation_path+"/domain-data/_wildcard_."+main_domain.replace('*.', '')+"_SSL"):
         print(('<option value="_wildcard_.'+main_domain.replace('*.', '')+'_SSL">'+main_domain+'(SSL)</option>'))
 else:
     print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
@@ -62,7 +62,7 @@ else:
 for domain_in_subdomains in sub_domains:
     if domain_in_subdomains.startswith('*.'):
         print(('<option value="_wildcard_.'+domain_in_subdomains.replace('*.', '')+'">'+domain_in_subdomains+'</option>'))
-        if os.path.isfile(installation_path+"/domain-data/" + domain_in_subdomains + "_SSL"):
+        if os.path.isfile(installation_path+"/domain-data/_wildcard_." + domain_in_subdomains.replace('*.', '') + "_SSL"):
             print(('<option value="_wildcard_.'+domain_in_subdomains.replace('*.', '')+'_SSL">'+domain_in_subdomains+'(SSL)</option>'))
     else:
         print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))

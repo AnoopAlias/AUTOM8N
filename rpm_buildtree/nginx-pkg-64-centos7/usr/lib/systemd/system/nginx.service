@@ -2,7 +2,7 @@
 Description=nginx-nDeploy - high performance web server
 Documentation=http://nginx.org/en/docs/
 After=network.target remote-fs.target nss-lookup.target
- 
+
 [Service]
 Type=forking
 PIDFile=/var/run/nginx.pid
@@ -11,6 +11,7 @@ ExecStart=/usr/sbin/nginx -c /etc/nginx/nginx.conf
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 PrivateTmp=true
- 
+LimitNOFILE=49152
+
 [Install]
 WantedBy=multi-user.target
