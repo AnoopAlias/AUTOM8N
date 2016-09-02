@@ -6,10 +6,14 @@
 nDeploy
 =======
 
-.. tip:: nDeploy does not modify any files or configuration  setup by cPanel other than httpd listening port
+Eliminate downtime, replace cPanel's Apache Webstack with NGINX and PHP-FPM, and horizontally scale your web applications.
+
+
+.. tip:: nDeploy does not modify any files or configuration setup by cPanel other than httpd listening port.
 
 Features
-========
+---------
+
 * Supports CentOS6 CentOS7 CloudLinux6 CloudLinux7 on x86_64 arch
 * Multiple backends - Apache HTTPD, PHP-FPM, HHVM, ColdFusion/Java, Python, Ruby on Rails, NodeJS
 * Supports caching/conditional cache purging in proxy and FastCGI(ngx_cache_purge)
@@ -22,7 +26,7 @@ Features
 * Brotli Compression support
 * GeoIP support
 * Fast installation, upgrade and easy uninstall available via yum
-* High Available WebStack
+* High Available Webstack
 * High Available SMTP service
 * High Available Database (MariaDB/MySQL)
 
