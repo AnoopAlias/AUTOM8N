@@ -6,6 +6,8 @@
 nDeploy
 =======
 
+.. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png
+
 Eliminate downtime, replace cPanel's Apache Webstack with NGINX and PHP-FPM, and horizontally scale your web applications.
 
 
