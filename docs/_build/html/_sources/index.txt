@@ -13,7 +13,7 @@ Eliminate downtime, replace cPanel's Apache httpd Webstack with NGINX cluster, a
 
 .. tip:: neatly rpm packaged, nDeploy does not modify any files or configuration setup by cPanel other than httpd listening port
 
-.. tip:: nDeploy is OpenSource and ready to fork on GitHub. No vendor lock-in guarenteed
+.. tip:: nDeploy is OpenSource and ready to fork on GitHub. No vendor lock-in and lesser bugs
 
 Features
 ---------
