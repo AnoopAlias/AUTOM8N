@@ -160,14 +160,14 @@
   <div class="section" id="ndeploy">
 <h1>nDeploy<a class="headerlink" href="#ndeploy" title="Permalink to this headline">¶</a></h1>
 <img alt="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png" />
-<p>Eliminate downtime, replace cPanel&#8217;s Apache Webstack with NGINX cluster, and horizontally scale your web applications.</p>
+<p>Eliminate downtime, replace cPanel&#8217;s Apache httpd Webstack with NGINX cluster, and horizontally scale your web applications.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">nDeploy does not modify any files or configuration setup by cPanel other than httpd listening port</p>
+<p class="last">neatly rpm packaged, nDeploy does not modify any files or configuration setup by cPanel other than httpd listening port</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">nDeploy is OpenSource and thus prevent vendor lockin</p>
+<p class="last">nDeploy is OpenSource and ready to fork on GitHub. No vendor lock-in guarenteed</p>
 </div>
 <div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
@@ -177,16 +177,17 @@
 <li>Supports caching/conditional cache purging in proxy and FastCGI(ngx_cache_purge)</li>
 <li>Google PageSpeed support</li>
 <li>limit_req, limit_conn support</li>
-<li>NAXSI Web Application Firewall</li>
+<li>NAXSI Web Application Firewall - (mod_security via libmodsecurity support coming soon!)</li>
 <li>IPv6 support</li>
 <li>TLS(HTTPS) support</li>
 <li>HTTP/2 support</li>
 <li>Brotli Compression support</li>
 <li>GeoIP support</li>
-<li>Fast installation, upgrade and easy uninstall available via yum</li>
-<li>High Available Webstack</li>
-<li>High Available SMTP service</li>
-<li>High Available Database (MariaDB/MySQL)</li>
+<li>Fast installation, upgrade and easy uninstall available via yum/rpm.</li>
+<li>High Available Webstack - csync2 config sync and unison file sync for nginX</li>
+<li>High Available SMTP service - PostFix backup MX automatically configured for all domains</li>
+<li>High Available Database (MariaDB/MySQL) - MySQL replication(master-master/galera) &amp; tcp loadbalancing</li>
+<li>Clustering in the application layer(csync2,unison,rsync).Easy to troubleshoot and fix errors</li>
 </ul>
 <div class="toctree-wrapper compound" id="installation-basic-configuration">
 <p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span><a class="headerlink" href="#installation-basic-configuration" title="Permalink to this toctree">¶</a></p>

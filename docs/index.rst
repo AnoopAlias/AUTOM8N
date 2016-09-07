@@ -8,12 +8,12 @@ nDeploy
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png
 
-Eliminate downtime, replace cPanel's Apache Webstack with NGINX cluster, and horizontally scale your web applications.
+Eliminate downtime, replace cPanel's Apache httpd Webstack with NGINX cluster, and horizontally scale your web applications.
 
 
-.. tip:: nDeploy does not modify any files or configuration setup by cPanel other than httpd listening port
+.. tip:: neatly rpm packaged, nDeploy does not modify any files or configuration setup by cPanel other than httpd listening port
 
-.. tip:: nDeploy is OpenSource and thus prevent vendor lockin
+.. tip:: nDeploy is OpenSource and ready to fork on GitHub. No vendor lock-in guarenteed
 
 Features
 ---------
@@ -23,16 +23,17 @@ Features
 * Supports caching/conditional cache purging in proxy and FastCGI(ngx_cache_purge)
 * Google PageSpeed support
 * limit_req, limit_conn support
-* NAXSI Web Application Firewall
+* NAXSI Web Application Firewall - (mod_security via libmodsecurity support coming soon!)
 * IPv6 support
 * TLS(HTTPS) support
 * HTTP/2 support
 * Brotli Compression support
 * GeoIP support
-* Fast installation, upgrade and easy uninstall available via yum
-* High Available Webstack
-* High Available SMTP service
-* High Available Database (MariaDB/MySQL)
+* Fast installation, upgrade and easy uninstall available via yum/rpm.
+* High Available Webstack - csync2 config sync and unison file sync for nginX
+* High Available SMTP service - PostFix backup MX automatically configured for all domains
+* High Available Database (MariaDB/MySQL) - MySQL replication(master-master/galera) & tcp loadbalancing
+* Clustering in the application layer(csync2,unison,rsync).Easy to troubleshoot and fix errors
 
 
 .. toctree::
