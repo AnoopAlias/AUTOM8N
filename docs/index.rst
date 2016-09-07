@@ -11,9 +11,9 @@ nDeploy
 Eliminate downtime, replace cPanel's Apache Webstack with NGINX cluster, and horizontally scale your web applications.
 
 
-.. tip:: nDeploy does not modify any files or configuration setup by cPanel other than httpd listening port.
+.. tip:: nDeploy does not modify any files or configuration setup by cPanel other than httpd listening port
 
-.. tip:: nDeploy is OpenSource and thus prevent vendor lockin. .
+.. tip:: nDeploy is OpenSource and thus prevent vendor lockin
 
 Features
 ---------

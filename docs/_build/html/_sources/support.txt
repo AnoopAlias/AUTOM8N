@@ -27,4 +27,4 @@ How can I contribute?
 
 * contribute code - easy to start with https://github.com/AnoopAlias/nDeploy/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22
 * contribute to the documentation - clone the github repo.Edit the .rst files in the doc folder and submit a pull request
-* Upwote the following cPanel feature request https://features.cpanel.net/topic/whm-hook-for-ip-change-and-ssl-install
+* Upvote the following cPanel feature request https://features.cpanel.net/topic/whm-hook-for-ip-change-and-ssl-install
