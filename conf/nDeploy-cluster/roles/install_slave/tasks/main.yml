@@ -8,7 +8,7 @@
 - name: Install nDeploy repo
   yum: name={{ item }} state=present disable_gpg_check=yes validate_certs=False
   with_items:
-    - https://rpm.piserve.com/nDeploy-release-centos-1.0-2.noarch.rpm
+    - https://github.com/AnoopAlias/nDeploy/raw/master/nDeploy-release-centos-1.0-3.noarch.rpm
 
 - name: Install nDeploy cluster slave rpm packages
   yum: name={{ item }} enablerepo=ndeploy,epel state=present
