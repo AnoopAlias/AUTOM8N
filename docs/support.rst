@@ -12,6 +12,8 @@ commercially. *This is like you getting a Jumbo Jet for free but hiring a pilot 
 Commercial Support for nDeploy, nDeploy-cluster, DuET cPanel, etc is available with the purchase of a SysAdmin Plan
 at `https://sysally.net/plans/ <https://sysally.net/plans/>`_.
 
+24x7 paid email support : support@sysally.net
+
 Community Support
 ------------------
 
