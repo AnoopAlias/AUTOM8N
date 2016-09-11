@@ -9,6 +9,9 @@ import sys
 import pwd
 import grp
 from lxml import etree
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 
 
 __author__ = "Anoop P Alias"
