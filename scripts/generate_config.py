@@ -9,8 +9,10 @@ import sys
 import pwd
 import grp
 from lxml import etree
+import jinja2
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
 
 
 
@@ -476,6 +478,14 @@ def nginx_confgen(user_name, domain_name):
             sslcombinedcert = sslcertificatefile
             template_file = installation_path + "/conf/server_ssl.tmpl"
         nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
+        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+        templateEnv = jinja2.Environment( loader=templateLoader )
+        TEMPLATE_FILE = "server_ssl.tmpl"
+        template = templateEnv.get_template( TEMPLATE_FILE )
+        templateVars = { "title" : "Test Example",
+                 "description" : "A simple inquiry of function." }
+        outputText = template.render( templateVars )
+
         config_out = open("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.conf", 'w')
         with open(template_file) as my_template_file:
             for line in my_template_file:
