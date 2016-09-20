@@ -7,10 +7,10 @@
 ; used in logs and stats. There is no limitation on the number of pools which
 ; FPM can handle. Your system will tell you anyway :)
 
-; Start a new pool named 'CPANELUSER'.
+; Start a new pool named '{{ CPANELUSER }}'.
 ; the variable $pool can we used in any directive and will be replaced by the
-; pool name ('CPANELUSER' here)
-[CPANELUSER]
+; pool name ('{{ CPANELUSER }}' here)
+[{{ CPANELUSER }}]
 
 ; Per pool prefix
 ; It only applies on the following directives:
@@ -380,9 +380,9 @@ security.limit_extensions = .php .php3 .php4 .php5
 ; Default Value: clean env
 ;env[HOSTNAME] = $HOSTNAME
 ;env[PATH] = /usr/local/bin:/usr/bin:/bin
-;env[TMP] = /tmp
-;env[TMPDIR] = /tmp
-;env[TEMP] = /tmp
+env[TMP] = {{ HOMEDIR }}/tmp
+env[TMPDIR] = {{ HOMEDIR }}/tmp
+env[TEMP] = {{ HOMEDIR }}/tmp
 
 ; Additional php.ini defines, specific to this pool of workers. These settings
 ; overwrite the values previously defined in the php.ini. The directives are the
@@ -404,6 +404,6 @@ security.limit_extensions = .php .php3 .php4 .php5
 ; Default Value: nothing is defined by default except the values in php.ini and
 ;                specified at startup with the -d argument
 php_admin_flag[log_errors] = on
-php_admin_value[error_log] = ERRORLOGFILE
-php_admin_value[opcache.restrict_api] = DOCUMENTROOT
-php_admin_value[opcache.blacklist_filename] = OPCACHEBLACKLIST
+php_admin_value[error_log] = {{ HOMEDIR }}/logs/php_error_log
+php_admin_value[opcache.restrict_api] = {{ HOMEDIR }}
+php_admin_value[opcache.blacklist_filename] = {{ HOMEDIR }}/opcache-blacklist.txt
