@@ -478,6 +478,10 @@ def nginx_confgen(user_name, domain_name):
             sslcombinedcert = sslcertificatefile
             template_file = installation_path + "/conf/server_ssl.tmpl"
         nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
+
+
+
+
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment( loader=templateLoader )
         TEMPLATE_FILE = "server_ssl.tmpl"
@@ -501,6 +505,12 @@ def nginx_confgen(user_name, domain_name):
                 config_out.write(line)
         config_out.close()
         my_template_file.close()
+
+
+
+
+
+
         if clusterenabled:
             for server in serverlist:
                 connect_server_dict = cluster_data_yaml_parsed.get(server)
