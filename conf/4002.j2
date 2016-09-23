@@ -1,8 +1,7 @@
-#PAGESPEED_NOT_ENABLED;
-root DOCUMENTROOT/public;
+#The Ghost blog application;
+root {{ DOCUMENTROOT }}/public;
 passenger_enabled on;
 passenger_app_type node;
 passenger_startup_file index.js;
-passenger_nodejs PATHTONODEJS;
-
+passenger_nodejs {{ PATHTONODEJS }};
 include /etc/nginx/conf.d/cpanel_services.conf;

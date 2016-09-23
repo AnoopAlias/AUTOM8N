@@ -1,0 +1,5 @@
+# A Ruby Rack application
+root {{ DOCUMENTROOT }}/public;
+passenger_enabled on;
+passenger_ruby {{ PATHTORUBY }};
+include /etc/nginx/conf.d/cpanel_services.conf;

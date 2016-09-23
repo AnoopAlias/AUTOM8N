@@ -1,0 +1,147 @@
+{% if WWWREDIRECT == "tononwww" %}
+server {
+listen  {{ CPANELIP }}:80;
+{% if IPVSIX == 1 %}
+listen  [{{ CPIPVSIX }}]:80;
+{% endif %}
+{% if SSL == 1 %}
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
+{% if IPVSIX == 1 %}
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
+{% endif %}
+ssl_certificate {{ CPANELSSLCRT }};
+ssl_certificate_key {{ CPANELSSLKEY }};
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_prefer_server_ciphers on;
+ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+ssl_session_cache shared:SSL:10m;
+ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+ssl_session_timeout  5m;
+{% if OCSP == 1 %}
+ssl_stapling on;
+ssl_stapling_verify on;
+ssl_trusted_certificate {{ CPANELCACERT }};
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver_timeout 5s;
+{% endif %}
+{% endif %}
+server_name www.{{ DOMAINNAME }};
+return 301 $scheme://{{ DOMAINNAME }}$request_uri;
+}
+{% endif %}
+{% if WWWREDIRECT == "towww" %}
+server {
+listen  {{ CPANELIP }}:80;
+{% if IPVSIX == 1 %}
+listen  [{{ CPIPVSIX }}]:80;
+{% endif %}
+{% if SSL == 1 %}
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
+{% if IPVSIX == 1 %}
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
+{% endif %}
+ssl_certificate {{ CPANELSSLCRT }};
+ssl_certificate_key {{ CPANELSSLKEY }};
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_prefer_server_ciphers on;
+ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+ssl_session_cache shared:SSL:10m;
+ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+ssl_session_timeout  5m;
+{% if OCSP == 1 %}
+ssl_stapling on;
+ssl_stapling_verify on;
+ssl_trusted_certificate {{ CPANELCACERT }};
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver_timeout 5s;
+{% endif %}
+{% endif %}
+server_name {{ DOMAINNAME }};
+return 301 $scheme://www.{{ DOMAINNAME }}$request_uri;
+}
+{% endif %}
+
+server {
+listen    {{ CPANELIP }}:80;
+{% if IPVSIX == 1 %}
+listen  [{{ CPIPVSIX }}]:80;
+{% endif %}
+server_name  {{ DOMAINLIST }};
+access_log /usr/local/apache/domlogs/{{ DOMAINNAME }} combined buffer=32k flush=5m;
+access_log /usr/local/apache/domlogs/{{ DOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+{% if AUTOINDEX == 1 %}
+autoindex on;
+{% endif %}
+{% if REDIRECT_TO_SSL == 1 %}
+return 301 https://$host$request_uri;
+{% else %}
+{% if CLICKJACKING_PROTECT == 1 %}
+add_header X-Frame-Options SAMEORIGIN;
+{% endif %}
+{% if DISABLE_CONTENTTYPE_SNIFFING == 1 %}
+add_header X-Content-Type-Options nosniff;
+{% endif %}
+{% if XSS_FILTER == 1 %}
+add_header X-XSS-Protection "1; mode=block";
+{% endif %}
+{% if CONTENT_SECURITY_POLICY == 1 %}
+add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
+{% endif %}
+{% if PAGESPEED_ENABLED == 1 %}
+include /etc/nginx/conf.d/pagespeed.conf;
+{% endif %}
+include /etc/nginx/sites-enabled/{{ DOMAINNAME }}.include;
+{% endif %}
+}
+
+{% if SSL == 1 %}
+server {
+listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
+{% if IPVSIX == 1 %}
+listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
+{% endif %}
+ssl_certificate {{ CPANELSSLCRT }};
+ssl_certificate_key {{ CPANELSSLKEY }};
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_prefer_server_ciphers on;
+ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+ssl_session_cache shared:SSL:10m;
+ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+ssl_session_timeout  5m;
+{% if OCSP == 1 %}
+ssl_stapling on;
+ssl_stapling_verify on;
+ssl_trusted_certificate {{ CPANELCACERT }};
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver_timeout 5s;
+{% endif %}
+server_name  {{ DOMAINLIST }};
+access_log /usr/local/apache/domlogs/{{ DOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
+access_log /usr/local/apache/domlogs/{{ DOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+{% if AUTOINDEX == 1 %}
+autoindex on;
+{% endif %}
+{% if HSTS == 1 %}
+add_header Strict-Transport-Security "max-age=86400" always;
+{% endif %}
+{% if CLICKJACKING_PROTECT == 1 %}
+add_header X-Frame-Options SAMEORIGIN;
+{% endif %}
+{% if DISABLE_CONTENTTYPE_SNIFFING == 1 %}
+add_header X-Content-Type-Options nosniff;
+{% endif %}
+{% if XSS_FILTER == 1 %}
+add_header X-XSS-Protection "1; mode=block";
+{% endif %}
+{% if CONTENT_SECURITY_POLICY == 1 %}
+add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
+{% endif %}
+{% if PAGESPEED_ENABLED == 1 %}
+include /etc/nginx/conf.d/pagespeed.conf;
+{% endif %}
+{% if BROTLI_ENABLED == 1 %}
+include /etc/nginx/conf.d/brotli.conf;
+{% endif %}
+include /etc/nginx/sites-enabled/{{ DOMAINNAME }}.include;
+}
+{% endif %}

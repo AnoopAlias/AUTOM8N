@@ -1,0 +1,38 @@
+#Magento
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+location / {
+try_files $uri $uri/ /index.php;
+}
+location ^~ /app/                { deny all; }
+location ^~ /includes/           { deny all; }
+location ^~ /lib/                { deny all; }
+location ^~ /media/downloadable/ { deny all; }
+location ^~ /pkginfo/            { deny all; }
+location ^~ /report/config.xml   { deny all; }
+location ^~ /var/                { deny all; }
+location ~ .php/ {
+rewrite ^(.*.php)/ $1 last;
+}
+#Uncomment Following if you are using Fooman Speedster
+#rewrite ^/minify/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
+# rewrite ^/skin/m/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
+#location /lib/minify/ {
+#        allow all;
+#}
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
+expires 1d;
+}
+location ~ \.php$ {
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+#fastcgi_param  MAGE_RUN_CODE default;
+#fastcgi_param  MAGE_RUN_TYPE store;
+include /etc/nginx/fastcgi_params;
+}
+include /etc/nginx/conf.d/cpanel_services.conf;

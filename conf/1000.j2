@@ -1,0 +1,21 @@
+#Proxy to cPanel Apache httpd service
+location / {
+access_log  off;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    32k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ PROXYLOCATION }};
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+}
