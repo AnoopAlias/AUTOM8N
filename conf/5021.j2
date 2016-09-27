@@ -1,46 +1,31 @@
-#PAGESPEED_NOT_ENABLED;
-root DOCUMENTROOT;
+#WHMCS
+root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
-
-
 # Announcements
 rewrite ^/announcements/([0-9]+)/[a-zA-Z0-9-]+\.html$ /announcements.php?id=$1 last;
 rewrite ^/announcements$ /announcements.php last;
-
 # Downloads
 rewrite ^/downloads/([0-9]+)/([^/]*)$ /downloads.php?action=displaycat&catid=$1 last;
 rewrite ^/downloads$ /downloads.php last;
-
 #Knowledgebase
 rewrite ^/knowledgebase/([0-9]+)/[a-zA-Z0-9-]+\.html$ /knowledgebase.php?action=displayarticle&id=$1 last;
 rewrite ^/knowledgebase/([0-9]+)/([^/]*)$ /knowledgebase.php?action=displaycat&catid=$1 last;
 rewrite ^/knowledgebase$ /knowledgebase.php last;
-
-
 location / {
-        try_files $uri $uri/ /index.php;
+try_files $uri $uri/ /index.php;
 }
-
-location /NaxsiRequestDenied {
-       return 418;
-   }
-
+location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
+expires 1d;
+}
 location ~ ^/pingphpfpm$ {
-    include /etc/nginx/fastcgi_params;
-    fastcgi_pass unix:SOCKETFILE;
+include /etc/nginx/fastcgi_params;
+fastcgi_pass unix:{{ SOCKETFILE }};
 }
-
 location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
-
-
 location ~ \.php$ {
-    #NAXSI_INCLUDE_FILE;
-    #NAXSI_DOMAIN_WHITELISTS;
-
-	try_files $uri =404;
-        fastcgi_pass unix:SOCKETFILE;
-        fastcgi_index index.php;
-        include /etc/nginx/fastcgi_params;
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params;
 }
-
 include /etc/nginx/conf.d/cpanel_services.conf;

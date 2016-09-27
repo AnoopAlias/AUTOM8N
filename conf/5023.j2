@@ -1,30 +1,21 @@
-#PAGESPEED_NOT_ENABLED;
-root DOCUMENTROOT;
+#Snipe-IT
+root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
-
 location / {
-        try_files $uri $uri/ /index.php$is_args$args;
+try_files $uri $uri/ /index.php$is_args$args;
 }
-
-location /NaxsiRequestDenied {
-       return 418;
-   }
-
+location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
+expires 1d;
+}
 location ~ ^/pingphpfpm$ {
-    include /etc/nginx/fastcgi_params;
-    fastcgi_pass unix:SOCKETFILE;
+include /etc/nginx/fastcgi_params;
+fastcgi_pass unix:{{ SOCKETFILE }};
 }
-
-
 location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
-
 location ~ \.php$ {
-    #NAXSI_INCLUDE_FILE;
-    #NAXSI_DOMAIN_WHITELISTS;
-	  try_files $uri =404;
-    fastcgi_pass unix:SOCKETFILE;
-    fastcgi_index index.php;
-    include /etc/nginx/fastcgi_params;
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params;
 }
-
 include /etc/nginx/conf.d/cpanel_services.conf;

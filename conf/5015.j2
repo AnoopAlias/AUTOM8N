@@ -1,37 +1,21 @@
-#PAGESPEED_NOT_ENABLED;
-root DOCUMENTROOT;
+#Codeignitor
+root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
-
-# set expiration of assets to MAX for caching
-        location ~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$ {
-                expires max;
-                log_not_found off;
-        }
-
 location / {
-        try_files $uri $uri/ /index.php;
+try_files $uri $uri/ /index.php;
 }
-
-location /NaxsiRequestDenied {
-       return 418;
-   }
-
+location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
+expires 1d;
+}
 location ~ ^/pingphpfpm$ {
-    include /etc/nginx/fastcgi_params;
-    fastcgi_pass unix:SOCKETFILE;
+include /etc/nginx/fastcgi_params;
+fastcgi_pass unix:{{ SOCKETFILE }};
 }
-
 location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
-
-
 location ~ \.php$ {
-    #NAXSI_INCLUDE_FILE;
-    #NAXSI_DOMAIN_WHITELISTS;
-
-	try_files $uri =404;
-        fastcgi_pass unix:SOCKETFILE;
-        fastcgi_index index.php;
-        include /etc/nginx/fastcgi_params;
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params;
 }
-
 include /etc/nginx/conf.d/cpanel_services.conf;
