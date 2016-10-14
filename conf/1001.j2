@@ -1,4 +1,4 @@
-#Proxy to CFML server 
+#Proxy to CFML server
 index  index.cfm index.html index.htm;
 root DOCUMENTROOT;
 
@@ -17,7 +17,7 @@ proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
-proxy_pass      http://{{ PROXYLOCATION }};
+proxy_pass      http://{{ CPANELIP }}:{{ UPSTREAM_PORT }};
 proxy_redirect off;
 proxy_set_header Host $host;
 proxy_set_header X-Forwarded-Host $host;
@@ -41,7 +41,7 @@ proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
 
-proxy_pass http://{{ PROXYLOCATION }};
+proxy_pass http://{{ CPANELIP }}:{{ UPSTREAM_PORT }};
 proxy_redirect off;
 proxy_set_header Host $host;
 proxy_set_header X-Forwarded-Host $host;

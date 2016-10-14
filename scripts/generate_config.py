@@ -10,10 +10,6 @@ import pwd
 import grp
 from lxml import etree
 import jinja2
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
-
 
 
 __author__ = "Anoop P Alias"
@@ -430,82 +426,153 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
 
 def nginx_confgen(user_name, domain_name):
     """Function that generates nginx config given a domain name"""
+    # Initiate Jinja2 templateEnv
+    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    # Get all Data from cPanel userdata files
     cpdomainyaml = "/var/cpanel/userdata/" + user_name + "/" + domain_name
-    cpaneldomain_data_stream = open(cpdomainyaml, 'r')
-    yaml_parsed_cpaneldomain = yaml.safe_load(cpaneldomain_data_stream)
+    with open(cpdomainyaml, 'r') as cpaneldomain_data_stream:
+        yaml_parsed_cpaneldomain = yaml.safe_load(cpaneldomain_data_stream)
     cpanel_ipv4 = yaml_parsed_cpaneldomain.get('ip')
     domain_home = yaml_parsed_cpaneldomain.get('homedir')
     document_root = yaml_parsed_cpaneldomain.get('documentroot')
-    domain_sname = yaml_parsed_cpaneldomain.get('servername')
-    if domain_sname.startswith("*"):
-        domain_aname = domain_sname
-        domain_sname = "_wildcard_."+domain_sname.replace('*.', '')
+    domain_server_name = yaml_parsed_cpaneldomain.get('servername')
+    if domain_server_name.startswith("*"):
+        domain_alias_name = domain_server_name
+        domain_server_name = "_wildcard_."+domain_server_name.replace('*.', '')
     else:
-        domain_aname = yaml_parsed_cpaneldomain.get('serveralias')
-    if domain_aname:
-        domain_aname_list = domain_aname.split(' ')
+        domain_alias_name = yaml_parsed_cpaneldomain.get('serveralias')
+    if domain_alias_name:
+        domain_alias_name_list = domain_alias_name.split(' ')
+        domain_alias_name_www = []
+        domain_alias_name_nonwww = []
+        for item in domain_alias_name_list:
+            if item.startswith("www."):
+                domain_alias_name_www.append(item)
+            else:
+                domain_alias_name_nonwww.append(item)
     else:
-        domain_aname_list = []
-    domain_list = domain_sname + " " + domain_aname
+        domain_alias_name_www = []
+        domain_alias_name_nonwww = []
+        domain_alias_name_list = []
+    domain_list = domain_server_name + " " + domain_alias_name
     if 'ipv6' in list(yaml_parsed_cpaneldomain.keys()):
         if yaml_parsed_cpaneldomain.get('ipv6'):
             try:
                 ipv6_addr_list = yaml_parsed_cpaneldomain.get('ipv6').keys()
                 ipv6_addr = str(ipv6_addr_list[0])
+                hasipv6 = True
             except AttributeError:
                 ipv6_addr = None
         else:
             ipv6_addr = None
     else:
         ipv6_addr = None
+    # if domain has SSL, get details about it too
     if os.path.isfile("/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"):
+        hasssl = True
         cpdomainyaml_ssl = "/var/cpanel/userdata/" + user_name + "/" + domain_name + "_SSL"
-        cpaneldomain_ssl_data_stream = open(cpdomainyaml_ssl, 'r')
-        yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpaneldomain_ssl_data_stream)
-        cpaneldomain_ssl_data_stream.close()
+        with open(cpdomainyaml_ssl, 'r') as cpaneldomain_ssl_data_stream:
+            yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpaneldomain_ssl_data_stream)
         sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
         sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
         sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
         if sslcacertificatefile:
+            ocsp = True
             sslcombinedcert = "/etc/nginx/ssl/" + domain_name + ".crt"
             subprocess.call("cat /dev/null > " + sslcombinedcert, shell=True)
             subprocess.call("cat " + sslcertificatefile + " >> " + sslcombinedcert, shell=True)
             subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
             subprocess.call("cat " + sslcacertificatefile + " >> " + sslcombinedcert, shell=True)
             subprocess.call('echo "" >> ' + sslcombinedcert, shell=True)
-            template_file = installation_path + "/conf/server_ssl_ocsp.tmpl"
         else:
             sslcombinedcert = sslcertificatefile
-            template_file = installation_path + "/conf/server_ssl.tmpl"
-        nginx_confgen_profilegen(user_name, domain_sname, cpanel_ipv4, document_root, 1, domain_home, *domain_aname_list)
+    # Get all data from nDeploy domain-data file
+    if os.path.exists("/var/cpanel/users/" + user_name):
+        with open("/var/cpanel/users/" + user_name) as users_file:
+            for line in users_file:
+                line = line.rstrip()
+                if line == "SUSPENDED=1":
+                    is_suspended = True
+                    break
+                else:
+                    is_suspended = False
+        if is_suspended:
+            domain_data_file = installation_path + "/conf/domain_data.suspended"
+        else:
+            domain_data_file = installation_path + "/domain-data/" + domain_server_name
+            if os.path.isfile(domain_data_file):
+                TEMPLATE_FILE = "domain_data_default.j2"
+                template = templateEnv.get_template(TEMPLATE_FILE)
+                templateVars = {"CPANELUSER": user_name}
+                generated_config = template.render(templateVars)
+                with open(domain_data_file, 'w') as thefile:
+                    thefile.write(generated_config)
+        with open(domain_data_file, 'r') as domain_data_stream:
+            yaml_parsed_domain_data = yaml.safe_load(domain_data_stream)
+        backend_category = yaml_parsed_domain_data.get('backend_category', default=None)
+        apptemplate_code = str(yaml_parsed_domain_data.get('apptemplate_code', default=None))
+        backend_path = yaml_parsed_domain_data.get('backend_path', default=None)
+        backend_version = yaml_parsed_domain_data.get('backend_version', default=None)
+        naxsi = yaml_parsed_domain_data.get('naxsi', default=None)
+        pagespeed = yaml_parsed_domain_data.get('pagespeed', default=None)
+        wwwredirect = yaml_parsed_domain_data.get('wwwredirect', default=None)
+        autoindex = yaml_parsed_domain_data.get('autoindex', default=None)
+        redirect_to_ssl = yaml_parsed_domain_data.get('redirect_to_ssl', default=None)
+        clickjacking_protect = yaml_parsed_domain_data.get('clickjacking_protect', default=None)
+        disable_contenttype_sniffing = yaml_parsed_domain_data.get('disable_contenttype_sniffing', default=None)
+        xss_filter = yaml_parsed_domain_data.get('xss_filter', default=None)
+        content_security_policy = yaml_parsed_domain_data.get('content_security_policy', default=None)
+        hsts = yaml_parsed_domain_data.get('hsts', default=None)
+        brotli = yaml_parsed_domain_data.get('brotli', default=None)
+        gzip = yaml_parsed_domain_data.get('gzip', default=None)
+        http2 = yaml_parsed_domain_data.get('http2', default=None)
+        ssl_offload = yaml_parsed_domain_data.get('ssl_offload', default=None)
+        TEMPLATE_FILE = "server.j2"
+        template = templateEnv.get_template(TEMPLATE_FILE)
+        templateVars = {"OCSP": ocsp,
+                        "SSL": hasssl,
+                        "IPVSIX": hasipv6,
+                        "WWWREDIRECT": wwwredirect,
+                        "CPANELIP": cpanel_ipv4,
+                        "CPIPVSIX": ipv6_addr,
+                        "IPVSIX": hasipv6,
+                        "HTTP2": http2,
+                        "CPANELSSLCRT": sslcombinedcert,
+                        "CPANELSSLKEY": sslcertificatekeyfile,
+                        "CPANELCACERT": sslcacertificatefile,
+                        "DOMAINNAME": domain_name,
+                        "HTTP2": http2,
+                        "DOMAINLIST": domain_list,
+                        "AUTOINDEX": autoindex,
+                        "REDIRECT_TO_SSL"
+                        }
+        generated_config = template.render(templateVars)
+
+
+
+        naxsi_whitelist = "/etc/nginx/sites-enabled/" + domain_name + ".nxapi.wl"
+        if not os.path.isfile(naxsi_whitelist):
+            subprocess.call("touch "+naxsi_whitelist, shell=True)
+
+
+
+
+
+
 
 
 
 
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment( loader=templateLoader )
-        TEMPLATE_FILE = "server_ssl.tmpl"
+        TEMPLATE_FILE = "server.j2"
         template = templateEnv.get_template( TEMPLATE_FILE )
-        templateVars = { "title" : "Test Example",
-                 "description" : "A simple inquiry of function." }
-        outputText = template.render( templateVars )
-
-        config_out = open("/etc/nginx/sites-enabled/" + domain_sname + "_SSL.conf", 'w')
-        with open(template_file) as my_template_file:
-            for line in my_template_file:
-                line = line.replace('CPANELIP', cpanel_ipv4)
-                line = line.replace('DOMAINLIST', domain_list)
-                line = line.replace('DOMAINNAME', domain_sname)
-                if ipv6_addr:
-                    line = line.replace('#CPIPVSIX', "listen [" + ipv6_addr + "]")
-                line = line.replace('CPANELSSLKEY', sslcertificatekeyfile)
-                line = line.replace('CPANELSSLCRT', sslcombinedcert)
-                if sslcacertificatefile:
-                    line = line.replace('CPANELCACERT', sslcacertificatefile)
-                config_out.write(line)
-        config_out.close()
-        my_template_file.close()
-
+        templateVars = { "OCSP" : ocsp,
+                         "SSL" : hasssl,
+                         "IPVSIX": hasipv6,
+                         }
+        generated_config = template.render( templateVars )
 
 
 

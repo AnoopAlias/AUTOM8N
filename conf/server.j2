@@ -1,13 +1,13 @@
 {% if WWWREDIRECT == "tononwww" %}
 server {
 listen  {{ CPANELIP }}:80;
-{% if IPVSIX == 1 %}
+{% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:80;
 {% endif %}
-{% if SSL == 1 %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
-{% if IPVSIX == 1 %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
+{% if SSL %}
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %};
+{% if IPVSIX %}
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 1 %}http2{% endif %};
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -17,7 +17,7 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP == 1 %}
+{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
 ssl_trusted_certificate {{ CPANELCACERT }};
@@ -32,13 +32,13 @@ return 301 $scheme://{{ DOMAINNAME }}$request_uri;
 {% if WWWREDIRECT == "towww" %}
 server {
 listen  {{ CPANELIP }}:80;
-{% if IPVSIX == 1 %}
+{% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:80;
 {% endif %}
-{% if SSL == 1 %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
-{% if IPVSIX == 1 %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
+{% if SSL %}
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %};
+{% if IPVSIX %}
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %};
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -48,7 +48,7 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP == 1 %}
+{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
 ssl_trusted_certificate {{ CPANELCACERT }};
@@ -63,42 +63,45 @@ return 301 $scheme://www.{{ DOMAINNAME }}$request_uri;
 
 server {
 listen    {{ CPANELIP }}:80;
-{% if IPVSIX == 1 %}
+{% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:80;
 {% endif %}
 server_name  {{ DOMAINLIST }};
 access_log /usr/local/apache/domlogs/{{ DOMAINNAME }} combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ DOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
-{% if AUTOINDEX == 1 %}
+{% if AUTOINDEX %}
 autoindex on;
 {% endif %}
-{% if REDIRECT_TO_SSL == 1 %}
+{% if REDIRECT_TO_SSL %}
 return 301 https://$host$request_uri;
 {% else %}
-{% if CLICKJACKING_PROTECT == 1 %}
+{% if CLICKJACKING_PROTECT %}
 add_header X-Frame-Options SAMEORIGIN;
 {% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 1 %}
+{% if DISABLE_CONTENTTYPE_SNIFFING %}
 add_header X-Content-Type-Options nosniff;
 {% endif %}
-{% if XSS_FILTER == 1 %}
+{% if XSS_FILTER %}
 add_header X-XSS-Protection "1; mode=block";
 {% endif %}
-{% if CONTENT_SECURITY_POLICY == 1 %}
+{% if CONTENT_SECURITY_POLICY %}
 add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
 {% endif %}
-{% if PAGESPEED_ENABLED == 1 %}
+{% if PAGESPEED_ENABLED %}
 include /etc/nginx/conf.d/pagespeed.conf;
+{% endif %}
+{% if GZIP_ENABLED %}
+include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
 include /etc/nginx/sites-enabled/{{ DOMAINNAME }}.include;
 {% endif %}
 }
 
-{% if SSL == 1 %}
+{% if SSL %}
 server {
-listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
-{% if IPVSIX == 1 %}
-listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 1 %}http2{% endif %};
+listen    {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %};
+{% if IPVSIX %}
+listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %};
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -108,7 +111,7 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP == 1 %}
+{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
 ssl_trusted_certificate {{ CPANELCACERT }};
@@ -118,29 +121,31 @@ resolver_timeout 5s;
 server_name  {{ DOMAINLIST }};
 access_log /usr/local/apache/domlogs/{{ DOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ DOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
-{% if AUTOINDEX == 1 %}
+{% if AUTOINDEX %}
 autoindex on;
 {% endif %}
-{% if HSTS == 1 %}
+{% if HSTS %}
 add_header Strict-Transport-Security "max-age=86400" always;
 {% endif %}
-{% if CLICKJACKING_PROTECT == 1 %}
+{% if CLICKJACKING_PROTECT %}
 add_header X-Frame-Options SAMEORIGIN;
 {% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 1 %}
+{% if DISABLE_CONTENTTYPE_SNIFFING %}
 add_header X-Content-Type-Options nosniff;
 {% endif %}
-{% if XSS_FILTER == 1 %}
+{% if XSS_FILTER %}
 add_header X-XSS-Protection "1; mode=block";
 {% endif %}
-{% if CONTENT_SECURITY_POLICY == 1 %}
+{% if CONTENT_SECURITY_POLICY %}
 add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
 {% endif %}
-{% if PAGESPEED_ENABLED == 1 %}
+{% if PAGESPEED_ENABLED %}
 include /etc/nginx/conf.d/pagespeed.conf;
 {% endif %}
-{% if BROTLI_ENABLED == 1 %}
+{% if BROTLI_ENABLED %}
 include /etc/nginx/conf.d/brotli.conf;
+{% elif GZIP_ENABLED %}
+include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
 include /etc/nginx/sites-enabled/{{ DOMAINNAME }}.include;
 }
