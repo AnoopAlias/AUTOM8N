@@ -10,6 +10,10 @@ import pwd
 import grp
 from lxml import etree
 import jinja2
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
 
 __author__ = "Anoop P Alias"
@@ -424,19 +428,19 @@ def nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, ss
             nginx_confgen_profilegen(user_name, domain_name, cpanelip, document_root, sslenabled, domain_home, *domain_aname_list)
 
 
-def nginx_confgen(user_name, domain_name):
-    """Function that generates nginx config given a domain name"""
+def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
+    """Function that generates nginx config """
     # Initiate Jinja2 templateEnv
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
     templateEnv = jinja2.Environment(loader=templateLoader)
     # Get all Data from cPanel userdata files
-    cpdomainyaml = "/var/cpanel/userdata/" + user_name + "/" + domain_name
-    with open(cpdomainyaml, 'r') as cpaneldomain_data_stream:
-        yaml_parsed_cpaneldomain = yaml.safe_load(cpaneldomain_data_stream)
-    cpanel_ipv4 = yaml_parsed_cpaneldomain.get('ip')
-    domain_home = yaml_parsed_cpaneldomain.get('homedir')
-    document_root = yaml_parsed_cpaneldomain.get('documentroot')
-    domain_server_name = yaml_parsed_cpaneldomain.get('servername')
+    cpdomainjson = "/var/cpanel/userdata/" + user_name + "/" + domain_name + ".cache"
+    with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
+        json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
+    cpanel_ipv4 = json_parsed_cpaneldomain.get('ip')
+    domain_home = json_parsed_cpaneldomain.get('homedir')
+    document_root = json_parsed_cpaneldomain.get('documentroot')
+    domain_server_name = json_parsed_cpaneldomain.get('servername')
     if domain_server_name.startswith("*"):
         domain_alias_name = domain_server_name
         domain_server_name = "_wildcard_."+domain_server_name.replace('*.', '')
@@ -639,38 +643,58 @@ def nginx_confgen(user_name, domain_name):
 # End Function defs
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Regenerate nginX and app server configs for cpanel user")
+    parser = argparse.ArgumentParser(description="generate nginX and app server configs for cpanel user")
     parser.add_argument("CPANELUSER")
     args = parser.parse_args()
     cpaneluser = args.CPANELUSER
-
+    # if user is not in /etc/passwd we dont proceed any further
     try:
         pwd.getpwnam(cpaneluser)
     except KeyError:
         sys.exit(0)
     else:
-        cpuserdatayaml = "/var/cpanel/userdata/" + cpaneluser + "/main"
-        try:
-            cpaneluser_data_stream = open(cpuserdatayaml, 'r')
-        except IOError:
+        # Try loading the main userdata cache file
+        cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
+        with open(cpuserdatajson) as cpaneluser_data_stream:
+            json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
+        main_domain = json_parsed_cpaneluser.get('main_domain')
+        # parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   # This data is irrelevant as parked domain list is in ServerAlias
+        addon_domains_dict = json_parsed_cpaneluser.get('addon_domains')     # So we know which addon is mapped to which sub-domain
+        sub_domains = json_parsed_cpaneluser.get('sub_domains')
+        # Check if a user is suspended and set a flag accordingly
+        if os.path.exists("/var/cpanel/users/" + cpaneluser):
+            with open("/var/cpanel/users/" + cpaneluser) as users_file:
+                for line in users_file:
+                    line = line.rstrip()
+                    if line == "SUSPENDED=1":
+                        is_suspended = True
+                        break
+                    else:
+                        is_suspended = False
+        else:
+            # If cpanel users file is not present silently exit
             sys.exit(0)
-        yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
-
-        main_domain = yaml_parsed_cpaneluser.get('main_domain')
-        # parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   #This data is irrelevant as parked domain list is in ServerAlias
-        # addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
-        sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
+        # If nDeploy cluster is enabled we set a global flag and generate a list of servers in the serverlist list
         if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
             clusterenabled = True
             cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
             cluster_data_yaml = open(cluster_config_file, 'r')
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             cluster_data_yaml.close()
-            serverlist = cluster_data_yaml_parsed.keys()
+            cluster_serverlist = cluster_data_yaml_parsed.keys()
         else:
-            clusterenabled = None
-
-        nginx_confgen(cpaneluser, main_domain)  # Generate conf for main domain
-
-        for domain_in_subdomains in sub_domains:
-            nginx_confgen(cpaneluser, domain_in_subdomains)  # Generate conf for sub domains which takes care of addon as well
+            clusterenabled = False
+            cluster_serverlist = []
+        # Begin config generation .Do it first for the main domain
+        nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
+        # iterate over the addon-domain ,passing the subdomain as the configdomain
+        for the_addon_domain in addon_domains_dict.keys():
+            nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
+        # iterate over sub-domains and generate config if its not a linked sub-somain for addon-domain
+        for the_sub_domain in sub_domains:
+            if the_sub_domain not in addon_domains_dict.values():
+                if the_sub_domain.startswith("*"):
+                    subdom_config_dom = "_wildcard_."+the_sub_domain.replace('*.', '')
+                    nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
+                else:
+                    nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
