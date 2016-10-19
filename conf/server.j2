@@ -7,7 +7,7 @@ listen  [{{ CPIPVSIX }}]:80;
 {% if SSL %}
 listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %};
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 1 %}http2{% endif %};
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %};
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -25,8 +25,8 @@ resolver 8.8.8.8 8.8.4.4 valid=300s;
 resolver_timeout 5s;
 {% endif %}
 {% endif %}
-server_name www.{{ DOMAINNAME }};
-return 301 $scheme://{{ DOMAINNAME }}$request_uri;
+server_name www.{{ MAINDOMAINNAME }};
+return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 }
 {% endif %}
 {% if WWWREDIRECT == "towww" %}
@@ -56,8 +56,8 @@ resolver 8.8.8.8 8.8.4.4 valid=300s;
 resolver_timeout 5s;
 {% endif %}
 {% endif %}
-server_name {{ DOMAINNAME }};
-return 301 $scheme://www.{{ DOMAINNAME }}$request_uri;
+server_name {{ MAINDOMAINNAME }};
+return 301 $scheme://www.{{ MAINDOMAINNAME }}$request_uri;
 }
 {% endif %}
 
@@ -67,8 +67,8 @@ listen    {{ CPANELIP }}:80;
 listen  [{{ CPIPVSIX }}]:80;
 {% endif %}
 server_name  {{ DOMAINLIST }};
-access_log /usr/local/apache/domlogs/{{ DOMAINNAME }} combined buffer=32k flush=5m;
-access_log /usr/local/apache/domlogs/{{ DOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=32k flush=5m;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% if AUTOINDEX %}
 autoindex on;
 {% endif %}
@@ -93,7 +93,7 @@ include /etc/nginx/conf.d/pagespeed.conf;
 {% if GZIP_ENABLED %}
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ DOMAINNAME }}.include;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
 }
 
@@ -119,8 +119,8 @@ resolver 8.8.8.8 8.8.4.4 valid=300s;
 resolver_timeout 5s;
 {% endif %}
 server_name  {{ DOMAINLIST }};
-access_log /usr/local/apache/domlogs/{{ DOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
-access_log /usr/local/apache/domlogs/{{ DOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% if AUTOINDEX %}
 autoindex on;
 {% endif %}
