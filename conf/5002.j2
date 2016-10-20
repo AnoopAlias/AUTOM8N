@@ -12,7 +12,7 @@ location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
 expires 1d;
 }
 location ~ ^/pingphpfpm$ {
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
@@ -20,6 +20,6 @@ location ~ \.php$ {
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 }
 include /etc/nginx/conf.d/cpanel_services.conf;

@@ -15,7 +15,7 @@ fastcgi_keep_conn on;
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 }
 location ~ /(mysite|framework|cms)/.*\.(php|php3|php4|php5|phtml|inc)$ {
 deny all;
@@ -47,13 +47,13 @@ location ~* /(cms|framework)/silverstripe_version$ {
 deny all;
 }
 location ~ ^/pingphpfpm$ {
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 location ~ \.php$ {
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 }
 include /etc/nginx/conf.d/cpanel_services.conf;

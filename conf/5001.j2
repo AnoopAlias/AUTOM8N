@@ -5,12 +5,12 @@ location / {
 try_files $uri $uri/ /index.php?q=$uri&$args;
 }
 location ~ ^/pingphpfpm$ {
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 location = /wp-login.php {
 limit_req   zone=one  burst=1 nodelay;
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
@@ -21,6 +21,6 @@ location ~ \.php$ {
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 }
 include /etc/nginx/conf.d/cpanel_services.conf;

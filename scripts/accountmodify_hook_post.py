@@ -22,6 +22,6 @@ mydict = cpjson["data"]
 cpanelnewuser = mydict["newuser"]
 cpaneluser = mydict["user"]
 maindomain = mydict["domain"]
-subprocess.call("/usr/sbin/nginx -s reload", shell=True)
+subprocess.call("/usr/sbin/nginx -s reload")
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
 print(("1 nDeploy:postmodify:"+cpanelnewuser))

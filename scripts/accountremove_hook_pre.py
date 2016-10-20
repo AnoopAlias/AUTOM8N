@@ -6,6 +6,7 @@ import sys
 import json
 import os
 import subprocess
+import shutil
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright 2014, PiServe Technologies Pvt Ltd , India"
@@ -37,7 +38,7 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
             os.remove("/etc/nginx/"+line+"/"+main_domain+".conf")
             os.remove("/etc/nginx/"+line+"/"+main_domain+".include")
             os.remove("/etc/nginx/"+line+"/"+main_domain+".nxapi.wl")
-subprocess.call("rm -rf /var/resin/hosts/"+main_domain, shell=True)
+shutil.rmtree('/var/resin/hosts/'+main_domain)
 if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
     os.remove(installation_path+"/domain-data/"+main_domain+"_SSL")
     os.remove(nginx_dir+main_domain+"_SSL.conf")
@@ -60,7 +61,7 @@ for domain_in_subdomains in sub_domains:
                 os.remove("/etc/nginx/"+line+"/"+domain_in_subdomains+".conf")
                 os.remove("/etc/nginx/"+line+"/"+domain_in_subdomains+".include")
                 os.remove("/etc/nginx/"+line+"/"+domain_in_subdomains+".nxapi.wl")
-    subprocess.call("rm -rf /var/resin/hosts/"+domain_in_subdomains, shell=True)
+    shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
     if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
         os.remove(installation_path+"/domain-data/"+domain_in_subdomains+"_SSL")
         os.remove(nginx_dir+domain_in_subdomains+"_SSL.conf")

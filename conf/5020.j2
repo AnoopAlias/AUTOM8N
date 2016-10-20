@@ -22,12 +22,12 @@ rewrite ^(/core/doc/[^\/]+/)$ $1/index.html;
 try_files $uri $uri/ /index.php;
 }
 location ~ ^/pingphpfpm$ {
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 location ~ \.php(?:$|/) {
 fastcgi_split_path_info ^(.+\.php)(/.+)$;
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 include /etc/nginx/conf.d/cpanel_services.conf;

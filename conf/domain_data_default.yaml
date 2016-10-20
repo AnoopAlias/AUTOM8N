@@ -4,6 +4,7 @@ backend_version: httpd
 apptemplate_code: '1000'
 pagespeed: False
 naxsi: False
+naxsi_mode: "learn"
 autoindex: False
 redirect_to_ssl: False
 clickjacking_protect: False
@@ -14,3 +15,6 @@ hsts: False
 brotli: False
 gzip: False
 ssl_offload: False
+disable_access_log: False
+http2: False
+disable_open_file_cache: False

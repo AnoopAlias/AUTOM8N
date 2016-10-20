@@ -30,7 +30,7 @@ job1:
   label: Watch /var/cpanel/userdata
   watch: /var/cpanel/userdata
   exclude: ['/var/cpanel/userdata/nobody']
-  events: ['create', 'modify', 'delete']
+  events: ['create', 'delete']
   options: []
   recursive: true
   command: /opt/nDeploy/scripts/event_trigger.sh $filename 0 $tflags

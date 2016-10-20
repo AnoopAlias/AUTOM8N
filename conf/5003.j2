@@ -21,7 +21,7 @@ rewrite ^(.*.php)/ $1 last;
 #        allow all;
 #}
 location ~ ^/pingphpfpm$ {
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
@@ -33,6 +33,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 #fastcgi_param  MAGE_RUN_CODE default;
 #fastcgi_param  MAGE_RUN_TYPE store;
-include /etc/nginx/fastcgi_params;
+include /etc/nginx/fastcgi_params*;
 }
 include /etc/nginx/conf.d/cpanel_services.conf;

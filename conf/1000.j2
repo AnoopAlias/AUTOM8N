@@ -12,9 +12,9 @@ proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
 {% if SSL_OFFLOAD %}
-proxy_pass   $scheme://{{ CPANELIP }}:$cpport;
-{% else %}
 proxy_pass   http://{{ CPANELIP }}:9999;
+{% else %}
+proxy_pass   $scheme://{{ CPANELIP }}:$cpport;
 {% endif %}
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
