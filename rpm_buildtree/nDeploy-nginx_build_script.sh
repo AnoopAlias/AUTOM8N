@@ -36,9 +36,9 @@ if [ ${OSVERSION} -eq 6 ];then
   rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
   wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
   yum install devtoolset-2-gcc-c++ devtoolset-2-binutils
-  rsync -av --exclude 'usr/lib' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
+  rsync -av --exclude 'usr/lib' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
 else
-  rsync -av --exclude 'etc/rc.d' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
+  rsync -av --exclude 'etc/rc.d' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
 fi
 
 
@@ -88,6 +88,7 @@ rsync -av naxsi-rules/*.rules ../nginx-module-naxsi-pkg/etc/nginx/naxsi.d/
 rsync -av naxsi-${NAXSI_VERSION}/naxsi_config/naxsi_core.rules ../nginx-module-naxsi-pkg/etc/nginx/naxsi.d/naxsi_core.rules
 rsync -av naxsi-${NAXSI_VERSION}/nxapi ../nginx-module-naxsi-pkg/usr/nginx/
 rsync -av ../nxapi.json ../nginx-module-naxsi-pkg/usr/nginx/nxapi/
+rsync -av ../nginx-pkg-64-common/etc/nginx/fastcgi_params_geoip ../nginx-module-geoip-pkg/etc/nginx/
 rsync -av tempo/usr/sbin ../nginx-pkg/usr/
 for module in brotli geoip naxsi pagespeed passenger
 do
@@ -114,4 +115,5 @@ for module in brotli geoip naxsi pagespeed passenger
 do
   cd ../nginx-module-${module}-pkg
   fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/nDeploy/ --conflicts nginx-module-${module} --name nginx-nDeploy-module-${module} .
+  rsync -av nginx-nDeploy-* root@rpm.piserve.com:/home/gnusys/public_html/CentOS/6/x86_64/
 done
