@@ -179,7 +179,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     else:
         domain_data_file = installation_path + "/domain-data/" + kwargs.get('configdomain')
     if not os.path.isfile(domain_data_file):
-        TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+        if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+        else:
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
         shutil.copyfile(TEMPLATE_FILE, domain_data_file)
         cpuser_uid = pwd.getpwnam(kwargs.get('configuser')).pw_uid
         cpuser_gid = grp.getgrnam(kwargs.get('configuser')).gr_gid
@@ -213,6 +216,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     ssl_offload = yaml_parsed_domain_data.get('ssl_offload', None)
     disable_access_log = yaml_parsed_domain_data.get('disable_access_log', None)
     naxsi_mode = yaml_parsed_domain_data.get('naxsi_mode', None)
+    dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', None)
     disable_open_file_cache = yaml_parsed_domain_data.get('disable_open_file_cache', None)
     protected_dir = yaml_parsed_domain_data.get('protected_dir')
     if not protected_dir:
@@ -228,8 +232,11 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         subdir_apps = {}
         subdir_apps_uniq = {}
     # Since we have all data needed ,lets render the conf to a file
-    TEMPLATE_FILE = "server.j2"
-    template = templateEnv.get_template(TEMPLATE_FILE)
+    if os.path.isfile(installation_path+'/conf/server_local.j2'):
+        TEMPLATE_FILE = "server_local.j2"
+    else:
+        TEMPLATE_FILE = "server.j2"
+    server_template = templateEnv.get_template(TEMPLATE_FILE)
     templateVars = {"OCSP": ocsp,
                     "SSL": hasssl,
                     "IPVSIX": hasipv6,
@@ -259,9 +266,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "DISABLELOG": disable_access_log,
                     "DISABLE_OPEN_FILE_CACHE": disable_open_file_cache,
                     "PROTECTED_DIR": protected_dir,
-                    "HOMEDIR": domain_home
+                    "HOMEDIR": domain_home,
+                    "DOSMITIGATE": dos_mitigate
                     }
-    generated_config = template.render(templateVars)
+    generated_config = server_template.render(templateVars)
     with open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w") as confout:
         confout.write(generated_config)
     # If a cluster is setup.Generate nginx config for other servers as well
@@ -273,82 +281,34 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             if ipv6_addr:
                 remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
             cluster_config_out = "/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".conf"
-            clustertemplateVars = {"OCSP": ocsp,
-                                   "SSL": hasssl,
-                                   "IPVSIX": hasipv6,
-                                   "WWWREDIRECT": wwwredirect,
-                                   "CPANELIP": remote_domain_ipv4,
-                                   "CPIPVSIX": remote_domain_ipv6,
-                                   "IPVSIX": hasipv6,
-                                   "HTTP2": http2,
-                                   "CPANELSSLCRT": sslcombinedcert,
-                                   "CPANELSSLKEY": sslcertificatekeyfile,
-                                   "CPANELCACERT": sslcacertificatefile,
-                                   "MAINDOMAINNAME": kwargs.get('maindomain'),
-                                   "CONFIGDOMAINNAME": kwargs.get('configdomain'),
-                                   "NAXSI": naxsi,
-                                   "NAXSIMODE": naxsi_mode,
-                                   "PAGESPEED": pagespeed,
-                                   "CLICKJACKING_PROTECT": clickjacking_protect,
-                                   "DISABLE_CONTENTTYPE_SNIFFING": disable_contenttype_sniffing,
-                                   "XSS_FILTER": xss_filter,
-                                   "GZIP_ENABLED": gzip,
-                                   "BROTLI_ENABLED": brotli,
-                                   "CONTENT_SECURITY_POLICY": content_security_policy,
-                                   "HSTS": hsts,
-                                   "DOMAINLIST": domain_list,
-                                   "AUTOINDEX": autoindex,
-                                   "REDIRECT_TO_SSL": redirect_to_ssl,
-                                   "DISABLELOG": disable_access_log,
-                                   "DISABLE_OPEN_FILE_CACHE": disable_open_file_cache,
-                                   "PROTECTED_DIR": protected_dir,
-                                   "HOMEDIR": domain_home
-                                   }
-            cluster_generated_config = template.render(clustertemplateVars)
+            templateVars["CPANELIP"] = remote_domain_ipv4
+            templateVars["CPIPVSIX"] = remote_domain_ipv6
+            cluster_generated_config = server_template.render(templateVars)
             with open(cluster_config_out, "w") as confout:
                 confout.write(cluster_generated_config)
     # Generate the rest of the config(domain.include) based on the application template
-    apptemplate = templateEnv.get_template(apptemplate_code)
+    app_template = templateEnv.get_template(apptemplate_code)
+    # We configure the backends first if necessary
     if backend_category == 'PROXY':
-        if backend_version == 'httpd':
-            apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
-                               "CPANELIP": cpanel_ipv4
-                               }
-        elif backend_version == 'railo_tomcat':
-            apptemplateVars = {"UPSTREAM_PORT": backend_path,
-                               "CPANELIP": cpanel_ipv4
-                               }
+        if backend_version == 'railo_tomcat':
             railo_vhost_add_tomcat(domain_server_name, document_root, *serveralias_list)
         elif backend_version == 'railo_resin':
-            apptemplateVars = {"UPSTREAM_PORT": backend_path,
-                               "CPANELIP": cpanel_ipv4
-                               }
             railo_vhost_add_resin(kwargs.get('configuser'), domain_server_name, document_root, *serveralias_list)
     elif backend_category == 'PHP':
-        path_to_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
-        apptemplateVars = {"DOCUMENTROOT": document_root,
-                           "SOCKETFILE": path_to_socket,
-                           "SUBDIRAPPS": subdir_apps_uniq
-                           }
-        if not os.path.isfile(path_to_socket):
+        if not os.path.isfile(backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"):
             php_backend_add(kwargs.get('configuser'), domain_home)
-    elif backend_category == 'PYTHON':
-        apptemplateVars = {"DOCUMENTROOT": document_root,
-                           "PATHTOPYTHON": backend_path
-                           }
-    elif backend_category == 'RUBY':
-        apptemplateVars = {"DOCUMENTROOT": document_root,
-                           "PATHTORUBY": backend_path
-                           }
-    elif backend_category == 'NODEJS':
-        apptemplateVars = {"DOCUMENTROOT": document_root,
-                           "PATHTONODEJS": backend_path
-                           }
-    elif backend_category == 'HHVM_NOBODY':
-        apptemplateVars = {"DOCUMENTROOT": document_root,
-                           "SOCKETFILE": backend_path
-                           }
-    generated_app_config = apptemplate.render(apptemplateVars)
+    # We generate the app config from template next
+    apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
+                       "CPANELIP": cpanel_ipv4,
+                       "UPSTREAM_PORT": backend_path,
+                       "PATHTOPYTHON": backend_path,
+                       "PATHTORUBY": backend_path,
+                       "PATHTONODEJS": backend_path,
+                       "SOCKETFILE": backend_path + "/var/run/" + kwargs.get('configuser') + ".sock",
+                       "SUBDIRAPPS": subdir_apps_uniq,
+                       "PATHTOPYTHON": backend_path,
+                       }
+    generated_app_config = app_template.render(apptemplateVars)
     with open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w") as confout:
         confout.write(generated_app_config)
     # Get the subdir config also rendered
@@ -356,7 +316,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         for key, value in subdir_apps.iteritems():
             subdirApptemplate = templateEnv.get_template(value)
             subdirApptemplateVars = {"DOCUMENTROOT": document_root,
-                                     "SUBDIR": key
+                                     "SUBDIR": key,
+                                     "CPANELIP": cpanel_ipv4,
                                      }
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
             with open("/etc/nginx/sites-enabled/"+subdir_apps_uniq.get(key)+".include", "w") as confout:
