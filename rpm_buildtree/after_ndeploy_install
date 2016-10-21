@@ -30,6 +30,8 @@
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5021.j2 "WHMCS"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5022.j2 "Laravel"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5023.j2 "Snipe-IT"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5024.j2 "Magento+Fooman Speedster"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5100.j2 "A PHP application"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5001.j2 "Wordpress"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5002.j2 "Joomla"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5003.j2 "Magento"
@@ -45,6 +47,8 @@
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5021.j2 "WHMCS"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5022.j2 "Laravel"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5023.j2 "Snipe-IT"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5024.j2 "Magento+Fooman Speedster"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5100.j2 "A PHP application"
 
 echo -e '\e[93m Adding cpanel hooks \e[0m'
 

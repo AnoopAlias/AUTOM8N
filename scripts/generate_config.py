@@ -226,6 +226,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             subdir_apps_uniq[key] = uniq_filename
     else:
         subdir_apps = {}
+        subdir_apps_uniq = {}
     # Since we have all data needed ,lets render the conf to a file
     TEMPLATE_FILE = "server.j2"
     template = templateEnv.get_template(TEMPLATE_FILE)

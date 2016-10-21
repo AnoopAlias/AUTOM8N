@@ -1,18 +1,10 @@
-#Magento
+#Magento+Fooman Speedster
+
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 location / {
 try_files $uri $uri/ /index.php;
 }
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.include;
-}
-{% endfor %}
-# End Include any applications in subdirectory
-
 location ^~ /app/                { deny all; }
 location ^~ /includes/           { deny all; }
 location ^~ /lib/                { deny all; }
@@ -24,6 +16,21 @@ location ^~ /var/                { deny all; }
 location ~ .php/ { ## Forward paths like /js/index.php/x.js to relevant handler
 rewrite ^(.*.php)/ $1 last;
 }
+
+rewrite ^/minify/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
+rewrite ^/skin/m/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
+location /lib/minify/ {
+allow all;
+}
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ VALUE }}.include;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;

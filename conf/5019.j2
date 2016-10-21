@@ -4,6 +4,16 @@ index index.php index.html index.htm;
 location / {
 rewrite ^/(.*.php)(/)(.*)$ /$1?file=/$3 last;
 }
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ VALUE }}.include;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
+
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};

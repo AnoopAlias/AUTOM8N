@@ -16,6 +16,16 @@ rewrite ^/c/([a-zA-Z-]+)(-[0-9]+)?/.+\.jpg$ /img/c/$1.jpg last;
 rewrite ^/([0-9]+)(-[_a-zA-Z0-9-]*)(-[0-9]+)?/.+\.jpg$ /img/c/$1$2.jpg last;
 try_files $uri $uri/ /index.php?$args;
 }
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ VALUE }}.include;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
+
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};

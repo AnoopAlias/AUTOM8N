@@ -4,6 +4,15 @@ index index.php index.html index.htm default.html default.htm;
 location / {
 try_files $uri $uri/ /index.php?$args;
 }
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ VALUE }}.include;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
 location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
 return 403;
 error_page 403 /403_error.html;
