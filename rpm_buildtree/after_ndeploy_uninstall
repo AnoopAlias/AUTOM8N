@@ -19,6 +19,7 @@ echo -e '\e[93m Removing cpanel stats processing hooks \e[0m'
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/accountmodify_hook_pre.py --category Whostmgr --event Accounts::Modify --stage pre --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/accountmodify_hook_post.py --category Whostmgr --event Accounts::Modify --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/accountremove_hook_pre.py --category Whostmgr --event Accounts::Remove --stage pre --manual
+/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::SiteIP::set --stage post --manual
 echo -e '\e[93m Uninstalling nDeploy plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp --theme x3

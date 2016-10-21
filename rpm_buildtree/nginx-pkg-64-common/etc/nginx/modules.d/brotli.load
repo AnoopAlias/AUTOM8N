@@ -1,0 +1,2 @@
+load_module "/etc/nginx/modules/ngx_http_brotli_filter_module.so";
+load_module "/etc/nginx/modules/ngx_http_brotli_static_module.so";

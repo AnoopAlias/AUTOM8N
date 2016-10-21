@@ -10,7 +10,7 @@ echo -e '\e[93m The following PHP-FPM master process has started \e[0m'
 
 for pid in $(pidof php-fpm)
 do
-    cat /proc/${pid}/cmdline
+    lsof -p $pid | grep txt
 done
 
 ##Attempt to re-generate all nginx config

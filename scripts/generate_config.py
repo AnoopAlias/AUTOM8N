@@ -11,6 +11,7 @@ import grp
 import shutil
 from lxml import etree
 import jinja2
+from hashlib import md5
 try:
     import simplejson as json
 except ImportError:
@@ -213,6 +214,18 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     disable_access_log = yaml_parsed_domain_data.get('disable_access_log', None)
     naxsi_mode = yaml_parsed_domain_data.get('naxsi_mode', None)
     disable_open_file_cache = yaml_parsed_domain_data.get('disable_open_file_cache', None)
+    protected_dir = yaml_parsed_domain_data.get('protected_dir')
+    if not protected_dir:
+        protected_dir = []
+    subdir_apps = yaml_parsed_domain_data.get('subdir_apps')
+    if subdir_apps:
+        subdir_apps_uniq = {}
+        for key in subdir_apps.keys():
+            uniq_path = document_root+key
+            uniq_filename = md5(uniq_path.encode("utf-8")).hexdigest()
+            subdir_apps_uniq[key] = uniq_filename
+    else:
+        subdir_apps = {}
     # Since we have all data needed ,lets render the conf to a file
     TEMPLATE_FILE = "server.j2"
     template = templateEnv.get_template(TEMPLATE_FILE)
@@ -243,7 +256,9 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "AUTOINDEX": autoindex,
                     "REDIRECT_TO_SSL": redirect_to_ssl,
                     "DISABLELOG": disable_access_log,
-                    "DISABLE_OPEN_FILE_CACHE": disable_open_file_cache
+                    "DISABLE_OPEN_FILE_CACHE": disable_open_file_cache,
+                    "PROTECTED_DIR": protected_dir,
+                    "HOMEDIR": domain_home
                     }
     generated_config = template.render(templateVars)
     with open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w") as confout:
@@ -284,14 +299,15 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                                    "AUTOINDEX": autoindex,
                                    "REDIRECT_TO_SSL": redirect_to_ssl,
                                    "DISABLELOG": disable_access_log,
-                                   "DISABLE_OPEN_FILE_CACHE": disable_open_file_cache
+                                   "DISABLE_OPEN_FILE_CACHE": disable_open_file_cache,
+                                   "PROTECTED_DIR": protected_dir,
+                                   "HOMEDIR": domain_home
                                    }
             cluster_generated_config = template.render(clustertemplateVars)
             with open(cluster_config_out, "w") as confout:
                 confout.write(cluster_generated_config)
     # Generate the rest of the config(domain.include) based on the application template
-    APP_TEMPLATE_FILE = apptemplate_code+".j2"
-    apptemplate = templateEnv.get_template(APP_TEMPLATE_FILE)
+    apptemplate = templateEnv.get_template(apptemplate_code)
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
             apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
@@ -310,7 +326,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     elif backend_category == 'PHP':
         path_to_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
         apptemplateVars = {"DOCUMENTROOT": document_root,
-                           "SOCKETFILE": path_to_socket
+                           "SOCKETFILE": path_to_socket,
+                           "SUBDIRAPPS": subdir_apps_uniq
                            }
         if not os.path.isfile(path_to_socket):
             php_backend_add(kwargs.get('configuser'), domain_home)
@@ -333,6 +350,16 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     generated_app_config = apptemplate.render(apptemplateVars)
     with open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w") as confout:
         confout.write(generated_app_config)
+    # Get the subdir config also rendered
+    if subdir_apps:
+        for key, value in subdir_apps.iteritems():
+            subdirApptemplate = templateEnv.get_template(value)
+            subdirApptemplateVars = {"DOCUMENTROOT": document_root,
+                                     "SUBDIR": key
+                                     }
+            generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
+            with open("/etc/nginx/sites-enabled/"+subdir_apps_uniq.get(key)+".include", "w") as confout:
+                confout.write(generated_subdir_app_config)
 
 
 # End Function defs

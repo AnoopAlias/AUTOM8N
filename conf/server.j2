@@ -112,6 +112,17 @@ add_header Content-Security-Policy "script-src 'self' www.google-analytics.com a
 {% if GZIP_ENABLED %}
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
+{% for DIR in PROTECTED_DIR %}
+{% if DIR == '/' %}
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds/public_html/passwd;
+{% else %}
+location {{ DIR }}/ {
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds/public_html{{ DIR }}/passwd;
+}
+{% endif %}
+{% endfor %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
 }
@@ -185,6 +196,17 @@ include /etc/nginx/conf.d/brotli.conf;
 {% elif GZIP_ENABLED %}
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
+{% for DIR in PROTECTED_DIR %}
+{% if DIR == '/' %}
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds/public_html/passwd;
+{% else %}
+location {{ DIR }}/ {
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds/public_html{{ DIR }}/passwd;
+}
+{% endif %}
+{% endfor %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 }
 {% endif %}

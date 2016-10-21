@@ -11,5 +11,4 @@ if [ ! -d /usr/local/rvm/gems/ruby-RUBY_VERSION/gems/passenger-PASSENGER_VERSION
         /usr/local/rvm/rubies/ruby-RUBY_VERSION/bin/gem install passenger -v PASSENGER_VERSION
         ln -s /usr/nginx/buildout /usr/local/rvm/gems/ruby-RUBY_VERSION/gems/passenger-PASSENGER_VERSION/
 fi
-sed -i 's/^#//' /etc/nginx/conf.d/passenger.conf
 service nginx restart || systemctl restart nginx
