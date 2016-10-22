@@ -300,6 +300,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     # We generate the app config from template next
     apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
                        "CPANELIP": cpanel_ipv4,
+                       "DOCUMENTROOT": document_root,
                        "UPSTREAM_PORT": backend_path,
                        "PATHTOPYTHON": backend_path,
                        "PATHTORUBY": backend_path,
