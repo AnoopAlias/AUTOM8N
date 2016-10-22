@@ -7,9 +7,9 @@ import os
 import sys
 
 __author__ = "Anoop P Alias"
-__copyright__ = "Copyright 2014, PiServe Technologies Pvt Ltd , India"
+__copyright__ = "Copyright Anoop P Alias"
 __license__ = "GPL"
-__email__ = "anoop.alias@piserve.com"
+__email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
