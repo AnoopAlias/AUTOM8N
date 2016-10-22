@@ -45,6 +45,8 @@ RETVAL=0
 start() {
     echo -n $"Starting $prog: "
     ulimit -n 64000
+    /usr/sbin/sysctl -w net.core.somaxconn=16384
+    /usr/sbin/sysctl -w net.core.netdev_max_backlog=16384
     daemon --pidfile=${pidfile} ${nginx} -c ${conffile}
     RETVAL=$?
     echo

@@ -14,5 +14,5 @@ make UISTYLE=text NATIVE=true STATIC=true
 mkdir -p ../nDeploy-unison-pkg-centos7/usr/bin
 rsync -av unison ../nDeploy-unison-pkg-centos7/usr/bin/
 cd ../nDeploy-unison-pkg-centos7
-fpm -s dir -t rpm -C ../nDeploy-unison-pkg-centos7 --vendor "PiServe Technologies" --version ${UNISON_VERSION} --iteration ${UNISON_RPM_ITER} -a $(arch) -m info@piserve.com -e --description "nDeploy custom unison package" --url http://piserve.com --conflicts unison --name unison-nDeploy .
+fpm -s dir -t rpm -C ../nDeploy-unison-pkg-centos7 --vendor "Anoop P Alias" --version ${UNISON_VERSION} --iteration ${UNISON_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom unison package" --url http://anoopalias.github.io/nDeploy/ --conflicts unison --name unison-nDeploy .
 rsync -av *.rpm root@rpm.piserve.com:/home/gnusys/public_html/CentOS/7/x86_64/
