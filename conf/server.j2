@@ -1,14 +1,14 @@
 # Redirects if any
 {% if WWWREDIRECT == "tononwww" %}
 server {
-listen  {{ CPANELIP }}:80 backlog=16384;
+listen  {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:80 backlog=16384;
+listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 {% if SSL %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} backlog=16384;
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} backlog=16384;
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -32,14 +32,14 @@ return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
 {% if WWWREDIRECT == "towww" %}
 server {
-listen  {{ CPANELIP }}:80 backlog=16384;
+listen  {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:80 backlog=16384;
+listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 {% if SSL %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} backlog=16384;
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} backlog=16384;
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -65,9 +65,9 @@ return 301 $scheme://www.{{ MAINDOMAINNAME }}$request_uri;
 # The server blocks
 
 server {
-listen    {{ CPANELIP }}:80 backlog=16384;
+listen    {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:80 backlog=16384;
+listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 server_name  {{ DOMAINLIST }};
 {% if DISABLELOG %}
@@ -132,9 +132,9 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 
 {% if SSL %}
 server {
-listen    {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} backlog=16384;
+listen    {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} ;
 {% if IPVSIX %}
-listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} backlog=16384;
+listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};

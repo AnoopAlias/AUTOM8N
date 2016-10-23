@@ -9,7 +9,6 @@ if [ ! -d /usr/local/rvm/gems/ruby-RUBY_VERSION/gems/passenger-PASSENGER_VERSION
 	. /usr/local/rvm/scripts/rvm
 	rvm use ruby-RUBY_VERSION
         /usr/local/rvm/rubies/ruby-RUBY_VERSION/bin/gem install passenger -v PASSENGER_VERSION
-        yum -y --enablerepo=ndeploy install nginx-nDeploy-module-passenger
         ln -s /usr/nginx/buildout /usr/local/rvm/gems/ruby-RUBY_VERSION/gems/passenger-PASSENGER_VERSION/
 fi
 echo -e '\e[93m Adding a Ruby backend for nDeploy. Refer http://ndeploy.readthedocs.io/ \e[0m'
