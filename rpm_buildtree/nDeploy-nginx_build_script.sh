@@ -111,11 +111,11 @@ cp -pvr /usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_V
 cd ../nginx-pkg
 
 fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx package" --url http://anoopalias.github.io/nDeploy/ --conflicts nginx -d GeoIP -d libbrotli-nDeploy -d zlib -d openssl -d pcre -d libcurl -d memcached --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
-rsync -av nginx-nDeploy-* root@rpm.piserve.com:/home/gnusys/public_html/CentOS/${OSVERSION}/x86_64/
+rsync -av nginx-nDeploy-* root@cpanel.sysally.net:/home/gnusys/public_html/CentOS/${OSVERSION}/x86_64/
 
 for module in brotli geoip naxsi pagespeed passenger
 do
   cd ../nginx-module-${module}-pkg
   fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/nDeploy/ --conflicts nginx-module-${module} --name nginx-nDeploy-module-${module} .
-  rsync -av nginx-nDeploy-* root@rpm.piserve.com:/home/gnusys/public_html/CentOS/${OSVERSION}/x86_64/
+  rsync -av nginx-nDeploy-* root@cpanel.sysally.net:/home/gnusys/public_html/CentOS/${OSVERSION}/x86_64/
 done
