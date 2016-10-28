@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
 
-import yaml
 import sys
-import json
 import os
 import subprocess
+try:
+    import simplejson as json
+except ImportError:
+    import json
+import shutil
 
 
 __author__ = "Anoop P Alias"
@@ -14,61 +17,95 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
+# Define a function to silently remove files
+def silentremove(filename):
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
+
+
+# This hook script is called by cPanel before an account is modified
+# We are intrested in username and main-domain name modifications
+# Mainly take care of removing stuff here as the post-accountmodify hook will
+# take care of creating new configs
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-backend_config_file = installation_path+"/conf/backends.yaml"
 nginx_dir = "/etc/nginx/sites-enabled/"
 
-
+# Get data send by cPanel on stdin
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
 cpanelnewuser = mydict["newuser"]
 cpaneluser = mydict["user"]
 maindomain = mydict["domain"]
-cpuserdatayaml = "/var/cpanel/userdata/" + cpaneluser + "/main"
-cpaneluser_data_stream = open(cpuserdatayaml, 'r')
-yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
-cpaneluser_data_stream.close()
-main_domain = yaml_parsed_cpaneluser.get('main_domain')
-sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
+
+# Get details of current main-domain and sub-domain stored in cPanel datastore
+cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main"
+with open(cpuserdatajson, 'r') as cpaneluser_data_stream:
+    json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
+main_domain = json_parsed_cpaneluser.get('main_domain')
+sub_domains = json_parsed_cpaneluser.get('sub_domains')
+# If cPanel username is modified
 if cpanelnewuser != cpaneluser:
-    try:
-        os.remove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
-    except OSError:
-        pass
-    subprocess.call(installation_path+"/scripts/init_backends.py reload", shell=True)
-    os.remove(installation_path+"/domain-data/"+main_domain)
-    os.remove(nginx_dir+main_domain+".conf")
-    os.remove(nginx_dir+main_domain+".include")
-    os.remove(nginx_dir+main_domain+".nxapi.wl")
-    subprocess.call("rm -rf /var/resin/hosts/"+main_domain, shell=True)
-    if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
-        os.remove(installation_path+"/domain-data/"+main_domain+"_SSL")
-        os.remove(nginx_dir+main_domain+"_SSL.conf")
-        os.remove(nginx_dir+main_domain+"_SSL.include")
+    # Remove php-fpm pool file and reload php-fpm
+    silentremove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
+    subprocess.Popen(installation_path+"/scripts/init_backends.py reload")
+    # Remove domains associated with the user
+    silentremove(installation_path+"/domain-data/"+main_domain)
+    silentremove(nginx_dir+main_domain+".conf")
+    silentremove(nginx_dir+main_domain+".include")
+    silentremove(nginx_dir+main_domain+".nxapi.wl")
+    if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
+        with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
+            for server in cluster_slave_list:
+                silentremove("/etc/nginx/"+server+"/"+main_domain+".conf")
+                silentremove("/etc/nginx/"+server+"/"+main_domain+".include")
+                silentremove("/etc/nginx/"+server+"/"+main_domain+".nxapi.wl")
+    if os.path.exists('/var/resin/hosts/'+main_domain):
+        shutil.rmtree('/var/resin/hosts/'+main_domain)
     for domain_in_subdomains in sub_domains:
         if domain_in_subdomains.startswith("*"):
             domain_in_subdomains = "_wildcard_."+domain_in_subdomains.replace('*.', '')
-        os.remove(installation_path+"/domain-data/"+domain_in_subdomains)
-        os.remove(nginx_dir+domain_in_subdomains+".conf")
-        os.remove(nginx_dir+domain_in_subdomains+".include")
-        os.remove(nginx_dir+domain_in_subdomains+".nxapi.wl")
-        subprocess.call("rm -rf /var/resin/hosts/"+domain_in_subdomains, shell=True)
-        if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + domain_in_subdomains + "_SSL"):
-            os.remove(installation_path+"/domain-data/"+domain_in_subdomains+"_SSL")
-            os.remove(nginx_dir+domain_in_subdomains+"_SSL.conf")
-            os.remove(nginx_dir+domain_in_subdomains+"_SSL.include")
-    print(("1 nDeploy:olduser:"+cpaneluser+":newuser:"+cpanelnewuser))
-elif maindomain != main_domain:
-    os.remove(installation_path+"/domain-data/"+main_domain)
-    os.remove(nginx_dir+main_domain+".conf")
-    os.remove(nginx_dir+main_domain+".include")
-    os.remove(nginx_dir+main_domain+".nxapi.wl")
-    subprocess.call("rm -rf /var/resin/hosts/"+main_domain, shell=True)
-    if os.path.isfile("/var/cpanel/userdata/" + cpaneluser + "/" + main_domain + "_SSL"):
-        os.remove(installation_path+"/domain-data/"+main_domain+"_SSL")
-        os.remove(nginx_dir+main_domain+"_SSL.conf")
-        os.remove(nginx_dir+main_domain+"_SSL.include")
-    subprocess.call("/usr/sbin/nginx -s reload", shell=True)
-    print(("1 nDeploy:olddomain:"+main_domain+":newdomain:"+maindomain))
+        silentremove(installation_path+"/domain-data/"+domain_in_subdomains)
+        silentremove(nginx_dir+domain_in_subdomains+".conf")
+        silentremove(nginx_dir+domain_in_subdomains+".include")
+        silentremove(nginx_dir+domain_in_subdomains+".nxapi.wl")
+        if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
+            with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
+                for server in cluster_slave_list:
+                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".conf")
+                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".include")
+                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".nxapi.wl")
+        if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
+            shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
+if maindomain != main_domain:
+    silentremove(installation_path+"/domain-data/"+main_domain)
+    silentremove(nginx_dir+main_domain+".conf")
+    silentremove(nginx_dir+main_domain+".include")
+    silentremove(nginx_dir+main_domain+".nxapi.wl")
+    if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
+        with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
+            for server in cluster_slave_list:
+                silentremove("/etc/nginx/"+server+"/"+main_domain+".conf")
+                silentremove("/etc/nginx/"+server+"/"+main_domain+".include")
+                silentremove("/etc/nginx/"+server+"/"+main_domain+".nxapi.wl")
+    if os.path.exists('/var/resin/hosts/'+main_domain):
+        shutil.rmtree('/var/resin/hosts/'+main_domain)
+    for domain_in_subdomains in sub_domains:
+        if domain_in_subdomains.startswith("*"):
+            domain_in_subdomains = "_wildcard_."+domain_in_subdomains.replace('*.', '')
+        silentremove(installation_path+"/domain-data/"+domain_in_subdomains)
+        silentremove(nginx_dir+domain_in_subdomains+".conf")
+        silentremove(nginx_dir+domain_in_subdomains+".include")
+        silentremove(nginx_dir+domain_in_subdomains+".nxapi.wl")
+        if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
+            with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
+                for server in cluster_slave_list:
+                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".conf")
+                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".include")
+                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".nxapi.wl")
+        if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
+            shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
+    print("1 nDeploy:olddomain:"+main_domain+":newdomain:"+maindomain+":olduser:"+cpaneluser+":newuser:"+cpanelnewuser)
 else:
-    print("1 nDeploy::skiphook")
+    print("1 nDeploy::skiphook::accountModify::pre")

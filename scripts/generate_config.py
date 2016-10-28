@@ -348,15 +348,13 @@ if __name__ == "__main__":
         addon_domains_dict = json_parsed_cpaneluser.get('addon_domains')     # So we know which addon is mapped to which sub-domain
         sub_domains = json_parsed_cpaneluser.get('sub_domains')
         # Check if a user is suspended and set a flag accordingly
-        if os.path.exists("/var/cpanel/users/" + cpaneluser):
-            with open("/var/cpanel/users/" + cpaneluser) as users_file:
-                for line in users_file:
-                    line = line.rstrip()
-                    if line == "SUSPENDED=1":
-                        is_suspended = True
-                        break
-                    else:
-                        is_suspended = False
+        if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
+            with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
+                json_parsed_cpusersfile = json.load(users_file)
+            if json_parsed_cpusersfile.get('SUSPENDED') == 1:
+                is_suspended = True
+            else:
+                is_suspended = False
         else:
             # If cpanel users file is not present silently exit
             sys.exit(0)
