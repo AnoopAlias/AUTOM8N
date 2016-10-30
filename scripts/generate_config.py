@@ -132,8 +132,18 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     domain_alias_name = json_parsed_cpaneldomain.get('serveralias')
     if domain_alias_name:
         serveralias_list = domain_alias_name.split(' ')
+        serveralias_list_new = list(serveralias_list)
+        try:
+            serveralias_list_new.remove('www'+kwargs.get('maindomain'))
+        except ValueError:
+            pass
+        try:
+            serveralias_list_new.remove(kwargs.get('maindomain'))
+        except ValueError:
+            pass
     else:
         serveralias_list = []
+        serveralias_list_new = []
     domain_list = domain_server_name + " " + domain_alias_name
     if json_parsed_cpaneldomain.get('ipv6'):
         try:
@@ -218,6 +228,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     naxsi_mode = yaml_parsed_domain_data.get('naxsi_mode', None)
     dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', None)
     disable_open_file_cache = yaml_parsed_domain_data.get('disable_open_file_cache', None)
+    if not serveralias_list_new:
+        redirect_aliases = False
+    else:
+        redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', None)
     protected_dir = yaml_parsed_domain_data.get('protected_dir')
     if not protected_dir:
         protected_dir = []
@@ -241,6 +255,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "SSL": hasssl,
                     "IPVSIX": hasipv6,
                     "WWWREDIRECT": wwwredirect,
+                    "REDIRECTALIASES": redirect_aliases,
+                    "REDIRECTALIASES_LIST": serveralias_list_new,
                     "CPANELIP": cpanel_ipv4,
                     "CPIPVSIX": ipv6_addr,
                     "IPVSIX": hasipv6,

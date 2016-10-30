@@ -1,4 +1,5 @@
 # Redirects if any
+
 {% if WWWREDIRECT == "tononwww" %}
 server {
 listen  {{ CPANELIP }}:80 ;
@@ -30,6 +31,7 @@ server_name www.{{ MAINDOMAINNAME }};
 return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 }
 {% endif %}
+
 {% if WWWREDIRECT == "towww" %}
 server {
 listen  {{ CPANELIP }}:80 ;
@@ -62,6 +64,38 @@ return 301 $scheme://www.{{ MAINDOMAINNAME }}$request_uri;
 }
 {% endif %}
 
+{% if REDIRECTALIASES %}
+server {
+listen  {{ CPANELIP }}:80 ;
+{% if IPVSIX %}
+listen  [{{ CPIPVSIX }}]:80 ;
+{% endif %}
+{% if SSL %}
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} ;
+{% if IPVSIX %}
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} ;
+{% endif %}
+ssl_certificate {{ CPANELSSLCRT }};
+ssl_certificate_key {{ CPANELSSLKEY }};
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_prefer_server_ciphers on;
+ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+ssl_session_cache shared:SSL:10m;
+ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+ssl_session_timeout  5m;
+{% if OCSP %}
+ssl_stapling on;
+ssl_stapling_verify on;
+ssl_trusted_certificate {{ CPANELCACERT }};
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver_timeout 5s;
+{% endif %}
+{% endif %}
+server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN}}{% endfor %};
+return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
+}
+{% endif %}
+
 # The server blocks
 
 server {
@@ -71,11 +105,14 @@ listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 server_name  {{ DOMAINLIST }};
 {% if DISABLELOG %}
-access_log off;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% endif %}
+{% if REDIRECT_TO_SSL %}
+return 301 https://$host$request_uri;
+{% else %}
 {% if NAXSI %}
 {% if NAXSIMODE == "learn" %}
 include /etc/nginx/conf.d/naxsi_learn.rules;
@@ -94,9 +131,6 @@ open_file_cache off;
 {% if AUTOINDEX %}
 autoindex on;
 {% endif %}
-{% if REDIRECT_TO_SSL %}
-return 301 https://$host$request_uri;
-{% else %}
 {% if CLICKJACKING_PROTECT %}
 add_header X-Frame-Options SAMEORIGIN;
 {% endif %}
@@ -153,7 +187,7 @@ resolver_timeout 5s;
 {% endif %}
 server_name  {{ DOMAINLIST }};
 {% if DISABLELOG %}
-access_log off;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;

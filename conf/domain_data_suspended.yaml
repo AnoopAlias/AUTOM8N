@@ -14,6 +14,7 @@ disable_open_file_cache: False
 ssl_offload: False
 wwwredirect: none
 redirect_to_ssl: False
+redirect_aliases: False
 clickjacking_protect: False
 disable_contenttype_sniffing: False
 xss_filter: False
