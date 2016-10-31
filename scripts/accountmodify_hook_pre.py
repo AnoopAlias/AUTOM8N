@@ -40,45 +40,18 @@ cpaneluser = mydict["user"]
 maindomain = mydict["domain"]
 
 # Get details of current main-domain and sub-domain stored in cPanel datastore
-cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main"
+cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
 with open(cpuserdatajson, 'r') as cpaneluser_data_stream:
     json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
 main_domain = json_parsed_cpaneluser.get('main_domain')
 sub_domains = json_parsed_cpaneluser.get('sub_domains')
 # If cPanel username is modified
-if cpanelnewuser != cpaneluser:
-    # Remove php-fpm pool file and reload php-fpm
-    silentremove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
-    subprocess.Popen(installation_path+"/scripts/init_backends.py reload")
+if cpanelnewuser != cpaneluser or maindomain != main_domain:
+    if cpanelnewuser != cpaneluser:
+        # Remove php-fpm pool file and reload php-fpm
+        silentremove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
+        subprocess.Popen(installation_path+"/scripts/init_backends.py reload", shell=True)
     # Remove domains associated with the user
-    silentremove(installation_path+"/domain-data/"+main_domain)
-    silentremove(nginx_dir+main_domain+".conf")
-    silentremove(nginx_dir+main_domain+".include")
-    silentremove(nginx_dir+main_domain+".nxapi.wl")
-    if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
-        with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
-            for server in cluster_slave_list:
-                silentremove("/etc/nginx/"+server+"/"+main_domain+".conf")
-                silentremove("/etc/nginx/"+server+"/"+main_domain+".include")
-                silentremove("/etc/nginx/"+server+"/"+main_domain+".nxapi.wl")
-    if os.path.exists('/var/resin/hosts/'+main_domain):
-        shutil.rmtree('/var/resin/hosts/'+main_domain)
-    for domain_in_subdomains in sub_domains:
-        if domain_in_subdomains.startswith("*"):
-            domain_in_subdomains = "_wildcard_."+domain_in_subdomains.replace('*.', '')
-        silentremove(installation_path+"/domain-data/"+domain_in_subdomains)
-        silentremove(nginx_dir+domain_in_subdomains+".conf")
-        silentremove(nginx_dir+domain_in_subdomains+".include")
-        silentremove(nginx_dir+domain_in_subdomains+".nxapi.wl")
-        if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
-            with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
-                for server in cluster_slave_list:
-                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".conf")
-                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".include")
-                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".nxapi.wl")
-        if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
-            shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
-if maindomain != main_domain:
     silentremove(installation_path+"/domain-data/"+main_domain)
     silentremove(nginx_dir+main_domain+".conf")
     silentremove(nginx_dir+main_domain+".include")

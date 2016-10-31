@@ -51,12 +51,14 @@
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5100.j2 "A PHP application"
 
 echo -e '\e[93m Adding cpanel hooks \e[0m'
-
+#Delete Hooks
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::addsubdomain --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::changedocroot --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::delsubdomain --stage post --manual --exectype script --escalateprivs
+/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_removesubdom_functions_hook_post.py --category Cpanel --event Api2::SubDomain::delsubdomain --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::AddonDomain::addaddondomain --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::AddonDomain::deladdondomain --stage post --manual --exectype script --escalateprivs
+/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_removeaddon_functions_hook_post.py --category Cpanel --event Api2::AddonDomain::deladdondomain --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api1::Park::park --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api1::Park::unpark --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event UAPI::SSL::delete_ssl --stage post --manual --exectype script --escalateprivs
@@ -70,24 +72,24 @@ echo -e '\e[93m Adding cpanel hooks \e[0m'
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/accountremove_hook_post.py --category Whostmgr --event Accounts::Remove --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::suspendacct --stage post --manual
+/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_suspension_functions_hook_post.py --category Whostmgr --event Accounts::suspendacct --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::unsuspendacct --stage post --manual
+/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_suspension_functions_hook_post.py --category Whostmgr --event Accounts::unsuspendacct --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::SiteIP::set --stage post --manual
-
+#Add Hooks
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::addsubdomain --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::changedocroot --stage post --manual --exectype script --escalateprivs
-/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::delsubdomain --stage post --manual --exectype script --escalateprivs
+/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_removesubdom_functions_hook_post.py --category Cpanel --event Api2::SubDomain::delsubdomain --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::AddonDomain::addaddondomain --stage post --manual --exectype script --escalateprivs
-/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::AddonDomain::deladdondomain --stage post --manual --exectype script --escalateprivs
+/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_removeaddon_functions_hook_post.py --category Cpanel --event Api2::AddonDomain::deladdondomain --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api1::Park::park --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api1::Park::unpark --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event UAPI::SSL::delete_ssl --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event UAPI::SSL::install_ssl --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountcreate_hook_post.py --category Whostmgr --event Accounts::Create --stage post --manual
-/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_post.py --category Whostmgr --event Accounts::Remove --stage post --manual
-/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::suspendacct --stage post --manual
-/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::unsuspendacct --stage post --manual
+/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_suspension_functions_hook_post.py --category Whostmgr --event Accounts::suspendacct --stage post --manual
+/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_suspension_functions_hook_post.py --category Whostmgr --event Accounts::unsuspendacct --stage post --manual
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::SiteIP::set --stage post --manual
-/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/reload_watcher.sh --category System --event upcp --stage post --manual
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/reload_nginx.sh --category Stats --event RunAll --stage post --manual
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/runuserstats_hook_post.py --category Stats --event RunUser --stage post --manual
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountmodify_hook_pre.py --category Whostmgr --event Accounts::Modify --stage pre --manual

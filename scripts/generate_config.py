@@ -122,7 +122,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
     templateEnv = jinja2.Environment(loader=templateLoader)
     # Get all Data from cPanel userdata files
-    cpdomainjson = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('maindomain') + ".cache"
+    cpdomainjson = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + ".cache"
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
     cpanel_ipv4 = json_parsed_cpaneldomain.get('ip')
@@ -157,9 +157,9 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         hasipv6 = False
         ipv6_addr = None
     # if domain has TLS, get details about it too
-    if os.path.isfile("/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('maindomain') + "_SSL"):
+    if os.path.isfile("/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL"):
         hasssl = True
-        cpdomainjson_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('maindomain') + "_SSL.cache"
+        cpdomainjson_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL.cache"
         with open(cpdomainjson_ssl, 'r') as cpaneldomain_ssl_data_stream:
             json_parsed_cpaneldomain_ssl = json.load(cpaneldomain_ssl_data_stream)
         sslcertificatefile = json_parsed_cpaneldomain_ssl.get('sslcertificatefile')

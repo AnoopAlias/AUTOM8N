@@ -30,17 +30,17 @@ cpaneluser = mydict["user"]
 maindomain = mydict["domain"]
 # Calling the config generate script for the user
 if cpanelnewuser != cpaneluser:
-    subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser)
+    subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
     if os.path.exists(cluster_config_file):
         cpaneluserhome = mydict["homedir"]
         # Calling ansible ad-hoc command to remove / create users across the cluster
         # Using subprocess.call here as no async call is required
-        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' state=absent remove=yes"')
+        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' state=absent remove=yes"', shell=True)
         # Create the new user
-        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpanelnewuser+' home='+cpaneluserhome+'"')
-        subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpanelnewuser)
-        subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser)
+        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpanelnewuser+' home='+cpaneluserhome+'"', shell=True)
+        subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpanelnewuser, shell=True)
+        subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
     print(("1 nDeploy:postmodify:"+cpanelnewuser))
 else:
-    subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser)
+    subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
     print(("1 nDeploy:postmodify:"+cpaneluser))

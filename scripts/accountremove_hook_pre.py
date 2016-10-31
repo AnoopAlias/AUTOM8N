@@ -35,9 +35,9 @@ cpaneluser = mydict["user"]
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 # If cluster is configured , we remove user from cluster
 if os.path.exists(cluster_config_file):
-    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' state=absent remove=yes"')
+    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' state=absent remove=yes"', shell=True)
 silentremove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
-subprocess.Popen(installation_path+"/scripts/init_backends.py reload")
+subprocess.Popen(installation_path+"/scripts/init_backends.py reload", shell=True)
 cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
 if os.path.exists(cpuserdatajson):
     with open(cpuserdatajson, 'r') as cpaneluser_data_stream:
@@ -71,6 +71,5 @@ if os.path.exists(cpuserdatajson):
                     silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".nxapi.wl")
         if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
             shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
-    subprocess.call(installation_path+"/scripts/init_backends.py reload")
-    subprocess.Popen("/usr/sbin/nginx -s reload")
+    subprocess.Popen("/usr/sbin/nginx -s reload", shell=True)
     print(("1 nDeploy:remove:post:"+cpaneluser))

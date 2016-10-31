@@ -29,11 +29,11 @@ if os.path.exists(cluster_config_file):
     cpaneldomain = mydict["domain"]
     # Calling ansible ad-hoc command to create users across the cluster
     # Using subprocess.call here as we are not in a hurry and no async call is required
-    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' home='+cpaneluserhome+'"')
-    subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser)
-    subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser)
+    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' home='+cpaneluserhome+'"', shell=True)
+    subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
+    subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
     print("1 nDeploy:clusteraccountcreate:"+cpaneluser)
 else:
     # We just need to generate config for the local machine
-    subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser)
+    subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
     print("1 nDeploy:accountcreate:"+cpaneluser)
