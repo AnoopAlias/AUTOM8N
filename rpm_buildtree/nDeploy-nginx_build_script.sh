@@ -31,8 +31,8 @@ do
 done
 mkdir -p nginx-module-naxsi-pkg/etc/nginx/naxsi.d
 
+yum -y install rpm-build libcurl-devel pcre-devel git xz-devel
 if [ ${OSVERSION} -eq 6 ];then
-  yum -y install rpm-build libcurl-devel pcre-devel git xz-devel
   rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
   wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
   yum install devtoolset-2-gcc-c++ devtoolset-2-binutils
