@@ -17,11 +17,11 @@ rsync -av nDeploy-pkg/etc/rc.d/init.d/ndeploy_backends nDeploy-cluster-slave-pkg
 cd nDeploy-cluster-slave-pkg-centos7
 mkdir opt/nDeploy/lock
 fpm -s dir -t rpm -C ../nDeploy-cluster-slave-pkg-centos7 --vendor "Anoop P Alias" --version ${NDEPLOY_VERSION} --iteration ${RPM_ITERATION}.el7 -d python-inotify -d nginx-nDeploy -d python-argparse -d PyYAML -d python-lxml -a noarch -m anoopalias01@gmail.com -e --description "nDeploy cluster slave" --url http://anoopalias.github.io/nDeploy/ --after-install ../after_ndeploy_cluster_slave_install --name nDeploy-cluster-slave .
-rsync -av nDeploy-* root@cpanel.sysally.net:/home/gnusys/public_html/CentOS/7/x86_64/
+rsync -av nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/7/x86_64/
 cd ..
 
 cd nDeploy-cluster-slave-pkg
 mkdir opt/nDeploy/lock
 fpm -s dir -t rpm -C ../nDeploy-cluster-slave-pkg --vendor "Anoop P Alias" --version ${NDEPLOY_VERSION} --iteration ${RPM_ITERATION}.el6 -d python-inotify -d nginx-nDeploy -d python-argparse -d PyYAML -d python-lxml -a noarch -m anoopalias01@gmail.com -e --description "nDeploy cluster slave" --url http://anoopalias.github.io/nDeploy/ --after-install ../after_ndeploy_cluster_slave_install --name nDeploy-cluster-slave .
-rsync -av nDeploy-* root@cpanel.sysally.net:/home/gnusys/public_html/CentOS/6/x86_64/
+rsync -av nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/6/x86_64/
 cd ..

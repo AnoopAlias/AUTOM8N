@@ -15,4 +15,4 @@ cd ../nDeploy-csync2-pkg-centos7
 mkdir -p var/backups/csync2
 mkdir -p var/lib/csync2
 fpm -s dir -t rpm -C ../nDeploy-csync2-pkg-centos7 --vendor "Anoop P Alias" --version ${CSYNC2_VERSION} --iteration ${CSYNC2_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom csync2 package" --url http://anoopalias.github.io/nDeploy/ --conflicts csync2 -d librsync -d gnutls -d sqlite -d sqlite-devel --after-install ../after_csync2_install --before-remove ../after_csync2_uninstall --name csync2-nDeploy .
-rsync -av *.rpm root@cpanel.sysally.net:/home/gnusys/public_html/CentOS/7/x86_64/
+rsync -av *.rpm root@gnusys.net:/usr/share/nginx/html/CentOS/7/x86_64/

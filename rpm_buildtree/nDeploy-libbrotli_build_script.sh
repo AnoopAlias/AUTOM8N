@@ -14,4 +14,4 @@ make DESTDIR=/opt/libbrotli install
 cd /opt/libbrotli
 
 fpm -s dir -t rpm -C ../libbrotli --vendor "Anoop P Alias" --version ${BROTLI_VERSION} --iteration ${BROTLI_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom libbrotli package" --url https://github.com/bagder/libbrotli --conflicts libbrotli --name libbrotli-nDeploy .
-rsync -av libbrotli-nDeploy-* root@cpanel.sysally.net:/home/gnusys/public_html/CentOS/6/x86_64/
+rsync -av libbrotli-nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/6/x86_64/
