@@ -10,4 +10,3 @@ with open("/etc/domainusers", 'r') as domainusers:
         user_info = pwd.getpwnam(cpaneluser)
         cpaneluserhome = user_info.pw_dir
         subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts -m user -a "name='+cpaneluser+' home='+cpaneluserhome+'"', shell=True)
-        

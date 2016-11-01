@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
-
-import yaml
+try:
+    import simplejson as json
+except ImportError:
+    import json
 import argparse
 import subprocess
 import os
 import sys
 import pwd
+import yaml
 
 
 __author__ = "Anoop P Alias"
@@ -35,66 +38,42 @@ if __name__ == "__main__":
     parser.add_argument("CPANELUSER")
     args = parser.parse_args()
     cpaneluser = args.CPANELUSER
-
+    # if user is not in /etc/passwd we dont proceed any further
     try:
         pwd.getpwnam(cpaneluser)
     except KeyError:
         sys.exit(0)
     else:
-        cpuserdatayaml = "/var/cpanel/userdata/" + cpaneluser + "/main"
-        try:
-            cpaneluser_data_stream = open(cpuserdatayaml, 'r')
-        except IOError:
-            sys.exit(0)
-        yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
-
+        # Generate the server list in cluster and make it available globally
         if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cluster ipmap
             cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
             cluster_data_yaml = open(cluster_config_file, 'r')
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             cluster_data_yaml.close()
             serverlist = cluster_data_yaml_parsed.keys()
-
-            main_domain = yaml_parsed_cpaneluser.get('main_domain')
-            parked_domains = yaml_parsed_cpaneluser.get('parked_domains')
-            addon_domains = yaml_parsed_cpaneluser.get('addon_domains')
-            sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
-
-            # Add DNS for main_domain
-            maindomain_datayaml = "/var/cpanel/userdata/"+cpaneluser+"/"+main_domain
-            if os.path.isfile(maindomain_datayaml):
-                maindomain_data_stream = open(maindomain_datayaml, 'r')
-                yaml_parsed_maindomain = yaml.safe_load(maindomain_data_stream)
-                maindomain_ip = yaml_parsed_maindomain.get('ip')
-                cluster_ensure_arecord(main_domain, main_domain, maindomain_ip)
-
-            # Add DNS for sub_domains
-            for domain_in_subdomains in sub_domains:
-                subdomain_datayaml = "/var/cpanel/userdata/"+cpaneluser+"/"+domain_in_subdomains
-                if os.path.isfile(subdomain_datayaml):
-                    subdomain_data_stream = open(subdomain_datayaml, 'r')
-                    yaml_parsed_subdomain = yaml.safe_load(subdomain_data_stream)
-                    subdomain_ip = yaml_parsed_subdomain.get('ip')
-                    cluster_ensure_arecord(main_domain, domain_in_subdomains, subdomain_ip)
-
-            # Add DNS for parked_domains
-            for domain_in_parkeddomains in parked_domains:
-                parkeddomain_datayaml = "/var/cpanel/userdata/"+cpaneluser+"/"+domain_in_parkeddomains
-                if os.path.isfile(parkeddomain_datayaml):
-                    parkeddomain_data_stream = open(parkeddomain_datayaml, 'r')
-                    yaml_parsed_parkeddomain = yaml.safe_load(parkeddomain_data_stream)
-                    parkeddomain_ip = yaml_parsed_parkeddomain.get('ip')
-                    cluster_ensure_arecord(domain_in_parkeddomains, domain_in_parkeddomains, parkeddomain_ip)
-
-            # Add DNS for addon_domains
-            if addon_domains.keys():
-                for addondom in addon_domains.keys():
-                    domain_in_addondomains = addon_domains.get(addondom)
-                    addondomain_datayaml = "/var/cpanel/userdata/"+cpaneluser+"/"+domain_in_addondomains
-                    if os.path.isfile(addondomain_datayaml):
-                        addondomain_data_stream = open(addondomain_datayaml, 'r')
-                        yaml_parsed_addondomain = yaml.safe_load(addondomain_data_stream)
-                        addondomain_ip = yaml_parsed_addondomain.get('ip')
-                        cluster_ensure_arecord(addondom, addondom, addondomain_ip)
-        else:
-            sys.exit(0)
+        # Try loading the main userdata cache file
+        cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
+        with open(cpuserdatajson) as cpaneluser_data_stream:
+            json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
+        main_domain = json_parsed_cpaneluser.get('main_domain')
+        parked_domains = json_parsed_cpaneluser.get('parked_domains')
+        addon_domains_dict = json_parsed_cpaneluser.get('addon_domains')     # So we know which addon is mapped to which sub-domain
+        sub_domains = json_parsed_cpaneluser.get('sub_domains')
+        # Begin DNS RR addition .Do it first for the main domain
+        with open("/var/cpanel/userdata/"+cpaneluser+"/"+main_domain+".cache") as maindomain_data_stream:
+            maindomain_data_stream_parsed = json.load(maindomain_data_stream)
+        maindomain_ip = maindomain_data_stream_parsed.get('ip')
+        cluster_ensure_arecord(main_domain, main_domain, maindomain_ip)
+        # iterate over the addon-domain and add DNS RR for it
+        for the_addon_domain in addon_domains_dict.keys():
+            with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict[the_addon_domain]+".cache") as addondomain_data_stream:
+                addondomain_data_stream_parsed = json.load(addondomain_data_stream)
+            addondomain_ip = addondomain_data_stream_parsed.get('ip')
+            cluster_ensure_arecord(the_addon_domain, the_addon_domain, addondomain_ip)
+        # iterate over sub-domains and add DNS RR if its not a linked sub-domain for addon-domain
+        for the_sub_domain in sub_domains:
+            if the_sub_domain not in addon_domains_dict.values():
+                cluster_ensure_arecord(main_domain, the_sub_domain, maindomain_ip)
+        # iterate over parked domains and add DNS RR for it . IP being that of main domain
+        for the_parked_domain in parked_domains:
+            cluster_ensure_arecord(the_parked_domain, the_parked_domain, maindomain_ip)
