@@ -66,7 +66,7 @@ if __name__ == "__main__":
         cluster_ensure_arecord(main_domain, main_domain, maindomain_ip)
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
-            with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict[the_addon_domain]+".cache") as addondomain_data_stream:
+            with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict.get(the_addon_domain)+".cache") as addondomain_data_stream:
                 addondomain_data_stream_parsed = json.load(addondomain_data_stream)
             addondomain_ip = addondomain_data_stream_parsed.get('ip')
             cluster_ensure_arecord(the_addon_domain, the_addon_domain, addondomain_ip)

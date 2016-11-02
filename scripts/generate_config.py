@@ -224,10 +224,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     gzip = yaml_parsed_domain_data.get('gzip', None)
     http2 = yaml_parsed_domain_data.get('http2', None)
     ssl_offload = yaml_parsed_domain_data.get('ssl_offload', None)
-    disable_access_log = yaml_parsed_domain_data.get('disable_access_log', None)
+    access_log = yaml_parsed_domain_data.get('access_log', None)
     naxsi_mode = yaml_parsed_domain_data.get('naxsi_mode', None)
     dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', None)
-    disable_open_file_cache = yaml_parsed_domain_data.get('disable_open_file_cache', None)
+    open_file_cache = yaml_parsed_domain_data.get('open_file_cache', None)
     if not serveralias_list_new:
         redirect_aliases = False
     else:
@@ -279,8 +279,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "DOMAINLIST": domain_list,
                     "AUTOINDEX": autoindex,
                     "REDIRECT_TO_SSL": redirect_to_ssl,
-                    "DISABLELOG": disable_access_log,
-                    "DISABLE_OPEN_FILE_CACHE": disable_open_file_cache,
+                    "ENABLEACCESSLOG": access_log,
+                    "OPEN_FILE_CACHE": open_file_cache,
                     "PROTECTED_DIR": protected_dir,
                     "HOMEDIR": domain_home,
                     "DOSMITIGATE": dos_mitigate

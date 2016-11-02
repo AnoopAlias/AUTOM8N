@@ -104,7 +104,7 @@ listen    {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 server_name  {{ DOMAINLIST }};
-{% if DISABLELOG %}
+{% if not ENABLEACCESSLOG %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=32k flush=5m;
@@ -125,7 +125,7 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% if PAGESPEED %}
 include /etc/nginx/conf.d/pagespeed.conf
 {% endif %}
-{% if DISABLE_OPEN_FILE_CACHE %}
+{% if not OPEN_FILE_CACHE %}
 open_file_cache off;
 {% endif %}
 {% if AUTOINDEX %}
@@ -186,7 +186,7 @@ resolver 8.8.8.8 8.8.4.4 valid=300s;
 resolver_timeout 5s;
 {% endif %}
 server_name  {{ DOMAINLIST }};
-{% if DISABLELOG %}
+{% if not ENABLEACCESSLOG %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
@@ -204,7 +204,7 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% if PAGESPEED %}
 include /etc/nginx/conf.d/pagespeed.conf
 {% endif %}
-{% if DISABLE_OPEN_FILE_CACHE %}
+{% if not OPEN_FILE_CACHE %}
 open_file_cache off;
 {% endif %}
 {% if AUTOINDEX %}
