@@ -1,6 +1,6 @@
 Installation
 ============
-Requirements: cPanel 11.48+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed
+Requirements: cPanel 11.48+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed.
 
 * nDeploy 3.x is available via yum (Supports PHP-FPM from EasyApache4 or REMI repo)
 * nDeploy 2.0.65 is available as an RPM package for manual install
@@ -12,17 +12,17 @@ Requirements: cPanel 11.48+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 
 
   yum -y install epel-release
 
-#. Install nDeploy yum repo
+2. Install nDeploy yum repo
 ::
 
   yum -y install https://github.com/AnoopAlias/nDeploy/raw/master/nDeploy-release-centos-1.0-3.noarch.rpm
 
-#. Install nDeploy plugin and nginx. Be patient as this may take several minutes to complete.
+3. Install nDeploy plugin and nginx. Be patient as this may take several minutes to complete.
 ::
 
   yum --enablerepo=ndeploy install nginx-nDeploy nDeploy
 
-#. Install or enable Application servers. You can skip any step below based on your servers requirements.
+4. Install or enable Application servers. You can skip any step below based on your servers requirements.
 ::
 
   #Install PHP-FPM Application server for PHP
@@ -31,12 +31,12 @@ Requirements: cPanel 11.48+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 
   #Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.
   /usr/nginx/scripts/nginx-passenger-setup.sh
 
-#. Enable the plugin. This will make nginx your frontend webserver.
+5. Enable the plugin. This will make nginx your frontend webserver.
 ::
 
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
 
-#. Step4(Optional) : Setup NAXSI learning .This is required to generate NAXSI whitelist rules
+6. Setup NAXSI learning (Optional) - This is required to generate NAXSI whitelist rules
 ::
 
   #Note that this step will install JAVA and ElasticSearch daemon for NXAPI
