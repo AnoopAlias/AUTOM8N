@@ -1,6 +1,5 @@
-SSLREDIRECT: "0"
 PHP:
-  '/wp-config.php': '5001'
-  '/libraries/joomla/version.php': '5002'
-  '/sites/default/settings.php': '5017'
-  '/app/etc/local.xml': '5003'
+  '/wp-config.php': 5001.j2
+  '/libraries/joomla/version.php': 5002.j2
+  '/sites/default/settings.php': 5017.j2
+  '/app/etc/local.xml': 5003.j2

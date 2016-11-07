@@ -1,6 +1,5 @@
-#Proxy to cPanel Apache httpd service
+# Subdirectory Proxy to cPanel Apache httpd service
 
-location / {
 access_log  off;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
@@ -25,11 +24,3 @@ proxy_set_header   X-Forwarded-Proto $scheme;
 proxy_set_header   X-Scheme $scheme;
 proxy_set_header   Proxy "";
 proxy_redirect     off;
-}
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory

@@ -1,7 +1,6 @@
 #!/usr/bin/python
 import os
 import socket
-import yaml
 import cgi
 import cgitb
 
@@ -37,7 +36,7 @@ print('<title>nDeploy</title>')
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<a href="ndeploy.live.cgi"><img border="0" src="nDeploy.png" alt="nDeploy"></a>')
+print('<a href="xtendweb.live.py"><img border="0" src="xtendweb.png" alt="nDeploy"></a>')
 print('<HR>')
 if form.getvalue('domain'):
     # Get the domain name from form data
@@ -45,7 +44,7 @@ if form.getvalue('domain'):
     print(('<p style="background-color:LightGrey">CONFIGURING:  '+mydomain+'</p>'))
     print('<HR>')
     print('<div class="boxedyellow">')
-    print('<form action="server_settings.live.cgi" method="post">')
+    print('<form action="server_settings.live.py" method="post">')
     print(('<center><p style="background-color:LightGrey">Configure -  content optimizations / redirections/ server headers etc. </p></center>'))
     print('<center><input type="submit" value="SERVER SETTINGS"></center>')
     # Pass on the domain name to the next stage
@@ -54,7 +53,7 @@ if form.getvalue('domain'):
     print('</div>')
     print('<HR>')
     print('<div class="boxedyellow">')
-    print('<form action="app_settings.live.cgi" method="post">')
+    print('<form action="app_settings.live.py" method="post">')
     print(('<center><p style="background-color:LightGrey">Configure -  application server / version / application template etc </p></center>'))
     print('<center><input type="submit" value="APPLICATION SETTINGS"></center>')
     # Pass on the domain name to the next stage
@@ -63,7 +62,7 @@ if form.getvalue('domain'):
     print('</div>')
     print('<HR>')
     print('<div class="boxedyellow">')
-    print('<form action="subir_app.live.cgi" method="post">')
+    print('<form action="subdir_selector.live.py" method="post">')
     print(('<center><p style="background-color:LightGrey">Configure -  applications installed in sub-directory like domain.com/blog/ </p></center>'))
     print('<center><input type="submit" value="APPLICATION IN SUB-DIRECTORY"></center>')
     # Pass on the domain name to the next stage
@@ -72,9 +71,9 @@ if form.getvalue('domain'):
     print('</div>')
     print('<HR>')
     print('<div class="boxedyellow">')
-    print('<form action="directory_privacy.live.cgi" method="post">')
-    print(('<center><p style="background-color:LightGrey">Configure -  password protected directory </p></center>'))
-    print('<center><input type="submit" value="PASSWORD PROTECTED FOLDER"></center>')
+    print('<form action="directory_privacy.live.py" method="post">')
+    print(('<center><p style="background-color:LightGrey">Configure -  password protected URL </p></center>'))
+    print('<center><input type="submit" value="PASSWORD PROTECTED URL"></center>')
     # Pass on the domain name to the next stage
     print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
     print('</form>')

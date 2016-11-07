@@ -7,11 +7,7 @@ echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_port value=0.0.0.0:9999
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:4430
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
-for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
-do
-	echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/generate_config.py $CPANELUSER
-done
-
+/opt/nDeploy/scripts/attempt_autofix.sh
 /usr/local/cpanel/libexec/tailwatchd --restart
 
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
@@ -47,7 +43,6 @@ echo -e '\e[93m Reverting apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:443
 sed -i "s/9999/80/" /etc/chkserv.d/httpd
 
-/usr/local/cpanel/whostmgr/bin/whostmgr2 --updatetweaksettings > /dev/null
 /usr/local/cpanel/libexec/tailwatchd --restart
 
 echo -e '\e[93m Rebuilding Apache httpd backend configs.Apache will listen on default ports!  \e[0m'

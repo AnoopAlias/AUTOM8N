@@ -16,7 +16,7 @@ location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
 # Include any applications in subdirectory
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
 location /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.include;
+include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
 }
 {% endfor %}
 # End Include any applications in subdirectory

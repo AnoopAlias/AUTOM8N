@@ -7,9 +7,9 @@ listen  {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 {% if SSL %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} ;
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} ;
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -39,9 +39,9 @@ listen  {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 {% if SSL %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} ;
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} ;
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -64,16 +64,16 @@ return 301 $scheme://www.{{ MAINDOMAINNAME }}$request_uri;
 }
 {% endif %}
 
-{% if REDIRECTALIASES %}
+{% if REDIRECTALIASES == 'enabled' %}
 server {
 listen  {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 {% if SSL %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} ;
+listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} ;
+listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -91,7 +91,7 @@ resolver 8.8.8.8 8.8.4.4 valid=300s;
 resolver_timeout 5s;
 {% endif %}
 {% endif %}
-server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN}}{% endfor %};
+server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 }
 {% endif %}
@@ -104,59 +104,59 @@ listen    {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 server_name  {{ DOMAINLIST }};
-{% if not ENABLEACCESSLOG %}
+{% if ENABLEACCESSLOG == 'disabled' %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% endif %}
-{% if REDIRECT_TO_SSL %}
+{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
 return 301 https://$host$request_uri;
 {% else %}
-{% if NAXSI %}
-{% if NAXSIMODE == "learn" %}
+{% if NAXSI == 'enabled' %}
+{% if NAXSIMODE == 'learn' %}
 include /etc/nginx/conf.d/naxsi_learn.rules;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == "active" %}
+{% elif NAXSIMODE == 'active' %}
 include /etc/nginx/conf.d/naxsi_active.rules;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
 {% endif %}
-{% if PAGESPEED %}
-include /etc/nginx/conf.d/pagespeed.conf
+{% if PAGESPEED == 'enabled' %}
+include /etc/nginx/conf.d/pagespeed.conf;
 {% endif %}
-{% if not OPEN_FILE_CACHE %}
+{% if not OPEN_FILE_CACHE == 'enabled' %}
 open_file_cache off;
 {% endif %}
-{% if AUTOINDEX %}
+{% if AUTOINDEX == 'enabled' %}
 autoindex on;
 {% endif %}
-{% if CLICKJACKING_PROTECT %}
+{% if CLICKJACKING_PROTECT == 'enabled' %}
 add_header X-Frame-Options SAMEORIGIN;
 {% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING %}
+{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}
 add_header X-Content-Type-Options nosniff;
 {% endif %}
-{% if XSS_FILTER %}
+{% if XSS_FILTER == 'enabled' %}
 add_header X-XSS-Protection "1; mode=block";
 {% endif %}
-{% if CONTENT_SECURITY_POLICY %}
+{% if CONTENT_SECURITY_POLICY == 'enabled' %}
 add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
 {% endif %}
-{% if GZIP_ENABLED %}
+{% if GZIP_ENABLED == 'enabled' %}
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
-{% if DOSMITIGATE %}
+{% if DOSMITIGATE == 'enabled' %}
 include /etc/nginx/conf.d/dos_mitigate;
 {% endif %}
 {% for DIR in PROTECTED_DIR %}
 {% if DIR == '/' %}
 auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds/public_html/passwd;
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% else %}
 location {{ DIR }}/ {
 auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds/public_html{{ DIR }}/passwd;
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}{{ DIR }}/passwd;
 }
 {% endif %}
 {% endfor %}
@@ -166,9 +166,9 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 
 {% if SSL %}
 server {
-listen    {{ CPANELIP }}:443 ssl {% if HTTP2 %}http2{% endif %} ;
+listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% if IPVSIX %}
-listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 %}http2{% endif %} ;
+listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLKEY }};
@@ -186,14 +186,14 @@ resolver 8.8.8.8 8.8.4.4 valid=300s;
 resolver_timeout 5s;
 {% endif %}
 server_name  {{ DOMAINLIST }};
-{% if not ENABLEACCESSLOG %}
+{% if ENABLEACCESSLOG == 'disabled' %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% endif %}
-{% if NAXSI %}
-{% if NAXSIMODE == "learn" %}
+{% if NAXSI == 'enabled' %}
+{% if NAXSIMODE == 'learn' %}
 include /etc/nginx/conf.d/naxsi_learn.rules;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% elif NAXSIMODE == "active" %}
@@ -201,49 +201,49 @@ include /etc/nginx/conf.d/naxsi_active.rules;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
 {% endif %}
-{% if PAGESPEED %}
-include /etc/nginx/conf.d/pagespeed.conf
-{% endif %}
-{% if not OPEN_FILE_CACHE %}
-open_file_cache off;
-{% endif %}
-{% if AUTOINDEX %}
-autoindex on;
-{% endif %}
-{% if HSTS %}
-add_header Strict-Transport-Security "max-age=86400" always;
-{% endif %}
-{% if CLICKJACKING_PROTECT %}
-add_header X-Frame-Options SAMEORIGIN;
-{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING %}
-add_header X-Content-Type-Options nosniff;
-{% endif %}
-{% if XSS_FILTER %}
-add_header X-XSS-Protection "1; mode=block";
-{% endif %}
-{% if CONTENT_SECURITY_POLICY %}
-add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
-{% endif %}
-{% if PAGESPEED_ENABLED %}
+{% if PAGESPEED == 'enabled' %}
 include /etc/nginx/conf.d/pagespeed.conf;
 {% endif %}
-{% if BROTLI_ENABLED %}
+{% if not OPEN_FILE_CACHE == 'enabled' %}
+open_file_cache off;
+{% endif %}
+{% if AUTOINDEX == 'enabled' %}
+autoindex on;
+{% endif %}
+{% if HSTS == 'enabled' %}
+add_header Strict-Transport-Security "max-age=86400" always;
+{% endif %}
+{% if CLICKJACKING_PROTECT == 'enabled' %}
+add_header X-Frame-Options SAMEORIGIN;
+{% endif %}
+{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}
+add_header X-Content-Type-Options nosniff;
+{% endif %}
+{% if XSS_FILTER == 'enabled' %}
+add_header X-XSS-Protection "1; mode=block";
+{% endif %}
+{% if CONTENT_SECURITY_POLICY == 'enabled' %}
+add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
+{% endif %}
+{% if PAGESPEED == 'enabled' %}
+include /etc/nginx/conf.d/pagespeed.conf;
+{% endif %}
+{% if BROTLI == 'enabled' %}
 include /etc/nginx/conf.d/brotli.conf;
-{% elif GZIP_ENABLED %}
+{% elif GZIP == 'enabled' %}
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
-{% if DOSMITIGATE %}
+{% if DOSMITIGATE == 'enabled' %}
 include /etc/nginx/conf.d/dos_mitigate;
 {% endif %}
 {% for DIR in PROTECTED_DIR %}
 {% if DIR == '/' %}
 auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds/public_html/passwd;
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% else %}
 location {{ DIR }}/ {
 auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds/public_html{{ DIR }}/passwd;
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}{{ DIR }}/passwd;
 }
 {% endif %}
 {% endfor %}

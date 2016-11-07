@@ -1,18 +1,18 @@
 [
     {
-       "order" : 11,
-       "name" : "High Performance WebStack",
+       "order" : 12,
+       "name" : "NGINX CLUSTER CONTROL",
        "type" : "group",
-       "id" : "ndeploy_grp"
+       "id" : "xtendweb_grp"
     },
     {
-       "icon" : "nDeploy.png",
-       "group_id" : "ndeploy_grp",
+       "icon" : "xtendweb.png",
+       "group_id" : "xtendweb_grp",
        "order" : 1,
-       "name" : "nginX",
+       "name" : "XtendWeb nginX control",
        "type" : "link",
-       "id" : "ndeploy",
-       "uri" : "nDeploy_cp/ndeploy.live.cgi",
+       "id" : "xtendweb",
+       "uri" : "nDeploy_cp/xtendweb.live.py",
        "target" : "_blank"
     }
 ]

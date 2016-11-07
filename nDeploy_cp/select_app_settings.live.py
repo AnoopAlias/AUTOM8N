@@ -1,0 +1,126 @@
+#!/usr/bin/python
+import os
+import socket
+import yaml
+import cgi
+import cgitb
+import sys
+
+
+__author__ = "Anoop P Alias"
+__copyright__ = "Copyright Anoop P Alias"
+__license__ = "GPL"
+__email__ = "anoopalias01@gmail.com"
+
+
+installation_path = "/opt/nDeploy"  # Absolute Installation Path
+app_template_file = installation_path+"/conf/apptemplates.yaml"
+backend_config_file = installation_path+"/conf/backends.yaml"
+
+
+cgitb.enable()
+
+
+def close_cpanel_liveapisock():
+    """We close the cpanel LiveAPI socket here as we dont need those"""
+    cp_socket = os.environ["CPANEL_CONNECT_SOCKET"]
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    sock.connect(cp_socket)
+    sock.sendall('<cpanelxml shutdown="1" />')
+    sock.close()
+
+
+close_cpanel_liveapisock()
+form = cgi.FieldStorage()
+
+
+print('Content-Type: text/html')
+print('')
+print('<html>')
+print('<head>')
+print('<title>nDeploy</title>')
+print(('<link rel="stylesheet" href="styles.css">'))
+print('</head>')
+print('<body>')
+print('<a href="xtendweb.live.py"><img border="0" src="xtendweb.png" alt="nDeploy"></a>')
+print('<HR>')
+if form.getvalue('domain') and form.getvalue('backend'):
+    # Get the domain name from form data
+    mydomain = form.getvalue('domain')
+    mybackend = form.getvalue('backend')
+    profileyaml = installation_path + "/domain-data/" + mydomain
+    # Get data about the backends available
+    if os.path.isfile(backend_config_file):
+        with open(backend_config_file, 'r') as backend_data_yaml:
+            backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+    if os.path.isfile(profileyaml):
+        # Get all config settings from the domains domain-data config file
+        with open(profileyaml, 'r') as profileyaml_data_stream:
+            yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+        # App settings
+        backend_category = yaml_parsed_profileyaml.get('backend_category')
+        backend_version = yaml_parsed_profileyaml.get('backend_version')
+        backend_path = yaml_parsed_profileyaml.get('backend_path')
+        apptemplate_code = yaml_parsed_profileyaml.get('apptemplate_code')
+        # get the human friendly name of the app template
+        if os.path.isfile(app_template_file):
+            with open(app_template_file, 'r') as apptemplate_data_yaml:
+                apptemplate_data_yaml_parsed = yaml.safe_load(apptemplate_data_yaml)
+            apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
+            apptemplate_description = apptemplate_dict.get(apptemplate_code)
+        else:
+            print('ERROR : app template data file error')
+            sys.exit(0)
+        # Ok we are done with getting the settings,now lets present it to the user
+        print(('<p style="background-color:LightGrey">APPLICATION SETTINGS:  '+mydomain+'</p>'))
+        print('<HR>')
+        print('<form action="save_app_settings.live.py" method="post">')
+        print('<div class="boxedyellow">')
+        if backend_category == 'PROXY':
+            print(('<p style="background-color:LightGrey">currently NGINX is proxying to: '+backend_version+' using === '+apptemplate_description+' === as template</p>'))
+        else:
+            print(('<p style="background-color:LightGrey">currently NGINX is directly serving content using '+backend_category+' as application server(version: '+backend_version+') and === '+apptemplate_description+' === as template</p>'))
+        print(('<p style="background-color:LightGrey">You selected : '+mybackend+' as the new backend, select the version and template for this backend below </p>'))
+        backends_dict = backend_data_yaml_parsed.get(mybackend)
+        new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
+        if mybackend == backend_category:
+            print(('<p style="background-color:LightGrey">Select Backend version: </p>'))
+            print('<select name="backendversion">')
+            for mybackend_version in backends_dict.keys():
+                if mybackend_version == backend_version:
+                    print(('<option selected value="'+mybackend_version+'">'+mybackend_version+'</option>'))
+                else:
+                    print(('<option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
+            print('</select>')
+            print(('<p style="background-color:LightGrey">Select Application template: </p>'))
+            print('<select name="apptemplate">')
+            for myapptemplate in new_apptemplate_dict.keys():
+                if myapptemplate == apptemplate_code:
+                    print(('<option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                else:
+                    print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+            print('</select>')
+        else:
+            print(('<p style="background-color:LightGrey">Select Backend version: </p>'))
+            print('<select name="backendversion">')
+            for mybackend_version in backends_dict.keys():
+                print(('<option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
+            print('</select>')
+            print(('<p style="background-color:LightGrey">Select Application template: </p>'))
+            print('<select name="apptemplate">')
+            for myapptemplate in new_apptemplate_dict.keys():
+                print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+            print('</select>')
+        # Pass on the domain name to the next stage
+        print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
+        print(('<input style="display:none" name="backend" value="'+mybackend+'">'))
+        print('<HR>')
+        print('<center><input type="submit" value="Submit"></center>')
+        print('</div>')
+        print('</form>')
+    else:
+        print('ERROR : domain-data file i/o error')
+else:
+    print('ERROR : Forbidden')
+print('</body>')
+print('</html>')

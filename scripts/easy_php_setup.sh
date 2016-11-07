@@ -10,7 +10,7 @@ setup_ea4_php_cloudlinux(){
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
 			fi
-			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
+			/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 			service ndeploy_backends stop || systemctl stop ndeploy_backends
 			service ndeploy_backends start || systemctl start ndeploy_backends
 			chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
@@ -25,7 +25,7 @@ setup_ea4_php(){
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
 			fi
-			/opt/nDeploy/scripts/update_backend.py PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
+			/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 			service ndeploy_backends stop || systemctl stop ndeploy_backends
 			service ndeploy_backends start || systemctl start ndeploy_backends
 			chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
@@ -45,7 +45,7 @@ setup_remi_php(){
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
 				fi
-				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root
+				/opt/nDeploy/scripts/update_backend.py add PHP PHP$ver /opt/remi/php$ver/root
 				/etc/init.d/ndeploy_backends stop
 				/etc/init.d/ndeploy_backends start
 				chkconfig ndeploy_backends on
@@ -58,7 +58,7 @@ setup_remi_php(){
 				if [ ! -d /opt/remi/php$ver/root/var ];then
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
 				fi
-				/opt/nDeploy/scripts/update_backend.py PHP PHP$ver /opt/remi/php$ver/root
+				/opt/nDeploy/scripts/update_backend.py add PHP PHP$ver /opt/remi/php$ver/root
 				systemctl stop ndeploy_backends
 				systemctl start ndeploy_backends
 				systemctl enable ndeploy_backends

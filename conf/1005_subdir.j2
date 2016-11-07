@@ -1,7 +1,8 @@
-#Proxy to cPanel Apache httpd service
+# Subdirectory proxy to cPanel Apache httpd service and cache the content in proxycache
 
-location / {
+
 access_log  off;
+
 proxy_send_timeout   90;
 proxy_read_timeout   90;
 
@@ -11,6 +12,7 @@ proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
+
 {% if SSL_OFFLOAD %}
 proxy_pass   http://{{ CPANELIP }}:9999;
 {% else %}
@@ -22,14 +24,8 @@ proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header   X-Forwarded-Proto $scheme;
-proxy_set_header   X-Scheme $scheme;
-proxy_set_header   Proxy "";
 proxy_redirect     off;
-}
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
+proxy_cache            PROXYCACHE;
+proxy_cache_valid      200  1d;
+proxy_cache_use_stale  error timeout invalid_header updating http_500 http_502 http_503 http_504;
+proxy_set_header   Proxy "";

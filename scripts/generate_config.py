@@ -55,7 +55,8 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
             node2.append(new_xml_element)
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
     # enabling shell as Railo probably needs shell vars like CATALINA_HOME
-    subprocess.Popen(['/opt/railo/railo_ctl', 'restart'], shell=True)
+    if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload'):
+        subprocess.Popen(['/opt/railo/railo_ctl', 'restart'], shell=True)
     return
 
 
@@ -109,8 +110,9 @@ def php_backend_add(user_name, domain_home):
         generated_config = template.render(templateVars)
         with open(phppool_file, "w") as confout:
             confout.write(generated_config)
-        control_script = installation_path+"/scripts/init_backends.py"
-        subprocess.Popen([control_script, 'reload'])
+        if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
+            control_script = installation_path+"/scripts/init_backends.py"
+            subprocess.Popen([control_script, 'reload'])
         return
     else:
         return
@@ -128,13 +130,14 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     cpanel_ipv4 = json_parsed_cpaneldomain.get('ip')
     domain_home = json_parsed_cpaneldomain.get('homedir')
     document_root = json_parsed_cpaneldomain.get('documentroot')
+    diff_dir = document_root.replace(domain_home, "")
     domain_server_name = json_parsed_cpaneldomain.get('servername')
     domain_alias_name = json_parsed_cpaneldomain.get('serveralias')
     if domain_alias_name:
         serveralias_list = domain_alias_name.split(' ')
         serveralias_list_new = list(serveralias_list)
         try:
-            serveralias_list_new.remove('www'+kwargs.get('maindomain'))
+            serveralias_list_new.remove('www.'+kwargs.get('maindomain'))
         except ValueError:
             pass
         try:
@@ -185,7 +188,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         sslcertificatekeyfile = None
     # Get all data from nDeploy domain-data file
     if is_suspended:
-        domain_data_file = installation_path + "/conf/domain_data.suspended"
+        if os.path.isfile(installation_path + "/conf/domain_data.suspended_local.yaml"):
+            domain_data_file = installation_path + "/conf/domain_data.suspended_local.yaml"
+        else:
+            domain_data_file = installation_path + "/conf/domain_data.suspended.yaml"
     else:
         domain_data_file = installation_path + "/domain-data/" + kwargs.get('configdomain')
     if not os.path.isfile(domain_data_file):
@@ -202,16 +208,24 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         yaml_parsed_domain_data = yaml.safe_load(domain_data_stream)
     # Following are the backend details that can be changed from the UI
     backend_category = yaml_parsed_domain_data.get('backend_category', None)
-    apptemplate_code = str(yaml_parsed_domain_data.get('apptemplate_code', None))
+    apptemplate_code = yaml_parsed_domain_data.get('apptemplate_code', None)
     backend_path = yaml_parsed_domain_data.get('backend_path', None)
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
+    # initialize the fastcgi_socket variable
+    fastcgi_socket = None
     # Following are features that the UI can change . Can be expanded in future
     # as and when more features are incorporated
-    naxsi = yaml_parsed_domain_data.get('naxsi', None)
-    if naxsi:
+    if os.path.isfile('/etc/nginx/modules.d/naxsi.load'):
+        naxsi = yaml_parsed_domain_data.get('naxsi', None)
+    else:
+        naxsi = 'disabled'
+    if naxsi == 'enabled':
         if not os.path.isfile("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".wl"):
             os.mknod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".wl")
-    pagespeed = yaml_parsed_domain_data.get('pagespeed', None)
+    if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
+        pagespeed = yaml_parsed_domain_data.get('pagespeed', None)
+    else:
+        pagespeed = 'disabled'
     wwwredirect = yaml_parsed_domain_data.get('wwwredirect', None)
     autoindex = yaml_parsed_domain_data.get('autoindex', None)
     redirect_to_ssl = yaml_parsed_domain_data.get('redirect_to_ssl', None)
@@ -220,7 +234,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     xss_filter = yaml_parsed_domain_data.get('xss_filter', None)
     content_security_policy = yaml_parsed_domain_data.get('content_security_policy', None)
     hsts = yaml_parsed_domain_data.get('hsts', None)
-    brotli = yaml_parsed_domain_data.get('brotli', None)
+    if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
+        brotli = yaml_parsed_domain_data.get('brotli', None)
+    else:
+        brotli = 'disabled'
     gzip = yaml_parsed_domain_data.get('gzip', None)
     http2 = yaml_parsed_domain_data.get('http2', None)
     ssl_offload = yaml_parsed_domain_data.get('ssl_offload', None)
@@ -229,13 +246,13 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', None)
     open_file_cache = yaml_parsed_domain_data.get('open_file_cache', None)
     if not serveralias_list_new:
-        redirect_aliases = False
+        redirect_aliases = 'disabled'
     else:
         redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', None)
-    protected_dir = yaml_parsed_domain_data.get('protected_dir')
+    protected_dir = yaml_parsed_domain_data.get('protected_dir', None)
     if not protected_dir:
         protected_dir = []
-    subdir_apps = yaml_parsed_domain_data.get('subdir_apps')
+    subdir_apps = yaml_parsed_domain_data.get('subdir_apps', None)
     if subdir_apps:
         subdir_apps_uniq = {}
         for key in subdir_apps.keys():
@@ -283,6 +300,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "OPEN_FILE_CACHE": open_file_cache,
                     "PROTECTED_DIR": protected_dir,
                     "HOMEDIR": domain_home,
+                    "DIFFDIR": diff_dir,
                     "DOSMITIGATE": dos_mitigate
                     }
     generated_config = server_template.render(templateVars)
@@ -311,8 +329,11 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         elif backend_version == 'railo_resin':
             railo_vhost_add_resin(kwargs.get('configuser'), domain_server_name, document_root, *serveralias_list)
     elif backend_category == 'PHP':
-        if not os.path.isfile(backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"):
+        fastcgi_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
+        if not os.path.isfile(fastcgi_socket):
             php_backend_add(kwargs.get('configuser'), domain_home)
+    elif backend_category == 'HHVM_NOBODY':
+        fastcgi_socket = backend_path
     # We generate the app config from template next
     apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
                        "CPANELIP": cpanel_ipv4,
@@ -321,7 +342,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                        "PATHTOPYTHON": backend_path,
                        "PATHTORUBY": backend_path,
                        "PATHTONODEJS": backend_path,
-                       "SOCKETFILE": backend_path + "/var/run/" + kwargs.get('configuser') + ".sock",
+                       "SOCKETFILE": fastcgi_socket,
                        "SUBDIRAPPS": subdir_apps_uniq,
                        "PATHTOPYTHON": backend_path,
                        }
@@ -330,14 +351,40 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         confout.write(generated_app_config)
     # Get the subdir config also rendered
     if subdir_apps:
-        for key, value in subdir_apps.iteritems():
-            subdirApptemplate = templateEnv.get_template(value)
-            subdirApptemplateVars = {"DOCUMENTROOT": document_root,
+        for subdir in subdir_apps.keys():
+            the_subdir_app_dict = subdir_apps.get(subdir)
+            subdir_backend_category = the_subdir_app_dict.get('backend_category')
+            subdir_backend_path = the_subdir_app_dict.get('backend_path')
+            subdir_backend_version = the_subdir_app_dict.get('backend_version')
+            subdir_apptemplate_code = the_subdir_app_dict.get('apptemplate_code')
+            subdirApptemplate = templateEnv.get_template(subdir_apptemplate_code)
+            # We configure the backends first if necessary
+            if subdir_backend_category == 'PROXY':
+                if subdir_backend_version == 'railo_tomcat':
+                    railo_vhost_add_tomcat(domain_server_name, document_root, *serveralias_list)
+                elif subdir_backend_version == 'railo_resin':
+                    railo_vhost_add_resin(kwargs.get('configuser'), domain_server_name, document_root, *serveralias_list)
+            elif subdir_backend_category == 'PHP':
+                fastcgi_socket = subdir_backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
+                if not os.path.isfile(fastcgi_socket):
+                    php_backend_add(kwargs.get('configuser'), domain_home)
+            elif backend_category == 'HHVM_NOBODY':
+                fastcgi_socket = backend_path
+            subdirApptemplateVars = {"DOCUMENTROOT": document_root+subdir,
                                      "SUBDIR": key,
                                      "CPANELIP": cpanel_ipv4,
+                                     "SSL_OFFLOAD": ssl_offload,
+                                     "CPANELIP": cpanel_ipv4,
+                                     "DOCUMENTROOT": document_root,
+                                     "UPSTREAM_PORT": backend_path,
+                                     "PATHTOPYTHON": backend_path,
+                                     "PATHTORUBY": backend_path,
+                                     "PATHTONODEJS": backend_path,
+                                     "SOCKETFILE": fastcgi_socket,
+                                     "PATHTOPYTHON": backend_path,
                                      }
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
-            with open("/etc/nginx/sites-enabled/"+subdir_apps_uniq.get(key)+".include", "w") as confout:
+            with open("/etc/nginx/sites-enabled/"+subdir_apps_uniq.get(subdir)+".subinclude", "w") as confout:
                 confout.write(generated_subdir_app_config)
 
 
@@ -399,7 +446,9 @@ if __name__ == "__main__":
                 else:
                     nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
         # Ok we are done generating .Lets reload nginx and some misc things ( Using async Popen whenever possible )
-        subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'])
+        # Unless someone has set a skip reload flag
+        if not os.path.isfile(installation_path+'/conf/skip_nginx_reload'):
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'])
         if clusterenabled:
             for server in cluster_serverlist:
                 target_dir = "/etc/nginx/"+server+"/"

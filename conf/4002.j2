@@ -4,4 +4,13 @@ passenger_enabled on;
 passenger_app_type node;
 passenger_startup_file index.js;
 passenger_nodejs {{ PATHTONODEJS }};
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
 include /etc/nginx/conf.d/cpanel_services.conf;
