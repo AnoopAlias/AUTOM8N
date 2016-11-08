@@ -6,6 +6,10 @@ import argparse
 import os
 import sys
 import pwd
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
 
 __author__ = "Anoop P Alias"
@@ -30,12 +34,16 @@ def set_preferred_php():
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         for versions_defined in list(php_backends_dict.keys()):
             print(versions_defined)
-        required_version = str(raw_input("Provide the exact desired version string here and press ENTER: "))
+        try:
+            input = raw_input
+        except NameError:
+            pass
+        myinput = input("Provide the exact desired version string here and press ENTER: ")
+        required_version = str(myinput)
         required_version_path = php_backends_dict.get(required_version)
         userdata_dict = {'PHP': {required_version: required_version_path}}
         with open(installation_path+"/conf/preferred_php.yaml", 'w') as yaml_file:
-            yaml_file.write(yaml.dump(userdata_dict, default_flow_style=False))
-        yaml_file.close()
+            yaml.dump(userdata_dict, yaml_file, default_flow_style=False)
         return
     else:
         print("ERROR : You need atleast one PHP backends defined")
@@ -43,32 +51,13 @@ def set_preferred_php():
 
 
 def nginx_conf_switch(user_name, domain_name):
-    cpdomainyaml = "/var/cpanel/userdata/" + user_name + "/" + domain_name
-    cpaneldomain_data_stream = open(cpdomainyaml, 'r')
-    yaml_parsed_cpaneldomain = yaml.safe_load(cpaneldomain_data_stream)
-    cpaneldomain_data_stream.close()
-    document_root = yaml_parsed_cpaneldomain.get('documentroot')
-    if not os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
-        set_preferred_php()
-    prefphpyaml = installation_path+"/conf/preferred_php.yaml"
-    prefphpyaml_data_stream = open(prefphpyaml, 'r')
-    yaml_parsed_prefphpyaml = yaml.safe_load(prefphpyaml_data_stream)
-    prefphpyaml_data_stream.close()
-    phpversion = yaml_parsed_prefphpyaml.get('PHP')
-    my_phpversion = str(phpversion.keys()[0])
-    my_phppath = str(phpversion.get(my_phpversion))
-    sigsyaml = installation_path+"/conf/appsignatures.yaml"
-    sigs_data_stream = open(sigsyaml, 'r')
-    yaml_parsed_sigs = yaml.safe_load(sigs_data_stream)
-    sigs_data_stream.close()
+    cpdomainjson = "/var/cpanel/userdata/" + user_name + "/" + domain_name + ".cache"
+    with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
+        json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
+    document_root = json_parsed_cpaneldomain.get('documentroot')
     domain_data_file = installation_path+"/domain-data/"+domain_name
-    domaindata_data_stream = open(domain_data_file, 'r')
-    yaml_parsed_domaindata = yaml.safe_load(domaindata_data_stream)
-    domaindata_data_stream.close()
-    domain_data_file = installation_path+"/domain-data/"+domain_name
-    domaindata_data_stream = open(domain_data_file, 'r')
-    yaml_parsed_domaindata = yaml.safe_load(domaindata_data_stream)
-    domaindata_data_stream.close()
+    with open(domain_data_file, 'r') as domaindata_data_stream:
+        yaml_parsed_domaindata = yaml.safe_load(domaindata_data_stream)
     backend_category = yaml_parsed_domaindata.get('backend_category')
     if backend_category == "PROXY":
         phpsigs = yaml_parsed_sigs.get("PHP")
@@ -77,9 +66,9 @@ def nginx_conf_switch(user_name, domain_name):
                 yaml_parsed_domaindata["backend_category"] = "PHP"
                 yaml_parsed_domaindata["backend_version"] = my_phpversion
                 yaml_parsed_domaindata["backend_path"] = my_phppath
-                yaml_parsed_domaindata["profile"] = phpsigs.get(app_path)
+                yaml_parsed_domaindata["apptemplate_code"] = phpsigs.get(app_path)
                 with open(domain_data_file, 'w') as yaml_file:
-                    yaml_file.write(yaml.dump(yaml_parsed_domaindata, default_flow_style=False))
+                    yaml.dump(yaml_parsed_domaindata, yaml_file, default_flow_style=False)
                 yaml_file.close()
 
     # End Function defs
@@ -100,17 +89,25 @@ if __name__ == "__main__":
     except KeyError:
         sys.exit(0)
     else:
-        cpuserdatayaml = "/var/cpanel/userdata/" + cpaneluser + "/main"
-        try:
-            cpaneluser_data_stream = open(cpuserdatayaml, 'r')
-        except IOError:
-            sys.exit(0)
-        yaml_parsed_cpaneluser = yaml.safe_load(cpaneluser_data_stream)
-
-        main_domain = yaml_parsed_cpaneluser.get('main_domain')
+        cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
+        with open(cpuserdatajson) as cpaneluser_data_stream:
+            json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
+        main_domain = json_parsed_cpaneluser.get('main_domain')
         # parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   #This data is irrelevant as parked domain list is in ServerAlias
         # addon_domains = yaml_parsed_cpaneluser.get('addon_domains')     #This data is irrelevant as addon is mapped to a subdomain
-        sub_domains = yaml_parsed_cpaneluser.get('sub_domains')
+        sub_domains = json_parsed_cpaneluser.get('sub_domains')
+        # Get the appsignatures and preferred php details
+        if not os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
+            set_preferred_php()
+        prefphpyaml = installation_path+"/conf/preferred_php.yaml"
+        with open(prefphpyaml, 'r') as prefphpyaml_data_stream:
+            yaml_parsed_prefphpyaml = yaml.safe_load(prefphpyaml_data_stream)
+        phpversion = yaml_parsed_prefphpyaml.get('PHP')
+        my_phpversion = str(phpversion.keys()[0])
+        my_phppath = str(phpversion.get(my_phpversion))
+        sigsyaml = installation_path+"/conf/appsignatures.yaml"
+        with open(sigsyaml, 'r') as sigs_data_stream:
+            yaml_parsed_sigs = yaml.safe_load(sigs_data_stream)
         nginx_conf_switch(cpaneluser, main_domain)  # Generate conf for main domain
 
         for domain_in_subdomains in sub_domains:
