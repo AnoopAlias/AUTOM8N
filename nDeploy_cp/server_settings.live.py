@@ -122,7 +122,7 @@ if form.getvalue('domain'):
             print('<input type="radio" name="brotli" value="enabled" /> Enabled')
             print('<input type="radio" name="brotli" value="disabled" checked/> Disabled')
         # gzip
-        gzip_hint = "bandwidth optimization, reource intensive"
+        gzip_hint = "bandwidth optimization, resource intensive"
         if gzip == 'enabled':
             print_green("gzip", gzip_hint)
             print('<input type="radio" name="gzip" value="enabled" checked/> Enabled')

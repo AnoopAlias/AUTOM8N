@@ -11,7 +11,7 @@ proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
-{% if SSL_OFFLOAD %}
+{% if SSL_OFFLOAD == 'enabled' %}
 proxy_pass   http://{{ CPANELIP }}:9999;
 {% else %}
 proxy_pass   $scheme://{{ CPANELIP }}:$cpport;

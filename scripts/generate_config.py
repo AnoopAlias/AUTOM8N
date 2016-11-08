@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-
+import codecs
 import yaml
 import argparse
 import subprocess
@@ -108,7 +108,7 @@ def php_backend_add(user_name, domain_home):
                         "HOMEDIR": domain_home
                         }
         generated_config = template.render(templateVars)
-        with open(phppool_file, "w") as confout:
+        with codecs.open(phppool_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
         if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
             control_script = installation_path+"/scripts/init_backends.py"
@@ -172,9 +172,9 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
             ocsp = True
             filenames = [sslcertificatefile, sslcacertificatefile]
-            with open(sslcombinedcert, 'w') as outfile:
+            with codecs.open(sslcombinedcert, 'w', 'utf-8') as outfile:
                 for fname in filenames:
-                    with open(fname) as infile:
+                    with codecs.open(fname, 'utf-8') as infile:
                         outfile.write(infile.read()+"\n")
         else:
             sslcombinedcert = sslcertificatefile
@@ -304,7 +304,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "DOSMITIGATE": dos_mitigate
                     }
     generated_config = server_template.render(templateVars)
-    with open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w") as confout:
+    with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
         confout.write(generated_config)
     # If a cluster is setup.Generate nginx config for other servers as well
     if clusterenabled:
@@ -318,7 +318,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             templateVars["CPANELIP"] = remote_domain_ipv4
             templateVars["CPIPVSIX"] = remote_domain_ipv6
             cluster_generated_config = server_template.render(templateVars)
-            with open(cluster_config_out, "w") as confout:
+            with codecs.open(cluster_config_out, "w", 'utf-8') as confout:
                 confout.write(cluster_generated_config)
     # Generate the rest of the config(domain.include) based on the application template
     app_template = templateEnv.get_template(apptemplate_code)
@@ -347,7 +347,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                        "PATHTOPYTHON": backend_path,
                        }
     generated_app_config = app_template.render(apptemplateVars)
-    with open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w") as confout:
+    with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
         confout.write(generated_app_config)
     # Get the subdir config also rendered
     if subdir_apps:
@@ -384,7 +384,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                                      "PATHTOPYTHON": backend_path,
                                      }
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
-            with open("/etc/nginx/sites-enabled/"+subdir_apps_uniq.get(subdir)+".subinclude", "w") as confout:
+            with codecs.open("/etc/nginx/sites-enabled/"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
                 confout.write(generated_subdir_app_config)
 
 
