@@ -110,12 +110,20 @@ sed -i "s/PASSENGER_VERSION/$PASSENGER_VERSION/g" ../nginx-module-passenger-pkg/
 cp -pvr /usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/buildout ../nginx-module-passenger-pkg/usr/nginx/
 cd ../nginx-pkg
 
-fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx package" --url http://anoopalias.github.io/nDeploy/ --conflicts nginx -d GeoIP -d libbrotli-nDeploy -d zlib -d openssl -d pcre -d libcurl -d memcached --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
+fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx -d zlib -d pcre -d libcurl --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
 rsync -av nginx-nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/${OSVERSION}/x86_64/
 
 for module in brotli geoip naxsi pagespeed passenger
 do
   cd ../nginx-module-${module}-pkg
-  fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/nDeploy/ --conflicts nginx-module-${module} --name nginx-nDeploy-module-${module} .
+  if [ ${module} == "brotli" ];then
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d libbrotli-nDeploy --name nginx-nDeploy-module-${module} .
+  elif [${module} == "geoip" ];then
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d GeoIP --name nginx-nDeploy-module-${module} .
+  elif [${module} == "pagespeed" ];then
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d memcached --name nginx-nDeploy-module-${module} .
+  else
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} --name nginx-nDeploy-module-${module} .
+  fi
   rsync -av nginx-nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/${OSVERSION}/x86_64/
 done
