@@ -5,6 +5,7 @@ import yaml
 import cgi
 import cgitb
 import sys
+import re
 
 
 __author__ = "Anoop P Alias"
@@ -50,10 +51,13 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
     thesubdir = form.getvalue('thesubdir')
     if thesubdir.startswith('/'):
         thesubdir = thesubdir[1:]
-        if thesubdir.endswith('/'):
-            thesubdir = thesubdir[:-1]
+    if thesubdir.endswith('/'):
+        thesubdir = thesubdir[:-1]
     if not thesubdir:
         print('ERROR: Invalid sub-directory name')
+        sys.exit(0)
+    if not re.match("^[a-zA-Z/_]*$", thesubdir):
+        print "Error: Invalid char in sub-directory name"
         sys.exit(0)
     profileyaml = installation_path + "/domain-data/" + mydomain
     # Get data about the backends available

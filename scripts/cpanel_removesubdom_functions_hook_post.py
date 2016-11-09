@@ -35,6 +35,8 @@ if status == 1:
     hookargs = mydict["args"]
     hookargs_domain = hookargs["domain"]
     conf_sub_domain = hookargs_domain.replace("_", ".", 1)
+    if conf_sub_domain.startswith("*"):
+        conf_sub_domain = "_wildcard_."+conf_sub_domain.replace('*.', '')
     silentremove(installation_path+"/domain-data/"+conf_sub_domain)
     silentremove(nginx_dir+conf_sub_domain+".conf")
     silentremove(nginx_dir+conf_sub_domain+".include")

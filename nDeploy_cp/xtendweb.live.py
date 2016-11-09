@@ -57,7 +57,11 @@ print('<select name="domain">')
 print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
 for domain_in_subdomains in sub_domains:
     if domain_in_subdomains not in addon_domains_dict.values():
-        print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
+        if domain_in_subdomains.startswith("*"):
+            wildcard_domain = "_wildcard_."+domain_in_subdomains.replace('*.', '')
+            print(('<option value="'+wildcard_domain+'">'+domain_in_subdomains+'</option>'))
+        else:
+            print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
 for the_addon_domain in addon_domains_dict.keys():
     print(('<option value="'+addon_domains_dict.get(the_addon_domain)+'">'+the_addon_domain+'</option>'))
 print('</select>')

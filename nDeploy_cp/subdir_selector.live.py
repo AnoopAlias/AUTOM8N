@@ -50,6 +50,10 @@ print('<HR>')
 if form.getvalue('domain'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
+    if mydomain.startswith('_wildcard_.'):
+        cpmydomain = '*.'+mydomain.replace('_wildcard_.', '')
+    else:
+        cpmydomain = mydomain
     profileyaml = installation_path + "/domain-data/" + mydomain
     if os.path.isfile(profileyaml):
         # Get all config settings from the domains domain-data config file
@@ -57,7 +61,7 @@ if form.getvalue('domain'):
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
         cpaneluser = os.environ["USER"]
-        cpdomainjson = "/var/cpanel/userdata/" + cpaneluser + "/" + mydomain + ".cache"
+        cpdomainjson = "/var/cpanel/userdata/" + cpaneluser + "/" + cpmydomain + ".cache"
         with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
             json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
         document_root = json_parsed_cpaneldomain.get('documentroot')

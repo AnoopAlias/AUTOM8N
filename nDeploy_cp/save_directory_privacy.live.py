@@ -4,6 +4,8 @@ import socket
 import yaml
 import cgi
 import cgitb
+import re
+import sys
 
 
 __author__ = "Anoop P Alias"
@@ -45,6 +47,13 @@ if form.getvalue('domain') and form.getvalue('action') and form.getvalue('protec
     mydomain = form.getvalue('domain')
     action = form.getvalue('action')
     protectedurl = form.getvalue('protectedurl')
+    if not protectedurl.startswith('/'):
+        protectedurl = '/'+protectedurl
+    if protectedurl != '/' and protectedurl.endswith('/'):
+        protectedurl = protectedurl[:-1]
+    if not re.match("^[a-zA-Z/_]*$", protectedurl):
+        print "Error: Invalid char in sub-directory name"
+        sys.exit(0)
     profileyaml = installation_path + "/domain-data/" + mydomain
     if os.path.isfile(profileyaml):
         # Get all config settings from the domains domain-data config file

@@ -124,7 +124,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
     templateEnv = jinja2.Environment(loader=templateLoader)
     # Get all Data from cPanel userdata files
-    cpdomainjson = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + ".cache"
+    if kwargs.get('maindomain').startswith("*"):
+        cpdomainjson = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('maindomain') + ".cache"
+    else:
+        cpdomainjson = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + ".cache"
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
     cpanel_ipv4 = json_parsed_cpaneldomain.get('ip')
@@ -226,7 +229,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         pagespeed = yaml_parsed_domain_data.get('pagespeed', None)
     else:
         pagespeed = 'disabled'
-    wwwredirect = yaml_parsed_domain_data.get('wwwredirect', None)
+    if domain_server_name.startswith("*"):
+        wwwredirect = None
+    else:
+        wwwredirect = yaml_parsed_domain_data.get('wwwredirect', None)
     autoindex = yaml_parsed_domain_data.get('autoindex', None)
     redirect_to_ssl = yaml_parsed_domain_data.get('redirect_to_ssl', None)
     clickjacking_protect = yaml_parsed_domain_data.get('clickjacking_protect', None)
