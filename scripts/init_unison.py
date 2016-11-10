@@ -22,7 +22,7 @@ def control_unison(trigger):
         if trigger == "start":
             with open(ndeploy_slaves_file) as slavelist:
                 for line in slavelist:
-                    proc = subprocess.Popen("/usr/bin/unison "+line, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+                    proc = subprocess.Popen("/usr/bin/unison "+line.replace('\n', ''), shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
         elif trigger == "stop":
             subprocess.call("killall unison", shell=True)
         elif trigger == "reload":

@@ -11,7 +11,7 @@ if [ ! -d /usr/local/rvm/gems/ruby-RUBY_VERSION/gems/passenger-PASSENGER_VERSION
         /usr/local/rvm/rubies/ruby-RUBY_VERSION/bin/gem install passenger -v PASSENGER_VERSION
         ln -s /usr/nginx/buildout /usr/local/rvm/gems/ruby-RUBY_VERSION/gems/passenger-PASSENGER_VERSION/
 fi
-echo -e '\e[93m Adding a Ruby backend for nDeploy. Refer http://ndeploy.readthedocs.io/ \e[0m'
+echo -e '\e[93m Adding a Ruby backend for XtendWeb. Refer http://xtendweb.gnusys.net \e[0m'
 echo -e '\e[93m for adding other passenger backends like Python/NodeJS etc. \e[0m'
 /opt/nDeploy/scripts/update_backend.py add RUBY ruby-RUBY_VERSION /usr/local/rvm/wrappers/ruby-RUBY_VERSION/ruby
 service nginx restart || systemctl restart nginx

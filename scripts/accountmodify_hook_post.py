@@ -2,6 +2,7 @@
 
 import os
 import sys
+import pwd
 import subprocess
 try:
     import simplejson as json
@@ -32,7 +33,7 @@ maindomain = mydict["domain"]
 if cpanelnewuser != cpaneluser:
     subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
     if os.path.exists(cluster_config_file):
-        cpaneluserhome = mydict["homedir"]
+        cpaneluserhome = pwd.getpwnam(cpanelnewuser).pw_dir
         # Calling ansible ad-hoc command to remove / create users across the cluster
         # Using subprocess.call here as no async call is required
         subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' state=absent remove=yes"', shell=True)

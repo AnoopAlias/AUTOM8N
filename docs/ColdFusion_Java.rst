@@ -1,9 +1,12 @@
 Setting up ColdFusion or Java
 ==============================
 
-There are 2 ways to setup ColdFusion supported by nDeploy
+There are 2 ways to setup ColdFusion supported by XtendWeb
 
-￼
+
+.. tip:: Railo project is probably dead . Please check ￼http://lucee.org/ or http://openbd.org/ for a Railo replacement
+
+
 **Using Tomcat**
 
 This is the simplest to setup. The downside is that this setup is
@@ -14,7 +17,7 @@ addition and removal etc.
 
 2. Register the backend with backend_name railo_tomcat as type PROXY and path 8888 (this is default port for the above installer!)
 
-  ``/opt/nDeploy/scripts/update_backend.py PROXY railo_tomcat 8888``
+  ``/opt/nDeploy/scripts/update_backend.py add PROXY railo_tomcat 8888``
 
 **Using Caucho resin**
 
@@ -165,6 +168,6 @@ Install resin or resin pro and deploy railo war to the ROOT context and add it a
 10. Register the railo server as a PROXY backend
 ::
 
-  root@cpanel1 [~]# /opt/nDeploy/scripts/update_backend.py PROXY railo_resin 8080
+  root@cpanel1 [~]# /opt/nDeploy/scripts/update_backend.py add PROXY railo_resin 8080
 
 .. disqus::

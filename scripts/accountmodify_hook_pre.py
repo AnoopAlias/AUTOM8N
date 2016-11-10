@@ -45,6 +45,7 @@ with open(cpuserdatajson, 'r') as cpaneluser_data_stream:
     json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
 main_domain = json_parsed_cpaneluser.get('main_domain')
 sub_domains = json_parsed_cpaneluser.get('sub_domains')
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 # If cPanel username is modified
 if cpanelnewuser != cpaneluser or maindomain != main_domain:
     if cpanelnewuser != cpaneluser:
@@ -59,9 +60,9 @@ if cpanelnewuser != cpaneluser or maindomain != main_domain:
     if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
         with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
             for server in cluster_slave_list:
-                silentremove("/etc/nginx/"+server+"/"+main_domain+".conf")
-                silentremove("/etc/nginx/"+server+"/"+main_domain+".include")
-                silentremove("/etc/nginx/"+server+"/"+main_domain+".nxapi.wl")
+                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+main_domain+".conf")
+                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+main_domain+".include")
+                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+main_domain+".nxapi.wl")
     if os.path.exists('/var/resin/hosts/'+main_domain):
         shutil.rmtree('/var/resin/hosts/'+main_domain)
     for domain_in_subdomains in sub_domains:
@@ -74,9 +75,9 @@ if cpanelnewuser != cpaneluser or maindomain != main_domain:
         if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
             with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
                 for server in cluster_slave_list:
-                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".conf")
-                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".include")
-                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".nxapi.wl")
+                    silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+domain_in_subdomains+".conf")
+                    silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+domain_in_subdomains+".include")
+                    silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+domain_in_subdomains+".nxapi.wl")
         if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
             shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
     print("1 nDeploy:olddomain:"+main_domain+":newdomain:"+maindomain+":olduser:"+cpaneluser+":newuser:"+cpanelnewuser)

@@ -20,6 +20,9 @@ if [ ! -L /etc/nginx/sites-enabled ] ; then
 	rm -rf /etc/nginx/sites-enabled
 	ln -s /etc/nginx/$(hostname) /etc/nginx/sites-enabled
 fi
+if [ ! -L /opt/nDeploy/scripts/easy_passenger_setup.sh ];then
+  ln -s /usr/nginx/scripts/nginx-passenger-setup.sh /opt/nDeploy/scripts/easy_passenger_setup.sh
+fi
 if [ -f /usr/bin/systemctl ];then
   systemctl daemon-reload
 fi

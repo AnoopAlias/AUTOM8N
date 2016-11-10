@@ -1,7 +1,7 @@
 Managing Logs
 =============
 
-**nDeploy logs**
+**XtendWeb logs**
 
 watcher logs ``/opt/nDeploy/watcher.log``
 

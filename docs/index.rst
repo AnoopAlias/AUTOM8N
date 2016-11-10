@@ -1,9 +1,9 @@
-.. nDeploy documentation master file, created by
+.. XtendWeb documentation master file, created by
    sphinx-quickstart on Tue Aug  2 11:13:22 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-nDeploy
+XtendWeb
 =======
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png
@@ -11,16 +11,21 @@ nDeploy
 Eliminate downtime, replace cPanel's Apache httpd Webstack with NGINX cluster, and horizontally scale your web applications.
 
 
-.. tip:: neatly rpm packaged, nDeploy does not modify any files or configuration setup by cPanel other than httpd listening port
+.. tip:: neatly rpm packaged, XtendWeb does not modify any files or configuration setup by cPanel other than httpd listening port
 
-.. tip:: nDeploy is OpenSource and ready to fork on GitHub. No vendor lock-in and lesser bugs
+.. tip:: XtendWeb is OpenSource and ready to fork on GitHub. No vendor lock-in and lesser bugs
 
 Features
 ---------
 
+* worlds simplest nginx config wizard
+* configuration curated for high performance and incorporates nginx best practices
+* template based application configuration+ support application in sub domains
+* password protection setup by cpanel can be reused in nginx
+* cpanel user can configure nginx for their application without editing any configuration
 * Supports CentOS6 CentOS7 CloudLinux6 CloudLinux7 on x86_64 arch
 * Multiple backends - Apache HTTPD, PHP-FPM, HHVM, ColdFusion/Java, Python, Ruby on Rails, NodeJS
-* Supports caching/conditional cache purging in proxy and FastCGI(ngx_cache_purge)
+* Supports caching in proxy and FastCGI
 * Google PageSpeed support
 * limit_req, limit_conn support
 * NAXSI Web Application Firewall - (mod_security via libmodsecurity support coming soon!)
@@ -42,7 +47,6 @@ Features
 
    installation
    mod_remoteip
-   http_to_https_redirect
    brotli_compression
    http2
 
@@ -62,16 +66,16 @@ Features
    :maxdepth: 2
    :caption: Administration & Monitoring
 
-   nDeploy_Administration
+   XtendWeb_Administration
    Monitoring
    Logs
 
 .. toctree::
    :maxdepth: 2
-   :caption: nDeploy Cluster
+   :caption: XtendWeb Cluster
 
    cluster_architecture
-   nDeploy_cluster_setup
+   XtendWeb_cluster_setup
    Upgrade_cluster
 
 .. toctree::

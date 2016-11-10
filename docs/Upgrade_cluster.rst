@@ -1,4 +1,4 @@
-nDeploy cluster upgrade
+XtendWeb cluster upgrade
 =======================
 
 On All slaves

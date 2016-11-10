@@ -5,11 +5,14 @@ Brotli is a relatively new compression format that provides 20% more compression
 
 Ref: http://google-opensource.blogspot.in/2015/09/introducing-brotli-new-compression.html
 
-nginx-nDeploy comes compiled with brotli support ;but it is not enabled by default as the compression is
-a bit more CPU intensive than gzip. If your clients want more faster pageload and you have CPU resources to spare,
-brotli can be enabled using the following command
+.. tip:: Brotli on the fly compression is CPU intensive
 
-``echo "include /etc/nginx/conf.d/brotli.conf;" >> /etc/nginx/conf.d/custom_include.conf``
+To enable brotli do
+::
+
+  yum --enablerepo=ndeploy install nginx-nDeploy-module-brotli
+
+Once the module is installed brotli can be turned on/off from the plugin user interface in cPanel
 
 You can check if brotli is enabled using : https://tools.keycdn.com/brotli-test
 

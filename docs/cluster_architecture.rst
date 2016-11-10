@@ -1,4 +1,4 @@
-nDeploy cluster architecture
+XtendWeb cluster architecture
 ============================
 
 .. image:: DuEt_cPanel.jpg
@@ -6,8 +6,8 @@ nDeploy cluster architecture
 
 Software components
 --------------------
-nDeploy (Script that generates nginx configuration for all nginx servers in the cluster)
-nDeploy-cluster-slave (A trimmed down version of nDeploy that is useful on the slave)
+XtendWeb (Script that generates nginx configuration for all nginx servers in the cluster)
+XtendWeb-cluster-slave (A trimmed down version of XtendWeb that is useful on the slave)
 
 csync2 - http://oss.linbit.com/csync2/ - Synchronize the nginx config on the cluster
 

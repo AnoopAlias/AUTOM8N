@@ -320,6 +320,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4, "127.0.0.1")
             if ipv6_addr:
                 remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
+            else:
+                remote_domain_ipv6 = None
             cluster_config_out = "/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".conf"
             templateVars["CPANELIP"] = remote_domain_ipv4
             templateVars["CPIPVSIX"] = remote_domain_ipv6
@@ -458,4 +460,4 @@ if __name__ == "__main__":
         if clusterenabled:
             for server in cluster_serverlist:
                 target_dir = "/etc/nginx/"+server+"/"
-                subprocess.Popen(['/usr/bin/rsync', '-a', '/etc/nginx/sites-enabled/*.{include,nxapi.wl}', target_dir])
+                subprocess.Popen(['/usr/bin/rsync', '-a', '--exclude=*.conf', '/etc/nginx/sites-enabled/', target_dir])

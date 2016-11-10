@@ -51,9 +51,9 @@ if os.path.exists(cpuserdatajson):
     if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
         with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
             for server in cluster_slave_list:
-                silentremove("/etc/nginx/"+server+"/"+main_domain+".conf")
-                silentremove("/etc/nginx/"+server+"/"+main_domain+".include")
-                silentremove("/etc/nginx/"+server+"/"+main_domain+".nxapi.wl")
+                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+main_domain+".conf")
+                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+main_domain+".include")
+                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+main_domain+".nxapi.wl")
     if os.path.exists('/var/resin/hosts/'+main_domain):
         shutil.rmtree('/var/resin/hosts/'+main_domain)
     for domain_in_subdomains in sub_domains:
@@ -66,9 +66,9 @@ if os.path.exists(cpuserdatajson):
         if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
             with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
                 for server in cluster_slave_list:
-                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".conf")
-                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".include")
-                    silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".nxapi.wl")
+                    silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+domain_in_subdomains+".conf")
+                    silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+domain_in_subdomains+".include")
+                    silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+domain_in_subdomains+".nxapi.wl")
         if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
             shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
     subprocess.Popen("/usr/sbin/nginx -s reload", shell=True)

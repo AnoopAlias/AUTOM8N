@@ -20,7 +20,7 @@ Setting up Python (WSGI app)
 3. Register the python backend
 ::
 
-  root@cpanel1 [~]# /opt/nDeploy/scripts/update_backend.py PYTHON CPython-3.4.2 /usr/local/pythonz/pythons/CPython-3.4.2/bin/python3
+  root@cpanel1 [~]# /opt/nDeploy/scripts/update_backend.py add PYTHON CPython-3.4.2 /usr/local/pythonz/pythons/CPython-3.4.2/bin/python3
 
 **Bootstrapping PIP**
 
@@ -42,7 +42,7 @@ To install PIP packages as user add the --user flag
 Additional Reference
 https://www.phusionpassenger.com/library/deploy/nginx/deploy/python/
 
-Additonal Environment variables can be set per application by the cPanel user in MANUAL edit mode from nDeploy
+Additonal Environment variables can be set per user using custom application templates
 https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_env_var
 
 .. disqus::

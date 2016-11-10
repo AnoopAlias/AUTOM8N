@@ -44,9 +44,9 @@ if status == 1:
     if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
         with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
             for server in cluster_slave_list:
-                silentremove("/etc/nginx/"+server+"/"+conf_sub_domain+".conf")
-                silentremove("/etc/nginx/"+server+"/"+conf_sub_domain+".include")
-                silentremove("/etc/nginx/"+server+"/"+conf_sub_domain+".nxapi.wl")
+                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+conf_sub_domain+".conf")
+                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+conf_sub_domain+".include")
+                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+conf_sub_domain+".nxapi.wl")
     if os.path.exists('/var/resin/hosts/'+conf_sub_domain):
         shutil.rmtree('/var/resin/hosts/'+conf_sub_domain)
     subprocess.Popen("/usr/sbin/nginx -s reload", shell=True)
