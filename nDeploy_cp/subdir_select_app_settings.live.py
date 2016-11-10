@@ -15,6 +15,8 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 app_template_file = installation_path+"/conf/apptemplates_subdir.yaml"
+cpaneluser = os.environ["USER"]
+user_app_template_file = installation_path+"/conf/"+cpaneluser+"_apptemplates_subdir.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 
 
@@ -38,7 +40,7 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-print('<title>nDeploy</title>')
+print('<title>XtendWeb</title>')
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
@@ -57,6 +59,9 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
     if os.path.isfile(app_template_file):
         with open(app_template_file, 'r') as apptemplate_data_yaml:
             apptemplate_data_yaml_parsed = yaml.safe_load(apptemplate_data_yaml)
+        if os.path.isfile(user_app_template_file):
+            with open(user_app_template_file, 'r') as user_apptemplate_data_yaml:
+                user_apptemplate_data_yaml_parsed = yaml.safe_load(user_apptemplate_data_yaml)
     else:
         print('ERROR : app template data file error')
         sys.exit(0)
@@ -77,6 +82,10 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print(('<p style="background-color:LightGrey">You selected : '+mybackend+' as the backend, select the version and template for this backend below </p>'))
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
+                if os.path.isfile(user_app_template_file):
+                    user_new_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(mybackend)
+                else:
+                    user_new_apptemplate_dict = {}
                 print(('<p style="background-color:LightGrey">Select Backend version: </p>'))
                 print('<select name="backendversion">')
                 for mybackend_version in backends_dict.keys():
@@ -86,6 +95,8 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('<select name="apptemplate">')
                 for myapptemplate in new_apptemplate_dict.keys():
                     print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                for user_myapptemplate in user_new_apptemplate_dict.keys():
+                    print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
                 print('</select>')
                 # Pass on the domain name to the next stage
                 print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
@@ -105,6 +116,12 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 # get the human friendly name of the app template
                 apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
                 apptemplate_description = apptemplate_dict.get(apptemplate_code)
+                if apptemplate_code in apptemplate_dict.keys():
+                    apptemplate_description = apptemplate_dict.get(apptemplate_code)
+                else:
+                    user_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(backend_category)
+                    if apptemplate_code in user_apptemplate_dict.keys():
+                        apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
                 # Ok we are done with getting the settings,now lets present it to the user
                 print(('<p style="background-color:LightGrey">APPLICATION SETTINGS:  '+mydomain+'/'+thesubdir+'</p>'))
                 print('<HR>')
@@ -117,6 +134,10 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print(('<p style="background-color:LightGrey">You selected : '+mybackend+' as the new backend, select the version and template for this backend below </p>'))
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
+                if os.path.isfile(user_app_template_file):
+                    user_new_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(mybackend)
+                else:
+                    user_new_apptemplate_dict = {}
                 if mybackend == backend_category:
                     print(('<p style="background-color:LightGrey">Select Backend version: </p>'))
                     print('<select name="backendversion">')
@@ -133,6 +154,11 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                             print(('<option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
                         else:
                             print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                    for user_myapptemplate in user_new_apptemplate_dict.keys():
+                        if user_myapptemplate == apptemplate_code:
+                            print(('<option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
+                        else:
+                            print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
                     print('</select>')
                 else:
                     print(('<p style="background-color:LightGrey">Select Backend version: </p>'))
@@ -144,6 +170,8 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                     print('<select name="apptemplate">')
                     for myapptemplate in new_apptemplate_dict.keys():
                         print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                    for user_myapptemplate in user_new_apptemplate_dict.keys():
+                        print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
                     print('</select>')
                 # Pass on the domain name to the next stage
                 print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
@@ -162,6 +190,10 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print(('<p style="background-color:LightGrey">You selected : '+mybackend+' as the backend, select the version and template for this backend below </p>'))
             backends_dict = backend_data_yaml_parsed.get(mybackend)
             new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
+            if os.path.isfile(user_app_template_file):
+                user_new_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(mybackend)
+            else:
+                user_new_apptemplate_dict = {}
             print(('<p style="background-color:LightGrey">Select Backend version: </p>'))
             print('<select name="backendversion">')
             for mybackend_version in backends_dict.keys():
@@ -171,6 +203,8 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('<select name="apptemplate">')
             for myapptemplate in new_apptemplate_dict.keys():
                 print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+            for user_myapptemplate in user_new_apptemplate_dict.keys():
+                print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
             print('</select>')
             # Pass on the domain name to the next stage
             print(('<input style="display:none" name="domain" value="'+mydomain+'">'))

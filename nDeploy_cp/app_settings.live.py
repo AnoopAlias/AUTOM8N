@@ -15,6 +15,8 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 app_template_file = installation_path+"/conf/apptemplates.yaml"
+cpaneluser = os.environ["USER"]
+user_app_template_file = installation_path+"/conf/"+cpaneluser+"_apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 
 
@@ -38,7 +40,7 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-print('<title>nDeploy</title>')
+print('<title>XtendWeb</title>')
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
@@ -66,7 +68,17 @@ if form.getvalue('domain'):
             with open(app_template_file, 'r') as apptemplate_data_yaml:
                 apptemplate_data_yaml_parsed = yaml.safe_load(apptemplate_data_yaml)
             apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
-            apptemplate_description = apptemplate_dict.get(apptemplate_code)
+            if os.path.isfile(user_app_template_file):
+                with open(user_app_template_file, 'r') as user_apptemplate_data_yaml:
+                    user_apptemplate_data_yaml_parsed = yaml.safe_load(user_apptemplate_data_yaml)
+                user_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(backend_category)
+            else:
+                user_apptemplate_dict = {}
+            if apptemplate_code in apptemplate_dict.keys():
+                apptemplate_description = apptemplate_dict.get(apptemplate_code)
+            else:
+                if apptemplate_code in user_apptemplate_dict.keys():
+                    apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
         else:
             print('ERROR : app template data file error')
             sys.exit(0)

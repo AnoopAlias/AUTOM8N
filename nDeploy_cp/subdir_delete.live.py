@@ -4,8 +4,6 @@ import socket
 import yaml
 import cgi
 import cgitb
-import re
-import sys
 
 
 __author__ = "Anoop P Alias"
@@ -15,6 +13,7 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+
 
 cgitb.enable()
 
@@ -42,39 +41,28 @@ print('</head>')
 print('<body>')
 print('<a href="xtendweb.live.py"><img border="0" src="xtendweb.png" alt="nDeploy"></a>')
 print('<HR>')
-if form.getvalue('domain') and form.getvalue('action') and form.getvalue('protectedurl'):
+if form.getvalue('domain') and form.getvalue('thesubdir'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
-    action = form.getvalue('action')
-    protectedurl = form.getvalue('protectedurl')
-    if not protectedurl.startswith('/'):
-        protectedurl = '/'+protectedurl
-    if protectedurl != '/' and protectedurl.endswith('/'):
-        protectedurl = protectedurl[:-1]
-    if not re.match("^[a-zA-Z/_]*$", protectedurl):
-        print("Error: Invalid char in sub-directory name")
-        sys.exit(0)
+    thesubdir = form.getvalue('thesubdir')
     profileyaml = installation_path + "/domain-data/" + mydomain
     if os.path.isfile(profileyaml):
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        protected_dir_list = yaml_parsed_profileyaml.get('protected_dir')
-        if action == 'add':
-            if protectedurl not in protected_dir_list:
-                protected_dir_list.append(protectedurl)
-        elif action == 'del':
-            if protectedurl in protected_dir_list:
-                protected_dir_list.remove(protectedurl)
-        yaml_parsed_profileyaml['protected_dir'] = protected_dir_list
-        print(('<p style="background-color:LightGrey">CONFIGURING PASSWORD PROTECTED URL FOR:  '+mydomain+'</p>'))
+        subdir_apps_dict = yaml_parsed_profileyaml.get('subdir_apps')
+        if thesubdir in subdir_apps_dict.keys():
+            del subdir_apps_dict[thesubdir]
+        else:
+            print('ERROR : The SubDir is not configured')
+        yaml_parsed_profileyaml['subdir_apps'] = subdir_apps_dict
+        print(('<p style="background-color:LightGrey">REMOVING:  '+mydomain+'/'+thesubdir+'</p>'))
         print('<HR>')
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
         print('<div class="boxedyellow">')
-        print('password protected URL list modified for '+mydomain)
+        print('removed '+mydomain+'/'+thesubdir)
         print('</div>')
-        print('</form>')
     else:
         print('ERROR : domain-data file i/o error')
 else:

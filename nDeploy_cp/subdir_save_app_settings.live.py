@@ -38,7 +38,7 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-print('<title>nDeploy</title>')
+print('<title>XtendWeb</title>')
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
@@ -80,7 +80,6 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         print('<div class="boxedyellow">')
         print('configuration for '+mydomain+'/'+thesubdir+' saved')
         print('</div>')
-        print('</form>')
     else:
         print('ERROR : domain-data file i/o error')
 else:
