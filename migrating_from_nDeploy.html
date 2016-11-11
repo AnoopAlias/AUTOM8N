@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Instructions for upgrading from nDeploy &#8212; XtendWeb nginX control v4.0</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
+    <link rel="next" title="mod_remoteip" href="mod_remoteip.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mod_remoteip.html" title="mod_remoteip"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mod_remoteip.html"
+                        title="next chapter">mod_remoteip</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/migrating_from_nDeploy.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>XtendWeb is version 4 of the nDeploy cPanel plugin</p>
+<p>While the core ideas of nDeploy like template based config generation etc is reused in XtendWeb ,
+XtendWeb is otherwise a complete rewrite of nDeploy .</p>
+<p>The major changes in XtendWeb are</p>
+<ol class="arabic simple">
+<li>There are no AUTO and MANUAL mode in the user interface. Users are not allowed to edit nginx configuration</li>
+<li>Use of the Jinja2 templates</li>
+<li>Adding templates for specific users is supported in XtendWeb</li>
+<li>Configuring application in sub-directory is suppoted</li>
+</ol>
+<p>These changes were made on careful analysis of end user feedback. A cpanel user never care
+for manually editing nginx config( Users are less technical in general ) .</p>
+<p>Because of this XtendWeb User Interface is more intuitive</p>
+<div class="section" id="instructions-for-upgrading-from-ndeploy">
+<h1>Instructions for upgrading from nDeploy<a class="headerlink" href="#instructions-for-upgrading-from-ndeploy" title="Permalink to this headline">¶</a></h1>
+<p>XtendWeb templates and domain-data settings are not backward compatible
+So the right way to upgrade from nDeloy is completly removing nDeploy and setting up XtendWeb as a new installation</p>
+<p>1. Completly remove the old plugin</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">disable</span>
+<span class="n">yum</span> <span class="n">remove</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span>
+<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">removing /etc/nginx and /opt/nDeploy is a crucial step as otherwise the old config files may interfere with the new template system.</p>
+</div>
+<ol class="arabic simple" start="2">
+<li>Follow <a class="reference external" href="http://xtendweb.gnusys.net/installation.html">http://xtendweb.gnusys.net/installation.html</a> for a fresh installation</li>
+</ol>
+<p>Contact <a class="reference external" href="mailto:ops&#37;&#52;&#48;gnusys&#46;net">ops<span>&#64;</span>gnusys<span>&#46;</span>net</a> for commercial upgrade support.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mod_remoteip.html" title="mod_remoteip"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Anoop P Alias.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

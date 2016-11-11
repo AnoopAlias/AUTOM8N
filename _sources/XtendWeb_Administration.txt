@@ -45,7 +45,7 @@ You can change the default server setting by creating /opt/nDeploy/conf/domain_d
   cp -p /opt/nDeploy/conf/domain_data_default.yaml /opt/nDeploy/conf/domain_data_default_local.yaml
   cp -p /opt/nDeploy/conf/domain_data_suspended.yaml /opt/nDeploy/conf/domain_data_suspended_local.yaml
 
-Automatic selection of template based on application detection
+Automatic selection of template based on application
 ---------------------------------------------------------------
 
 The following script can detect the application installed in the webroot(only!) based on filenames
@@ -108,19 +108,60 @@ It MAY NOT! be always accurate . The administrator must be aware of this .
 Of course, any change made by the auto_config can be reverted by the end user
 or the admin from the cPanel plugin UI.
 
-Adding more application templates
+Adding application templates
 --------------------------------------------
-Application templates provides end users with drop down list of templates that generate a vhost application configuration.
-The rpm provides a set of templates ; but admins can extend this by adding more
+Application templates are a way of extending the plugin with dealing with more web applications and user specific
+nginx config customization
 
+Application templates can be distributed server wide or to specific users
+Application templates can be created for an application in the document_root as well as a subdirectory
+
+Distributing templates to all users
 ::
 
-[root@master conf]# /opt/nDeploy/scripts/update_profiles.py
-usage: update_profiles.py [-h]
-                          action user scope backend_category file_name
-                          application_description_in_doublequotes
-update_profiles.py: error: too few arguments
+  /opt/nDeploy/scripts/update_profiles.py add root main PHP 5001.j2 "Wordpress"
+Distributing templates for a subdirectory to all users
+::
 
+  /opt/nDeploy/scripts/update_profiles.py add root subdir PHP 5001_subdir.j2 "Wordpress in subdir"
+Distributing template to a specific cpaneluser
+::
+
+  /opt/nDeploy/scripts/update_profiles.py add cpanelusername main PHP 5001.j2 "Wordpress"
+  /opt/nDeploy/scripts/update_profiles.py add cpanelusername subdir PHP 5001_subdir.j2 "Wordpress in subdir"
+In short the template registration has the following syntax
+::
+
+  /opt/nDeploy/scripts/update_profiles.py [add|del] [root|cpanelusername] [main|subdir] [backend] [templatefilename] [quoted description]
+
+Templates use Python Jinja2 templating engine . But there isnt much template logic used to make application template
+simpler for most users. You can check existing templates for the commonly used variables.
+
+Include the following block where ever appropriate in a template to make way for application in subdirectories
+::
+
+  # Include any applications in subdirectory
+  {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+  location /{{ KEY }}/ {
+  include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
+  }
+  {% endfor %}
+  # End Include any applications in subdirectory
+
+.. tip:: Open an issue at the github repo if you wish template for a commonly used application to be added
+
+
+
+Adding Application servers or backends
+---------------------------------------
+
+XtendWeb supports php-fpm or hhvm via FastCGI , Other web/application servers like httpd,tomcat etc via Proxy .
+Ruby/Python/NodeJs using the Phusion Passenger module
+
+To register a backend use the follwoing command
+::
+
+  /opt/nDeploy/scripts/update_backend.py [add|del] backend_category backend_name backend_path
 
 
 Upgrading XtendWeb and nginx
@@ -131,10 +172,11 @@ So we don't encourage unmanned upgrades and have therefore set enable=0 in the y
 The upgrade must be done manually by running the following commands
 ::
 
-  yum -y install https://github.com/AnoopAlias/nDeploy/raw/master/nDeploy-release-centos-1.0-3.noarch.rpm
+  yum -y install https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-5.noarch.rpm
   yum --enablerepo=ndeploy install nginx-nDeploy nDeploy
+  yum --enablerepo=ndeploy upgrade nginx-nDeploy-module-*
   #For setups using Phusion Passenger app server
-  /usr/nginx/scripts/nginx-passenger-setup.sh
+  /opt/nDeploy/scripts/easy_passenger_setup.sh
   #For upgrading PHP application server(additional packages are to upgraded via yum)
   /opt/nDeploy/scripts/easy_php_setup.sh
 

@@ -27,7 +27,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
-    <link rel="next" title="mod_remoteip" href="mod_remoteip.html" />
+    <link rel="next" title="Instructions for upgrading from nDeploy" href="migrating_from_nDeploy.html" />
     <link rel="prev" title="XtendWeb" href="index.html" /> 
   </head>
   <body role="document">
@@ -38,7 +38,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="mod_remoteip.html" title="mod_remoteip"
+          <a href="migrating_from_nDeploy.html" title="Instructions for upgrading from nDeploy"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="XtendWeb"
@@ -52,8 +52,8 @@
   <p class="topless"><a href="index.html"
                         title="previous chapter">XtendWeb</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="mod_remoteip.html"
-                        title="next chapter">mod_remoteip</a></p>
+  <p class="topless"><a href="migrating_from_nDeploy.html"
+                        title="next chapter">Instructions for upgrading from nDeploy</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -84,47 +84,46 @@
 <p>XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">cPanel 60.0 is required as some hooks necessary for the plugin is only available in this version ownwards</p>
+<p class="last">Ensure your cPanel version displayed in WHM is 60 or higher</p>
 </div>
-<ul class="simple">
-<li>Migrating from nDeploy 3.x ? . Read the migration doc here:</li>
-</ul>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If you are migrating from previous versions of nDeploy,please read the migration doc first</p>
+</div>
 <p>1. Install EPEL repo</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
 </pre></div>
 </div>
-<p>#. Install XtendWeb yum repo</p>
+<p>2. Install XtendWeb yum repo</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">ndeploy4</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">5.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
 </pre></div>
 </div>
-<p>#. Install XtendWeb plugin and nginx. Be patient as this may take several minutes to complete.</p>
+<p>3. Install XtendWeb plugin and nginx. Be patient as this may take several minutes to complete.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span>
 </pre></div>
 </div>
-<p>#. Install PHP-FPM Application server</p>
+<p>4.1. Install PHP-FPM Application server</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Install PHP-FPM Application server for PHP</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
-<ol class="arabic simple">
-<li>Install Phusion Passenger ( only if you need support for RUBY/PYTHON/NODEJS )</li>
-</ol>
-<blockquote>
-<div><p>#Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.</p>
-<p>yum &#8211;enablerepo=ndeploy install nginx-nDeploy-module-passenger
-/opt/nDeploy/scripts/easy_passenger_setup.sh</p>
-</div></blockquote>
-<p>#. Enable the plugin. This will make nginx your frontend webserver.</p>
+<p>4.2. Install Phusion Passenger ( only if you need support for RUBY/PYTHON/NODEJS )</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span>
+<span class="c1">#Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>5. Enable the plugin. This will make nginx your frontend webserver.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
 </pre></div>
 </div>
-<p>#. Install Optional additional modules</p>
+<p>6. Install Optional additional modules</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Note that each module increases the nginx size and processing requirements</span>
 <span class="c1">#So install only required functionality .</span>
-<span class="n">pagespeed</span>  <span class="o">-</span> <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">pagespeed</span>
-<span class="n">brotli</span> <span class="o">-</span> <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">brotli</span>
-<span class="n">geoip</span> <span class="o">-</span> <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">geoip</span>
-<span class="n">naxsi</span> <span class="o">-</span> <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">naxsi</span>
+<span class="p">(</span><span class="n">pagespeed</span><span class="p">)</span>   <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">pagespeed</span>
+<span class="p">(</span><span class="n">brotli</span><span class="p">)</span>      <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">brotli</span>
+<span class="p">(</span><span class="n">geoip</span><span class="p">)</span>       <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">geoip</span>
+<span class="p">(</span><span class="n">naxsi</span><span class="p">)</span>       <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">naxsi</span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -146,7 +145,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="mod_remoteip.html" title="mod_remoteip"
+          <a href="migrating_from_nDeploy.html" title="Instructions for upgrading from nDeploy"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="XtendWeb"

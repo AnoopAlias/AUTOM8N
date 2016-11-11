@@ -83,15 +83,13 @@
             
   <div class="section" id="xtendweb">
 <h1>XtendWeb<a class="headerlink" href="#xtendweb" title="Permalink to this headline">¶</a></h1>
-<img alt="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png" />
-<p>Eliminate downtime, replace cPanel&#8217;s Apache httpd Webstack with NGINX cluster, and horizontally scale your web applications.</p>
+<p>XtendWeb is the worlds easiest, fastest(in terms of deployment speed) and scalable nginX deployment tool that seemlessly plugs into your
+cPanel/WHM powered server .The result - you get a faster reliable webstack and can deploy your web applications to multiple web
+servers which are DNS load-balanced .</p>
+<p>XtendWeb is free and Open Source with commercial support and customization service provided by the developers 24x7</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">neatly rpm packaged, XtendWeb does not modify any files or configuration setup by cPanel other than httpd listening port</p>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">XtendWeb is OpenSource and ready to fork on GitHub. No vendor lock-in and lesser bugs</p>
+<p class="last">XtendWeb is tuned for speedy config generation and effecient high performance web server working</p>
 </div>
 <div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
@@ -119,16 +117,26 @@
 <li>Clustering in the application layer(csync2,unison,rsync).Easy to troubleshoot and fix errors</li>
 </ul>
 <div class="toctree-wrapper compound" id="installation-basic-configuration">
-<p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span><a class="headerlink" href="#installation-basic-configuration" title="Permalink to this toctree">¶</a></p>
+<p class="caption"><span class="caption-text">**Installation &amp; Basic Configuration**</span><a class="headerlink" href="#installation-basic-configuration" title="Permalink to this toctree">¶</a></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migrating_from_nDeploy.html">Instructions for upgrading from nDeploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 </ul>
 </div>
+<div class="toctree-wrapper compound" id="support">
+<p class="caption"><span class="caption-text">**Support**</span><a class="headerlink" href="#support" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="support.html#community-support">Community Support</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="toctree-wrapper compound" id="backends-setup">
-<p class="caption"><span class="caption-text">Backends Setup</span><a class="headerlink" href="#backends-setup" title="Permalink to this toctree">¶</a></p>
+<p class="caption"><span class="caption-text">**Backends Setup**</span><a class="headerlink" href="#backends-setup" title="Permalink to this toctree">¶</a></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a><ul>
@@ -147,14 +155,15 @@
 </ul>
 </div>
 <div class="toctree-wrapper compound" id="administration-monitoring">
-<p class="caption"><span class="caption-text">Administration &amp; Monitoring</span><a class="headerlink" href="#administration-monitoring" title="Permalink to this toctree">¶</a></p>
+<p class="caption"><span class="caption-text">**Administration &amp; Monitoring**</span><a class="headerlink" href="#administration-monitoring" title="Permalink to this toctree">¶</a></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-fixing-of-most-errors">Automatic fixing of most errors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#managing-default-server-settings">Managing default server settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application-detection">Automatic selection of template based on application detection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-more-application-templates">Adding more application templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-templates">Adding application templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#uninstall-the-plugin">Uninstall the plugin</a></li>
@@ -166,7 +175,7 @@
 </ul>
 </div>
 <div class="toctree-wrapper compound" id="xtendweb-cluster">
-<p class="caption"><span class="caption-text">XtendWeb Cluster</span><a class="headerlink" href="#xtendweb-cluster" title="Permalink to this toctree">¶</a></p>
+<p class="caption"><span class="caption-text">**XtendWeb Cluster**</span><a class="headerlink" href="#xtendweb-cluster" title="Permalink to this toctree">¶</a></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="cluster_architecture.html">XtendWeb cluster architecture</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#software-components">Software components</a></li>
@@ -183,15 +192,6 @@
 <li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">XtendWeb cluster upgrade</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Upgrade_cluster.html#on-all-slaves">On All slaves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Upgrade_cluster.html#on-master">On master</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="toctree-wrapper compound" id="support">
-<p class="caption"><span class="caption-text">Support</span><a class="headerlink" href="#support" title="Permalink to this toctree">¶</a></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="support.html#community-support">Community Support</a></li>
 </ul>
 </li>
 </ul>
