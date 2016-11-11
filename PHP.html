@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setting up PHP &#8212; XtendWeb nginX control v4.0</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/disqus.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
+    <link rel="next" title="Setting up Python (WSGI app)" href="PYTHON_WSGI.html" />
+    <link rel="prev" title="Setting up HHVM" href="HHVM.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="PYTHON_WSGI.html" title="Setting up Python (WSGI app)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="HHVM.html" title="Setting up HHVM"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setting up PHP</a><ul>
+<li><a class="reference internal" href="#on-centos6-centos7">On CentOS6/CentOS7</a></li>
+<li><a class="reference internal" href="#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a></li>
+<li><a class="reference internal" href="#where-are-my-php-logs">Where are my php logs?</a></li>
+<li><a class="reference internal" href="#zendopcache-and-security-considerations">ZendOpcache and security considerations</a></li>
+<li><a class="reference internal" href="#per-user-php-ini-custom-settings">Per user php.ini custom settings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="HHVM.html"
+                        title="previous chapter">Setting up HHVM</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="PYTHON_WSGI.html"
+                        title="next chapter">Setting up Python (WSGI app)</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/PHP.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="setting-up-php">
+<h1>Setting up PHP<a class="headerlink" href="#setting-up-php" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="on-centos6-centos7">
+<h2>On CentOS6/CentOS7<a class="headerlink" href="#on-centos6-centos7" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb can work with PHP installed from the following Software Collection( SCL)</p>
+<p>1. cPanel EA-PHP repo
+<code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/easy_php_setup.sh</span></code></p>
+<p>Additional PHP modules from ea-php repo can be added similar to example below</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">search</span> <span class="n">ea</span><span class="o">-</span><span class="n">php</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">ea</span><span class="o">-</span><span class="n">php70</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">intl</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p>2. REMI repo
+<code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/easy_php_setup.sh</span> <span class="pre">remi</span></code></p>
+<p>Additional PHP modules from remi repo can be added similar to example below</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">disableexcludes</span><span class="o">=</span><span class="nb">all</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">remi</span> <span class="n">search</span> <span class="n">php</span>
+<span class="n">yum</span> <span class="o">--</span><span class="n">disableexcludes</span><span class="o">=</span><span class="nb">all</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">remi</span> <span class="n">install</span> <span class="n">php56</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">pecl</span><span class="o">-</span><span class="n">memcached</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="on-cloudlinux6-cloudlinux7">
+<h2>On CloudLinux6/CloudLinux7<a class="headerlink" href="#on-cloudlinux6-cloudlinux7" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb can work with ea-php packages installed from the CloudLinux cloudlinux-updates-testing repo
+Note that remi repo may work but the php in remi is not compiled with the CloudLinux patches so it
+may not adhere to limits setup in CloudLinux</p>
+<p>1. CloudLinux EA-PHP repo</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">cloudlinux</span><span class="o">-</span><span class="n">updates</span><span class="o">-</span><span class="n">testing</span> <span class="n">search</span> <span class="n">ea</span><span class="o">-</span><span class="n">php</span>
+<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">cloudlinux</span><span class="o">-</span><span class="n">updates</span><span class="o">-</span><span class="n">testing</span> <span class="n">install</span> <span class="n">ea</span><span class="o">-</span><span class="n">php70</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">intl</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span> <span class="o">||</span> <span class="n">service</span> <span class="n">ndeploy_backends</span> <span class="n">restart</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="where-are-my-php-logs">
+<h2>Where are my php logs?<a class="headerlink" href="#where-are-my-php-logs" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb creates php-fpm pool files for each user with the PHP error log file set to</p>
+<p><code class="docutils literal"><span class="pre">/home/CPANELUSER/logs/php_error_log</span></code>
+Users can check the logs from their FileManager/FTP/SSH login</p>
+</div>
+<div class="section" id="zendopcache-and-security-considerations">
+<h2>ZendOpcache and security considerations<a class="headerlink" href="#zendopcache-and-security-considerations" title="Permalink to this headline">¶</a></h2>
+<p>PHP-FPM shares the OpCache memory with all the user pools. On a shared hosting setup where users dont trust one another
+this can be a security risk . The workaround is to run one PHP-FPM master process per user which need
+more resource overhead and a process manager . XtendWeb currently offers the following settings
+that can mitigate the security risk of a shared OpCache memory to some extend</p>
+<p>1. opcache.restrict_api</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">opcache</span><span class="o">.</span><span class="n">restrict_api</span>
+<span class="n">Allows</span> <span class="n">calling</span> <span class="n">OPcache</span> <span class="n">API</span> <span class="n">functions</span> <span class="n">only</span> <span class="kn">from</span> <span class="nn">PHP</span> <span class="n">scripts</span> <span class="n">which</span> <span class="n">path</span> <span class="ow">is</span> <span class="n">started</span> <span class="kn">from</span> <span class="nn">specified</span> <span class="n">string</span><span class="o">.</span> <span class="n">The</span> <span class="n">default</span> <span class="s2">&quot;&quot;</span> <span class="n">means</span> <span class="n">no</span> <span class="n">restriction</span><span class="o">.</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="nb">set</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">CPANELUSER</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>2. opcache.blacklist_filename</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">opcache</span><span class="o">.</span><span class="n">blacklist_filename</span>
+<span class="n">The</span> <span class="n">location</span> <span class="n">of</span> <span class="n">the</span> <span class="n">OPcache</span> <span class="n">blacklist</span> <span class="n">file</span><span class="o">.</span> <span class="n">A</span> <span class="n">blacklist</span> <span class="n">file</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">text</span> <span class="n">file</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">names</span> <span class="n">of</span> <span class="n">files</span> <span class="n">that</span> <span class="n">should</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">accelerated</span><span class="p">,</span> <span class="n">one</span> <span class="n">per</span> <span class="n">line</span><span class="o">.</span> <span class="n">Wildcards</span> <span class="n">are</span> <span class="n">allowed</span><span class="p">,</span> <span class="ow">and</span> <span class="n">prefixes</span> <span class="n">can</span> <span class="n">also</span> <span class="n">be</span> <span class="n">provided</span><span class="o">.</span> <span class="n">Lines</span> <span class="n">starting</span> <span class="k">with</span> <span class="n">a</span> <span class="n">semi</span><span class="o">-</span><span class="n">colon</span> <span class="n">are</span> <span class="n">ignored</span> <span class="k">as</span> <span class="n">comments</span><span class="o">.</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="nb">set</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">CPANELUSER</span><span class="o">/</span><span class="n">opcache</span><span class="o">-</span><span class="n">blacklist</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">User</span> <span class="n">can</span> <span class="n">upload</span> <span class="n">the</span> <span class="n">opcache</span><span class="o">-</span><span class="n">blacklist</span><span class="o">.</span><span class="n">txt</span> <span class="n">to</span> <span class="n">his</span> <span class="n">homedir</span> <span class="n">via</span> <span class="n">FTP</span> <span class="ow">or</span> <span class="n">ssh</span> <span class="ow">and</span> <span class="n">paths</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">file</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">cached</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="per-user-php-ini-custom-settings">
+<h2>Per user php.ini custom settings<a class="headerlink" href="#per-user-php-ini-custom-settings" title="Permalink to this headline">¶</a></h2>
+<p>php-fpm lets users configure settings of type PHP_INI_PERDIR and PHP_INI_USER in .user.ini files</p>
+<p>Ref: <a class="reference external" href="http://php.net/manual/en/configuration.file.per-user.php">http://php.net/manual/en/configuration.file.per-user.php</a></p>
+<p>the settings can be provided in ini format(same as php.ini) and the file must be named .user.ini</p>
+<div data-disqus-identifier="Setting up PHP" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="PYTHON_WSGI.html" title="Setting up Python (WSGI app)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="HHVM.html" title="Setting up HHVM"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Anoop P Alias.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

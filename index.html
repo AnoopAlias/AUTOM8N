@@ -1,47 +1,228 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="UTF-8">
-    <title>Ndeploy by AnoopAlias</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>XtendWeb &#8212; XtendWeb nginX control v4.0</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="XtendWeb nginX control v4.0" href="#" />
+    <link rel="next" title="Installation" href="installation.html" /> 
   </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Ndeploy</h1>
-      <h2 class="project-tagline">Eliminate downtime, replace cPanel’s Apache httpd Webstack with NGINX cluster, and horizontally scale your web applications</h2>
-      <a href="https://github.com/AnoopAlias/nDeploy" class="btn">View on GitHub</a>
-    </section>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">XtendWeb</a><ul>
+<li><a class="reference internal" href="#features">Features</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-    <section class="main-content">
-      <h1>
-<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DOCUMENTATION</h1>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="next chapter">Installation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
 
-<p><a href="http://ndeploy.readthedocs.io/en/latest/">http://ndeploy.readthedocs.io/en/latest/</a></p>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="xtendweb">
+<h1>XtendWeb<a class="headerlink" href="#xtendweb" title="Permalink to this headline">¶</a></h1>
+<img alt="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png" />
+<p>Eliminate downtime, replace cPanel&#8217;s Apache httpd Webstack with NGINX cluster, and horizontally scale your web applications.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">neatly rpm packaged, XtendWeb does not modify any files or configuration setup by cPanel other than httpd listening port</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">XtendWeb is OpenSource and ready to fork on GitHub. No vendor lock-in and lesser bugs</p>
+</div>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>worlds simplest nginx config wizard</li>
+<li>configuration curated for high performance and incorporates nginx best practices</li>
+<li>template based application configuration+ support application in sub domains</li>
+<li>password protection setup by cpanel can be reused in nginx</li>
+<li>cpanel user can configure nginx for their application without editing any configuration</li>
+<li>Supports CentOS6 CentOS7 CloudLinux6 CloudLinux7 on x86_64 arch</li>
+<li>Multiple backends - Apache HTTPD, PHP-FPM, HHVM, ColdFusion/Java, Python, Ruby on Rails, NodeJS</li>
+<li>Supports caching in proxy and FastCGI</li>
+<li>Google PageSpeed support</li>
+<li>limit_req, limit_conn support</li>
+<li>NAXSI Web Application Firewall - (mod_security via libmodsecurity support coming soon!)</li>
+<li>IPv6 support</li>
+<li>TLS(HTTPS) support</li>
+<li>HTTP/2 support</li>
+<li>Brotli Compression support</li>
+<li>GeoIP support</li>
+<li>Fast installation, upgrade and easy uninstall available via yum/rpm.</li>
+<li>High Available Webstack - csync2 config sync and unison file sync for nginX</li>
+<li>High Available SMTP service - PostFix backup MX automatically configured for all domains</li>
+<li>High Available Database (MariaDB/MySQL) - MySQL replication(master-master/galera) &amp; tcp loadbalancing</li>
+<li>Clustering in the application layer(csync2,unison,rsync).Easy to troubleshoot and fix errors</li>
+</ul>
+<div class="toctree-wrapper compound" id="installation-basic-configuration">
+<p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span><a class="headerlink" href="#installation-basic-configuration" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound" id="backends-setup">
+<p class="caption"><span class="caption-text">Backends Setup</span><a class="headerlink" href="#backends-setup" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#on-centos6-centos7">On CentOS6/CentOS7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#where-are-my-php-logs">Where are my php logs?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#zendopcache-and-security-considerations">ZendOpcache and security considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#per-user-php-ini-custom-settings">Per user php.ini custom settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion or Java</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound" id="administration-monitoring">
+<p class="caption"><span class="caption-text">Administration &amp; Monitoring</span><a class="headerlink" href="#administration-monitoring" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-fixing-of-most-errors">Automatic fixing of most errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#managing-default-server-settings">Managing default server settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application-detection">Automatic selection of template based on application detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-more-application-templates">Adding more application templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#uninstall-the-plugin">Uninstall the plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#building-nginx-ndeploy-from-source">Building nginx-nDeploy from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound" id="xtendweb-cluster">
+<p class="caption"><span class="caption-text">XtendWeb Cluster</span><a class="headerlink" href="#xtendweb-cluster" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cluster_architecture.html">XtendWeb cluster architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#software-components">Software components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#loadbalancing">LoadBalancing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#highavailability">HighAvailability</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="XtendWeb_cluster_setup.html">nDeploy cluster setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#basic-2-server-setup">Basic 2 server setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#configuring-the-rest-of-the-system-to-work-as-a-cluster">Configuring the rest of the system to work as a cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#start-the-cluster">Start the cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">XtendWeb cluster upgrade</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Upgrade_cluster.html#on-all-slaves">On All slaves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Upgrade_cluster.html#on-master">On master</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound" id="support">
+<p class="caption"><span class="caption-text">Support</span><a class="headerlink" href="#support" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="support.html#community-support">Community Support</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+</div>
 
-<h1>
-<a id="forum" class="anchor" href="#forum" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>FORUM</h1>
 
-<p><a href="https://groups.google.com/forum/#!forum/ndeploy">https://groups.google.com/forum/#!forum/ndeploy</a></p>
-
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="S2XZ9P8USBTRN">
-<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_subscribe_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-</form>
-
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/AnoopAlias/nDeploy">Ndeploy</a> is maintained by <a href="https://github.com/AnoopAlias">AnoopAlias</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Anoop P Alias.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
   </body>
 </html>

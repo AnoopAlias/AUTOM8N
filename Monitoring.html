@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Monitoring nginx and app servers &#8212; XtendWeb nginX control v4.0</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
+    <link rel="next" title="Managing Logs" href="Logs.html" />
+    <link rel="prev" title="Administration of XtendWeb plugin" href="XtendWeb_Administration.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Logs.html" title="Managing Logs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="XtendWeb_Administration.html" title="Administration of XtendWeb plugin"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="XtendWeb_Administration.html"
+                        title="previous chapter">Administration of XtendWeb plugin</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Logs.html"
+                        title="next chapter">Managing Logs</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Monitoring.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="monitoring-nginx-and-app-servers">
+<h1>Monitoring nginx and app servers<a class="headerlink" href="#monitoring-nginx-and-app-servers" title="Permalink to this headline">¶</a></h1>
+<p><strong>Monitoring nginX</strong></p>
+<p>The server is already configured on localhost to send the nginx status at nginx_status URL</p>
+<p>lynx <a class="reference external" href="http://localhost/nginx_status">http://localhost/nginx_status</a></p>
+<p>on the server cli will show the status .
+Local checks (for example the check_mk nginx status module) should just report
+the details fine to remote monitoring servers.</p>
+<p><strong>Monitoring php-fpm</strong></p>
+<p>php-fpm can be configured to provide detailed status info per pool.
+But since this has its own data confidentiality risks
+this is not enabled by default on the php-fpm pool config file.
+But all php-based templated include a location block to give a ping signal to php-fpm
+and the fpm pool is setup to respond with a pong</p>
+<p><a class="reference external" href="http://domain.com/pingphpfpm">http://domain.com/pingphpfpm</a></p>
+<p>will return with a pong output if php-fpm pool is working fine .</p>
+<p>This can be easily configured for status checking</p>
+<p>￼.. disqus:</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Logs.html" title="Managing Logs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="XtendWeb_Administration.html" title="Administration of XtendWeb plugin"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Anoop P Alias.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

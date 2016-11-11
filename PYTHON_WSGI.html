@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setting up Python (WSGI app) &#8212; XtendWeb nginX control v4.0</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/disqus.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
+    <link rel="next" title="Setting up Ruby(Rack app)" href="RUBY_RACK.html" />
+    <link rel="prev" title="Setting up PHP" href="PHP.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="RUBY_RACK.html" title="Setting up Ruby(Rack app)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="PHP.html" title="Setting up PHP"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="PHP.html"
+                        title="previous chapter">Setting up PHP</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="RUBY_RACK.html"
+                        title="next chapter">Setting up Ruby(Rack app)</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/PYTHON_WSGI.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="setting-up-python-wsgi-app">
+<h1>Setting up Python (WSGI app)<a class="headerlink" href="#setting-up-python-wsgi-app" title="Permalink to this headline">¶</a></h1>
+<p>1. Enable the Phusion Passenger module
+<code class="docutils literal"><span class="pre">/usr/nginx/scripts/nginx-passenger-setup.sh</span></code></p>
+<p>2. To setup python install <a class="reference external" href="https://github.com/saghul/pythonz">https://github.com/saghul/pythonz</a></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># pythonz install 3.4.2</span>
+
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># pythonz list</span>
+<span class="c1"># Installed Python versions</span>
+  <span class="n">CPython</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mi">8</span>
+  <span class="n">CPython</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">2</span>
+
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># pythonz locate 3.4.2</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">pythonz</span><span class="o">/</span><span class="n">pythons</span><span class="o">/</span><span class="n">CPython</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span>
+</pre></div>
+</div>
+<p>3. Register the python backend</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># /opt/nDeploy/scripts/update_backend.py add PYTHON CPython-3.4.2 /usr/local/pythonz/pythons/CPython-3.4.2/bin/python3</span>
+</pre></div>
+</div>
+<p><strong>Bootstrapping PIP</strong></p>
+<p>PIP can be used to add additional python modules by cPanel user</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bootstrap</span><span class="o">.</span><span class="n">pypa</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">get</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span><span class="n">py</span>
+
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># pythonz locate 3.4.2</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">pythonz</span><span class="o">/</span><span class="n">pythons</span><span class="o">/</span><span class="n">CPython</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span>
+
+<span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># /usr/local/pythonz/pythons/CPython-3.4.2/bin/python3 get-pip.py</span>
+</pre></div>
+</div>
+<p>To install PIP packages as user add the &#8211;user flag</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gnusys</span><span class="nd">@gnusys</span><span class="o">.</span><span class="n">net</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># /usr/local/pythonz/pythons/CPython-2.7.8/bin/pip install --user PyYAML</span>
+</pre></div>
+</div>
+<p>Additional Reference
+<a class="reference external" href="https://www.phusionpassenger.com/library/deploy/nginx/deploy/python/">https://www.phusionpassenger.com/library/deploy/nginx/deploy/python/</a></p>
+<p>Additonal Environment variables can be set per user using custom application templates
+<a class="reference external" href="https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_env_var">https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_env_var</a></p>
+<div data-disqus-identifier="Setting up Python (WSGI app)" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="RUBY_RACK.html" title="Setting up Ruby(Rack app)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="PHP.html" title="Setting up PHP"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Anoop P Alias.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

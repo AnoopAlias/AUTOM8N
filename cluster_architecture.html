@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>XtendWeb cluster architecture &#8212; XtendWeb nginX control v4.0</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/disqus.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
+    <link rel="next" title="nDeploy cluster setup" href="XtendWeb_cluster_setup.html" />
+    <link rel="prev" title="Managing Logs" href="Logs.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="XtendWeb_cluster_setup.html" title="nDeploy cluster setup"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Logs.html" title="Managing Logs"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">XtendWeb cluster architecture</a><ul>
+<li><a class="reference internal" href="#software-components">Software components</a></li>
+<li><a class="reference internal" href="#loadbalancing">LoadBalancing</a></li>
+<li><a class="reference internal" href="#highavailability">HighAvailability</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Logs.html"
+                        title="previous chapter">Managing Logs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="XtendWeb_cluster_setup.html"
+                        title="next chapter">nDeploy cluster setup</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/cluster_architecture.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="xtendweb-cluster-architecture">
+<h1>XtendWeb cluster architecture<a class="headerlink" href="#xtendweb-cluster-architecture" title="Permalink to this headline">¶</a></h1>
+<img alt="_images/DuEt_cPanel.jpg" src="_images/DuEt_cPanel.jpg" />
+<div class="section" id="software-components">
+<h2>Software components<a class="headerlink" href="#software-components" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb (Script that generates nginx configuration for all nginx servers in the cluster)
+XtendWeb-cluster-slave (A trimmed down version of XtendWeb that is useful on the slave)</p>
+<p>csync2 - <a class="reference external" href="http://oss.linbit.com/csync2/">http://oss.linbit.com/csync2/</a> - Synchronize the nginx config on the cluster</p>
+<p>unison - <a class="reference external" href="https://www.cis.upenn.edu/~bcpierce/unison/">https://www.cis.upenn.edu/~bcpierce/unison/</a> - Synchronize /home/user directory</p>
+<p>cPanel DNS cluster - DNS clustering and LoadBalancing</p>
+<p>MySQL Replication or a Dedicated MySQL server - For providing a redundant MySQL database</p>
+</div>
+<div class="section" id="loadbalancing">
+<h2>LoadBalancing<a class="headerlink" href="#loadbalancing" title="Permalink to this headline">¶</a></h2>
+<p>This happens at the DNS layer. The DNS server return multiple A records in round-robin fashion
+making each successive request to point to different servers in the cluster .</p>
+<p>Thus you achieve horizontal scalability as each server is doing request processing on its own</p>
+</div>
+<div class="section" id="highavailability">
+<h2>HighAvailability<a class="headerlink" href="#highavailability" title="Permalink to this headline">¶</a></h2>
+<p>High availability for the webstack:</p>
+<p>Modern browsers are smart enough to query DNS and redirect to next A record if it is unable
+to connect to one . There may be slight delays in connections and this may not
+work with old web browsers or commandline http clients. But Our tests with modern
+Chrome/Safari/FireFox etc returned positive results</p>
+<p>High availability for MySQL:</p>
+<p>Each nginx server is configured to connect to one or more upstream mysql servers
+thus creating a failover for scripts accessing MySQL</p>
+<p>High availability for Email:</p>
+<p>PostFix server configured on the slave acts as a queue and forward backupMX for the exim MTA on the
+cPanel master and thus provide uninterrupted SMTP for the domains</p>
+<div data-disqus-identifier="XtendWeb cluster architecture" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="XtendWeb_cluster_setup.html" title="nDeploy cluster setup"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Logs.html" title="Managing Logs"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Anoop P Alias.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>
