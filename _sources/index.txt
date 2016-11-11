@@ -6,7 +6,7 @@
 XtendWeb
 =========
 
-XtendWeb is the worlds easiest, fastest(in terms of deployment speed) and scalable nginX deployment tool that seemlessly plugs into your
+XtendWeb is the worlds easiest and scalable nginX deployment tool that seemlessly plugs into your
 cPanel/WHM powered server .The result - you get a faster reliable webstack and can deploy your web applications to multiple web
 servers which are DNS load-balanced .
 
