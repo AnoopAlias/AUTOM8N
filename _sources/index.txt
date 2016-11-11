@@ -42,7 +42,7 @@ Features
 
 .. toctree::
    :maxdepth: 2
-   :caption: **Installation & Basic Configuration**
+   :caption: Installation & Basic Configuration
 
    installation
    migrating_from_nDeploy
@@ -52,13 +52,13 @@ Features
 
 .. toctree::
    :maxdepth: 2
-   :caption: **Support**
+   :caption: Support
 
    support
 
 .. toctree::
    :maxdepth: 2
-   :caption: **Backends Setup**
+   :caption:  Backends Setup
 
    HHVM
    PHP
@@ -70,7 +70,7 @@ Features
 
 .. toctree::
    :maxdepth: 2
-   :caption: **Administration & Monitoring**
+   :caption: Administration & Monitoring
 
    XtendWeb_Administration
    Monitoring
@@ -78,7 +78,7 @@ Features
 
 .. toctree::
    :maxdepth: 2
-   :caption: **XtendWeb Cluster**
+   :caption: XtendWeb Cluster
 
    cluster_architecture
    XtendWeb_cluster_setup
