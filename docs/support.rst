@@ -9,11 +9,13 @@ There is no seperate version of XtendWeb provided with a different feature set.
 The people behind XtendWeb provide their expertise in installing and setting up the software
 commercially.
 
-Commercial Support for XtendWeb, XtendWeb-cluster, DuET cPanel, etc is available with the purchase of a SysAdmin Plan
-at `https://support.gnusys.net/order.php <https://support.gnusys.net/order.php>`_.
+
+Commercial Support for XtendWeb, XtendWeb-cluster, DuET cPanel, etc is available with `PURCHASE OF GNUSYS SUPPORT PLANS <https://support.gnusys.net/order.php>`_.
+
+
 
 24x7 paid email support : ops@gnusys.net
-HelpDesk URL: https://support.gnusys.net/index.php?fuse=support&controller=ticket&view=submitticket
+HelpDesk URL: `GNUSYS HELPDESK <https://support.gnusys.net/index.php?fuse=support&controller=ticket&view=submitticket>`_
 
 Community Support
 ------------------

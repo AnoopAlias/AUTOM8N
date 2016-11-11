@@ -2,8 +2,10 @@ Setting up Ruby(Rack app)
 ==========================
 
 1. Enable the Phusion Passenger module
+::
 
-``/usr/nginx/scripts/nginx-passenger-setup.sh``
+  yum --enablerepo=ndeploy install nginx-nDeploy-module-passenger
+  /opt/nDeploy/scripts/easy_passenger_setup.sh
 
 2. The above step will install rvm and a version of ruby for the modules working.
 We can install any version of ruby using rvm
@@ -37,7 +39,7 @@ We can install any version of ruby using rvm
 
 4. Register the Ruby backend using the command
 
-  ``root@cpanel1 [~]# /opt/nDeploy/scripts/update_backend.py RUBY ruby-2.1.4 /usr/local/rvm/wrappers/ruby-2.1.4/ruby``
+  ``root@cpanel1 [~]# /opt/nDeploy/scripts/update_backend.py add RUBY ruby-2.1.4 /usr/local/rvm/wrappers/ruby-2.1.4/ruby``
 
 5. cPanel users can install more gems to local folders using
 ::

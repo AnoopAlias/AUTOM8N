@@ -8,7 +8,7 @@ Setting up NodeJS
 
   Note that only nodeJs versions 0.10 and above will work!
 
-3. Register the NodeJS backend in nDeploy
+3. Register the NodeJS backend in XtendWeb
 ::
 
   root@cpanel1 [~]# nvm ls-remote
@@ -21,7 +21,7 @@ Setting up NodeJS
   stable -> 0.10 (-> v0.10.33) (default)
   unstable -> 0.11 (-> v0.11.14) (default)
 
-  /opt/nDeploy/scripts/update_backend.py NODEJS v0.11.14 /usr/local/nvm/v0.11.14/bin/node
+  /opt/nDeploy/scripts/update_backend.py add NODEJS v0.11.14 /usr/local/nvm/v0.11.14/bin/node
 
 
 4. cPanel user can run npm install --production in the package directory
@@ -34,7 +34,7 @@ Setting up NodeJS
 Additional Reference
 https://www.phusionpassenger.com/library/deploy/nginx/deploy/nodejs/
 
-Additonal Environment variables can be set per application by the cPanel user in MANUAL edit mode from nDeploy
+Additonal Environment variables can be set per application by the cPanel user using custom application templates
 https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_env_var
 
 .. disqus::

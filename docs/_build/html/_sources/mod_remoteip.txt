@@ -1,7 +1,7 @@
 mod_remoteip
 ============
 
-One of the backend nDeploy support is PROXY to httpd .
+One of the backend XtendWeb support is PROXY to httpd .
 You must setup mod_remoteip to provide httpd with the correct IP of clients and modify apache logging settings
 ``yum -y install ea-apache24-mod_remoteip``
 

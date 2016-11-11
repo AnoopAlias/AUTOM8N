@@ -4,16 +4,15 @@
    contain the root `toctree` directive.
 
 XtendWeb
-=======
+=========
 
-.. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png
+XtendWeb is the worlds easiest and scalable nginX deployment tool that seemlessly plugs into your
+cPanel/WHM powered server .The result - you get a faster reliable webstack and can deploy your web applications to multiple web
+servers which are DNS load-balanced .
 
-Eliminate downtime, replace cPanel's Apache httpd Webstack with NGINX cluster, and horizontally scale your web applications.
+XtendWeb is free and Open Source with commercial support and customization service provided by the developers 24x7
 
-
-.. tip:: neatly rpm packaged, XtendWeb does not modify any files or configuration setup by cPanel other than httpd listening port
-
-.. tip:: XtendWeb is OpenSource and ready to fork on GitHub. No vendor lock-in and lesser bugs
+.. tip:: XtendWeb is tuned for speedy config generation and effecient high performance web server working
 
 Features
 ---------
@@ -46,13 +45,20 @@ Features
    :caption: Installation & Basic Configuration
 
    installation
+   migrating_from_nDeploy
    mod_remoteip
    brotli_compression
    http2
 
 .. toctree::
    :maxdepth: 2
-   :caption: Backends Setup
+   :caption: Support
+
+   support
+
+.. toctree::
+   :maxdepth: 2
+   :caption:  Backends Setup
 
    HHVM
    PHP
@@ -77,15 +83,6 @@ Features
    cluster_architecture
    XtendWeb_cluster_setup
    Upgrade_cluster
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Support
-
-   support
-
-
-
 
 
 * :ref:`search`

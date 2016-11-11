@@ -1,23 +1,16 @@
 
-XtendWeb(formerly nDeploy) is releasing on Nov-14-2016.
-
-
-> Please do not upgrade the rpm from nDeploy repo now as this contain the new RPM's( which works but need a final round of test's ).
-
-
-If you are willing to test the new nginx config gen tool. Please go ahead and upgrade . We love the feedback and report any issues at github. Lets make Xtendweb better .
+# XtendWeb
 
 
 # DOCUMENTATION
-
-New documentation will be ready asap. Meanwhile you can read the old docs using commands below
-
-git clone https://github.com/AnoopAlias/XtendWeb.git
-
-cd XtendWeb/docs/_build
-
-and double click on the .html files.
+http://xtendweb.gnusys.net/
 
 
 # FORUM
 https://groups.google.com/forum/#!forum/gnusys_extendweb
+
+# SUPPORT
+http://xtendweb.gnusys.net/support.html
+
+# UPGRADING FROM PREVIOUS VERSION
+http://xtendweb.gnusys.net/migrating_from_nDeploy.html

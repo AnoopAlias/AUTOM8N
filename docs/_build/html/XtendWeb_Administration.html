@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Administration of XtendWeb plugin &#8212; XtendWeb nginX control v4.0</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/disqus.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
+    <link rel="next" title="Monitoring nginx and app servers" href="Monitoring.html" />
+    <link rel="prev" title="Setting up ColdFusion or Java" href="ColdFusion_Java.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Monitoring.html" title="Monitoring nginx and app servers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ColdFusion_Java.html" title="Setting up ColdFusion or Java"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Administration of XtendWeb plugin</a><ul>
+<li><a class="reference internal" href="#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
+<li><a class="reference internal" href="#automatic-fixing-of-most-errors">Automatic fixing of most errors</a></li>
+<li><a class="reference internal" href="#managing-default-server-settings">Managing default server settings</a></li>
+<li><a class="reference internal" href="#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
+<li><a class="reference internal" href="#adding-application-templates">Adding application templates</a></li>
+<li><a class="reference internal" href="#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
+<li><a class="reference internal" href="#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
+<li><a class="reference internal" href="#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
+<li><a class="reference internal" href="#uninstall-the-plugin">Uninstall the plugin</a></li>
+<li><a class="reference internal" href="#building-nginx-ndeploy-from-source">Building nginx-nDeploy from source</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ColdFusion_Java.html"
+                        title="previous chapter">Setting up ColdFusion or Java</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Monitoring.html"
+                        title="next chapter">Monitoring nginx and app servers</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/XtendWeb_Administration.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="administration-of-xtendweb-plugin">
+<h1>Administration of XtendWeb plugin<a class="headerlink" href="#administration-of-xtendweb-plugin" title="Permalink to this headline">¶</a></h1>
+<p>The end user has a intutive UI for managing domains hosted on cPanel .</p>
+<p>Sysadmins can manipulate server wide settings using various scripts accessible from commandline</p>
+<div class="section" id="layer7-application-layer-ddos-mitigation">
+<h2>Layer7(Application layer) DDOS mitigation<a class="headerlink" href="#layer7-application-layer-ddos-mitigation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">To</span> <span class="n">deal</span> <span class="k">with</span> <span class="n">a</span> <span class="n">server</span> <span class="n">wide</span> <span class="n">DDOS</span> <span class="n">on</span> <span class="n">http</span> <span class="p">(</span><span class="n">application</span> <span class="n">layer</span><span class="p">)</span>
+<span class="n">Edit</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">http_settings</span><span class="o">.</span><span class="n">conf</span>
+<span class="ow">and</span> <span class="n">uncomment</span> <span class="n">the</span> <span class="n">include</span> <span class="n">line</span> <span class="k">as</span> <span class="n">mentioned</span>
+
+<span class="c1"># Uncomment following to enable DOS mitigation server wide</span>
+<span class="c1"># include /etc/nginx/conf.d/dos_mitigate.conf;</span>
+
+<span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">reload</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="automatic-fixing-of-most-errors">
+<h2>Automatic fixing of most errors<a class="headerlink" href="#automatic-fixing-of-most-errors" title="Permalink to this headline">¶</a></h2>
+<p>The following script rebuilds all config and restarts backend app servers</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="managing-default-server-settings">
+<h2>Managing default server settings<a class="headerlink" href="#managing-default-server-settings" title="Permalink to this headline">¶</a></h2>
+<p>The default config generation in XtendWeb is governed by</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_default</span><span class="o">.</span><span class="n">yaml</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_suspended</span><span class="o">.</span><span class="n">yaml</span> <span class="p">(</span><span class="k">for</span> <span class="n">suspended</span> <span class="n">users</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can change the default server setting by creating /opt/nDeploy/conf/domain_data_default_local.conf</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_default</span><span class="o">.</span><span class="n">yaml</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_default_local</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_suspended</span><span class="o">.</span><span class="n">yaml</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_suspended_local</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="automatic-selection-of-template-based-on-application">
+<h2>Automatic selection of template based on application<a class="headerlink" href="#automatic-selection-of-template-based-on-application" title="Permalink to this headline">¶</a></h2>
+<p>The following script can detect the application installed in the webroot(only!) based on filenames</p>
+<p>While cPanel users can always change the vhost configuration for nginX
+anytime from their cPanel login
+sometimes the server administrator want to automatically switch supporting applications
+to be directly served by nginX instead of apache.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auto_config</span><span class="o">.</span><span class="n">py</span> <span class="n">CPANELUSER</span>
+</pre></div>
+</div>
+<p>does this.</p>
+<p>The script works by checking the presence of certain files like for example the wp-config.php in case of wordpress and switches the profile accordingly</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># cat /opt/nDeploy/conf/appsignatures.yaml</span>
+<span class="n">PHP</span><span class="p">:</span>
+  <span class="s1">&#39;/wp-config.php&#39;</span><span class="p">:</span> <span class="s1">&#39;5001.j2&#39;</span>
+  <span class="s1">&#39;/libraries/joomla/version.php&#39;</span><span class="p">:</span> <span class="s1">&#39;5002.j2&#39;</span>
+  <span class="s1">&#39;/sites/default/settings.php&#39;</span><span class="p">:</span> <span class="s1">&#39;5017.j2&#39;</span>
+  <span class="s1">&#39;/app/etc/local.xml&#39;</span><span class="p">:</span> <span class="s1">&#39;5003.j2&#39;</span>
+</pre></div>
+</div>
+<p>Admin can update the appsignatures.yaml file with file names and the corresponding
+profile that auto_config.py switch the domain to if the file exists.
+The default list provided by us is not extensive.
+Admins can also remove entries from the file above to negate auto-switching should there be a need for it .</p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">/opt/nDeploy/conf/auto_config.exclude</span></code></div></blockquote>
+<p>if present and contain the CPANELUSERNAME in it will prevent auto switching of profiles
+for any domain (addon,subdomain etc) of the cpanel user.
+This is useful while running the auto_config script in a for loop over a list of
+cpanel users and if the script should omit any user.
+To make this all work</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>1. Edit /opt/nDeploy/conf/appsignatures.yaml . Add or remove filenames (relative to document root) and the corresponding profile names to switch to should the file be present in document root
+
+2.Create a file named /opt/nDeploy/conf/auto_config.exclude and add any cpanelusername for which you wish to exclude auto_config. If the file is not present or is empty ;no user is excluded
+
+3.run
+
+for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
+    do
+        echo &quot;Auto ConfGen:: $CPANELUSER&quot; &amp;&amp; /opt/nDeploy/scripts/auto_config.py $CPANELUSER
+    done
+    service nginx restart
+</pre></div>
+</div>
+<p>The first time auto_config.py runs it will ask your preference of PHP version
+that automatic switching should use.
+On cpanel servers you can safely use the same version as the default installed PHP
+as most of your domains will be running that version without issues</p>
+<p>A very IMPORTANT thing to note here is that auto_config.py is doing an educated guess work
+and determining the application that is installed .
+It MAY NOT! be always accurate . The administrator must be aware of this .
+Of course, any change made by the auto_config can be reverted by the end user
+or the admin from the cPanel plugin UI.</p>
+</div>
+<div class="section" id="adding-application-templates">
+<h2>Adding application templates<a class="headerlink" href="#adding-application-templates" title="Permalink to this headline">¶</a></h2>
+<p>Application templates are a way of extending the plugin with dealing with more web applications and user specific
+nginx config customization</p>
+<p>Application templates can be distributed server wide or to specific users
+Application templates can be created for an application in the document_root as well as a subdirectory</p>
+<p>Distributing templates to all users</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">root</span> <span class="n">main</span> <span class="n">PHP</span> <span class="mf">5001.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress&quot;</span>
+</pre></div>
+</div>
+<p>Distributing templates for a subdirectory to all users</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">root</span> <span class="n">subdir</span> <span class="n">PHP</span> <span class="mi">5001</span><span class="n">_subdir</span><span class="o">.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress in subdir&quot;</span>
+</pre></div>
+</div>
+<p>Distributing template to a specific cpaneluser</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">cpanelusername</span> <span class="n">main</span> <span class="n">PHP</span> <span class="mf">5001.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress&quot;</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">cpanelusername</span> <span class="n">subdir</span> <span class="n">PHP</span> <span class="mi">5001</span><span class="n">_subdir</span><span class="o">.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress in subdir&quot;</span>
+</pre></div>
+</div>
+<p>In short the template registration has the following syntax</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">add</span><span class="o">|</span><span class="k">del</span><span class="p">]</span> <span class="p">[</span><span class="n">root</span><span class="o">|</span><span class="n">cpanelusername</span><span class="p">]</span> <span class="p">[</span><span class="n">main</span><span class="o">|</span><span class="n">subdir</span><span class="p">]</span> <span class="p">[</span><span class="n">backend</span><span class="p">]</span> <span class="p">[</span><span class="n">templatefilename</span><span class="p">]</span> <span class="p">[</span><span class="n">quoted</span> <span class="n">description</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Templates use Python Jinja2 templating engine . But there isnt much template logic used to make application template
+simpler for most users. You can check existing templates for the commonly used variables.</p>
+<p>Include the following block where ever appropriate in a template to make way for application in subdirectories</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Include any applications in subdirectory</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">KEY</span><span class="p">,</span> <span class="n">VALUE</span> <span class="ow">in</span> <span class="n">SUBDIRAPPS</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+<span class="n">location</span> <span class="o">/</span><span class="p">{{</span> <span class="n">KEY</span> <span class="p">}}</span><span class="o">/</span> <span class="p">{</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sites</span><span class="o">-</span><span class="n">enabled</span><span class="o">/</span><span class="p">{{</span> <span class="n">VALUE</span> <span class="p">}}</span><span class="o">.</span><span class="n">subinclude</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="c1"># End Include any applications in subdirectory</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Open an issue at the github repo if you wish template for a commonly used application to be added</p>
+</div>
+</div>
+<div class="section" id="adding-application-servers-or-backends">
+<h2>Adding Application servers or backends<a class="headerlink" href="#adding-application-servers-or-backends" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb supports php-fpm or hhvm via FastCGI , Other web/application servers like httpd,tomcat etc via Proxy .
+Ruby/Python/NodeJs using the Phusion Passenger module</p>
+<p>To register a backend use the follwoing command</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">add</span><span class="o">|</span><span class="k">del</span><span class="p">]</span> <span class="n">backend_category</span> <span class="n">backend_name</span> <span class="n">backend_path</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="upgrading-xtendweb-and-nginx">
+<h2>Upgrading XtendWeb and nginx<a class="headerlink" href="#upgrading-xtendweb-and-nginx" title="Permalink to this headline">¶</a></h2>
+<p>nDeploy-nginx is mated with a phusion passenger ruby gem .
+So we don&#8217;t encourage unmanned upgrades and have therefore set enable=0 in the yum repository .
+The upgrade must be done manually by running the following commands</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">ndeploy4</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">5.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span>
+<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">upgrade</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-*</span>
+<span class="c1">#For setups using Phusion Passenger app server</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
+<span class="c1">#For upgrading PHP application server(additional packages are to upgraded via yum)</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="temporarily-disable-the-plugin">
+<h2>Temporarily disable the plugin<a class="headerlink" href="#temporarily-disable-the-plugin" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/cpanel-nDeploy-setup.sh</span> <span class="pre">disable</span></code></div></blockquote>
+</div>
+<div class="section" id="uninstall-the-plugin">
+<h2>Uninstall the plugin<a class="headerlink" href="#uninstall-the-plugin" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">disable</span>
+<span class="n">yum</span> <span class="n">remove</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-nginx-ndeploy-from-source">
+<h2>Building nginx-nDeploy from source<a class="headerlink" href="#building-nginx-ndeploy-from-source" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb is a collection of scripts and contains no binary file.
+nginx-nDeploy is distributed as a binary application .</p>
+<p>While using the XtendWeb RPM repository is the easiest and fastest way to get XtendWeb on your server . You may sometimes wish to compile your own RPM&#8217;s</p>
+<p>The reason why one may wish to do this is</p>
+<ol class="arabic simple">
+<li>Add /extend nginX with more plugins</li>
+<li>If you don&#8217;t trust the nginX binary compiled on our server.</li>
+<li>You notice an error and wish to debug nginX . <a class="reference external" href="https://www.nginx.com/resources/wiki/start/topics/tutorials/debugging/">https://www.nginx.com/resources/wiki/start/topics/tutorials/debugging/</a> , which requires that you compile Nginx with the –with-debug flag .</li>
+<li>For the fun (and knowledge) of doing it</li>
+</ol>
+<p>The instructions for creating your own nginX rpms are listed below. Run the following on your cPanel server</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">XtendWeb</span><span class="o">/</span><span class="n">rpm_buildtree</span><span class="o">/</span>
+<span class="c1">#Open nDeploy-nginx_build_script.sh in a text editor</span>
+<span class="c1">#The line starting with ./configure --prefix=/etc/nginx</span>
+<span class="c1">#is what you have to modify to add or remove configure arguments</span>
+<span class="c1"># comment out the line starting with rsync -av nginx-nDeploy-*</span>
+<span class="n">root</span><span class="nd">@cpanel</span> <span class="p">[</span><span class="o">~/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">rpm_buildtree</span><span class="p">]</span><span class="c1"># ./nDeploy-nginx_build_script.sh $OSVERSION where OSVERSION=6/7</span>
+
+<span class="n">It</span> <span class="n">will</span> <span class="n">take</span> <span class="n">some</span> <span class="n">time</span> <span class="n">to</span> <span class="n">build</span> <span class="o">.</span> <span class="n">Once</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">complete</span> <span class="n">you</span> <span class="n">will</span> <span class="n">have</span> <span class="n">the</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">rpm</span> <span class="n">inside</span> <span class="n">nginx</span><span class="o">-</span><span class="n">pkg</span><span class="o">-</span> <span class="n">folder</span> <span class="o">.</span> <span class="n">which</span> <span class="n">you</span> <span class="n">can</span> <span class="n">install</span> <span class="n">using</span> <span class="n">rpm</span> <span class="o">-</span><span class="n">Uvh</span> <span class="n">command</span>
+</pre></div>
+</div>
+<div data-disqus-identifier="Administration of XtendWeb plugin" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Monitoring.html" title="Monitoring nginx and app servers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ColdFusion_Java.html" title="Setting up ColdFusion or Java"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Anoop P Alias.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>
