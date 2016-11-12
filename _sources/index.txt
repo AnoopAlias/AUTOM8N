@@ -11,21 +11,6 @@ cPanel/WHM powered server .The result - you get a faster reliable webstack and c
 servers which are DNS load-balanced .
 
 XtendWeb is free and Open Source with commercial support and customization service provided by the developers 24x7
-.. raw:: html
-
-  <link href="https://support.gnusys.net/library/utilities/min/index.php?g=supportwidgetcss" media="screen" rel="stylesheet" type="text/css" />
-  <script src="https://support.gnusys.net/library/utilities/min/index.php?g=supportwidgetjs" type="text/javascript"></script>
-  <script type="text/javascript">
-  if (typeof(CESupportWidget) !== "undefined") {
-  supportwidget_params = {
-  url:         "https://support.gnusys.net",
-  tabPosition: "left",
-  tabId:       "support",
-  forceSuggestions: false,
-  ticketTypeId: 3
-  };
-  }
-  </script>
 
 .. tip:: XtendWeb is tuned for speedy config generation and effecient high performance web server working
 
