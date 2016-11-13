@@ -150,7 +150,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     else:
         serveralias_list = []
         serveralias_list_new = []
-    domain_list = domain_server_name + " " + domain_alias_name
+    if domain_alias_name:
+        domain_list = domain_server_name + " " + domain_alias_name
+    else:
+        domain_list = domain_server_name
     if json_parsed_cpaneldomain.get('ipv6'):
         try:
             ipv6_addr_list = json_parsed_cpaneldomain.get('ipv6').keys()
