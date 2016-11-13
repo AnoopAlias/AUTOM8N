@@ -382,7 +382,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             elif backend_category == 'HHVM_NOBODY':
                 fastcgi_socket = backend_path
             subdirApptemplateVars = {"DOCUMENTROOT": document_root+subdir,
-                                     "SUBDIR": key,
+                                     "SUBDIR": subdir,
                                      "CPANELIP": cpanel_ipv4,
                                      "SSL_OFFLOAD": ssl_offload,
                                      "CPANELIP": cpanel_ipv4,
