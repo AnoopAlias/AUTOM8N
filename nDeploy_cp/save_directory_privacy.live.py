@@ -51,7 +51,7 @@ if form.getvalue('domain') and form.getvalue('action') and form.getvalue('protec
         protectedurl = '/'+protectedurl
     if protectedurl != '/' and protectedurl.endswith('/'):
         protectedurl = protectedurl[:-1]
-    if not re.match("^[a-zA-Z/_-]*$", protectedurl):
+    if not re.match("^[0-9a-zA-Z/_-]*$", protectedurl):
         print("Error: Invalid char in sub-directory name")
         sys.exit(0)
     profileyaml = installation_path + "/domain-data/" + mydomain
