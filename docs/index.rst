@@ -52,9 +52,11 @@ Features
 
 .. toctree::
    :maxdepth: 2
-   :caption: Support
+   :caption: Support & Development
 
    support
+   project_sponsors
+   nginx_friendly_web_hosts
 
 .. toctree::
    :maxdepth: 2

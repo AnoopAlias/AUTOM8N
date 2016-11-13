@@ -177,7 +177,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             filenames = [sslcertificatefile, sslcacertificatefile]
             with codecs.open(sslcombinedcert, 'w', 'utf-8') as outfile:
                 for fname in filenames:
-                    with codecs.open(fname, 'utf-8') as infile:
+                    with codecs.open(fname, 'r', 'utf-8') as infile:
                         outfile.write(infile.read()+"\n")
         else:
             sslcombinedcert = sslcertificatefile
