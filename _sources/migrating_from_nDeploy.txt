@@ -28,9 +28,20 @@ So the right way to upgrade from nDeloy is completly removing nDeploy and settin
   yum remove nginx-nDeploy nDeploy
   rm -rf /etc/nginx /opt/nDeploy
 
-.. tip:: removing /etc/nginx and /opt/nDeploy is a crucial step as otherwise the old config files may interfere with the new template system.
+1.1. If you see the following error while running yum remove,it is caused by cPanel version 60 not having X3 theme and the old rpm trying to uninstall the nDeploy plugin from x3
+::
+
+  error: %preun(nDeploy-3.0-15.el7.noarch) scriptlet failed, exit status 1
+  
+The workaround is
+::
+
+  rpm -e --noscripts nDeploy
+
 
 2. Follow http://xtendweb.gnusys.net/installation.html for a fresh installation
+
+.. tip:: removing /etc/nginx and /opt/nDeploy is a crucial step as otherwise the old config files may interfere with the new template system.
 
 
 Contact ops@gnusys.net for commercial upgrade support.

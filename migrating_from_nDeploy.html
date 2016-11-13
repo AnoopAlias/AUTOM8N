@@ -101,13 +101,21 @@ So the right way to upgrade from nDeloy is completly removing nDeploy and settin
 <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span>
 </pre></div>
 </div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">removing /etc/nginx and /opt/nDeploy is a crucial step as otherwise the old config files may interfere with the new template system.</p>
+<p>1.1. If you see the following error while running yum remove,it is caused by cPanel version 60 not having X3 theme and the old rpm trying to uninstall the nDeploy plugin from x3</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">error</span><span class="p">:</span> <span class="o">%</span><span class="n">preun</span><span class="p">(</span><span class="n">nDeploy</span><span class="o">-</span><span class="mf">3.0</span><span class="o">-</span><span class="mf">15.</span><span class="n">el7</span><span class="o">.</span><span class="n">noarch</span><span class="p">)</span> <span class="n">scriptlet</span> <span class="n">failed</span><span class="p">,</span> <span class="n">exit</span> <span class="n">status</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The workaround is</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rpm</span> <span class="o">-</span><span class="n">e</span> <span class="o">--</span><span class="n">noscripts</span> <span class="n">nDeploy</span>
+</pre></div>
 </div>
 <ol class="arabic simple" start="2">
 <li>Follow <a class="reference external" href="http://xtendweb.gnusys.net/installation.html">http://xtendweb.gnusys.net/installation.html</a> for a fresh installation</li>
 </ol>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">removing /etc/nginx and /opt/nDeploy is a crucial step as otherwise the old config files may interfere with the new template system.</p>
+</div>
 <p>Contact <a class="reference external" href="mailto:ops&#37;&#52;&#48;gnusys&#46;net">ops<span>&#64;</span>gnusys<span>&#46;</span>net</a> for commercial upgrade support.</p>
 </div>
 
