@@ -14,11 +14,11 @@ clickjacking_protect: enabled
 disable_contenttype_sniffing: enabled
 xss_filter: enabled
 content_security_policy: disabled
-hsts: enabled
+hsts: disabled
 dos_mitigate: disabled
 naxsi: disabled
 naxsi_mode: learn
-redirect_to_ssl: enabled
+redirect_to_ssl: disabled
 redirect_aliases: disabled
 wwwredirect: none
 subdir_apps: {}
