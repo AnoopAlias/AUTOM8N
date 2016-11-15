@@ -25,4 +25,5 @@ will return with a pong output if php-fpm pool is working fine .
 
 This can be easily configured for status checking
 
-￼.. disqus::
+
+.. disqus::
