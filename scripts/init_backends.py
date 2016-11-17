@@ -8,6 +8,8 @@ import os
 import signal
 import time
 import pwd
+import jinja2
+import codecs
 
 
 __author__ = "Anoop P Alias"
@@ -83,6 +85,28 @@ def control_php_fpm(trigger):
                             subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
                 else:
                         subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
+        elif trigger == "secure-php":
+            try:
+                subprocess.call(['systemctl', '--version'])
+                for backend_name in list(php_backends_dict.keys()):
+                    systemd_socket_template = installation_path+"/conf/secure-php-fpm.socket.j2"
+                    systemd_service_template = installation_path+"/conf/secure-php-fpm.service.j2"
+                    systemd_socket_file = "/usr/lib/systemd/system/"+backend_name+"@.socket"
+                    systemd_service_file = "/usr/lib/systemd/system/"+backend_name+"@.service"
+                    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+                    templateEnv = jinja2.Environment(loader=templateLoader)
+                    socket_template = templateEnv.get_template(systemd_socket_template)
+                    templateVars = {"PHP-FPM_ROOT_PATH": php_backends_dict.get(backend_name)}
+                    socket_generated_config = socket_template.render(templateVars)
+                    with codecs.open(systemd_socket_file, "w", 'utf-8') as confout:
+                        confout.write(socket_generated_config)
+                    service_template = templateEnv.get_template(systemd_service_template)
+                    service_generated_config = service_template.render(templateVars)
+                    with codecs.open(systemd_service_file, "w", 'utf-8') as confout:
+                        confout.write(service_generated_config)
+                    os.mknod(installation_path+"/conf/secure-php-enabled")
+            except OSError:
+                print('secure-php needs systemd . upgrade your cPanel system to CentOS7/CloudLinux7 ')
         else:
             return
 

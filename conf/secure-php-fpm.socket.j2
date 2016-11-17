@@ -1,0 +1,8 @@
+[Socket]
+ListenStream={{ PHP-FPM_ROOT_PATH }}/var/run/%i.sock
+SocketMode=0660
+SocketUser=%i
+SocketGroup=nobody
+
+[Install]
+WantedBy=sockets.target

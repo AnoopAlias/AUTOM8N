@@ -118,6 +118,36 @@ def php_backend_add(user_name, domain_home):
         return
 
 
+def php_secure_backend_add(user_name, domain_home, backend_version):
+    """Function to setup php-fpm for user using systemd socket activation"""
+    phpfpm_conf_file = installation_path + "/secure-php-fpm.d/" + user_name + ".conf"
+    if not os.path.isfile(phpfpm_conf_file):
+        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+        templateEnv = jinja2.Environment(loader=templateLoader)
+        TEMPLATE_FILE = "secure-php-fpm.conf.j2"
+        template = templateEnv.get_template(TEMPLATE_FILE)
+        templateVars = {"CPANELUSER": user_name,
+                        "HOMEDIR": domain_home
+                        }
+        generated_config = template.render(templateVars)
+        with codecs.open(phpfpm_conf_file, 'w', 'utf-8') as confout:
+            confout.write(generated_config)
+    backend_config_file = installation_path+"/conf/backends.yaml"
+    with open(backend_config_file, 'r') as backend_data_yaml:
+        backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+    if "PHP" in backend_data_yaml_parsed:
+        php_backends_dict = backend_data_yaml_parsed["PHP"]
+        for backend_name in list(php_backends_dict.keys()):
+            if backend_name == backend_version:
+                subprocess.call(['systemctl', 'restart', backend_version+'@'+user_name+'.socket'])
+                subprocess.call(['systemctl', 'enable', backend_version+'@'+user_name+'.socket'])
+            else:
+                subprocess.call(['systemctl', 'stop', backend_version+'@'+user_name+'.service'])
+                subprocess.call(['systemctl', 'stop', backend_version+'@'+user_name+'.socket'])
+                subprocess.call(['systemctl', 'disable', backend_version+'@'+user_name+'.socket'])
+
+
+
 def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     """Function that generates nginx config """
     # Initiate Jinja2 templateEnv
@@ -342,7 +372,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     elif backend_category == 'PHP':
         fastcgi_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
         if not os.path.isfile(fastcgi_socket):
-            php_backend_add(kwargs.get('configuser'), domain_home)
+            if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
+                php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version)
+            else:
+                php_backend_add(kwargs.get('configuser'), domain_home)
     elif backend_category == 'HHVM_NOBODY':
         fastcgi_socket = backend_path
     # We generate the app config from template next
@@ -378,7 +411,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             elif subdir_backend_category == 'PHP':
                 fastcgi_socket = subdir_backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
                 if not os.path.isfile(fastcgi_socket):
-                    php_backend_add(kwargs.get('configuser'), domain_home)
+                    if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
+                        php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version)
+                    else:
+                        php_backend_add(kwargs.get('configuser'), domain_home)
             elif backend_category == 'HHVM_NOBODY':
                 fastcgi_socket = backend_path
             subdirApptemplateVars = {"DOCUMENTROOT": document_root+subdir,
