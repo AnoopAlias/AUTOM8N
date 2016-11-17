@@ -104,6 +104,7 @@ def control_php_fpm(trigger):
                     service_generated_config = service_template.render(templateVars)
                     with codecs.open(systemd_service_file, "w", 'utf-8') as confout:
                         confout.write(service_generated_config)
+                    subprocess.call(['systemctl', 'daemon-reload'])
                     os.mknod(installation_path+"/conf/secure-php-enabled")
             except OSError:
                 print('secure-php needs systemd . upgrade your cPanel system to CentOS7/CloudLinux7 ')
