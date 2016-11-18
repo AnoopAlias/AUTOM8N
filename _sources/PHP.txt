@@ -41,6 +41,31 @@ may not adhere to limits setup in CloudLinux
   systemctl restart ndeploy_backends || service ndeploy_backends restart
 
 
+Secure php-fpm setup
+------------------------
+
+The default PHP-FPM setup creates a single master process owned by root, which then spawns multiple pools
+which run under the user credentials .The downside of this setup is that opcode caches like OpCache,APC etc share a single
+cache making it less secure on a shared hosting environment
+
+XtendWeb offers a solution on Centos7/CloudLinux7 servers by using socket activated php-fpm masters which run under each user
+This setup requires more memory as each user will have a php-fpm master spawned
+
+To use secure php-fpm
+::
+
+  #Works only on Centos7/CloudLinux7
+  /opt/nDeploy/scripts/init_backends.py secure-php
+
+To revert to single php-fpm master setup do
+::
+
+  rm -f /opt/nDeploy/conf/secure-php-enabled
+  /opt/nDeploy/scripts/attempt_autofix.sh
+
+
+
+
 Where are my php logs?
 ----------------------
 
@@ -50,12 +75,10 @@ XtendWeb creates php-fpm pool files for each user with the PHP error log file se
 Users can check the logs from their FileManager/FTP/SSH login
 
 
-ZendOpcache and security considerations
-----------------------------------------
+ZendOpcache and security considerations on php-fpm single master setup
+-----------------------------------------------------------------------
 
-PHP-FPM shares the OpCache memory with all the user pools. On a shared hosting setup where users dont trust one another
-this can be a security risk . The workaround is to run one PHP-FPM master process per user which need
-more resource overhead and a process manager . XtendWeb currently offers the following settings
+. XtendWeb currently offers the following settings
 that can mitigate the security risk of a shared OpCache memory to some extend
 
 1. opcache.restrict_api

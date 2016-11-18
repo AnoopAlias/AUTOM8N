@@ -53,8 +53,9 @@
 <li><a class="reference internal" href="#">Setting up PHP</a><ul>
 <li><a class="reference internal" href="#on-centos6-centos7">On CentOS6/CentOS7</a></li>
 <li><a class="reference internal" href="#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a></li>
+<li><a class="reference internal" href="#secure-php-fpm-setup">Secure php-fpm setup</a></li>
 <li><a class="reference internal" href="#where-are-my-php-logs">Where are my php logs?</a></li>
-<li><a class="reference internal" href="#zendopcache-and-security-considerations">ZendOpcache and security considerations</a></li>
+<li><a class="reference internal" href="#zendopcache-and-security-considerations-on-php-fpm-single-master-setup">ZendOpcache and security considerations on php-fpm single master setup</a></li>
 <li><a class="reference internal" href="#per-user-php-ini-custom-settings">Per user php.ini custom settings</a></li>
 </ul>
 </li>
@@ -125,17 +126,33 @@ may not adhere to limits setup in CloudLinux</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="secure-php-fpm-setup">
+<h2>Secure php-fpm setup<a class="headerlink" href="#secure-php-fpm-setup" title="Permalink to this headline">¶</a></h2>
+<p>The default PHP-FPM setup creates a single master process owned by root, which then spawns multiple pools
+which run under the user credentials .The downside of this setup is that opcode caches like OpCache,APC etc share a single
+cache making it less secure on a shared hosting environment</p>
+<p>XtendWeb offers a solution on Centos7/CloudLinux7 servers by using socket activated php-fpm masters which run under each user
+This setup requires more memory as each user will have a php-fpm master spawned</p>
+<p>To use secure php-fpm</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Works only on Centos7/CloudLinux7</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">secure</span><span class="o">-</span><span class="n">php</span>
+</pre></div>
+</div>
+<p>To revert to single php-fpm master setup do</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">secure</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">enabled</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="where-are-my-php-logs">
 <h2>Where are my php logs?<a class="headerlink" href="#where-are-my-php-logs" title="Permalink to this headline">¶</a></h2>
 <p>XtendWeb creates php-fpm pool files for each user with the PHP error log file set to</p>
 <p><code class="docutils literal"><span class="pre">/home/CPANELUSER/logs/php_error_log</span></code>
 Users can check the logs from their FileManager/FTP/SSH login</p>
 </div>
-<div class="section" id="zendopcache-and-security-considerations">
-<h2>ZendOpcache and security considerations<a class="headerlink" href="#zendopcache-and-security-considerations" title="Permalink to this headline">¶</a></h2>
-<p>PHP-FPM shares the OpCache memory with all the user pools. On a shared hosting setup where users dont trust one another
-this can be a security risk . The workaround is to run one PHP-FPM master process per user which need
-more resource overhead and a process manager . XtendWeb currently offers the following settings
+<div class="section" id="zendopcache-and-security-considerations-on-php-fpm-single-master-setup">
+<h2>ZendOpcache and security considerations on php-fpm single master setup<a class="headerlink" href="#zendopcache-and-security-considerations-on-php-fpm-single-master-setup" title="Permalink to this headline">¶</a></h2>
+<p>. XtendWeb currently offers the following settings
 that can mitigate the security risk of a shared OpCache memory to some extend</p>
 <p>1. opcache.restrict_api</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">opcache</span><span class="o">.</span><span class="n">restrict_api</span>
