@@ -1,6 +1,6 @@
 [Service]
 User=%i
 Group=nobody
-Environment="FPM_SOCKETS={{ PHP-FPM_ROOT_PATH }}/var/run/%i.sock=3"
-ExecStart={{ PHP-FPM_ROOT_PATH }}/usr/sbin/php-fpm --prefix={{ PHP-FPM_ROOT_PATH }} --fpm-config=/opt/nDeploy/secure-php-fpm.d/%i.conf
+Environment="FPM_SOCKETS={{ PHP_ROOT_PATH }}/var/run/%i.sock=3"
+ExecStart={{ PHP_ROOT_PATH }}/usr/sbin/php-fpm --prefix={{ PHP_ROOT_PATH }} --fpm-config=/opt/nDeploy/secure-php-fpm.d/%i.conf
 KillMode=process

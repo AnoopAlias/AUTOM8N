@@ -13,16 +13,18 @@ rm -f /opt/nDeploy/conf/skip_nginx_reload /opt/nDeploy/conf/skip_php-fpm_reload
 # Reloading nginx
 /usr/sbin/nginx -s reload
 
-##Attempt to fix backends issue
-echo -e '\e[93m Attempting to restart all backend Application servers \e[0m'
+if [ ! -f /opt/nDeploy/conf/secure-php-enabled ] ; then
+  ##Attempt to fix backends issue
+  echo -e '\e[93m Attempting to restart all backend Application servers \e[0m'
 
-systemctl restart ndeploy_backends || service ndeploy_backends restart
+  systemctl restart ndeploy_backends || service ndeploy_backends restart
+fi
 
 echo -e '\e[93m The following PHP-FPM master process has started \e[0m'
 
 for pid in $(pidof php-fpm)
 do
-    lsof -p $pid | grep txt
+    lsof -p $pid | grep txt | awk '{print $1,$2,$3,$9}'
 done
 
 

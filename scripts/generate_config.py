@@ -139,12 +139,12 @@ def php_secure_backend_add(user_name, domain_home, backend_version):
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         for backend_name in list(php_backends_dict.keys()):
             if backend_name == backend_version:
-                subprocess.call(['systemctl', 'restart', backend_version+'@'+user_name+'.socket'])
-                subprocess.call(['systemctl', 'enable', backend_version+'@'+user_name+'.socket'])
+                subprocess.call(['systemctl', 'restart', backend_name+'@'+user_name+'.socket'])
+                subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
             else:
-                subprocess.call(['systemctl', 'stop', backend_version+'@'+user_name+'.service'])
-                subprocess.call(['systemctl', 'stop', backend_version+'@'+user_name+'.socket'])
-                subprocess.call(['systemctl', 'disable', backend_version+'@'+user_name+'.socket'])
+                subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
+                subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.socket'])
+                subprocess.call(['systemctl', 'disable', backend_name+'@'+user_name+'.socket'])
 
 
 

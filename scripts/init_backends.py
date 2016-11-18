@@ -10,6 +10,7 @@ import time
 import pwd
 import jinja2
 import codecs
+import sys
 
 
 __author__ = "Anoop P Alias"
@@ -88,26 +89,30 @@ def control_php_fpm(trigger):
         elif trigger == "secure-php":
             try:
                 subprocess.call(['systemctl', '--version'])
+            except OSError:
+                print('secure-php needs systemd . upgrade your cPanel system to CentOS7/CloudLinux7 ')
+                sys.exit(1)
+            else:
                 for backend_name in list(php_backends_dict.keys()):
-                    systemd_socket_template = installation_path+"/conf/secure-php-fpm.socket.j2"
-                    systemd_service_template = installation_path+"/conf/secure-php-fpm.service.j2"
                     systemd_socket_file = "/usr/lib/systemd/system/"+backend_name+"@.socket"
                     systemd_service_file = "/usr/lib/systemd/system/"+backend_name+"@.service"
                     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
                     templateEnv = jinja2.Environment(loader=templateLoader)
-                    socket_template = templateEnv.get_template(systemd_socket_template)
-                    templateVars = {"PHP-FPM_ROOT_PATH": php_backends_dict.get(backend_name)}
+                    socket_template = templateEnv.get_template('secure-php-fpm.socket.j2')
+                    templateVars = {"PHP_ROOT_PATH": php_backends_dict.get(backend_name)}
                     socket_generated_config = socket_template.render(templateVars)
                     with codecs.open(systemd_socket_file, "w", 'utf-8') as confout:
                         confout.write(socket_generated_config)
-                    service_template = templateEnv.get_template(systemd_service_template)
+                    service_template = templateEnv.get_template('secure-php-fpm.service.j2')
                     service_generated_config = service_template.render(templateVars)
                     with codecs.open(systemd_service_file, "w", 'utf-8') as confout:
                         confout.write(service_generated_config)
-                    subprocess.call(['systemctl', 'daemon-reload'])
+                subprocess.call(['systemctl', 'daemon-reload'])
+                print('Disabling root owned php-fpm master process:')
+                subprocess.call(['systemctl', 'stop', 'ndeploy_backends.service'])
+                subprocess.call(['systemctl', 'disable', 'ndeploy_backends.service'])
+                if not os.path.isfile(installation_path+"/conf/secure-php-enabled"):
                     os.mknod(installation_path+"/conf/secure-php-enabled")
-            except OSError:
-                print('secure-php needs systemd . upgrade your cPanel system to CentOS7/CloudLinux7 ')
         else:
             return
 
