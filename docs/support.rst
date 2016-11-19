@@ -23,3 +23,7 @@ Community Support
 * DISCUSSION BOARDS: `https://groups.google.com/forum/#!forum/gnusys_extendweb <https://groups.google.com/forum/#!forum/gnusys_extendweb>`_
 * REPORT BUGS: `https://github.com/AnoopAlias/XtendWeb/issues <https://github.com/AnoopAlias/XtendWeb/issues>`_
 * GITHUB URL: `https://github.com/AnoopAlias/XtendWeb <https://github.com/AnoopAlias/XtendWeb>`_
+
+Announcements
+--------------
+Follow https://twitter.com/gnusys for project announcements , new rpm release notifications etc

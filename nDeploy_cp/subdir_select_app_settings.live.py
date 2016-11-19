@@ -154,11 +154,12 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                             print(('<option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
                         else:
                             print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
-                    for user_myapptemplate in user_new_apptemplate_dict.keys():
-                        if user_myapptemplate == apptemplate_code:
-                            print(('<option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
-                        else:
-                            print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
+                    if user_new_apptemplate_dict:
+                        for user_myapptemplate in user_new_apptemplate_dict.keys():
+                            if user_myapptemplate == apptemplate_code:
+                                print(('<option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
+                            else:
+                                print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
                     print('</select>')
                 else:
                     print(('<p style="background-color:LightGrey">Select Backend version: </p>'))
@@ -170,8 +171,9 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                     print('<select name="apptemplate">')
                     for myapptemplate in new_apptemplate_dict.keys():
                         print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
-                    for user_myapptemplate in user_new_apptemplate_dict.keys():
-                        print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
+                    if user_new_apptemplate_dict:
+                        for user_myapptemplate in user_new_apptemplate_dict.keys():
+                            print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
                     print('</select>')
                 # Pass on the domain name to the next stage
                 print(('<input style="display:none" name="domain" value="'+mydomain+'">'))

@@ -1,5 +1,7 @@
 #Proxy to cPanel Apache httpd service
 
+root {{ DOCUMENTROOT }};
+
 location / {
 access_log  off;
 proxy_send_timeout   90;

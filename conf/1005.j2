@@ -1,5 +1,7 @@
 #Proxy to cPanel Apache httpd service and cache the content in proxycache
 
+root {{ DOCUMENTROOT }};
+
 location / {
 access_log  off;
 
