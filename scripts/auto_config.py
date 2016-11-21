@@ -55,7 +55,10 @@ def nginx_conf_switch(user_name, domain_name):
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
     document_root = json_parsed_cpaneldomain.get('documentroot')
-    domain_data_file = installation_path+"/domain-data/"+domain_name
+    if domain_name.startswith('*'):
+        domain_data_file = installation_path+"/domain-data/"+"_wildcard_."+domain_name.replace('*.', '')
+    else:
+        domain_data_file = installation_path+"/domain-data/"+domain_name
     with open(domain_data_file, 'r') as domaindata_data_stream:
         yaml_parsed_domaindata = yaml.safe_load(domaindata_data_stream)
     backend_category = yaml_parsed_domaindata.get('backend_category')
