@@ -1,0 +1,44 @@
+#Wordpress multisite (subdirectory)
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+# Add support for subdirectory structure in WordPress Multisite
+if (!-e $request_filename) {
+rewrite /wp-admin$ $scheme://$host$uri/ permanent;
+rewrite ^(/[^/]+)?(/wp-.*) $2 last;
+rewrite ^(/[^/]+)?(/.*\.php) $2 last;
+}
+
+location / {
+try_files $uri $uri/ /index.php?q=$uri&$args;
+}
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+location = /wp-login.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
+expires 1d;
+}
+location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
+location ~ \.php$ {
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+}
+include /etc/nginx/conf.d/cpanel_services.conf;

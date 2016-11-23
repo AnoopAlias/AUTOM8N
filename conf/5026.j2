@@ -1,0 +1,53 @@
+#Wordpress + FastCGI microcaching
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+#If request method is POST we add a _mcnc cookie
+if ($requestnocache = "1") {
+add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
+add_header X-Microcachable "0";
+}
+
+location / {
+try_files $uri $uri/ /index.php?q=$uri&$args;
+}
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+location = /wp-login.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
+expires 1d;
+}
+location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
+location ~ \.php$ {
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+
+#MicroCache
+fastcgi_cache FASTCGIMICROCACHE;
+fastcgi_cache_bypass $requestnocache $querystringnc $wpcookienocache $wpurinocache;
+fastcgi_no_cache $requestnocache $querystringnc $wpcookienocache $wpurinocache;
+fastcgi_cache_valid any 1s;
+fastcgi_cache_use_stale updating error timeout invalid_header http_500;
+fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+fastcgi_cache_lock on;
+
+include /etc/nginx/fastcgi_params*;
+}
+include /etc/nginx/conf.d/cpanel_services.conf;
