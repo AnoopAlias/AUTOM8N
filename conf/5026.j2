@@ -3,13 +3,14 @@
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
+location / {
+
 #If request method is POST we add a _mcnc cookie
 if ($requestnocache = "1") {
 add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
 add_header X-Microcachable "0";
 }
 
-location / {
 try_files $uri $uri/ /index.php?q=$uri&$args;
 }
 

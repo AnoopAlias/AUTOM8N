@@ -50,12 +50,6 @@ add_header Content-Encoding gzip;
 }
 # END W3TC Minify cache
 
-# BEGIN W3TC Browser Cache
-# This overrides XtendWeb toggling off gzip via the GUI
-gzip on;
-gzip_types text/css text/x-component application/x-javascript application/javascript text/javascript text/x-js text/richtext image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon;
-# END W3TC Browser Cache
-
 # BEGIN W3TC CDN
 location ~ \.(ttf|ttc|otf|eot|woff|font.css)$ {
 add_header Access-Control-Allow-Origin "*";
