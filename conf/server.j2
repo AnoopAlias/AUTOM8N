@@ -147,7 +147,7 @@ add_header Content-Security-Policy "script-src 'self' www.google-analytics.com a
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
 {% if DOSMITIGATE == 'enabled' %}
-include /etc/nginx/conf.d/dos_mitigate;
+include /etc/nginx/conf.d/dos_mitigate.conf;
 {% endif %}
 {% for DIR in PROTECTED_DIR %}
 {% if DIR == '/' %}
@@ -234,7 +234,7 @@ include /etc/nginx/conf.d/brotli.conf;
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
 {% if DOSMITIGATE == 'enabled' %}
-include /etc/nginx/conf.d/dos_mitigate;
+include /etc/nginx/conf.d/dos_mitigate.conf;
 {% endif %}
 {% for DIR in PROTECTED_DIR %}
 {% if DIR == '/' %}
