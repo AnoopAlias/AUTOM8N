@@ -1,0 +1,5 @@
+[Service]
+ExecStart=/usr/local/bin/hhvm --config /opt/nDeploy/hhvm.d/%i.ini --user %i --mode daemon
+
+[Install]
+WantedBy=multi-user.target

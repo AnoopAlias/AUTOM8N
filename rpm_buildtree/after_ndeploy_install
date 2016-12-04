@@ -134,6 +134,9 @@ fi
 if [ ! -d /opt/nDeploy/secure-php-fpm.d ] ; then
 	mkdir /opt/nDeploy/secure-php-fpm.d
 fi
+if [ ! -d /opt/nDeploy/hhvm.d ] ; then
+	mkdir /opt/nDeploy/hhvm.d
+fi
 if [ ! -L /usr/local/cpanel/base/frontend/paper_lantern/nDeploy_cp  ];then
 	ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/paper_lantern/
 fi

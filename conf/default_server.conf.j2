@@ -1,56 +1,4 @@
 server {
-        listen CPANELIP:80 default_server backlog=16384;
-        #CPMAIN6CONF
-        server_name _;
-        access_log off;
-        location / {
-
-           proxy_send_timeout   90;
-           proxy_read_timeout   90;
-
-           proxy_buffer_size    4k;
-           proxy_buffers     16 32k;
-           proxy_busy_buffers_size 64k;
-           proxy_temp_file_write_size 64k;
-
-           proxy_connect_timeout 30s;
-
-           proxy_pass   http://CPANELIP:9999;
-           proxy_set_header   Host   $host;
-           proxy_set_header   X-Real-IP  $remote_addr;
-           proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-          }
-}
-
-server {
-        listen CPANELIP:443 default_server ssl backlog=16384;
-        #CPMAIN6SSLCONF
-        ssl_certificate CPANELCERTPATH;
-        ssl_certificate_key CPANELCERTPATH;
-        ssl_session_cache shared:SSL:10m;
-        ssl_session_timeout  5m;
-        server_name _;
-        access_log off;
-        location / {
-
-           proxy_send_timeout   90;
-           proxy_read_timeout   90;
-
-           proxy_buffer_size    4k;
-           proxy_buffers     16 32k;
-           proxy_busy_buffers_size 64k;
-           proxy_temp_file_write_size 64k;
-
-           proxy_connect_timeout 30s;
-
-           proxy_pass   https://CPANELIP:4430;
-           proxy_set_header   Host   $host;
-           proxy_set_header   X-Real-IP  $remote_addr;
-           proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-          }
-}
-
-server {
         listen localhost:80 backlog=16384;
         server_name localhost;
         access_log off;
@@ -93,3 +41,57 @@ server {
             stub_status on;
         }
 }
+
+{% for MYIP in CPIPLIST %}
+
+server {
+        listen {{ MYIP }}:80 default_server backlog=16384;
+        server_name _;
+        access_log off;
+        location / {
+
+           proxy_send_timeout   90;
+           proxy_read_timeout   90;
+
+           proxy_buffer_size    4k;
+           proxy_buffers     16 32k;
+           proxy_busy_buffers_size 64k;
+           proxy_temp_file_write_size 64k;
+
+           proxy_connect_timeout 30s;
+
+           proxy_pass   http://{{ MYIP }}:9999;
+           proxy_set_header   Host   $host;
+           proxy_set_header   X-Real-IP  $remote_addr;
+           proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+          }
+}
+
+server {
+        listen {{ MYIP }}:443 default_server ssl backlog=16384;
+        ssl_certificate {{ CPSRVDSSL }};
+        ssl_certificate_key {{ CPSRVDSSL }};
+        ssl_session_cache shared:SSL:10m;
+        ssl_session_timeout  5m;
+        server_name _;
+        access_log off;
+        location / {
+
+           proxy_send_timeout   90;
+           proxy_read_timeout   90;
+
+           proxy_buffer_size    4k;
+           proxy_buffers     16 32k;
+           proxy_busy_buffers_size 64k;
+           proxy_temp_file_write_size 64k;
+
+           proxy_connect_timeout 30s;
+
+           proxy_pass   https://{{ MYIP }}:4430;
+           proxy_set_header   Host   $host;
+           proxy_set_header   X-Real-IP  $remote_addr;
+           proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+          }
+}
+
+{% endfor %}

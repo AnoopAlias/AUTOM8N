@@ -118,6 +118,26 @@ def php_backend_add(user_name, domain_home):
         return
 
 
+def hhvm_backend_add(user_name, domain_home):
+    """Function to setup hhvm for user """
+    hhvm_server_file = installation_path + "/hhvm.d/" + user_name + ".ini"
+    if not os.path.isfile(hhvm_server_file):
+        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+        templateEnv = jinja2.Environment(loader=templateLoader)
+        TEMPLATE_FILE = "hhvm_secure.ini.j2"
+        template = templateEnv.get_template(TEMPLATE_FILE)
+        templateVars = {"CPANELUSER": user_name,
+                        "HOMEDIR": domain_home
+                        }
+        generated_config = template.render(templateVars)
+        with codecs.open(hhvm_server_file, 'w', 'utf-8') as confout:
+            confout.write(generated_config)
+        subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
+        subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
+    else:
+        return
+
+
 def php_secure_backend_add(user_name, domain_home, backend_version):
     """Function to setup php-fpm for user using systemd socket activation"""
     phpfpm_conf_file = installation_path + "/secure-php-fpm.d/" + user_name + ".conf"
@@ -212,6 +232,30 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                 for fname in filenames:
                     with codecs.open(fname, 'r', 'utf-8') as infile:
                         outfile.write(infile.read()+"\n")
+            if os.stat(sslcombinedcert).st_size == 0:
+                # The cert generated has zero size we redo this using the main YAML file now
+                cpdomainyaml_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL"
+                with open(cpdomainyaml_ssl, 'r') as cpdomainyaml_ssl_data_stream:
+                    yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpdomainyaml_ssl_data_stream)
+                sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
+                sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
+                sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
+                if sslcacertificatefile:
+                    sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
+                    ocsp = True
+                    filenames = [sslcertificatefile, sslcacertificatefile]
+                    with codecs.open(sslcombinedcert, 'w', 'utf-8') as outfile:
+                        for fname in filenames:
+                            with codecs.open(fname, 'r', 'utf-8') as infile:
+                                outfile.write(infile.read()+"\n")
+            if os.stat(sslcombinedcert).st_size == 0:
+                hasssl = False
+                ocsp = False
+                sslcombinedcert = None
+                sslcertificatefile = None
+                sslcacertificatefile = None
+                sslcertificatekeyfile = None
+                print("Error:: TLS cert is invalid")
         else:
             sslcombinedcert = sslcertificatefile
             ocsp = False
@@ -378,6 +422,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                 php_backend_add(kwargs.get('configuser'), domain_home)
     elif backend_category == 'HHVM_NOBODY':
         fastcgi_socket = backend_path
+    elif backend_category == 'HHVM':
+        fastcgi_socket = domain_home+"/hhvm.sock"
+        if not os.path.isfile(fastcgi_socket):
+            hhvm_backend_add(kwargs.get('configuser'), domain_home)
     # We generate the app config from template next
     apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
                        "CPANELIP": cpanel_ipv4,
@@ -449,6 +497,8 @@ if __name__ == "__main__":
     except KeyError:
         sys.exit(0)
     else:
+        #Update the userdata cache
+        subprocess.Popen(['/scripts/updateuserdatacache', '--force', cpaneluser], shell=True)
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
         with open(cpuserdatajson) as cpaneluser_data_stream:

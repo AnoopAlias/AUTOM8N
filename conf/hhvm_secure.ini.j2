@@ -1,0 +1,29 @@
+hhvm.pid_file = {{ HOMEDIR }}/hhvm.pid
+hhvm.server.file_socket= {{ HOMEDIR }}/hhvm.sock
+hhvm.server.type = fastcgi
+hhvm.server.default_document = index.php
+hhvm.server.graceful_shutdown_wait = 5
+hhvm.server.enable_keep_alive = true
+hhvm.server.apc.enable_apc = true
+hhvm.server.request_timeout_seconds = 120
+hhvm.server.expose_hphp = false
+
+hhvm.log.level = Notice
+hhvm.log.always_log_unhandled_exceptions = true
+hhvm.log.runtime_error_reporting_level = 8191
+hhvm.log.use_log_file = true
+hhvm.log.use_syslog = false
+hhvm.log.file = {{ HOMEDIR }}/log/hhvm.log
+hhvm.log.header = true
+hhvm.log.native_stack_trace = true
+
+hhvm.repo.central.path = {{ HOMEDIR }}/hhvm.hhbc
+
+hhvm.jit = true
+hhvm.jit_a_size = 100000000
+hhvm.jit_a_frozen_size = 100000000
+hhvm.jit_a_cold_size = 33000000
+
+hhvm.mysql.socket = /var/lib/mysql/mysql.sock
+hhvm.mysql.typed_results = false
+hhvm.mysql.slow_query_threshold = 5000

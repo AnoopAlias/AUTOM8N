@@ -1,17 +1,3 @@
-echo -e '\e[93m Setting up default vhost proxy in nginx \e[0m'
-cpanelmainip=$(grep -w ADDR /etc/wwwacct.conf|awk '{print $2}')
-cpanelmainipv6=$(grep -w ADDR6 /etc/wwwacct.conf|awk '{print $2}')
-sed -i "s/CPANELIP/$cpanelmainip/g" /etc/nginx/conf.d/default_server.conf
-sed -i "s/CPANELIP/$cpanelmainip/g" /etc/nginx/conf.d/cpanel_services.conf
-if [ ! -z $cpanelmainipv6 ] ; then
-	sed -i "s/#CPMAIN6CONF/listen [${cpanelmainipv6}]\:80 default_server backlog=16384\;/g" /etc/nginx/conf.d/default_server.conf
-	sed -i "s/#CPMAIN6SSLCONF/listen [${cpanelmainipv6}]\:443 default_server ssl backlog=16384\;/g" /etc/nginx/conf.d/default_server.conf
-fi
-if [ -f /var/cpanel/ssl/cpanel/mycpanel.pem ] ; then
-	sed -i "s/CPANELCERTPATH/\/var\/cpanel\/ssl\/cpanel\/mycpanel.pem/g" /etc/nginx/conf.d/default_server.conf
-else
-	sed -i "s/CPANELCERTPATH/\/var\/cpanel\/ssl\/cpanel\/cpanel.pem/g" /etc/nginx/conf.d/default_server.conf
-fi
 if [ -f /etc/csf/csf.pignore ] ; then
 	echo -e '\e[93m Setting up CSF firewall to ignore nginx process \e[0m'
 	grep -w '/usr/sbin/nginx' /etc/csf/csf.pignore || echo 'exe:/usr/sbin/nginx' >> /etc/csf/csf.pignore
