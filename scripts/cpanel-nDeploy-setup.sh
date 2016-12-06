@@ -3,6 +3,8 @@
 # SetEnvIf X-Forwarded-Proto patch provided by https://github.com/mdpuma
 
 function enable {
+echo -e '\e[93m Generating the default nginx vhosts \e[0m'
+python /opt/nDeploy/scripts/generate_default_vhost_config.py
 echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_port value=0.0.0.0:9999
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:4430

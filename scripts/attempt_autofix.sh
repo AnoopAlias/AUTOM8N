@@ -6,17 +6,24 @@ touch /opt/nDeploy/conf/skip_nginx_reload
 touch /opt/nDeploy/conf/skip_php-fpm_reload
 
 echo -e '\e[93m Attempting to regenerate all nginx conf  \e[0m'
-for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1);do echo "ConfGen:: $CPANELUSER" && /opt/nDeploy/scripts/generate_config.py $CPANELUSER;done
+for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1);do echo "ConfGen:: $CPANELUSER" && nice --adjustment=15 /opt/nDeploy/scripts/generate_config.py $CPANELUSER;done
 
 rm -f /opt/nDeploy/conf/skip_nginx_reload /opt/nDeploy/conf/skip_php-fpm_reload
 
 # Reloading nginx
 /usr/sbin/nginx -s reload
 
+# Getting the OS release version
+osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
+
 if [ ! -f /opt/nDeploy/conf/secure-php-enabled ] ; then
   ##Attempt to fix backends issue
   echo -e '\e[93m Attempting to restart all backend Application servers \e[0m'
-
+  if [ ${osversion} -le 6 ];then
+  	service ndeploy_backends restart
+  else
+  	systemctl restart ndeploy_backends
+  fi
   systemctl restart ndeploy_backends || service ndeploy_backends restart
 fi
 
@@ -30,7 +37,12 @@ done
 
 ##Restart ndeploy_watcher
 echo -e '\e[93m Attempting to restart ndeploy_watcher daemon \e[0m'
-
-service ndeploy_watcher stop || systemctl ndeploy_watcher stop
-rm -f /opt/nDeploy/watcher.pid
-service ndeploy_watcher start || systemctl ndeploy_watcher start
+if [ ${osversion} -le 6 ];then
+  service ndeploy_watcher stop
+  rm -f /opt/nDeploy/watcher.pid
+  service ndeploy_watcher start
+else
+  systemctl stop ndeploy_watcher
+  rm -f /opt/nDeploy/watcher.pid
+  systemctl start ndeploy_watcher
+fi

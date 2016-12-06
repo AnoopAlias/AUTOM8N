@@ -8,16 +8,21 @@
 /opt/nDeploy/scripts/update_backend.py del PROXY apache_SSL 4430
 
 # Adding Application templates
+# PROXY
 /opt/nDeploy/scripts/update_profiles.py add root main PROXY 1000.j2 "Proxy to httpd"
 /opt/nDeploy/scripts/update_profiles.py add root subdir PROXY 1000_subdir.j2 "Proxy subdir to httpd"
 #/opt/nDeploy/scripts/update_profiles.py add root main PROXY 1001.j2 "A ColdFusion App"
 /opt/nDeploy/scripts/update_profiles.py add root main PROXY 1002.j2 "Proxy to httpd(microcache)"
 /opt/nDeploy/scripts/update_profiles.py add root main PROXY 1005.j2 "Proxy to httpd(cached)"
 /opt/nDeploy/scripts/update_profiles.py add root subdir PROXY 1005_subdir.j2 "Proxy subdir to httpd(cached)"
+# RUBY
 /opt/nDeploy/scripts/update_profiles.py add root main RUBY 2001.j2 "Ruby on Rails(Rack) App"
+# PYTHON
 /opt/nDeploy/scripts/update_profiles.py add root main PYTHON 3001.j2 "Python(WSGI) App"
+# NODEJS
 /opt/nDeploy/scripts/update_profiles.py add root main NODEJS 4001.j2 "A NodeJS application"
 /opt/nDeploy/scripts/update_profiles.py add root main NODEJS 4002.j2 "Ghost Blog"
+# PHP
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5001.j2 "Wordpress"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5026.j2 "Wordpress+FastCGI(microcache)"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5027.j2 "Wordpress Multisite(subdirectory)"
@@ -43,6 +48,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5024.j2 "Magento+Fooman Speedster"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5025.j2 "Magento-2"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5100.j2 "A PHP application"
+# HHVM_NOBODY
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5001.j2 "Wordpress"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5026.j2 "Wordpress+FastCGI(microcache)"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5027.j2 "Wordpress Multisite(subdirectory)"
@@ -68,6 +74,32 @@
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5024.j2 "Magento+Fooman Speedster"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5025.j2 "Magento-2"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5100.j2 "A PHP application"
+# HHVM
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5001.j2 "Wordpress"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5026.j2 "Wordpress+FastCGI(microcache)"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5027.j2 "Wordpress Multisite(subdirectory)"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5028.j2 "Wordpress+WPSuperCache"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5029.j2 "Wordpress+w3tc"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5030.j2 "Wordpress+w3tc+minify"
+/opt/nDeploy/scripts/update_profiles.py add root subdir HHVM 5001_subdir.j2 "Wordpress in subdir"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5002.j2 "Joomla"
+/opt/nDeploy/scripts/update_profiles.py add root subdir HHVM 5002_subdir.j2 "Joomla in subdir"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5003.j2 "Magento"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5012.j2 "X-Cart"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5013.j2 "SilverStripe"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5014.j2 "CMS Made Simple"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5015.j2 "Codeignitor"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5016.j2 "Drupal7 or higher"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5017.j2 "Drupal6 or lower"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5018.j2 "Prestashop"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5019.j2 "Moodle"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5020.j2 "OwnCloud"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5021.j2 "WHMCS"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5022.j2 "Laravel"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5023.j2 "Snipe-IT"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5024.j2 "Magento+Fooman Speedster"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5025.j2 "Magento-2"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5100.j2 "A PHP application"
 
 echo -e '\e[93m Adding cpanel hooks \e[0m'
 #Delete Hooks

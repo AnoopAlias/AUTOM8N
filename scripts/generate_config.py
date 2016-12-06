@@ -12,10 +12,7 @@ import shutil
 from lxml import etree
 import jinja2
 from hashlib import md5
-try:
-    import simplejson as json
-except ImportError:
-    import json
+import json
 
 
 __author__ = "Anoop P Alias"
@@ -118,7 +115,7 @@ def php_backend_add(user_name, domain_home):
         return
 
 
-def hhvm_backend_add(user_name, domain_home):
+def hhvm_backend_add(user_name, domain_home, clusterenabled, *cluster_serverlist):
     """Function to setup hhvm for user """
     hhvm_server_file = installation_path + "/hhvm.d/" + user_name + ".ini"
     if not os.path.isfile(hhvm_server_file):
@@ -134,11 +131,23 @@ def hhvm_backend_add(user_name, domain_home):
             confout.write(generated_config)
         subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
+        # Sync cluster config and call systemd remotely
+        if clusterenabled:
+            subprocess.call(['csync2', '-x'], shell=True)
+            for server in cluster_serverlist:
+                subprocess.call(['systemctl', '--host', server, 'start', 'ndeploy_hhvm@'+user_name+'.service'])
+                subprocess.call(['systemctl', '--host', server, 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
     else:
+        subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
+        subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
+        if clusterenabled:
+            for server in cluster_serverlist:
+                subprocess.call(['systemctl', '--host', server, 'start', 'ndeploy_hhvm@'+user_name+'.service'])
+                subprocess.call(['systemctl', '--host', server, 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         return
 
 
-def php_secure_backend_add(user_name, domain_home, backend_version):
+def php_secure_backend_add(user_name, domain_home, backend_version, clusterenabled, *cluster_serverlist):
     """Function to setup php-fpm for user using systemd socket activation"""
     phpfpm_conf_file = installation_path + "/secure-php-fpm.d/" + user_name + ".conf"
     if not os.path.isfile(phpfpm_conf_file):
@@ -152,6 +161,8 @@ def php_secure_backend_add(user_name, domain_home, backend_version):
         generated_config = template.render(templateVars)
         with codecs.open(phpfpm_conf_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
+        if clusterenabled:
+            subprocess.call(['csync2', '-x'], shell=True)
     backend_config_file = installation_path+"/conf/backends.yaml"
     with open(backend_config_file, 'r') as backend_data_yaml:
         backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
@@ -161,11 +172,19 @@ def php_secure_backend_add(user_name, domain_home, backend_version):
             if backend_name == backend_version:
                 subprocess.call(['systemctl', 'restart', backend_name+'@'+user_name+'.socket'])
                 subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
+                if clusterenabled:
+                    for server in cluster_serverlist:
+                        subprocess.call(['systemctl', '--host', server, 'restart', backend_name+'@'+user_name+'.socket'])
+                        subprocess.call(['systemctl', '--host', server, 'enable', backend_name+'@'+user_name+'.socket'])
             else:
                 subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
                 subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.socket'])
                 subprocess.call(['systemctl', 'disable', backend_name+'@'+user_name+'.socket'])
-
+                if clusterenabled:
+                    for server in cluster_serverlist:
+                        subprocess.call(['systemctl', '--host', server, 'stop', backend_name+'@'+user_name+'.service'])
+                        subprocess.call(['systemctl', '--host', server, 'stop', backend_name+'@'+user_name+'.socket'])
+                        subprocess.call(['systemctl', '--host', server, 'disable', backend_name+'@'+user_name+'.socket'])
 
 
 def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
@@ -417,7 +436,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         fastcgi_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
         if not os.path.isfile(fastcgi_socket):
             if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version)
+                php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version, clusterenabled, *cluster_serverlist)
             else:
                 php_backend_add(kwargs.get('configuser'), domain_home)
     elif backend_category == 'HHVM_NOBODY':
@@ -425,7 +444,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     elif backend_category == 'HHVM':
         fastcgi_socket = domain_home+"/hhvm.sock"
         if not os.path.isfile(fastcgi_socket):
-            hhvm_backend_add(kwargs.get('configuser'), domain_home)
+            hhvm_backend_add(kwargs.get('configuser'), domain_home, clusterenabled, *cluster_serverlist)
     # We generate the app config from template next
     apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
                        "CPANELIP": cpanel_ipv4,
@@ -497,7 +516,7 @@ if __name__ == "__main__":
     except KeyError:
         sys.exit(0)
     else:
-        #Update the userdata cache
+        # Update the userdata cache
         subprocess.Popen(['/scripts/updateuserdatacache', '--force', cpaneluser], shell=True)
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"

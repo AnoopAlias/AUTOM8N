@@ -5,6 +5,8 @@ group nDeployCluster
         include /etc/nginx/ssl;
         include /var/cpanel/ssl/installed;
 	      include /opt/nDeploy/php-fpm.d;
+        include /opt/nDeploy/secure-php-fpm.d;
+        include /opt/nDeploy/hhvm.d;
         include /etc/localdomains;
         action
         {

@@ -13,7 +13,13 @@ if [ ! -d /opt/nDeploy/domain-data ] ; then
 fi
 if [ ! -d /opt/nDeploy/php-fpm.d ] ; then
 	mkdir /opt/nDeploy/php-fpm.d
-	sed 's/CPANELUSER/nobody/g' /opt/nDeploy/conf/php-fpm.pool.tmpl > /opt/nDeploy/php-fpm.d/nobody.conf
+	cat /opt/nDeploy/conf/php-fpm_default.pool > /opt/nDeploy/php-fpm.d/nobody.conf
+fi
+if [ ! -d /opt/nDeploy/secure-php-fpm.d ] ; then
+	mkdir /opt/nDeploy/secure-php-fpm.d
+fi
+if [ ! -d /opt/nDeploy/hhvm.d ] ; then
+	mkdir /opt/nDeploy/hhvm.d
 fi
 if [ ! -L /etc/nginx/sites-enabled ] ; then
 	mkdir /etc/nginx/$(hostname)

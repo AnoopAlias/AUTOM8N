@@ -94,8 +94,8 @@ def control_php_fpm(trigger):
                 sys.exit(1)
             else:
                 for backend_name in list(php_backends_dict.keys()):
-                    systemd_socket_file = "/usr/lib/systemd/system/"+backend_name+"@.socket"
-                    systemd_service_file = "/usr/lib/systemd/system/"+backend_name+"@.service"
+                    systemd_socket_file = "/etc/systemd/system/"+backend_name+"@.socket"
+                    systemd_service_file = "/etc/systemd/system/"+backend_name+"@.service"
                     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
                     templateEnv = jinja2.Environment(loader=templateLoader)
                     socket_template = templateEnv.get_template('secure-php-fpm.socket.j2')

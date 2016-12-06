@@ -1,4 +1,6 @@
 [Service]
+User=%i
+Group=nobody
 ExecStart=/usr/local/bin/hhvm --config /opt/nDeploy/hhvm.d/%i.ini --user %i --mode daemon
 
 [Install]
