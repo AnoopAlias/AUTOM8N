@@ -16,7 +16,7 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 
-iplist_json = json.loads(subprocess.check_output(['/usr/local/cpanel/bin/whmapi1', 'listips', '--output=json']))
+iplist_json = json.loads(subprocess.Popen(['/usr/local/cpanel/bin/whmapi1', 'listips', '--output=json'], stdout=subprocess.PIPE).communicate()[0])
 data_dict = iplist_json.get('data')
 ip_list = data_dict.get('ip')
 cpanel_ip_list = []
