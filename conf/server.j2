@@ -113,15 +113,6 @@ access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log 
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
 return 301 https://$host$request_uri;
 {% else %}
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
 {% if PAGESPEED == 'enabled' %}
 include /etc/nginx/conf.d/pagespeed.conf;
 {% endif %}
@@ -191,15 +182,6 @@ access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log 
 {% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
-{% endif %}
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == "active" %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
 {% endif %}
 {% if PAGESPEED == 'enabled' %}
 include /etc/nginx/conf.d/pagespeed.conf;
