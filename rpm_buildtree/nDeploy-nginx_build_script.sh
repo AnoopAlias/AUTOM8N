@@ -6,7 +6,7 @@
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
 NGINX_VERSION="1.11.6"
-NGINX_RPM_ITER="4.el${OSVERSION}"
+NGINX_RPM_ITER="5.el${OSVERSION}"
 NPS_VERSION="1.11.33.4"
 MY_RUBY_VERSION="2.3.1"
 PASSENGER_VERSION="5.0.30"
@@ -36,9 +36,9 @@ if [ ${OSVERSION} -eq 6 ];then
   rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
   wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
   yum install devtoolset-2-gcc-c++ devtoolset-2-binutils
-  rsync -av --exclude 'usr/lib' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
+  rsync -av --exclude 'usr/lib' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/naxsi_*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
 else
-  rsync -av --exclude 'etc/rc.d' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
+  rsync -av --exclude 'etc/rc.d' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/naxsi_*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
 fi
 
 
@@ -91,6 +91,7 @@ rsync -av ../nxapi.json ../nginx-module-naxsi-pkg/usr/nginx/nxapi/
 rsync -av ../nginx-pkg-64-common/etc/nginx/fastcgi_params_geoip ../nginx-module-geoip-pkg/etc/nginx/
 rsync -av ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed.conf ../nginx-module-pagespeed-pkg/etc/nginx/conf.d/
 rsync -av ../nginx-pkg-64-common/etc/nginx/conf.d/brotli.conf ../nginx-module-brotli-pkg/etc/nginx/conf.d/
+rsync -av ../nginx-pkg-64-common/etc/nginx/conf.d/naxsi_* ../nginx-module-naxsi-pkg/etc/nginx/conf.d/
 rsync -av tempo/usr/sbin ../nginx-pkg/usr/
 for module in brotli geoip naxsi pagespeed passenger
 do
