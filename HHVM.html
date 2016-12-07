@@ -28,7 +28,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
     <link rel="next" title="Setting up PHP" href="PHP.html" />
-    <link rel="prev" title="http2" href="http2.html" /> 
+    <link rel="prev" title="List of webHosts that support nginX" href="nginx_friendly_web_hosts.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -41,16 +41,25 @@
           <a href="PHP.html" title="Setting up PHP"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="http2.html" title="http2"
+          <a href="nginx_friendly_web_hosts.html" title="List of webHosts that support nginX"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setting up HHVM</a><ul>
+<li><a class="reference internal" href="#seperate-hhvm-process-for-each-user-managed-by-systemd-centos7-cloudlinux7-required">Seperate HHVM process for each user managed by systemd( CentOS7/CloudLinux7 required)</a></li>
+<li><a class="reference internal" href="#single-hhvm-process-running-as-nobody-user">Single HHVM process running as nobody user</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="http2.html"
-                        title="previous chapter">http2</a></p>
+  <p class="topless"><a href="nginx_friendly_web_hosts.html"
+                        title="previous chapter">List of webHosts that support nginX</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="PHP.html"
                         title="next chapter">Setting up PHP</a></p>
@@ -83,10 +92,23 @@
 <h1>Setting up HHVM<a class="headerlink" href="#setting-up-hhvm" title="Permalink to this headline">¶</a></h1>
 <p>HHVM manages new connections in threads of single process unlike PHP-FPM that handles new connections
 by forking a new process . So unlike PHP-FPM there is no process pool in HHVM</p>
-<p>XtendWeb only supports HHVM running as a single user (nobody) using a single process .The recommended way
-of running HHVM for multiple users is to create a process for each user which then require a third party process manager
-to manage the process creation and shutdown</p>
-<p><strong>HHVM install and setup on CentOS7</strong></p>
+<p>XtendWeb support 2 modes of HHVM backend .</p>
+<div class="section" id="seperate-hhvm-process-for-each-user-managed-by-systemd-centos7-cloudlinux7-required">
+<h2>Seperate HHVM process for each user managed by systemd( CentOS7/CloudLinux7 required)<a class="headerlink" href="#seperate-hhvm-process-for-each-user-managed-by-systemd-centos7-cloudlinux7-required" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">cpp</span> <span class="n">gcc</span><span class="o">-</span><span class="n">c</span><span class="o">++</span> <span class="n">cmake</span> <span class="n">git</span> <span class="n">psmisc</span> <span class="p">{</span><span class="n">binutils</span><span class="p">,</span><span class="n">boost</span><span class="p">,</span><span class="n">jemalloc</span><span class="p">,</span><span class="n">numactl</span><span class="p">}</span><span class="o">-</span><span class="n">devel</span> <span class="p">{</span><span class="n">ImageMagick</span><span class="p">,</span><span class="n">sqlite</span><span class="p">,</span><span class="n">tbb</span><span class="p">,</span><span class="n">bzip2</span><span class="p">,</span><span class="n">openldap</span><span class="p">,</span><span class="n">readline</span><span class="p">,</span><span class="n">elfutils</span><span class="o">-</span><span class="n">libelf</span><span class="p">,</span><span class="n">gmp</span><span class="p">,</span><span class="n">lz4</span><span class="p">,</span><span class="n">pcre</span><span class="p">}</span><span class="o">-</span><span class="n">devel</span> <span class="n">lib</span><span class="p">{</span><span class="n">xslt</span><span class="p">,</span><span class="n">event</span><span class="p">,</span><span class="n">yaml</span><span class="p">,</span><span class="n">vpx</span><span class="p">,</span><span class="n">png</span><span class="p">,</span><span class="nb">zip</span><span class="p">,</span><span class="n">icu</span><span class="p">,</span><span class="n">mcrypt</span><span class="p">,</span><span class="n">memcached</span><span class="p">,</span><span class="n">cap</span><span class="p">,</span><span class="n">dwarf</span><span class="p">}</span><span class="o">-</span><span class="n">devel</span> <span class="p">{</span><span class="n">unixODBC</span><span class="p">,</span><span class="n">expat</span><span class="p">}</span><span class="o">-</span><span class="n">devel</span> <span class="n">lib</span><span class="p">{</span><span class="n">edit</span><span class="p">,</span><span class="n">curl</span><span class="p">,</span><span class="n">xml2</span><span class="p">,</span><span class="n">xslt</span><span class="p">}</span><span class="o">-</span><span class="n">devel</span> <span class="n">glog</span><span class="o">-</span><span class="n">devel</span> <span class="n">oniguruma</span><span class="o">-</span><span class="n">devel</span> <span class="n">ocaml</span> <span class="n">gperf</span> <span class="n">enca</span> <span class="n">libjpeg</span><span class="o">-</span><span class="n">turbo</span><span class="o">-</span><span class="n">devel</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span> <span class="n">make</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">linuxeye</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hhvm</span><span class="o">-</span><span class="n">repo</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">hhvm</span><span class="o">-</span><span class="mf">3.15</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="mf">1.</span><span class="n">el7</span><span class="o">.</span><span class="n">centos</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+<span class="c1"># Above command is based on current version of hhvm at https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.xhttps://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.x</span>
+<span class="c1">#Register the HHVM backend in XtendWeb</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">HHVM</span> <span class="n">hhvm</span><span class="o">-</span><span class="mf">3.15</span> <span class="n">systemd</span>
+<span class="c1"># Add a cron job to stop unused HHVM process to be run every 6 hours</span>
+<span class="n">echo</span> <span class="s2">&quot;0 */6 * * * bash /opt/nDeploy/scripts/hhvm_ghost_hunter.sh&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">crontab</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="single-hhvm-process-running-as-nobody-user">
+<h2>Single HHVM process running as nobody user<a class="headerlink" href="#single-hhvm-process-running-as-nobody-user" title="Permalink to this headline">¶</a></h2>
+<p>Use HHVM running as individual user whenever possible. HHVM running as nobody user is not recommended for shared hosting</p>
 <ol class="arabic simple">
 <li>Install HHVM as per <a class="reference external" href="https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.x">https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.x</a></li>
 <li>Setup HHVM as an XtendWeb backend app server</li>
@@ -106,10 +128,11 @@ to manage the process creation and shutdown</p>
 <span class="n">systemctl</span> <span class="n">status</span> <span class="n">hhvm</span>
 
 <span class="n">Register</span> <span class="n">the</span> <span class="n">HHVM</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">XtendWeb</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">HHVM_NOBODY</span> <span class="n">hhvm</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">hhvm</span><span class="o">/</span><span class="n">hhvm</span><span class="o">.</span><span class="n">sock</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">HHVM_NOBODY</span> <span class="n">hhvm</span><span class="o">-</span><span class="mf">3.15</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">hhvm</span><span class="o">/</span><span class="n">hhvm</span><span class="o">.</span><span class="n">sock</span>
 </pre></div>
 </div>
 <div data-disqus-identifier="Setting up HHVM" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
 
 
           </div>
@@ -127,7 +150,7 @@ to manage the process creation and shutdown</p>
           <a href="PHP.html" title="Setting up PHP"
              >next</a> |</li>
         <li class="right" >
-          <a href="http2.html" title="http2"
+          <a href="nginx_friendly_web_hosts.html" title="List of webHosts that support nginX"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
       </ul>

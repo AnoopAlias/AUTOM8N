@@ -141,7 +141,11 @@ servers which are DNS load-balanced .</p>
 <div class="toctree-wrapper compound" id="backends-setup">
 <p class="caption"><span class="caption-text">Backends Setup</span><a class="headerlink" href="#backends-setup" title="Permalink to this toctree">¶</a></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="HHVM.html#seperate-hhvm-process-for-each-user-managed-by-systemd-centos7-cloudlinux7-required">Seperate HHVM process for each user managed by systemd( CentOS7/CloudLinux7 required)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HHVM.html#single-hhvm-process-running-as-nobody-user">Single HHVM process running as nobody user</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#on-centos6-centos7">On CentOS6/CentOS7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a></li>
@@ -187,7 +191,7 @@ servers which are DNS load-balanced .</p>
 <li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#highavailability">HighAvailability</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="XtendWeb_cluster_setup.html">nDeploy cluster setup</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="XtendWeb_cluster_setup.html">XtendWeb cluster setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#basic-2-server-setup">Basic 2 server setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#configuring-the-rest-of-the-system-to-work-as-a-cluster">Configuring the rest of the system to work as a cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#start-the-cluster">Start the cluster</a></li>
