@@ -12,7 +12,7 @@ Seperate HHVM process for each user managed by systemd( CentOS7/CloudLinux7 requ
 ::
 
   yum -y install epel-release
-  yum install cpp gcc-c++ cmake git psmisc {binutils,boost,jemalloc,numactl}-devel {ImageMagick,sqlite,tbb,bzip2,openldap,readline,elfutils-libelf,gmp,lz4,pcre}-devel lib{xslt,event,yaml,vpx,png,zip,icu,mcrypt,memcached,cap,dwarf}-devel {unixODBC,expat}-devel lib{edit,curl,xml2,xslt}-devel glog-devel oniguruma-devel ocaml gperf enca libjpeg-turbo-devel openssl-devel make -y
+  yum install libc-client-2007f cpp gcc-c++ cmake git psmisc {binutils,boost,jemalloc,numactl}-devel {ImageMagick,sqlite,tbb,bzip2,openldap,readline,elfutils-libelf,gmp,lz4,pcre}-devel lib{xslt,event,yaml,vpx,png,zip,icu,mcrypt,memcached,cap,dwarf}-devel {unixODBC,expat}-devel lib{edit,curl,xml2,xslt}-devel glog-devel oniguruma-devel ocaml gperf enca libjpeg-turbo-devel openssl-devel make -y
   yum -y install http://mirrors.linuxeye.com/hhvm-repo/7/x86_64/hhvm-3.15.2-1.el7.centos.x86_64.rpm
   # Above command is based on current version of hhvm at https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.xhttps://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Centos-7.x
   #Register the HHVM backend in XtendWeb
