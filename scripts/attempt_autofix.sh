@@ -24,7 +24,6 @@ if [ ! -f /opt/nDeploy/conf/secure-php-enabled ] ; then
   else
   	systemctl restart ndeploy_backends
   fi
-  systemctl restart ndeploy_backends || service ndeploy_backends restart
 fi
 
 echo -e '\e[93m The following PHP-FPM master process has started \e[0m'
