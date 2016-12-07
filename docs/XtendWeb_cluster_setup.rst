@@ -1,5 +1,5 @@
 XtendWeb cluster setup
-=====================
+=======================
 
 Your business is critical - Never Lose an email . Never Show a "WebSite Down!" message to a client .
 
