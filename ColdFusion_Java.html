@@ -1,83 +1,167 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setting up ColdFusion or Java &mdash; XtendWeb nginX control v4.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
     
-    <title>Setting up ColdFusion or Java &#8212; XtendWeb nginX control v4.0</title>
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
+        <link rel="next" title="Administration of XtendWeb plugin" href="XtendWeb_Administration.html"/>
+        <link rel="prev" title="Setting up Meteor" href="Meteor.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
     
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '4.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/disqus.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
-    <link rel="next" title="Administration of XtendWeb plugin" href="XtendWeb_Administration.html" />
-    <link rel="prev" title="Setting up Meteor" href="Meteor.html" /> 
-  </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="XtendWeb_Administration.html" title="Administration of XtendWeb plugin"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="Meteor.html" title="Setting up Meteor"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
-      </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="Meteor.html"
-                        title="previous chapter">Setting up Meteor</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="XtendWeb_Administration.html"
-                        title="next chapter">Administration of XtendWeb plugin</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/ColdFusion_Java.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> XtendWeb
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migrating_from_nDeploy.html">Instructions for upgrading from nDeploy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support &amp; Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Backends Setup</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up ColdFusion or Java</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">XtendWeb Cluster</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cluster_architecture.html">XtendWeb cluster architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="XtendWeb_cluster_setup.html">XtendWeb cluster setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">XtendWeb cluster upgrade</a></li>
+</ul>
+
+            
+          
         </div>
       </div>
+    </nav>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">XtendWeb</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Setting up ColdFusion or Java</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/ColdFusion_Java.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="setting-up-coldfusion-or-java">
 <h1>Setting up ColdFusion or Java<a class="headerlink" href="#setting-up-coldfusion-or-java" title="Permalink to this headline">¶</a></h1>
@@ -237,29 +321,72 @@ root@cpanel1 [/var/resin/webapp-jars]# rm -rf railo-4.2.1.008-jars railo-4.2.1.0
 <div data-disqus-identifier="Setting up ColdFusion or Java" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 
 
+           </div>
           </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="XtendWeb_Administration.html" class="btn btn-neutral float-right" title="Administration of XtendWeb plugin" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Meteor.html" class="btn btn-neutral" title="Setting up Meteor" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Anoop P Alias.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="XtendWeb_Administration.html" title="Administration of XtendWeb plugin"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="Meteor.html" title="Setting up Meteor"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">XtendWeb nginX control v4.0</a> &#187;</li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2016, Anoop P Alias.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
-    </div>
-  </body>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'4.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/disqus.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
 </html>
