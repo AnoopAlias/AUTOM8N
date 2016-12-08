@@ -168,22 +168,13 @@
 <p>One of the backend XtendWeb support is PROXY to httpd .
 You must setup mod_remoteip to provide httpd with the correct IP of clients and modify apache logging settings
 <code class="docutils literal"><span class="pre">yum</span> <span class="pre">-y</span> <span class="pre">install</span> <span class="pre">ea-apache24-mod_remoteip</span></code></p>
+<p>XtendWeb automatically generates the remoteIP configuration when the plugin is enabled
+You just need to include the file in Apache httpd as below</p>
 <ol class="arabic simple">
 <li>Navigate to WHM Home »Service Configuration »Apache Configuration »Include Editor &gt; Scroll down to &#8220;Pre VirtualHost Include&#8221;</li>
 </ol>
 <p>2. Select the version of Apache you wish to customize and add the following</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IfModule</span> <span class="n">remoteip_module</span><span class="o">&gt;</span>
-  <span class="n">RemoteIPHeader</span> <span class="n">X</span><span class="o">-</span><span class="n">Forwarded</span><span class="o">-</span><span class="n">For</span>
-  <span class="n">RemoteIPTrustedProxy</span> <span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">/</span><span class="mi">32</span>   <span class="c1">#substitute x.x.x.x with your IP address</span>
-  <span class="n">RemoteIPTrustedProxy</span> <span class="n">y</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">y</span><span class="o">/</span><span class="mi">32</span>   <span class="c1">#substitute y.y.y.y with your IP address</span>
-<span class="o">&lt;/</span><span class="n">IfModule</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">IfModule</span> <span class="n">log_config_module</span><span class="o">&gt;</span>
-  <span class="n">LogFormat</span> <span class="s2">&quot;%</span><span class="si">{Referer}</span><span class="s2">i -&gt; %U&quot;</span> <span class="n">referer</span>
-  <span class="n">LogFormat</span> <span class="s2">&quot;%{User-agent}i&quot;</span> <span class="n">agent</span>
-  <span class="n">LogFormat</span> <span class="s2">&quot;%a %l </span><span class="si">%u</span><span class="s2"> %t </span><span class="se">\&quot;</span><span class="si">%r</span><span class="se">\&quot;</span><span class="s2"> %&gt;s %b&quot;</span> <span class="n">common</span>
-  <span class="n">LogFormat</span> <span class="s2">&quot;%a %l </span><span class="si">%u</span><span class="s2"> %t </span><span class="se">\&quot;</span><span class="si">%r</span><span class="se">\&quot;</span><span class="s2"> %&gt;s %b </span><span class="se">\&quot;</span><span class="s2">%</span><span class="si">{Referer}</span><span class="s2">i</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="s2">%{User-Agent}i</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="n">combined</span>
-  <span class="n">CustomLog</span> <span class="n">logs</span><span class="o">/</span><span class="n">access_log</span> <span class="n">combined</span>
-<span class="o">&lt;/</span><span class="n">IfModule</span><span class="o">&gt;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Include</span> <span class="s2">&quot;/etc/nginx/conf.d/httpd_mod_remoteip.include&quot;</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
