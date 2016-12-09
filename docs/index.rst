@@ -19,11 +19,12 @@ Features
 
 * worlds simplest nginx config wizard
 * configuration curated for high performance and incorporates nginx best practices
-* template based application configuration+ support application in sub domains
+* template based application configuration+ support application in sub-directories
 * password protection setup by cpanel can be reused in nginx
 * cpanel user can configure nginx for their application without editing any configuration
 * Supports CentOS6 CentOS7 CloudLinux6 CloudLinux7 on x86_64 arch
 * Multiple backends - Apache HTTPD, PHP-FPM, HHVM, ColdFusion/Java, Python, Ruby on Rails, NodeJS
+* PHP-FPM multiple master setup and HHVM server run per user ( for the security conscious )
 * Supports caching in proxy and FastCGI
 * Google PageSpeed support
 * limit_req, limit_conn support

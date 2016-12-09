@@ -207,9 +207,6 @@ add_header X-XSS-Protection "1; mode=block";
 {% if CONTENT_SECURITY_POLICY == 'enabled' %}
 add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
 {% endif %}
-{% if PAGESPEED == 'enabled' %}
-include /etc/nginx/conf.d/pagespeed.conf;
-{% endif %}
 {% if BROTLI == 'enabled' %}
 include /etc/nginx/conf.d/brotli.conf;
 {% elif GZIP == 'enabled' %}

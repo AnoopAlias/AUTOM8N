@@ -178,13 +178,9 @@ def php_secure_backend_add(user_name, domain_home, backend_version, clusterenabl
                         subprocess.call(['systemctl', '--host', server, 'enable', backend_name+'@'+user_name+'.socket'])
             else:
                 subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
-                subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.socket'])
-                subprocess.call(['systemctl', 'disable', backend_name+'@'+user_name+'.socket'])
                 if clusterenabled:
                     for server in cluster_serverlist:
                         subprocess.call(['systemctl', '--host', server, 'stop', backend_name+'@'+user_name+'.service'])
-                        subprocess.call(['systemctl', '--host', server, 'stop', backend_name+'@'+user_name+'.socket'])
-                        subprocess.call(['systemctl', '--host', server, 'disable', backend_name+'@'+user_name+'.socket'])
 
 
 def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
