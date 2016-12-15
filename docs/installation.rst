@@ -45,6 +45,9 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
 
 
+.. tip:: If you modify WHM service certificate run /opt/nDeploy/scripts/generate_default_vhost_config.py && nginx -s reload
+
+
 6. Install Optional additional modules
 ::
 

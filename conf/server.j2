@@ -193,7 +193,7 @@ open_file_cache off;
 autoindex on;
 {% endif %}
 {% if HSTS == 'enabled' %}
-add_header Strict-Transport-Security "max-age=86400" always;
+add_header Strict-Transport-Security "max-age=31536000" always;
 {% endif %}
 {% if CLICKJACKING_PROTECT == 'enabled' %}
 add_header X-Frame-Options SAMEORIGIN;
