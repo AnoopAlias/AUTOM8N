@@ -1,0 +1,138 @@
+#Wordpress with redis cache + nginx helper plugin
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+set $skip_cache 0;
+
+# POST requests and urls with a query string should always go to PHP
+if ($request_method = POST) {
+set $skip_cache 1;
+}
+if ($query_string != "") {
+set $skip_cache 1;
+}
+
+# Don't cache uris containing the following segments
+if ($request_uri ~* "/wp-admin/|/xmlrpc.php|wp-.*.php|/feed/|index.php|sitemap(_index)?.xml") {
+set $skip_cache 1;
+}
+
+# Don't use the cache for logged in users or recent commenters
+if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|wordpress_logged_in") {
+set $skip_cache 1;
+}
+
+location / {
+
+# Include NAXSI settings
+{% if NAXSI == 'enabled' %}
+{% if NAXSIMODE == 'learn' %}
+include /etc/nginx/conf.d/naxsi_learn.rules;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% elif NAXSIMODE == 'active' %}
+include /etc/nginx/conf.d/naxsi_active.rules;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% endif %}
+{% endif %}
+# End Include NAXSI settings
+
+try_files $uri $uri/ /index.php?q=$uri&$args;
+}
+
+location /redis-fetch {
+internal;
+set  $redis_key $args;
+# Assuming redis is bound to port 6379
+redis_pass  127.0.0.1:6379;
+}
+
+location /redis-store {
+internal;
+set_unescape_uri $key $arg_key ;
+redis2_query  set $key $echo_request_body;
+redis2_query expire $key 14400;
+redis2_pass  127.0.0.1:6379;
+}
+
+location ~ \.php$ {
+# Include NAXSI settings
+{% if NAXSI == 'enabled' %}
+{% if NAXSIMODE == 'learn' %}
+include /etc/nginx/conf.d/naxsi_learn.rules;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% elif NAXSIMODE == 'active' %}
+include /etc/nginx/conf.d/naxsi_active.rules;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% endif %}
+{% endif %}
+# End Include NAXSI settings
+
+set $key "$scheme$request_method$host$request_uri";
+try_files $uri =404;
+
+srcache_fetch_skip $skip_cache;
+srcache_store_skip $skip_cache;
+
+srcache_response_cache_control off;
+
+set_escape_uri $escaped_key $key;
+
+srcache_fetch GET /redis-fetch $key;
+srcache_store PUT /redis-store key=$escaped_key;
+
+more_set_headers 'X-Cache $srcache_fetch_status';
+more_set_headers 'X-Cache-2 $srcache_store_status';
+
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~* ^.+\.(ogg|ogv|svg|svgz|eot|otf|woff|mp4|ttf|rss|atom|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf)$ {
+access_log off; log_not_found off; expires max;
+}
+
+location = /robots.txt { access_log off; log_not_found off; }
+
+# Include NAXSI settings
+{% if NAXSI == 'enabled' %}
+location /NaxsiRequestDenied {
+return 418;
+}
+{% endif %}
+# End Include NAXSI settings
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location /{{ KEY }}/ {
+
+# Include NAXSI settings
+{% if NAXSI == 'enabled' %}
+{% if NAXSIMODE == 'learn' %}
+include /etc/nginx/conf.d/naxsi_learn.rules;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% elif NAXSIMODE == 'active' %}
+include /etc/nginx/conf.d/naxsi_active.rules;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% endif %}
+{% endif %}
+# End Include NAXSI settings
+
+include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+location = /wp-login.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
+
+include /etc/nginx/conf.d/cpanel_services.conf;
