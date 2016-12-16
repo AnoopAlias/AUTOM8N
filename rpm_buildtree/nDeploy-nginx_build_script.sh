@@ -125,6 +125,8 @@ rsync -a tempo/etc/nginx/modules/ndk_http_module.so ../nginx-pkg/etc/nginx/modul
 rsync -a ../nginx-pkg-64-common/etc/nginx/modules.d/ndk.load ../nginx-pkg/etc/nginx/modules.d/
 rsync -a ../nginx-pkg-64-common/usr/nginx/scripts/nginx-passenger* ../nginx-module-passenger-pkg/usr/nginx/scripts/
 rsync -a ../nginx-pkg-64-common/usr/nginx/scripts/nxapi* ../nginx-module-naxsi-pkg/usr/nginx/scripts/
+#We remove redis2 from redis package which gets copied due to file glob
+rm -f ../nginx-module-redis-pkg/etc/nginx/modules/ngx_http_redis2_module.so
 
 sed -i "s/RUBY_VERSION/$MY_RUBY_VERSION/g" ../nginx-module-passenger-pkg/etc/nginx/conf.auto/passenger.conf
 sed -i "s/PASSENGER_VERSION/$PASSENGER_VERSION/g" ../nginx-module-passenger-pkg/etc/nginx/conf.auto/passenger.conf
