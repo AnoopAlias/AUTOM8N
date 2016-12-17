@@ -118,6 +118,13 @@ Note that the template for this is not enabled by default as it needs support fo
 modules for the nginX server . If template is activated without installing the modules , it can lead into an invalid
 server configuration .
 
+Install Redis server
+::
+
+  yum install redis
+  systemctl enable redis.service && systemctl start redis.service #centos7/cl7
+  service redis start && chkconfig redis on #centos6/cl6
+
 Install additional modules required by the template
 ::
 

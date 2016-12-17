@@ -264,6 +264,12 @@ that can mitigate the security risk of a shared OpCache memory to some extend</p
 <p>Note that the template for this is not enabled by default as it needs support for additional optional
 modules for the nginX server . If template is activated without installing the modules , it can lead into an invalid
 server configuration .</p>
+<p>Install Redis server</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">redis</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">redis</span><span class="o">.</span><span class="n">service</span> <span class="o">&amp;&amp;</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">redis</span><span class="o">.</span><span class="n">service</span> <span class="c1">#centos7/cl7</span>
+<span class="n">service</span> <span class="n">redis</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="n">chkconfig</span> <span class="n">redis</span> <span class="n">on</span> <span class="c1">#centos6/cl6</span>
+</pre></div>
+</div>
 <p>Install additional modules required by the template</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">redis</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">redis2</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">echo</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">set_misc</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">srcache_filter</span>
 </pre></div>
