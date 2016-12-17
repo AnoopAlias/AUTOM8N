@@ -127,6 +127,8 @@ echo -e '\e[93m Adding cpanel hooks \e[0m'
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::unsuspendacct --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_suspension_functions_hook_post.py --category Whostmgr --event Accounts::unsuspendacct --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::SiteIP::set --stage post --manual
+/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/convertaddon_hook_pre.py --category ConvertAddon --event convert_addon --stage pre --manual
+/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/convertaddon_hook_post.py --category ConvertAddon --event convert_addon --stage post --manual
 #Add Hooks
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::addsubdomain --stage post --manual --exectype script --escalateprivs
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::changedocroot --stage post --manual --exectype script --escalateprivs
@@ -146,6 +148,8 @@ echo -e '\e[93m Adding cpanel hooks \e[0m'
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountmodify_hook_pre.py --category Whostmgr --event Accounts::Modify --stage pre --manual
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountmodify_hook_post.py --category Whostmgr --event Accounts::Modify --stage post --manual
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/accountremove_hook_pre.py --category Whostmgr --event Accounts::Remove --stage pre --manual
+/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/convertaddon_hook_pre.py --category ConvertAddon --event convert_addon --stage pre --manual
+/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/convertaddon_hook_post.py --category ConvertAddon --event convert_addon --stage post --manual
 
 
 if [ -z "$PHPBREW_ROOT" ] ; then
