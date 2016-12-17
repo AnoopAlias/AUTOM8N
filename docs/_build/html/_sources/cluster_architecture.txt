@@ -1,5 +1,5 @@
 XtendWeb cluster architecture
-============================
+==============================
 
 .. image:: DuEt_cPanel.jpg
 

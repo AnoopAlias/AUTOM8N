@@ -6,13 +6,14 @@
 .. image:: Xtendweb_banner.jpg
 
 
+
 XtendWeb is the worlds easiest and scalable nginX deployment tool that seemlessly plugs into your
 cPanel/WHM powered server .The result - you get a faster reliable webstack and can deploy your web applications to multiple web
 servers which are DNS load-balanced .
 
 XtendWeb is free and Open Source with commercial support and customization service provided by the developers 24x7
 
-.. tip:: XtendWeb is tuned for speedy config generation and effecient high performance web server working
+.. note:: XtendWeb is tuned for speedy config generation and effecient high performance web server working
 
 Features
 ---------

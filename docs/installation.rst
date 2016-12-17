@@ -57,6 +57,14 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   (brotli)      yum --enablerepo=ndeploy install nginx-nDeploy-module-brotli
   (geoip)       yum --enablerepo=ndeploy install nginx-nDeploy-module-geoip
   (naxsi)       yum --enablerepo=ndeploy install nginx-nDeploy-module-naxsi
+  (redis)       yum --enablerepo=ndeploy install nginx-nDeploy-module-redis
+  (redis2)      yum --enablerepo=ndeploy install nginx-nDeploy-module-redis2
+  (set_misc)    yum --enablerepo=ndeploy install nginx-nDeploy-module-set_misc
+  (srcache)     yum --enablerepo=ndeploy install nginx-nDeploy-module-srcache_filter
+  (echo)        yum --enablerepo=ndeploy install nginx-nDeploy-module-echo
+  # Following modules are installed and loaded by default but can be disabled
+  (headers_more)
+  (ndk) Nginx Development ToolKit
 
 .. tip:: There are no additonal configurations required for the loadable modules. Users can control the functionality from XtendWeb UI
 
