@@ -84,6 +84,8 @@ On Master
   #Copy rpm repos on master to slave for php and mysql
   cd /etc/yum.repos.d
   rsync -av EA4.repo MariaDB101.repo root@slave:/etc/yum.repos.d/
+  mkdir -p /etc/cpanel/ea4
+  touch /etc/cpanel/ea4/is_ea4
 
 
 Configuring the rest of the system to work as a cluster

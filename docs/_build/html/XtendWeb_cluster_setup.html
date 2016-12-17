@@ -241,6 +241,8 @@
 <span class="c1">#Copy rpm repos on master to slave for php and mysql</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span>
 <span class="n">rsync</span> <span class="o">-</span><span class="n">av</span> <span class="n">EA4</span><span class="o">.</span><span class="n">repo</span> <span class="n">MariaDB101</span><span class="o">.</span><span class="n">repo</span> <span class="n">root</span><span class="nd">@slave</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cpanel</span><span class="o">/</span><span class="n">ea4</span>
+<span class="n">touch</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cpanel</span><span class="o">/</span><span class="n">ea4</span><span class="o">/</span><span class="n">is_ea4</span>
 </pre></div>
 </div>
 </div>
