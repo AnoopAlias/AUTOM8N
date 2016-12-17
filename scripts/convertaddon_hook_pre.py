@@ -22,5 +22,6 @@ theaddon = mydict["domain"]
 with open('/etc/userdatadomains.json', 'r') as userdatadomains:
     userdatadom = json.load(userdatadomains)
 addondata = userdatadom.get(theaddon)
+theaddon_dict = {theaddon: addondata}
 with open(installation_path+"/lock/"+theaddon, 'w') as tempuserdata:
-    json.dump(addondata, tempuserdata)
+    json.dump(theaddon_dict, tempuserdata)
