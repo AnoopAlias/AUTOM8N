@@ -108,6 +108,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#where-are-my-php-logs">Where are my php logs?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#zendopcache-and-security-considerations-on-php-fpm-single-master-setup">ZendOpcache and security considerations on php-fpm single master setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#per-user-php-ini-custom-settings">Per user php.ini custom settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#high-performance-wordpress-setup-using-redis-cache-and-nginx-helper-plugin">High Performance Wordpress setup using Redis cache and nginx-helper plugin</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
@@ -252,6 +253,28 @@ that can mitigate the security risk of a shared OpCache memory to some extend</p
 <p>php-fpm lets users configure settings of type PHP_INI_PERDIR and PHP_INI_USER in .user.ini files</p>
 <p>Ref: <a class="reference external" href="http://php.net/manual/en/configuration.file.per-user.php">http://php.net/manual/en/configuration.file.per-user.php</a></p>
 <p>the settings can be provided in ini format(same as php.ini) and the file must be named .user.ini</p>
+</div>
+<div class="section" id="high-performance-wordpress-setup-using-redis-cache-and-nginx-helper-plugin">
+<h2>High Performance Wordpress setup using Redis cache and nginx-helper plugin<a class="headerlink" href="#high-performance-wordpress-setup-using-redis-cache-and-nginx-helper-plugin" title="Permalink to this headline">¶</a></h2>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">Require extra modules. System will break if not setup correctly</p>
+</div>
+<p>XtendWeb supports wordpress full page cache to redis as described at <a class="reference external" href="https://easyengine.io/wordpress-nginx/tutorials/single-site/redis_cache-with-conditional-purging/">https://easyengine.io/wordpress-nginx/tutorials/single-site/redis_cache-with-conditional-purging/</a></p>
+<p>Note that the template for this is not enabled by default as it needs support for additional optional
+modules for the nginX server . If template is activated without installing the modules , it can lead into an invalid
+server configuration .</p>
+<p>Install additional modules required by the template</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">redis</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">redis2</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">echo</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">set_misc</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">srcache_filter</span>
+</pre></div>
+</div>
+<p>Register the template</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">root</span> <span class="n">main</span> <span class="n">PHP</span> <span class="n">wpredis_helper</span><span class="o">.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress+Redis+nginx-helper&quot;</span>
+</pre></div>
+</div>
+<p>Install the nginx-helper plugin in wordpress <a class="reference external" href="https://wordpress.org/plugins/nginx-helper/">https://wordpress.org/plugins/nginx-helper/</a></p>
+<p>Setup the nginx helper plugin as mentioned in <a class="reference external" href="https://easyengine.io/wordpress-nginx/tutorials/single-site/redis_cache-with-conditional-purging/">https://easyengine.io/wordpress-nginx/tutorials/single-site/redis_cache-with-conditional-purging/</a>
+Leave the &#8220;Prefix&#8221; field blank in &#8220;Redis settings&#8221;</p>
 <div data-disqus-identifier="Setting up PHP" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 </div>
 

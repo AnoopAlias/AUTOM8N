@@ -171,6 +171,14 @@
 <p>on the server cli will show the status .
 Local checks (for example the check_mk nginx status module) should just report
 the details fine to remote monitoring servers.</p>
+<p>Monit configuration for nginx
+Below example is for init .For systemd replace &#8220;/etc/init.d/nginx start/stop&#8221;
+with &#8220;/usr/bin/systemctl start/stop nginx.service&#8221;</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="n">process</span> <span class="n">nginx</span> <span class="k">with</span> <span class="n">pidfile</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">start</span> <span class="n">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/nginx start&quot;</span>
+<span class="n">stop</span> <span class="n">program</span>  <span class="o">=</span> <span class="s2">&quot;/etc/init.d/nginx stop&quot;</span>
+</pre></div>
+</div>
 <p><strong>Monitoring php-fpm</strong></p>
 <p>php-fpm can be configured to provide detailed status info per pool.
 But since this has its own data confidentiality risks
@@ -180,6 +188,18 @@ and the fpm pool is setup to respond with a pong</p>
 <p><a class="reference external" href="http://domain.com/pingphpfpm">http://domain.com/pingphpfpm</a></p>
 <p>will return with a pong output if php-fpm pool is working fine .</p>
 <p>This can be easily configured for status checking</p>
+<p>Monit configuration useful to restart php-fpm in case of issues
+Below example is for systemd .For init replace &#8220;/usr/bin/systemctl start/stop ndeploy_backends.service&#8221;
+with &#8220;/etc/init.d/ndeploy_backends start/stop&#8221;</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="n">host</span> <span class="n">mydomain</span><span class="o">.</span><span class="n">com</span> <span class="k">with</span> <span class="n">address</span> <span class="n">mydomain</span><span class="o">.</span><span class="n">com</span>
+<span class="n">start</span> <span class="n">program</span> <span class="o">=</span> <span class="s2">&quot;/usr/bin/systemctl start ndeploy_backends.service&quot;</span>
+<span class="n">stop</span> <span class="n">program</span> <span class="o">=</span> <span class="s2">&quot;/usr/bin/systemctl stop ndeploy_backends.service&quot;</span>
+  <span class="k">if</span> <span class="n">failed</span> <span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">/</span><span class="n">mydomain</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pingphpfpm</span>
+      <span class="ow">and</span> <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;pong&quot;</span>
+      <span class="k">with</span> <span class="n">timeout</span> <span class="mi">60</span> <span class="n">seconds</span>
+  <span class="n">then</span> <span class="n">restart</span>
+</pre></div>
+</div>
 <div data-disqus-identifier="Monitoring nginx and app servers" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 
 
