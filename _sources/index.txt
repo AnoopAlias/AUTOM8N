@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-XtendWeb
-=========
+.. image:: Xtendweb_banner.jpg
+
 
 XtendWeb is the worlds easiest and scalable nginX deployment tool that seemlessly plugs into your
 cPanel/WHM powered server .The result - you get a faster reliable webstack and can deploy your web applications to multiple web
