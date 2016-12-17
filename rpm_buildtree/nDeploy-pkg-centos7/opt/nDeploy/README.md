@@ -1,6 +1,16 @@
-# nDeploy
-cpanel nginx plugin that lets you deploy PHP/Ruby/Python/NodeJS/ColdFusion and more!
+
+# XtendWeb
 
 
-# DOC
-https://github.com/AnoopAlias/nDeploy/wiki
+# DOCUMENTATION
+http://xtendweb.gnusys.net/
+
+
+# FORUM
+https://groups.google.com/forum/#!forum/gnusys_extendweb
+
+# SUPPORT
+http://xtendweb.gnusys.net/support.html
+
+# UPGRADING FROM PREVIOUS VERSION
+http://xtendweb.gnusys.net/migrating_from_nDeploy.html
