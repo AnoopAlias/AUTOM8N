@@ -173,8 +173,7 @@ The upgrade must be done manually by running the following commands
 ::
 
   yum -y install https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-5.noarch.rpm
-  yum --enablerepo=ndeploy install nginx-nDeploy nDeploy
-  yum --enablerepo=ndeploy upgrade nginx-nDeploy-module-*
+  yum --enablerepo=ndeploy upgrade
   #For setups using Phusion Passenger app server
   /opt/nDeploy/scripts/easy_passenger_setup.sh
   #For upgrading PHP application server(additional packages are to upgraded via yum)

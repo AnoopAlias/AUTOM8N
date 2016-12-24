@@ -170,13 +170,13 @@
 <h1>XtendWeb cluster upgrade<a class="headerlink" href="#xtendweb-cluster-upgrade" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="on-all-slaves">
 <h2>On All slaves<a class="headerlink" href="#on-all-slaves" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">unison</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">csync2</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span><span class="o">-</span><span class="n">slave</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">upgrade</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="on-master">
 <h2>On master<a class="headerlink" href="#on-master" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">unison</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">csync2</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">upgrade</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
 <span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">hosts</span> <span class="n">cluster</span><span class="o">.</span><span class="n">yml</span>
 </pre></div>
