@@ -231,9 +231,12 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         hasipv6 = False
         ipv6_addr = None
     # if domain has TLS, get details about it too
-    if os.path.isfile("/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL"):
-        hasssl = True
+    if kwargs.get('maindomain').startswith("*"):
+        cpdomainjson_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('maindomain') + "_SSL.cache"
+    else:
         cpdomainjson_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL.cache"
+    if os.path.isfile(cpdomainjson_ssl):
+        hasssl = True
         with open(cpdomainjson_ssl, 'r') as cpaneldomain_ssl_data_stream:
             json_parsed_cpaneldomain_ssl = json.load(cpaneldomain_ssl_data_stream)
         sslcertificatefile = json_parsed_cpaneldomain_ssl.get('sslcertificatefile')
@@ -444,6 +447,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                        "CPANELIP": cpanel_ipv4,
                        "DOCUMENTROOT": document_root,
                        "CONFIGDOMAINNAME": kwargs.get('configdomain'),
+                       "HOMEDIR": domain_home,
                        "NAXSI": naxsi,
                        "NAXSIMODE": naxsi_mode,
                        "UPSTREAM_PORT": backend_path,
@@ -488,6 +492,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                                      "CPANELIP": cpanel_ipv4,
                                      "DOCUMENTROOT": document_root,
                                      "CONFIGDOMAINNAME": kwargs.get('configdomain'),
+                                     "HOMEDIR": domain_home,
                                      "NAXSI": naxsi,
                                      "NAXSIMODE": naxsi_mode,
                                      "UPSTREAM_PORT": backend_path,

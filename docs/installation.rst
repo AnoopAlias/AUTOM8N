@@ -7,7 +7,7 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 
 .. tip:: If you are migrating from previous versions of nDeploy,please read the migration doc first
 
-.. tip:: If you see redirect loop error post installation, turn off ssl_offload feature in the cPanel plugin UI >> Server Settings
+.. tip:: If you see redirect loop error post installation, turn off ssl_offload feature in XtendWeb server settings 
 
 1. Install EPEL repo
 ::

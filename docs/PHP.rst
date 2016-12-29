@@ -114,7 +114,7 @@ High Performance Wordpress setup using Redis cache and nginx-helper plugin
 
 XtendWeb supports wordpress full page cache to redis as described at https://easyengine.io/wordpress-nginx/tutorials/single-site/redis_cache-with-conditional-purging/
 
-Note that the template for this is not enabled by default as it needs support for additional optional
+Note that the template for this is not enabled by default as it needs additional optional
 modules for the nginX server . If template is activated without installing the modules , it can lead into an invalid
 server configuration .
 

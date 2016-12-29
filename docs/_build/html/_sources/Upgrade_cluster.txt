@@ -1,19 +1,19 @@
 XtendWeb cluster upgrade
-=======================
+=========================
 
 On All slaves
 -------------
 
 ::
 
-  yum --enablerepo=ndeploy install unison-nDeploy csync2-nDeploy nDeploy-cluster-slave nginx-nDeploy
+  yum --enablerepo=ndeploy upgrade
 
 On master
 ---------
 
 ::
 
-  yum --enablerepo=ndeploy install unison-nDeploy csync2-nDeploy nDeploy nginx-nDeploy
+  yum --enablerepo=ndeploy upgrade
   cd /opt/nDeploy/conf/nDeploy-cluster
   ansible-playbook -i ./hosts cluster.yml
 
