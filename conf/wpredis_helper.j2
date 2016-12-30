@@ -37,7 +37,7 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
 # End Include NAXSI settings
 
-try_files $uri $uri/ /index.php?q=$uri&$args;
+try_files $uri $uri/ /index.php?$args;
 }
 
 location /redis-fetch {
