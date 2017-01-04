@@ -24,6 +24,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main NODEJS 4002.j2 "Ghost Blog"
 # PHP
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5001.j2 "Wordpress"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5031.j2 "CakePHP"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5026.j2 "Wordpress+FastCGI(microcache)"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5027.j2 "Wordpress Multisite(subdirectory)"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5028.j2 "Wordpress+WPSuperCache"
@@ -50,6 +51,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5100.j2 "A PHP application"
 # HHVM_NOBODY
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5001.j2 "Wordpress"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5031.j2 "CakePHP"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5026.j2 "Wordpress+FastCGI(microcache)"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5027.j2 "Wordpress Multisite(subdirectory)"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5028.j2 "Wordpress+WPSuperCache"
@@ -76,6 +78,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM_NOBODY 5100.j2 "A PHP application"
 # HHVM
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5001.j2 "Wordpress"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5031.j2 "CakePHP"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5026.j2 "Wordpress+FastCGI(microcache)"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5027.j2 "Wordpress Multisite(subdirectory)"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5028.j2 "Wordpress+WPSuperCache"
