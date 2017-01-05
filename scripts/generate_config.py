@@ -232,16 +232,16 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         ipv6_addr = None
     # if domain has TLS, get details about it too
     if kwargs.get('maindomain').startswith("*"):
-        cpdomainjson_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('maindomain') + "_SSL.cache"
+        cpdomainyaml_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('maindomain') + "_SSL"
     else:
-        cpdomainjson_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL.cache"
-    if os.path.isfile(cpdomainjson_ssl):
+        cpdomainyaml_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL"
+    if os.path.isfile(cpdomainyaml_ssl):
         hasssl = True
-        with open(cpdomainjson_ssl, 'r') as cpaneldomain_ssl_data_stream:
-            json_parsed_cpaneldomain_ssl = json.load(cpaneldomain_ssl_data_stream)
-        sslcertificatefile = json_parsed_cpaneldomain_ssl.get('sslcertificatefile')
-        sslcertificatekeyfile = json_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
-        sslcacertificatefile = json_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
+        with open(cpdomainyaml_ssl, 'r') as cpdomainyaml_ssl_data_stream:
+            yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpdomainyaml_ssl_data_stream)
+        sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
+        sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
+        sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
         if sslcacertificatefile:
             sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
             ocsp = True
@@ -250,22 +250,6 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                 for fname in filenames:
                     with codecs.open(fname, 'r', 'utf-8') as infile:
                         outfile.write(infile.read()+"\n")
-            if os.stat(sslcombinedcert).st_size == 0:
-                # The cert generated has zero size we redo this using the main YAML file now
-                cpdomainyaml_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL"
-                with open(cpdomainyaml_ssl, 'r') as cpdomainyaml_ssl_data_stream:
-                    yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpdomainyaml_ssl_data_stream)
-                sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
-                sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
-                sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
-                if sslcacertificatefile:
-                    sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
-                    ocsp = True
-                    filenames = [sslcertificatefile, sslcacertificatefile]
-                    with codecs.open(sslcombinedcert, 'w', 'utf-8') as outfile:
-                        for fname in filenames:
-                            with codecs.open(fname, 'r', 'utf-8') as infile:
-                                outfile.write(infile.read()+"\n")
             if os.stat(sslcombinedcert).st_size == 0:
                 hasssl = False
                 ocsp = False
