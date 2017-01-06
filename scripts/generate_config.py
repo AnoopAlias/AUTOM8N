@@ -13,6 +13,7 @@ from lxml import etree
 import jinja2
 from hashlib import md5
 import json
+import time
 
 
 __author__ = "Anoop P Alias"
@@ -248,6 +249,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             filenames = [sslcertificatefile, sslcacertificatefile]
             with codecs.open(sslcombinedcert, 'w', 'utf-8') as outfile:
                 for fname in filenames:
+                    # we wait for the file to be created if it does not exist.
+                    # this will eventually be removed  when SSL events have hook as there is a risk for infinite loop
+                    while not os.path.exists(fname):
+                        time.sleep(1)
                     with codecs.open(fname, 'r', 'utf-8') as infile:
                         outfile.write(infile.read()+"\n")
             if os.stat(sslcombinedcert).st_size == 0:
