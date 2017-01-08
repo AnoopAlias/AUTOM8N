@@ -247,12 +247,20 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
             ocsp = True
             filenames = [sslcertificatefile, sslcacertificatefile]
+            # Intialize a count to prevent an infinite loop
+            wait_count = 0
             with codecs.open(sslcombinedcert, 'w', 'utf-8') as outfile:
                 for fname in filenames:
                     # we wait for the file to be created if it does not exist.
                     # this will eventually be removed  when SSL events have hook as there is a risk for infinite loop
-                    while not os.path.exists(fname):
+                    # Lets wait 10 minutes in the hope that cPanel creates the SSL file
+                    while not os.path.exists(fname) or wait_count < 600:
                         time.sleep(1)
+                        wait_count = wait_count + 1
+                    # if we reached the timeout exit by raising an error
+                    if not wait_count < 600:
+                        print("Invalid TLS data in userdata file")
+                        sys.exit(1)
                     with codecs.open(fname, 'r', 'utf-8') as infile:
                         outfile.write(infile.read()+"\n")
             if os.stat(sslcombinedcert).st_size == 0:
