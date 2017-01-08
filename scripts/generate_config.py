@@ -254,9 +254,11 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     # we wait for the file to be created if it does not exist.
                     # this will eventually be removed  when SSL events have hook as there is a risk for infinite loop
                     # Lets wait 10 minutes in the hope that cPanel creates the SSL file
-                    while not os.path.exists(fname) or wait_count < 600:
+                    while not os.path.exists(fname):
                         time.sleep(1)
                         wait_count = wait_count + 1
+                        if wait_count > 600:
+                            break
                     # if we reached the timeout exit by raising an error
                     if not wait_count < 600:
                         print("Invalid TLS data in userdata file")
