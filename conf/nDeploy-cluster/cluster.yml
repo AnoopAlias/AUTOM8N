@@ -17,6 +17,7 @@
     - install_slave
     - csync2_slave
     - services_slave
+    - domlog_rotate_slave
     - backupmx_slave
 
 - name: setup csync2 service on master

@@ -1,0 +1,6 @@
+---
+
+- name: Setup domlog rotation on slave
+  template:
+    src: nginx-domlogs.j2
+    dest: /etc/logrotate.d/nginx-domlogs
