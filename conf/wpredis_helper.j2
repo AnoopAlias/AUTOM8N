@@ -49,6 +49,8 @@ redis_pass  127.0.0.1:6379;
 
 location /redis-store {
 internal;
+sendfile off;
+aio off;
 set_unescape_uri $key $arg_key ;
 redis2_query  set $key $echo_request_body;
 redis2_query expire $key 14400;
@@ -68,6 +70,9 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
 # End Include NAXSI settings
 
+sendfile off;
+aio off;
+
 set $key "$scheme$request_method$host$request_uri";
 try_files $uri =404;
 
@@ -75,6 +80,7 @@ srcache_fetch_skip $skip_cache;
 srcache_store_skip $skip_cache;
 
 srcache_response_cache_control off;
+srcache_request_cache_control off;
 
 set_escape_uri $escaped_key $key;
 
