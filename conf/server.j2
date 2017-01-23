@@ -28,7 +28,11 @@ resolver_timeout 5s;
 {% endif %}
 {% endif %}
 server_name www.{{ MAINDOMAINNAME }};
+{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
+return 301 https://{{ MAINDOMAINNAME }}$request_uri;
+{% else %}
 return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
+{% endif %}
 }
 {% endif %}
 
@@ -60,7 +64,11 @@ resolver_timeout 5s;
 {% endif %}
 {% endif %}
 server_name {{ MAINDOMAINNAME }};
+{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
+return 301 https://www.{{ MAINDOMAINNAME }}$request_uri;
+{% else %}
 return 301 $scheme://www.{{ MAINDOMAINNAME }}$request_uri;
+{% endif %}
 }
 {% endif %}
 
@@ -92,7 +100,11 @@ resolver_timeout 5s;
 {% endif %}
 {% endif %}
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
+{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
+return 301 https://{{ MAINDOMAINNAME }}$request_uri;
+{% else %}
 return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
+{% endif %}
 }
 {% endif %}
 
