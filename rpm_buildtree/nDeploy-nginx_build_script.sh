@@ -88,7 +88,8 @@ tar -zxf openssl-${OPENSSL_VERSION}.tar.gz
 wget https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${LIBRESSL_VERSION}.tar.gz
 tar -zxf libressl-${LIBRESSL_VERSION}.tar.gz
 cd libressl-${LIBRESSL_VERSION}
-./configure LDFLAGS=-lrt --prefix=$(pwd)/.openssl/ && make install-strip
+LIBRESSL_INSTALL_PATH=$(pwd)/.openssl
+./configure LDFLAGS=-lrt --prefix=${LIBRESSL_INSTALL_PATH} && make install-strip
 cd ..
 
 git clone https://github.com/google/ngx_brotli.git
