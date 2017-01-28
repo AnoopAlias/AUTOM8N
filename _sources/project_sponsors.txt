@@ -8,7 +8,7 @@ Companies who have sponsored XtendWeb development
 5. `WE PUSH BUTTONS <http://wepushbuttons.com.au/>`_
 
 CREDITS
-========
+---------
 The XtendWeb Plugin User Interface was contributed by Glyn Gray http://www.stirstudiosdesign.com/
 
 
