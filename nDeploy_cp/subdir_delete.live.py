@@ -36,17 +36,32 @@ print('')
 print('<html>')
 print('<head>')
 print('<title>XtendWeb</title>')
+print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
+print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
+print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
+print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<a href="xtendweb.live.py"><img border="0" src="xtendweb.png" alt="nDeploy"></a>')
-print('<HR>')
+print('<div id="main-container" class="container text-center">')
+print('<div class="row">')
+print('<div class="col-md-6 col-md-offset-3">')
+print('<div class="logo">')
+print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>')
+print('<h4>XtendWeb</h4>')
+print('</div>')
+print('<ol class="breadcrumb">')
+print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-home"></span></a></li>')
+print('<li><a href="xtendweb.live.py">Set Domain</a></li><li class="active">Sub-Directory App Settings</li>')
+print('</ol>')
+print('<div class="panel panel-default">')
 if form.getvalue('domain') and form.getvalue('thesubdir'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
     thesubdir = form.getvalue('thesubdir')
     profileyaml = installation_path + "/domain-data/" + mydomain
     if os.path.isfile(profileyaml):
+        print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div><div class="panel-body">'))
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
@@ -54,18 +69,23 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         if thesubdir in subdir_apps_dict.keys():
             del subdir_apps_dict[thesubdir]
         else:
-            print('ERROR : The SubDir is not configured')
+            print('<div class="alert alert-danger">The SubDir is not configured</div>')
         yaml_parsed_profileyaml['subdir_apps'] = subdir_apps_dict
-        print(('<p style="background-color:LightGrey">REMOVING:  '+mydomain+'/'+thesubdir+'</p>'))
-        print('<HR>')
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        print('<div class="boxedyellow">')
-        print('removed '+mydomain+'/'+thesubdir)
+        print('<div class="icon-box">')
+        print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Successfully removed '+thesubdir+'!')
         print('</div>')
     else:
-        print('ERROR : domain-data file i/o error')
+        print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
-    print('ERROR : Forbidden')
+    print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
+print('</div>')
+print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</a></small></div>')
+print('</div>')
+print('<div class="help pull-right"><a target="_blank" href="http://xtendweb.gnusys.net/"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <em>Need Help?</em></a></div>')
+print('</div>')
+print('</div>')
+print('</div>')
 print('</body>')
 print('</html>')

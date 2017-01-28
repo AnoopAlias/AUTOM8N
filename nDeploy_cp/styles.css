@@ -1,3 +1,126 @@
+body {
+	background: #e6e6e6;
+	font-family: 'Source Sans Pro', sans-serif;
+}
 
-.boxedyellow {border:5px solid grey;background-color:LightYellow;font-size:15px}
-.boxedblue {border:5px solid grey;background-color:LightBlue;font-size:15px}
+#main-container {
+	margin-top: 20px;
+}
+
+.logo {
+	margin: 20px auto;
+}
+
+.logo a {
+	display: block;
+}
+
+.logo .glyphicon {
+	font-size: 50px;
+}
+
+select {
+	margin-right: 10px;
+	position: relative;
+	top: 3px;
+}
+
+.panel .form-inline {
+	margin-bottom: 0;
+}
+
+.desc {
+	margin-bottom: 20px;
+}
+
+.radio {
+	margin: 0 5px;
+}
+
+.radio input {
+	margin-right: 5px;
+}
+
+.alert-top {
+	margin-top: 20px;
+}
+
+.panel .panel select {
+	width: 100%;
+}
+
+.icon-box .glyphicon {
+	font-size: 30px;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.glyphicon-option-vertical {
+	position: relative;
+	top: 3px;
+	margin: 0 10px;
+}
+
+.btn-primary {
+	min-width: 100px;
+	text-transform: uppercase;
+}
+
+.col-sm-6 .panel-title {
+	text-transform: uppercase;
+}
+
+.help {
+	font-size: 12px;
+	margin: 0 5px 30px 0;
+}
+
+#config .col-sm-6 .btn-primary {
+	width: 100%;
+}
+
+#config .col-sm-6 .label {
+	font-size: 14px;
+	text-align: right;
+	padding: 15px;
+	display: block;
+	border-radius: 0;
+}
+
+#config .list-group-item {
+	padding: 0;
+}
+
+#config .list-group-item .row {
+	margin: 0;
+}
+
+#config .list-group-item .col-sm-6:first-child {
+	padding: 0;
+}
+
+.config-save .list-group-item .col-sm-6:last-child {
+	padding: 0;
+}
+
+.config-save .list-group-item .col-sm-6:last-child .label {
+	text-align: left !important;
+}
+
+#config .list-group-item .col-radio {
+	padding: 10px !important;
+}
+
+.config-save .list-group-item .col-sm-6:first-child {
+	text-align: right;
+	line-height: 24px;
+}
+
+#config form .btn {
+	width: 100%;
+	margin: 10px 0;
+}
+
+#config form {
+	margin: 0;
+}
