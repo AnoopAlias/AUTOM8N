@@ -167,7 +167,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 else:
                     print('<li class="list-group-item">')
                     print('<div class="row">')
-                    print('<div class="col-sm-6 col-radio"><strong>NGINX is directly serving content via</strong></div>')
+                    print('<div class="col-sm-6 col-radio"><strong>native NGINX and</strong></div>')
                     print(('<div class="col-sm-6"><div class="label label-success">'+backend_category+'</div>'))
                     print('</div>')
                     print('</li>')
