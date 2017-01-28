@@ -73,7 +73,7 @@ if form.getvalue('domain'):
     print('</div>')
     print('<div class="col-sm-6">')
     print('<form action="subdir_selector.live.py" method="post">')
-    print('<input class="btn btn-primary" data-toggle="tooltip" title="applications installed in sub-directory like domain.com/blog/" type="submit" value="APPLICATION IN SUB-DIRECTORY">')
+    print('<input class="btn btn-primary" data-toggle="tooltip" title="applications installed in sub-directory like domain.com/blog/" type="submit" value="SUBDIR APPS">')
     # Pass on the domain name to the next stage
     print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
     print('</form>')
