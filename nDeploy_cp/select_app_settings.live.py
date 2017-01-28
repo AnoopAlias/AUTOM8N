@@ -105,7 +105,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         if backend_category == 'PROXY':
             print('<li class="list-group-item">')
             print('<div class="row">')
-            print('<div class="col-sm-6 col-radio"><strong>NGINX is currently proxying to</strong></div>')
+            print('<div class="col-sm-6 col-radio"><strong>NGINX is proxying to</strong></div>')
             print(('<div class="col-sm-6"><div class="label label-success">'+backend_version+'</div></div>'))
             print('</div>')
             print('</li>')
