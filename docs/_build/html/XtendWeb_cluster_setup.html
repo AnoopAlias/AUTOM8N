@@ -96,6 +96,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_sponsors.html#credits">CREDITS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
@@ -217,17 +218,6 @@
 <ol class="arabic simple" start="5">
 <li>Setup the cluster</li>
 </ol>
-<p>On the dnsonly slave remove the cpanel installed MySQL* rpms as these prevent the postfix server to be installed</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">eg</span><span class="p">:</span>
-<span class="n">root</span><span class="nd">@slave</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa|grep MySQL</span>
-<span class="n">MySQL55</span><span class="o">-</span><span class="n">test</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">48</span><span class="o">-</span><span class="mf">1.</span><span class="n">cp1148</span><span class="o">.</span><span class="n">x86_64</span>
-<span class="n">MySQL55</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">48</span><span class="o">-</span><span class="mf">1.</span><span class="n">cp1148</span><span class="o">.</span><span class="n">x86_64</span>
-<span class="n">MySQL55</span><span class="o">-</span><span class="n">devel</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">48</span><span class="o">-</span><span class="mf">1.</span><span class="n">cp1148</span><span class="o">.</span><span class="n">x86_64</span>
-<span class="n">MySQL55</span><span class="o">-</span><span class="n">shared</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">48</span><span class="o">-</span><span class="mf">1.</span><span class="n">cp1148</span><span class="o">.</span><span class="n">x86_64</span>
-
-<span class="n">yum</span> <span class="n">remove</span> <span class="n">MySQL55</span><span class="o">-*</span>
-</pre></div>
-</div>
 <p>On Master</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
 <span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="n">hosts</span><span class="o">.</span><span class="n">sample</span> <span class="n">hosts</span>
@@ -256,7 +246,7 @@ Modify the DNS zone template on master and set slave as a second MX entry with l
 %domain%. IN AAAA %ipv6%
 
 %domain%. IN MX 0 %domain%.
-%domain%. IN MX 5 slave.sysally.net.
+%domain%. IN MX 5 slave.gnusys.net.
 
 WHM &gt;&gt; Home »Service Configuration »Exim Configuration Manager
 Access Lists
