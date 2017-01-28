@@ -6,7 +6,7 @@
        "id" : "xtendweb_grp"
     },
     {
-       "icon" : "xtendweb.svg",
+       "icon" : "xtendweb.png",
        "group_id" : "xtendweb_grp",
        "order" : 1,
        "name" : "XtendWeb nginX control",
