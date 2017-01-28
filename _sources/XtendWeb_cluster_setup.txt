@@ -57,18 +57,6 @@ Login at least once from both ends and ensure the SSH key signatures are accepte
 
 5. Setup the cluster
 
-On the dnsonly slave remove the cpanel installed MySQL* rpms as these prevent the postfix server to be installed
-::
-
-  eg:
-  root@slave [~]# rpm -qa|grep MySQL
-  MySQL55-test-5.5.48-1.cp1148.x86_64
-  MySQL55-server-5.5.48-1.cp1148.x86_64
-  MySQL55-devel-5.5.48-1.cp1148.x86_64
-  MySQL55-shared-5.5.48-1.cp1148.x86_64
-
-  yum remove MySQL55-*
-
 On Master
 ::
 
@@ -102,7 +90,7 @@ Configuring the rest of the system to work as a cluster
   %domain%. IN AAAA %ipv6%
 
   %domain%. IN MX 0 %domain%.
-  %domain%. IN MX 5 slave.sysally.net.
+  %domain%. IN MX 5 slave.gnusys.net.
 
   WHM >> Home »Service Configuration »Exim Configuration Manager
   Access Lists
