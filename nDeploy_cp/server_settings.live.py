@@ -312,7 +312,7 @@ if form.getvalue('domain'):
         print('<li class="list-group-item">')
         # hsts
         print('<div class="row">')
-        hsts_hint = 'add_header Strict-Transport-Security "max-age=86400" always;'
+        hsts_hint = 'add_header Strict-Transport-Security "max-age=31536000" always;'
         if hsts == 'enabled':
             print_green("hsts", hsts_hint)
             print('<div class="col-sm-6 col-radio">')
