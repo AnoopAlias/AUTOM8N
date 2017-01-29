@@ -117,7 +117,7 @@ if form.getvalue('domain'):
         else:
             print('<li class="list-group-item">')
             print('<div class="row">')
-            print('<div class="col-sm-6 col-radio"><strong>NGINX is directly serving content via</strong></div>')
+            print('<div class="col-sm-6 col-radio"><strong>native NGINX and </strong></div>')
             print(('<div class="col-sm-6"><div class="label label-success">'+backend_category+'</div>'))
             print('</div>')
             print('</li>')
@@ -151,8 +151,9 @@ if form.getvalue('domain'):
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</a></small></div>')
 print('</div>')
+print('<div class="help pull-right"><a target="_blank" href="http://xtendweb.gnusys.net/"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <em>Need Help?</em></a></div>')
 print('</div>')
 print('</div>')
 print('</div>')

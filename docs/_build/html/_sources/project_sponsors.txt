@@ -7,4 +7,9 @@ Companies who have sponsored XtendWeb development
 4. `TOGINET RADIO <http://www.toginet.com/>`_
 5. `WE PUSH BUTTONS <http://wepushbuttons.com.au/>`_
 
+CREDITS
+---------
+The XtendWeb Plugin User Interface was contributed by Glyn Gray http://www.stirstudiosdesign.com/
+
+
 .. tip:: Please contact anoop@gnusys.net if you wish to sponsor the development of this project
