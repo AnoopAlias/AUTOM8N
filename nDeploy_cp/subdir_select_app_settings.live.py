@@ -262,9 +262,8 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             # Ok we are done with getting the settings,now lets present it to the user
             print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
             print('<div class="panel-body">')
-            print('<form action="subdir_save_app_settings.live.py" method="post">')
-            print('<div class="boxedyellow">')
-            print(('<div class="alert alert-success alert-top">You selected <span class="label label-success">'+mybackend+'</span> as the backend, select the version and template for this backend below</div>'))
+            print('<form class="form-inline" action="subdir_save_app_settings.live.py" method="post">')
+            print(('<div class="alert alert-success">You selected <span class="label label-success">'+mybackend+'</span> as the backend, select the version and template for this backend below</div>'))
             backends_dict = backend_data_yaml_parsed.get(mybackend)
             new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
             if os.path.isfile(user_app_template_file):
@@ -308,9 +307,8 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('</div>')
-print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</a></small></div>')
+print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
 print('</div>')
-print('<div class="help pull-right"><a target="_blank" href="http://xtendweb.gnusys.net/"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <em>Need Help?</em></a></div>')
 print('</div>')
 print('</div>')
 print('</div>')
