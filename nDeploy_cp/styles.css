@@ -1,6 +1,30 @@
 body {
-	background: #e6e6e6;
+	background: #E6E6E6;
 	font-family: 'Source Sans Pro', sans-serif;
+}
+
+a {
+	color: #2B6DA9;
+	transition: all 0.5s ease 0s;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #075A8B;
+}
+
+.btn-primary {
+	background-color: #2B6DA9;
+	border-color: #2B6DA9;
+	transition: all 0.5s ease 0s;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+	background-color: #075A8B;
+	border-color: #075A8B;
 }
 
 #main-container {
@@ -12,7 +36,7 @@ body {
 }
 
 .logo a {
-	display: block;
+	display: inline-block;
 }
 
 .logo .glyphicon {
@@ -68,11 +92,6 @@ select {
 
 .col-sm-6 .panel-title {
 	text-transform: uppercase;
-}
-
-.help {
-	font-size: 12px;
-	margin: 0 5px 30px 0;
 }
 
 #config .col-sm-6 .btn-primary {
