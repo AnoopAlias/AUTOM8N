@@ -6,7 +6,7 @@
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
 NGINX_VERSION="1.11.9"
-NGINX_RPM_ITER="1.el${OSVERSION}"
+NGINX_RPM_ITER="2.el${OSVERSION}"
 NPS_VERSION="1.11.33.4"
 MY_RUBY_VERSION="2.3.1"
 PASSENGER_VERSION="5.1.1"
@@ -14,7 +14,7 @@ CACHE_PURGE_VERSION="2.3"
 NAXSI_VERSION="http2"
 PS_NGX_EXTRA_FLAGS="--with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc"
 OPENSSL_VERSION="1.0.2j"
-LIBRESSL_VERSION="2.5.0"
+LIBRESSL_VERSION="2.5.1"
 SRCACHE_NGINX_MODULE="0.31"
 NGX_DEVEL_KIT="0.3.0"
 REDIS2_NGINX_MODULE="0.13"
