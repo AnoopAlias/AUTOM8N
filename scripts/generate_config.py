@@ -285,10 +285,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         sslcertificatekeyfile = None
     # Get all data from nDeploy domain-data file
     if is_suspended:
-        if os.path.isfile(installation_path + "/conf/domain_data.suspended_local.yaml"):
-            domain_data_file = installation_path + "/conf/domain_data.suspended_local.yaml"
+        if os.path.isfile(installation_path + "/conf/domain_data_suspended_local.yaml"):
+            domain_data_file = installation_path + "/conf/domain_data_suspended_local.yaml"
         else:
-            domain_data_file = installation_path + "/conf/domain_data.suspended.yaml"
+            domain_data_file = installation_path + "/conf/domain_data_suspended.yaml"
     else:
         domain_data_file = installation_path + "/domain-data/" + kwargs.get('configdomain')
     if not os.path.isfile(domain_data_file):
@@ -534,7 +534,7 @@ if __name__ == "__main__":
         if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
             with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
                 json_parsed_cpusersfile = json.load(users_file)
-            if json_parsed_cpusersfile.get('SUSPENDED') == 1:
+            if json_parsed_cpusersfile.get('SUSPENDED') == "1":
                 is_suspended = True
             else:
                 is_suspended = False
