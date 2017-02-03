@@ -6,6 +6,7 @@ Companies who have sponsored XtendWeb development
 3. `MATAHARI LABS <https://mataharilabs.com/>`_
 4. `TOGINET RADIO <http://www.toginet.com/>`_
 5. `WE PUSH BUTTONS <http://wepushbuttons.com.au/>`_
+6. `OPENTAXI.CAB <https://www.opentaxi.cab/>`_
 
 CREDITS
 ---------
