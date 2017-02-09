@@ -1,7 +1,7 @@
 [Unit]
 Description=nginx-nDeploy - high performance web server
 Documentation=http://nginx.org/en/docs/
-After=network.target remote-fs.target nss-lookup.target
+After=network.target remote-fs.target nss-lookup.target network-online.target ipaliases.service
 
 [Service]
 Type=forking
