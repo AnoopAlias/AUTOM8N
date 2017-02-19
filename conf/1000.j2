@@ -2,7 +2,27 @@
 
 root {{ DOCUMENTROOT }};
 
+
+# Password protected uri
+{% for DIR in PROTECTED_DIR %}
+{% if DIR == '/' %}
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
+{% else %}
+location ^~ {{ DIR }}/ {
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}{{ DIR }}/passwd;
+# Include any regex locations here
+# End Include any regex locations here
+}
+{% endif %}
+{% endfor %}
+# End Password protected uri
+
+
 location / {
+
+
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}
 {% if NAXSIMODE == 'learn' %}
@@ -14,6 +34,8 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
 {% endif %}
 # End Include NAXSI settings
+
+
 access_log  off;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
@@ -56,6 +78,7 @@ return 418;
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
 location /{{ KEY }}/ {
 
+
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}
 {% if NAXSIMODE == 'learn' %}
@@ -67,6 +90,7 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
 {% endif %}
 # End Include NAXSI settings
+
 
 include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
 }

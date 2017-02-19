@@ -152,17 +152,9 @@ include /etc/nginx/conf.d/gzip.conf;
 {% if DOSMITIGATE == 'enabled' %}
 include /etc/nginx/conf.d/dos_mitigate.conf;
 {% endif %}
-{% for DIR in PROTECTED_DIR %}
-{% if DIR == '/' %}
-auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
-{% else %}
-location {{ DIR }}/ {
-auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}{{ DIR }}/passwd;
-}
+{% if SET_EXPIRE_STATIC == 'enabled' %}
+include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
-{% endfor %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
 }
@@ -227,17 +219,9 @@ include /etc/nginx/conf.d/gzip.conf;
 {% if DOSMITIGATE == 'enabled' %}
 include /etc/nginx/conf.d/dos_mitigate.conf;
 {% endif %}
-{% for DIR in PROTECTED_DIR %}
-{% if DIR == '/' %}
-auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
-{% else %}
-location {{ DIR }}/ {
-auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}{{ DIR }}/passwd;
-}
+{% if SET_EXPIRE_STATIC == 'enabled' %}
+include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
-{% endfor %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 }
 {% endif %}
