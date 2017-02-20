@@ -1,4 +1,5 @@
 # Configuration file for the nginx service.
 
 NGINX=/usr/sbin/nginx
+NGINX_DEBUG=/usr/sbin/nginx-debug
 CONFFILE=/etc/nginx/nginx.conf
