@@ -19,9 +19,20 @@ app_template_file = installation_path+"/conf/apptemplates_subdir.yaml"
 cpaneluser = os.environ["USER"]
 user_app_template_file = installation_path+"/conf/"+cpaneluser+"_apptemplates_subdir.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
+naxsi = 'enabled'
+naxsi_mode = 'learn'
+naxsi_whitelist = 'none'
 
 
 cgitb.enable()
+
+
+def print_green(theoption, hint):
+    print(('<div class="col-sm-6"><div class="label label-success" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+
+
+def print_red(theoption, hint):
+    print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
 
 def close_cpanel_liveapisock():
@@ -177,6 +188,100 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # Pass on the domain name to the next stage
                 print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
+                print('<input class="btn btn-primary" type="submit" value="Submit">')
+                print('</form>')
+                # Next section start here
+                print(('<div class="panel-heading"><h3 class="panel-title">Password protect: <strong>http://'+mydomain+'/</strong></h3></div>'))
+                print('<div class="panel-body">')
+                print('<ul class="list-group">')
+                print('<li class="list-group-item">')
+                print('<div class="row">')
+                print('<div class="alert alert-info">')
+                print('<ul class="list text-left">')
+                print('<li>Password protection works along with cPanel - "Directory Privacy" feature</li>')
+                print('<li>Please setup a password for the folder in cPanel <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> FILES <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Directory Privacy</li>')
+                print('</ul>')
+                print('</div>')
+                print('<div class="col-sm-6">')
+                print('<form action="directory_privacy.live.py" method="post">')
+                print('<input class="btn btn-primary" data-toggle="tooltip" title="password protected URL" type="submit" value="PASSWORD PROTECTED URL">')
+                # Pass on the domain name to the next stage
+                print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+                print('</form>')
+                print('</div>')
+                print('</li>')
+                print('</ul>')
+                print('</ul>')
+                print('</div>')
+                print('</div>')
+                # Next section start here
+                print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
+                print('<form id="config" class="form-inline" action="save_server_settings.live.py" method="post">')
+                print('<ul class="list-group"><li class="list-group-item">')
+                # naxsi
+                print('<div class="row">')
+                naxsi_hint = "NAXSI is a web application firewall"
+                if naxsi == 'enabled':
+                    print_green("naxsi", naxsi_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="naxsi" value="enabled" checked/> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="naxsi" value="disabled" /> Disabled</label></div>')
+                    print('</div>')
+                else:
+                    print_red("naxsi", naxsi_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="naxsi" value="enabled" /> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="naxsi" value="disabled" checked/> Disabled</label></div>')
+                    print('</div>')
+                    print('</div>')
+                print('</li>')
+                print('<li class="list-group-item">')
+                # naxsi_mode
+                print('<div class="row">')
+                print('<div class="col-sm-6">')
+                print(('<div class="label label-default" data-toggle="tooltip" title="active mode blocks requests on trigger">naxsi_mode</div>'))
+                print('</div>')
+                print('<div class="col-sm-6 col-radio">')
+                print('<select name="naxsi_mode">')
+                if naxsi_mode == 'learn':
+                    print(('<option selected value="learn">learn</option>'))
+                    print(('<option value="active">active</option>'))
+                else:
+                    print(('<option value="learn">learn</option>'))
+                    print(('<option selected value="active">active</option>'))
+                print('</select>')
+                print('</div>')
+                print('</div>')
+                print('</li>')
+
+                print('<li class="list-group-item">')
+                # NAXSI Whitelist
+                print('<div class="row">')
+                print('<div class="col-sm-6">')
+                print(('<div class="label label-default" data-toggle="tooltip" title="select NAXSI Whitelist">NAXSI Whitelist</div>'))
+                print('</div>')
+                print('<div class="col-sm-6 col-radio">')
+                print('<select name="naxsi_whitelist">')
+                if naxsi_whitelist == 'none':
+                    print(('<option selected value="none">none</option>'))
+                    print(('<option value="wordpress">Wordpress</option>'))
+                    print(('<option value="drupal">Drupal</option>'))
+                elif naxsi_whitelist == 'wordpress':
+                    print(('<option value="none">none</option>'))
+                    print(('<option value="drupal">Drupal</option>'))
+                    print(('<option selected value="wordpress">Wordpress</option>'))
+                elif naxsi_whitelist == 'drupal':
+                    print(('<option value="none">none</option>'))
+                    print(('<option selected value="drupal">Drupal</option>'))
+                    print(('<option value="wordpress">Wordpress</option>'))
+                print('</select>')
+                print('</div>')
+                print('</div>')
+                print('</li>')
+                # end
+                print('</ul>')
+                # Pass on the domain name to the next stage
+                print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
                 print('<input class="btn btn-primary" type="submit" value="Submit">')
                 print('</form>')
         else:

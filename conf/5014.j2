@@ -1,26 +1,24 @@
 # CMSMadeSimple
+
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
+
 location / {
 try_files $uri $uri/ /index.php?page=$request_uri;
 }
+
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
-location ~* \.(js|css|png|jpg|jpeg|gif|swf|xml|ico|pdf|flv|txt)$ {
-expires 1d;
-}
-location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
 
 # Include any applications in subdirectory
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location /{{ KEY }}/ {
+location ^~ /{{ KEY }}/ {
 include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
 }
 {% endfor %}
 # End Include any applications in subdirectory
-
 
 location ~ \.php$ {
 try_files $uri =404;

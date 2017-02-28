@@ -78,13 +78,6 @@ if form.getvalue('domain'):
     print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
     print('</form>')
     print('</div>')
-    print('<div class="col-sm-6">')
-    print('<form action="directory_privacy.live.py" method="post">')
-    print('<input class="btn btn-primary" data-toggle="tooltip" title="password protected URL" type="submit" value="PASSWORD PROTECTED URL">')
-    # Pass on the domain name to the next stage
-    print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-    print('</form>')
-    print('</div>')
     print('</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')

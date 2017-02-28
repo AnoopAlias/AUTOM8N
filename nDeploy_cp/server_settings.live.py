@@ -346,42 +346,6 @@ if form.getvalue('domain'):
             print('</div>')
         print('</li>')
         print('<li class="list-group-item">')
-        # naxsi
-        print('<div class="row">')
-        naxsi_hint = "NAXSI is a web application firewall"
-        if naxsi == 'enabled':
-            print_green("naxsi", naxsi_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="naxsi" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="naxsi" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("naxsi", naxsi_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="naxsi" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="naxsi" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-            print('</div>')
-        print('</li>')
-        print('<li class="list-group-item">')
-        # naxsi_mode
-        print('<div class="row">')
-        print('<div class="col-sm-6">')
-        print(('<div class="label label-default" data-toggle="tooltip" title="active mode blocks requests on trigger">naxsi_mode</div>'))
-        print('</div>')
-        print('<div class="col-sm-6 col-radio">')
-        print('<select name="naxsi_mode">')
-        if naxsi_mode == 'learn':
-            print(('<option selected value="learn">learn</option>'))
-            print(('<option value="active">active</option>'))
-        else:
-            print(('<option value="learn">learn</option>'))
-            print(('<option selected value="active">active</option>'))
-        print('</select>')
-        print('</div>')
-        print('</div>')
-        print('</li>')
-        print('<li class="list-group-item">')
         # redirect_to_ssl
         print('<div class="row">')
         redirect_to_ssl_hint = "redirect http:// to https:// "
@@ -441,6 +405,43 @@ if form.getvalue('domain'):
         print('</div>')
         print('</div>')
         print('</li>')
+        print('<li class="list-group-item">')
+        # URL Redirect
+        print('<div class="row">')
+        print('<div class="col-sm-6">')
+        print(('<div class="label label-default" data-toggle="tooltip" title="select redirection status">URL Redirect</div>'))
+        print('</div>')
+        print('<div class="col-sm-6 col-radio">')
+        print('<select name="redirectstatus">')
+        if wwwredirect == 'none':
+            print(('<option selected value="none">no redirection</option>'))
+            print(('<option value="301">Permanent Redirect</option>'))
+            print(('<option value="307">Temporary Redirect</option>'))
+        elif wwwredirect == '301':
+            print(('<option value="none">no redirection</option>'))
+            print(('<option value="307">Temporary Redirect</option>'))
+            print(('<option selected value="301">Permanent Redirect</option>'))
+        elif wwwredirect == '307':
+            print(('<option value="none">no redirection</option>'))
+            print(('<option selected value="307">Temporary Redirect</option>'))
+            print(('<option value="301">Permanent Redirect</option>'))
+        print('</select>')
+        print('</div>')
+        print('</div>')
+        print('</li>')
+        # start
+        print('<li class="list-group-item">')
+        # Redirect URL
+        print('<div class="row">')
+        print('<div class="col-sm-6">')
+        print(('<div class="label label-default" data-toggle="tooltip" title="Redirect to URL">Redirect to URL</div>'))
+        print('</div>')
+        print('<div class="col-sm-6 col-radio">')
+        print('<input class="form-control" placeholder="https://mynewdomain.tld/blog" type="text" name="redirecturl">')
+        print('</div>')
+        print('</div>')
+        print('</li>')
+        # end
         print('</ul>')
         # Pass on the domain name to the next stage
         print(('<input style="display:none" name="domain" value="'+mydomain+'">'))

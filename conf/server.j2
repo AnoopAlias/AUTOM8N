@@ -152,10 +152,23 @@ include /etc/nginx/conf.d/gzip.conf;
 {% if DOSMITIGATE == 'enabled' %}
 include /etc/nginx/conf.d/dos_mitigate.conf;
 {% endif %}
+{% if AUTH_BASIC == 'enabled' %}
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
+{% endif %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
+# Include NAXSI settings
+location ^* /NaxsiRequestDenied {
+return 418;
+}
+# End Include NAXSI settings
+{% if SET_REDIRECT == 'enabled' %}
+return {{RETURN_CODE}} {{REDIRECT_URL}};
+{% else %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
+{% endif %}
 {% endif %}
 }
 
@@ -219,9 +232,22 @@ include /etc/nginx/conf.d/gzip.conf;
 {% if DOSMITIGATE == 'enabled' %}
 include /etc/nginx/conf.d/dos_mitigate.conf;
 {% endif %}
+{% if AUTH_BASIC == 'enabled' %}
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
+{% endif %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
+# Include NAXSI settings
+location ^~ /NaxsiRequestDenied {
+return 418;
+}
+# End Include NAXSI settings
+{% if SET_REDIRECT == 'enabled' %}
+return {{RETURN_CODE}} {{REDIRECT_URL}};
+{% else %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
+{% endif %}
 }
 {% endif %}

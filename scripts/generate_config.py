@@ -391,6 +391,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "BROTLI": brotli,
                     "CONTENT_SECURITY_POLICY": content_security_policy,
                     "HSTS": hsts,
+                    "NAXSI": naxsi,
+                    "NAXSIMODE": naxsi_mode,
                     "DOMAINLIST": domain_list,
                     "AUTOINDEX": autoindex,
                     "REDIRECT_TO_SSL": redirect_to_ssl,

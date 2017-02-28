@@ -59,7 +59,7 @@ if 'domain' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -76,7 +76,7 @@ if os.path.isfile(profileyaml):
 else:
     print('ERROR: Domain data file i/o error')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -91,7 +91,7 @@ if 'autoindex' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -106,7 +106,7 @@ if 'ssl_offload' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -121,7 +121,7 @@ if 'pagespeed' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -136,7 +136,7 @@ if 'brotli' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -151,7 +151,7 @@ if 'gzip' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -166,7 +166,7 @@ if 'http2' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -181,7 +181,7 @@ if 'access_log' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -196,7 +196,7 @@ if 'open_file_cache' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -211,7 +211,7 @@ if 'clickjacking_protect' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -226,7 +226,7 @@ if 'disable_contenttype_sniffing' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -241,7 +241,7 @@ if 'xss_filter' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -256,7 +256,7 @@ if 'content_security_policy' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -271,7 +271,7 @@ if 'hsts' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -286,7 +286,7 @@ if 'dos_mitigate' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -301,7 +301,7 @@ if 'naxsi' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -316,7 +316,7 @@ if 'naxsi_mode' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -331,7 +331,7 @@ if 'redirect_to_ssl' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -346,7 +346,7 @@ if 'redirect_aliases' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -361,7 +361,7 @@ if 'wwwredirect' in form.keys():
 else:
     print('ERROR: Forbidden')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
