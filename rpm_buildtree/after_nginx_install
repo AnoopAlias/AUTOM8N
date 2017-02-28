@@ -1,6 +1,7 @@
 if [ -f /etc/csf/csf.pignore ] ; then
 	echo -e '\e[93m Setting up CSF firewall to ignore nginx process \e[0m'
 	grep -w '/usr/sbin/nginx' /etc/csf/csf.pignore || echo 'exe:/usr/sbin/nginx' >> /etc/csf/csf.pignore
+	grep -w '/usr/sbin/nginx-debug' /etc/csf/csf.pignore || echo 'exe:/usr/sbin/nginx-debug' >> /etc/csf/csf.pignore
 fi
 if [ ! -L /etc/nginx/sites-enabled ] && [ ! -d /etc/nginx/sites-enabled ] ; then
 	mkdir /etc/nginx/sites-enabled
