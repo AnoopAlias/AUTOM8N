@@ -391,6 +391,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "BROTLI": brotli,
                     "CONTENT_SECURITY_POLICY": content_security_policy,
                     "HSTS": hsts,
+                    "NAXSI": naxsi,
+                    "NAXSIMODE": naxsi_mode,
                     "DOMAINLIST": domain_list,
                     "AUTOINDEX": autoindex,
                     "REDIRECT_TO_SSL": redirect_to_ssl,
@@ -455,6 +457,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                        "PATHTONODEJS": backend_path,
                        "SOCKETFILE": fastcgi_socket,
                        "SUBDIRAPPS": subdir_apps_uniq,
+                       "PROTECTED_DIR": protected_dir,
+                       "DIFFDIR": diff_dir,
                        "PATHTOPYTHON": backend_path,
                        }
     generated_app_config = app_template.render(apptemplateVars)

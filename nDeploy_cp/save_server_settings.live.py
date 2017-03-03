@@ -5,6 +5,7 @@ import yaml
 import cgi
 import cgitb
 import sys
+import re
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -50,16 +51,16 @@ print('<h4>XtendWeb</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-home"></span></a></li>')
-print('<li><a href="xtendweb.live.py">Set Domain</a></li><li class="active">Server Settings</li>')
+print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Server Settings</li>')
 print('</ol>')
 print('<div class="panel panel-default">')
 # Get the domain name
 if 'domain' in form.keys():
     mydomain = form.getvalue('domain')
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::domain')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -73,10 +74,11 @@ if os.path.isfile(profileyaml):
     # Get all config settings from the domains domain-data config file
     with open(profileyaml, 'r') as profileyaml_data_stream:
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+    current_redirecturl = yaml_parsed_profileyaml.get('redirecturl', "noredirection")
 else:
     print('ERROR: Domain data file i/o error')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -89,9 +91,9 @@ if 'autoindex' in form.keys():
     autoindex = form.getvalue('autoindex')
     yaml_parsed_profileyaml['autoindex'] = autoindex
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::autoindex')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -104,9 +106,9 @@ if 'ssl_offload' in form.keys():
     ssl_offload = form.getvalue('ssl_offload')
     yaml_parsed_profileyaml['ssl_offload'] = ssl_offload
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::ssl_offload')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -119,9 +121,24 @@ if 'pagespeed' in form.keys():
     pagespeed = form.getvalue('pagespeed')
     yaml_parsed_profileyaml['pagespeed'] = pagespeed
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::pagespeed')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</body>')
+    print('</html>')
+    sys.exit(0)
+# pagespeed_filter
+if 'pagespeed_filter' in form.keys():
+    pagespeed_filter = form.getvalue('pagespeed_filter')
+    yaml_parsed_profileyaml['pagespeed_filter'] = pagespeed_filter
+else:
+    print('ERROR: Forbidden::pagespeed_filter')
+    print('</div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -134,9 +151,9 @@ if 'brotli' in form.keys():
     brotli = form.getvalue('brotli')
     yaml_parsed_profileyaml['brotli'] = brotli
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::brotli')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -149,9 +166,9 @@ if 'gzip' in form.keys():
     gzip = form.getvalue('gzip')
     yaml_parsed_profileyaml['gzip'] = gzip
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::gzip')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -164,9 +181,9 @@ if 'http2' in form.keys():
     http2 = form.getvalue('http2')
     yaml_parsed_profileyaml['http2'] = http2
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::http2')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -179,9 +196,9 @@ if 'access_log' in form.keys():
     access_log = form.getvalue('access_log')
     yaml_parsed_profileyaml['access_log'] = access_log
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::access_log')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -194,9 +211,9 @@ if 'open_file_cache' in form.keys():
     open_file_cache = form.getvalue('open_file_cache')
     yaml_parsed_profileyaml['open_file_cache'] = open_file_cache
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::open_file_cache')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -209,9 +226,9 @@ if 'clickjacking_protect' in form.keys():
     clickjacking_protect = form.getvalue('clickjacking_protect')
     yaml_parsed_profileyaml['clickjacking_protect'] = clickjacking_protect
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::clickjacking_protect')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -224,9 +241,9 @@ if 'disable_contenttype_sniffing' in form.keys():
     disable_contenttype_sniffing = form.getvalue('disable_contenttype_sniffing')
     yaml_parsed_profileyaml['disable_contenttype_sniffing'] = disable_contenttype_sniffing
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::disable_contenttype_sniffing')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -239,9 +256,9 @@ if 'xss_filter' in form.keys():
     xss_filter = form.getvalue('xss_filter')
     yaml_parsed_profileyaml['xss_filter'] = xss_filter
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::xss_filter')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -254,9 +271,9 @@ if 'content_security_policy' in form.keys():
     content_security_policy = form.getvalue('content_security_policy')
     yaml_parsed_profileyaml['content_security_policy'] = content_security_policy
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::content_security_policy')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -269,9 +286,9 @@ if 'hsts' in form.keys():
     hsts = form.getvalue('hsts')
     yaml_parsed_profileyaml['hsts'] = hsts
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::hsts')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -284,39 +301,9 @@ if 'dos_mitigate' in form.keys():
     dos_mitigate = form.getvalue('dos_mitigate')
     yaml_parsed_profileyaml['dos_mitigate'] = dos_mitigate
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::dos_mitigate')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
-    print('</div>')
-    print('</div>')
-    print('</div>')
-    print('</div>')
-    print('</body>')
-    print('</html>')
-    sys.exit(0)
-# naxsi
-if 'naxsi' in form.keys():
-    naxsi = form.getvalue('naxsi')
-    yaml_parsed_profileyaml['naxsi'] = naxsi
-else:
-    print('ERROR: Forbidden')
-    print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
-    print('</div>')
-    print('</div>')
-    print('</div>')
-    print('</div>')
-    print('</body>')
-    print('</html>')
-    sys.exit(0)
-# naxsi_mode
-if 'naxsi_mode' in form.keys():
-    naxsi_mode = form.getvalue('naxsi_mode')
-    yaml_parsed_profileyaml['naxsi_mode'] = naxsi_mode
-else:
-    print('ERROR: Forbidden')
-    print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -329,9 +316,9 @@ if 'redirect_to_ssl' in form.keys():
     redirect_to_ssl = form.getvalue('redirect_to_ssl')
     yaml_parsed_profileyaml['redirect_to_ssl'] = redirect_to_ssl
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::redirect_to_ssl')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -344,9 +331,9 @@ if 'redirect_aliases' in form.keys():
     redirect_aliases = form.getvalue('redirect_aliases')
     yaml_parsed_profileyaml['redirect_aliases'] = redirect_aliases
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::redirect_aliases')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -359,9 +346,67 @@ if 'wwwredirect' in form.keys():
     wwwredirect = form.getvalue('wwwredirect')
     yaml_parsed_profileyaml['wwwredirect'] = wwwredirect
 else:
-    print('ERROR: Forbidden')
+    print('ERROR: Forbidden::wwwredirect')
     print('</div>')
-    print('<div class="panel-footer"><small>Powered by <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb</a> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Themed by <a target="_blank" href="http://www.stirstudiosdesign.com/">StirStudios</small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</body>')
+    print('</html>')
+    sys.exit(0)
+# redirectstatus
+if 'redirectstatus' in form.keys():
+    redirectstatus = form.getvalue('redirectstatus')
+    yaml_parsed_profileyaml['redirectstatus'] = redirectstatus
+else:
+    print('ERROR: Forbidden::redirectstatus')
+    print('</div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</body>')
+    print('</html>')
+    sys.exit(0)
+# redirecturl
+if redirectstatus != "none":
+    if 'redirecturl' in form.keys():
+        redirecturl = form.getvalue('redirecturl')
+        if not redirecturl == "noredirection":
+            regex = re.compile(
+                r'^(?:http|ftp)s?://'
+                r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'
+                r'localhost|'
+                r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+                r'(?::\d+)?'
+                r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+            it_matches = regex.match(redirecturl)
+            if not it_matches:
+                print('ERROR: Invalid Redirect URL. The URL must be something like https://google.com ')
+                print('</div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</body>')
+                print('</html>')
+                sys.exit(0)
+            else:
+                yaml_parsed_profileyaml['redirecturl'] = redirecturl
+        else:
+            yaml_parsed_profileyaml['redirecturl'] = current_redirecturl
+# append_requesturi
+if 'append_requesturi' in form.keys():
+    append_requesturi = form.getvalue('append_requesturi')
+    yaml_parsed_profileyaml['append_requesturi'] = append_requesturi
+else:
+    print('ERROR: Forbidden::append_requesturi')
+    print('</div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')

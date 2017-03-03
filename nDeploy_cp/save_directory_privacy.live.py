@@ -4,8 +4,6 @@ import socket
 import yaml
 import cgi
 import cgitb
-import re
-import sys
 
 
 __author__ = "Anoop P Alias"
@@ -53,41 +51,55 @@ print('<h4>XtendWeb</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-home"></span></a></li>')
-print('<li><a href="xtendweb.live.py">Set Domain</a></li><li class="active">Password Protected URLs</li>')
+print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Password Protected URLs</li>')
 print('</ol>')
 print('<div class="panel panel-default">')
-if form.getvalue('domain') and form.getvalue('action') and form.getvalue('protectedurl'):
+if form.getvalue('domain') and form.getvalue('action'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
     action = form.getvalue('action')
-    protectedurl = form.getvalue('protectedurl')
-    if not protectedurl.startswith('/'):
-        protectedurl = '/'+protectedurl
-    if protectedurl != '/' and protectedurl.endswith('/'):
-        protectedurl = protectedurl[:-1]
-    if not re.match("^[0-9a-zA-Z/_-]*$", protectedurl):
-        print("Error: Invalid char in sub-directory name")
-        sys.exit(0)
     profileyaml = installation_path + "/domain-data/" + mydomain
     if os.path.isfile(profileyaml):
         # Get all config settings from the domains domain-data config file
-        with open(profileyaml, 'r') as profileyaml_data_stream:
-            yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        protected_dir_list = yaml_parsed_profileyaml.get('protected_dir')
-        if action == 'add':
-            if protectedurl not in protected_dir_list:
-                protected_dir_list.append(protectedurl)
-        elif action == 'del':
-            if protectedurl in protected_dir_list:
-                protected_dir_list.remove(protectedurl)
-        yaml_parsed_profileyaml['protected_dir'] = protected_dir_list
-        print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
-        with open(profileyaml, 'w') as yaml_file:
-            yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        print('<div class="icon-box">')
-        print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Password Protected URLs updated')
-        print('</div>')
-        print('</form>')
+        if form.getvalue('thesubdir'):
+            thesubdir = form.getvalue('thesubdir')
+            with open(profileyaml, 'r') as profileyaml_data_stream:
+                yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+            subdir_apps_dict = yaml_parsed_profileyaml.get('subdir_apps')
+            if subdir_apps_dict:
+                if subdir_apps_dict.get(thesubdir):
+                    the_subdir_dict = subdir_apps_dict.get(thesubdir)
+                    if action == 'add':
+                        the_subdir_dict['auth_basic'] = 'enabled'
+                    elif action == 'del':
+                        the_subdir_dict['auth_basic'] = 'disabled'
+                    subdir_apps_dict[thesubdir] = the_subdir_dict
+                    yaml_parsed_profileyaml['subdir_apps'] = subdir_apps_dict
+                    print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
+                    with open(profileyaml, 'w') as yaml_file:
+                        yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+                    print('<div class="icon-box">')
+                    print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Password Protected URL:: status updated')
+                    print('</div>')
+                    print('</form>')
+                else:
+                    print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Missing subdir::'+thesubdir+' in domain data</div>')
+            else:
+                print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Missing subdir_apps section in domain data</div>')
+        else:
+            with open(profileyaml, 'r') as profileyaml_data_stream:
+                yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+            if action == 'add':
+                yaml_parsed_profileyaml['auth_basic'] = 'enabled'
+            elif action == 'del':
+                yaml_parsed_profileyaml['auth_basic'] = 'disabled'
+            print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
+            with open(profileyaml, 'w') as yaml_file:
+                yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+            print('<div class="icon-box">')
+            print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Password Protected URL:: status updated')
+            print('</div>')
+            print('</form>')
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:

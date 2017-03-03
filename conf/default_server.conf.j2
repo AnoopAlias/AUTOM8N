@@ -1,5 +1,5 @@
 server {
-        listen localhost:80 backlog=16384;
+        listen localhost:80 backlog=16384 reuseport deferred;
         server_name localhost;
         access_log off;
         location / {
@@ -45,7 +45,7 @@ server {
 {% for MYIP in CPIPLIST %}
 
 server {
-        listen {{ MYIP }}:80 default_server backlog=16384;
+        listen {{ MYIP }}:80 default_server backlog=16384 reuseport deferred;
         server_name _;
         access_log off;
         location / {
@@ -68,7 +68,7 @@ server {
 }
 
 server {
-        listen {{ MYIP }}:443 default_server ssl backlog=16384;
+        listen {{ MYIP }}:443 default_server ssl backlog=16384 reuseport deferred;
         ssl_certificate {{ CPSRVDSSL }};
         ssl_certificate_key {{ CPSRVDSSL }};
         ssl_session_cache shared:SSL:10m;
