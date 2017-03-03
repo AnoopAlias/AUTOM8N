@@ -59,7 +59,7 @@ print('<h4>XtendWeb</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-home"></span></a></li>')
-print('<li><a href="xtendweb.live.py">Set Domain</a></li><li class="active">Server Settings</li>')
+print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Server Settings</li>')
 print('</ol>')
 print('<div class="panel panel-default">')
 if form.getvalue('domain'):
@@ -71,30 +71,32 @@ if form.getvalue('domain'):
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         # Server Settings
-        naxsi = yaml_parsed_profileyaml.get('naxsi')
-        naxsi_mode = yaml_parsed_profileyaml.get('naxsi_mode')
-        autoindex = yaml_parsed_profileyaml.get('autoindex')
-        pagespeed = yaml_parsed_profileyaml.get('pagespeed')
-        brotli = yaml_parsed_profileyaml.get('brotli')
-        gzip = yaml_parsed_profileyaml.get('gzip')
-        http2 = yaml_parsed_profileyaml.get('http2')
-        access_log = yaml_parsed_profileyaml.get('access_log')
-        open_file_cache = yaml_parsed_profileyaml.get('open_file_cache')
-        ssl_offload = yaml_parsed_profileyaml.get('ssl_offload')
-        wwwredirect = yaml_parsed_profileyaml.get('wwwredirect')
-        redirect_to_ssl = yaml_parsed_profileyaml.get('redirect_to_ssl')
-        redirect_aliases = yaml_parsed_profileyaml.get('redirect_aliases')
-        clickjacking_protect = yaml_parsed_profileyaml.get('clickjacking_protect')
-        disable_contenttype_sniffing = yaml_parsed_profileyaml.get('disable_contenttype_sniffing')
-        xss_filter = yaml_parsed_profileyaml.get('xss_filter')
-        content_security_policy = yaml_parsed_profileyaml.get('content_security_policy')
-        hsts = yaml_parsed_profileyaml.get('hsts')
-        dos_mitigate = yaml_parsed_profileyaml.get('dos_mitigate')
+        autoindex = yaml_parsed_profileyaml.get('autoindex', 'disabled')
+        pagespeed = yaml_parsed_profileyaml.get('pagespeed', 'disabled')
+        brotli = yaml_parsed_profileyaml.get('brotli', 'disabled')
+        gzip = yaml_parsed_profileyaml.get('gzip', 'disabled')
+        http2 = yaml_parsed_profileyaml.get('http2', 'disabled')
+        access_log = yaml_parsed_profileyaml.get('access_log', 'enabled')
+        open_file_cache = yaml_parsed_profileyaml.get('open_file_cache', 'disabled')
+        ssl_offload = yaml_parsed_profileyaml.get('ssl_offload', 'disabled')
+        wwwredirect = yaml_parsed_profileyaml.get('wwwredirect', 'none')
+        redirect_to_ssl = yaml_parsed_profileyaml.get('redirect_to_ssl', 'disabled')
+        redirect_aliases = yaml_parsed_profileyaml.get('redirect_aliases', 'disabled')
+        clickjacking_protect = yaml_parsed_profileyaml.get('clickjacking_protect', 'disabled')
+        disable_contenttype_sniffing = yaml_parsed_profileyaml.get('disable_contenttype_sniffing', 'disabled')
+        xss_filter = yaml_parsed_profileyaml.get('xss_filter', 'disabled')
+        content_security_policy = yaml_parsed_profileyaml.get('content_security_policy', 'disabled')
+        hsts = yaml_parsed_profileyaml.get('hsts', 'disabled')
+        dos_mitigate = yaml_parsed_profileyaml.get('dos_mitigate', 'disabled')
+        pagespeed_filter = yaml_parsed_profileyaml.get('pagespeed_filter', 'CoreFilters')
+        redirecturl = yaml_parsed_profileyaml.get('redirecturl', 'noredirection')
+        redirectstatus = yaml_parsed_profileyaml.get('redirectstatus', 'none')
+        append_requesturi = yaml_parsed_profileyaml.get('append_requesturi', 'disabled')
         # Ok we are done with getting the settings,now lets present it to the user
         print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
         print('<form id="config" class="form-inline" action="save_server_settings.live.py" method="post">')
-        print('<ul class="list-group"><li class="list-group-item">')
         # autoindex
+        print('<ul class="list-group"><li class="list-group-item">')
         autoindex_hint = "enable for directory listing"
         print('<div class="row">')
         if autoindex == 'enabled':
@@ -111,8 +113,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # ssl_offload
+        print('<li class="list-group-item">')
         ssl_offload_hint = "enable for performance, disable if redirect loop error"
         print('<div class="row">')
         if ssl_offload == 'enabled':
@@ -129,8 +131,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # pagespeed
+        print('<li class="list-group-item">')
         print('<div class="row">')
         pagespeed_hint = "delivers pagespeed optimized webpage, resource intensive"
         if pagespeed == 'enabled':
@@ -147,8 +149,26 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
+        # pagespeed filter level
         print('<li class="list-group-item">')
+        print('<div class="row">')
+        pagespeed_filter_hint = "PassThrough breaks some pages.CoreFilters is mostly safe"
+        if pagespeed_filter == 'CoreFilters':
+            print_red("pagespeed level", pagespeed_filter_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="CoreFilters" checked/> CoreFilters</label></div>')
+            print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="PassThrough" /> PassThrough</label></div>')
+            print('</div>')
+        else:
+            print_green("pagespeed_filter", pagespeed_filter_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="CoreFilters" /> CoreFilters</label></div>')
+            print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="PassThrough" checked/> PassThrough</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
         # brotli
+        print('<li class="list-group-item">')
         print('<div class="row">')
         brotli_hint = "bandwidth optimization, resource intensive, tls only"
         if brotli == 'enabled':
@@ -165,8 +185,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # gzip
+        print('<li class="list-group-item">')
         print('<div class="row">')
         gzip_hint = "bandwidth optimization, resource intensive"
         if gzip == 'enabled':
@@ -183,8 +203,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # http2
+        print('<li class="list-group-item">')
         print('<div class="row">')
         http2_hint = "works only with TLS"
         if http2 == 'enabled':
@@ -201,8 +221,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # access_log
+        print('<li class="list-group-item">')
         print('<div class="row">')
         access_log_hint = "disabling access_log increase performance but stats wont work"
         if access_log == 'enabled':
@@ -219,8 +239,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # open_file_cache
+        print('<li class="list-group-item">')
         print('<div class="row">')
         open_file_cache_hint = "increase performance, disable on dev environment for no caching"
         if open_file_cache == 'enabled':
@@ -237,8 +257,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # clickjacking_protect
+        print('<li class="list-group-item">')
         print('<div class="row">')
         clickjacking_protect_hint = "add_header X-Frame-Options SAMEORIGIN;"
         if clickjacking_protect == 'enabled':
@@ -255,8 +275,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # disable_contenttype_sniffing
+        print('<li class="list-group-item">')
         print('<div class="row">')
         disable_contenttype_sniffing_hint = "add_header X-Content-Type-Options nosniff;"
         if disable_contenttype_sniffing == 'enabled':
@@ -273,8 +293,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # xss_filter
+        print('<li class="list-group-item">')
         print('<div class="row">')
         xss_filter_hint = 'add_header X-XSS-Protection "1; mode=block";'
         if xss_filter == 'enabled':
@@ -291,8 +311,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # content_security_policy
+        print('<li class="list-group-item">')
         print('<div class="row">')
         content_security_policy_hint = 'add_header Content-Security-Policy "script-src self www.google-analytics.com ajax.googleapis.com;";'
         if content_security_policy == 'enabled':
@@ -309,8 +329,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # hsts
+        print('<li class="list-group-item">')
         print('<div class="row">')
         hsts_hint = 'add_header Strict-Transport-Security "max-age=31536000" always;'
         if hsts == 'enabled':
@@ -327,8 +347,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # dos_mitigate
+        print('<li class="list-group-item">')
         print('<div class="row">')
         dos_mitigate_hint = "Enable only when under a dos attack"
         if dos_mitigate == 'enabled':
@@ -345,8 +365,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # redirect_to_ssl
+        print('<li class="list-group-item">')
         print('<div class="row">')
         redirect_to_ssl_hint = "redirect http:// to https:// "
         if redirect_to_ssl == 'enabled':
@@ -363,8 +383,8 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # redirect_aliases
+        print('<li class="list-group-item">')
         print('<div class="row">')
         redirect_aliases_hint = "redirect all alias domains to the main domain"
         if redirect_aliases == 'enabled':
@@ -381,12 +401,14 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # wwwredirect
+        print('<li class="list-group-item">')
+        www_redirect_hint = "select redirection mode"
         print('<div class="row">')
-        print('<div class="col-sm-6">')
-        print(('<div class="label label-default" data-toggle="tooltip" title="select redirection mode">www redirect</div>'))
-        print('</div>')
+        if wwwredirect == 'none':
+            print_red("www redirect", www_redirect_hint)
+        else:
+            print_green("www redirect", www_redirect_hint)
         print('<div class="col-sm-6 col-radio">')
         print('<select name="wwwredirect">')
         if wwwredirect == 'none':
@@ -405,23 +427,25 @@ if form.getvalue('domain'):
         print('</div>')
         print('</div>')
         print('</li>')
-        print('<li class="list-group-item">')
         # URL Redirect
+        print('<li class="list-group-item">')
         print('<div class="row">')
-        print('<div class="col-sm-6">')
-        print(('<div class="label label-default" data-toggle="tooltip" title="select redirection status">URL Redirect</div>'))
-        print('</div>')
+        url_redirect_hint = "select redirection status 301 or 307"
+        if redirectstatus == 'none':
+            print_red("URL Redirect", url_redirect_hint)
+        else:
+            print_green("URL Redirect", url_redirect_hint)
         print('<div class="col-sm-6 col-radio">')
         print('<select name="redirectstatus">')
-        if wwwredirect == 'none':
+        if redirectstatus == 'none':
             print(('<option selected value="none">no redirection</option>'))
             print(('<option value="301">Permanent Redirect</option>'))
             print(('<option value="307">Temporary Redirect</option>'))
-        elif wwwredirect == '301':
+        elif redirectstatus == '301':
             print(('<option value="none">no redirection</option>'))
             print(('<option value="307">Temporary Redirect</option>'))
             print(('<option selected value="301">Permanent Redirect</option>'))
-        elif wwwredirect == '307':
+        elif redirectstatus == '307':
             print(('<option value="none">no redirection</option>'))
             print(('<option selected value="307">Temporary Redirect</option>'))
             print(('<option value="301">Permanent Redirect</option>'))
@@ -429,15 +453,34 @@ if form.getvalue('domain'):
         print('</div>')
         print('</div>')
         print('</li>')
-        # start
+        # Append request_uri to redirect
         print('<li class="list-group-item">')
-        # Redirect URL
         print('<div class="row">')
-        print('<div class="col-sm-6">')
-        print(('<div class="label label-default" data-toggle="tooltip" title="Redirect to URL">Redirect to URL</div>'))
-        print('</div>')
+        append_requesturi_hint = 'Append $$request_uri to the redirect URL'
+        if append_requesturi == 'enabled':
+            print_green("Append $request_uri to redirecturl", append_requesturi_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="append_requesturi" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="append_requesturi" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red("Append $request_uri to redirecturl", append_requesturi_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="append_requesturi" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="append_requesturi" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
+        # Redirect URL
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
+        if redirecturl == "noredirection":
+            print_red("Redirect to URL", redirecturl_hint)
+        else:
+            print_green("Redirect to URL", redirecturl_hint)
         print('<div class="col-sm-6 col-radio">')
-        print('<input class="form-control" placeholder="https://mynewdomain.tld/blog" type="text" name="redirecturl">')
+        print('<input class="form-control" placeholder='+redirecturl+' type="text" name="redirecturl">')
         print('</div>')
         print('</div>')
         print('</li>')

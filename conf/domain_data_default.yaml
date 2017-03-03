@@ -27,3 +27,5 @@ auth_basic: disabled
 set_redirect: none
 redirect_url: none
 return_code: 301
+pagespeed_filter: CoreFilters
+append_requesturi: disabled

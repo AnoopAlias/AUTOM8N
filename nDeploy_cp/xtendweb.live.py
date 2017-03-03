@@ -4,6 +4,7 @@
 import os
 import socket
 import cgitb
+import psutil
 try:
     import simplejson as json
 except ImportError:
@@ -17,6 +18,7 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 
 cgitb.enable()
@@ -81,6 +83,23 @@ for the_addon_domain in addon_domains_dict.keys():
     print(('<option value="'+addon_domains_dict.get(the_addon_domain)+'">'+the_addon_domain+'</option>'))
 print('</select>')
 print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
+print('</div>')
+print('<div class="alert alert-info">')
+if os.path.isfile(cluster_config_file):
+    with open(cluster_config_file, 'r') as cluster_data_yaml:
+        cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+    print('Nginx high available cluster is ACTIVE and config+files are synced to:')
+    print('<ul class="list text-left">')
+    for servername in cluster_data_yaml_parsed.keys():
+        filesync_status = "OFF"
+        for myprocess in psutil.process_iter():
+            mycmdline = myprocess.cmdline()
+            if '/usr/bin/unison' in mycmdline and servername in mycmdline:
+                filesync_status = "ON"
+        print(servername+' FileSync::'+filesync_status)
+    print('</ul>')
+else:
+    print('Nginx high available cluster is not enabled. Please contact service provider')
 print('</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
 print('</div>')

@@ -52,7 +52,7 @@ print('<h4>XtendWeb</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-home"></span></a></li>')
-print('<li><a href="xtendweb.live.py">Set Domain</a></li><li class="active">Sub-Directory App Settings</li>')
+print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Sub-Directory App Settings</li>')
 print('</ol>')
 print('<div class="panel panel-default">')
 if form.getvalue('domain') and form.getvalue('thesubdir'):
