@@ -4,54 +4,12 @@ root {{ DOCUMENTROOT }};
 
 #Proxy Pass to a railo appServer listening on port 8888
 location / {
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
 try_files $uri $uri/ /index.cfm;
 }
 
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location /{{ KEY }}/ {
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
 
 
 location ~* /railo-context/admin/ {
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
-
 proxy_send_timeout   90;
 proxy_read_timeout   90;
 
@@ -74,19 +32,6 @@ proxy_set_header   Proxy "";
 
 # Main Railo proxy handler
 location ~ \.(cfm|cfml|cfc|jsp|cfr)(.*)$ {
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
-
 proxy_send_timeout   90;
 proxy_read_timeout   90;
 
@@ -106,13 +51,13 @@ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header X-Real-IP $remote_addr;
 }
 
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-location /NaxsiRequestDenied {
-return 418;
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location ^~ /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
 }
-{% endif %}
-# End Include NAXSI settings
+{% endfor %}
+# End Include any applications in subdirectory
 
 
 include /etc/nginx/conf.d/cpanel_services.conf;

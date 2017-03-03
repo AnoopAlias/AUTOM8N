@@ -3,9 +3,13 @@ List of webHosts that support nginX
 
 
 The following WebHost support nginX in Shared/VPS/Cloud/Dedicated hosting
+and provide support for hosting your website in native nginX+php-fpm including
+assistance in converting your htaccess rewrite rules.
 
 
 `TUNEDHOSTING.COM <https://tunedhosting.com/>`_
+
+`CONEXCOL CLOUD <https://conexcol.net.co/>`_
 
 
 .. tip:: Wish to list your webhosting business here?. Contact anoop@gnusys.net

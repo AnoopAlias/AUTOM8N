@@ -14,12 +14,12 @@ set $skip_cache 1;
 }
 
 # Don't cache uris containing the following segments
-if ($request_uri ~* "/wp-admin/|/xmlrpc.php|wp-.*.php|/feed/|index.php|sitemap(_index)?.xml") {
+if ($request_uri ~* "/wp-admin/|/xmlrpc.php|wp-.*.php|/feed/|/cart/|/my-account/|/wc-api/|/resetpass/|index.php|sitemap(_index)?.xml") {
 set $skip_cache 1;
 }
 
 # Don't use the cache for logged in users or recent commenters
-if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|wordpress_logged_in") {
+if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|woocommerce_items_in_cart|resetpass|wordpress_logged_in") {
 set $skip_cache 1;
 }
 
@@ -94,36 +94,10 @@ include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
-location ~* ^.+\.(ogg|ogv|svg|svgz|eot|otf|woff|mp4|ttf|rss|atom|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf)$ {
-access_log off; log_not_found off; expires max;
-}
-
-location = /robots.txt { access_log off; log_not_found off; }
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-location /NaxsiRequestDenied {
-return 418;
-}
-{% endif %}
-# End Include NAXSI settings
 
 # Include any applications in subdirectory
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
 location /{{ KEY }}/ {
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
-
 include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
 }
 {% endfor %}
@@ -133,12 +107,11 @@ location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
+
 location = /wp-login.php {
 limit_req   zone=one  burst=1 nodelay;
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
-
-location ~* /\.(?!well-known\/) { deny all; access_log off; log_not_found off; }
 
 include /etc/nginx/conf.d/cpanel_services.conf;

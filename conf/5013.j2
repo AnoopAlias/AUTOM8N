@@ -1,15 +1,17 @@
 #Silverstripe
+
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
+
 location / {
 try_files $uri /framework/main.php?url=$uri&$query_string;
 }
 error_page 404 /assets/error-404.html;
 error_page 500 /assets/error-500.html;
 location ^~ /assets/ {
-sendfile on;
 try_files $uri =404;
 }
+
 location ~ /framework/.*(main|rpc|tiny_mce_gzip)\.php$ {
 fastcgi_keep_conn on;
 try_files $uri =404;
@@ -17,9 +19,11 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
 }
+
 location ~ /(mysite|framework|cms)/.*\.(php|php3|php4|php5|phtml|inc)$ {
 deny all;
 }
+
 location ~ /\.. {
 deny all;
 }
@@ -46,6 +50,7 @@ deny all;
 location ~* /(cms|framework)/silverstripe_version$ {
 deny all;
 }
+
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
@@ -53,12 +58,11 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 
 # Include any applications in subdirectory
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location /{{ KEY }}/ {
+location ^~ /{{ KEY }}/ {
 include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
 }
 {% endfor %}
 # End Include any applications in subdirectory
-
 
 location ~ \.php$ {
 try_files $uri =404;
@@ -66,4 +70,5 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
 }
+
 include /etc/nginx/conf.d/cpanel_services.conf;

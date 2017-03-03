@@ -18,8 +18,14 @@ hsts: disabled
 dos_mitigate: disabled
 naxsi: disabled
 naxsi_mode: learn
+naxsi_whitelist: disabled
 redirect_to_ssl: disabled
 redirect_aliases: disabled
 wwwredirect: none
 subdir_apps: {}
-protected_dir: []
+auth_basic: disabled
+set_redirect: none
+redirect_url: none
+return_code: 301
+pagespeed_filter: CoreFilters
+append_requesturi: disabled
