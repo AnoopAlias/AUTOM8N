@@ -3,6 +3,15 @@
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location ^~ /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
 # Announcements
 rewrite ^/announcements/([0-9]+)/[a-zA-Z0-9-]+\.html$ /announcements.php?id=$1 last;
 rewrite ^/announcements$ /announcements.php last;
@@ -17,15 +26,6 @@ rewrite ^/knowledgebase$ /knowledgebase.php last;
 location / {
 try_files $uri $uri/ /index.php;
 }
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
-
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;

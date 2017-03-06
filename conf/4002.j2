@@ -8,7 +8,8 @@ passenger_nodejs {{ PATHTONODEJS }};
 # Include any applications in subdirectory
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
 location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
 }
 {% endfor %}
 # End Include any applications in subdirectory

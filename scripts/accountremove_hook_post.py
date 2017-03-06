@@ -5,6 +5,7 @@ import sys
 import subprocess
 import os
 import shutil
+import yaml
 try:
     import simplejson as json
 except ImportError:
@@ -19,6 +20,7 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 nginx_dir = "/etc/nginx/sites-enabled/"
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 
 # Define a function to silently remove files
@@ -47,13 +49,12 @@ if os.path.exists(cpuserdatajson):
     silentremove(installation_path+"/domain-data/"+main_domain)
     silentremove(nginx_dir+main_domain+".conf")
     silentremove(nginx_dir+main_domain+".include")
-    silentremove(nginx_dir+main_domain+".nxapi.wl")
-    if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
-        with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
-            for server in cluster_slave_list:
-                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+main_domain+".conf")
-                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+main_domain+".include")
-                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+main_domain+".nxapi.wl")
+    if os.path.isfile(cluster_config_file):
+        with open(cluster_config_file, 'r') as cluster_data_yaml:
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+        for server in cluster_data_yaml_parsed.keys():
+            silentremove("/etc/nginx/"+server+"/"+main_domain+".conf")
+            silentremove("/etc/nginx/"+server+"/"+main_domain+".include")
     if os.path.exists('/var/resin/hosts/'+main_domain):
         shutil.rmtree('/var/resin/hosts/'+main_domain)
     for domain_in_subdomains in sub_domains:
@@ -62,13 +63,12 @@ if os.path.exists(cpuserdatajson):
         silentremove(installation_path+"/domain-data/"+domain_in_subdomains)
         silentremove(nginx_dir+domain_in_subdomains+".conf")
         silentremove(nginx_dir+domain_in_subdomains+".include")
-        silentremove(nginx_dir+domain_in_subdomains+".nxapi.wl")
-        if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
-            with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
-                for server in cluster_slave_list:
-                    silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+domain_in_subdomains+".conf")
-                    silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+domain_in_subdomains+".include")
-                    silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+domain_in_subdomains+".nxapi.wl")
+        if os.path.isfile(cluster_config_file):
+            with open(cluster_config_file, 'r') as cluster_data_yaml:
+                cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+            for server in cluster_data_yaml_parsed.keys():
+                silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".conf")
+                silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".include")
         if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
             shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
     subprocess.Popen("/usr/sbin/nginx -s reload", shell=True)

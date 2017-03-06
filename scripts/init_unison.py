@@ -3,6 +3,7 @@
 import argparse
 import subprocess
 import os
+import yaml
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -11,25 +12,27 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-ndeploy_slaves_file = installation_path+"/conf/ndeploy_cluster_slaves"
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 
 # Function defs
 
 
 def control_unison(trigger):
-    if os.path.isfile(ndeploy_slaves_file):
+    if os.path.isfile(cluster_config_file):
         if trigger == "start":
-            with open(ndeploy_slaves_file) as slavelist:
-                for line in slavelist:
-                    proc = subprocess.Popen("/usr/bin/unison "+line.replace('\n', ''), shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+            with open(cluster_config_file, 'r') as cluster_data_yaml:
+                cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+            for server in cluster_data_yaml_parsed.keys():
+                proc = subprocess.Popen("/usr/bin/unison "+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
         elif trigger == "stop":
             subprocess.call("killall unison", shell=True)
         elif trigger == "reload":
             subprocess.call("killall unison", shell=True)
-            with open(ndeploy_slaves_file) as slavelist:
-                for line in slavelist:
-                    proc = subprocess.Popen("/usr/bin/unison "+line, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+            with open(cluster_config_file, 'r') as cluster_data_yaml:
+                cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+            for server in cluster_data_yaml_parsed.keys():
+                proc = subprocess.Popen("/usr/bin/unison "+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
         else:
             return
 

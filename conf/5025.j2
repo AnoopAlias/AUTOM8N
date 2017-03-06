@@ -5,9 +5,9 @@ set $MAGE_ROOT {{ DOCUMENTROOT }};
 # Include any applications in subdirectory
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
 location ^~ /{{ KEY }}/ {
-# Because we set the main root to public_html/pub
 root {{ DOCUMENTROOT }};
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
 }
 {% endfor %}
 # End Include any applications in subdirectory

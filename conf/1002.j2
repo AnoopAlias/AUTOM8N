@@ -2,6 +2,15 @@
 
 root {{ DOCUMENTROOT }};
 
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location ^~ /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
 location / {
 
 # Include NAXSI settings
@@ -14,7 +23,6 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% elif NAXSIMODE == 'active' %}
 include /etc/nginx/conf.d/naxsi_active.rules;
 {% if NAXSI_WHITELIST == 'wordpress' %}
@@ -23,11 +31,10 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
-
 
 #If request method is POST we add a _mcnc cookie
 if ($requestnocache = "1") {
@@ -71,11 +78,3 @@ proxy_set_header Accept-Encoding "";
 proxy_no_cache $mccookienocache;
 proxy_cache_bypass $mccookienocache;
 }
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory

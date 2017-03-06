@@ -74,7 +74,7 @@ if os.path.isfile(profileyaml):
     # Get all config settings from the domains domain-data config file
     with open(profileyaml, 'r') as profileyaml_data_stream:
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-    current_redirecturl = yaml_parsed_profileyaml.get('redirecturl', "noredirection")
+    current_redirecturl = yaml_parsed_profileyaml.get('redirecturl', "none")
 else:
     print('ERROR: Domain data file i/o error')
     print('</div>')

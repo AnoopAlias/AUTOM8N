@@ -2,8 +2,16 @@
 
 root {{ DOCUMENTROOT }};
 
-location / {
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location ^~ /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
 
+location / {
 
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}
@@ -15,7 +23,6 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% elif NAXSIMODE == 'active' %}
 include /etc/nginx/conf.d/naxsi_active.rules;
 {% if NAXSI_WHITELIST == 'wordpress' %}
@@ -24,11 +31,10 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
-
 
 access_log  off;
 proxy_send_timeout   90;
@@ -58,12 +64,3 @@ proxy_set_header   X-Scheme $scheme;
 proxy_set_header   Proxy "";
 proxy_redirect     off;
 }
-
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory

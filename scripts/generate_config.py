@@ -314,15 +314,16 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     # as and when more features are incorporated
     if os.path.isfile('/etc/nginx/modules.d/naxsi.load'):
         naxsi = yaml_parsed_domain_data.get('naxsi', None)
+        naxsi_whitelist = yaml_parsed_domain_data.get('naxsi_whitelist', None)
     else:
         naxsi = 'disabled'
-    if naxsi == 'enabled':
-        if not os.path.isfile("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".wl"):
-            os.mknod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".wl")
+        naxsi_whitelist = 'none'
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
         pagespeed = yaml_parsed_domain_data.get('pagespeed', None)
+        pagespeed_filter = yaml_parsed_domain_data.get('pagespeed_filter', 'CoreFilters')
     else:
         pagespeed = 'disabled'
+        pagespeed_filter = 'CoreFilters'
     if domain_server_name.startswith("*"):
         wwwredirect = None
     else:
@@ -343,15 +344,17 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     ssl_offload = yaml_parsed_domain_data.get('ssl_offload', None)
     access_log = yaml_parsed_domain_data.get('access_log', None)
     naxsi_mode = yaml_parsed_domain_data.get('naxsi_mode', None)
+    redirect_url = yaml_parsed_domain_data.get('redirecturl', 'none')
+    redirectstatus = yaml_parsed_domain_data.get('redirectstatus', 'none')
+    append_requesturi = yaml_parsed_domain_data.get('append_requesturi', 'disabled')
+    set_expire_static = yaml_parsed_domain_data.get('set_expire_static', 'disabled')
     dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', None)
     open_file_cache = yaml_parsed_domain_data.get('open_file_cache', None)
     if not serveralias_list_new:
         redirect_aliases = 'disabled'
     else:
         redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', None)
-    protected_dir = yaml_parsed_domain_data.get('protected_dir', None)
-    if not protected_dir:
-        protected_dir = []
+    auth_basic = yaml_parsed_domain_data.get('auth_basic', 'disabled')
     subdir_apps = yaml_parsed_domain_data.get('subdir_apps', None)
     if subdir_apps:
         subdir_apps_uniq = {}
@@ -398,9 +401,15 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "REDIRECT_TO_SSL": redirect_to_ssl,
                     "ENABLEACCESSLOG": access_log,
                     "OPEN_FILE_CACHE": open_file_cache,
-                    "PROTECTED_DIR": protected_dir,
                     "HOMEDIR": domain_home,
                     "DIFFDIR": diff_dir,
+                    "NAXSI_WHITELIST": naxsi_whitelist,
+                    "PAGESPEED_FILTER": pagespeed_filter,
+                    "SET_EXPIRE_STATIC": set_expire_static,
+                    "AUTH_BASIC": auth_basic,
+                    "REDIRECTSTATUS": redirectstatus,
+                    "REDIRECT_URL": redirect_url,
+                    "APPEND_REQUESTURI": append_requesturi,
                     "DOSMITIGATE": dos_mitigate
                     }
     generated_config = server_template.render(templateVars)
@@ -457,8 +466,13 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                        "PATHTONODEJS": backend_path,
                        "SOCKETFILE": fastcgi_socket,
                        "SUBDIRAPPS": subdir_apps_uniq,
-                       "PROTECTED_DIR": protected_dir,
                        "DIFFDIR": diff_dir,
+                       "NAXSI_WHITELIST": naxsi_whitelist,
+                       "SET_EXPIRE_STATIC": set_expire_static,
+                       "AUTH_BASIC": auth_basic,
+                       "REDIRECTSTATUS": redirectstatus,
+                       "REDIRECT_URL": redirect_url,
+                       "APPEND_REQUESTURI": append_requesturi,
                        "PATHTOPYTHON": backend_path,
                        }
     generated_app_config = app_template.render(apptemplateVars)
@@ -472,6 +486,14 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             subdir_backend_path = the_subdir_app_dict.get('backend_path')
             subdir_backend_version = the_subdir_app_dict.get('backend_version')
             subdir_apptemplate_code = the_subdir_app_dict.get('apptemplate_code')
+            subdir_auth_basic = the_subdir_app_dict.get('auth_basic', 'disabled')
+            subdir_naxsi = the_subdir_app_dict.get('naxsi', 'disabled')
+            subdir_naxsi_mode = the_subdir_app_dict.get('naxsi_mode', 'learn')
+            subdir_naxsi_whitelist = the_subdir_app_dict.get('naxsi_whitelist', 'none')
+            subdir_redirect_url = the_subdir_app_dict.get('redirecturl', 'none')
+            subdir_redirectstatus = the_subdir_app_dict.get('redirectstatus', 'none')
+            subdir_set_expire_static = the_subdir_app_dict.get('set_expire_static', 'disabled')
+            subdir_append_requesturi = the_subdir_app_dict.get('append_requesturi', 'disabled')
             subdirApptemplate = templateEnv.get_template(subdir_apptemplate_code)
             # We configure the backends first if necessary
             if subdir_backend_category == 'PROXY':
@@ -488,25 +510,33 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                         php_backend_add(kwargs.get('configuser'), domain_home)
             elif backend_category == 'HHVM_NOBODY':
                 fastcgi_socket = backend_path
-            subdirApptemplateVars = {"DOCUMENTROOT": document_root+subdir,
+            subdirApptemplateVars = {"NEWDOCUMENTROOT": document_root+'/'+subdir,
                                      "SUBDIR": subdir,
+                                     "SUBDIRAPPS": subdir_apps_uniq,
                                      "CPANELIP": cpanel_ipv4,
                                      "SSL_OFFLOAD": ssl_offload,
                                      "CPANELIP": cpanel_ipv4,
                                      "DOCUMENTROOT": document_root,
                                      "CONFIGDOMAINNAME": kwargs.get('configdomain'),
                                      "HOMEDIR": domain_home,
-                                     "NAXSI": naxsi,
-                                     "NAXSIMODE": naxsi_mode,
-                                     "UPSTREAM_PORT": backend_path,
-                                     "PATHTOPYTHON": backend_path,
-                                     "PATHTORUBY": backend_path,
-                                     "PATHTONODEJS": backend_path,
+                                     "DIFFDIR": diff_dir,
+                                     "NAXSI": subdir_naxsi,
+                                     "NAXSIMODE": subdir_naxsi_mode,
+                                     "UPSTREAM_PORT": subdir_backend_path,
+                                     "PATHTOPYTHON": subdir_backend_path,
+                                     "PATHTORUBY": subdir_backend_path,
+                                     "PATHTONODEJS": subdir_backend_path,
                                      "SOCKETFILE": fastcgi_socket,
+                                     "NAXSI_WHITELIST": subdir_naxsi_whitelist,
+                                     "SET_EXPIRE_STATIC": subdir_set_expire_static,
+                                     "AUTH_BASIC": subdir_auth_basic,
+                                     "REDIRECT_URL": subdir_redirect_url,
+                                     "REDIRECTSTATUS": subdir_redirectstatus,
+                                     "APPEND_REQUESTURI": subdir_append_requesturi,
                                      "PATHTOPYTHON": backend_path,
                                      }
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
-            with codecs.open("/etc/nginx/sites-enabled/"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
+            with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
                 confout.write(generated_subdir_app_config)
 
 

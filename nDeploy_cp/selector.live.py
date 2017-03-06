@@ -57,21 +57,27 @@ if form.getvalue('domain'):
     mydomain = form.getvalue('domain')
     print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
     print('<div class="row">')
+    print('<div class="col-md-6 col-md-offset-3">')
     print('<form action="server_settings.live.py" method="post">')
     print('<input class="btn btn-primary" data-toggle="tooltip" title="content optimizations, redirections, server headers" type="submit" value="SERVER SETTINGS">')
     # Pass on the domain name to the next stage
     print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
     print('</form>')
+    print('</div>')
+    print('<div class="col-md-6 col-md-offset-3">')
     print('<form action="app_settings.live.py" method="post">')
-    print('<input class="btn btn-primary" data-toggle="tooltip" title="application server, version, application template" type="submit" value="APPLICATION SETTINGS">')
+    print('<input class="btn btn-primary" data-toggle="tooltip" title="application server, version, application template" type="submit" value="APP SETTINGS">')
     # Pass on the domain name to the next stage
     print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
     print('</form>')
+    print('</div>')
+    print('<div class="col-md-6 col-md-offset-3">')
     print('<form action="subdir_selector.live.py" method="post">')
     print('<input class="btn btn-primary" data-toggle="tooltip" title="application installed in sub-directory like domain.com/blog/" type="submit" value="SUBDIR APPS">')
     # Pass on the domain name to the next stage
     print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
     print('</form>')
+    print('</div>')
     print('</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')

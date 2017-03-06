@@ -134,6 +134,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 naxsi_mode = the_subdir_dict.get('naxsi_mode', 'learn')
                 naxsi_whitelist = the_subdir_dict.get('naxsi_whitelist', 'none')
                 auth_basic = the_subdir_dict.get('auth_basic', 'disabled')
+                set_expire_static = the_subdir_dict.get('set_expire_static', 'disabled')
+                redirectstatus = the_subdir_dict.get('redirectstatus', 'none')
+                append_requesturi = the_subdir_dict.get('append_requesturi', 'disabled')
+                redirecturl = the_subdir_dict.get('redirecturl', 'none')
                 # get the human friendly name of the app template
                 if os.path.isfile(app_template_file):
                     with open(app_template_file, 'r') as apptemplate_data_yaml:
@@ -154,7 +158,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> ERROR: app template data file error</div>')
                     sys.exit(0)
                 # Ok we are done with getting the settings,now lets present it to the user
-                print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
+                print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
                 print('<div class="panel-body">')
                 print('<form id="config" class="form-inline config-save" action="subdir_select_app_settings.live.py" method="post">')
                 print('<ul class="list-group">')
@@ -191,7 +195,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('</div>')
                     print('</li>')
                 print('</ul>')
-                print('<p><em>To change application settings select a BACKEND from the drop down below:</em></p>')
+                print('<p><em>To change application server select a BACKEND from the drop down below:</em></p>')
                 print('<select name="backend">')
                 for backends_defined in backend_data_yaml_parsed.keys():
                     if backends_defined == backend_category:
@@ -204,53 +208,48 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('<input class="btn btn-primary" type="submit" value="Submit">')
                 print('</form>')
-                # Next section start here
-                print(('<div class="panel-heading"><h3 class="panel-title">Password protect: http://'+mydomain+'/'+thesubdir+'/</h3></div>'))
-                print('<div class="panel-body">')
-                print('<ul class="list-group">')
-                print('<li class="list-group-item">')
-                print('<div class="row">')
-                if auth_basic == 'disabled':
-                    print('<div class="alert alert-info">')
-                    print('<ul class="list text-left">')
-                    print('<li>Password protection works along with cPanel - "Directory Privacy" feature</li>')
-                    print('<li>Setup a password for the folder below first in cPanel <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> FILES <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Directory Privacy</li>')
-                    print('<li><kbd>'+document_root+'/'+thesubdir+'</kbd></li>')
-                    print('</ul>')
-                    print('</div>')
-                    print('<div class="col-sm-6">')
-                    print('<form action="save_directory_privacy.live.py" method="post">')
-                    print('<input class="btn btn-primary" data-toggle="tooltip" title="password protect http://'+mydomain+'/'+thesubdir+'/" type="submit" value="PASSWORD PROTECT">')
-                    # Pass on the domain name to the next stage
-                    print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-                    print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                    print(('<input class="hidden" name="action" value="add">'))
-                    print('</form>')
-                    print('</div>')
-                else:
-                    print('<div class="alert alert-info">')
-                    print('<ul class="list text-left">')
-                    print('<li>Password protection is enabled for</li>')
-                    print('<li><kbd>'+document_root+'/'+thesubdir+'</kbd></li>')
-                    print('</ul>')
-                    print('</div>')
-                    print('<div class="col-sm-6">')
-                    print('<form action="save_directory_privacy.live.py" method="post">')
-                    print('<input class="btn btn-primary" data-toggle="tooltip" title="disable password protect http://'+mydomain+'/'+thesubdir+'/" type="submit" value="DISABLE PASSWORD PROTECTION">')
-                    # Pass on the domain name to the next stage
-                    print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-                    print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                    print(('<input class="hidden" name="action" value="del">'))
-                    print('</form>')
-                    print('</div>')
+                print('</div>')
                 print('</li>')
                 print('</ul>')
-                print('</ul>')
-                print('</div>')
-                print('</div>')
                 # Next section start here
-                print(('<div class="panel-heading"><h3 class="panel-title">Web Application Firewall for: '+mydomain+'/'+thesubdir+'</h3></div><div class="panel-body">'))
+                print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'/'+thesubdir+'</h3></div><div class="panel-body">'))
                 print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
+                # auth_basic
+                print('<ul class="list-group"><li class="list-group-item">')
+                print('<div class="row">')
+                auth_basic_hint = "Setup password for "+document_root+"/"+thesubdir+" in cPanel>>Files>>Directory Privacy first"
+                if auth_basic == 'enabled':
+                    print_green('password protect app url', auth_basic_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" checked/> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" /> Disabled</label></div>')
+                    print('</div>')
+                else:
+                    print_red('password protect app url', auth_basic_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" /> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" checked/> Disabled</label></div>')
+                    print('</div>')
+                    print('</div>')
+                print('</li>')
+                # set_expire_static
+                print('<ul class="list-group"><li class="list-group-item">')
+                print('<div class="row">')
+                set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
+                if set_expire_static == 'enabled':
+                    print_green('set expires header', set_expire_static_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" checked/> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" /> Disabled</label></div>')
+                    print('</div>')
+                else:
+                    print_red('set expires header', set_expire_static_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" /> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
+                    print('</div>')
+                    print('</div>')
+                print('</li>')
                 # naxsi
                 print('<ul class="list-group"><li class="list-group-item">')
                 print('<div class="row">')
@@ -315,6 +314,63 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print(('<option selected value="drupal">Drupal</option>'))
                     print(('<option value="wordpress">Wordpress</option>'))
                 print('</select>')
+                print('</div>')
+                print('</div>')
+                print('</li>')
+                # URL Redirect
+                print('<li class="list-group-item">')
+                print('<div class="row">')
+                url_redirect_hint = "select redirection status 301 or 307"
+                if redirectstatus == 'none':
+                    print_red("URL Redirect", url_redirect_hint)
+                else:
+                    print_green("URL Redirect", url_redirect_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<select name="redirectstatus">')
+                if redirectstatus == 'none':
+                    print(('<option selected value="none">no redirection</option>'))
+                    print(('<option value="301">Permanent Redirect</option>'))
+                    print(('<option value="307">Temporary Redirect</option>'))
+                elif redirectstatus == '301':
+                    print(('<option value="none">no redirection</option>'))
+                    print(('<option value="307">Temporary Redirect</option>'))
+                    print(('<option selected value="301">Permanent Redirect</option>'))
+                elif redirectstatus == '307':
+                    print(('<option value="none">no redirection</option>'))
+                    print(('<option selected value="307">Temporary Redirect</option>'))
+                    print(('<option value="301">Permanent Redirect</option>'))
+                print('</select>')
+                print('</div>')
+                print('</div>')
+                print('</li>')
+                # Append request_uri to redirect
+                print('<li class="list-group-item">')
+                print('<div class="row">')
+                append_requesturi_hint = 'append $$request_uri to the redirect URL'
+                if append_requesturi == 'enabled':
+                    print_green("append $request_uri to redirecturl", append_requesturi_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="append_requesturi" value="enabled" checked/> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="append_requesturi" value="disabled" /> Disabled</label></div>')
+                    print('</div>')
+                else:
+                    print_red("append $request_uri to redirecturl", append_requesturi_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="append_requesturi" value="enabled" /> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="append_requesturi" value="disabled" checked/> Disabled</label></div>')
+                    print('</div>')
+                    print('</div>')
+                print('</li>')
+                # Redirect URL
+                print('<li class="list-group-item">')
+                print('<div class="row">')
+                redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
+                if redirecturl == "none":
+                    print_red("Redirect to URL", redirecturl_hint)
+                else:
+                    print_green("Redirect to URL", redirecturl_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<input class="form-control" placeholder='+redirecturl+' type="text" name="redirecturl">')
                 print('</div>')
                 print('</div>')
                 print('</li>')

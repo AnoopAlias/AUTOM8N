@@ -90,6 +90,37 @@ if form.getvalue('thesubdir'):
     if subdir_apps_dict:
         if subdir_apps_dict.get(thesubdir):
             the_subdir_dict = subdir_apps_dict.get(thesubdir)
+            current_redirecturl = the_subdir_dict.get('redirecturl', "none")
+            # auth_basic
+            if 'auth_basic' in form.keys():
+                auth_basic = form.getvalue('auth_basic')
+                the_subdir_dict['auth_basic'] = auth_basic
+            else:
+                print('ERROR: Forbidden::auth_basic')
+                print('</div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</body>')
+                print('</html>')
+                sys.exit(0)
+            # set_expire_static
+            if 'set_expire_static' in form.keys():
+                set_expire_static = form.getvalue('set_expire_static')
+                the_subdir_dict['set_expire_static'] = set_expire_static
+            else:
+                print('ERROR: Forbidden::set_expire_static')
+                print('</div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</body>')
+                print('</html>')
+                sys.exit(0)
             # naxsi
             if 'naxsi' in form.keys():
                 naxsi = form.getvalue('naxsi')
@@ -135,6 +166,64 @@ if form.getvalue('thesubdir'):
                 print('</body>')
                 print('</html>')
                 sys.exit(0)
+            # redirectstatus
+            if 'redirectstatus' in form.keys():
+                redirectstatus = form.getvalue('redirectstatus')
+                the_subdir_dict['redirectstatus'] = redirectstatus
+            else:
+                print('ERROR: Forbidden::redirectstatus')
+                print('</div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</body>')
+                print('</html>')
+                sys.exit(0)
+            # redirecturl
+            if redirectstatus != "none":
+                if 'redirecturl' in form.keys():
+                    redirecturl = form.getvalue('redirecturl')
+                    if not redirecturl == "none":
+                        regex = re.compile(
+                            r'^(?:http|ftp)s?://'
+                            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'
+                            r'localhost|'
+                            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+                            r'(?::\d+)?'
+                            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+                        it_matches = regex.match(redirecturl)
+                        if not it_matches:
+                            print('ERROR: Invalid Redirect URL. The URL must be something like https://google.com ')
+                            print('</div>')
+                            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+                            print('</div>')
+                            print('</div>')
+                            print('</div>')
+                            print('</div>')
+                            print('</body>')
+                            print('</html>')
+                            sys.exit(0)
+                        else:
+                            the_subdir_dict['redirecturl'] = redirecturl
+                    else:
+                        the_subdir_dict['redirecturl'] = current_redirecturl
+            # append_requesturi
+            if 'append_requesturi' in form.keys():
+                append_requesturi = form.getvalue('append_requesturi')
+                the_subdir_dict['append_requesturi'] = append_requesturi
+            else:
+                print('ERROR: Forbidden::append_requesturi')
+                print('</div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</body>')
+                print('</html>')
+                sys.exit(0)
             subdir_apps_dict[thesubdir] = the_subdir_dict
             yaml_parsed_profileyaml['subdir_apps'] = subdir_apps_dict
         else:
@@ -142,6 +231,36 @@ if form.getvalue('thesubdir'):
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Missing subdir_apps section in domain data</div>')
 else:
+    # auth_basic
+    if 'auth_basic' in form.keys():
+        auth_basic = form.getvalue('auth_basic')
+        yaml_parsed_profileyaml['auth_basic'] = auth_basic
+    else:
+        print('ERROR: Forbidden::auth_basic')
+        print('</div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</body>')
+        print('</html>')
+        sys.exit(0)
+    # set_expire_static
+    if 'set_expire_static' in form.keys():
+        set_expire_static = form.getvalue('set_expire_static')
+        yaml_parsed_profileyaml['set_expire_static'] = set_expire_static
+    else:
+        print('ERROR: Forbidden::set_expire_static')
+        print('</div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</body>')
+        print('</html>')
+        sys.exit(0)
     # naxsi
     if 'naxsi' in form.keys():
         naxsi = form.getvalue('naxsi')
@@ -187,7 +306,10 @@ else:
         print('</body>')
         print('</html>')
         sys.exit(0)
-print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
+if form.getvalue('thesubdir'):
+    print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+form.getvalue('thesubdir')+'</strong></h3></div><div class="panel-body">'))
+else:
+    print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
 with open(profileyaml, 'w') as yaml_file:
     yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
 print('<div class="icon-box">')

@@ -5,6 +5,7 @@ import os
 import socket
 import cgitb
 import psutil
+import yaml
 try:
     import simplejson as json
 except ImportError:
@@ -84,22 +85,23 @@ for the_addon_domain in addon_domains_dict.keys():
 print('</select>')
 print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
 print('</div>')
+# Next section start here
 print('<div class="alert alert-info">')
 if os.path.isfile(cluster_config_file):
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-    print('Nginx high available cluster is ACTIVE and config+files are synced to:')
-    print('<ul class="list text-left">')
+    print('XtendWeb nginx high available cluster is ACTIVE<br>')
+    print('<br>')
     for servername in cluster_data_yaml_parsed.keys():
-        filesync_status = "OFF"
+        filesync_status = "Filesync OFF"
         for myprocess in psutil.process_iter():
             mycmdline = myprocess.cmdline()
             if '/usr/bin/unison' in mycmdline and servername in mycmdline:
-                filesync_status = "ON"
-        print(servername+' FileSync::'+filesync_status)
-    print('</ul>')
+                filesync_status = "Filesync ON"
+        print('<kbd>'+servername+'</kbd> : <kbd>'+filesync_status+'</kbd><br>')
+        print('<br>')
 else:
-    print('Nginx high available cluster is not enabled. Please contact service provider')
+    print('XtendWeb nginx high available cluster is not enabled. Please contact service provider')
 print('</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
 print('</div>')

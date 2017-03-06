@@ -126,7 +126,11 @@ access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log 
 return 301 https://$host$request_uri;
 {% else %}
 {% if PAGESPEED == 'enabled' %}
+{% if PAGESPEED_FILTER == 'CoreFilters' %}
 include /etc/nginx/conf.d/pagespeed.conf;
+{% elif PAGESPEED_FILTER == 'PassThrough' %}
+include /etc/nginx/conf.d/pagespeed_passthrough.conf;
+{% endif %}
 {% endif %}
 {% if not OPEN_FILE_CACHE == 'enabled' %}
 open_file_cache off;
@@ -156,17 +160,18 @@ include /etc/nginx/conf.d/dos_mitigate.conf;
 auth_basic "Restricted Content";
 auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% endif %}
+{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+{% else %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
 # Include NAXSI settings
-location ^* /NaxsiRequestDenied {
+location ^~ /NaxsiRequestDenied {
 return 418;
 }
 # End Include NAXSI settings
-{% if SET_REDIRECT == 'enabled' %}
-return {{RETURN_CODE}} {{REDIRECT_URL}};
-{% else %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
 {% endif %}
@@ -201,7 +206,11 @@ access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buf
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% endif %}
 {% if PAGESPEED == 'enabled' %}
+{% if PAGESPEED_FILTER == 'CoreFilters' %}
 include /etc/nginx/conf.d/pagespeed.conf;
+{% elif PAGESPEED_FILTER == 'PassThrough' %}
+include /etc/nginx/conf.d/pagespeed_passthrough.conf;
+{% endif %}
 {% endif %}
 {% if not OPEN_FILE_CACHE == 'enabled' %}
 open_file_cache off;
@@ -236,6 +245,10 @@ include /etc/nginx/conf.d/dos_mitigate.conf;
 auth_basic "Restricted Content";
 auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% endif %}
+{% if REDIRECT_URL != 'none' and RETURN_CODE != 'none' %}
+{% if SET_REDIRECT == 'enabled' %}
+return {{RETURN_CODE}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+{% else %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
@@ -244,10 +257,9 @@ location ^~ /NaxsiRequestDenied {
 return 418;
 }
 # End Include NAXSI settings
-{% if SET_REDIRECT == 'enabled' %}
-return {{RETURN_CODE}} {{REDIRECT_URL}};
-{% else %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
+{% endif %}
 {% endif %}
 }
 {% endif %}

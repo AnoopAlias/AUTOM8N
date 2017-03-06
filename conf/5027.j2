@@ -3,6 +3,15 @@
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location ^~ /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
 # Add support for subdirectory structure in WordPress Multisite
 if (!-e $request_filename) {
 rewrite /wp-admin$ $scheme://$host$uri/ permanent;
@@ -22,7 +31,6 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% elif NAXSIMODE == 'active' %}
 include /etc/nginx/conf.d/naxsi_active.rules;
 {% if NAXSI_WHITELIST == 'wordpress' %}
@@ -31,22 +39,13 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
 
-
 try_files $uri $uri/ /index.php?q=$uri&$args;
 }
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
@@ -70,7 +69,6 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% elif NAXSIMODE == 'active' %}
 include /etc/nginx/conf.d/naxsi_active.rules;
 {% if NAXSI_WHITELIST == 'wordpress' %}
@@ -79,11 +77,10 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
-
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

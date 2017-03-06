@@ -456,15 +456,15 @@ if form.getvalue('domain'):
         # Append request_uri to redirect
         print('<li class="list-group-item">')
         print('<div class="row">')
-        append_requesturi_hint = 'Append $$request_uri to the redirect URL'
+        append_requesturi_hint = 'append $$request_uri to the redirect URL'
         if append_requesturi == 'enabled':
-            print_green("Append $request_uri to redirecturl", append_requesturi_hint)
+            print_green("append $request_uri to redirecturl", append_requesturi_hint)
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="append_requesturi" value="enabled" checked/> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="append_requesturi" value="disabled" /> Disabled</label></div>')
             print('</div>')
         else:
-            print_red("Append $request_uri to redirecturl", append_requesturi_hint)
+            print_red("append $request_uri to redirecturl", append_requesturi_hint)
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="append_requesturi" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="append_requesturi" value="disabled" checked/> Disabled</label></div>')

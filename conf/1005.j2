@@ -2,6 +2,15 @@
 
 root {{ DOCUMENTROOT }};
 
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location ^~ /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
 location / {
 
 # Include NAXSI settings
@@ -14,7 +23,6 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% elif NAXSIMODE == 'active' %}
 include /etc/nginx/conf.d/naxsi_active.rules;
 {% if NAXSI_WHITELIST == 'wordpress' %}
@@ -23,8 +31,8 @@ include /etc/nginx/naxsi.d/wordpress.rules;
 {% if NAXSI_WHITELIST == 'drupal' %}
 include /etc/nginx/naxsi.d/drupal.rules;
 {% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
 {% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
 
@@ -60,11 +68,3 @@ proxy_cache_valid      200  1d;
 proxy_cache_use_stale  error timeout invalid_header updating http_500 http_502 http_503 http_504;
 proxy_set_header   Proxy "";
 }
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory

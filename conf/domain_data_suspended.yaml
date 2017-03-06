@@ -5,6 +5,7 @@ apptemplate_code: 1000.j2
 autoindex: disabled
 ssl_offload: disabled
 pagespeed: enabled
+pagespeed_filter: CoreFilters
 brotli: enabled
 gzip: enabled
 http2: enabled
@@ -18,11 +19,13 @@ hsts: disabled
 dos_mitigate: disabled
 naxsi: disabled
 naxsi_mode: learn
-naxsi_whitelist: disabled
+naxsi_whitelist: none
 redirect_to_ssl: disabled
 redirect_aliases: disabled
 wwwredirect: none
 subdir_apps: {}
 auth_basic: disabled
-set_redirect: none
-redirect_status: 301
+redirecturl: none
+redirectstatus: none
+append_requesturi: disabled
+set_expire_static: disabled

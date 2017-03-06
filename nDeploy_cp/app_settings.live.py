@@ -103,6 +103,7 @@ if form.getvalue('domain'):
         naxsi_mode = yaml_parsed_profileyaml.get('naxsi_mode', 'learn')
         naxsi_whitelist = yaml_parsed_profileyaml.get('naxsi_whitelist', 'none')
         auth_basic = yaml_parsed_profileyaml.get('auth_basic', 'disabled')
+        set_expire_static = yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
         # get the human friendly name of the app template
         if os.path.isfile(app_template_file):
             with open(app_template_file, 'r') as apptemplate_data_yaml:
@@ -123,7 +124,7 @@ if form.getvalue('domain'):
             print('<div class="alert alert-danger">ERROR: app template data file error</div>')
             sys.exit(0)
         # Ok we are done with getting the settings,now lets present it to the user
-        print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div>'))
+        print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+mydomain+'</strong></h3></div>'))
         print('<div class="panel-body">')
         print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
         print('<ul class="list-group">')
@@ -156,7 +157,7 @@ if form.getvalue('domain'):
             print('<div class="col-sm-6 col-radio"><strong>Template</strong></div>')
             print(('<div class="col-sm-6"><div class="label label-info">'+apptemplate_description+'</div>'))
         print('</ul>')
-        print('<p><em>To change application settings select a BACKEND from the drop down below:</em></p>')
+        print('<p><em>To change application server select a BACKEND from the drop down below:</em></p>')
         print('<select name="backend">')
         for backends_defined in backend_data_yaml_parsed.keys():
             if backends_defined == backend_category:
@@ -172,50 +173,44 @@ if form.getvalue('domain'):
         print('</li>')
         print('</ul>')
         # Next section start here
-        print(('<div class="panel-heading"><h3 class="panel-title">Password protect: http://'+mydomain+'/</h3></div>'))
-        print('<div class="panel-body">')
-        print('<ul class="list-group">')
-        print('<li class="list-group-item">')
+        print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div><div class="panel-body">'))
+        print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
+        # auth_basic
+        print('<ul class="list-group"><li class="list-group-item">')
         print('<div class="row">')
-        if auth_basic == 'disabled':
-            print('<div class="alert alert-info">')
-            print('<ul class="list text-left">')
-            print('<li>Password protection works along with cPanel - "Directory Privacy" feature</li>')
-            print('<li>Setup a password for the folder below first in cPanel <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> FILES <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Directory Privacy</li>')
-            print('<li><kbd>'+document_root+'</kbd></li>')
-            print('</ul>')
-            print('</div>')
-            print('<div class="col-sm-6">')
-            print('<form action="save_directory_privacy.live.py" method="post">')
-            print('<input class="btn btn-primary" data-toggle="tooltip" title="password protect http://'+mydomain+'/" type="submit" value="PASSWORD PROTECT">')
-            # Pass on the domain name to the next stage
-            print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-            print(('<input class="hidden" name="action" value="add">'))
-            print('</form>')
+        auth_basic_hint = "Setup password for "+document_root+" in cPanel>>Files>>Directory Privacy first"
+        if auth_basic == 'enabled':
+            print_green('password protect app url', auth_basic_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" /> Disabled</label></div>')
             print('</div>')
         else:
-            print('<div class="alert alert-info">')
-            print('<ul class="list text-left">')
-            print('<li>Password protection is enabled for</li>')
-            print('<li><kbd>'+document_root+'</kbd></li>')
-            print('</ul>')
+            print_red('password protect app url', auth_basic_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('<div class="col-sm-6">')
-            print('<form action="save_directory_privacy.live.py" method="post">')
-            print('<input class="btn btn-primary" data-toggle="tooltip" title="disable password protect http://'+mydomain+'/" type="submit" value="DISABLE PASSWORD PROTECT">')
-            # Pass on the domain name to the next stage
-            print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-            print(('<input class="hidden" name="action" value="del">'))
-            print('</form>')
             print('</div>')
         print('</li>')
-        print('</ul>')
-        print('</ul>')
-        print('</div>')
-        print('</div>')
-        # Next section start here
-        print(('<div class="panel-heading"><h3 class="panel-title">Web Application Firewall for: '+mydomain+'</h3></div><div class="panel-body">'))
-        print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
+        # set_expire_static
+        print('<ul class="list-group"><li class="list-group-item">')
+        print('<div class="row">')
+        set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
+        if set_expire_static == 'enabled':
+            print_green('set expires header', set_expire_static_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red('set expires header', set_expire_static_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
         # naxsi
         print('<ul class="list-group"><li class="list-group-item">')
         print('<div class="row">')
