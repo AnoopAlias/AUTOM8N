@@ -14,7 +14,6 @@ open_file_cache: enabled
 clickjacking_protect: disabled
 disable_contenttype_sniffing: disabled
 xss_filter: disabled
-content_security_policy: disabled
 hsts: disabled
 dos_mitigate: disabled
 naxsi: disabled

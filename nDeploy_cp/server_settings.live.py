@@ -85,7 +85,6 @@ if form.getvalue('domain'):
         clickjacking_protect = yaml_parsed_profileyaml.get('clickjacking_protect', 'disabled')
         disable_contenttype_sniffing = yaml_parsed_profileyaml.get('disable_contenttype_sniffing', 'disabled')
         xss_filter = yaml_parsed_profileyaml.get('xss_filter', 'disabled')
-        content_security_policy = yaml_parsed_profileyaml.get('content_security_policy', 'disabled')
         hsts = yaml_parsed_profileyaml.get('hsts', 'disabled')
         dos_mitigate = yaml_parsed_profileyaml.get('dos_mitigate', 'disabled')
         pagespeed_filter = yaml_parsed_profileyaml.get('pagespeed_filter', 'CoreFilters')
@@ -308,24 +307,6 @@ if form.getvalue('domain'):
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-            print('</div>')
-        print('</li>')
-        # content_security_policy
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        content_security_policy_hint = 'add_header Content-Security-Policy "script-src self www.google-analytics.com ajax.googleapis.com;";'
-        if content_security_policy == 'enabled':
-            print_green("content_security_policy", content_security_policy_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="content_security_policy" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="content_security_policy" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("content_security_policy", content_security_policy_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="content_security_policy" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="content_security_policy" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
         print('</li>')

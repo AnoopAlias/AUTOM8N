@@ -266,21 +266,6 @@ else:
     print('</body>')
     print('</html>')
     sys.exit(0)
-# content_security_policy
-if 'content_security_policy' in form.keys():
-    content_security_policy = form.getvalue('content_security_policy')
-    yaml_parsed_profileyaml['content_security_policy'] = content_security_policy
-else:
-    print('ERROR: Forbidden::content_security_policy')
-    print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
-    print('</div>')
-    print('</div>')
-    print('</div>')
-    print('</div>')
-    print('</body>')
-    print('</html>')
-    sys.exit(0)
 # hsts
 if 'hsts' in form.keys():
     hsts = form.getvalue('hsts')

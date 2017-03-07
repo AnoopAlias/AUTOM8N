@@ -103,7 +103,8 @@ def php_backend_add(user_name, domain_home):
         TEMPLATE_FILE = "php-fpm.pool.j2"
         template = templateEnv.get_template(TEMPLATE_FILE)
         templateVars = {"CPANELUSER": user_name,
-                        "HOMEDIR": domain_home
+                        "HOMEDIR": domain_home,
+                        "CHROOT_PHPFPM": False
                         }
         generated_config = template.render(templateVars)
         with codecs.open(phppool_file, 'w', 'utf-8') as confout:
@@ -164,24 +165,12 @@ def php_secure_backend_add(user_name, domain_home, backend_version, clusterenabl
             confout.write(generated_config)
         if clusterenabled:
             subprocess.call(['csync2', '-x'], shell=True)
-    backend_config_file = installation_path+"/conf/backends.yaml"
-    with open(backend_config_file, 'r') as backend_data_yaml:
-        backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
-    if "PHP" in backend_data_yaml_parsed:
-        php_backends_dict = backend_data_yaml_parsed["PHP"]
-        for backend_name in list(php_backends_dict.keys()):
-            if backend_name == backend_version:
-                subprocess.call(['systemctl', 'restart', backend_name+'@'+user_name+'.socket'])
-                subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
-                if clusterenabled:
-                    for server in cluster_serverlist:
-                        subprocess.call(['systemctl', '--host', server, 'restart', backend_name+'@'+user_name+'.socket'])
-                        subprocess.call(['systemctl', '--host', server, 'enable', backend_name+'@'+user_name+'.socket'])
-            else:
-                subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
-                if clusterenabled:
-                    for server in cluster_serverlist:
-                        subprocess.call(['systemctl', '--host', server, 'stop', backend_name+'@'+user_name+'.service'])
+    subprocess.call(['systemctl', 'restart', backend_version+'@'+user_name+'.socket'])
+    subprocess.call(['systemctl', 'enable', backend_version+'@'+user_name+'.socket'])
+    if clusterenabled:
+        for server in cluster_serverlist:
+            subprocess.call(['systemctl', '--host', server, 'restart', backend_version+'@'+user_name+'.socket'])
+            subprocess.call(['systemctl', '--host', server, 'enable', backend_version+'@'+user_name+'.socket'])
 
 
 def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
@@ -333,7 +322,6 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     clickjacking_protect = yaml_parsed_domain_data.get('clickjacking_protect', None)
     disable_contenttype_sniffing = yaml_parsed_domain_data.get('disable_contenttype_sniffing', None)
     xss_filter = yaml_parsed_domain_data.get('xss_filter', None)
-    content_security_policy = yaml_parsed_domain_data.get('content_security_policy', None)
     hsts = yaml_parsed_domain_data.get('hsts', None)
     if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
         brotli = yaml_parsed_domain_data.get('brotli', None)
@@ -392,7 +380,6 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "XSS_FILTER": xss_filter,
                     "GZIP": gzip,
                     "BROTLI": brotli,
-                    "CONTENT_SECURITY_POLICY": content_security_policy,
                     "HSTS": hsts,
                     "NAXSI": naxsi,
                     "NAXSIMODE": naxsi_mode,
@@ -446,8 +433,6 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                 php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version, clusterenabled, *cluster_serverlist)
             else:
                 php_backend_add(kwargs.get('configuser'), domain_home)
-    elif backend_category == 'HHVM_NOBODY':
-        fastcgi_socket = backend_path
     elif backend_category == 'HHVM':
         fastcgi_socket = domain_home+"/hhvm.sock"
         if not os.path.isfile(fastcgi_socket):
@@ -508,8 +493,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                         php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version)
                     else:
                         php_backend_add(kwargs.get('configuser'), domain_home)
-            elif backend_category == 'HHVM_NOBODY':
-                fastcgi_socket = backend_path
+            elif backend_category == 'HHVM':
+                fastcgi_socket = domain_home+"/hhvm.sock"
+                if not os.path.isfile(fastcgi_socket):
+                    hhvm_backend_add(kwargs.get('configuser'), domain_home, clusterenabled, *cluster_serverlist)
             subdirApptemplateVars = {"NEWDOCUMENTROOT": document_root+'/'+subdir,
                                      "SUBDIR": subdir,
                                      "SUBDIRAPPS": subdir_apps_uniq,

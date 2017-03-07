@@ -147,9 +147,6 @@ add_header X-Content-Type-Options nosniff;
 {% if XSS_FILTER == 'enabled' %}
 add_header X-XSS-Protection "1; mode=block";
 {% endif %}
-{% if CONTENT_SECURITY_POLICY == 'enabled' %}
-add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
-{% endif %}
 {% if GZIP == 'enabled' %}
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
@@ -229,9 +226,6 @@ add_header X-Content-Type-Options nosniff;
 {% endif %}
 {% if XSS_FILTER == 'enabled' %}
 add_header X-XSS-Protection "1; mode=block";
-{% endif %}
-{% if CONTENT_SECURITY_POLICY == 'enabled' %}
-add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
 {% endif %}
 {% if BROTLI == 'enabled' %}
 include /etc/nginx/conf.d/brotli.conf;
