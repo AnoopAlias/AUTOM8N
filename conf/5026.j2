@@ -48,11 +48,19 @@ try_files $uri $uri/ /index.php?q=$uri&$args;
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 location = /wp-login.php {
 limit_req   zone=one  burst=1 nodelay;
 include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
@@ -95,6 +103,10 @@ fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
 fastcgi_cache_lock on;
 
 include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
 }
 
 include /etc/nginx/conf.d/cpanel_services.conf;

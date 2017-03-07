@@ -33,12 +33,20 @@ try_files $uri $uri/ /index.php;
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php(?:$|/) {
 fastcgi_split_path_info ^(.+\.php)(/.+)$;
 include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 

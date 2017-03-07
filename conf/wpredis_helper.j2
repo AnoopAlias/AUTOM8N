@@ -38,11 +38,22 @@ location / {
 {% if NAXSI == 'enabled' %}
 {% if NAXSIMODE == 'learn' %}
 include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% if NAXSI_WHITELIST == 'wordpress' %}
+include /etc/nginx/naxsi.d/wordpress.rules;
+{% endif %}
+{% if NAXSI_WHITELIST == 'drupal' %}
+include /etc/nginx/naxsi.d/drupal.rules;
+{% endif %}
 {% elif NAXSIMODE == 'active' %}
 include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% if NAXSI_WHITELIST == 'wordpress' %}
+include /etc/nginx/naxsi.d/wordpress.rules;
 {% endif %}
+{% if NAXSI_WHITELIST == 'drupal' %}
+include /etc/nginx/naxsi.d/drupal.rules;
+{% endif %}
+{% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
 
@@ -67,17 +78,30 @@ redis2_pass  127.0.0.1:6379;
 }
 
 location ~ \.php$ {
+
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}
 {% if NAXSIMODE == 'learn' %}
 include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% if NAXSI_WHITELIST == 'wordpress' %}
+include /etc/nginx/naxsi.d/wordpress.rules;
+{% endif %}
+{% if NAXSI_WHITELIST == 'drupal' %}
+include /etc/nginx/naxsi.d/drupal.rules;
+{% endif %}
 {% elif NAXSIMODE == 'active' %}
 include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
+{% if NAXSI_WHITELIST == 'wordpress' %}
+include /etc/nginx/naxsi.d/wordpress.rules;
 {% endif %}
+{% if NAXSI_WHITELIST == 'drupal' %}
+include /etc/nginx/naxsi.d/drupal.rules;
+{% endif %}
+{% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
+
 
 sendfile off;
 aio off;
@@ -100,17 +124,29 @@ more_set_headers 'X-Cache $srcache_fetch_status';
 more_set_headers 'X-Cache-2 $srcache_store_status';
 
 include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location = /wp-login.php {
 limit_req   zone=one  burst=1 nodelay;
 include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 

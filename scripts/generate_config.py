@@ -98,13 +98,17 @@ def php_backend_add(user_name, domain_home):
     """Function to setup php-fpm pool for user and reload the master php-fpm"""
     phppool_file = installation_path + "/php-fpm.d/" + user_name + ".conf"
     if not os.path.isfile(phppool_file):
+        if os.path.isfile(installation_path+"/conf/chroot-php-enabled"):
+            chroot_status = True
+        else:
+            chroot_status = False
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = "php-fpm.pool.j2"
         template = templateEnv.get_template(TEMPLATE_FILE)
         templateVars = {"CPANELUSER": user_name,
                         "HOMEDIR": domain_home,
-                        "CHROOT_PHPFPM": False
+                        "CHROOT_PHPFPM": chroot_status
                         }
         generated_config = template.render(templateVars)
         with codecs.open(phppool_file, 'w', 'utf-8') as confout:
@@ -299,6 +303,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
     # initialize the fastcgi_socket variable
     fastcgi_socket = None
+    if os.path.isfile(installation_path+"/conf/chroot-php-enabled"):
+        chroot_status = True
+    else:
+        chroot_status = False
     # Following are features that the UI can change . Can be expanded in future
     # as and when more features are incorporated
     if os.path.isfile('/etc/nginx/modules.d/naxsi.load'):
@@ -459,6 +467,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                        "REDIRECT_URL": redirect_url,
                        "APPEND_REQUESTURI": append_requesturi,
                        "PATHTOPYTHON": backend_path,
+                       "CHROOT_PHPFPM": chroot_status
                        }
     generated_app_config = app_template.render(apptemplateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
@@ -521,6 +530,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                                      "REDIRECTSTATUS": subdir_redirectstatus,
                                      "APPEND_REQUESTURI": subdir_append_requesturi,
                                      "PATHTOPYTHON": backend_path,
+                                     "CHROOT_PHPFPM": chroot_status
                                      }
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
