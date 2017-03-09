@@ -60,7 +60,7 @@ location ~* ^/.well-known/ {
 # Block access to "hidden" files and directories whose names begin with a
 # period. This includes directories used by version control systems such
 # as Subversion or Git to store control files.
-  location ~ (^|/)\. {
+location ~ (^|/)\. {
   return 403;
 }
 
