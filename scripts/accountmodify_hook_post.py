@@ -87,8 +87,8 @@ if cpanelnewuser != cpaneluser:
         subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
     print(("1 nDeploy:postmodify:"+cpanelnewuser))
 else:
-    # Get details of current main-domain and sub-domain stored in cPanel datastore
-    cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
+    # Get details of old main-domain and sub-domain stored in cPanel datastore
+    cpuserdatajson = installation_path+"/lock/"+cpaneluser+".userdata"
     with open(cpuserdatajson, 'r') as cpaneluser_data_stream:
         json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
     main_domain = json_parsed_cpaneluser.get('main_domain')
@@ -123,4 +123,5 @@ else:
     if os.path.exists(cluster_config_file):
         subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
         subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
+    silentremove(installation_path+"/lock/"+cpaneluser+".userdata")
     print(("1 nDeploy:postmodify:"+cpaneluser))

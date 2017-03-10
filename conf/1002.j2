@@ -74,7 +74,9 @@ proxy_cache_valid      200  1s;
 proxy_cache_lock on;
 proxy_cache_use_stale  updating;
 proxy_set_header   Proxy "";
+# We ignore most cache control logic set by the application
+proxy_ignore_headers Expires Cache-Control Set-Cookie Vary;
 proxy_set_header Accept-Encoding "";
-proxy_no_cache $mccookienocache;
-proxy_cache_bypass $mccookienocache;
+proxy_no_cache $query_string$cookie__mcnc;
+proxy_cache_bypass $query_string$cookie__mcnc;
 }

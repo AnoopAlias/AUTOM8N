@@ -163,6 +163,11 @@ return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+allow all;
+}
+# Allow "Well-Known URIs" as per RFC 5785
 # Include NAXSI settings
 location ^~ /NaxsiRequestDenied {
 return 418;
@@ -245,6 +250,11 @@ return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+allow all;
+}
+# Allow "Well-Known URIs" as per RFC 5785
 # Include NAXSI settings
 location ^~ /NaxsiRequestDenied {
 return 418;

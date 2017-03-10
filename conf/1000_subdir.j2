@@ -1,5 +1,14 @@
 # Subdirectory Proxy to cPanel Apache httpd service
 
+{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+{% else %}
+
+{% if SET_EXPIRE_STATIC == 'enabled' %}
+include /etc/nginx/conf.d/files_with_expire.conf;
+{% endif %}
+
+
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}
 {% if NAXSIMODE == 'learn' %}
@@ -47,3 +56,5 @@ proxy_set_header   X-Forwarded-Proto $scheme;
 proxy_set_header   X-Scheme $scheme;
 proxy_set_header   Proxy "";
 proxy_redirect     off;
+
+{% endif %}

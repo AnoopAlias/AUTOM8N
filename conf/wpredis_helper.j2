@@ -12,26 +12,6 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
 {% endfor %}
 # End Include any applications in subdirectory
 
-set $skip_cache 0;
-
-# POST requests and urls with a query string should always go to PHP
-if ($request_method = POST) {
-set $skip_cache 1;
-}
-if ($query_string != "") {
-set $skip_cache 1;
-}
-
-# Don't cache uris containing the following segments
-if ($request_uri ~* "/wp-admin/|/xmlrpc.php|wp-.*.php|/feed/|/cart/|/my-account/|/wc-api/|/resetpass/|index.php|sitemap(_index)?.xml") {
-set $skip_cache 1;
-}
-
-# Don't use the cache for logged in users or recent commenters
-if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|woocommerce_items_in_cart|resetpass|wordpress_logged_in") {
-set $skip_cache 1;
-}
-
 location / {
 
 # Include NAXSI settings
@@ -106,11 +86,11 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 sendfile off;
 aio off;
 
-set $key "$scheme$request_method$host$request_uri";
+set $key "$ua_device$scheme$request_method$host$request_uri";
 try_files $uri =404;
 
-srcache_fetch_skip $skip_cache;
-srcache_store_skip $skip_cache;
+srcache_fetch_skip $query_string$wpcookienocache$wpurinocache;
+srcache_store_skip $query_string$wpcookienocache$wpurinocache;
 
 srcache_response_cache_control off;
 srcache_request_cache_control off;

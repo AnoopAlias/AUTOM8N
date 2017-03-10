@@ -36,12 +36,11 @@ cpanelnewuser = mydict["newuser"]
 cpaneluser = mydict["user"]
 maindomain = mydict["domain"]
 
-if cpanelnewuser != cpaneluser:
-    # we copy the associated  userdata file for the user for post hook stage
-    with open("/var/cpanel/userdata/" + cpaneluser + "/main.cache", 'r') as userdata:
-        userdata_json = json.load(userdata)
-    # remove any stale userdata tmp files
-    silentremove(installation_path+"/lock/"+cpaneluser+".userdata")
-    with open(installation_path+"/lock/"+cpaneluser+".userdata", 'w') as tempuserdata:
-        json.dump(userdata_json, tempuserdata)
+# we copy the associated  userdata file for the user for post hook stage
+with open("/var/cpanel/userdata/" + cpaneluser + "/main.cache", 'r') as userdata:
+    userdata_json = json.load(userdata)
+# remove any stale userdata tmp files
+silentremove(installation_path+"/lock/"+cpaneluser+".userdata")
+with open(installation_path+"/lock/"+cpaneluser+".userdata", 'w') as tempuserdata:
+    json.dump(userdata_json, tempuserdata)
 print(("1 nDeploy:modify:pre:"+cpaneluser))

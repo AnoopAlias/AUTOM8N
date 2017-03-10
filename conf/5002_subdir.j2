@@ -5,6 +5,14 @@ auth_basic "Restricted Content";
 auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/{{ SUBDIR }}/passwd;
 {% endif %}
 
+{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+{% else %}
+
+{% if SET_EXPIRE_STATIC == 'enabled' %}
+include /etc/nginx/conf.d/files_with_expire.conf;
+{% endif %}
+
 try_files $uri $uri/ /{{ SUBDIR }}/index.php?$args;
 
 location ~ \.php$ {
@@ -17,3 +25,5 @@ fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
 fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
 {% endif %}
 }
+
+{% endif %}

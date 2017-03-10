@@ -6,7 +6,7 @@ HHVM_RPM_LOCATION="http://mirrors.linuxeye.com/hhvm-repo/7/x86_64/hhvm-3.15.3-1.
 
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 if [ ${osversion} -le 6 ];then
-  echo "XtendWeb HHVM setup needs CentOS7 or CloudLinux7 as the OS"
+  echo -e '\e[93m XtendWeb HHVM setup needs CentOS7 or CloudLinux7 as the OS \e[0m'
 else
   echo "Be Warned that you are using binary HHVM from mirrors.linuxeye.com - which XtendWeb project cannot guarentee"
   yum -y install epel-release
@@ -14,5 +14,6 @@ else
   yum -y install ${HHVM_RPM_LOCATION}
   /opt/nDeploy/scripts/update_backend.py add HHVM hhvm-3.15 systemd
   echo "0 */6 * * * bash /opt/nDeploy/scripts/hhvm_ghost_hunter.sh" >> /etc/crontab
-  echo "HHVM setup : OK"
+  echo -e '\e[93m Be Warned that you are using binary HHVM from mirrors.linuxeye.com - which is not part of XtendWeb project \e[0m'
+  echo -e '\e[93m HHVM setup : OK \e[0m'
 fi

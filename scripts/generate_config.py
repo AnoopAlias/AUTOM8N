@@ -32,7 +32,7 @@ nginx_bin = "/usr/sbin/nginx"
 # Railo is probably dead.Checkout http://lucee.org/ for a fork
 def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     """Add a vhost to tomcat and restart railo-tomcat app server"""
-    tomcat_conf = "/opt/railo/tomcat/conf/server.xml"
+    tomcat_conf = "/opt/lucee/tomcat/conf/server.xml"
     s1 = '<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'/" />'
     s2 = ''
     for domain in domain_aname_list:
@@ -54,7 +54,7 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
     # enabling shell as Railo probably needs shell vars like CATALINA_HOME
     if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload'):
-        subprocess.Popen(['/opt/railo/railo_ctl', 'restart'], shell=True)
+        subprocess.Popen(['/opt/lucee/lucee_ctl', 'restart'], shell=True)
     return
 
 
@@ -502,7 +502,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                         php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version)
                     else:
                         php_backend_add(kwargs.get('configuser'), domain_home)
-            elif backend_category == 'HHVM':
+            elif subdir_backend_category == 'HHVM':
                 fastcgi_socket = domain_home+"/hhvm.sock"
                 if not os.path.isfile(fastcgi_socket):
                     hhvm_backend_add(kwargs.get('configuser'), domain_home, clusterenabled, *cluster_serverlist)

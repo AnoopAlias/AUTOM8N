@@ -86,22 +86,24 @@ print('</select>')
 print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
 print('</div>')
 # Next section start here
-print('<div class="alert alert-info">')
+print('<div class="panel-body">')
 if os.path.isfile(cluster_config_file):
+    print('<span class="label label-primary">XTENDWEB CLUSTER IS ACTIVE</span><br><br>')
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-    print('XtendWeb nginx high available cluster is ACTIVE<br>')
-    print('<br>')
     for servername in cluster_data_yaml_parsed.keys():
-        filesync_status = "Filesync OFF"
+        filesync_status = False
         for myprocess in psutil.process_iter():
             mycmdline = myprocess.cmdline()
             if '/usr/bin/unison' in mycmdline and servername in mycmdline:
-                filesync_status = "Filesync ON"
-        print('<kbd>'+servername+'</kbd> : <kbd>'+filesync_status+'</kbd><br>')
-        print('<br>')
+                filesync_status = True
+        if filesync_status:
+            print('<span class="label label-success">'+servername+' | IN SYNC</span><br><br>')
+        else:
+            print('<span class="label label-warning">'+servername+' | OUT OF SYNC</span><br><br>')
 else:
-    print('XtendWeb nginx high available cluster is not enabled. Please contact service provider')
+    print('<span class="label label-default">XTENDWEB CLUSTER INACTIVE</span><br><br>')
+    print('<span class="label label-info">Contact your service provider</span><br><br>')
 print('</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
 print('</div>')

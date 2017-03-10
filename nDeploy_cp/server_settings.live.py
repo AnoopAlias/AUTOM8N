@@ -456,7 +456,7 @@ if form.getvalue('domain'):
         print('<li class="list-group-item">')
         print('<div class="row">')
         redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
-        if redirecturl == "noredirection":
+        if redirecturl == "none":
             print_red("Redirect to URL", redirecturl_hint)
         else:
             print_green("Redirect to URL", redirecturl_hint)
