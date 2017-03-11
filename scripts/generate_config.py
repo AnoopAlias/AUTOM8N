@@ -140,17 +140,13 @@ def hhvm_backend_add(user_name, domain_home, clusterenabled, *cluster_serverlist
         # Sync cluster config and call systemd remotely
         if clusterenabled:
             subprocess.call(['csync2', '-x'], shell=True)
-            for server in cluster_serverlist:
-                subprocess.call(['systemctl', '--host', server, 'start', 'ndeploy_hhvm@'+user_name+'.service'])
-                subprocess.call(['systemctl', '--host', server, 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
+            subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=started enabled=yes"', shell=True)
     else:
         subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         if clusterenabled:
-            for server in cluster_serverlist:
-                subprocess.call(['systemctl', '--host', server, 'start', 'ndeploy_hhvm@'+user_name+'.service'])
-                subprocess.call(['systemctl', '--host', server, 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
-        return
+            subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=started enabled=yes"', shell=True)
+    return
 
 
 def php_secure_backend_add(user_name, domain_home, backend_version, clusterenabled, *cluster_serverlist):
@@ -172,9 +168,8 @@ def php_secure_backend_add(user_name, domain_home, backend_version, clusterenabl
     subprocess.call(['systemctl', 'restart', backend_version+'@'+user_name+'.socket'])
     subprocess.call(['systemctl', 'enable', backend_version+'@'+user_name+'.socket'])
     if clusterenabled:
-        for server in cluster_serverlist:
-            subprocess.call(['systemctl', '--host', server, 'restart', backend_version+'@'+user_name+'.socket'])
-            subprocess.call(['systemctl', '--host', server, 'enable', backend_version+'@'+user_name+'.socket'])
+        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_version+'@'+user_name+'.socket state=started enabled=yes"', shell=True)
+    return
 
 
 def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):

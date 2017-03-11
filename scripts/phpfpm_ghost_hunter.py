@@ -69,10 +69,4 @@ if __name__ == "__main__":
                 # This means none of the domain has the version of php-fpm enabled and we can shut down the version og php-fpm for the user
                 subprocess.call(['systemctl', 'stop', backend_name+'@'+cpaneluser+'.service'])
                 if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
-                    cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
-                    cluster_data_yaml = open(cluster_config_file, 'r')
-                    cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-                    cluster_data_yaml.close()
-                    cluster_serverlist = cluster_data_yaml_parsed.keys()
-                    for server in cluster_serverlist:
-                        subprocess.call(['systemctl', '--host', server, 'stop', backend_name+'@'+cpaneluser+'.service'])
+                    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+cpaneluser+'.service state=stopped"', shell=True)

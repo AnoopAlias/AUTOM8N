@@ -8,7 +8,6 @@ osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 if [ ${osversion} -le 6 ];then
   echo -e '\e[93m XtendWeb HHVM setup needs CentOS7 or CloudLinux7 as the OS \e[0m'
 else
-  echo "Be Warned that you are using binary HHVM from mirrors.linuxeye.com - which XtendWeb project cannot guarentee"
   yum -y install epel-release
   yum install libc-client-2007f cpp gcc-c++ cmake git psmisc {binutils,boost,jemalloc,numactl}-devel {ImageMagick,sqlite,tbb,bzip2,openldap,readline,elfutils-libelf,gmp,lz4,pcre}-devel lib{xslt,event,yaml,vpx,png,zip,icu,mcrypt,memcached,cap,dwarf}-devel {unixODBC,expat}-devel lib{edit,curl,xml2,xs
   yum -y install ${HHVM_RPM_LOCATION}
