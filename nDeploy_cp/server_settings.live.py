@@ -88,7 +88,7 @@ if form.getvalue('domain'):
         hsts = yaml_parsed_profileyaml.get('hsts', 'disabled')
         dos_mitigate = yaml_parsed_profileyaml.get('dos_mitigate', 'disabled')
         pagespeed_filter = yaml_parsed_profileyaml.get('pagespeed_filter', 'CoreFilters')
-        redirecturl = yaml_parsed_profileyaml.get('redirecturl', 'noredirection')
+        redirecturl = yaml_parsed_profileyaml.get('redirecturl', 'none')
         redirectstatus = yaml_parsed_profileyaml.get('redirectstatus', 'none')
         append_requesturi = yaml_parsed_profileyaml.get('append_requesturi', 'disabled')
         # Ok we are done with getting the settings,now lets present it to the user
