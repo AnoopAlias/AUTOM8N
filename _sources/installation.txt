@@ -7,7 +7,7 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 
 .. tip:: If you are migrating from previous versions of nDeploy,please read the migration doc first
 
-.. tip:: If you see redirect loop error post installation, turn off ssl_offload feature in XtendWeb server settings 
+.. tip:: If you see redirect loop error post installation, turn off ssl_offload feature in XtendWeb server settings
 
 1. Install EPEL repo
 ::
@@ -38,6 +38,12 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   yum --enablerepo=ndeploy install nginx-nDeploy-module-passenger
   #Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.
   /opt/nDeploy/scripts/easy_passenger_setup.sh
+
+4.3. Install HHVM Hack/PHP Application server
+::
+
+  /opt/nDeploy/scripts/easy_hhvm_setup.sh
+  
 
 5. Enable the plugin. This will make nginx your frontend webserver.
 ::
