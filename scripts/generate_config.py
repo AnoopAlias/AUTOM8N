@@ -253,6 +253,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                         sys.exit(1)
                     with codecs.open(fname, 'r', 'utf-8') as infile:
                         outfile.write(infile.read()+"\n")
+            os.chmod(sslcombinedcert, 0o644)
             if os.stat(sslcombinedcert).st_size == 0:
                 hasssl = False
                 ocsp = False
