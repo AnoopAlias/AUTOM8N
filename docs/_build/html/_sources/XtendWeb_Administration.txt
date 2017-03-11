@@ -179,6 +179,17 @@ The upgrade must be done manually by running the following commands
   #For upgrading PHP application server(additional packages are to upgraded via yum)
   /opt/nDeploy/scripts/easy_php_setup.sh
 
+
+Migrating Xtendweb settings
+--------------------------------
+In case you are migrating the entire cPanel accounts to a new server .
+
+1. Do the cPanel migration
+2. Install Xtendweb on the new server
+3. Edit the file /opt/nDeploy/scripts/migrate_xtendweb_settings.sh and change REMOTE_SERVER='ip.ip.ip.ip' with the remote servers IP address
+4. Run the script /opt/nDeploy/scripts/migrate_xtendweb_settings.sh  #Input password of remote server whenever prompted
+
+
 Temporarily disable the plugin
 -------------------------------
 

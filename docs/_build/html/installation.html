@@ -96,7 +96,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project_sponsors.html#credits">CREDITS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
@@ -200,6 +199,10 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span>
 <span class="c1">#Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>4.3. Install HHVM Hack/PHP Application server</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_hhvm_setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <p>5. Enable the plugin. This will make nginx your frontend webserver.</p>

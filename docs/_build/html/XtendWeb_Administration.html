@@ -96,7 +96,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project_sponsors.html#credits">CREDITS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
@@ -119,6 +118,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#adding-application-templates">Adding application templates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#uninstall-the-plugin">Uninstall the plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-nginx-ndeploy-from-source">Building nginx-nDeploy from source</a></li>
@@ -329,6 +329,16 @@ The upgrade must be done manually by running the following commands</p>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="migrating-xtendweb-settings">
+<h2>Migrating Xtendweb settings<a class="headerlink" href="#migrating-xtendweb-settings" title="Permalink to this headline">¶</a></h2>
+<p>In case you are migrating the entire cPanel accounts to a new server .</p>
+<ol class="arabic simple">
+<li>Do the cPanel migration</li>
+<li>Install Xtendweb on the new server</li>
+<li>Edit the file /opt/nDeploy/scripts/migrate_xtendweb_settings.sh and change REMOTE_SERVER=&#8217;ip.ip.ip.ip&#8217; with the remote servers IP address</li>
+<li>Run the script /opt/nDeploy/scripts/migrate_xtendweb_settings.sh  #Input password of remote server whenever prompted</li>
+</ol>
 </div>
 <div class="section" id="temporarily-disable-the-plugin">
 <h2>Temporarily disable the plugin<a class="headerlink" href="#temporarily-disable-the-plugin" title="Permalink to this headline">¶</a></h2>
