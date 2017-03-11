@@ -20,20 +20,16 @@ if [ ${osversion} -le 6 ];then
 	service nginx restart
 	service ndeploy_watcher restart
 	service ndeploy_backends restart
-	service memcached restart
 	chkconfig nginx on
 	chkconfig ndeploy_watcher on
 	chkconfig ndeploy_backends on
-	chkconfig memcached on
 else
 	systemctl restart nginx
 	systemctl restart ndeploy_watcher
 	systemctl restart ndeploy_backends
-	systemctl restart memcached
 	systemctl enable nginx
 	systemctl enable ndeploy_watcher
 	systemctl enable ndeploy_backends
-	systemctl enable memcached
 fi
 
 }

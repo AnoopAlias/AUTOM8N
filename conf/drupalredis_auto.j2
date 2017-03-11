@@ -1,4 +1,4 @@
-#Wordpress with redis cache + nginx helper plugin
+#Drupal with redis cache + 10 Minute automatic cache purge
 
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
@@ -37,7 +37,7 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
 
-try_files $uri $uri/ /index.php?$args;
+try_files $uri $uri/ /index.php?$query_string;
 }
 
 location /redis-fetch {
@@ -53,7 +53,7 @@ sendfile off;
 aio off;
 set_unescape_uri $key $arg_key ;
 redis2_query  set $key $echo_request_body;
-redis2_query expire $key 14400;
+redis2_query expire $key 600;
 redis2_pass  127.0.0.1:6379;
 }
 
@@ -89,8 +89,8 @@ aio off;
 set $key "$ua_device$scheme$request_method$host$request_uri";
 try_files $uri =404;
 
-srcache_fetch_skip "$query_string$wpcookienocache$wpurinocache";
-srcache_store_skip "$query_string$wpcookienocache$wpurinocache";
+srcache_fetch_skip "$query_string$cookie_DRUPAL_UID$drupalurinocache";
+srcache_store_skip "$query_string$cookie_DRUPAL_UID$drupalurinocache";
 
 srcache_response_cache_control off;
 srcache_request_cache_control off;
@@ -112,16 +112,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ ^/pingphpfpm$ {
-include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
-fastcgi_pass unix:{{ SOCKETFILE }};
-}
-
-location = /wp-login.php {
-limit_req   zone=one  burst=1 nodelay;
 include /etc/nginx/fastcgi_params*;
 {% if CHROOT_PHPFPM %}
 fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
