@@ -187,12 +187,10 @@
 <ol class="arabic simple">
 <li>if you have Custom app template having subdir jinja2 logic - Remove the code from the template as this is now handled in server.j2</li>
 </ol>
-<p>2. Remove the expire setting like below from any custom template as this is now handled in server.j2</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {}
-</pre></div>
-</div>
+<p>2. Remove the expire setting like below from any custom template as this is now handled in server.j2
+<cite>location ~* .(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {}</cite></p>
 <ol class="arabic simple" start="3">
-<li>Run /opt/nDeploy/scripts/attempt_autofix.sh psot upgrade and editing of custom template if any</li>
+<li>Run /opt/nDeploy/scripts/attempt_autofix.sh postt upgrade and editing of custom template if any</li>
 <li>Because of the way Auth Basic password protected URI is handled . You should re-enable password protection for the folder from UI</li>
 </ol>
 </div>
