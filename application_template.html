@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Application templates &mdash; XtendWeb nginX control v4.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
+        <link rel="next" title="Monitoring nginx and app servers" href="Monitoring.html"/>
+        <link rel="prev" title="Administration of XtendWeb plugin" href="XtendWeb_Administration.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> XtendWeb
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migrating_from_nDeploy.html">Instructions for upgrading from nDeploy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Support &amp; Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Backends Setup</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion or Java</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Application templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">XtendWeb Cluster</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cluster_architecture.html">XtendWeb cluster architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="XtendWeb_cluster_setup.html">XtendWeb cluster setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">XtendWeb cluster upgrade</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">XtendWeb</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Application templates</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/application_template.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="application-templates">
+<h1>Application templates<a class="headerlink" href="#application-templates" title="Permalink to this headline">¶</a></h1>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">Do NOT include location like location ~* .(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {} in template as it is already added</p>
+</div>
+<p>nginx config file is not Apache httpd compatible. Most web applications ship requirements like rewrite rules
+in an htaccess file hoping the app will be run on Apache httpd server .</p>
+<p>Application template are XtendWeb&#8217;s answer to htaccess config in nginx world.</p>
+<p>A bare minimum PHP webapp template is</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>location / {
+try_files $uri $uri/ /index.php;
+}
+
+#Required for php ping/pong monitoing to work
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ \.php$ {
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+}
+
+#Required to redirect /cpanel /whm etc
+include /etc/nginx/conf.d/cpanel_services.conf;
+</pre></div>
+</div>
+<p>Additionally if you wish to support some optional functionality like NAXSI,Apps in SubFolder etc a corresponding Jinja2 is required</p>
+<p>For NAXSI you need to add the following inside location{} blocks</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Include NAXSI settings</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">NAXSI</span> <span class="o">==</span> <span class="s1">&#39;enabled&#39;</span> <span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">NAXSIMODE</span> <span class="o">==</span> <span class="s1">&#39;learn&#39;</span> <span class="o">%</span><span class="p">}</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">naxsi_learn</span><span class="o">.</span><span class="n">rules</span><span class="p">;</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">NAXSI_WHITELIST</span> <span class="o">==</span> <span class="s1">&#39;wordpress&#39;</span> <span class="o">%</span><span class="p">}</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">naxsi</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">wordpress</span><span class="o">.</span><span class="n">rules</span><span class="p">;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">NAXSI_WHITELIST</span> <span class="o">==</span> <span class="s1">&#39;drupal&#39;</span> <span class="o">%</span><span class="p">}</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">naxsi</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">drupal</span><span class="o">.</span><span class="n">rules</span><span class="p">;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">elif</span> <span class="n">NAXSIMODE</span> <span class="o">==</span> <span class="s1">&#39;active&#39;</span> <span class="o">%</span><span class="p">}</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">naxsi_active</span><span class="o">.</span><span class="n">rules</span><span class="p">;</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">NAXSI_WHITELIST</span> <span class="o">==</span> <span class="s1">&#39;wordpress&#39;</span> <span class="o">%</span><span class="p">}</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">naxsi</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">wordpress</span><span class="o">.</span><span class="n">rules</span><span class="p">;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">NAXSI_WHITELIST</span> <span class="o">==</span> <span class="s1">&#39;drupal&#39;</span> <span class="o">%</span><span class="p">}</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">naxsi</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">drupal</span><span class="o">.</span><span class="n">rules</span><span class="p">;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+<span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sites</span><span class="o">-</span><span class="n">enabled</span><span class="o">/</span><span class="p">{{</span> <span class="n">CONFIGDOMAINNAME</span> <span class="p">}}</span><span class="n">_</span><span class="p">{{</span> <span class="n">SUBDIRAPPS</span><span class="p">[</span><span class="n">SUBDIR</span><span class="p">]</span> <span class="p">}}</span><span class="o">.</span><span class="n">naxsi</span><span class="o">.</span><span class="n">wl</span><span class="o">*</span><span class="p">;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+<span class="c1"># End Include NAXSI settings</span>
+</pre></div>
+</div>
+<p>For a subdirectory template; you need to include the following for some settings to work</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>{% if AUTH_BASIC == &#39;enabled&#39; %}
+auth_basic &quot;Restricted Content&quot;;
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/{{ SUBDIR }}/passwd;
+{% endif %}
+
+{% if REDIRECTSTATUS != &#39;none&#39; and REDIRECT_URL != &#39;none&#39;  %}
+return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == &#39;enabled&#39; %}$request_uri{% endif %};
+{% else %}
+
+{% if SET_EXPIRE_STATIC == &#39;enabled&#39; %}
+include /etc/nginx/conf.d/files_with_expire.conf;
+{% endif %}
+</pre></div>
+</div>
+<p>Thats it! .</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Monitoring.html" class="btn btn-neutral float-right" title="Monitoring nginx and app servers" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="XtendWeb_Administration.html" class="btn btn-neutral" title="Administration of XtendWeb plugin" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Anoop P Alias.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'4.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
