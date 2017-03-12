@@ -393,6 +393,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "ENABLEACCESSLOG": access_log,
                     "OPEN_FILE_CACHE": open_file_cache,
                     "HOMEDIR": domain_home,
+                    "SUBDIRAPPS": subdir_apps_uniq,
                     "DIFFDIR": diff_dir,
                     "NAXSI_WHITELIST": naxsi_whitelist,
                     "PAGESPEED_FILTER": pagespeed_filter,

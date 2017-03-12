@@ -173,6 +173,14 @@ location ^~ /NaxsiRequestDenied {
 return 418;
 }
 # End Include NAXSI settings
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location ^~ /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
@@ -260,6 +268,14 @@ location ^~ /NaxsiRequestDenied {
 return 418;
 }
 # End Include NAXSI settings
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+location ^~ /{{ KEY }}/ {
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
+}
+{% endfor %}
+# End Include any applications in subdirectory
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; XtendWeb nginX control v4.0</title>
+  <title>ChangeLog &mdash; XtendWeb nginX control v4.0</title>
   
 
   
@@ -32,8 +32,10 @@
   
         <link rel="index" title="Index"
               href="genindex.html"/>
-        <link rel="search" title="Search" href="#"/>
-    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/> 
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
+        <link rel="next" title="Support" href="support.html"/>
+        <link rel="prev" title="http2" href="http2.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -68,7 +70,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -91,8 +93,12 @@
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Support &amp; Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ChangeLog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#xtendweb-version-4-2-x-13-march-2017">XtendWeb version 4.2.x ( 13 March 2017 )</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#if-you-are-upgrading-from-a-previous-release-do-the-following">If you are upgrading from a previous release do the following</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
@@ -141,7 +147,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -149,8 +155,12 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li></li>
+    <li>ChangeLog</li>
       <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/changelog.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
@@ -159,23 +169,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="changelog">
+<h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="xtendweb-version-4-2-x-13-march-2017">
+<h2>XtendWeb version 4.2.x ( 13 March 2017 )<a class="headerlink" href="#xtendweb-version-4-2-x-13-march-2017" title="Permalink to this headline">¶</a></h2>
+<p>This version brings in lot of improvements and fix a lot of bugs, major ones being</p>
+<ol class="arabic simple">
+<li>Removal of Password protected location blocks as this conflicts with the subdir location</li>
+<li>Change in SubDir include filename</li>
+<li>Fix file permission of combined SSL files</li>
+<li>Various UI improvement</li>
+<li>Option to set 301 and 307 redirect from the UI</li>
+</ol>
+</div>
+<div class="section" id="if-you-are-upgrading-from-a-previous-release-do-the-following">
+<h2>If you are upgrading from a previous release do the following<a class="headerlink" href="#if-you-are-upgrading-from-a-previous-release-do-the-following" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>if you have Custom app template having subdir jinja2 logic - Remove the code from the template as this is now handled in server.j2</li>
+</ol>
+<p>2. Remove the expire setting like below from any custom template as this is now handled in server.j2</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {}
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Run /opt/nDeploy/scripts/attempt_autofix.sh psot upgrade and editing of custom template if any</li>
+<li>Because of the way Auth Basic password protected URI is handled . You should re-enable password protection for the folder from UI</li>
+</ol>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="support.html" class="btn btn-neutral float-right" title="Support" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="http2.html" class="btn btn-neutral" title="http2" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -213,7 +248,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -229,14 +263,7 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

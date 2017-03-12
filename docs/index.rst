@@ -56,6 +56,7 @@ Features
    :maxdepth: 2
    :caption: Support & Development
 
+   changelog
    support
    project_sponsors
    nginx_friendly_web_hosts
@@ -77,6 +78,7 @@ Features
    :caption: Administration & Monitoring
 
    XtendWeb_Administration
+   application_template
    Monitoring
    Logs
 
