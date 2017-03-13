@@ -52,3 +52,8 @@ httpd_mod_remoteip_template = templateEnv.get_template('httpd_mod_remoteip.inclu
 httpd_mod_remoteip_config = httpd_mod_remoteip_template.render(templateVars)
 with codecs.open('/etc/nginx/conf.d/httpd_mod_remoteip.include', 'w', 'utf-8') as httpd_mod_remoteip_config_file:
     httpd_mod_remoteip_config_file.write(httpd_mod_remoteip_config)
+# Generate yoast_seo_wordpress.conf
+yoast_seo_wordpress_template = templateEnv.get_template('yoast_seo_wordpress.conf.j2')
+yoast_seo_wordpress_config = yoast_seo_wordpress_template.render(templateVars)
+with codecs.open('/etc/nginx/conf.d/yoast_seo_wordpress.conf', 'w', 'utf-8') as yoast_seo_wordpress_config_file:
+    yoast_seo_wordpress_config_file.write(yoast_seo_wordpress_config)
