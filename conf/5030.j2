@@ -69,7 +69,7 @@ rewrite ^/wp-content/cache/minify/(.+/[X]+\.css)$ /wp-content/plugins/w3-total-c
 rewrite ^/wp-content/cache/minify/(.+\.(css|js))$ /wp-content/plugins/w3-total-cache/pub/minify.php?file=$1 last;
 # END W3TC Minify core
 
-
+include /etc/nginx/conf.d/yoast_seo_wordpress.conf;
 
 location / {
 

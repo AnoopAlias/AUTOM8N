@@ -23,6 +23,8 @@ if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_lo
 set $cache_uri 'null cache';
 }
 
+include /etc/nginx/conf.d/yoast_seo_wordpress.conf;
+
 location / {
 
 # Include NAXSI settings

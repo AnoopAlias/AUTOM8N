@@ -3,6 +3,8 @@
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
+include /etc/nginx/conf.d/yoast_seo_wordpress.conf;
+
 location / {
 
 # Include NAXSI settings
