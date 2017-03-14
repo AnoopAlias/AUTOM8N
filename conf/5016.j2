@@ -18,6 +18,10 @@ location ~ (^|/)\. {
 return 403;
 }
 
+location ~ /sitemap.xml {
+try_files $uri @rewrite;
+}
+
 location / {
 
 # Include NAXSI settings
