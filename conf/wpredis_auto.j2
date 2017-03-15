@@ -3,6 +3,27 @@
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
+##########Yoast###############
+#Yoast SEO Sitemaps
+location ~ ([^/]*)sitemap(.*).x(m|s)l$ {
+## this redirects sitemap.xml to /sitemap_index.xml
+rewrite ^/sitemap.xml$ /sitemap_index.xml permanent;
+## this makes the XML sitemaps work
+rewrite ^/([a-z]+)?-?sitemap.xsl$ /index.php?xsl=$1 last;
+rewrite ^/sitemap_index.xml$ /index.php?sitemap=1 last;
+rewrite ^/([^/]+?)-sitemap([0-9]+)?.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
+## The following lines are optional for the premium extensions
+## News SEO
+rewrite ^/news-sitemap.xml$ /index.php?sitemap=wpseo_news last;
+## Local SEO
+rewrite ^/locations.kml$ /index.php?sitemap=wpseo_local_kml last;
+rewrite ^/geo-sitemap.xml$ /index.php?sitemap=wpseo_local last;
+## Video SEO
+rewrite ^/video-sitemap.xsl$ /index.php?xsl=video last;
+}
+##########Yoast###############
+
+
 location / {
 
 # Include NAXSI settings
