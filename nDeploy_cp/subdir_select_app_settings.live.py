@@ -118,8 +118,9 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('<select name="apptemplate">')
                 for myapptemplate in new_apptemplate_dict.keys():
                     print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
-                for user_myapptemplate in user_new_apptemplate_dict.keys():
-                    print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
+                if user_new_apptemplate_dict:
+                    for user_myapptemplate in user_new_apptemplate_dict.keys():
+                        print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
                 print('</select>')
                 print('</div>')
                 print('</div>')
