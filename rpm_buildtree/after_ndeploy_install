@@ -17,11 +17,15 @@
 /opt/nDeploy/scripts/update_profiles.py add root subdir PROXY 1005_subdir.j2 "Proxy subdir to httpd(cached)"
 # RUBY
 /opt/nDeploy/scripts/update_profiles.py add root main RUBY 2001.j2 "Ruby on Rails(Rack) App"
+/opt/nDeploy/scripts/update_profiles.py add root subdir RUBY 2001_subdir.j2 "RubyOnRails subdir App"
 # PYTHON
 /opt/nDeploy/scripts/update_profiles.py add root main PYTHON 3001.j2 "Python(WSGI) App"
+/opt/nDeploy/scripts/update_profiles.py add root subdir PYTHON 3001_subdir.j2 "Python(WSGI) subdir App"
 # NODEJS
 /opt/nDeploy/scripts/update_profiles.py add root main NODEJS 4001.j2 "A NodeJS application"
 /opt/nDeploy/scripts/update_profiles.py add root main NODEJS 4002.j2 "Ghost Blog"
+/opt/nDeploy/scripts/update_profiles.py add root subdir NODEJS 4001_subdir.j2 "Subdir NodeJS application"
+/opt/nDeploy/scripts/update_profiles.py add root subdir NODEJS 4002_subdir.j2 "Subdir Ghost Blog"
 # PHP
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5001.j2 "Wordpress"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5031.j2 "CakePHP"
@@ -49,7 +53,10 @@
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5024.j2 "Magento+Fooman Speedster"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5025.j2 "Magento-2"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5100.j2 "A PHP application"
-/opt/nDeploy/scripts/update_profiles.py add root main PHP 5100_subdir.j2 "PHP app in subdir"
+/opt/nDeploy/scripts/update_profiles.py add root subdir PHP 5100_subdir.j2 "PHP app in subdir"
+# To be removed
+/opt/nDeploy/scripts/update_profiles.py del root main PHP 5100_subdir.j2 "PHP app in subdir"
+# To be removed
 # HHVM
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5001.j2 "Wordpress"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5031.j2 "CakePHP"
@@ -77,7 +84,10 @@
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5024.j2 "Magento+Fooman Speedster"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5025.j2 "Magento-2"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5100.j2 "A PHP application"
-/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5100_subdir.j2 "PHP app in subdir"
+/opt/nDeploy/scripts/update_profiles.py add root subdir HHVM 5100_subdir.j2 "PHP app in subdir"
+# To be removed
+/opt/nDeploy/scripts/update_profiles.py del root main HHVM 5100_subdir.j2 "PHP app in subdir"
+# To be removed
 
 echo -e '\e[93m Adding cpanel hooks \e[0m'
 #Delete Hooks

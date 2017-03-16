@@ -270,7 +270,11 @@ return 418;
 # End Include NAXSI settings
 # Include any applications in subdirectory
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+{% if PASSENGERAPPS[KEY] == 'enabled' %}
+location ~ ^/{{ KEY }}(/.*|$) {
+{% else %}
 location ^~ /{{ KEY }}/ {
+{% endif %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
 }

@@ -1,0 +1,9 @@
+#The Ghost blog application in subdir;
+
+alias {{ DOCUMENTROOT }}/{{ SUBDIR }}/public$1;
+passenger_base_uri /{{ SUBDIR }};
+passenger_document_root {{ DOCUMENTROOT }}/{{ SUBDIR }}/public;
+passenger_enabled on;
+passenger_app_type node;
+passenger_startup_file index.js;
+passenger_nodejs {{ PATHTONODEJS }};

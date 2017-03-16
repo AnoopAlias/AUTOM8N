@@ -350,13 +350,22 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     subdir_apps = yaml_parsed_domain_data.get('subdir_apps', None)
     if subdir_apps:
         subdir_apps_uniq = {}
+        subdir_apps_passenger = {}
         for key in subdir_apps.keys():
             uniq_path = document_root+key
             uniq_filename = md5(uniq_path.encode("utf-8")).hexdigest()
             subdir_apps_uniq[key] = uniq_filename
+            my_subdir_dict = subdir_apps.get(key)
+            my_subdir_backend = my_subdir_dict.get('backend_category')
+            if my_subdir_backend == 'PYTHON' or my_subdir_backend == 'RUBY' or my_subdir_backend == 'NODEJS':
+                is_passenger_app = 'enabled'
+            else:
+                is_passenger_app = 'disabled'
+            subdir_apps_passenger[key] = is_passenger_app
     else:
         subdir_apps = {}
         subdir_apps_uniq = {}
+        subdir_apps_passenger = {}
     # Since we have all data needed ,lets render the conf to a file
     if os.path.isfile(installation_path+'/conf/server_local.j2'):
         TEMPLATE_FILE = "server_local.j2"
@@ -394,6 +403,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "OPEN_FILE_CACHE": open_file_cache,
                     "HOMEDIR": domain_home,
                     "SUBDIRAPPS": subdir_apps_uniq,
+                    "PASSENGERAPPS": subdir_apps_passenger,
                     "DIFFDIR": diff_dir,
                     "NAXSI_WHITELIST": naxsi_whitelist,
                     "PAGESPEED_FILTER": pagespeed_filter,
