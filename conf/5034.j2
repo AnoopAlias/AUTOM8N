@@ -1,0 +1,84 @@
+# Bolt CMS
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+# The main Bolt website
+location / {
+try_files $uri $uri/ /index.php?$query_string;
+}
+
+# Generated thumbnail images
+location ~* /thumbs/(.*)$ {
+try_files $uri $uri/ /index.php?$query_string;
+}
+
+# Bolt backend access
+#
+# NOTE: If you set a custom branding path, you will need to change '/bolt/'
+#       here to match
+location ~* /bolt/(.*)$ {
+try_files $uri $uri/ /index.php?$query_string;
+}
+
+# Backend async routes
+location ~* /async/(.*)$ {
+try_files $uri $uri/ /index.php?$query_string;
+}
+
+
+# Block access to the app, cache & vendor directories
+#
+# NOTE: If you have one or more of 'app' , 'src', 'test' and 'vendor' as
+# sub-directories of your installation root, you should uncomment
+# this location block to prevent site visitors having access to the
+# various directories that contain executable code.
+#
+# NOTE: This approach is *not* recommended for production use.
+#
+#location ~ /(?:app|src|tests|vendor)/(.*)$ {
+#    deny all;
+#}
+
+# Block hidden files
+location ~ /\. {
+deny all;
+}
+
+# Block access to Sqlite database files
+location ~ /\.(?:db)$ {
+deny all;
+}
+
+# Block access to certain JSON files
+location ~ /(?:bower|composer|jsdoc|package)\.json$ {
+deny all;
+}
+
+# Block access to Markdown, Twig & YAML files directly
+location ~* /(.*)\.(?:dist|markdown|md|twig|yaml|yml)$ {
+deny all;
+}
+
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ \.php$ {
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
+}
+
+include /etc/nginx/conf.d/cpanel_services.conf;

@@ -44,6 +44,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5015.j2 "Codeignitor"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5016.j2 "Drupal7 or higher"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5017.j2 "Drupal6 or lower"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5032.j2 "Drupal+Boost"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5018.j2 "Prestashop"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5019.j2 "Moodle"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5020.j2 "OwnCloud"
@@ -54,9 +55,17 @@
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5025.j2 "Magento-2"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5100.j2 "A PHP application"
 /opt/nDeploy/scripts/update_profiles.py add root subdir PHP 5100_subdir.j2 "PHP app in subdir"
-# To be removed
-/opt/nDeploy/scripts/update_profiles.py del root main PHP 5100_subdir.j2 "PHP app in subdir"
-# To be removed
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5033.j2 "Yourls Short URL"
+/opt/nDeploy/scripts/update_profiles.py add root subdir PHP 5033_subdir.j2 "Yourls in Subdir"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5034.j2 "Bolt CMS"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5035.j2 "LiteCart"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5036.j2 "OpenCart"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5037.j2 "PicoCMS"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5038.j2 "Respond"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5039.j2 "Symfony"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5040.j2 "Yii"
+
+
 # HHVM
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5001.j2 "Wordpress"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5031.j2 "CakePHP"
@@ -75,6 +84,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5015.j2 "Codeignitor"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5016.j2 "Drupal7 or higher"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5017.j2 "Drupal6 or lower"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5032.j2 "Drupal+Boost"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5018.j2 "Prestashop"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5019.j2 "Moodle"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5020.j2 "OwnCloud"
@@ -85,9 +95,16 @@
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5025.j2 "Magento-2"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5100.j2 "A PHP application"
 /opt/nDeploy/scripts/update_profiles.py add root subdir HHVM 5100_subdir.j2 "PHP app in subdir"
-# To be removed
-/opt/nDeploy/scripts/update_profiles.py del root main HHVM 5100_subdir.j2 "PHP app in subdir"
-# To be removed
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5033.j2 "Yourls short URL"
+/opt/nDeploy/scripts/update_profiles.py add root subdir HHVM 5033_subdir.j2 "Yourls in subdir"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5034.j2 "Bolt CMS"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5035.j2 "LiteCart"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5036.j2 "OpenCart"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5037.j2 "PicoCMS"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5038.j2 "Respond"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5039.j2 "Symfony"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5040.j2 "Yii"
+
 
 echo -e '\e[93m Adding cpanel hooks \e[0m'
 #Delete Hooks
@@ -141,10 +158,7 @@ echo -e '\e[93m Adding cpanel hooks \e[0m'
 /usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/convertaddon_hook_post.py --category ConvertAddon --event convert_addon --stage post --manual
 
 
-if [ -z "$PHPBREW_ROOT" ] ; then
-	export PHPBREW_ROOT=/usr/local/phpbrew
-	echo "export PHPBREW_ROOT=/usr/local/phpbrew" >> /root/.bashrc
-fi
+
 if [ -z "$NVM_DIR" ] ; then
 	export NVM_DIR="/usr/local/nvm"
 	echo "export NVM_DIR=/usr/local/nvm" >> /root/.bashrc

@@ -1,0 +1,48 @@
+# OpenCart
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+rewrite ^/sitemap.xml$ /index.php?route=feed/google_sitemap last;
+rewrite ^/googlebase.xml$ /index.php?route=feed/google_base last;
+rewrite ^/download/(.*) /index.php?route=error/not_found last;
+
+
+
+# Add trailing slash to */admin requests.
+rewrite /admin$ $scheme://$host$uri/ permanent;
+
+location / {
+# This try_files directive is used to enable SEO-friendly URLs for OpenCart.
+try_files $uri @opencart;
+}
+
+location @opencart {
+rewrite ^/(.+)$ /index.php?_route_=$1 last;
+}
+
+location /admin {
+index index.php;
+}
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ \.php$ {
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
+}
+
+include /etc/nginx/conf.d/cpanel_services.conf;

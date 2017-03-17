@@ -1,0 +1,49 @@
+# LiteCart Shopping cart
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+error_page 403 /error_document?code=403;
+error_page 404 /error_document?code=404;
+error_page 410 /error_document?code=410;
+
+rewrite ^/sitemap_index\.xml$ /index.php?sitemap=1 last;
+rewrite ^/([^/]+?)-sitemap([0-9]+)?\.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
+
+location / {
+try_files $uri $uri/ /index.php?q=$uri&$args;
+}
+
+location ~* ^/cache/_cache_ {
+deny all;
+}
+
+location /data {
+deny all;
+}
+
+location ~* ^/vqmod/.*\.(xml|cache|log)$ {
+return 444;
+}
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ \.php$ {
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+{% if CHROOT_PHPFPM %}
+fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
+{% endif %}
+}
+
+include /etc/nginx/conf.d/cpanel_services.conf;
