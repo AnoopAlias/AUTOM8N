@@ -33,9 +33,11 @@ try_files $uri $uri/ /index.php?$query_string;
 
 location /redis-fetch {
 internal;
-set  $redis_key $args;
-# Assuming redis is bound to port 6379
-redis_pass  127.0.0.1:6379;
+sendfile off;
+aio off;
+set_unescape_uri $key $arg_key ;
+redis2_query  get $key;
+redis2_pass  127.0.0.1:6379;
 }
 
 location /redis-store {
@@ -80,15 +82,15 @@ aio off;
 set $key "$ua_device$scheme$request_method$host$request_uri";
 try_files $uri =404;
 
-srcache_fetch_skip "$query_string$cookie_DRUPAL_UID$drupalurinocache";
-srcache_store_skip "$query_string$cookie_DRUPAL_UID$drupalurinocache";
+srcache_fetch_skip "$query_string$drupalcookienocache$drupalurinocache";
+srcache_store_skip "$query_string$drupalcookienocache$drupalurinocache";
 
 srcache_response_cache_control off;
 srcache_request_cache_control off;
 
 set_escape_uri $escaped_key $key;
 
-srcache_fetch GET /redis-fetch $key;
+srcache_fetch GET /redis-fetch key=$escaped_key;
 srcache_store PUT /redis-store key=$escaped_key;
 
 more_set_headers 'X-Cache $srcache_fetch_status';
