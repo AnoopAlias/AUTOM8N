@@ -110,7 +110,10 @@ wget -O srcache-nginx-module.tgz https://github.com/openresty/srcache-nginx-modu
 wget -O ngx_devel_kit.tgz https://github.com/simpl/ngx_devel_kit/archive/v${NGX_DEVEL_KIT}.tar.gz
 wget -O set-misc-nginx-module.tgz https://github.com/openresty/set-misc-nginx-module/archive/v${SET_MISC_NGINX_MODULE}.tar.gz
 wget -O headers-more-nginx-module.tgz https://github.com/openresty/headers-more-nginx-module/archive/v${HEADERS_MORE_NGINX_MODULE}.tar.gz
-wget -O echo-nginx-module.tgz https://github.com/openresty/echo-nginx-module/archive/v${ECHO_NGINX_MODULE}.tar.gz
+#wget -O echo-nginx-module.tgz https://github.com/openresty/echo-nginx-module/archive/v${ECHO_NGINX_MODULE}.tar.gz
+# To be removed later
+git clone -b issue64 https://github.com/defanator/echo-nginx-module.git
+mv echo-nginx-module echo-nginx-module-${ECHO_NGINX_MODULE}
 wget http://people.freebsd.org/~osa/ngx_http_redis-${REDIS_NGINX_MODULE}.tar.gz
 #wget -O redis2-nginx-module.tgz https://github.com/openresty/redis2-nginx-module/archive/v${REDIS2_NGINX_MODULE}.tar.gz
 tar -xvzf ngx_http_redis-${REDIS_NGINX_MODULE}.tar.gz
@@ -176,20 +179,20 @@ sed -i "s/PASSENGER_VERSION/$PASSENGER_VERSION/g" ../nginx-module-passenger-pkg/
 rsync -a /usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/buildout ../nginx-module-passenger-pkg/usr/nginx/
 cd ../nginx-pkg
 
-fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx -d zlib -d pcre -d libcurl --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
+fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx -d zlib -d pcre -d libcurl --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
 rsync -a nginx-nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/${OSVERSION}/x86_64/
 
 for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo
 do
   cd ../nginx-module-${module}-pkg
   if [ ${module} == "brotli" ];then
-    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d libbrotli-nDeploy --name nginx-nDeploy-module-${module} .
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d libbrotli-nDeploy --name nginx-nDeploy-module-${module} .
   elif [ ${module} == "geoip" ];then
-    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d GeoIP --name nginx-nDeploy-module-${module} .
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d GeoIP --name nginx-nDeploy-module-${module} .
   elif [ ${module} == "pagespeed" ];then
-    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d memcached --name nginx-nDeploy-module-${module} .
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d memcached --name nginx-nDeploy-module-${module} .
   else
-    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} --name nginx-nDeploy-module-${module} .
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} --name nginx-nDeploy-module-${module} .
   fi
   rsync -a nginx-nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/${OSVERSION}/x86_64/
 done
