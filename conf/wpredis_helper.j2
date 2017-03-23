@@ -100,7 +100,7 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 sendfile off;
 aio off;
 
-set $key "$ua_device$scheme$request_method$host$request_uri";
+set $key "$scheme$request_method$host$request_uri";
 try_files $uri =404;
 
 srcache_fetch_skip "$query_string$wpcookienocache$wpurinocache";
