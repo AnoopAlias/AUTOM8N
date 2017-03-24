@@ -4,7 +4,7 @@ Setting up Python (WSGI app)
 1. Enable the Phusion Passenger module
 ``/usr/nginx/scripts/nginx-passenger-setup.sh``
 
-2. To setup python install https://github.com/saghul/pythonz
+2. To install additional python 
 ::
 
   root@cpanel1 [~]# pythonz install 3.4.2
