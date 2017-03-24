@@ -161,7 +161,7 @@ echo -e '\e[93m Adding cpanel hooks \e[0m'
 
 if [ -z "$NVM_DIR" ] ; then
 	export NVM_DIR="/usr/local/nvm"
-	echo "export NVM_DIR=/usr/local/nvm" >> /root/.bashrc
+	grep NVM_DIR /root/.bashrc || echo "export NVM_DIR=/usr/local/nvm" >> /root/.bashrc
 fi
 if [ ! -d /opt/nDeploy/domain-data ] ; then
 	mkdir /opt/nDeploy/domain-data

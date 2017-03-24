@@ -24,13 +24,14 @@ echo -e '\e[93m Adding a Python backend for XtendWeb.  \e[0m'
 echo -e '\e[93m Bootstrapping pip  \e[0m'
 curl https://bootstrap.pypa.io/get-pip.py | /usr/local/pythonz/pythons/CPython-2.7/bin/python
 
+export NVM_DIR="/usr/local/nvm"
 echo -e '\e[93m Setting up NodeJS. Grab a coffee as this going to take a while \e[0m'
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
 export NVM_DIR="/usr/local/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install v6.10.1
 echo -e '\e[93m Adding a NodeJS backend for XtendWeb.  \e[0m'
-/opt/nDeploy/scripts/update_backend.py add NODEJS /usr/local/nvm/versions/node/v6.10.1/bin/node
+/opt/nDeploy/scripts/update_backend.py add NODEJS nodejs-v6.10.1 /usr/local/nvm/versions/node/v6.10.1/bin/node
 nginx -s reload
 echo -e '\e[93m Additional versions of Ruby/Python/NodeJS can be installed by following docs at.  \e[0m'
 echo -e '\e[93m http://xtendweb.gnusys.net/  \e[0m'
