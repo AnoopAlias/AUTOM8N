@@ -43,7 +43,7 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 ::
 
   /opt/nDeploy/scripts/easy_hhvm_setup.sh
-  
+
 
 5. Enable the plugin. This will make nginx your frontend webserver.
 ::
@@ -53,8 +53,13 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 
 .. tip:: If you modify WHM service certificate run /opt/nDeploy/scripts/generate_default_vhost_config.py && nginx -s reload
 
+6. Enable Extra templates that require redis and additional nginx modules
+::
 
-6. Install Optional additional modules
+  /opt/nDeploy/scripts/setup_additional_templates.sh
+
+
+7. Install Optional additional modules
 ::
 
   #Note that each module increases the nginx size and processing requirements

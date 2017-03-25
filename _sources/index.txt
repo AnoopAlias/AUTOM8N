@@ -13,14 +13,14 @@ servers which are DNS load-balanced .
 
 XtendWeb is free and Open Source with commercial support and customization service provided by the developers 24x7
 
-.. note:: XtendWeb is tuned for speedy config generation and effecient high performance web server working
+.. note:: Xtendweb does automated configuration based on cPanel user input. There is NO whm plugin simply because there is no need of it.Its all automated!
 
 Features
 ---------
 
 * worlds simplest nginx config wizard
 * configuration curated for high performance and incorporates nginx best practices
-* template based application configuration+ support application in sub-directories
+* template based application configuration and support application in sub-directories
 * password protection setup by cpanel can be reused in nginx
 * cpanel user can configure nginx for their application without editing any configuration
 * Supports CentOS6 CentOS7 CloudLinux6 CloudLinux7 on x86_64 arch
@@ -40,7 +40,10 @@ Features
 * High Available SMTP service - PostFix backup MX automatically configured for all domains
 * High Available Database (MariaDB/MySQL) - MySQL replication(master-master/galera) & tcp loadbalancing
 * Clustering in the application layer(csync2,unison,rsync).Easy to troubleshoot and fix errors
+* Redis powered full page cache for Wordpress and Drupal CMS
+* NAXSI Web App Firewall for Wordpress and Drupal CMS
 
+.. note:: Using Wordpress or Drupal? XtendWeb now offer full page cache and WAF for secure blazing fast websites
 
 .. toctree::
    :maxdepth: 2

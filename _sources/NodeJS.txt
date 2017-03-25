@@ -4,11 +4,8 @@ Setting up NodeJS
 1. Enable the Phusion Passenger module
 ``/usr/nginx/scripts/nginx-passenger-setup.sh``
 
-2. To provide nodeJs backend you must install https://github.com/creationix/nvm
+2. To install additional node binaries do ( Note that only nodeJs versions 0.10 and above will work! )
 
-  Note that only nodeJs versions 0.10 and above will work!
-
-3. Register the NodeJS backend in XtendWeb
 ::
 
   root@cpanel1 [~]# nvm ls-remote

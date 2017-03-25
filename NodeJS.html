@@ -94,9 +94,9 @@
 </ul>
 <p class="caption"><span class="caption-text">Support &amp; Development</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project_sponsors.html#credits">CREDITS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
@@ -112,6 +112,7 @@
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
@@ -169,11 +170,8 @@
 <p>1. Enable the Phusion Passenger module
 <code class="docutils literal"><span class="pre">/usr/nginx/scripts/nginx-passenger-setup.sh</span></code></p>
 <ol class="arabic simple" start="2">
-<li>To provide nodeJs backend you must install <a class="reference external" href="https://github.com/creationix/nvm">https://github.com/creationix/nvm</a></li>
+<li>To install additional node binaries do ( Note that only nodeJs versions 0.10 and above will work! )</li>
 </ol>
-<blockquote>
-<div>Note that only nodeJs versions 0.10 and above will work!</div></blockquote>
-<p>3. Register the NodeJS backend in XtendWeb</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># nvm ls-remote</span>
 
 <span class="n">root</span><span class="nd">@cpanel1</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># nvm install v0.11.14</span>

@@ -169,7 +169,10 @@
 <h1>Application templates<a class="headerlink" href="#application-templates" title="Permalink to this headline">¶</a></h1>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p class="last">Do NOT include location like location ~* .(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {} in template as it is already added</p>
+<p class="last">Do NOT include location like the follwing in a template</p>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {}
+</pre></div>
 </div>
 <p>nginx config file is not Apache httpd compatible. Most web applications ship requirements like rewrite rules
 in an htaccess file hoping the app will be run on Apache httpd server .</p>
