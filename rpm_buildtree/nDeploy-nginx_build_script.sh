@@ -6,7 +6,7 @@
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
 NGINX_VERSION="1.11.12"
-NGINX_RPM_ITER="1.el${OSVERSION}"
+NGINX_RPM_ITER="2.el${OSVERSION}"
 NPS_VERSION="1.11.33.4"
 MY_RUBY_VERSION="2.3.1"
 PASSENGER_VERSION="5.1.2"
@@ -153,7 +153,7 @@ rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed.conf ../nginx-module-
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed_passthrough.conf ../nginx-module-pagespeed-pkg/etc/nginx/conf.d/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/brotli.conf ../nginx-module-brotli-pkg/etc/nginx/conf.d/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/naxsi_* ../nginx-module-naxsi-pkg/etc/nginx/conf.d/
-rsync -a tempo/usr/sbin ../nginx-pkg/usr/
+#rsync -a tempo/usr/sbin ../nginx-pkg/usr/
 for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo
 do
   rsync -a tempo/etc/nginx/modules/ngx_http_${module}* ../nginx-module-${module}-pkg/etc/nginx/modules/

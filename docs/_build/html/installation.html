@@ -94,6 +94,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Support &amp; Development</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
@@ -111,6 +112,7 @@
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
@@ -213,7 +215,11 @@
 <p class="first admonition-title">Tip</p>
 <p class="last">If you modify WHM service certificate run /opt/nDeploy/scripts/generate_default_vhost_config.py &amp;&amp; nginx -s reload</p>
 </div>
-<p>6. Install Optional additional modules</p>
+<p>6. Enable Extra templates that require redis and additional nginx modules</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>7. Install Optional additional modules</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Note that each module increases the nginx size and processing requirements</span>
 <span class="c1">#So install only required functionality .</span>
 <span class="p">(</span><span class="n">pagespeed</span><span class="p">)</span>   <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">pagespeed</span>

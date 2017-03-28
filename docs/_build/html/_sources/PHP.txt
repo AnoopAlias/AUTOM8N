@@ -109,35 +109,9 @@ the settings can be provided in ini format(same as php.ini) and the file must be
 
 High Performance Wordpress setup using Redis cache and nginx-helper plugin
 ----------------------------------------------------------------------------
-
-.. caution:: Require extra modules. System will break if not setup correctly
-
-XtendWeb supports wordpress full page cache to redis as described at https://easyengine.io/wordpress-nginx/tutorials/single-site/redis_cache-with-conditional-purging/
-
-Note that the template for this is not enabled by default as it needs additional optional
-modules for the nginX server . If template is activated without installing the modules , it can lead into an invalid
-server configuration .
-
-Install Redis server
-::
-
-  yum install redis
-  systemctl enable redis.service && systemctl start redis.service #centos7/cl7
-  service redis start && chkconfig redis on #centos6/cl6
-
-Install additional modules required by the template
-::
-
-  yum --enablerepo=ndeploy install nginx-nDeploy-module-redis nginx-nDeploy-module-redis2 nginx-nDeploy-module-echo nginx-nDeploy-module-set_misc nginx-nDeploy-module-srcache_filter
-
-Register the template
-::
-
-  /opt/nDeploy/scripts/update_profiles.py add root main PHP wpredis_helper.j2 "Wordpress+Redis+nginx-helper"
-
 Install the nginx-helper plugin in wordpress https://wordpress.org/plugins/nginx-helper/
 
-Setup the nginx helper plugin as mentioned in https://easyengine.io/wordpress-nginx/tutorials/single-site/redis_cache-with-conditional-purging/
+Setup the nginx helper plugin to use Redis Cache purge
 Leave the "Prefix" field blank in "Redis settings"
 
 

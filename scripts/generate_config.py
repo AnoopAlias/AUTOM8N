@@ -97,9 +97,13 @@ def railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_l
 def php_backend_add(user_name, domain_home):
     """Function to setup php-fpm pool for user and reload the master php-fpm"""
     phppool_file = installation_path + "/php-fpm.d/" + user_name + ".conf"
+    user_shell = pwd.getpwnam(user_name).pw_shell
     if not os.path.isfile(phppool_file):
         if os.path.isfile(installation_path+"/conf/chroot-php-enabled"):
-            chroot_status = True
+            if user_shell == '/usr/local/cpanel/bin/jailshell' or user_shell == '/usr/local/cpanel/bin/noshell':
+                chroot_status = True
+            else:
+                chroot_status = False
         else:
             chroot_status = False
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
@@ -152,12 +156,21 @@ def hhvm_backend_add(user_name, domain_home, clusterenabled, *cluster_serverlist
 def php_secure_backend_add(user_name, domain_home, backend_version, clusterenabled, *cluster_serverlist):
     """Function to setup php-fpm for user using systemd socket activation"""
     phpfpm_conf_file = installation_path + "/secure-php-fpm.d/" + user_name + ".conf"
+    user_shell = pwd.getpwnam(user_name).pw_shell
     if not os.path.isfile(phpfpm_conf_file):
+        if os.path.isfile(installation_path+"/conf/chroot-php-enabled"):
+            if user_shell == '/usr/local/cpanel/bin/jailshell' or user_shell == '/usr/local/cpanel/bin/noshell':
+                chroot_status = True
+            else:
+                chroot_status = False
+        else:
+            chroot_status = False
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = "secure-php-fpm.conf.j2"
         template = templateEnv.get_template(TEMPLATE_FILE)
         templateVars = {"CPANELUSER": user_name,
+                        "CHROOT_PHPFPM": chroot_status,
                         "HOMEDIR": domain_home
                         }
         generated_config = template.render(templateVars)
@@ -299,10 +312,6 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
     # initialize the fastcgi_socket variable
     fastcgi_socket = None
-    if os.path.isfile(installation_path+"/conf/chroot-php-enabled"):
-        chroot_status = True
-    else:
-        chroot_status = False
     # Following are features that the UI can change . Can be expanded in future
     # as and when more features are incorporated
     if os.path.isfile('/etc/nginx/modules.d/naxsi.load'):
@@ -473,8 +482,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                        "REDIRECTSTATUS": redirectstatus,
                        "REDIRECT_URL": redirect_url,
                        "APPEND_REQUESTURI": append_requesturi,
-                       "PATHTOPYTHON": backend_path,
-                       "CHROOT_PHPFPM": chroot_status
+                       "PATHTOPYTHON": backend_path
                        }
     generated_app_config = app_template.render(apptemplateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
@@ -536,8 +544,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                                      "REDIRECT_URL": subdir_redirect_url,
                                      "REDIRECTSTATUS": subdir_redirectstatus,
                                      "APPEND_REQUESTURI": subdir_append_requesturi,
-                                     "PATHTOPYTHON": backend_path,
-                                     "CHROOT_PHPFPM": chroot_status
+                                     "PATHTOPYTHON": backend_path
                                      }
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:

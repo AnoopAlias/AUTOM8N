@@ -137,17 +137,6 @@ In short the template registration has the following syntax
 Templates use Python Jinja2 templating engine . But there isnt much template logic used to make application template
 simpler for most users. You can check existing templates for the commonly used variables.
 
-Include the following block where ever appropriate in a template to make way for application in subdirectories
-::
-
-  # Include any applications in subdirectory
-  {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-  location /{{ KEY }}/ {
-  include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-  }
-  {% endfor %}
-  # End Include any applications in subdirectory
-
 .. tip:: Open an issue at the github repo if you wish template for a commonly used application to be added
 
 

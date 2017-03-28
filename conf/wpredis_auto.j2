@@ -117,29 +117,17 @@ more_set_headers 'X-Cache $srcache_fetch_status';
 more_set_headers 'X-Cache-2 $srcache_store_status';
 
 include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location = /wp-login.php {
 limit_req   zone=one  burst=1 nodelay;
 include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 

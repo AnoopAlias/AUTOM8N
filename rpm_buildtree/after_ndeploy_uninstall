@@ -26,6 +26,7 @@ echo -e '\e[93m Removing cpanel hooks \e[0m'
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Whostmgr --event Accounts::SiteIP::set --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/convertaddon_hook_pre.py --category ConvertAddon --event convert_addon --stage pre --manual
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/convertaddon_hook_post.py --category ConvertAddon --event convert_addon --stage post --manual
+/usr/local/cpanel/bin/manage_hooks delete script  /opt/nDeploy/scripts/accountmodify_setshell_hook_post.py --category Whostmgr --event Accounts::set_shell --stage post --manual
 
 echo -e '\e[93m Uninstalling nDeploy plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp

@@ -2,8 +2,10 @@ Application templates
 =========================
 
 .. caution:: Do NOT include location like the follwing in a template
+
 ::
-location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {}
+
+  location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {}
 
 nginx config file is not Apache httpd compatible. Most web applications ship requirements like rewrite rules
 in an htaccess file hoping the app will be run on Apache httpd server .

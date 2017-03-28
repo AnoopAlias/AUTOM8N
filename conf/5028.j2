@@ -78,20 +78,12 @@ try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $ur
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location = /wp-login.php {
 limit_req   zone=one  burst=1 nodelay;
 include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
@@ -124,10 +116,7 @@ try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
+
 }
 
 include /etc/nginx/conf.d/cpanel_services.conf;

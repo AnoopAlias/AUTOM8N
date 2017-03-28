@@ -346,7 +346,7 @@ ping.path = /pingphpfpm
 ; Default Value: not set
 ;chroot =
 {% if CHROOT_PHPFPM %}
-chroot = {{ HOMEDIR }}
+chroot = /home/virtfs/{{ CPANELUSER }}
 {% endif %}
 
 ; Chdir to this directory at the start.
@@ -383,15 +383,9 @@ security.limit_extensions = .php .php3 .php4 .php5
 ; Default Value: clean env
 ;env[HOSTNAME] = $HOSTNAME
 ;env[PATH] = /usr/local/bin:/usr/bin:/bin
-{% if CHROOT_PHPFPM %}
-env[TMP] = /tmp
-env[TMPDIR] = /tmp
-env[TEMP] = /tmp
-{% else %}
 env[TMP] = {{ HOMEDIR }}/tmp
 env[TMPDIR] = {{ HOMEDIR }}/tmp
 env[TEMP] = {{ HOMEDIR }}/tmp
-{% endif %}
 
 ; Additional php.ini defines, specific to this pool of workers. These settings
 ; overwrite the values previously defined in the php.ini. The directives are the
@@ -412,17 +406,7 @@ env[TEMP] = {{ HOMEDIR }}/tmp
 
 ; Default Value: nothing is defined by default except the values in php.ini and
 ;                specified at startup with the -d argument
-{% if CHROOT_PHPFPM %}
-php_admin_flag[log_errors] = on
-php_admin_value[error_log] = /logs/php_error_log
-php_admin_value[opcache.restrict_api] = /
-php_admin_value[opcache.blacklist_filename] = /opcache-blacklist.txt
-php_admin_value[mysql.default_socket] = /tmp/mysql.sock
-php_admin_value[mysqli.default_socket] = /tmp/mysql.sock
-php_admin_value[pdo_mysql.default_socket] = /tmp/mysql.sock
-{% else %}
 php_admin_flag[log_errors] = on
 php_admin_value[error_log] = {{ HOMEDIR }}/logs/php_error_log
 php_admin_value[opcache.restrict_api] = {{ HOMEDIR }}
 php_admin_value[opcache.blacklist_filename] = {{ HOMEDIR }}/opcache-blacklist.txt
-{% endif %}

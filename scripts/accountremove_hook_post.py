@@ -38,7 +38,23 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 # If cluster is configured , we remove user from cluster
 if os.path.exists(cluster_config_file):
     subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' state=absent remove=yes"', shell=True)
+# Deal with php and hhvm
+subprocess.call(['systemctl', 'stop', 'ndeploy_hhvm@'+cpaneluser+'.service'])
+subprocess.call(['systemctl', 'disable', 'ndeploy_hhvm@'+cpaneluser+'.service'])
+if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
+    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+cpaneluser+'.service state=stopped enabled=no"', shell=True)
+backend_config_file = installation_path+"/conf/backends.yaml"
+with open(backend_config_file, 'r') as backend_data_yaml:
+    backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+if "PHP" in backend_data_yaml_parsed:
+    php_backends_dict = backend_data_yaml_parsed["PHP"]
+for backend_name in list(php_backends_dict.keys()):
+    subprocess.call(['systemctl', 'stop', backend_name+'@'+cpaneluser+'.service'])
+    if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
+        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+cpaneluser+'.service state=stopped"', shell=True)
 silentremove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
+silentremove(installation_path + "/secure-php-fpm.d/" + cpaneluser + ".conf")
+silentremove(installation_path + "/hhvm.d/" + cpaneluser + ".ini")
 subprocess.Popen(installation_path+"/scripts/init_backends.py reload", shell=True)
 cpuserdatajson = installation_path+"/lock/"+cpaneluser+".userdata"
 if os.path.exists(cpuserdatajson):

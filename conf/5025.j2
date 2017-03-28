@@ -18,10 +18,7 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_split_path_info ^(.+?\.php)(/.*)$;
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
+
 }
 location ~ ^/setup/(?!pub/). {
 deny all;
@@ -40,10 +37,7 @@ fastcgi_split_path_info ^(/update/index.php)(/.+)$;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
+
 }
 # Deny everything but index.php
 location ~ ^/update/(?!pub/). {
@@ -134,10 +128,7 @@ try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-{% if CHROOT_PHPFPM %}
-fastcgi_param  SCRIPT_FILENAME    {{ DIFFDIR }}$fastcgi_script_name;
-fastcgi_param  DOCUMENT_ROOT      {{ DIFFDIR }};
-{% endif %}
+
 }
 
 # Banned locations (only reached if the earlier PHP entry point regexes don't match)

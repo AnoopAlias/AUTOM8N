@@ -1,5 +1,6 @@
 if [ ! -d /usr/local/rvm/gems/ruby-RUBY_VERSION ] ; then
         echo -e '\e[93m Setting up Phusion Passenger \e[0m'
+        echo -e '\e[93m Setting up Ruby. Grab a coffee as this is going to take a while \e[0m'
         gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
         \curl -sSL https://get.rvm.io | sudo bash -s stable --ruby=RUBY_VERSION
 	. /usr/local/rvm/scripts/rvm
@@ -16,7 +17,7 @@ echo -e '\e[93m Adding a Ruby backend for XtendWeb.  \e[0m'
 echo -e '\e[93m Installing bundler  \e[0m'
 /usr/local/rvm/rubies/ruby-RUBY_VERSION/bin/gem install bundler
 
-echo -e '\e[93m Setting up Python. Grab a coffee as this going to take a while \e[0m'
+echo -e '\e[93m Setting up Python. Grab a coffee as this is going to take a while \e[0m'
 curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 /usr/local/pythonz/bin/pythonz install 2.7
 echo -e '\e[93m Adding a Python backend for XtendWeb.  \e[0m'
@@ -25,7 +26,7 @@ echo -e '\e[93m Bootstrapping pip  \e[0m'
 curl https://bootstrap.pypa.io/get-pip.py | /usr/local/pythonz/pythons/CPython-2.7/bin/python
 
 export NVM_DIR="/usr/local/nvm"
-echo -e '\e[93m Setting up NodeJS. Grab a coffee as this going to take a while \e[0m'
+echo -e '\e[93m Setting up NodeJS. Grab a coffee as this is going to take a while \e[0m'
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
 export NVM_DIR="/usr/local/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
