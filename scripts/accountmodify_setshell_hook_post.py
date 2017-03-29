@@ -36,6 +36,5 @@ cpaneluser = mydict["user"]
 # current_shell = mydict["current_shell"]
 if os.path.isfile(installation_path+"/conf/chroot-php-enabled"):
     silentremove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
-    silentremove(installation_path + "/secure-php-fpm.d/" + cpaneluser + ".conf")
     subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
 print(("1 nDeploy:modifyshell:"+cpaneluser))

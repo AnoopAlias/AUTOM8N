@@ -99,6 +99,8 @@ def php_backend_add(user_name, domain_home):
     phppool_file = installation_path + "/php-fpm.d/" + user_name + ".conf"
     user_shell = pwd.getpwnam(user_name).pw_shell
     if not os.path.isfile(phppool_file):
+        # Following may not be necessary as cPanel ea-php includes chroot patch
+        # One just need to create the file /var/cpanel/feature_toggles/apachefpmjail for chroot
         if os.path.isfile(installation_path+"/conf/chroot-php-enabled"):
             if user_shell == '/usr/local/cpanel/bin/jailshell' or user_shell == '/usr/local/cpanel/bin/noshell':
                 chroot_status = True
@@ -156,21 +158,12 @@ def hhvm_backend_add(user_name, domain_home, clusterenabled, *cluster_serverlist
 def php_secure_backend_add(user_name, domain_home, backend_version, clusterenabled, *cluster_serverlist):
     """Function to setup php-fpm for user using systemd socket activation"""
     phpfpm_conf_file = installation_path + "/secure-php-fpm.d/" + user_name + ".conf"
-    user_shell = pwd.getpwnam(user_name).pw_shell
     if not os.path.isfile(phpfpm_conf_file):
-        if os.path.isfile(installation_path+"/conf/chroot-php-enabled"):
-            if user_shell == '/usr/local/cpanel/bin/jailshell' or user_shell == '/usr/local/cpanel/bin/noshell':
-                chroot_status = True
-            else:
-                chroot_status = False
-        else:
-            chroot_status = False
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = "secure-php-fpm.conf.j2"
         template = templateEnv.get_template(TEMPLATE_FILE)
         templateVars = {"CPANELUSER": user_name,
-                        "CHROOT_PHPFPM": chroot_status,
                         "HOMEDIR": domain_home
                         }
         generated_config = template.render(templateVars)
