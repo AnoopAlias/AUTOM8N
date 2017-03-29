@@ -562,22 +562,25 @@ if __name__ == "__main__":
         subprocess.Popen(['/scripts/updateuserdatacache', '--force', cpaneluser], shell=True)
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
-        with open(cpuserdatajson) as cpaneluser_data_stream:
-            json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
-        main_domain = json_parsed_cpaneluser.get('main_domain')
-        # parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   # This data is irrelevant as parked domain list is in ServerAlias
-        addon_domains_dict = json_parsed_cpaneluser.get('addon_domains')     # So we know which addon is mapped to which sub-domain
-        sub_domains = json_parsed_cpaneluser.get('sub_domains')
-        # Check if a user is suspended and set a flag accordingly
-        if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
-            with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
-                json_parsed_cpusersfile = json.load(users_file)
-            if json_parsed_cpusersfile.get('SUSPENDED') == "1":
-                is_suspended = True
+        if os.path.isfile(cpuserdatajson):
+            with open(cpuserdatajson) as cpaneluser_data_stream:
+                json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
+            main_domain = json_parsed_cpaneluser.get('main_domain')
+            # parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   # This data is irrelevant as parked domain list is in ServerAlias
+            addon_domains_dict = json_parsed_cpaneluser.get('addon_domains')     # So we know which addon is mapped to which sub-domain
+            sub_domains = json_parsed_cpaneluser.get('sub_domains')
+            # Check if a user is suspended and set a flag accordingly
+            if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
+                with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
+                    json_parsed_cpusersfile = json.load(users_file)
+                if json_parsed_cpusersfile.get('SUSPENDED') == "1":
+                    is_suspended = True
+                else:
+                    is_suspended = False
             else:
-                is_suspended = False
+                # If cpanel users file is not present silently exit
+                sys.exit(0)
         else:
-            # If cpanel users file is not present silently exit
             sys.exit(0)
         # If nDeploy cluster is enabled we set a global flag and generate a list of servers in the serverlist list
         if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
