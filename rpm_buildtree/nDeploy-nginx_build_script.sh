@@ -152,9 +152,9 @@ rsync -a tempo/usr/sbin/nginx ../nginx-pkg/usr/sbin/nginx-debug
 
 git clone https://github.com/SpiderLabs/owasp-modsecurity-crs.git
 rsync -a owasp-modsecurity-crs ../nginx-module-modsecurity-pkg/etc/nginx/
-mv ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/crs-setup.conf.example ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/crs-setup.conf
-mv ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
-mv ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
+mv ../nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/crs-setup.conf.example ../nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/crs-setup.conf
+mv ../nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example ../nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+mv ../nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example ../nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
 git clone https://github.com/nbs-system/naxsi-rules.git
 rsync -a naxsi-rules/*.rules ../nginx-module-naxsi-pkg/etc/nginx/naxsi.d/
 rsync -a naxsi-${NAXSI_VERSION}/naxsi_config/naxsi_core.rules ../nginx-module-naxsi-pkg/etc/nginx/naxsi.d/naxsi_core.rules
