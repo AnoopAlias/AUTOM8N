@@ -33,6 +33,8 @@ rm -rf nginx-${NGINX_VERSION}*
 mkdir -p nginx-pkg/etc/nginx/{modules,modules.d,conf.auto}
 mkdir -p nginx-pkg/usr/nginx/scripts
 mkdir -p nginx-pkg/var/cache/nginx/ngx_pagespeed
+mkdir -p nginx-pkg/var/cache/nginx/mod_security
+chmod 770 nginx-pkg/var/cache/nginx/mod_security
 mkdir -p nginx-pkg/var/log/nginx
 mkdir -p nginx-pkg/var/run
 
@@ -48,9 +50,9 @@ if [ ${OSVERSION} -eq 6 ];then
   rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
   wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
   yum install devtoolset-2-gcc-c++ devtoolset-2-binutils
-  rsync -a --exclude 'usr/lib' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/naxsi_*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/conf.d/pagespeed_passthrough.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
+  rsync -a --exclude 'usr/lib' --exclude 'etc/nginx/conf.d/modsecurity*' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/naxsi_*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/conf.d/pagespeed_passthrough.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
 else
-  rsync -a --exclude 'etc/rc.d' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/naxsi_*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/conf.d/pagespeed_passthrough.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
+  rsync -a --exclude 'etc/rc.d' --exclude 'etc/nginx/conf.d/modsecurity*' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/naxsi_*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/conf.d/pagespeed_passthrough.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
 fi
 
 
@@ -148,7 +150,11 @@ fi
 make DESTDIR=$(pwd)/tempo install
 rsync -a tempo/usr/sbin/nginx ../nginx-pkg/usr/sbin/nginx-debug
 
-
+git clone https://github.com/SpiderLabs/owasp-modsecurity-crs.git
+rsync -a owasp-modsecurity-crs ../nginx-module-modsecurity-pkg/etc/nginx/
+mv ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/crs-setup.conf.example ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/crs-setup.conf
+mv ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+mv ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example ./nginx-module-modsecurity-pkg/etc/nginx/owasp-modsecurity-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
 git clone https://github.com/nbs-system/naxsi-rules.git
 rsync -a naxsi-rules/*.rules ../nginx-module-naxsi-pkg/etc/nginx/naxsi.d/
 rsync -a naxsi-${NAXSI_VERSION}/naxsi_config/naxsi_core.rules ../nginx-module-naxsi-pkg/etc/nginx/naxsi.d/naxsi_core.rules
@@ -159,6 +165,7 @@ rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed.conf ../nginx-module-
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed_passthrough.conf ../nginx-module-pagespeed-pkg/etc/nginx/conf.d/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/brotli.conf ../nginx-module-brotli-pkg/etc/nginx/conf.d/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/naxsi_* ../nginx-module-naxsi-pkg/etc/nginx/conf.d/
+rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/modsecurity* ../nginx-module-modsecurity-pkg/etc/nginx/conf.d/
 #rsync -a tempo/usr/sbin ../nginx-pkg/usr/
 for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity
 do
@@ -193,6 +200,8 @@ do
   cd ../nginx-module-${module}-pkg
   if [ ${module} == "brotli" ];then
     fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d libbrotli-nDeploy --name nginx-nDeploy-module-${module} .
+  elif [ ${module} == "modsecurity" ];then
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d libmodsecurity-nDeploy --name nginx-nDeploy-module-${module} .
   elif [ ${module} == "geoip" ];then
     fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d GeoIP --name nginx-nDeploy-module-${module} .
   elif [ ${module} == "pagespeed" ];then

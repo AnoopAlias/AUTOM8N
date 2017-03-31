@@ -31,6 +31,7 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 
   #Install PHP-FPM Application server for PHP
   /opt/nDeploy/scripts/easy_php_setup.sh
+  # php-fpm and a selected set of modules are installed from the EA4 php repo
 
 4.2. Install Phusion Passenger ( only if you need support for RUBY/PYTHON/NODEJS )
 ::
@@ -38,6 +39,11 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   yum --enablerepo=ndeploy install nginx-nDeploy-module-passenger
   #Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.
   /opt/nDeploy/scripts/easy_passenger_setup.sh
+  # Ruby will be compiled and installed to /usr/local/rvm
+  # Python will be compiled and installed to /usr/local/pythonz
+  # NodeJS will be installed to /usr/local/nvm
+  # The easy_passenger script installs only one version of Ruby/Python and NodeJS
+  # Additional versions can be installed and managed using rvm,pythonz and nvm respectively
 
 4.3. Install HHVM Hack/PHP Application server
 ::
