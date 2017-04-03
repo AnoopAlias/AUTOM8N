@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Setting up Ruby(Rack app) &mdash; XtendWeb nginX control v4.0</title>
+  <title>Support &mdash; XtendWeb nginX control v4.0</title>
   
 
   
@@ -34,8 +34,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
-        <link rel="next" title="Setting up NodeJS" href="NodeJS.html"/>
-        <link rel="prev" title="Setting up Python (WSGI app)" href="PYTHON_WSGI.html"/> 
+        <link rel="next" title="Companies who have sponsored XtendWeb development" href="Project_sponsors.html"/>
+        <link rel="prev" title="ChangeLog" href="changelog.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -95,18 +95,22 @@
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Support &amp; Development</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bug-reporting-and-project-management">BUG REPORTING AND PROJECT MANAGEMENT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#announcements">Announcements</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up Ruby(Rack app)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion or Java</a></li>
@@ -153,11 +157,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Setting up Ruby(Rack app)</li>
+    <li>Support</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/RUBY_RACK.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Support.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -167,53 +171,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="setting-up-ruby-rack-app">
-<h1>Setting up Ruby(Rack app)<a class="headerlink" href="#setting-up-ruby-rack-app" title="Permalink to this headline">¶</a></h1>
-<p>1. Enable the Phusion Passenger module</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
-</pre></div>
-</div>
-<p>2. The above step will install rvm and a version of ruby for the modules working.
-We can install any version of ruby using rvm</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>root@cpanel1 [~]# type rvm|head -1
-
-rvm is a function
-
-[root@cpanel ~]# rvm list
-Warning! PATH is not properly set up, &#39;/usr/local/rvm/gems/ruby-2.3.0/bin&#39; is not at first place,
-         usually this is caused by shell initialization files - check them for &#39;PATH=...&#39; entries,
-         it might also help to re-add RVM to your dotfiles: &#39;rvm get stable --auto-dotfiles&#39;,
-         to fix temporarily in this shell session run: &#39;rvm use ruby-2.3.0&#39;.
-
-rvm rubies
-
-  ruby-2.0.0-p648 [ x86_64 ]
-  ruby-2.2.4 [ x86_64 ]
-=* ruby-2.3.0 [ x86_64 ]
-
-# =&gt; - current
-# =* - current &amp;&amp; default
-#  * - default
-</pre></div>
-</div>
-<p>3. install bundler for all the rubies so users can run bundle install. For example</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rvm</span> <span class="n">use</span> <span class="n">ruby</span><span class="o">-</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">p648</span>
-<span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="4">
-<li>Register the Ruby backend using the command</li>
-</ol>
+  <div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<p>XtendWeb is licensed under GPLv3. XtendWeb is Free and Open Source software</p>
+<p>If your business is using XtendWeb, please consider supporting the software development, by purchasing admin services from
+<a class="reference external" href="https://support.gnusys.net/order.php">https://support.gnusys.net/order.php</a> .</p>
+<p>Technical Support,Consulting and advertising at the project website is non-free</p>
 <blockquote>
-<div><code class="docutils literal"><span class="pre">root&#64;cpanel1</span> <span class="pre">[~]#</span> <span class="pre">/opt/nDeploy/scripts/update_backend.py</span> <span class="pre">add</span> <span class="pre">RUBY</span> <span class="pre">ruby-2.1.4</span> <span class="pre">/usr/local/rvm/wrappers/ruby-2.1.4/ruby</span></code></div></blockquote>
-<p>5. cPanel users can install more gems to local folders using</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bundle</span> <span class="n">install</span> <span class="o">--</span><span class="n">path</span> <span class="n">vendor</span><span class="o">/</span><span class="n">bundle</span>
-<span class="ow">or</span>
-<span class="n">bundle</span> <span class="n">install</span> <span class="o">--</span><span class="n">deployment</span>
-</pre></div>
+<div><a class="reference external" href="https://support.gnusys.net/order.php">PURCHASE SUPPORT AND CONSULTING SERVICES</a>.</div></blockquote>
+<p>24x7 email support : <a class="reference external" href="mailto:ops&#37;&#52;&#48;gnusys&#46;net">ops<span>&#64;</span>gnusys<span>&#46;</span>net</a>
+HelpDesk URL: <a class="reference external" href="https://support.gnusys.net/index.php?fuse=support&amp;controller=ticket&amp;view=submitticket">GNUSYS HELPDESK</a></p>
+<div class="section" id="bug-reporting-and-project-management">
+<h2>BUG REPORTING AND PROJECT MANAGEMENT<a class="headerlink" href="#bug-reporting-and-project-management" title="Permalink to this headline">¶</a></h2>
+<p>(No technical support for install/customization etc will be entertained over github. Please report bugs only)</p>
+<ul class="simple">
+<li>REPORT BUGS: <a class="reference external" href="https://github.com/AnoopAlias/XtendWeb/issues">https://github.com/AnoopAlias/XtendWeb/issues</a></li>
+<li>GITHUB URL: <a class="reference external" href="https://github.com/AnoopAlias/XtendWeb">https://github.com/AnoopAlias/XtendWeb</a></li>
+</ul>
 </div>
-<div data-disqus-identifier="Setting up Ruby(Rack app)" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+<div class="section" id="announcements">
+<h2>Announcements<a class="headerlink" href="#announcements" title="Permalink to this headline">¶</a></h2>
+<p>Follow <a class="reference external" href="https://twitter.com/gnusys">https://twitter.com/gnusys</a> for project announcements , new rpm release notifications etc</p>
+</div>
+</div>
 
 
            </div>
@@ -222,10 +202,10 @@ rvm rubies
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="NodeJS.html" class="btn btn-neutral float-right" title="Setting up NodeJS" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Project_sponsors.html" class="btn btn-neutral float-right" title="Companies who have sponsored XtendWeb development" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="PYTHON_WSGI.html" class="btn btn-neutral" title="Setting up Python (WSGI app)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="changelog.html" class="btn btn-neutral" title="ChangeLog" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -265,7 +245,6 @@ rvm rubies
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/disqus.js"></script>
 
   
 
