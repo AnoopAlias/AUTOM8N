@@ -11,6 +11,11 @@ rewrite ^/sitemap_index\.xml$ /index.php?sitemap=1 last;
 rewrite ^/([^/]+?)-sitemap([0-9]+)?\.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
 
 location / {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 try_files $uri $uri/ /index.php?q=$uri&$args;
 }
 
@@ -32,6 +37,11 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;

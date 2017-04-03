@@ -4,6 +4,11 @@ root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
 location / {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 try_files $uri /framework/main.php?url=$uri&$query_string;
 }
 error_page 404 /assets/error-404.html;
@@ -13,6 +18,11 @@ try_files $uri =404;
 }
 
 location ~ /framework/.*(main|rpc|tiny_mce_gzip)\.php$ {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 fastcgi_keep_conn on;
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
@@ -58,6 +68,11 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;

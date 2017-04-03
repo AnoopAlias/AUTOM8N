@@ -26,6 +26,10 @@ rewrite ^/video-sitemap.xsl$ /index.php?xsl=video last;
 
 location / {
 
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}
 {% if NAXSIMODE == 'learn' %}
@@ -72,6 +76,10 @@ redis2_pass  127.0.0.1:6379;
 }
 
 location ~ \.php$ {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
 
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}

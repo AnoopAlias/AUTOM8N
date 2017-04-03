@@ -13,6 +13,11 @@ deny all;
 }
 
 location / {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 # The following 2 rules are only needed with webfinger
 rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
 rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json last;
@@ -28,6 +33,11 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php(?:$|/) {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 fastcgi_split_path_info ^(.+\.php)(/.+)$;
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};

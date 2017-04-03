@@ -5,8 +5,19 @@
 MODSEC_VERSION="3.0"
 MODSEC_RPM_ITER="1.el6"
 
-rm -rf /opt/libmodsec
-yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel
+rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
+wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
+yum install devtoolset-2-gcc-c++ devtoolset-2-binutils
+
+yum install https://www.softwarecollections.org/en/scls/praiskup/autotools/epel-6-x86_64/download/praiskup-autotools-epel-6-x86_64.noarch.rpm
+yum install autotools-latest
+scl enable autotools-latest bash
+scl enable devtoolset-2 bash
+
+
+
+rm -rf /opt/libmodsec ModSecurity
+yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel pcre-devel
 git clone https://github.com/SpiderLabs/ModSecurity
 cd ModSecurity
 git checkout -b v3/master origin/v3/master

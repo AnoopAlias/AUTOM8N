@@ -160,6 +160,9 @@ auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
 return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
 {% else %}
+{% if MODSECURITY == 'enabled' %}
+modsecurity on;
+{% endif %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
@@ -259,6 +262,9 @@ auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
 return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
 {% else %}
+{% if MODSECURITY == 'enabled' %}
+modsecurity on;
+{% endif %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}

@@ -165,12 +165,14 @@ rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed.conf ../nginx-module-
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed_passthrough.conf ../nginx-module-pagespeed-pkg/etc/nginx/conf.d/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/brotli.conf ../nginx-module-brotli-pkg/etc/nginx/conf.d/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/naxsi_* ../nginx-module-naxsi-pkg/etc/nginx/conf.d/
-rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/modsecurity* ../nginx-module-modsecurity-pkg/etc/nginx/conf.d/
+rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/modsecurity.conf ../nginx-module-modsecurity-pkg/etc/nginx/conf.d/zz_modsecurity.conf
 #rsync -a tempo/usr/sbin ../nginx-pkg/usr/
 for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity
 do
   rsync -a tempo/etc/nginx/modules/ngx_http_${module}* ../nginx-module-${module}-pkg/etc/nginx/modules/
-  rsync -a ../nginx-pkg-64-common/etc/nginx/conf.auto/${module}.conf ../nginx-module-${module}-pkg/etc/nginx/conf.auto/
+  if [ -f ../nginx-pkg-64-common/etc/nginx/conf.auto/${module}.conf ] ; then
+    rsync -a ../nginx-pkg-64-common/etc/nginx/conf.auto/${module}.conf ../nginx-module-${module}-pkg/etc/nginx/conf.auto/
+  fi
   rsync -a ../nginx-pkg-64-common/etc/nginx/modules.d/${module}.load ../nginx-module-${module}-pkg/etc/nginx/modules.d/
 done
 rsync -a tempo/etc/nginx/modules/ngx_pagespeed.so ../nginx-module-pagespeed-pkg/etc/nginx/modules/
@@ -178,6 +180,7 @@ rsync -a tempo/etc/nginx/modules/ndk_http_module.so ../nginx-pkg/etc/nginx/modul
 rsync -a ../nginx-pkg-64-common/etc/nginx/modules.d/ndk.load ../nginx-pkg/etc/nginx/modules.d/
 rsync -a tempo/etc/nginx/modules/ngx_http_headers_more_filter_module.so ../nginx-pkg/etc/nginx/modules/
 rsync -a ../nginx-pkg-64-common/etc/nginx/modules.d/headers_more_filter.load ../nginx-pkg/etc/nginx/modules.d/
+mv ../nginx-pkg/etc/nginx/modules.d/modsecurity.load ../nginx-pkg/etc/nginx/modules.d/zz_modsecurity.load
 
 rsync -a ../nginx-pkg-64-common/usr/nginx/scripts/nginx-passenger* ../nginx-module-passenger-pkg/usr/nginx/scripts/
 rsync -a ../nginx-pkg-64-common/usr/nginx/scripts/nxapi* ../nginx-module-naxsi-pkg/usr/nginx/scripts/

@@ -4,6 +4,10 @@ root {{ DOCUMENTROOT }};
 
 location / {
 
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}
 {% if NAXSIMODE == 'learn' %}
@@ -26,6 +30,7 @@ include /etc/nginx/naxsi.d/drupal.rules;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
+
 
 #If request method is POST we add a _mcnc cookie
 if ($requestnocache = "1") {

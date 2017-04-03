@@ -28,3 +28,4 @@ redirecturl: none
 redirectstatus: none
 append_requesturi: disabled
 set_expire_static: disabled
+mod_security: disabled

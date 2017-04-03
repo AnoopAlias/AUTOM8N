@@ -5,6 +5,11 @@ root {{ DOCUMENTROOT }};
 index cart.php;
 
 location / {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 if (!-e $request_filename){
 rewrite ^/sitemap.xml(\?.+)?$ /cart.php?target=sitemap;
 rewrite ^/((([/_A-Za-z0-9-]+)/)?([_A-Za-z0-9-]+)/)?([_A-Za-z0-9-]+)(/?)(\.([_A-Za-z0-9-]+))?$ /cart.php?url=$5&last=$4&rest=$3&ext=$7 last;
@@ -17,6 +22,11 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;

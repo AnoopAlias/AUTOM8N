@@ -5,6 +5,11 @@ index index.php index.html index.htm;
 
 #Remove PHP extension from requests
 location / {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 if (!-e $request_filename){
 rewrite ^/api/.* /api/dispatch.php?$query_string last;
 rewrite ^(.*)$ /$1.php;
@@ -19,6 +24,11 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;

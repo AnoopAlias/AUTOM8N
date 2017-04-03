@@ -12,6 +12,11 @@ error_page 404 403 = /errors/404.php;
 
 # PHP entry point for setup application
 location ~* ^/setup($|/) {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 root $MAGE_ROOT;
 location ~ ^/setup/index.php {
 fastcgi_pass unix:{{ SOCKETFILE }};
@@ -31,6 +36,11 @@ add_header X-Frame-Options "SAMEORIGIN";
 
 # PHP entry point for update application
 location ~* ^/update($|/) {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 root $MAGE_ROOT;
 location ~ ^/update/index.php {
 fastcgi_split_path_info ^(/update/index.php)(/.+)$;
@@ -50,6 +60,11 @@ add_header X-Frame-Options "SAMEORIGIN";
 
 
 location / {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 try_files $uri $uri/ /index.php$is_args$args;
 }
 
@@ -124,6 +139,11 @@ deny all;
 
 # PHP entry point for main application
 location ~ (index|get|static|report|404|503)\.php$ {
+
+{% if MODSECURITY == 'enabled' %}
+modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
+{% endif %}
+
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
