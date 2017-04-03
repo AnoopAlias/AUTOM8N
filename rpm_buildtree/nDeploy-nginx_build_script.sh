@@ -180,7 +180,7 @@ rsync -a tempo/etc/nginx/modules/ndk_http_module.so ../nginx-pkg/etc/nginx/modul
 rsync -a ../nginx-pkg-64-common/etc/nginx/modules.d/ndk.load ../nginx-pkg/etc/nginx/modules.d/
 rsync -a tempo/etc/nginx/modules/ngx_http_headers_more_filter_module.so ../nginx-pkg/etc/nginx/modules/
 rsync -a ../nginx-pkg-64-common/etc/nginx/modules.d/headers_more_filter.load ../nginx-pkg/etc/nginx/modules.d/
-mv ../nginx-pkg/etc/nginx/modules.d/modsecurity.load ../nginx-pkg/etc/nginx/modules.d/zz_modsecurity.load
+mv ../nginx-module-modsecurity-pkg/etc/nginx/modules.d/modsecurity.load ../nginx-module-modsecurity-pkg/etc/nginx/modules.d/zz_modsecurity.load
 
 rsync -a ../nginx-pkg-64-common/usr/nginx/scripts/nginx-passenger* ../nginx-module-passenger-pkg/usr/nginx/scripts/
 rsync -a ../nginx-pkg-64-common/usr/nginx/scripts/nxapi* ../nginx-module-naxsi-pkg/usr/nginx/scripts/
