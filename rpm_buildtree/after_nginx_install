@@ -18,3 +18,13 @@ fi
 if [ ! -f /etc/nginx/ssl/dhparam.pem ];then
 	openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
 fi
+if [ ! -d /var/cache/nginx/mod_security ]; then
+	mkdir /var/cache/nginx/mod_security
+fi
+chmod 770 /var/cache/nginx/mod_security
+chgrp nobody /var/cache/nginx/mod_security
+if [ ! -d /var/log/nginx/modsecurity ];then
+	mkdir /var/log/nginx/modsecurity
+fi
+chmod 770 /var/log/nginx/modsecurity
+chgrp nobody /var/log/nginx/modsecurity

@@ -33,8 +33,6 @@ rm -rf nginx-${NGINX_VERSION}*
 mkdir -p nginx-pkg/etc/nginx/{modules,modules.d,conf.auto}
 mkdir -p nginx-pkg/usr/nginx/scripts
 mkdir -p nginx-pkg/var/cache/nginx/ngx_pagespeed
-mkdir -p nginx-pkg/var/cache/nginx/mod_security
-chmod 770 nginx-pkg/var/cache/nginx/mod_security
 mkdir -p nginx-pkg/var/log/nginx
 mkdir -p nginx-pkg/var/run
 
