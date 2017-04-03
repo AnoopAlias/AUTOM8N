@@ -307,7 +307,11 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     fastcgi_socket = None
     # Following are features that the UI can change . Can be expanded in future
     # as and when more features are incorporated
-    if os.path.isfile('/etc/nginx/modules.d/naxsi.load'):
+    if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+        mod_security = yaml_parsed_domain_data.get('mod_security', None)
+    else:
+        mod_security = 'disabled'
+    if os.path.isfile('/etc/nginx/modules.d/naxsi.load') and mod_security == 'disabled':
         naxsi = yaml_parsed_domain_data.get('naxsi', None)
         naxsi_whitelist = yaml_parsed_domain_data.get('naxsi_whitelist', None)
     else:
@@ -337,7 +341,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     http2 = yaml_parsed_domain_data.get('http2', None)
     ssl_offload = yaml_parsed_domain_data.get('ssl_offload', None)
     access_log = yaml_parsed_domain_data.get('access_log', None)
-    naxsi_mode = yaml_parsed_domain_data.get('naxsi_mode', None)
+    naxsi_mode = yaml_parsed_domain_data.get('naxsi_mode', 'learn')
     redirect_url = yaml_parsed_domain_data.get('redirecturl', 'none')
     redirectstatus = yaml_parsed_domain_data.get('redirectstatus', 'none')
     append_requesturi = yaml_parsed_domain_data.get('append_requesturi', 'disabled')
@@ -396,6 +400,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "GZIP": gzip,
                     "BROTLI": brotli,
                     "HSTS": hsts,
+                    "MODSECURITY": mod_security,
                     "NAXSI": naxsi,
                     "NAXSIMODE": naxsi_mode,
                     "DOMAINLIST": domain_list,
@@ -460,6 +465,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                        "DOCUMENTROOT": document_root,
                        "CONFIGDOMAINNAME": kwargs.get('configdomain'),
                        "HOMEDIR": domain_home,
+                       "MODSECURITY": mod_security,
                        "NAXSI": naxsi,
                        "NAXSIMODE": naxsi_mode,
                        "UPSTREAM_PORT": backend_path,
@@ -489,9 +495,17 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             subdir_backend_version = the_subdir_app_dict.get('backend_version')
             subdir_apptemplate_code = the_subdir_app_dict.get('apptemplate_code')
             subdir_auth_basic = the_subdir_app_dict.get('auth_basic', 'disabled')
-            subdir_naxsi = the_subdir_app_dict.get('naxsi', 'disabled')
             subdir_naxsi_mode = the_subdir_app_dict.get('naxsi_mode', 'learn')
-            subdir_naxsi_whitelist = the_subdir_app_dict.get('naxsi_whitelist', 'none')
+            if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+                subdir_mod_security = the_subdir_app_dict.get('mod_security', None)
+            else:
+                subdir_mod_security = 'disabled'
+            if os.path.isfile('/etc/nginx/modules.d/naxsi.load') and subdir_mod_security == 'disabled':
+                subdir_naxsi = the_subdir_app_dict.get('naxsi', None)
+                subdir_naxsi_whitelist = the_subdir_app_dict.get('naxsi_whitelist', None)
+            else:
+                subdir_naxsi = 'disabled'
+                subdir_naxsi_whitelist = 'none'
             subdir_redirect_url = the_subdir_app_dict.get('redirecturl', 'none')
             subdir_redirectstatus = the_subdir_app_dict.get('redirectstatus', 'none')
             subdir_set_expire_static = the_subdir_app_dict.get('set_expire_static', 'disabled')
@@ -524,6 +538,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                                      "CONFIGDOMAINNAME": kwargs.get('configdomain'),
                                      "HOMEDIR": domain_home,
                                      "DIFFDIR": diff_dir,
+                                     "MODSECURITY": subdir_mod_security,
                                      "NAXSI": subdir_naxsi,
                                      "NAXSIMODE": subdir_naxsi_mode,
                                      "UPSTREAM_PORT": subdir_backend_path,

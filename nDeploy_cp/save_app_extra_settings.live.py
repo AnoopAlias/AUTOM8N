@@ -121,6 +121,21 @@ if form.getvalue('thesubdir'):
                 print('</body>')
                 print('</html>')
                 sys.exit(0)
+            # mod_security
+            if 'mod_security' in form.keys():
+                mod_security = form.getvalue('mod_security')
+                the_subdir_dict['mod_security'] = mod_security
+            else:
+                print('ERROR: Forbidden::mod_security')
+                print('</div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</body>')
+                print('</html>')
+                sys.exit(0)
             # naxsi
             if 'naxsi' in form.keys():
                 naxsi = form.getvalue('naxsi')
@@ -252,6 +267,21 @@ else:
         yaml_parsed_profileyaml['set_expire_static'] = set_expire_static
     else:
         print('ERROR: Forbidden::set_expire_static')
+        print('</div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</body>')
+        print('</html>')
+        sys.exit(0)
+    # mod_security
+    if 'mod_security' in form.keys():
+        mod_security = form.getvalue('mod_security')
+        yaml_parsed_profileyaml['mod_security'] = mod_security
+    else:
+        print('ERROR: Forbidden::mod_security')
         print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
         print('</div>')

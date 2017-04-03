@@ -130,6 +130,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 backend_version = the_subdir_dict.get('backend_version')
                 backend_path = the_subdir_dict.get('backend_path')
                 apptemplate_code = the_subdir_dict.get('apptemplate_code')
+                mod_security = the_subdir_dict.get('mod_security', 'disabled')
                 naxsi = the_subdir_dict.get('naxsi', 'disabled')
                 naxsi_mode = the_subdir_dict.get('naxsi_mode', 'learn')
                 naxsi_whitelist = the_subdir_dict.get('naxsi_whitelist', 'none')
@@ -247,6 +248,24 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('<div class="col-sm-6 col-radio">')
                     print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" /> Enabled</label></div>')
                     print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
+                    print('</div>')
+                    print('</div>')
+                print('</li>')
+                # mod_security
+                print('<ul class="list-group"><li class="list-group-item">')
+                print('<div class="row">')
+                mod_security_hint = "mod_security v3 WAF"
+                if mod_security == 'enabled':
+                    print_green('mod_security', mod_security_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
+                    print('</div>')
+                else:
+                    print_red('mod_security', mod_security_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
                     print('</div>')
                     print('</div>')
                 print('</li>')
