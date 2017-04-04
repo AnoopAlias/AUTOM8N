@@ -29,7 +29,7 @@ ZLIB_VERSION="1.2.11"
 
 rm -rf nginx-module-*
 rm -rf nginx-pkg
-rm -rf nginx-${NGINX_VERSION}*
+rm -rf openresty-${NGINX_VERSION}*
 mkdir -p nginx-pkg/etc/nginx/{modules,modules.d,conf.auto}
 mkdir -p nginx-pkg/usr/nginx/scripts
 mkdir -p nginx-pkg/var/cache/nginx/ngx_pagespeed
@@ -62,7 +62,7 @@ echo ${MY_RUBY_VERSION}
 /usr/local/rvm/rubies/ruby-${MY_RUBY_VERSION}/bin/gem install fpm
 
 wget https://openresty.org/download/openresty-${NGINX_VERSION}.tar.gz
-tar -xvzf openrsty-${NGINX_VERSION}.tar.gz
+tar -xvzf openresty-${NGINX_VERSION}.tar.gz
 cd openresty-${NGINX_VERSION}/
 
 
