@@ -120,15 +120,18 @@ Distributing templates to all users
 ::
 
   /opt/nDeploy/scripts/update_profiles.py add root main PHP 5001.j2 "Wordpress"
+
 Distributing templates for a subdirectory to all users
 ::
 
   /opt/nDeploy/scripts/update_profiles.py add root subdir PHP 5001_subdir.j2 "Wordpress in subdir"
+
 Distributing template to a specific cpaneluser
 ::
 
   /opt/nDeploy/scripts/update_profiles.py add cpanelusername main PHP 5001.j2 "Wordpress"
   /opt/nDeploy/scripts/update_profiles.py add cpanelusername subdir PHP 5001_subdir.j2 "Wordpress in subdir"
+
 In short the template registration has the following syntax
 ::
 

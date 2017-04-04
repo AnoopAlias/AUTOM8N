@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>List of webHosts that support nginX &mdash; XtendWeb nginX control v4.0</title>
+  <title>Naxsi &mdash; XtendWeb nginX control v4.0</title>
   
 
   
@@ -34,8 +34,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
-        <link rel="next" title="Setting up HHVM" href="HHVM.html"/>
-        <link rel="prev" title="Companies who have sponsored XtendWeb development" href="project_sponsors.html"/> 
+        <link rel="next" title="ChangeLog" href="changelog.html"/>
+        <link rel="prev" title="ModSecurity" href="ModSecurity.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -85,18 +85,21 @@
             
             
                 <p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="migrating_from_nDeploy.html">Instructions for upgrading from nDeploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Naxsi</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Support &amp; Development</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">List of webHosts that support nginX</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
 <ul>
@@ -111,6 +114,7 @@
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
@@ -149,11 +153,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>List of webHosts that support nginX</li>
+    <li>Naxsi</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/nginx_friendly_web_hosts.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Naxsi.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -163,16 +167,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="list-of-webhosts-that-support-nginx">
-<h1>List of webHosts that support nginX<a class="headerlink" href="#list-of-webhosts-that-support-nginx" title="Permalink to this headline">¶</a></h1>
-<p>The following WebHost support nginX in Shared/VPS/Cloud/Dedicated hosting
-and provide support for hosting your website in native nginX+php-fpm including
-assistance in converting your htaccess rewrite rules.</p>
-<p><a class="reference external" href="https://tunedhosting.com/">TUNEDHOSTING.COM</a></p>
-<p><a class="reference external" href="https://conexcol.net.co/">CONEXCOL CLOUD</a></p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Wish to list your webhosting business here?. Contact <a class="reference external" href="mailto:anoop&#37;&#52;&#48;gnusys&#46;net">anoop<span>&#64;</span>gnusys<span>&#46;</span>net</a></p>
+  <div class="section" id="naxsi">
+<h1>Naxsi<a class="headerlink" href="#naxsi" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">NAXSI will only be enabled if ModSecurity is in the disabled state</p>
+</div>
+<p>NAXSI is Nginx Anti XSS and SQL Injection . <a class="reference external" href="https://github.com/nbs-system/naxsi">https://github.com/nbs-system/naxsi</a></p>
+<p>Currently XtendWeb support enabling/disabling NAXSI WAF and loading community contributed whitelists for Drupal and Wordpress CMS .
+Extending NAXSI using whitelists need root level access to the server .</p>
+<p>Root user can add Whitelists to the file</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sites</span><span class="o">-</span><span class="n">enabled</span><span class="o">/</span><span class="p">{</span> <span class="n">cpaneldomain</span> <span class="p">}</span><span class="o">.</span><span class="n">naxsi</span><span class="o">.</span><span class="n">wl</span> <span class="c1"># Where cpaneldomain is the actual cPanel configured domainname</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">reload</span>  <span class="c1"># to load the whitelists into the server</span>
+</pre></div>
 </div>
 </div>
 
@@ -183,10 +190,10 @@ assistance in converting your htaccess rewrite rules.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="HHVM.html" class="btn btn-neutral float-right" title="Setting up HHVM" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="changelog.html" class="btn btn-neutral float-right" title="ChangeLog" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="project_sponsors.html" class="btn btn-neutral" title="Companies who have sponsored XtendWeb development" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ModSecurity.html" class="btn btn-neutral" title="ModSecurity" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

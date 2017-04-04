@@ -29,7 +29,8 @@ Features
 * Supports caching in proxy and FastCGI
 * Google PageSpeed support
 * limit_req, limit_conn support
-* NAXSI Web Application Firewall - (mod_security via libmodsecurity support coming soon!)
+* ModSecurity v3 ( libmodsecurity ) via ModSecurity-nginx
+* NAXSI Web Application Firewall
 * IPv6 support
 * TLS(HTTPS) support
 * HTTP/2 support
@@ -54,15 +55,17 @@ Features
    mod_remoteip
    brotli_compression
    http2
+   ModSecurity
+   Naxsi
 
 .. toctree::
    :maxdepth: 2
    :caption: Support & Development
 
    changelog
-   support
-   project_sponsors
-   nginx_friendly_web_hosts
+   Support
+   Project_sponsors
+   Nginx_friendly_web_hosts
 
 .. toctree::
    :maxdepth: 2
@@ -81,7 +84,7 @@ Features
    :caption: Administration & Monitoring
 
    XtendWeb_Administration
-   application_template
+   Application_template
    Monitoring
    Logs
 

@@ -90,13 +90,15 @@
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Support &amp; Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
 <ul>
@@ -111,7 +113,7 @@
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="application_template.html">Application templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
@@ -187,7 +189,8 @@ servers which are DNS load-balanced .</p>
 <li>Supports caching in proxy and FastCGI</li>
 <li>Google PageSpeed support</li>
 <li>limit_req, limit_conn support</li>
-<li>NAXSI Web Application Firewall - (mod_security via libmodsecurity support coming soon!)</li>
+<li>ModSecurity v3 ( libmodsecurity ) via ModSecurity-nginx</li>
+<li>NAXSI Web Application Firewall</li>
 <li>IPv6 support</li>
 <li>TLS(HTTPS) support</li>
 <li>HTTP/2 support</li>
@@ -213,6 +216,11 @@ servers which are DNS load-balanced .</p>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ModSecurity.html#install-modsecurity">Install ModSecurity</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound" id="support-development">
@@ -223,16 +231,16 @@ servers which are DNS load-balanced .</p>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#if-you-are-upgrading-from-a-previous-release-do-the-following">If you are upgrading from a previous release do the following</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="support.html#bug-reporting-and-project-management">BUG REPORTING AND PROJECT MANAGEMENT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="support.html#announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Support.html#bug-reporting-and-project-management">BUG REPORTING AND PROJECT MANAGEMENT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Support.html#announcements">Announcements</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="project_sponsors.html">Companies who have sponsored XtendWeb development</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="project_sponsors.html#credits">CREDITS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Companies who have sponsored XtendWeb development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Project_sponsors.html#credits">CREDITS</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound" id="backends-setup">
@@ -276,7 +284,7 @@ servers which are DNS load-balanced .</p>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#building-nginx-ndeploy-from-source">Building nginx-nDeploy from source</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="application_template.html">Application templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
