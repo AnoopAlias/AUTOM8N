@@ -6,10 +6,6 @@ index index.php index.html index.htm default.html default.htm;
 
 location / {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
-
 try_files $uri $uri/ /index.php?$args;
 }
 
@@ -26,9 +22,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 
 location ~ \.php$ {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

@@ -6,19 +6,12 @@ index index.php index.html index.htm;
 # The main Bolt website
 location / {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
-
 try_files $uri $uri/ /index.php?$query_string;
 }
 
 # Generated thumbnail images
 location ~* /thumbs/(.*)$ {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 try_files $uri $uri/ /index.php?$query_string;
 }
@@ -29,9 +22,6 @@ try_files $uri $uri/ /index.php?$query_string;
 #       here to match
 location ~* /bolt/(.*)$ {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 try_files $uri $uri/ /index.php?$query_string;
 }
@@ -39,9 +29,6 @@ try_files $uri $uri/ /index.php?$query_string;
 # Backend async routes
 location ~* /async/(.*)$ {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 try_files $uri $uri/ /index.php?$query_string;
 }
@@ -88,9 +75,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 
 location ~ \.php$ {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

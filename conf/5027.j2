@@ -12,10 +12,6 @@ rewrite ^(/[^/]+)?(/.*\.php) $2 last;
 
 location / {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
-
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}
 {% if NAXSIMODE == 'learn' %}
@@ -53,10 +49,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}

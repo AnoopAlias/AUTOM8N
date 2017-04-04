@@ -308,17 +308,17 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     # Following are features that the UI can change . Can be expanded in future
     # as and when more features are incorporated
     if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
-        mod_security = yaml_parsed_domain_data.get('mod_security', None)
+        mod_security = yaml_parsed_domain_data.get('mod_security', 'disabled')
     else:
         mod_security = 'disabled'
     if os.path.isfile('/etc/nginx/modules.d/naxsi.load') and mod_security == 'disabled':
-        naxsi = yaml_parsed_domain_data.get('naxsi', None)
+        naxsi = yaml_parsed_domain_data.get('naxsi', 'disabled')
         naxsi_whitelist = yaml_parsed_domain_data.get('naxsi_whitelist', None)
     else:
         naxsi = 'disabled'
         naxsi_whitelist = 'none'
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
-        pagespeed = yaml_parsed_domain_data.get('pagespeed', None)
+        pagespeed = yaml_parsed_domain_data.get('pagespeed', 'disabled')
         pagespeed_filter = yaml_parsed_domain_data.get('pagespeed_filter', 'CoreFilters')
     else:
         pagespeed = 'disabled'
@@ -497,11 +497,11 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
             subdir_auth_basic = the_subdir_app_dict.get('auth_basic', 'disabled')
             subdir_naxsi_mode = the_subdir_app_dict.get('naxsi_mode', 'learn')
             if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
-                subdir_mod_security = the_subdir_app_dict.get('mod_security', None)
+                subdir_mod_security = the_subdir_app_dict.get('mod_security', 'disabled')
             else:
                 subdir_mod_security = 'disabled'
             if os.path.isfile('/etc/nginx/modules.d/naxsi.load') and subdir_mod_security == 'disabled':
-                subdir_naxsi = the_subdir_app_dict.get('naxsi', None)
+                subdir_naxsi = the_subdir_app_dict.get('naxsi', 'disabled')
                 subdir_naxsi_whitelist = the_subdir_app_dict.get('naxsi_whitelist', None)
             else:
                 subdir_naxsi = 'disabled'

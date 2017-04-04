@@ -13,7 +13,7 @@ PASSENGER_VERSION="5.1.2"
 CACHE_PURGE_VERSION="2.3"
 NAXSI_VERSION="http2"
 PS_NGX_EXTRA_FLAGS="--with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc"
-OPENSSL_VERSION="1.0.2j"
+OPENSSL_VERSION="1.0.2k"
 LIBRESSL_VERSION="2.5.1"
 SRCACHE_NGINX_MODULE="0.31"
 NGX_DEVEL_KIT="0.3.0"
@@ -163,7 +163,7 @@ rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed.conf ../nginx-module-
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed_passthrough.conf ../nginx-module-pagespeed-pkg/etc/nginx/conf.d/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/brotli.conf ../nginx-module-brotli-pkg/etc/nginx/conf.d/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/naxsi_* ../nginx-module-naxsi-pkg/etc/nginx/conf.d/
-rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/modsecurity.conf ../nginx-module-modsecurity-pkg/etc/nginx/conf.d/zz_modsecurity.conf
+rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/modsecurity.conf ../nginx-module-modsecurity-pkg/etc/nginx/conf.d/
 #rsync -a tempo/usr/sbin ../nginx-pkg/usr/
 for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity
 do

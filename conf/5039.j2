@@ -5,10 +5,6 @@ index index.php index.html index.htm;
 
 location / {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
-
 # try to serve file directly, fallback to app.php
 try_files $uri /app.php$is_args$args;
 }
@@ -19,10 +15,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

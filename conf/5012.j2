@@ -6,9 +6,6 @@ index cart.php;
 
 location / {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 if (!-e $request_filename){
 rewrite ^/sitemap.xml(\?.+)?$ /cart.php?target=sitemap;
@@ -22,10 +19,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

@@ -13,10 +13,6 @@ return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
-
 try_files $uri $uri/ /{{ SUBDIR }}/index.php;
 
 

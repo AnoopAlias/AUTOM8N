@@ -10,18 +10,9 @@ NGINX_RPM_ITER="1.el${OSVERSION}"
 NPS_VERSION="1.11.33.4"
 MY_RUBY_VERSION="2.3.1"
 PASSENGER_VERSION="5.1.2"
-CACHE_PURGE_VERSION="2.3"
-NAXSI_VERSION="http2"
 PS_NGX_EXTRA_FLAGS="--with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc"
-OPENSSL_VERSION="1.0.2j"
+OPENSSL_VERSION="1.0.2k"
 LIBRESSL_VERSION="2.5.1"
-SRCACHE_NGINX_MODULE="0.31"
-NGX_DEVEL_KIT="0.3.0"
-REDIS2_NGINX_MODULE="0.13"
-SET_MISC_NGINX_MODULE="0.31"
-REDIS_NGINX_MODULE="0.3.8"
-HEADERS_MORE_NGINX_MODULE="0.32"
-ECHO_NGINX_MODULE="0.60"
 PCRE_VERSION="8.40"
 ZLIB_VERSION="1.2.11"
 
@@ -61,15 +52,11 @@ echo ${MY_RUBY_VERSION}
 /usr/local/rvm/rubies/ruby-${MY_RUBY_VERSION}/bin/gem install passenger -v ${PASSENGER_VERSION}
 /usr/local/rvm/rubies/ruby-${MY_RUBY_VERSION}/bin/gem install fpm
 
+
 wget https://openresty.org/download/openresty-${NGINX_VERSION}.tar.gz
 tar -xvzf openresty-${NGINX_VERSION}.tar.gz
 cd openresty-${NGINX_VERSION}/
 cd bundle
-
-
-# ngx_cache_purge project is mostly unmaintained ;ignoring
-#wget http://labs.frickle.com/files/ngx_cache_purge-${CACHE_PURGE_VERSION}.tar.gz
-#tar -xvzf ngx_cache_purge-${CACHE_PURGE_VERSION}.tar.gz
 
 wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.zip
 unzip release-${NPS_VERSION}-beta.zip
@@ -77,6 +64,11 @@ cd ngx_pagespeed-release-${NPS_VERSION}-beta/
 wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
 tar -xzvf ${NPS_VERSION}.tar.gz
 cd ..
+
+cd ..
+git clone https://github.com/google/ngx_brotli.git
+cd ngx_brotli && git submodule update --init && cd ..
+
 
 wget https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
 tar -zxf openssl-${OPENSSL_VERSION}.tar.gz
@@ -97,10 +89,7 @@ tar -zxf pcre-${PCRE_VERSION}.tar.gz
 wget http://zlib.net/zlib-${ZLIB_VERSION}.tar.gz
 tar -zxf zlib-${ZLIB_VERSION}.tar.gz
 
-git clone https://github.com/google/ngx_brotli.git
-cd ngx_brotli && git submodule update --init && cd ..
 
-cd ..
 
 if [ ${OSVERSION} -eq 6 ];then
 ./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-path=/etc/nginx/modules --with-pcre=../pcre-${PCRE_VERSION} --with-pcre-jit --with-zlib=../zlib-${ZLIB_VERSION} --with-openssl=../openssl-${OPENSSL_VERSION} --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error_log --http-log-path=/var/log/nginx/access_log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nobody --group=nobody --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-file-aio --with-threads --with-stream --with-stream_ssl_module --with-http_slice_module --with-http_v2_module --with-http_geoip_module=dynamic --add-dynamic-module=../ngx_pagespeed-release-${NPS_VERSION}-beta ${PS_NGX_EXTRA_FLAGS} --add-dynamic-module=/usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/src/nginx_module --add-dynamic-module=../ngx_brotli  --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic' --with-ld-opt="-Wl,-E -lrt"
@@ -110,7 +99,7 @@ fi
 make DESTDIR=$(pwd)/tempostrip install
 strip --strip-debug ./tempostrip/usr/sbin/nginx
 rsync -a tempostrip/usr/sbin ../nginx-pkg/usr/
-#strip --strip-debug ./tempo/etc/nginx/modules/*.so
+strip --strip-debug ./tempo/etc/nginx/modules/*.so
 if [ ${OSVERSION} -eq 6 ];then
 ./configure --with-debug --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-path=/etc/nginx/modules --with-pcre=../pcre-${PCRE_VERSION} --with-pcre-jit --with-zlib=../zlib-${ZLIB_VERSION} --with-openssl=../openssl-${OPENSSL_VERSION} --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error_log --http-log-path=/var/log/nginx/access_log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nobody --group=nobody --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-file-aio --with-threads --with-stream --with-stream_ssl_module --with-http_slice_module --with-http_v2_module --with-http_geoip_module=dynamic --add-dynamic-module=../ngx_pagespeed-release-${NPS_VERSION}-beta ${PS_NGX_EXTRA_FLAGS} --add-dynamic-module=/usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/src/nginx_module --add-dynamic-module=../ngx_brotli  --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic' --with-ld-opt="-Wl,-E -lrt"
 else

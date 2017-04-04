@@ -14,10 +14,6 @@ rewrite /admin$ $scheme://$host$uri/ permanent;
 
 location / {
 
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
-
 # This try_files directive is used to enable SEO-friendly URLs for OpenCart.
 try_files $uri @opencart;
 }
@@ -36,10 +32,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
-{% if MODSECURITY == 'enabled' %}
-modsecurity_rules_file /etc/nginx/conf.d/zz_modsecurity.conf;
-{% endif %}
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
