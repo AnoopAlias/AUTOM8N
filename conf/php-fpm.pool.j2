@@ -345,9 +345,6 @@ ping.path = /pingphpfpm
 ;       (error_log, sessions.save_path, ...).
 ; Default Value: not set
 ;chroot =
-{% if CHROOT_PHPFPM %}
-chroot = /home/virtfs/{{ CPANELUSER }}
-{% endif %}
 
 ; Chdir to this directory at the start.
 ; Note: relative path can be used.

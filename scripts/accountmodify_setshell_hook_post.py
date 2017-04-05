@@ -4,6 +4,7 @@
 import sys
 import os
 import subprocess
+import pwd
 try:
     import simplejson as json
 except ImportError:
@@ -32,9 +33,11 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
 cpaneluser = mydict["user"]
+user_shell = pwd.getpwnam(cpaneluser).pw_shell
 # new_shell = mydict["new_shell"]
 # current_shell = mydict["current_shell"]
-if os.path.isfile(installation_path+"/conf/chroot-php-enabled"):
-    silentremove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
-    subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
-print(("1 nDeploy:modifyshell:"+cpaneluser))
+if os.path.exists(cluster_config_file):
+    # Calling ansible ad-hoc command to modify users across the cluster
+    # Using subprocess.call here as we are not in a hurry and no async call is required
+    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' home='+cpaneluserhome+' shell='+user_shell+'"', shell=True)
+print(("1 nDeploy:clustermodifyshell:"+cpaneluser))

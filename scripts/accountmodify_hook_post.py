@@ -39,6 +39,7 @@ mydict = cpjson["data"]
 cpanelnewuser = mydict["newuser"]
 cpaneluser = mydict["user"]
 maindomain = mydict["domain"]
+cpanelnewuser_shell = pwd.getpwnam(cpanelnewuser).pw_shell
 # Calling the config generate script for the user
 if cpanelnewuser != cpaneluser:
     if os.path.exists(cluster_config_file):
@@ -100,7 +101,7 @@ if cpanelnewuser != cpaneluser:
     if os.path.exists(cluster_config_file):
         cpaneluserhome = pwd.getpwnam(cpanelnewuser).pw_dir
         # Create the new user
-        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpanelnewuser+' home='+cpaneluserhome+'"', shell=True)
+        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpanelnewuser+' home='+cpaneluserhome+' shell='+cpanelnewuser_shell+'"', shell=True)
         subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpanelnewuser, shell=True)
         subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
     print(("1 nDeploy:postmodify:"+cpanelnewuser))

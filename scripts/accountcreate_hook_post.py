@@ -4,6 +4,7 @@
 import sys
 import subprocess
 import os
+import pwd
 try:
     import simplejson as json
 except ImportError:
@@ -23,13 +24,14 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
 cpaneluser = mydict["user"]
+user_shell = pwd.getpwnam(cpaneluser).pw_shell
 # If nDeploy cluster is enabled we need to add users,DNS entry for the same
 if os.path.exists(cluster_config_file):
     cpaneluserhome = mydict["homedir"]
     cpaneldomain = mydict["domain"]
     # Calling ansible ad-hoc command to create users across the cluster
     # Using subprocess.call here as we are not in a hurry and no async call is required
-    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' home='+cpaneluserhome+'"', shell=True)
+    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' home='+cpaneluserhome+' shell='+user_shell+'"', shell=True)
     subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
     print("1 nDeploy:clusteraccountcreate:"+cpaneluser)
