@@ -35,7 +35,7 @@ fi
 
 nginx=${NGINX_DEBUG-/usr/sbin/nginx-debug}
 prog=`/bin/basename $nginx`
-conffile=${CONFFILE-/etc/nginx/nginx.conf}
+conffile=${CONFFILE-/etc/nginx/nginx_debug.conf}
 lockfile=${LOCKFILE-/var/lock/subsys/nginx}
 pidfile=${PIDFILE-/var/run/nginx.pid}
 SLEEPMSEC=${SLEEPMSEC-200000}

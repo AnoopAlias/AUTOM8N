@@ -1,0 +1,1 @@
+load_module "/etc/nginx/modules.debug/ngx_http_redis_module.so";
