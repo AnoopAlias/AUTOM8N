@@ -114,7 +114,7 @@ make DESTDIR=$(pwd)/tempo install
 rsync -a tempo/usr/sbin/nginx ../nginx-pkg/usr/sbin/nginx-debug
 
 #Copy resty stuff
-rsync -a tempostrip/etc/nginx/bin tempostrip/etc/nginx/luajit* tempostrip/etc/nginx/pod tempostrip/etc/nginx/site tempostrip/etc/nginx/resty* ../nginx-pkg/etc/nginx/
+rsync -a tempostrip/etc/nginx/bin tempostrip/etc/nginx/lua* tempostrip/etc/nginx/pod tempostrip/etc/nginx/site tempostrip/etc/nginx/resty* ../nginx-pkg/etc/nginx/
 
 rsync -a ../nginx-pkg-64-common/etc/nginx/fastcgi_params_geoip ../nginx-module-geoip-pkg/etc/nginx/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/pagespeed.conf ../nginx-module-pagespeed-pkg/etc/nginx/conf.d/
