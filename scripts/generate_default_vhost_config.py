@@ -5,6 +5,7 @@ import json
 import os
 import jinja2
 import codecs
+import yaml
 
 
 __author__ = "Anoop P Alias"
@@ -30,12 +31,25 @@ if os.path.isfile('/var/cpanel/ssl/cpanel/mycpanel.pem'):
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/mycpanel.pem'
 else:
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/cpanel.pem'
+if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cluster ipmap
+    cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+    cluster_data_yaml = open(cluster_config_file, 'r')
+    cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+    cluster_data_yaml.close()
+    serverlist = cluster_data_yaml_parsed.keys()
+    slaveiplist = []
+    for slaveserver in serverlist:
+        server_dict = cluster_data_yaml_parsed.get(slaveserver)
+        ipmap_dict = server_dict.get('ipmap')
+        theiplist = ipmap_dict.values()
+        slaveiplist = slaveiplist + theiplist
 # Initiate Jinja2 templateEnv
 templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
 templateEnv = jinja2.Environment(loader=templateLoader)
 templateVars = {"CPIPLIST": cpanel_ip_list,
                 "MAINIP": mainip,
-                "CPSRVDSSL": cpsrvdsslfile
+                "CPSRVDSSL": cpsrvdsslfile,
+                "SLAVEIPLIST": slaveiplist
                 }
 # Generate default_server.conf
 default_server_template = templateEnv.get_template('default_server.conf.j2')

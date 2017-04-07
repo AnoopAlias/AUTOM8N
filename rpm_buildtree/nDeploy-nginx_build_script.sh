@@ -43,7 +43,7 @@ do
 done
 mkdir -p nginx-module-naxsi-pkg/etc/nginx/naxsi.d
 
-yum --enablerepo=ndeploy -y install rpm-build libcurl-devel pcre-devel git xz-devel GeoIP-devel libbrotli-nDeploy
+yum --enablerepo=ndeploy -y install rpm-build libcurl-devel git xz-devel GeoIP-devel libmodsecurity-nDeploy
 if [ ${OSVERSION} -eq 6 ];then
   rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
   wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
@@ -205,14 +205,14 @@ sed -i "s/PASSENGER_VERSION/$PASSENGER_VERSION/g" ../nginx-module-passenger-pkg/
 rsync -a /usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/buildout ../nginx-module-passenger-pkg/usr/nginx/
 cd ../nginx-pkg
 
-fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx -d zlib -d pcre -d libcurl --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
+fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx --conflicts openresty-nDeploy --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
 rsync -a nginx-nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/${OSVERSION}/x86_64/
 
 for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity
 do
   cd ../nginx-module-${module}-pkg
   if [ ${module} == "brotli" ];then
-    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d libbrotli-nDeploy -d nginx-nDeploy --name nginx-nDeploy-module-${module} .
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d nginx-nDeploy --name nginx-nDeploy-module-${module} .
   elif [ ${module} == "modsecurity" ];then
     if [ ${OSVERSION} -gt 6 ];then
       fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx-module-${module} -d libmodsecurity-nDeploy -d nginx-nDeploy --name nginx-nDeploy-module-${module} .

@@ -35,7 +35,7 @@ do
   mkdir -p nginx-module-${module}-pkg/usr/nginx/scripts
 done
 
-yum --enablerepo=ndeploy -y install rpm-build libcurl-devel pcre-devel git xz-devel GeoIP-devel libbrotli-nDeploy
+yum --enablerepo=ndeploy -y install rpm-build libcurl-devel git xz-devel GeoIP-devel
 if [ ${OSVERSION} -eq 6 ];then
   rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
   wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
@@ -144,14 +144,14 @@ sed -i "s/PASSENGER_VERSION/$PASSENGER_VERSION/g" ../nginx-module-passenger-pkg/
 rsync -a /usr/local/rvm/gems/ruby-${MY_RUBY_VERSION}/gems/passenger-${PASSENGER_VERSION}/buildout ../nginx-module-passenger-pkg/usr/nginx/
 cd ../nginx-pkg
 
-fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${OPENRESTY_VERSION} --iteration ${OPENRESTY_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx -d zlib -d pcre -d libcurl --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name openresty-nDeploy .
+fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${OPENRESTY_VERSION} --iteration ${OPENRESTY_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx --conflicts nginx-nDeploy --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name openresty-nDeploy .
 rsync -a openresty-nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/${OSVERSION}/x86_64/
 
 for module in brotli geoip pagespeed passenger
 do
   cd ../nginx-module-${module}-pkg
   if [ ${module} == "brotli" ];then
-    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${OPENRESTY_VERSION} --iteration ${OPENRESTY_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom openresty-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts openresty-module-${module} --conflicts nginx-module-${module} -d libbrotli-nDeploy -d openresty-nDeploy --name openresty-nDeploy-module-${module} .
+    fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${OPENRESTY_VERSION} --iteration ${OPENRESTY_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom openresty-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts openresty-module-${module} --conflicts nginx-module-${module} -d openresty-nDeploy --name openresty-nDeploy-module-${module} .
   elif [ ${module} == "geoip" ];then
     fpm -s dir -t rpm -C ../nginx-module-${module}-pkg --vendor "Anoop P Alias" --version ${OPENRESTY_VERSION} --iteration ${OPENRESTY_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom openresty-${module} package" --url http://anoopalias.github.io/XtendWeb/ --conflicts openresty-module-${module} --conflicts nginx-module-${module} -d GeoIP -d openresty-nDeploy --name openresty-nDeploy-module-${module} .
   elif [ ${module} == "pagespeed" ];then
