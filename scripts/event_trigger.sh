@@ -14,7 +14,7 @@ elif [[ $2 -eq 1 ]]; then
 		exit 0
 	else
 		if [ $3 = "IN_ATTRIB" ];then
-			/usr/sbin/nginx -s reload
+			kill -USR1 $(cat /var/run/nginx.pid)
 		else
 			echo "Domain::Data::Modify ${CPANELUSER}"
 			/opt/nDeploy/scripts/generate_config.py $CPANELUSER
