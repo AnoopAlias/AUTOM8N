@@ -3,7 +3,7 @@
 
 ##Vars
 MODSEC_VERSION="3.0"
-MODSEC_RPM_ITER="1.el7"
+MODSEC_RPM_ITER="2.el7"
 
 rm -rf /opt/libmodsec ModSecurity
 yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel pcre-devel

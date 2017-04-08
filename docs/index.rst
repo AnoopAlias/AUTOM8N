@@ -3,53 +3,26 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. image:: Xtendweb_banner.jpg
+
+XtendWeb Nginx cluster control for cPanel
+============================================
+
+XtendWeb automatically generates nginx configuration for deploying your web applications in cPanel
+for secure,faster and multi-server webApplication deployment.
+
+.. tip:: Builtin Redis Full page caching for Wordpress and Drupal which are two of the most widely used CMS
+
+.. tip:: Try Clustered HA cPanel hosting at one of our partners  https://xtendweb.gnusys.net/Nginx_friendly_web_hosts.html
+
+.. tip:: Read Why you should use XtendWeb instead of CloudLinux for your high paying enterprise customers https://xtendweb.gnusys.net/Why_XtendWeb.html
 
 
-
-XtendWeb is the worlds easiest and scalable nginX deployment tool that seemlessly plugs into your
-cPanel/WHM powered server .The result - you get a faster reliable webstack and can deploy your web applications to multiple web
-servers which are DNS load-balanced .
-
-XtendWeb is free and Open Source with commercial support and customization service provided by the developers 24x7
-
-.. note:: Xtendweb does automated configuration based on cPanel user input. There is NO whm plugin simply because there is no need of it.Its all automated!
-
-Features
----------
-
-* worlds simplest nginx config wizard
-* configuration curated for high performance and incorporates nginx best practices
-* template based application configuration and support application in sub-directories
-* password protection setup by cpanel can be reused in nginx
-* cpanel user can configure nginx for their application without editing any configuration
-* Supports CentOS6 CentOS7 CloudLinux6 CloudLinux7 on x86_64 arch
-* Multiple backends - Apache HTTPD, PHP-FPM, HHVM, ColdFusion/Java, Python, Ruby on Rails, NodeJS
-* PHP-FPM multiple master setup and HHVM server run per user ( for the security conscious )
-* Supports caching in proxy and FastCGI
-* Google PageSpeed support
-* limit_req, limit_conn support
-* ModSecurity v3 ( libmodsecurity ) via ModSecurity-nginx
-* NAXSI Web Application Firewall
-* IPv6 support
-* TLS(HTTPS) support
-* HTTP/2 support
-* Brotli Compression support
-* GeoIP support
-* Fast installation, upgrade and easy uninstall available via yum/rpm.
-* High Available Webstack - csync2 config sync and unison file sync for nginX
-* High Available SMTP service - PostFix backup MX automatically configured for all domains
-* High Available Database (MariaDB/MySQL) - MySQL replication(master-master/galera) & tcp loadbalancing
-* Clustering in the application layer(csync2,unison,rsync).Easy to troubleshoot and fix errors
-* Redis powered full page cache for Wordpress and Drupal CMS
-* NAXSI Web App Firewall for Wordpress and Drupal CMS
-
-.. note:: Using Wordpress or Drupal? XtendWeb now offer full page cache and WAF for secure blazing fast websites
 
 .. toctree::
    :maxdepth: 2
    :caption: Installation & Basic Configuration
 
+   Why_XtendWeb
    installation
    migrating_from_nDeploy
    mod_remoteip

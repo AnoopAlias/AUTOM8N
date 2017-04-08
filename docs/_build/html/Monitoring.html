@@ -1,110 +1,132 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Monitoring nginx and app servers &mdash; XtendWeb nginX control v4.0</title>
-  
 
-  
-  
 
-  
-
-  
-  
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-
-  
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
-        <link rel="next" title="Managing Logs" href="Logs.html"/>
-        <link rel="prev" title="Application templates" href="Application_template.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-
+    <title>Monitoring nginx and app servers &#8212; XtendWeb nginX control v4.0</title>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.6/cerulean/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/disqus.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html" />
+    <link rel="next" title="Managing Logs" href="Logs.html" />
+    <link rel="prev" title="Application templates" href="Application_template.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-          
-            <a href="index.html" class="icon icon-home"> XtendWeb
-          
+  </head>
+  <body role="document">
 
-          
-          </a>
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><span><img src="_static/XtendWeb.png"></span>
+          XtendWeb</a>
+        <span class="navbar-text navbar-version pull-left"><b>4.0</b></span>
+      </div>
 
-          
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="Support.html">SUPPORT</a></li>
+                <li><a href="http://gnusys.net">GNUSYS</a></li>
             
             
-              <div class="version">
-                4.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-                <p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span></p>
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Documentation <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="Why_XtendWeb.html">Why you should use XtendWeb</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#here-is-why-the-idea-is-fundamentally-flawed">Here &nbsp;is why the Idea is fundamentally flawed:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#ok-i-need-scalable-hosting-so-what-are-my-options">Ok, I need scalable hosting, so what are my options?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#what-if-all-i-need-to-do-is-host-a-web-app-like-wordpress">What if all I need to do is host a web app like WordPress?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#can-you-describe-more">Can you describe more?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#as-a-webhost-how-does-this-help-my-business">As a webHost , how does this help my business?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#as-an-enterprise-user-how-does-this-help-me">As an enterprise user how does this help me?</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="migrating_from_nDeploy.html">Instructions for upgrading from nDeploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ModSecurity.html#install-modsecurity">Install ModSecurity</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Support &amp; Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Companies who have sponsored XtendWeb development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Nginx_friendly_web_hosts.html">List of webHosts that support nginX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#xtendweb-version-4-2-x-13-march-2017">XtendWeb version 4.2.x ( 13 March 2017 )</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#if-you-are-upgrading-from-a-previous-release-do-the-following">If you are upgrading from a previous release do the following</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Support.html#bug-reporting-and-project-management">BUG REPORTING AND PROJECT MANAGEMENT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Support.html#announcements">Announcements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Companies who have sponsored XtendWeb development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Project_sponsors.html#credits">CREDITS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Nginx_friendly_web_hosts.html">List of webHosts that support nginX and Clustered hosting of your webapps</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Backends Setup</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="HHVM.html#on-centos7-cloudlinux7">On CentOS7 / CloudLinux7</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#on-centos6-centos7">On CentOS6/CentOS7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#secure-php-fpm-setup">Secure php-fpm setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#where-are-my-php-logs">Where are my php logs?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#zendopcache-and-security-considerations-on-php-fpm-single-master-setup">ZendOpcache and security considerations on php-fpm single master setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#per-user-php-ini-custom-settings">Per user php.ini custom settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#high-performance-wordpress-setup-using-redis-cache-and-nginx-helper-plugin">High Performance Wordpress setup using Redis cache and nginx-helper plugin</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
@@ -113,60 +135,92 @@
 </ul>
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-fixing-of-most-errors">Automatic fixing of most errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#managing-default-server-settings">Managing default server settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-templates">Adding application templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#uninstall-the-plugin">Uninstall the plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#building-nginx-ndeploy-from-source">Building nginx-nDeploy from source</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Monitoring nginx and app servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
 <p class="caption"><span class="caption-text">XtendWeb Cluster</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="cluster_architecture.html">XtendWeb cluster architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="XtendWeb_cluster_setup.html">XtendWeb cluster setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">XtendWeb cluster upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cluster_architecture.html">XtendWeb cluster architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#software-components">Software components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#loadbalancing">LoadBalancing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#highavailability">HighAvailability</a></li>
 </ul>
-
+</li>
+<li class="toctree-l1"><a class="reference internal" href="XtendWeb_cluster_setup.html">XtendWeb cluster setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#basic-2-server-setup">Basic 2 server setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#configuring-the-rest-of-the-system-to-work-as-a-cluster">Configuring the rest of the system to work as a cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#start-the-cluster">Start the cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">XtendWeb cluster upgrade</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Upgrade_cluster.html#on-all-slaves">On All slaves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Upgrade_cluster.html#on-master">On master</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">./ <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Monitoring nginx and app servers</a></li>
+</ul>
+</ul>
+</li>
+              
             
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/Monitoring.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
           
         </div>
-      </div>
-    </nav>
+    </div>
+  </div>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">XtendWeb</a>
-      </nav>
-
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          
-
- 
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Monitoring nginx and app servers</li>
-      <li class="wy-breadcrumbs-aside">
-        
-          
-            <a href="_sources/Monitoring.txt" rel="nofollow"> View page source</a>
-          
-        
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-            
   <div class="section" id="monitoring-nginx-and-app-servers">
 <h1>Monitoring nginx and app servers<a class="headerlink" href="#monitoring-nginx-and-app-servers" title="Permalink to this headline">¶</a></h1>
 <p><strong>Monitoring nginX</strong></p>
@@ -207,72 +261,21 @@ with &#8220;/etc/init.d/ndeploy_backends start/stop&#8221;</p>
 <div data-disqus-identifier="Monitoring nginx and app servers" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 
 
-           </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="Logs.html" class="btn btn-neutral float-right" title="Managing Logs" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="Application_template.html" class="btn btn-neutral" title="Application templates" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
     </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
     <p>
-        &copy; Copyright 2016, Anoop P Alias.
-
+        &copy; Copyright 2016, Anoop P Alias.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.<br/>
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
-
 </footer>
-
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'4.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/disqus.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
-      });
-  </script>
-   
-
-</body>
+  </body>
 </html>

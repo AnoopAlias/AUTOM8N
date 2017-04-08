@@ -25,4 +25,4 @@ BUG REPORTING AND PROJECT MANAGEMENT
 
 Announcements
 --------------
-Follow https://twitter.com/gnusys for project announcements , new rpm release notifications etc
+Twitter: @gnusys
