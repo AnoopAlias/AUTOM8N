@@ -31,13 +31,13 @@ if os.path.isfile('/var/cpanel/ssl/cpanel/mycpanel.pem'):
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/mycpanel.pem'
 else:
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/cpanel.pem'
+slaveiplist = []
 if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cluster ipmap
     cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
     cluster_data_yaml = open(cluster_config_file, 'r')
     cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     cluster_data_yaml.close()
     serverlist = cluster_data_yaml_parsed.keys()
-    slaveiplist = []
     for slaveserver in serverlist:
         server_dict = cluster_data_yaml_parsed.get(slaveserver)
         ipmap_dict = server_dict.get('ipmap')

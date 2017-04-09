@@ -29,19 +29,18 @@ setup_ea4_php(){
 			service ndeploy_backends stop || systemctl stop ndeploy_backends
 			service ndeploy_backends start || systemctl start ndeploy_backends
 			chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
-
-			# Securing php-fpm with chroot setup using virtfs
-			echo -e '\e[93m Setting up chrooted php-fpm using virtfs jails by default \e[0m'
-			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1
-			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1
-			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailmountusrbinsuid value=1
-			if [ ! -d  /var/cpanel/feature_toggles ];then
-				mkdir -p /var/cpanel/feature_toggles
-			fi
-			touch  /var/cpanel/feature_toggles/apachefpmjail
-			echo -e '\e[93m SECURITY TIP ::  Please set Jailed Shell(apply to all) at WHM \e[0m'
-			echo -e '\e[93m Home »Account Functions »Manage Shell Access \e[0m'
 		done
+		# Securing php-fpm with chroot setup using virtfs
+		echo -e '\e[93m Setting up chrooted php-fpm using virtfs jails by default \e[0m'
+		/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1
+		/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1
+		/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailmountusrbinsuid value=1
+		if [ ! -d  /var/cpanel/feature_toggles ];then
+			mkdir -p /var/cpanel/feature_toggles
+		fi
+		touch  /var/cpanel/feature_toggles/apachefpmjail
+		echo -e '\e[93m SECURITY TIP ::  Please set Jailed Shell(apply to all) at WHM \e[0m'
+		echo -e '\e[93m Home »Account Functions »Manage Shell Access \e[0m'
 	}
 
 setup_remi_php(){
