@@ -31,6 +31,7 @@ chgrp nobody /var/log/nginx/modsecurity
 
 echo -e '\e[93m ########################################################################### \e[0m'
 echo -e '\e[93m #          24x7 full IT infrastruture support and monitoring              # \e[0m'
-echo -e '\e[93m #   for SME (upto 10 server) at 150 USD per month - ie,15 USD per server  # \e[0m'
+echo -e '\e[93m #             nginx tuning and migrating of your webapps                  # \e[0m'
 echo -e '\e[93m #          Subscribe at https://support.gnusys.net/order.php              # \e[0m'
+echo -e '\e[93m #                         at 4 USD/Day                                    # \e[0m'
 echo -e '\e[93m ########################################################################### \e[0m'
