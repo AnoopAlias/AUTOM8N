@@ -29,3 +29,4 @@ redirectstatus: none
 append_requesturi: disabled
 set_expire_static: disabled
 mod_security: disabled
+lua_waf: disabled

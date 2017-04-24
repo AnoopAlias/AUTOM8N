@@ -3,46 +3,35 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-
-XtendWeb Nginx cluster control for cPanel
+XtendWeb Nginx Cluster Control for cPanel
 ============================================
 
-XtendWeb automatically generates nginx configuration for deploying your web applications in cPanel
-for secure,faster and multi-server webApplication deployment.
-
-.. tip:: Builtin Redis Full page caching for Wordpress and Drupal which are two of the most widely used CMS
-
-.. tip:: Try Clustered HA cPanel hosting at one of our partners  https://xtendweb.gnusys.net/Nginx_friendly_web_hosts.html
-
-.. tip:: Read Why you should use XtendWeb instead of CloudLinux for your high paying enterprise customers https://xtendweb.gnusys.net/Why_XtendWeb.html
-
-
+... index:: XtendWeb
 
 .. toctree::
    :maxdepth: 2
-   :caption: Installation & Basic Configuration
+   :caption: XtendWeb Cluster - Installation & Basic Configuration
 
-   Why_XtendWeb
-   installation
-   migrating_from_nDeploy
+   installation_standalone
+   installation_cluster
    mod_remoteip
    brotli_compression
    http2
    ModSecurity
    Naxsi
+   ngx_lua_waf
 
 .. toctree::
    :maxdepth: 2
-   :caption: Support & Development
+   :caption: Support and Development
 
-   changelog
    Support
    Project_sponsors
-   Nginx_friendly_web_hosts
+   Partner_Webhosts
 
 .. toctree::
    :maxdepth: 2
-   :caption:  Backends Setup
+   :caption:  Application servers
 
    HHVM
    PHP
@@ -60,14 +49,6 @@ for secure,faster and multi-server webApplication deployment.
    Application_template
    Monitoring
    Logs
-
-.. toctree::
-   :maxdepth: 2
-   :caption: XtendWeb Cluster
-
-   cluster_architecture
-   XtendWeb_cluster_setup
-   Upgrade_cluster
 
 
 * :ref:`search`

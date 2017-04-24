@@ -6,6 +6,12 @@ index index.php index.html index.htm;
 #Remove PHP extension from requests
 location / {
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
+
 if (!-e $request_filename){
 rewrite ^/api/.* /api/dispatch.php?$query_string last;
 rewrite ^(.*)$ /$1.php;
@@ -20,6 +26,12 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
+
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

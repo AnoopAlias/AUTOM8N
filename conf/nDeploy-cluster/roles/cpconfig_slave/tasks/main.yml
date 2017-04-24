@@ -1,0 +1,8 @@
+---
+
+- synchronize:
+    src: /var/cpanel/cpanel.config
+    dest: /var/cpanel/cpanel.config
+
+- name: Restart cPanel service
+  shell: /usr/local/cpanel/scripts/restartsrv_cpsrvd

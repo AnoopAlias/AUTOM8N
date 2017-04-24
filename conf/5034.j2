@@ -6,6 +6,12 @@ index index.php index.html index.htm;
 # The main Bolt website
 location / {
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
+
 try_files $uri $uri/ /index.php?$query_string;
 }
 
@@ -22,6 +28,11 @@ try_files $uri $uri/ /index.php?$query_string;
 #       here to match
 location ~* /bolt/(.*)$ {
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 try_files $uri $uri/ /index.php?$query_string;
 }
@@ -29,6 +40,11 @@ try_files $uri $uri/ /index.php?$query_string;
 # Backend async routes
 location ~* /async/(.*)$ {
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 try_files $uri $uri/ /index.php?$query_string;
 }

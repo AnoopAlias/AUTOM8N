@@ -14,6 +14,11 @@ deny all;
 
 location / {
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 # The following 2 rules are only needed with webfinger
 rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
@@ -31,6 +36,11 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 
 location ~ \.php(?:$|/) {
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 fastcgi_split_path_info ^(.+\.php)(/.+)$;
 include /etc/nginx/fastcgi_params*;

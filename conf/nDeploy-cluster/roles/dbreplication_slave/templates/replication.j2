@@ -1,0 +1,2 @@
+CHANGE MASTER TO MASTER_HOST='{{ hostvars[groups['ndeploymaster'][0]]['ansible_eth0']['ipv4']['address'] }}', MASTER_USE_GTID=slave_pos, MASTER_USER='maxscale',MASTER_PASSWORD={{ MYSQLPASS }}, MASTER_SSL=1, MASTER_PORT=13306;
+START SLAVE;

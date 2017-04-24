@@ -50,6 +50,12 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
+
 #If request method is POST we add a _mcnc cookie
 if ($requestnocache = "1") {
 add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
@@ -93,6 +99,12 @@ include /etc/nginx/naxsi.d/drupal.rules;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
+
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

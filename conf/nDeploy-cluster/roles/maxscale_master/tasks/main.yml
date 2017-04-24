@@ -1,0 +1,36 @@
+---
+
+- name: check if maxscale proxy is setup
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE
+  register: maxscale
+
+- name: Setup MaxScale
+  template:
+    src: maxscale.cnf.j2
+    dest: /etc/maxscale.cnf
+  when:
+    - maxscale.stat.exists == false
+
+- name: Start MaxScale
+  service:
+    name: maxscale
+    state: started
+
+- name: Create mysql.sock
+  file:
+    src: /tmp/maxscale_mysql.sock
+    dest: /var/lib/mysql/mysql.sock
+    state: link
+  when:  maxscale.stat.exists == false
+
+- name: Create mysql.sock in tmp
+  file:
+    src: /tmp/maxscale_mysql.sock
+    dest: /tmp/mysql.sock
+    state: link
+  when:  maxscale.stat.exists == false
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch

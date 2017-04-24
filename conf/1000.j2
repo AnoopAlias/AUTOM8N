@@ -28,6 +28,12 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
+
 access_log  off;
 proxy_send_timeout   90;
 proxy_read_timeout   90;

@@ -82,4 +82,5 @@ For a subdirectory template; you need to include the following for some settings
   {% endif %}
 
 
-Thats it! .
+Templates are nginx configuration that you specify inside the server context. Apart from the few additional Jinja2 template logic for UI options ,it is nginx configuration
+that you typically use to configure a vhost. Templates as the name suggest allows reuseability.

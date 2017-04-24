@@ -4,10 +4,7 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 
 .. tip:: Ensure your cPanel version displayed in WHM is 60 or higher
 
-
-.. tip:: If you are migrating from previous versions of nDeploy,please read the migration doc first
-
-.. tip:: If you see redirect loop error post installation, turn off ssl_offload feature in XtendWeb server settings
+.. tip:: CentOS7/CloudLinux7 is recommended
 
 1. Install EPEL repo
 ::

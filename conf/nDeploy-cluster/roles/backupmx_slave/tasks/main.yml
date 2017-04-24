@@ -11,7 +11,20 @@
   yum: name=postfix state=present
 
 - name: Setup Postfix configuration
-  shell: /opt/nDeploy/scripts/postfix_backupmx_setup.sh
+  shell: "{{ item }}"
+  with_items:
+    - postconf -e "smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination"
+    - postconf -e "relay_recipient_maps ="
+    - postconf -e "relay_domains = hash:/etc/postfix/relaydomains"
+    - postconf -e "inet_interfaces = all"
+    - postconf -e "smtp_tls_security_level = encrypt"
+    - postconf -e "relayhost = [{{ hostvars[groups['ndeploymaster'][0]]['ansible_nodename'] }}]:587"
+    - postconf -e "smtpd_tls_security_level = may"
+    - postconf -e "smtpd_tls_key_file = /var/cpanel/ssl/exim/exim.key"
+    - postconf -e "smtpd_tls_cert_file = /var/cpanel/ssl/exim/exim.crt"
+    - postconf -e "smtpd_tls_loglevel = 1"
+    - postconf -e "smtpd_tls_session_cache_timeout = 3600s"
+    - postconf -e "tls_random_source = dev:/dev/urandom"
 
 - name: Restart Postfix server
   service: name=postfix enabled=yes state=restarted

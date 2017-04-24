@@ -1,0 +1,69 @@
+---
+
+- name: check if Mysql replication is setup
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
+  register: mysqlsetup
+
+- name: create the mysql-ssl directory
+  file:
+    path: /etc/mysql-ssl
+    state: directory
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Secure mysql
+  template:
+    src: genssl.j2
+    dest: /root/xtendweb_mysql_secure.sh
+    mode: 755
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Generate certs
+  shell: /root/xtendweb_mysql_secure.sh
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Setup my.cnf
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Update socket path in /root/.my.cnf
+  ini_file:
+    path: /root/.my.cnf
+    section: client
+    option: socket
+    value: /var/lib/mysql/mysql_original.sock
+    backup: yes
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Restart MariaDB server
+  service: name=mariadb enabled=yes state=restarted
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Generate mysql grants
+  template:
+    src: mysqlgrants.j2
+    dest: /root/xtendweb_mysql_grants.sql
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Setup mysql grants
+  shell: mysql < /root/xtendweb_mysql_grants.sql
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Dump all databases
+  mysql_db:
+    state: dump
+    name: all
+    target: /root/xtendweb_mysql_all.sql
+    single_transaction: True
+  when:
+    - mysqlsetup.stat.exists == false

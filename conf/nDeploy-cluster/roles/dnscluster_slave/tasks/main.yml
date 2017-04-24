@@ -1,0 +1,27 @@
+---
+
+- name: Setup cluster configuration on slaves
+  template:
+    src: cluster.j2
+    dest: /root/xtendweb_{{ ansible_default_ipv4['address'] }}
+
+- file:
+    path: /root/xtendweb_{{ ansible_default_ipv4['address'] }}
+    mode: 0600
+
+- name: Setup cluster state on slaves
+  template:
+    src: dnsstate.j2
+    dest: /root/xtendweb_{{ ansible_default_ipv4['address'] }}-dnsrole
+
+- name: Fetch the cluster config to master
+  fetch:
+    src: /root/xtendweb_{{ ansible_default_ipv4['address'] }}
+    dest: /var/cpanel/cluster/root/config/{{ ansible_default_ipv4['address'] }}
+    flat: yes
+
+- name: Fetch the cluster config role to master
+  fetch:
+    src: /root/xtendweb_{{ ansible_default_ipv4['address'] }}-dnsrole
+    dest: /var/cpanel/cluster/root/config/{{ ansible_default_ipv4['address'] }}-dnsrole
+    flat: yes

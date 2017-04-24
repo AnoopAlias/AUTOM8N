@@ -28,3 +28,9 @@ if [ ! -d /var/log/nginx/modsecurity ];then
 fi
 chmod 770 /var/log/nginx/modsecurity
 chgrp nobody /var/log/nginx/modsecurity
+
+echo -e '\e[93m ########################################################################### \e[0m'
+echo -e '\e[93m #          24x7 full IT infrastruture support and monitoring              # \e[0m'
+echo -e '\e[93m #   for SME (upto 10 server) at 150 USD per month - ie,15 USD per server  # \e[0m'
+echo -e '\e[93m #          Subscribe at https://support.gnusys.net/order.php              # \e[0m'
+echo -e '\e[93m ########################################################################### \e[0m'

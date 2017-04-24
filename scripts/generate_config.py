@@ -308,6 +308,10 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     else:
         naxsi = 'disabled'
         naxsi_whitelist = 'none'
+    if os.path.isfile('/etc/nginx/conf.auto/luarestywaf.conf'):
+        lua_waf = yaml_parsed_domain_data.get('lua_waf', 'disabled')
+    else:
+        lua_waf = 'disabled'
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
         pagespeed = yaml_parsed_domain_data.get('pagespeed', 'disabled')
         pagespeed_filter = yaml_parsed_domain_data.get('pagespeed_filter', 'CoreFilters')
@@ -410,7 +414,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                     "REDIRECTSTATUS": redirectstatus,
                     "REDIRECT_URL": redirect_url,
                     "APPEND_REQUESTURI": append_requesturi,
-                    "DOSMITIGATE": dos_mitigate
+                    "DOSMITIGATE": dos_mitigate,
+                    "LUAWAF": lua_waf
                     }
     generated_config = server_template.render(templateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
@@ -472,7 +477,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                        "REDIRECTSTATUS": redirectstatus,
                        "REDIRECT_URL": redirect_url,
                        "APPEND_REQUESTURI": append_requesturi,
-                       "PATHTOPYTHON": backend_path
+                       "PATHTOPYTHON": backend_path,
+                       "LUAWAF": lua_waf
                        }
     generated_app_config = app_template.render(apptemplateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
@@ -543,7 +549,8 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                                      "REDIRECT_URL": subdir_redirect_url,
                                      "REDIRECTSTATUS": subdir_redirectstatus,
                                      "APPEND_REQUESTURI": subdir_append_requesturi,
-                                     "PATHTOPYTHON": backend_path
+                                     "PATHTOPYTHON": backend_path,
+                                     "LUAWAF": lua_waf
                                      }
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:

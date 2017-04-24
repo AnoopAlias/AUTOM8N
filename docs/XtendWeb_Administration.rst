@@ -102,12 +102,6 @@ that automatic switching should use.
 On cpanel servers you can safely use the same version as the default installed PHP
 as most of your domains will be running that version without issues
 
-A very IMPORTANT thing to note here is that auto_config.py is doing an educated guess work
-and determining the application that is installed .
-It MAY NOT! be always accurate . The administrator must be aware of this .
-Of course, any change made by the auto_config can be reverted by the end user
-or the admin from the cPanel plugin UI.
-
 Adding application templates
 --------------------------------------------
 Application templates are a way of extending the plugin with dealing with more web applications and user specific
@@ -171,6 +165,25 @@ The upgrade must be done manually by running the following commands
   #For upgrading PHP application server(additional packages are to upgraded via yum)
   /opt/nDeploy/scripts/easy_php_setup.sh
 
+XtendWeb cluster upgrade
+----------------------------
+
+On All slaves
+-------------
+
+::
+
+  yum --enablerepo=ndeploy upgrade
+
+On master
+---------
+
+::
+
+  yum --enablerepo=ndeploy upgrade
+  cd /opt/nDeploy/conf/nDeploy-cluster
+  ansible-playbook -i ./hosts cluster.yml
+
 
 Migrating Xtendweb settings
 --------------------------------
@@ -194,34 +207,6 @@ Uninstall the plugin
 
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh disable
   yum remove nginx-nDeploy nDeploy
-
-Building nginx-nDeploy from source
------------------------------------
-
-XtendWeb is a collection of scripts and contains no binary file.
-nginx-nDeploy is distributed as a binary application .
-
-While using the XtendWeb RPM repository is the easiest and fastest way to get XtendWeb on your server . You may sometimes wish to compile your own RPM's
-
-The reason why one may wish to do this is
-
-1. Add /extend nginX with more plugins
-2. If you don't trust the nginX binary compiled on our server.
-3. You notice an error and wish to debug nginX . https://www.nginx.com/resources/wiki/start/topics/tutorials/debugging/ , which requires that you compile Nginx with the –with-debug flag .
-4. For the fun (and knowledge) of doing it
-
-The instructions for creating your own nginX rpms are listed below. Run the following on your cPanel server
-::
-
-  git clone https://github.com/AnoopAlias/XtendWeb.git
-  cd XtendWeb/rpm_buildtree/
-  #Open nDeploy-nginx_build_script.sh in a text editor
-  #The line starting with ./configure --prefix=/etc/nginx
-  #is what you have to modify to add or remove configure arguments
-  # comment out the line starting with rsync -av nginx-nDeploy-*
-  root@cpanel [~/nDeploy/rpm_buildtree]# ./nDeploy-nginx_build_script.sh $OSVERSION where OSVERSION=6/7
-
-  It will take some time to build . Once this is complete you will have the nginx-nDeploy rpm inside nginx-pkg- folder . which you can install using rpm -Uvh command
 
 
 .. disqus::

@@ -1,0 +1,79 @@
+---
+
+- name: check if Mysql replication is setup
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
+  register: mysqlsetup
+
+- name: Remove MySQL rpm
+  yum:
+    name: MySQL*
+    state: absent
+
+- name: Install MariaDB rpm
+  yum:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - MariaDB-devel
+    - MariaDB-common
+    - MariaDB-shared
+    - MariaDB-server
+    - MariaDB-client
+
+- name: Restart MariaDB server
+  service: name=mariadb enabled=yes state=started
+
+- name: Copy database dump
+  copy:
+    src: /root/xtendweb_mysql_all.sql
+    dest: /root/xtendweb_mysql_all.sql
+  when:  mysqlsetup.stat.exists == false
+
+- name: create the mysql-ssl directory
+  file:
+    path: /etc/mysql-ssl
+    state: directory
+  when:
+    - mysqlsetup.stat.exists == false
+
+- synchronize:
+    src: /etc/mysql-ssl
+    dest: /etc/
+  when:  mysqlsetup.stat.exists == false
+
+- name: Setup my.cnf
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Restart MariaDB server
+  service: name=mariadb enabled=yes state=restarted
+
+- name: Update socket path in /root/.my.cnf
+  ini_file:
+    path: /root/.my.cnf
+    section: client
+    option: socket
+    value: /var/lib/mysql/mysql_original.sock
+    backup: yes
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Import mysqldump from master
+  mysql_db:
+    state: import
+    name: all
+    target: /root/xtendweb_mysql_all.sql
+  when:  mysqlsetup.stat.exists == false
+
+- name: Copy .my.cnf
+  copy:
+    src: /root/.my.cnf
+    dest: /root/.my.cnf
+  when:  mysqlsetup.stat.exists == false
+
+- name: Restart MariaDB server
+  service: name=mariadb enabled=yes state=restarted

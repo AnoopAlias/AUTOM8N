@@ -102,7 +102,8 @@ if form.getvalue('domain'):
         naxsi = yaml_parsed_profileyaml.get('naxsi', 'disabled')
         naxsi_mode = yaml_parsed_profileyaml.get('naxsi_mode', 'learn')
         naxsi_whitelist = yaml_parsed_profileyaml.get('naxsi_whitelist', 'none')
-        mod_security = yaml_parsed_profileyaml.get('mod_security', 'none')
+        mod_security = yaml_parsed_profileyaml.get('mod_security', 'disabled')
+        lua_waf = yaml_parsed_profileyaml.get('lua_waf', 'disabled')
         auth_basic = yaml_parsed_profileyaml.get('auth_basic', 'disabled')
         set_expire_static = yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
         # get the human friendly name of the app template
@@ -227,6 +228,24 @@ if form.getvalue('domain'):
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
+        # lua_waf
+        print('<ul class="list-group"><li class="list-group-item">')
+        print('<div class="row">')
+        lua_waf_hint = "OpenResty LUA WAF"
+        if lua_waf == 'enabled':
+            print_green('lua_waf', lua_waf_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="lua_waf" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="lua_waf" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red('lua_waf', lua_waf_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="lua_waf" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="lua_waf" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
         print('</li>')

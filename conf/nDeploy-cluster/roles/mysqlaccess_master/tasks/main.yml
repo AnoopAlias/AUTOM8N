@@ -1,0 +1,6 @@
+---
+
+- name: Setup mysqlaccess configuration on master
+  template:
+    src: mysqlaccesshosts.j2
+    dest: /var/cpanel/mysqlaccesshosts

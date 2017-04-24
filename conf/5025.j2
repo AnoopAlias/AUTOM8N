@@ -13,6 +13,11 @@ error_page 404 403 = /errors/404.php;
 # PHP entry point for setup application
 location ~* ^/setup($|/) {
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 root $MAGE_ROOT;
 location ~ ^/setup/index.php {
@@ -34,6 +39,11 @@ add_header X-Frame-Options "SAMEORIGIN";
 # PHP entry point for update application
 location ~* ^/update($|/) {
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 root $MAGE_ROOT;
 location ~ ^/update/index.php {
@@ -54,6 +64,12 @@ add_header X-Frame-Options "SAMEORIGIN";
 
 
 location / {
+
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 try_files $uri $uri/ /index.php$is_args$args;
 }
@@ -129,6 +145,12 @@ deny all;
 
 # PHP entry point for main application
 location ~ (index|get|static|report|404|503)\.php$ {
+
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

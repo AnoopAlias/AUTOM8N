@@ -185,5 +185,11 @@ if [ ! -L /opt/nDeploy/scripts/easy_passenger_setup.sh ];then
   ln -s /usr/nginx/scripts/nginx-passenger-setup.sh /opt/nDeploy/scripts/easy_passenger_setup.sh
 fi
 
-echo -e '\e[93m Installing nDeploy plugin in cPanel \e[0m'
+echo -e '\e[93m Installing << XtendWeb >> plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
+
+echo -e '\e[93m ########################################################################### \e[0m'
+echo -e '\e[93m #          24x7 full IT infrastruture support and monitoring              # \e[0m'
+echo -e '\e[93m #   for SME (upto 10 server) at 150 USD per month - ie,15 USD per server  # \e[0m'
+echo -e '\e[93m #          Subscribe at https://support.gnusys.net/order.php              # \e[0m'
+echo -e '\e[93m ########################################################################### \e[0m'

@@ -3,24 +3,116 @@
   hosts: ndeployslaves
   tasks: []
 
-- name: Setup nDeploy cluster on master cPanel server
+- name: Setup XtendWeb cluster on master cPanel server
   hosts: ndeploymaster
   connection: local
   roles:
     - install_master
     - csync2_master
     - unison_master
+    - dnszone_master
+    - mysqlaccess_master
+    - clusterdirs_master
 
-- name: Setup nDeploy cluster on slaves
+- name: Setup XtendWeb cluster on slaves
   hosts: ndeployslaves
   roles:
     - install_slave
     - csync2_slave
     - services_slave
     - domlog_rotate_slave
-    - backupmx_slave
+    - copyrepos_slave
+    - mkaccesshash_slave
+
+- name: Setup DNS cluster config on slaves
+  hosts: ndeployslaves
+  vars:
+     accesshash: "{{ lookup('file', '/root/xtendweb_accesshash_temp_{{ ansible_nodename }}') }}"
+  roles:
+    - dnscluster_slave
 
 - name: setup csync2 service on master
   hosts: ndeploymaster
   roles:
     - services_master
+
+- name: MariaDB setup on master
+  hosts: ndeploymaster
+  vars:
+    MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
+  roles:
+    - mariadb_master
+
+- name: MariaDB setup on slave
+  hosts: ndeploydbslave
+  vars:
+    MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
+  roles:
+    - mariadb_slave
+
+- name: Start MySQL replication on master
+  hosts: ndeploymaster
+  vars:
+    MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
+  roles:
+    - dbreplication_master
+
+- name: Start MySQL replication on slave
+  hosts: ndeploydbslave
+  vars:
+    MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
+  roles:
+    - dbreplication_slave
+
+- name: MaxScale setup init on master
+  hosts: ndeploymaster
+  vars:
+    MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
+  roles:
+    - maxscale_initmaster
+
+- name: MaxScale setup on master
+  hosts: ndeploymaster
+  vars:
+    MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
+  roles:
+    - maxscale_master
+
+- name: MaxScale setup on DB slave
+  hosts: ndeploydbslave
+  vars:
+    MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
+  roles:
+    - maxscale_dbslave
+
+- name: MaxScale setup on slave
+  hosts: ndeployslaves
+  vars:
+    MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
+  roles:
+    - maxscale_slave
+
+- name: BackupMX setup on master
+  hosts: ndeploymaster
+  roles:
+    - backupmx_master
+
+- name: BackupMX setup on master
+  hosts: ndeployslaves
+  roles:
+    - backupmx_slave
+
+- name: Sync cPanel config
+  hosts: ndeployslaves
+  roles:
+    - cpconfig_slave
+
+- name: Remove temp files from master
+  hosts: ndeploymaster
+  roles:
+    - cleanup_master
+
+- name: Remove temp files from slaves
+  hosts: ndeployslaves
+  roles:
+    - cleanup_slave

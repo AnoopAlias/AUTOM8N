@@ -27,6 +27,12 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
+
 
 #If request method is POST we add a _mcnc cookie
 if ($requestnocache = "1") {

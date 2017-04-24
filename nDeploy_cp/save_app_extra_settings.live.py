@@ -136,6 +136,21 @@ if form.getvalue('thesubdir'):
                 print('</body>')
                 print('</html>')
                 sys.exit(0)
+            # lua_waf
+            if 'lua_waf' in form.keys():
+                lua_waf = form.getvalue('lua_waf')
+                the_subdir_dict['lua_waf'] = lua_waf
+            else:
+                print('ERROR: Forbidden::lua_waf')
+                print('</div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</body>')
+                print('</html>')
+                sys.exit(0)
             # naxsi
             if 'naxsi' in form.keys():
                 naxsi = form.getvalue('naxsi')
@@ -282,6 +297,21 @@ else:
         yaml_parsed_profileyaml['mod_security'] = mod_security
     else:
         print('ERROR: Forbidden::mod_security')
+        print('</div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</body>')
+        print('</html>')
+        sys.exit(0)
+    # lua_waf
+    if 'lua_waf' in form.keys():
+        lua_waf = form.getvalue('lua_waf')
+        yaml_parsed_profileyaml['lua_waf'] = lua_waf
+    else:
+        print('ERROR: Forbidden::lua_waf')
         print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
         print('</div>')

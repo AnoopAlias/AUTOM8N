@@ -14,6 +14,12 @@ rewrite /admin$ $scheme://$host$uri/ permanent;
 
 location / {
 
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
+
 # This try_files directive is used to enable SEO-friendly URLs for OpenCart.
 try_files $uri @opencart;
 }
@@ -32,6 +38,12 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
+
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

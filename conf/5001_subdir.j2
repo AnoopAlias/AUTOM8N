@@ -13,6 +13,7 @@ return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
 
+index index.php index.html index.htm;
 
 try_files $uri $uri/ /{{ SUBDIR }}/index.php?q=$uri&$args;
 
@@ -38,6 +39,12 @@ include /etc/nginx/naxsi.d/drupal.rules;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ SUBDIRAPPS[SUBDIR] }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
+
+# Include LUAWAF settings
+{% if LUAWAF == 'enabled' %}
+include /etc/nginx/conf.d/luarestywaf_exec.conf;
+{% endif %}
+# End Include LUAWAF settings
 
 
 {% if SET_EXPIRE_STATIC == 'enabled' %}
