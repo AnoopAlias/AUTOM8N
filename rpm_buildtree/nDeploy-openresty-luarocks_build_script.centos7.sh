@@ -12,7 +12,7 @@ tar -xzf luarocks-${LUAROCKS_VERSION}.tar.gz
 cd luarocks-${LUAROCKS_VERSION}
 ./configure --prefix=/etc/nginx/luajit --with-lua=/etc/nginx/luajit --lua-suffix=jit --with-lua-include=/etc/nginx/luajit/include/luajit-2.1
 make build
-make DESTDIR=./tempo install
+make DESTDIR=$(pwd)/tempo install
 cd tempo
 fpm -s dir -t rpm -C ../tempo --vendor "Anoop P Alias" --version ${LUAROCKS_VERSION} --iteration ${LUAROCKS_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom luarocks package" --url http://luarocks.github.io/ -d openresty-nDeploy --name openresty-nDeploy-luarocks .
 rsync -av openresty-nDeploy-luarocks* root@gnusys.net:/usr/share/nginx/html/CentOS/7/x86_64/
