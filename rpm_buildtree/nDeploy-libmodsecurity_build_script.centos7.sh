@@ -14,7 +14,7 @@ sh build.sh
 git submodule init
 git submodule update
 ./configure --prefix=/opt/nDeploy-libmodsecurity
-make DESTDIR=./tempo install
+make DESTDIR=$(pwd)/tempo install
 cd tempo
 
 fpm -s dir -t rpm -C ../tempo --vendor "Anoop P Alias" --version ${MODSEC_VERSION} --iteration ${MODSEC_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom libmodsecurity package" --url https://github.com/SpiderLabs/ModSecurity -d libcurl -d GeoIP -d yajl -d libxml2 --name libmodsecurity-nDeploy .
