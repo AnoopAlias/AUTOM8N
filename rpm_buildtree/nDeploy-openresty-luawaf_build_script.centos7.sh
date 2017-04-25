@@ -21,6 +21,8 @@ install -m 644 lib/resty/waf/*.lua tempo/etc/nginx/site/lualib/resty/waf/
 install -m 644 lib/resty/waf/storage/*.lua tempo/etc/nginx/site/lualib/resty/waf/storage/
 install -m 644 lib/*.so tempo/etc/nginx/site/lualib
 install -m 644 rules/*.json tempo/etc/nginx/site/lualib/rules/
+install -d tempo/etc/nginx/conf.auto
+install -d tempo/etc/nginx/conf.d
 install -m 644 ../lua-resty-waf/luarestywaf.conf tempo/etc/nginx/conf.auto/
 install -m 644 ../lua-resty-waf/luarestywaf_exec.conf tempo/etc/nginx/conf.d/
 cd tempo

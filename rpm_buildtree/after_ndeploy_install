@@ -189,7 +189,7 @@ echo -e '\e[93m Installing << XtendWeb >> plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
 
 echo -e '\e[93m ########################################################################### \e[0m'
-echo -e '\e[93m #         24x7 monitoring and management for XtendWeb HA cluster          # \e[0m'
+echo -e '\e[93m #         24x7 monitoring and support for XtendWeb HA cluster             # \e[0m'
 echo -e '\e[93m #          Subscribe at https://support.gnusys.net/order.php              # \e[0m'
-echo -e '\e[93m #          Full infrastructure support at 4 USD per day                   # \e[0m'
+echo -e '\e[93m #         Consulting | Monitoring | Support for your entire IT infra      # \e[0m'
 echo -e '\e[93m ########################################################################### \e[0m'
