@@ -6,6 +6,9 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 
 .. tip:: CentOS7/CloudLinux7 is recommended
 
+.. tip:: If you see "ERROR! Unexpected Exception: 'module' object has no attribute 'HAVE_DECL_MPZ_POWM_SEC'" on centos6 do
+         yum remove python-crypto && pip install ansible ( Ref: https://github.com/ansible/ansible/issues/276 )
+
 1. Install EPEL repo
 ::
 

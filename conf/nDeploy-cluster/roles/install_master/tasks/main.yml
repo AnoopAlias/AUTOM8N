@@ -12,6 +12,7 @@
    - csync2-nDeploy
    - unison-nDeploy
    - python-pip
+   - redhat-lsb-core
 
 - name: Install MySQL-python
   pip:

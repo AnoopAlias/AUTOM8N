@@ -19,7 +19,7 @@ serv_weight=0
 #slave
 [server2]
 type=server
-address={{ hostvars[groups['ndeploymaster'][0]]['ansible_eth0']['ipv4']['address'] }}
+address={{ hostvars[groups['ndeploymaster'][0]]['ansible_default_ipv4']['address'] }}
 port=13306
 protocol=MySQLBackend
 ssl=required

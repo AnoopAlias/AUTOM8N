@@ -1,0 +1,9 @@
+---
+
+- name: Setup ipmap script
+  template:
+    src: ipmap.j2
+    dest: /root/xtendweb_ipmap
+
+- name: Setup ipmap
+  shell: bash /root/xtendweb_ipmap

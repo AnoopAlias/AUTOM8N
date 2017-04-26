@@ -107,6 +107,11 @@
   roles:
     - cpconfig_slave
 
+- name: Setup ipmap
+  hosts: ndeploymaster
+  roles:
+    - ipmap_master
+
 - name: Remove temp files from master
   hosts: ndeploymaster
   roles:

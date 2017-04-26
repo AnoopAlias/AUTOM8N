@@ -18,6 +18,7 @@
    - "{{ webserver }}-nDeploy"
    - nDeploy-cluster-slave
    - python-pip
+   - redhat-lsb-core
 
 - name: Install MySQL-python
   pip:

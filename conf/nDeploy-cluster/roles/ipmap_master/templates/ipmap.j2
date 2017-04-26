@@ -1,0 +1,3 @@
+{% for host in groups['ndeployslaves'] %}
+/opt/nDeploy/scripts/update_cluster_ipmap.py {{ hostvars[host]['ansible_nodename'] }} {{ ansible_default_ipv4.address }} {{ hostvars[host]['ansible_default_ipv4']['address'] }}
+{% endfor %}

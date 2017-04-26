@@ -15,7 +15,16 @@
 - name: Start MaxScale
   service:
     name: maxscale
+    enabled: yes
     state: started
+  when:
+    - ansible_lsb.major_release|int >= 7
+
+- name: Start maxscale
+  shell: service maxscale restart && chkconfig maxscale on
+  when:
+    - ansible_lsb.major_release|int < 7
+
 
 - name: Create mysql.sock
   file:

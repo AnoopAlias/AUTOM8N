@@ -10,7 +10,7 @@
     name: https://downloads.mariadb.com/MaxScale/2.0.5/rhel/7/x86_64/maxscale-2.0.5-1.rhel.7.x86_64.rpm
     state: present
   when:
-    - ansible_distribution_version > '6'
+    - ansible_lsb.major_release|int >= 7
     - maxscale.stat.exists == false
 
 
@@ -19,7 +19,7 @@
     name: https://downloads.mariadb.com/MaxScale/2.0.5/rhel/6/x86_64/maxscale-2.0.5-1.rhel.6.x86_64.rpm
     state: present
   when:
-    - ansible_distribution_version < '7'
+    - ansible_lsb.major_release|int < 7
     - maxscale.stat.exists == false
 
 - synchronize:
@@ -43,7 +43,15 @@
 - name: Start MaxScale
   service:
     name: maxscale
+    enabled: yes
     state: started
+  when:
+    - ansible_lsb.major_release|int >= 7
+
+- name: Start maxscale
+  shell: service maxscale restart && chkconfig maxscale on
+  when:
+    - ansible_lsb.major_release|int < 7
 
 - name: Create mysql.sock
   file:

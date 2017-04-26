@@ -5,7 +5,7 @@
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
   register: mysqlsetup
 
-- name: Disable chkservd monitoring of mysql-ssl
+- name: Disable chkservd monitoring of mysql
   lineinfile:
     path: /etc/chkserv.d/chkservd.conf
     state: absent
