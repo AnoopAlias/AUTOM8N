@@ -1,6 +1,6 @@
 ---
 
-- name: check if Mysql replication is setup
+- name: check if Mysql is setup
   stat:
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
   register: mysqlsetup
@@ -13,6 +13,7 @@
 
 - name: Restart chkservd
   shell: /scripts/restartsrv_chkservd
+  ignore_errors: yes
 
 - name: create the mysql-ssl directory
   file:
@@ -76,3 +77,7 @@
     single_transaction: True
   when:
     - mysqlsetup.stat.exists == false
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch

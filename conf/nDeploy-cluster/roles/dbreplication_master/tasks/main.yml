@@ -2,8 +2,8 @@
 
 - name: check if Mysql replication is setup
   stat:
-    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
-  register: mysqlsetup
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_REPLICATION_LOCK_DO_NOT_REMOVE
+  register: mysqlreplsetup
 
 - name: generate start replication query
   template:
@@ -13,8 +13,8 @@
 - name: Setup mysql replication
   shell: mysql < /root/xtendweb_mysql_replication.sql
   when:
-    - mysqlsetup.stat.exists == false
+    - mysqlreplsetup.stat.exists == false
 
 - file:
-    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_REPLICATION_LOCK_DO_NOT_REMOVE
     state: touch
