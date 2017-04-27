@@ -2,12 +2,10 @@ Installation
 ============
 XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed
 
-.. tip:: Ensure your cPanel version displayed in WHM is 60 or higher
+.. tip:: XtendWeb can use either Nginx or OpenResty as the webserver
 
 .. tip:: CentOS7/CloudLinux7 is recommended
 
-.. tip:: If you see "ERROR! Unexpected Exception: 'module' object has no attribute 'HAVE_DECL_MPZ_POWM_SEC'" on centos6 do
-         yum remove python-crypto && pip install ansible ( Ref: https://github.com/ansible/ansible/issues/276 )
 
 1. Install EPEL repo
 ::
@@ -20,10 +18,15 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   yum -y install https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-5.noarch.rpm
 
 
-3. Install XtendWeb plugin and nginx. Be patient as this may take several minutes to complete.
+3. Install XtendWeb plugin and nginx or openresty . Be patient as this may take several minutes to complete.
 ::
 
-  yum --enablerepo=ndeploy install nginx-nDeploy nDeploy
+  yum --enablerepo=ndeploy install nginx-nDeploy nDeploy # For nginx as webserver
+     OR
+  yum --enablerepo=ndeploy install openresty-nDeploy nDeploy # For openresty as webserver
+  # OpenResty support embedding lua code.Openresty does not include mod_security and naxsi modules (use OpenSSL)
+  # Nginx include naxsi and mod_security waf ( use LibreSSL instead of OpenSSL )
+  # You can use any of the webserver in an interchangeable way and swap anytime
 
 
 4.1. Install PHP-FPM Application server
@@ -36,7 +39,9 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 4.2. Install Phusion Passenger ( only if you need support for RUBY/PYTHON/NODEJS )
 ::
 
-  yum --enablerepo=ndeploy install nginx-nDeploy-module-passenger
+  yum --enablerepo=ndeploy install nginx-nDeploy-module-passenger # Nginx
+  OR
+  yum --enablerepo=ndeploy install openresty-nDeploy-module-passenger # Openresty
   #Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.
   /opt/nDeploy/scripts/easy_passenger_setup.sh
   # Ruby will be compiled and installed to /usr/local/rvm
@@ -71,17 +76,22 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   #Note that each module increases the nginx size and processing requirements
   #So install only required functionality .
   (pagespeed)   yum --enablerepo=ndeploy install nginx-nDeploy-module-pagespeed
+  (pagespeed)   yum --enablerepo=ndeploy install openresty-nDeploy-module-pagespeed  # OpenResty
   (brotli)      yum --enablerepo=ndeploy install nginx-nDeploy-module-brotli
+  (brotli)      yum --enablerepo=ndeploy install openresty-nDeploy-module-brotli  # OpenResty
   (geoip)       yum --enablerepo=ndeploy install nginx-nDeploy-module-geoip
+  (geoip)       yum --enablerepo=ndeploy install openresty-nDeploy-module-geoip # OpenResty
   (naxsi)       yum --enablerepo=ndeploy install nginx-nDeploy-module-naxsi
   (redis)       yum --enablerepo=ndeploy install nginx-nDeploy-module-redis
   (redis2)      yum --enablerepo=ndeploy install nginx-nDeploy-module-redis2
   (set_misc)    yum --enablerepo=ndeploy install nginx-nDeploy-module-set_misc
   (srcache)     yum --enablerepo=ndeploy install nginx-nDeploy-module-srcache_filter
   (echo)        yum --enablerepo=ndeploy install nginx-nDeploy-module-echo
-  # Following modules are installed and loaded by default but can be disabled
+  # Following modules are installed and loaded by default in nginx but can be disabled
   (headers_more)
   (ndk) Nginx Development ToolKit
+  # Following modules are installed and loaded by default in openresty
+  https://openresty.org/en/components.html
 
 .. tip:: There are no additonal configurations required for the loadable modules. Users can control the functionality from XtendWeb UI
 

@@ -169,14 +169,13 @@ XtendWeb cluster upgrade
 ----------------------------
 
 On All slaves
--------------
 
 ::
 
   yum --enablerepo=ndeploy upgrade
 
 On master
----------
+
 
 ::
 

@@ -6,15 +6,14 @@
 XtendWeb Nginx Cluster Control for cPanel
 ============================================
 
-... index:: XtendWeb
+.. index:: XtendWeb
 
 .. toctree::
    :maxdepth: 2
-   :caption: Installation & Basic Configuration
+   :caption: XtendWeb Cluster - Installation & Basic Configuration
 
-   Why_XtendWeb
-   installation
-   migrating_from_nDeploy
+   installation_standalone
+   installation_cluster
    mod_remoteip
    brotli_compression
    http2
@@ -23,16 +22,15 @@ XtendWeb Nginx Cluster Control for cPanel
 
 .. toctree::
    :maxdepth: 2
-   :caption: Support & Development
+   :caption: Support and Development
 
-   changelog
    Support
    Project_sponsors
-   Nginx_friendly_web_hosts
+   Partner_webhosts
 
 .. toctree::
    :maxdepth: 2
-   :caption:  Backends Setup
+   :caption:  Application servers
 
    HHVM
    PHP
@@ -50,14 +48,6 @@ XtendWeb Nginx Cluster Control for cPanel
    Application_template
    Monitoring
    Logs
-
-.. toctree::
-   :maxdepth: 2
-   :caption: XtendWeb Cluster
-
-   cluster_architecture
-   XtendWeb_cluster_setup
-   Upgrade_cluster
 
 
 * :ref:`search`

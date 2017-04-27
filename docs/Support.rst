@@ -16,13 +16,13 @@ If you have already purchased a support plan
 HelpDesk URL: `GNUSYS HELPDESK <https://support.gnusys.net/index.php?fuse=support&controller=ticket&view=submitticket>`_
 
 
-SOFTWARE BUG REPORTING AND PROJECT MANAGEMENT
---------------------------------------
+Bug Report
+------------
 (No technical support for install/customization etc will be entertained over github. Please report bugs only)
 
 * REPORT BUGS: `https://github.com/AnoopAlias/XtendWeb/issues <https://github.com/AnoopAlias/XtendWeb/issues>`_
 * GITHUB URL: `https://github.com/AnoopAlias/XtendWeb <https://github.com/AnoopAlias/XtendWeb>`_
 
 Announcements
---------------
+-----------------
 Twitter: @gnusys

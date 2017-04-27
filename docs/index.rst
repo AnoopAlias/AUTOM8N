@@ -6,7 +6,7 @@
 XtendWeb Nginx Cluster Control for cPanel
 ============================================
 
-... index:: XtendWeb
+.. index:: XtendWeb
 
 .. toctree::
    :maxdepth: 2
@@ -19,7 +19,6 @@ XtendWeb Nginx Cluster Control for cPanel
    http2
    ModSecurity
    Naxsi
-   ngx_lua_waf
 
 .. toctree::
    :maxdepth: 2
@@ -27,7 +26,7 @@ XtendWeb Nginx Cluster Control for cPanel
 
    Support
    Project_sponsors
-   Partner_Webhosts
+   Partner_webhosts
 
 .. toctree::
    :maxdepth: 2

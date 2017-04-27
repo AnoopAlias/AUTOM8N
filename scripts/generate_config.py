@@ -518,7 +518,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                 fastcgi_socket = subdir_backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
                 if not os.path.isfile(fastcgi_socket):
                     if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                        php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version)
+                        php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version, clusterenabled, *cluster_serverlist)
                     else:
                         php_backend_add(kwargs.get('configuser'), domain_home)
             elif subdir_backend_category == 'HHVM':

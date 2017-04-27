@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -34,8 +36,10 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
-        <link rel="next" title="Instructions for upgrading from nDeploy" href="migrating_from_nDeploy.html"/>
-        <link rel="prev" title="Why you should use XtendWeb" href="Why_XtendWeb.html"/> 
+        <link rel="next" title="Cluster Installation" href="installation_cluster.html"/>
+        <link rel="prev" title="XtendWeb Nginx Cluster Control for cPanel" href="index.html"/>
+    <link href="_static/style.css" rel="stylesheet" type="text/css">
+
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -44,6 +48,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,19 +85,17 @@
           
             
             
-                <p class="caption"><span class="caption-text">Installation &amp; Basic Configuration</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">XtendWeb Cluster - Installation &amp; Basic Configuration</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Why_XtendWeb.html">Why you should use XtendWeb</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#here-is-why-the-idea-is-fundamentally-flawed">Here &nbsp;is why the Idea is fundamentally flawed:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#ok-i-need-scalable-hosting-so-what-are-my-options">Ok, I need scalable hosting, so what are my options?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#what-if-all-i-need-to-do-is-host-a-web-app-like-wordpress">What if all I need to do is host a web app like WordPress?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#can-you-describe-more">Can you describe more?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#as-a-webhost-how-does-this-help-my-business">As a webHost , how does this help my business?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Why_XtendWeb.html#as-an-enterprise-user-how-does-this-help-me">As an enterprise user how does this help me?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation_cluster.html">Cluster Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup:</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="migrating_from_nDeploy.html">Instructions for upgrading from nDeploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
@@ -102,25 +105,21 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Support &amp; Development</span></p>
+<p class="caption"><span class="caption-text">Support and Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#xtendweb-version-4-2-x-13-march-2017">XtendWeb version 4.2.x ( 13 March 2017 )</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#if-you-are-upgrading-from-a-previous-release-do-the-following">If you are upgrading from a previous release do the following</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Support.html#bug-reporting-and-project-management">BUG REPORTING AND PROJECT MANAGEMENT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Support.html#if-you-have-already-purchased-a-support-plan">If you have already purchased a support plan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Support.html#bug-report">Bug Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Support.html#announcements">Announcements</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Companies who have sponsored XtendWeb development</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Project Sponsors</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Project_sponsors.html#credits">CREDITS</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Nginx_friendly_web_hosts.html">List of webHosts that support nginX and Clustered hosting of your webapps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partner_webhosts.html">Partner Webhosts</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Backends Setup</span></p>
+<p class="caption"><span class="caption-text">Application servers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="HHVM.html#on-centos7-cloudlinux7">On CentOS7 / CloudLinux7</a></li>
@@ -152,35 +151,15 @@
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-templates">Adding application templates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#uninstall-the-plugin">Uninstall the plugin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#building-nginx-ndeploy-from-source">Building nginx-nDeploy from source</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
-</ul>
-<p class="caption"><span class="caption-text">XtendWeb Cluster</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="cluster_architecture.html">XtendWeb cluster architecture</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#software-components">Software components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#loadbalancing">LoadBalancing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cluster_architecture.html#highavailability">HighAvailability</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="XtendWeb_cluster_setup.html">XtendWeb cluster setup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#basic-2-server-setup">Basic 2 server setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#configuring-the-rest-of-the-system-to-work-as-a-cluster">Configuring the rest of the system to work as a cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_cluster_setup.html#start-the-cluster">Start the cluster</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Upgrade_cluster.html">XtendWeb cluster upgrade</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Upgrade_cluster.html#on-all-slaves">On All slaves</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Upgrade_cluster.html#on-master">On master</a></li>
-</ul>
-</li>
 </ul>
 
             
@@ -193,8 +172,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">XtendWeb</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">XtendWeb</a>
+        
       </nav>
 
 
@@ -203,21 +184,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Installation</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Installation</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -228,15 +226,11 @@
 <p>XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">Ensure your cPanel version displayed in WHM is 60 or higher</p>
+<p class="last">XtendWeb can use either Nginx or OpenResty as the webserver</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">If you are migrating from previous versions of nDeploy,please read the migration doc first</p>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">If you see redirect loop error post installation, turn off ssl_offload feature in XtendWeb server settings</p>
+<p class="last">CentOS7/CloudLinux7 is recommended</p>
 </div>
 <p>1. Install EPEL repo</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
@@ -246,8 +240,13 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">ndeploy4</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">5.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
 </pre></div>
 </div>
-<p>3. Install XtendWeb plugin and nginx. Be patient as this may take several minutes to complete.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span>
+<p>3. Install XtendWeb plugin and nginx or openresty . Be patient as this may take several minutes to complete.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For nginx as webserver</span>
+   <span class="n">OR</span>
+<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For openresty as webserver</span>
+<span class="c1"># OpenResty support embedding lua code.Openresty does not include mod_security and naxsi modules (use OpenSSL)</span>
+<span class="c1"># Nginx include naxsi and mod_security waf ( use LibreSSL instead of OpenSSL )</span>
+<span class="c1"># You can use any of the webserver in an interchangeable way and swap anytime</span>
 </pre></div>
 </div>
 <p>4.1. Install PHP-FPM Application server</p>
@@ -257,7 +256,9 @@
 </pre></div>
 </div>
 <p>4.2. Install Phusion Passenger ( only if you need support for RUBY/PYTHON/NODEJS )</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Nginx</span>
+<span class="n">OR</span>
+<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Openresty</span>
 <span class="c1">#Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
 <span class="c1"># Ruby will be compiled and installed to /usr/local/rvm</span>
@@ -287,17 +288,22 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Note that each module increases the nginx size and processing requirements</span>
 <span class="c1">#So install only required functionality .</span>
 <span class="p">(</span><span class="n">pagespeed</span><span class="p">)</span>   <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">pagespeed</span>
+<span class="p">(</span><span class="n">pagespeed</span><span class="p">)</span>   <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">pagespeed</span>  <span class="c1"># OpenResty</span>
 <span class="p">(</span><span class="n">brotli</span><span class="p">)</span>      <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">brotli</span>
+<span class="p">(</span><span class="n">brotli</span><span class="p">)</span>      <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">brotli</span>  <span class="c1"># OpenResty</span>
 <span class="p">(</span><span class="n">geoip</span><span class="p">)</span>       <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">geoip</span>
+<span class="p">(</span><span class="n">geoip</span><span class="p">)</span>       <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">geoip</span> <span class="c1"># OpenResty</span>
 <span class="p">(</span><span class="n">naxsi</span><span class="p">)</span>       <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">naxsi</span>
 <span class="p">(</span><span class="n">redis</span><span class="p">)</span>       <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">redis</span>
 <span class="p">(</span><span class="n">redis2</span><span class="p">)</span>      <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">redis2</span>
 <span class="p">(</span><span class="n">set_misc</span><span class="p">)</span>    <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">set_misc</span>
 <span class="p">(</span><span class="n">srcache</span><span class="p">)</span>     <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">srcache_filter</span>
 <span class="p">(</span><span class="n">echo</span><span class="p">)</span>        <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">echo</span>
-<span class="c1"># Following modules are installed and loaded by default but can be disabled</span>
+<span class="c1"># Following modules are installed and loaded by default in nginx but can be disabled</span>
 <span class="p">(</span><span class="n">headers_more</span><span class="p">)</span>
 <span class="p">(</span><span class="n">ndk</span><span class="p">)</span> <span class="n">Nginx</span> <span class="n">Development</span> <span class="n">ToolKit</span>
+<span class="c1"># Following modules are installed and loaded by default in openresty</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">openresty</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">components</span><span class="o">.</span><span class="n">html</span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -308,15 +314,18 @@
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="migrating_from_nDeploy.html" class="btn btn-neutral float-right" title="Instructions for upgrading from nDeploy" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="installation_cluster.html" class="btn btn-neutral float-right" title="Cluster Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Why_XtendWeb.html" class="btn btn-neutral" title="Why you should use XtendWeb" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="XtendWeb Nginx Cluster Control for cPanel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -348,9 +357,11 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'4.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

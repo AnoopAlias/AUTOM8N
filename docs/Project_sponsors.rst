@@ -1,12 +1,17 @@
-Companies who have sponsored XtendWeb development
+Project Sponsors
 ==================================================
 
-1. `InboundCPH.dk <https://inboundcph.dk/>`_
-2. `Fabiia Ltd UK <https://www.fabiia.ae/>`_
-3. `MATAHARI LABS <https://mataharilabs.com/>`_
-4. `WE PUSH BUTTONS <http://wepushbuttons.com.au/>`_
-5. `OPENTAXI <https://www.opentaxi.cab/>`_
-6. `FtLP Rocks <http://ftlp.rocks/>`_
+
+1. `Fabiia Ltd UK <https://www.fabiia.ae/>`_
+
+2. `MATAHARI LABS <https://mataharilabs.com/>`_
+
+3. `WE PUSH BUTTONS <http://wepushbuttons.com.au/>`_
+
+4. `OPENTAXI <https://www.opentaxi.cab/>`_
+
+5. `FtLP Rocks <http://ftlp.rocks/>`_
+
 
 CREDITS
 ---------
