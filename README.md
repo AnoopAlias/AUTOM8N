@@ -3,7 +3,7 @@
 
 
 # DOCUMENTATION
-http://xtendweb.gnusys.net/
+http://xtendweb.gnusys.net/docs/
 
 # SME & WEBHOSTS COMMERCIAL SUPPORT AND CONSULTING
-http://xtendweb.gnusys.net/support.html
+https://xtendweb.gnusys.net/#support
