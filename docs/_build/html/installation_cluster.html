@@ -104,6 +104,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_docs.html">XtendWeb User docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_docs.html#handling-url-redirects">Handling URL Redirects</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Support and Development</span></p>
 <ul>
@@ -236,6 +240,11 @@ on the existing server.</p>
 <p>Slave Server&#8217;s - Centos7 ( installed with cPanel DNS only which is licensed free ).Rest of the software is installed automatically at cluster setup.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
+<p class="last">The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
+It is recommended that they resolve correctly on the internet</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
 <p class="last">CentOS7 is recommended</p>
 </div>
 </div>
@@ -244,6 +253,11 @@ on the existing server.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">If you are using CSF whitelist all server ip&#8217;s in cluster and ensure TCP ports  30865 , 4430, 9999, 13306 are allowed</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
+It is recommended that they resolve correctly on the internet</p>
 </div>
 <p>1. Install XtendWeb as normal on master and enable the plugin</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Follow</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">xtendweb</span><span class="o">.</span><span class="n">gnusys</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">docs</span><span class="o">/</span><span class="n">installation_standalone</span><span class="o">.</span><span class="n">html</span>  <span class="c1"># On master</span>
@@ -263,9 +277,9 @@ Ensure Upgrade completes successfully
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">On master ensure the /root/.my.cnf has mysql password enclosed in double quotes .
+<p class="last">On master ensure the /root/.my.cnf has mysql password enclosed in single quotes .
 Unquoted password will fail the Ansible playbook run
-password=&#8221;mypass&#8221; is good. password=mypass is bad</p>
+password=&#8217;mypass&#8217; is good. password=mypass and password=&#8221;mypass&#8221; may cause failure in setup scripts</p>
 </div>
 <p>4. Setup password-less ssh login between master and slaves</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#On master</span>
@@ -288,7 +302,11 @@ password=&#8221;mypass&#8221; is good. password=mypass is bad</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On a 2 server setup with default ssh port you just need to replace master and slave FQDN&#39;s in the sample file</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
 <span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="n">hosts</span><span class="o">.</span><span class="n">sample</span> <span class="n">hosts</span>
+
 <span class="c1"># Edit the hosts file</span>
+
+<span class="n">cat</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span><span class="o">/</span><span class="n">hosts</span>
+
 <span class="p">[</span><span class="n">ndeployslaves</span><span class="p">]</span>  <span class="c1"># section containing all your slaves</span>
 <span class="n">slave1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="n">ansible_port</span><span class="o">=</span><span class="mi">22</span> <span class="n">server_id</span><span class="o">=</span><span class="mi">2</span> <span class="n">webserver</span><span class="o">=</span><span class="n">nginx</span>
 <span class="c1"># ansible_port is ssh port</span>

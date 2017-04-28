@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Naxsi &mdash; XtendWeb nginX control v4.0</title>
+  <title>XtendWeb User docs &mdash; XtendWeb nginX control v4.0</title>
   
 
   
@@ -36,8 +36,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
-        <link rel="next" title="XtendWeb User docs" href="user_docs.html"/>
-        <link rel="prev" title="ModSecurity" href="ModSecurity.html"/>
+        <link rel="next" title="Support" href="Support.html"/>
+        <link rel="prev" title="Naxsi" href="Naxsi.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -103,9 +103,9 @@
 <li class="toctree-l2"><a class="reference internal" href="ModSecurity.html#install-modsecurity">Install ModSecurity</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Naxsi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_docs.html">XtendWeb User docs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#handling-url-redirects">Handling URL Redirects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">XtendWeb User docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#handling-url-redirects">Handling URL Redirects</a></li>
 </ul>
 </li>
 </ul>
@@ -208,7 +208,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Naxsi</li>
+      <li>XtendWeb User docs</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -225,20 +225,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="naxsi">
-<h1>Naxsi<a class="headerlink" href="#naxsi" title="Permalink to this headline">¶</a></h1>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">NAXSI will only be enabled if ModSecurity is in the disabled state</p>
-</div>
-<p>NAXSI is Nginx Anti XSS and SQL Injection . <a class="reference external" href="https://github.com/nbs-system/naxsi">https://github.com/nbs-system/naxsi</a></p>
-<p>Currently XtendWeb support enabling/disabling NAXSI WAF and loading community contributed whitelists for Drupal and Wordpress CMS .
-Extending NAXSI using whitelists need root level access to the server .</p>
-<p>Root user can add Whitelists to the file</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sites</span><span class="o">-</span><span class="n">enabled</span><span class="o">/</span><span class="p">{</span> <span class="n">cpaneldomain</span> <span class="p">}</span><span class="o">.</span><span class="n">naxsi</span><span class="o">.</span><span class="n">wl</span> <span class="c1"># Where cpaneldomain is the actual cPanel configured domainname</span>
-<span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">reload</span>  <span class="c1"># to load the whitelists into the server</span>
-</pre></div>
-</div>
+  <div class="section" id="xtendweb-user-docs">
+<h1>XtendWeb User docs<a class="headerlink" href="#xtendweb-user-docs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="handling-url-redirects">
+<h2>Handling URL Redirects<a class="headerlink" href="#handling-url-redirects" title="Permalink to this headline">¶</a></h2>
+<iframe width="640" height="360" src="//www.youtube.com/embed/7gQvsI6p5og?feature=player_detailpage" frameborder="0" allowfullscreen="1">&nbsp;</iframe></div>
 </div>
 
 
@@ -251,10 +242,10 @@ Extending NAXSI using whitelists need root level access to the server .</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="user_docs.html" class="btn btn-neutral float-right" title="XtendWeb User docs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Support.html" class="btn btn-neutral float-right" title="Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ModSecurity.html" class="btn btn-neutral" title="ModSecurity" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Naxsi.html" class="btn btn-neutral" title="Naxsi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

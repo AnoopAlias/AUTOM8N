@@ -18,6 +18,9 @@ Master server - Centos7 ,MariaDB 10.1
 
 Slave Server's - Centos7 ( installed with cPanel DNS only which is licensed free ).Rest of the software is installed automatically at cluster setup.
 
+.. tip:: The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
+          It is recommended that they resolve correctly on the internet
+
 
 .. tip:: CentOS7 is recommended
 
@@ -26,6 +29,10 @@ XtendWeb cluster setup:
 --------------------------
 
 .. tip:: If you are using CSF whitelist all server ip's in cluster and ensure TCP ports  30865 , 4430, 9999, 13306 are allowed
+
+.. tip:: The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
+          It is recommended that they resolve correctly on the internet
+
 
 1. Install XtendWeb as normal on master and enable the plugin
 ::
@@ -49,9 +56,9 @@ XtendWeb cluster setup:
   Ensure Upgrade completes successfully
 
 
-.. tip:: On master ensure the /root/.my.cnf has mysql password enclosed in double quotes .
+.. tip:: On master ensure the /root/.my.cnf has mysql password enclosed in single quotes .
          Unquoted password will fail the Ansible playbook run
-         password="mypass" is good. password=mypass is bad
+         password='mypass' is good. password=mypass and password="mypass" may cause failure in setup scripts
 
 
 4. Setup password-less ssh login between master and slaves
@@ -80,7 +87,11 @@ XtendWeb cluster setup:
   # On a 2 server setup with default ssh port you just need to replace master and slave FQDN's in the sample file
   cd /opt/nDeploy/conf/nDeploy-cluster
   cp -p hosts.sample hosts
+
   # Edit the hosts file
+
+  cat /opt/nDeploy/conf/nDeploy-cluster/hosts
+
   [ndeployslaves]  # section containing all your slaves
   slave1.example.com ansible_port=22 server_id=2 webserver=nginx
   # ansible_port is ssh port
