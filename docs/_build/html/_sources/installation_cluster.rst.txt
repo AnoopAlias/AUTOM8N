@@ -3,6 +3,9 @@ Cluster Installation
 
 XtendWeb Cluster Requirements:
 --------------------------------
+.. note:: using CloudLinux will be counter productive on XtendWeb Cluster as cloudLinux is trying to solve server stability problem by limiting resources useable by a user
+          XtendWeb on the other hand tries to achieve stability by using a fan-out infrastructure which is what an enterprise user would need.
+          
 It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this). XtendWeb cluster needs atleast 2 servers.
 
 It is highly recommended that the servers be on different geographic regions ( eg: master in US , slave in UK ) and use different providers.

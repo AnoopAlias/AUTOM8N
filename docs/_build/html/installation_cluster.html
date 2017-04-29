@@ -105,7 +105,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_docs.html">XtendWeb User docs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#handling-url-redirects">Handling URL Redirects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_docs.html#setup-url-redirects">Setup URL Redirects</a></li>
 </ul>
 </li>
 </ul>
@@ -229,6 +229,11 @@
 <h1>Cluster Installation<a class="headerlink" href="#cluster-installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="xtendweb-cluster-requirements">
 <h2>XtendWeb Cluster Requirements:<a class="headerlink" href="#xtendweb-cluster-requirements" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">using CloudLinux will be counter productive on XtendWeb Cluster as cloudLinux is trying to solve server stability problem by limiting resources useable by a user
+XtendWeb on the other hand tries to achieve stability by using a fan-out infrastructure which is what an enterprise user would need.</p>
+</div>
 <p>It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this). XtendWeb cluster needs atleast 2 servers.</p>
 <p>It is highly recommended that the servers be on different geographic regions ( eg: master in US , slave in UK ) and use different providers.
 The golden rule is - Dont keep all your eggs in the same basket.</p>

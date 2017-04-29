@@ -4,3 +4,8 @@
   template:
     src: backupmxhosts.j2
     dest: /etc/backupmxhosts
+
+- name: Setup Trusted IP's
+  template:
+    src: skipsmtpcheckhosts.j2
+    dest: /etc/skipsmtpcheckhosts

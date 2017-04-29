@@ -10,7 +10,6 @@ Project Sponsors
 
 4. `OPENTAXI <https://www.opentaxi.cab/>`_
 
-5. `FtLP Rocks <http://ftlp.rocks/>`_
 
 
 CREDITS

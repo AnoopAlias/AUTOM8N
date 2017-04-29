@@ -105,7 +105,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">XtendWeb User docs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#handling-url-redirects">Handling URL Redirects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-url-redirects">Setup URL Redirects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enable-directory-listing">Enable Directory listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#content-optimization">Content Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#security-headers">Security Headers</a></li>
 </ul>
 </li>
 </ul>
@@ -227,9 +230,73 @@
             
   <div class="section" id="xtendweb-user-docs">
 <h1>XtendWeb User docs<a class="headerlink" href="#xtendweb-user-docs" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="handling-url-redirects">
-<h2>Handling URL Redirects<a class="headerlink" href="#handling-url-redirects" title="Permalink to this headline">¶</a></h2>
-<iframe width="640" height="360" src="//www.youtube.com/embed/7gQvsI6p5og?feature=player_detailpage" frameborder="0" allowfullscreen="1">&nbsp;</iframe></div>
+<div class="section" id="setup-url-redirects">
+<h2>Setup URL Redirects<a class="headerlink" href="#setup-url-redirects" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">URL redirects setup from cPanel is done via .htaccess file and will work only in PROXY mode . For native nginx (nginx+php-fpm etc),you will need to setup the redirects in XtendWeb plugin
+All rdirect types can be easily setup from XtendWeb plugin</p>
+</div>
+<ol class="arabic simple">
+<li>domain.com to www.domain.com - Select domain in XtendWeb » Server Settings » www redirect</li>
+<li><a class="reference external" href="http://domain.com">http://domain.com</a> to <a class="reference external" href="https://domain.com">https://domain.com</a> - Select domain in XtendWeb » Server Settings » redirect_to_ssl</li>
+</ol>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">if you enable hsts in server settings, web browsers would prefer <a class="reference external" href="https://">https://</a> over <a class="reference external" href="http://">http://</a></p>
+</div>
+<ol class="arabic simple" start="3">
+<li><a class="reference external" href="http://my-alias-domain.com">http://my-alias-domain.com</a> to <a class="reference external" href="http://domain.com">http://domain.com</a> - Select domain in XtendWeb » Server Settings » redirect_aliases</li>
+</ol>
+<p>4. <a class="reference external" href="http://domain.com">http://domain.com</a> to <a class="reference external" href="http://external-domain.com">http://external-domain.com</a> - Select domain in XtendWeb » Server Settings</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>1. URL Redirect  - Select Permanent redirect
+2. append $request_uri to redirecturl   # eg:  http://domain.com/?q=test would be redirected to http://external-domain.com/?q=test
+3. Redirect to URL  - Enter target URL here # eg: http://external-domain.com
+</pre></div>
+</div>
+<p>5. <a class="reference external" href="http://domain.com/blog">http://domain.com/blog</a> to <a class="reference external" href="http://external-domain.com">http://external-domain.com</a> - Select domain in XtendWeb » Subdir Apps</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Enter /blog in &quot;Add new subdirectory apps&quot;
+Select Any Backend , Version and Application template # This will be replaced by the redirect shortly so you can select any
+Save
+
+Click on &quot;Subdir Apps&quot; Again and Click on &quot;Edit&quot; beside the subdir you already added
+In Application Settings
+
+1. URL Redirect  - Select Permanent redirect
+2. append $request_uri to redirecturl  [ Set enabled/disabled ]
+3. Redirect to URL  - Enter target URL here # eg: http://external-domain.com or http://domain.com/mynewblog
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">To redirect domain.com/blog to domain.com/newblog follow the same procedure as step 5 above and enter
+domain.com/newblog as the &#8220;Redirect to URL&#8221;</p>
+</div>
+</div>
+<div class="section" id="enable-directory-listing">
+<h2>Enable Directory listing<a class="headerlink" href="#enable-directory-listing" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb » Server Settings » autoindex [ enabled ]</p>
+</div>
+<div class="section" id="content-optimization">
+<h2>Content Optimization<a class="headerlink" href="#content-optimization" title="Permalink to this headline">¶</a></h2>
+<p>Following optimizes your html pages</p>
+<ol class="arabic simple">
+<li>pagespeed - provides html pages optimised for speed . it rewrites and modifies resources onyour webpage</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">&#8220;PassThrough&#8221; pagespeed level may sometime break page rendering . Select CoreFilters for a less drastic optimization</p>
+</div>
+<ol class="arabic simple" start="2">
+<li>brotli and gzip  -  Both brotli and gzip reduce content size ,brotli gives 20% more reduction but works over <a class="reference external" href="https://">https://</a> only</li>
+</ol>
+</div>
+<div class="section" id="security-headers">
+<h2>Security Headers<a class="headerlink" href="#security-headers" title="Permalink to this headline">¶</a></h2>
+<p>clickjacking_protect - Disallow Iframe to be loaded in your website from external domains . Disable this feature if you have external iframe</p>
+<p>disable_contenttype_sniffing - Read <a class="reference external" href="https://www.keycdn.com/support/what-is-mime-sniffing/">https://www.keycdn.com/support/what-is-mime-sniffing/</a> - Keeping this option [ enabled ] is good</p>
+<p>xss_filter -Read <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection</a> - Keeping this option [ enabled ] is good</p>
+</div>
 </div>
 
 
