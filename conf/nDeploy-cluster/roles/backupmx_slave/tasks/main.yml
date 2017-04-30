@@ -13,7 +13,7 @@
 - name: Setup Postfix configuration
   shell: "{{ item }}"
   with_items:
-    - postconf -e "smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination"
+    - postconf -e "smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, reject_unknown_reverse_client_hostname, reject_invalid_helo_hostname, reject_non_fqdn_helo_hostname, reject_non_fqdn_sender, reject_non_fqdn_recipient, reject_unknown_sender_domain, reject_unknown_recipient_domain, reject_invalid_hostname, reject_rbl_client zen.spamhaus.org, reject_rbl_client bl.spamcop.net, reject_rbl_client b.barracudacentral.org, reject_rbl_client dnsbl.sorbs.net, permit"
     - postconf -e "relay_recipient_maps ="
     - postconf -e "relay_domains = hash:/etc/postfix/relaydomains"
     - postconf -e "inet_interfaces = all"

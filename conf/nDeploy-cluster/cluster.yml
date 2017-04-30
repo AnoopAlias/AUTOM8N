@@ -92,6 +92,11 @@
   roles:
     - maxscale_slave
 
+- name: Switch to GTID
+  hosts: ndeploymaster,ndeploydbslave
+  roles:
+    - gtid_db
+
 - name: BackupMX setup on master
   hosts: ndeploymaster
   roles:

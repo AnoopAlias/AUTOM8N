@@ -19,13 +19,12 @@ auto_increment_increment={{ server_id }}
 
 
 # binlog and relaylog size is set to 52 Mb
-log_bin={{ ansible_nodename }}-bin
+log_bin=/var/lib/mysql/binlog-{{ ansible_nodename }}
 max_binlog_size=52428800
 expire_logs_days=3
 binlog-format=row
 
-log-slave-updates
-relay-log={{ ansible_nodename }}-relay-bin
+relay-log=/var/lib/mysql/relaylog-{{ ansible_nodename }}
 max-relay-log-size=52428800
 relay-log-recovery=1
 relay_log_purge=1

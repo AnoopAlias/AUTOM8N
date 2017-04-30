@@ -69,6 +69,10 @@
   when:
     - mysqlsetup.stat.exists == false
 
+- name: get the master log and pos
+  mysql_replication: mode=getmaster
+  register: masterrepl
+
 - name: Dump all databases
   mysql_db:
     state: dump
@@ -77,6 +81,10 @@
     single_transaction: True
   when:
     - mysqlsetup.stat.exists == false
+
+- set_fact:
+    masterlog: "{{ masterrepl.File }}"
+    masterpos: "{{ masterrepl.Position }}"
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE

@@ -1,2 +1,2 @@
-CHANGE MASTER TO MASTER_HOST='{{ hostvars[groups['ndeploydbslave'][0]]['ansible_default_ipv4']['address'] }}', MASTER_USE_GTID=slave_pos, MASTER_USER='maxscale',MASTER_PASSWORD={{ MYSQLPASS }}, MASTER_SSL=1, MASTER_PORT=13306;
+CHANGE MASTER TO MASTER_HOST='{{ hostvars[groups['ndeploydbslave'][0]]['ansible_default_ipv4']['address'] }}', MASTER_LOG_FILE = '{{ hostvars[groups['ndeploydbslave'][0]]['masterlog'] }}',MASTER_LOG_POS = {{ hostvars[groups['ndeploydbslave'][0]]['masterpos'] }}, MASTER_USER='maxscale',MASTER_PASSWORD={{ MYSQLPASS }}, MASTER_SSL=1, MASTER_PORT=13306;
 START SLAVE;

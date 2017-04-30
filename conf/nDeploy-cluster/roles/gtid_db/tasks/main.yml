@@ -1,0 +1,20 @@
+---
+
+- name: get the slave status
+  mysql_replication: mode=getslave
+  register: slavestatus
+
+- name: Setup gtid replication
+  shell: mysql -e "STOP SLAVE;"
+  when:
+    - slavestatus.Using_Gtid == "No"
+
+- name: Setup gtid replication
+  shell: mysql -e "CHANGE MASTER TO MASTER_USE_GTID=slave_pos;"
+  when:
+    - slavestatus.Using_Gtid == "No"
+
+- name: Setup gtid replication
+  shell: mysql -e "START SLAVE;"
+  when:
+    - slavestatus.Using_Gtid == "No"
