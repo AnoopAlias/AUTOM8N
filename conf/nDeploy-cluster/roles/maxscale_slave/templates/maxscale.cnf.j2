@@ -5,6 +5,7 @@ threads=1
 [server1]
 type=server
 address={{ hostvars[groups['ndeploydbslave'][0]]['ansible_default_ipv4']['address'] }}
+port=13306
 protocol=MySQLBackend
 ssl=required
 ssl_version=TLSv10

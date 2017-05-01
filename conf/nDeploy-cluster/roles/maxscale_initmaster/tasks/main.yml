@@ -28,8 +28,6 @@
 
 - name: Generate maxscale password
   shell: maxpasswd /var/lib/maxscale/ {{ MYSQLPASS }} > /root/xtendweb_maxscale
-  when:
-    - maxscale.stat.exists == false
 
 - file:
     path: /var/lib/maxscale/.secrets
