@@ -15,6 +15,8 @@ ssl_key=/etc/mysql-ssl/client-key.pem
 enable_root_user=1
 #localhost_match_wildcard_host=1
 serv_weight=0
+persistpoolmax=100
+persistmaxtime=3600
 
 #slave
 [server2]
@@ -29,6 +31,8 @@ ssl_cert=/etc/mysql-ssl/client-cert.pem
 ssl_key=/etc/mysql-ssl/client-key.pem
 enable_root_user=1
 serv_weight=1
+persistpoolmax=100
+persistmaxtime=3600
 
 [MySQL Monitor]
 type=monitor
@@ -45,6 +49,9 @@ servers=server2,server1
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 weightby=serv_weight
+connection_timeout=60
+max_connections=500
+
 
 [MaxAdmin Service]
 type=service

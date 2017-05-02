@@ -31,3 +31,13 @@
 
 - name: create default vhost config in slave
   shell: /opt/nDeploy/scripts/generate_default_vhost_config.py
+
+- name: Ensure EA4 is enabled for php-fpm
+  file:
+    path: /etc/cpanel/ea4
+    state: directory
+
+- name: Ensure isEA4
+  file:
+    path: /etc/cpanel/ea4/is_ea4
+    state: touch

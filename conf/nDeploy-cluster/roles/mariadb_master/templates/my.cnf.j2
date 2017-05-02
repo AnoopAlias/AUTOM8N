@@ -3,6 +3,10 @@ log-error=/var/lib/mysql/{{ ansible_nodename}}.err
 innodb_file_per_table=1
 performance-schema=0
 max_allowed_packet=268435456
+wait_timeout = 28800
+connect_timeout = 60
+max_connections =  500
+
 
 ssl-ca=/etc/mysql-ssl/ca-cert.pem
 ssl-cert=/etc/mysql-ssl/server-cert.pem

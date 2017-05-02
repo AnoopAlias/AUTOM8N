@@ -2,7 +2,7 @@
 #Author: Anoop P Alias
 
 NDEPLOY_VERSION="4.3"
-RPM_ITERATION="11"
+RPM_ITERATION="12"
 
 rm -f nDeploy-pkg/nDeploy-* nDeploy-pkg-centos7/nDeploy-*
 rsync -av ../scripts/ nDeploy-pkg/opt/nDeploy/scripts/
