@@ -13,9 +13,10 @@
 - name: Setup Postfix configuration
   shell: "{{ item }}"
   with_items:
-    - postconf -e "smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, reject_unknown_reverse_client_hostname, reject_invalid_helo_hostname, reject_non_fqdn_helo_hostname, reject_non_fqdn_sender, reject_non_fqdn_recipient, reject_unknown_sender_domain, reject_unknown_recipient_domain, reject_invalid_hostname, reject_rbl_client zen.spamhaus.org, reject_rbl_client bl.spamcop.net, reject_rbl_client b.barracudacentral.org, reject_rbl_client dnsbl.sorbs.net, permit"
+    - postconf -e "smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination"
     - postconf -e "relay_recipient_maps ="
     - postconf -e "relay_domains = hash:/etc/postfix/relaydomains"
+    - postconf -e "relay_domains = hash:/etc/postfix/transportmaps"
     - postconf -e "inet_interfaces = all"
     - postconf -e "smtp_tls_security_level = may"
     - postconf -e "smtpd_tls_security_level = may"
@@ -24,6 +25,13 @@
     - postconf -e "smtpd_tls_loglevel = 1"
     - postconf -e "smtpd_tls_session_cache_timeout = 3600s"
     - postconf -e "tls_random_source = dev:/dev/urandom"
+
+- name: Setup backupMX update script
+  template:
+    src: postfix_backupmx_update.sh.j2
+    dest: /opt/nDeploy/scripts/postfix_backupmx_update.sh
+    mode: 0755
+
 
 - name: Restart Postfix server
   service: name=postfix enabled=yes state=restarted
