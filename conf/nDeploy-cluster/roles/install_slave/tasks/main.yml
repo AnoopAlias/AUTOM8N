@@ -10,15 +10,19 @@
   with_items:
     - https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-5.noarch.rpm
 
-- name: Install XtendWeb cluster slave rpm packages
+- name: Install XtendWeb cluster rpm packages
   yum: name={{ item }} enablerepo=ndeploy,epel state=present
   with_items:
    - csync2-nDeploy
    - unison-nDeploy
    - "{{ webserver }}-nDeploy"
-   - nDeploy-cluster-slave
    - python-pip
    - redhat-lsb-core
+
+- name: Install XtendWeb cluster slave rpm package
+  yum: name={{ item }} enablerepo=ndeploy,epel state=present
+  with_items:
+   - nDeploy-cluster-slave
 
 - name: Install MySQL-python
   pip:

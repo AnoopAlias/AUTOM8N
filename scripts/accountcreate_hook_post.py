@@ -5,6 +5,8 @@ import sys
 import subprocess
 import os
 import pwd
+import jinja2
+import codecs
 try:
     import simplejson as json
 except ImportError:
@@ -24,7 +26,21 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
 cpaneluser = mydict["user"]
+owner = mydict["owner"]
 user_shell = pwd.getpwnam(cpaneluser).pw_shell
+# Lets create files necessary for simpleR
+ownerslice = "/etc/systemd/system/"+owner+".slice"
+if not os.path.isfile(ownerslice):
+    # create the slice from a template
+    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    TEMPLATE_FILE = "simpler_resources.j2"
+    template = templateEnv.get_template(TEMPLATE_FILE)
+    templateVars = {"OWNER": owner
+                    }
+    generated_config = template.render(templateVars)
+    with codecs.open(ownerslice, 'w', 'utf-8') as confout:
+        confout.write(generated_config)
 # If nDeploy cluster is enabled we need to add users,DNS entry for the same
 if os.path.exists(cluster_config_file):
     cpaneluserhome = mydict["homedir"]

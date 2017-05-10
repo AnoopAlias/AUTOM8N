@@ -21,11 +21,10 @@ $TTL %ttl%
 %domain%. IN A %ip%
 %domain%. IN AAAA %ipv6%
 
-%domain%. IN MX 0 %domain%.
+%domain%. IN MX 0 {{ ansible_nodename }}.
 {% for host in groups['ndeployslaves'] %}
 %domain%. IN MX 100 {{ host }}.
 {% endfor %}
 mail IN CNAME %domain%.
 www IN CNAME %domain%.
-ftp IN A %ftpip%
-ftp IN AAAA %ipv6%
+ftp IN CNAME %domain%.

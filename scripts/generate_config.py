@@ -28,6 +28,13 @@ nginx_bin = "/usr/sbin/nginx"
 
 # Function definitions
 
+# Define a function to silently remove files
+def silentremove(filename):
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
+
 
 # Railo is probably dead.Checkout http://lucee.org/ for a fork
 def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
@@ -146,7 +153,7 @@ def hhvm_backend_add(user_name, domain_home, clusterenabled, *cluster_serverlist
     return
 
 
-def php_secure_backend_add(user_name, domain_home, backend_version, clusterenabled, *cluster_serverlist):
+def php_secure_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluster_serverlist):
     """Function to setup php-fpm for user using systemd socket activation"""
     phpfpm_conf_file = installation_path + "/secure-php-fpm.d/" + user_name + ".conf"
     if not os.path.isfile(phpfpm_conf_file):
@@ -162,14 +169,35 @@ def php_secure_backend_add(user_name, domain_home, backend_version, clusterenabl
             confout.write(generated_config)
         if clusterenabled:
             subprocess.call(['csync2', '-x'], shell=True)
-    subprocess.call(['systemctl', 'restart', backend_version+'@'+user_name+'.socket'])
-    subprocess.call(['systemctl', 'enable', backend_version+'@'+user_name+'.socket'])
-    if clusterenabled:
-        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_version+'@'+user_name+'.socket state=started enabled=yes"', shell=True)
+    backend_config_file = installation_path+"/conf/backends.yaml"
+    with open(backend_config_file, 'r') as backend_data_yaml:
+        backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+    if "PHP" in backend_data_yaml_parsed:
+        php_backends_dict = backend_data_yaml_parsed["PHP"]
+        for backend_name in php_backends_dict.keys():
+            silentremove('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf')
+            if not os.path.isdir('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d'):
+                os.mkdir('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d',0o755)
+            templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+            templateEnv = jinja2.Environment(loader=templateLoader)
+            TEMPLATE_FILE = "limits.conf.j2"
+            template = templateEnv.get_template(TEMPLATE_FILE)
+            templateVars = {"OWNER": owner_name
+                            }
+            generated_config = template.render(templateVars)
+            with codecs.open('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf', 'w', 'utf-8') as confout:
+                confout.write(generated_config)
+            subprocess.call(['systemctl', 'start', backend_name+'@'+user_name+'.socket'])
+            subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
+            # Stopping the service as a new request to socket will activate it again
+            subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
+            if clusterenabled:
+                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.socket state=started enabled=yes"', shell=True)
+                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.service state=stopped"', shell=True)
     return
 
 
-def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
+def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kwargs):
     """Function that generates nginx config """
     # Initiate Jinja2 templateEnv
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
@@ -294,8 +322,21 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
     apptemplate_code = yaml_parsed_domain_data.get('apptemplate_code', None)
     backend_path = yaml_parsed_domain_data.get('backend_path', None)
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
+    phpfpm_selector = yaml_parsed_domain_data.get('phpfpm_selector', None)
+    phpfpm_path = yaml_parsed_domain_data.get('phpfpm_path', None)
     # initialize the fastcgi_socket variable
     fastcgi_socket = None
+    # Lets get the PHPFPM selector stuff done
+    if os.path.isfile(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED') and phpfpm_selector is not None:
+        if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
+            php_secure_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
+            phpfpm_secure_socket = domain_home+"/tmp/"+kwargs.get('configdomain')+".sock"
+            if not os.path.islink(phpfpm_secure_socket):
+                os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_secure_socket)
+            else:
+                if not os.path.realpath(phpfpm_secure_socket) == phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock":
+                    silentremove(phpfpm_secure_socket)
+                    os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_secure_socket)
     # Following are features that the UI can change . Can be expanded in future
     # as and when more features are incorporated
     if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
@@ -448,7 +489,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
         fastcgi_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
         if not os.path.isfile(fastcgi_socket):
             if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version, clusterenabled, *cluster_serverlist)
+                php_secure_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
             else:
                 php_backend_add(kwargs.get('configuser'), domain_home)
     elif backend_category == 'HHVM':
@@ -518,7 +559,7 @@ def nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, **kwargs):
                 fastcgi_socket = subdir_backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
                 if not os.path.isfile(fastcgi_socket):
                     if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                        php_secure_backend_add(kwargs.get('configuser'), domain_home, backend_version, clusterenabled, *cluster_serverlist)
+                        php_secure_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
                     else:
                         php_backend_add(kwargs.get('configuser'), domain_home)
             elif subdir_backend_category == 'HHVM':
@@ -590,6 +631,7 @@ if __name__ == "__main__":
                     is_suspended = True
                 else:
                     is_suspended = False
+                myowner = json_parsed_cpusersfile.get('OWNER')
             else:
                 # If cpanel users file is not present silently exit
                 sys.exit(0)
@@ -607,18 +649,18 @@ if __name__ == "__main__":
             clusterenabled = False
             cluster_serverlist = []
         # Begin config generation .Do it first for the main domain
-        nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
+        nginx_confgen(is_suspended, myowner, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
         # iterate over the addon-domain ,passing the subdomain as the configdomain
         for the_addon_domain in addon_domains_dict.keys():
-            nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
+            nginx_confgen(is_suspended, myowner, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
         # iterate over sub-domains and generate config if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
             if the_sub_domain not in addon_domains_dict.values():
                 if the_sub_domain.startswith("*"):
                     subdom_config_dom = "_wildcard_."+the_sub_domain.replace('*.', '')
-                    nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
+                    nginx_confgen(is_suspended, myowner, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
                 else:
-                    nginx_confgen(is_suspended, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
+                    nginx_confgen(is_suspended, myowner, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
         # Ok we are done generating .Lets reload nginx and some misc things ( Using async Popen whenever possible )
         # Unless someone has set a skip reload flag
         if not os.path.isfile(installation_path+'/conf/skip_nginx_reload'):

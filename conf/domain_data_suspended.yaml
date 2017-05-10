@@ -30,3 +30,5 @@ append_requesturi: disabled
 set_expire_static: disabled
 mod_security: disabled
 lua_waf: disabled
+phpfpm_selector: CPANELPHP56
+phpfpm_path: /opt/cpanel/ea-php56/root

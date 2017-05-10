@@ -5,6 +5,6 @@
     src: "{{ item }}"
     dest: /var/cpanel/zonetemplates/{{ item }}
   with_items:
-    - root_simple.j2
-    - root_standard.j2
-    - root_standardvirtualftp.j2
+    - root_simple
+    - root_standard
+    - root_standardvirtualftp

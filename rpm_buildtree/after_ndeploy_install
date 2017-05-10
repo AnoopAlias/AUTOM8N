@@ -64,6 +64,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5038.j2 "Respond"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5039.j2 "Symfony"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5040.j2 "Yii"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5041.j2 "MediaWiki"
 
 
 # HHVM
@@ -104,6 +105,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5038.j2 "Respond"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5039.j2 "Symfony"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5040.j2 "Yii"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5041.j2 "MediaWiki"
 
 
 echo -e '\e[93m Adding cpanel hooks \e[0m'
@@ -181,12 +183,18 @@ fi
 if [ ! -L /usr/local/cpanel/base/frontend/paper_lantern/nDeploy_cp  ];then
 	ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/paper_lantern/
 fi
+if [ ! -L /usr/local/cpanel/base/frontend/paper_lantern/PHPfpmSelector  ];then
+	ln -s /opt/nDeploy/PHPfpmSelector /usr/local/cpanel/base/frontend/paper_lantern/
+fi
 if [ ! -L /opt/nDeploy/scripts/easy_passenger_setup.sh ];then
   ln -s /usr/nginx/scripts/nginx-passenger-setup.sh /opt/nDeploy/scripts/easy_passenger_setup.sh
 fi
 
 echo -e '\e[93m Installing << XtendWeb >> plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
+
+echo -e '\e[93m Installing << PHP-FPM Selector >> plugin in cPanel \e[0m'
+/usr/local/cpanel/scripts/install_plugin /opt/nDeploy/PHPfpmSelector
 
 echo -e '\e[93m ########################################################################### \e[0m'
 echo -e '\e[93m #         24x7 monitoring and support for XtendWeb HA cluster             # \e[0m'

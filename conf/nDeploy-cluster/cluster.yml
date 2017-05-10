@@ -112,7 +112,7 @@
   roles:
     - cpconfig_slave
 
-- name: Setup ipmap
+- name: Setup ipmap do dnssync
   hosts: ndeploymaster
   roles:
     - ipmap_master

@@ -30,5 +30,5 @@ echo -e '\e[93m Removing cpanel hooks \e[0m'
 
 echo -e '\e[93m Uninstalling nDeploy plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp
-/usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp --theme x3
+/usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/PHPfpmSelector
 fi

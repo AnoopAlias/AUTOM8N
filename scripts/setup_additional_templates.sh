@@ -11,13 +11,15 @@ fi
 
 rpm -q openresty-nDeploy || yum --enablerepo=ndeploy -y install nginx-nDeploy-module-redis2 nginx-nDeploy-module-redis nginx-nDeploy-module-echo nginx-nDeploy-module-set_misc nginx-nDeploy-module-srcache_filter
 
-/opt/nDeploy/scripts/update_profiles.py add root main PHP wpredis_helper.j2 "Wordpress+Redis+nginx-helper"
-/opt/nDeploy/scripts/update_profiles.py add root main HHVM wpredis_helper.j2 "Wordpress+Redis+nginx-helper"
+if [ -f /opt/nDeploy/scripts/update_profiles.py ];then
+  /opt/nDeploy/scripts/update_profiles.py add root main PHP wpredis_helper.j2 "Wordpress+Redis+nginx-helper"
+  /opt/nDeploy/scripts/update_profiles.py add root main HHVM wpredis_helper.j2 "Wordpress+Redis+nginx-helper"
 
-/opt/nDeploy/scripts/update_profiles.py add root main PHP wpredis_auto.j2 "Wordpress+Redis"
-/opt/nDeploy/scripts/update_profiles.py add root main HHVM wpredis_auto.j2 "Wordpress+Redis"
+  /opt/nDeploy/scripts/update_profiles.py add root main PHP wpredis_auto.j2 "Wordpress+Redis"
+  /opt/nDeploy/scripts/update_profiles.py add root main HHVM wpredis_auto.j2 "Wordpress+Redis"
 
-/opt/nDeploy/scripts/update_profiles.py add root main PHP drupalredis_auto.j2 "Drupal+Redis"
-/opt/nDeploy/scripts/update_profiles.py add root main HHVM drupalredis_auto.j2 "Drupal+Redis"
+  /opt/nDeploy/scripts/update_profiles.py add root main PHP drupalredis_auto.j2 "Drupal+Redis"
+  /opt/nDeploy/scripts/update_profiles.py add root main HHVM drupalredis_auto.j2 "Drupal+Redis"
+fi
 
 echo -e '\e[93m Additional templates setup: OK \e[0m'

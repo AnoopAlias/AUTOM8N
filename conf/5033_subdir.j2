@@ -20,6 +20,7 @@ include /etc/nginx/conf.d/luarestywaf_exec.conf;
 {% endif %}
 # End Include LUAWAF settings
 
+root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
 try_files $uri $uri/ /{{ SUBDIR }}/yourls-loader.php;
