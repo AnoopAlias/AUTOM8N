@@ -632,6 +632,19 @@ if __name__ == "__main__":
                 else:
                     is_suspended = False
                 myowner = json_parsed_cpusersfile.get('OWNER')
+                if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
+                    ownerslice = "/etc/systemd/system/"+myowner+".slice"
+                    if not os.path.isfile(ownerslice):
+                        # create the slice from a template
+                        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+                        templateEnv = jinja2.Environment(loader=templateLoader)
+                        TEMPLATE_FILE = "simpler_resources.j2"
+                        template = templateEnv.get_template(TEMPLATE_FILE)
+                        templateVars = {"OWNER": myowner
+                                        }
+                        generated_config = template.render(templateVars)
+                        with codecs.open(ownerslice, 'w', 'utf-8') as confout:
+                            confout.write(generated_config)
             else:
                 # If cpanel users file is not present silently exit
                 sys.exit(0)

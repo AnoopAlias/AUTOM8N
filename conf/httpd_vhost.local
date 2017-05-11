@@ -1,0 +1,217 @@
+
+<VirtualHost[% FOREACH ipblock IN vhost.ips %] [% ipblock.ip %]:[% ipblock.port %][% END %]>
+  ServerName [% wildcard_safe(vhost.servername) %]
+[% IF vhost.serveralias_array.size -%]
+[% FOREACH alias IN vhost.serveralias_array -%]
+  ServerAlias [% alias %]
+[% END -%]
+[% ELSE -%]
+  ServerAlias [% vhost.serveralias %]
+[% END -%]
+  DocumentRoot [% vhost.documentroot %]
+[% IF vhost.serveradmin -%]
+  ServerAdmin [% vhost.serveradmin %]
+[% ELSE %]
+  ServerAdmin webmaster@[% vhost.servername %]
+[% END -%]
+[% IF vhost.usecanonicalname -%]
+  UseCanonicalName [% vhost.usecanonicalname %]
+[% ELSE %]
+  UseCanonicalName Off
+[% END -%]
+[% IF !vhost.hascgi -%]
+  Options -ExecCGI -Includes
+  RemoveHandler cgi-script .cgi .pl .plx .ppl .perl
+[% END -%]
+[% IF logstyle == 'combined' -%]
+    [%- IF !enable_piped_logs || !supported.mod_log_config -%]
+  CustomLog [% paths.dir_domlogs %]/[% wildcard_safe(vhost.log_servername) %] combined
+    [%- END %]
+[% ELSE %]
+  TransferLog [% paths.dir_domlogs %]/[% wildcard_safe(vhost.log_servername) %]
+[% END -%]
+[% IF !enable_piped_logs -%]
+  <IfModule log_config_module>
+    <IfModule logio_module>
+      CustomLog [% paths.dir_domlogs %]/[% wildcard_safe(vhost.log_servername) %]-bytes_log "%{%s}t %I .\n%{%s}t %O ."
+    </IfModule>
+  </IfModule>
+[% END -%]
+  ## User [% vhost.user %] # Needed for Cpanel::ApacheConf
+  <IfModule userdir_module>
+    <IfModule !mpm_itk.c>
+      <IfModule !ruid2_module>
+[%- IF userdirprotect_enabled %]
+[%- IF vhost.userdirprotect == '-1' %]
+        UserDir enabled
+[%- ELSE %]
+        UserDir disabled
+        UserDir enabled [% vhost.user %] [% vhost.userdirprotect %]
+[%- END %]
+[%- ELSE %]
+[%- IF vhost.user != 'nobody' %]
+        UserDir enabled [% vhost.user %]
+[%- END %]
+[%- END %]
+      </IfModule>
+    </IfModule>
+  </IfModule>
+
+  # Enable backwards compatible Server Side Include expression parser for Apache versions >= 2.4.
+  # To selectively use the newer Apache 2.4 expression parser, disable SSILegacyExprParser in
+  # the user's .htaccess file.  For more information, please read:
+  #    http://httpd.apache.org/docs/2.4/mod/mod_include.html#ssilegacyexprparser
+  <IfModule include_module>
+    <Directory "[% vhost.documentroot %]">
+      SSILegacyExprParser On
+    </Directory>
+  </IfModule>
+
+  [% IF vhost.optimize_htaccess && vhost.optimize_htaccess != "search_full_path" %]
+    [% IF vhost.optimize_htaccess == "search_homedir_below" %]
+      <Directory "[% vhost.homedir %]">
+        AllowOverride All
+      </Directory>
+    [% ELSIF vhost.optimize_htaccess == "search_documentroot_below" %]
+      <Directory "[% vhost.documentroot %]">
+        AllowOverride All
+      </Directory>
+    [% ELSIF vhost.optimize_htaccess == "disable_htaccess" %]
+      <Directory "/">
+       AllowOverride None
+      </Directory>
+    [% ELSE %]
+      <Directory "/">
+        AllowOverride All
+      </Directory>
+    [% END %]
+  [% END %]
+
+  <IfModule suphp_module>
+    suPHP_UserGroup [% vhost.user %] [% vhost.group %]
+  </IfModule>
+[% IF phpopenbasedirprotect_enabled && vhost.phpopenbasedirprotect && ( supported.libphp4 || supported.libphp5 ) -%]
+  <IfModule concurrent_php.c>
+    php4_admin_value open_basedir "[% vhost.homedir %]:/usr/lib/php:/usr/php4/lib/php:/usr/local/lib/php:/usr/local/php4/lib/php:/tmp"
+    php5_admin_value open_basedir "[% vhost.homedir %]:/usr/lib/php:/usr/local/lib/php:/tmp"
+  </IfModule>
+  <IfModule !concurrent_php.c>
+    <IfModule mod_php4.c>
+      php_admin_value open_basedir "[% vhost.homedir %]:/usr/lib/php:/usr/php4/lib/php:/usr/local/lib/php:/usr/local/php4/lib/php:/tmp"
+    </IfModule>
+    <IfModule mod_php5.c>
+      php_admin_value open_basedir "[% vhost.homedir %]:/usr/lib/php:/usr/local/lib/php:/tmp"
+    </IfModule>
+    <IfModule sapi_apache2.c>
+      php_admin_value open_basedir "[% vhost.homedir %]:/usr/lib/php:/usr/php4/lib/php:/usr/local/lib/php:/usr/local/php4/lib/php:/tmp"
+    </IfModule>
+  </IfModule>
+[% END -%]
+[% IF vhost.user != 'nobody' -%]
+  <IfModule suexec_module>
+    <IfModule !mod_ruid2.c>
+      SuexecUserGroup [% vhost.user %] [% vhost.group %]
+    </IfModule>
+  </IfModule>
+  <IfModule ruid2_module>
+    RMode config
+    RUidGid [% vhost.user %] [% vhost.group %]
+[% IF jailapache && vhost.jailed -%]
+    RDocumentChRoot /home/virtfs/[% vhost.user %] [% vhost.documentroot %]
+[% END -%]
+  </IfModule>
+  <IfModule mpm_itk.c>
+    # For more information on MPM ITK, please read:
+    #   http://mpm-itk.sesse.net/
+    AssignUserID [% vhost.user %] [% vhost.group %]
+  </IfModule>
+[% END -%]
+[%- IF vhost.secruleengineoff %]
+  <IfModule security2_module>
+    SecRuleEngine Off
+  </IfModule>
+[%- END %]
+[% IF vhost.hascgi && scriptalias == 1 -%]
+  <IfModule alias_module>
+    ScriptAlias /cgi-bin/ [% vhost.documentroot %]/cgi-bin/
+  </IfModule>
+[% END -%]
+
+[%- IF file_test('d', paths.dir_conf_userdata) %]
+    [%- IF cachedfglob(paths.dir_conf_userdata _ '/*.conf') %]
+  Include "[% paths.dir_conf_userdata %]/*.conf"
+    [%- END %]
+    [%- IF vhost.owner && cachedfglob(paths.dir_conf_userdata _ '/*.owner-' _ vhost.owner) %]
+        [%- added_include = 1 %]
+  Include "[% paths.dir_conf_userdata %]/*.owner-[% vhost.owner %]"
+    [%- END %]
+    [%- IF file_test('d', paths.dir_conf_userdata _ '/std') %]
+        [%- IF cachedfglob(paths.dir_conf_userdata _ '/std/*.conf') %]
+            [%- added_include = 1 %]
+  Include "[% paths.dir_conf_userdata %]/std/*.conf"
+        [%- END %]
+        [%- IF vhost.owner && cachedfglob(paths.dir_conf_userdata _ '/std/*.owner-' _ vhost.owner) %]
+            [%- added_include = 1 %]
+  Include "[% paths.dir_conf_userdata %]/std/*.owner-[% vhost.owner %]"
+        [%- END %]
+        [% SET vhost_include_base = '' %]
+        [% FOREACH vhost_include_dir IN [ "$paths.dir_conf_userdata/std/$apache_target_version/", "$paths.dir_conf_userdata/std/2/" ] %]
+            [% IF file_test('d',vhost_include_dir) %]
+                [% SET vhost_include_base = vhost_include_dir %]
+                [% LAST %]
+            [% END %]
+        [% END %]
+        [%- IF vhost_include_base %]
+            [%- IF cachedfglob(vhost_include_base _ '*.conf') %]
+                [%- added_include = 1 %]
+  Include "[% vhost_include_base %]*.conf"
+            [%- END %]
+            [%- IF vhost.owner && cachedfglob(vhost_include_base _ '*.owner-' _ vhost.owner) %]
+                [%- added_include = 1 %]
+  Include "[% vhost_include_base %]*.owner-[% vhost.owner %]"
+            [%- END %]
+            [%- IF file_test('d',vhost_include_base _ vhost.user) %]
+                [%- IF fglob(vhost_include_base _ vhost.user _ '/*.conf') %]
+                    [%- added_include = 1 %]
+  Include "[% vhost_include_base %][% vhost.user %]/*.conf"
+                [%- END %]
+                [%- domains_list = vhost.serveralias.split(' ') %]
+                [%- domains_list.push(vhost.servername) %]
+                [%- FOREACH domain IN domains_list.unique() %]
+                    [%- domain = legacy_wildcard_safe(domain) %]
+                    [%- IF file_test('d',vhost_include_base _ vhost.user _ '/' _  domain) %]
+                        [%- IF fglob(vhost_include_base _ vhost.user _ '/' _ domain _ '/*.conf') %]
+                            [%- added_include = 1 %]
+  Include "[% vhost_include_base %][% vhost.user %]/[% domain %]/*.conf"
+                        [%- END %]
+                    [%- END %]
+                [%- END %]
+            [%- END %]
+        [%- END %]
+    [%- END %]
+[%- END %]
+# XtendWeb managed config
+    <IfModule proxy_fcgi_module>
+        <FilesMatch \.(phtml|php[0-9]*)$>
+            SetHandler proxy:unix:[% vhost.homedir %]/tmp/[% wildcard_safe(vhost.servername) %].sock|fcgi://[% wildcard_safe(vhost.servername) %]/
+        </FilesMatch>
+    </IfModule>
+# XtendWeb managed config
+[%- IF global_dcv_rewrite_exclude && dcv_rewrite_patterns %]
+    # Global DCV Rewrite Exclude
+    <IfModule rewrite_module>
+        RewriteOptions Inherit
+    </IfModule>
+[%- END %]
+
+[%- IF !added_include %]
+    [%- IF apache_target_version %]
+        [%- SET vhost_include_base = paths.dir_conf_userdata _ "/std/$apache_target_version/" %]
+    [%- ELSE %]
+        [%- SET vhost_include_base = paths.dir_conf_userdata _ '/std/2_4/' %]
+    [%- END %]
+    [%- domain = legacy_wildcard_safe(vhost.servername) %]
+  # To customize this VirtualHost use an include file at the following location
+  # Include "[% vhost_include_base %][% vhost.user %]/[% domain %]/*.conf"
+[%- END %]
+</VirtualHost>

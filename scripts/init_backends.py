@@ -11,6 +11,7 @@ import pwd
 import jinja2
 import codecs
 import sys
+import shutil
 
 
 __author__ = "Anoop P Alias"
@@ -25,6 +26,14 @@ php_fpm_config = installation_path+"/conf/php-fpm.conf"
 
 
 # Function defs
+
+
+# Define a function to silently remove files
+def silentremove(filename):
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
 
 
 def control_php_fpm(trigger):
@@ -113,6 +122,21 @@ def control_php_fpm(trigger):
                 subprocess.call(['systemctl', 'disable', 'ndeploy_backends.service'])
                 if not os.path.isfile(installation_path+"/conf/secure-php-enabled"):
                     os.mknod(installation_path+"/conf/secure-php-enabled")
+        elif trigger == 'httpd-php-install':
+            if not os.path.isfile('/var/cpanel/templates/apache2_4/vhost.local') and not os.path.isfile('/var/cpanel/templates/apache2_4/ssl_vhost.local'):
+                shutil.copy2(installation_path+"/conf/httpd_vhost.local", "/var/cpanel/templates/apache2_4/vhost.local")
+                shutil.copy2(installation_path+"/conf/httpd_ssl_vhost.local", "/var/cpanel/templates/apache2_4/ssl_vhost.local")
+                subprocess.call(['/scripts/rebuildhttpdconf'], shell=True)
+                subprocess.call(['/scripts/restartsrv_httpd'], shell=True)
+                print("/var/cpanel/templates/apache2_4/vhost.local and /var/cpanel/templates/apache2_4/ssl_vhost.local was modified")
+            else:
+                print("Your /var/cpanel/templates/apache* template file has customization")
+                print("Automatic setup FAILED")
+        elif trigger == 'httpd-php-uninstall':
+            silentremove('/var/cpanel/templates/apache2_4/vhost.local')
+            silentremove('/var/cpanel/templates/apache2_4/ssl_vhost.local')
+            subprocess.call(['/scripts/rebuildhttpdconf'], shell=True)
+            subprocess.call(['/scripts/restartsrv_httpd'], shell=True)
         else:
             return
 

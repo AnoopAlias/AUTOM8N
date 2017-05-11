@@ -4,7 +4,9 @@ DefaultDependencies=no
 Before=slices.target
 
 [Slice]
-CPUWeight=100%
-MemoryMax=80%
-MemoryHigh=80%
-IOWeight=100%
+CPUShares=1024
+MemoryLimit=4G
+BlockIOWeight=1000
+# CPUWeight=200
+# MemoryHigh=2G
+# IOWeight=200

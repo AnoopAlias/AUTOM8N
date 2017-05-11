@@ -85,7 +85,6 @@ if form.getvalue('domain') and form.getvalue('phpfpm'):
         print('<div class="icon-box">')
         print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> PHP-FPM settings saved')
         print('</div>')
-        print('</form>')
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
