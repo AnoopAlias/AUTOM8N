@@ -71,6 +71,7 @@ if form.getvalue('reseller') and form.getvalue('cpuweight') and form.getvalue('m
     print('<div class="panel-body">')
     with open(ownerslice, 'w') as configfile:
       config.write(configfile)
+    subprocess.call(['systemctl', 'daemon-reload'], shell=True)
     print('<div class="icon-box">')
     print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Resource settings saved')
     print('</div>')

@@ -97,7 +97,7 @@ def control_php_fpm(trigger):
                         subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
         elif trigger == "secure-php":
             try:
-                subprocess.call(['systemctl', '--version'])
+                subprocess.call(['systemctl', '--version'], shell=True)
             except OSError:
                 print('secure-php needs systemd . upgrade your cPanel system to CentOS7/CloudLinux7 ')
                 sys.exit(1)
@@ -116,10 +116,10 @@ def control_php_fpm(trigger):
                     service_generated_config = service_template.render(templateVars)
                     with codecs.open(systemd_service_file, "w", 'utf-8') as confout:
                         confout.write(service_generated_config)
-                subprocess.call(['systemctl', 'daemon-reload'])
+                subprocess.call(['systemctl', 'daemon-reload'], shell=True)
                 print('Disabling root owned php-fpm master process:')
-                subprocess.call(['systemctl', 'stop', 'ndeploy_backends.service'])
-                subprocess.call(['systemctl', 'disable', 'ndeploy_backends.service'])
+                subprocess.call(['systemctl', 'stop', 'ndeploy_backends.service'], shell=True)
+                subprocess.call(['systemctl', 'disable', 'ndeploy_backends.service'], shell=True)
                 if not os.path.isfile(installation_path+"/conf/secure-php-enabled"):
                     os.mknod(installation_path+"/conf/secure-php-enabled")
         elif trigger == 'httpd-php-install':
