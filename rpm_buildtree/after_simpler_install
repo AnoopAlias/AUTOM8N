@@ -4,7 +4,7 @@ if [ ! -d /var/cpanel/apps ] ; then
 fi
 
 echo -e '\e[93m Installing << SimpleR >> plugin in WHM \e[0m'
-/usr/local/cpanel/bin/unregister_appconfig /opt/simpler/simpler.conf
+/usr/local/cpanel/bin/register_appconfig /opt/simpler/simpler.conf
 
 
 echo -e '\e[93m ########################################################################### \e[0m'
