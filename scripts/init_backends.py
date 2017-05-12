@@ -97,7 +97,7 @@ def control_php_fpm(trigger):
                         subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
         elif trigger == "secure-php":
             try:
-                subprocess.call(['systemctl', '--version'], shell=True)
+                subprocess.call(['systemctl', '--version'])
             except OSError:
                 print('secure-php needs systemd . upgrade your cPanel system to CentOS7/CloudLinux7 ')
                 sys.exit(1)
@@ -116,10 +116,10 @@ def control_php_fpm(trigger):
                     service_generated_config = service_template.render(templateVars)
                     with codecs.open(systemd_service_file, "w", 'utf-8') as confout:
                         confout.write(service_generated_config)
-                subprocess.call(['systemctl', 'daemon-reload'], shell=True)
+                subprocess.call(['systemctl', 'daemon-reload'])
                 print('Disabling root owned php-fpm master process:')
-                subprocess.call(['systemctl', 'stop', 'ndeploy_backends.service'], shell=True)
-                subprocess.call(['systemctl', 'disable', 'ndeploy_backends.service'], shell=True)
+                subprocess.call(['systemctl', 'stop', 'ndeploy_backends.service'])
+                subprocess.call(['systemctl', 'disable', 'ndeploy_backends.service'])
                 if not os.path.isfile(installation_path+"/conf/secure-php-enabled"):
                     os.mknod(installation_path+"/conf/secure-php-enabled")
         elif trigger == 'httpd-php-install':
@@ -128,6 +128,7 @@ def control_php_fpm(trigger):
                 shutil.copy2(installation_path+"/conf/httpd_ssl_vhost.local", "/var/cpanel/templates/apache2_4/ssl_vhost.local")
                 subprocess.call(['/scripts/rebuildhttpdconf'], shell=True)
                 subprocess.call(['/scripts/restartsrv_httpd'], shell=True)
+                os.mknod(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED')
                 print("/var/cpanel/templates/apache2_4/vhost.local and /var/cpanel/templates/apache2_4/ssl_vhost.local was modified")
             else:
                 print("Your /var/cpanel/templates/apache* template file has customization")
@@ -135,6 +136,7 @@ def control_php_fpm(trigger):
         elif trigger == 'httpd-php-uninstall':
             silentremove('/var/cpanel/templates/apache2_4/vhost.local')
             silentremove('/var/cpanel/templates/apache2_4/ssl_vhost.local')
+            silentremove(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED')
             subprocess.call(['/scripts/rebuildhttpdconf'], shell=True)
             subprocess.call(['/scripts/restartsrv_httpd'], shell=True)
         else:
