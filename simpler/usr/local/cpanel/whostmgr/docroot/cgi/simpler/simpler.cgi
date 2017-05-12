@@ -63,7 +63,10 @@ if os.path.isfile(xtendweb_installation_path+"/conf/secure-php-enabled"):
           # create the slice from a template
           templateLoader = jinja2.FileSystemLoader(xtendweb_installation_path + "/conf/")
           templateEnv = jinja2.Environment(loader=templateLoader)
-          TEMPLATE_FILE = "simpler_resources.j2"
+          if os.path.isfile(xtendweb_installation_path+"/conf/simpler_resources_local.j2"):
+              TEMPLATE_FILE = "simpler_resources_local.j2"
+          else:
+              TEMPLATE_FILE = "simpler_resources.j2"
           template = templateEnv.get_template(TEMPLATE_FILE)
           templateVars = {"OWNER": owner
                           }

@@ -125,7 +125,7 @@ def php_backend_add(user_name, domain_home):
         return
 
 
-def hhvm_backend_add(user_name, domain_home, clusterenabled, *cluster_serverlist):
+def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluster_serverlist):
     """Function to setup hhvm for user """
     hhvm_server_file = installation_path + "/hhvm.d/" + user_name + ".ini"
     if not os.path.isfile(hhvm_server_file):
@@ -139,6 +139,19 @@ def hhvm_backend_add(user_name, domain_home, clusterenabled, *cluster_serverlist
         generated_config = template.render(templateVars)
         with codecs.open(hhvm_server_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
+        silentremove('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf')
+        if not os.path.isdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d'):
+            os.mkdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d',0o755)
+        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+        templateEnv = jinja2.Environment(loader=templateLoader)
+        TEMPLATE_FILE = "limits.conf.j2"
+        template = templateEnv.get_template(TEMPLATE_FILE)
+        templateVars = {"OWNER": owner_name
+                        }
+        generated_config = template.render(templateVars)
+        with codecs.open('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 'w', 'utf-8') as confout:
+            confout.write(generated_config)
+        os.chmod('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 0o644)
         subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         # Sync cluster config and call systemd remotely
@@ -146,6 +159,19 @@ def hhvm_backend_add(user_name, domain_home, clusterenabled, *cluster_serverlist
             subprocess.call(['csync2', '-x'], shell=True)
             subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=started enabled=yes"', shell=True)
     else:
+        silentremove('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf')
+        if not os.path.isdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d'):
+            os.mkdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d',0o755)
+        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+        templateEnv = jinja2.Environment(loader=templateLoader)
+        TEMPLATE_FILE = "limits.conf.j2"
+        template = templateEnv.get_template(TEMPLATE_FILE)
+        templateVars = {"OWNER": owner_name
+                        }
+        generated_config = template.render(templateVars)
+        with codecs.open('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 'w', 'utf-8') as confout:
+            confout.write(generated_config)
+        os.chmod('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 0o644)
         subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         if clusterenabled:
@@ -187,6 +213,7 @@ def php_secure_backend_add(user_name, owner_name, domain_home, clusterenabled, *
             generated_config = template.render(templateVars)
             with codecs.open('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf', 'w', 'utf-8') as confout:
                 confout.write(generated_config)
+            os.chmod('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf', 0o644)
             subprocess.call(['systemctl', 'start', backend_name+'@'+user_name+'.socket'])
             subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
             # Stopping the service as a new request to socket will activate it again
@@ -495,7 +522,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     elif backend_category == 'HHVM':
         fastcgi_socket = domain_home+"/hhvm.sock"
         if not os.path.isfile(fastcgi_socket):
-            hhvm_backend_add(kwargs.get('configuser'), domain_home, clusterenabled, *cluster_serverlist)
+            hhvm_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
     # We generate the app config from template next
     apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
                        "CPANELIP": cpanel_ipv4,
@@ -565,7 +592,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
             elif subdir_backend_category == 'HHVM':
                 fastcgi_socket = domain_home+"/hhvm.sock"
                 if not os.path.isfile(fastcgi_socket):
-                    hhvm_backend_add(kwargs.get('configuser'), domain_home, clusterenabled, *cluster_serverlist)
+                    hhvm_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
             subdirApptemplateVars = {"NEWDOCUMENTROOT": document_root+'/'+subdir,
                                      "SUBDIR": subdir,
                                      "SUBDIRAPPS": subdir_apps_uniq,
@@ -638,7 +665,10 @@ if __name__ == "__main__":
                         # create the slice from a template
                         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
                         templateEnv = jinja2.Environment(loader=templateLoader)
-                        TEMPLATE_FILE = "simpler_resources.j2"
+                        if os.path.isfile(installation_path+"/conf/simpler_resources_local.j2"):
+                            TEMPLATE_FILE = "simpler_resources_local.j2"
+                        else:
+                            TEMPLATE_FILE = "simpler_resources.j2"
                         template = templateEnv.get_template(TEMPLATE_FILE)
                         templateVars = {"OWNER": myowner
                                         }
