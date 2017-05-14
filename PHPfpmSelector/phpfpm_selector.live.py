@@ -65,7 +65,7 @@ print('<ol class="breadcrumb">')
 print('<li><a href="phpfpm_selector.live.py"><span class="glyphicon glyphicon-home"></span></a></li>')
 print('<li class="active">Select domain</li>')
 print('</ol>')
-if os.path.isfile(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED') and os.path.isfile(installation_path+"/conf/secure-php-enabled"):
+if os.path.isfile(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED'):
     print('<div class="panel panel-default">')
     print('<div class="panel-heading"><h3 class="panel-title">Select domain to configure:</h3></div>')
     print('<div class="panel-body">')

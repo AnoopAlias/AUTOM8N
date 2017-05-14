@@ -20,6 +20,7 @@ XtendWeb Nginx Cluster Control for cPanel
    ModSecurity
    Naxsi
    user_docs
+   simpler_resource_control
 
 .. toctree::
    :maxdepth: 2

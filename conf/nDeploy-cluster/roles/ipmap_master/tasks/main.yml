@@ -9,4 +9,4 @@
   shell: bash /root/xtendweb_ipmap
 
 - name: Do a DNS Sync
-  shell: for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do /opt/nDeploy/scripts/cluster_dns_ensure_user.py $CPANELUSER; done
+  shell: "for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do /opt/nDeploy/scripts/cluster_dns_ensure_user.py $CPANELUSER; done"

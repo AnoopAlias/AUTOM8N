@@ -25,6 +25,6 @@ $TTL %ttl%
 {% for host in groups['ndeployslaves'] %}
 %domain%. IN MX 100 {{ host }}.
 {% endfor %}
-mail IN CNAME %domain%.
+mail IN CNAME {{ ansible_nodename }}.
 www IN CNAME %domain%.
-ftp IN CNAME %domain%.
+ftp IN CNAME {{ ansible_nodename }}.

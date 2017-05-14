@@ -364,6 +364,15 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                 if not os.path.realpath(phpfpm_secure_socket) == phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock":
                     silentremove(phpfpm_secure_socket)
                     os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_secure_socket)
+        else:
+            php_backend_add(kwargs.get('configuser'), domain_home)
+            phpfpm_socket = domain_home+"/tmp/"+kwargs.get('configdomain')+".sock"
+            if not os.path.islink(phpfpm_socket):
+                os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_socket)
+            else:
+                if not os.path.realpath(phpfpm_socket) == phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock":
+                    silentremove(phpfpm_socket)
+                    os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_socket)
     # Following are features that the UI can change . Can be expanded in future
     # as and when more features are incorporated
     if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
