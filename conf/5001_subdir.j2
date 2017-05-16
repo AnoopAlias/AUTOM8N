@@ -16,7 +16,7 @@ include /etc/nginx/conf.d/files_with_expire.conf;
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
-try_files $uri $uri/ /{{ SUBDIR }}/index.php?q=$uri&$args;
+try_files $uri $uri/ /{{ SUBDIR }}/index.php?$args;
 
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}

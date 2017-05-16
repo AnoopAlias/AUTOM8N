@@ -55,7 +55,7 @@ include /etc/nginx/conf.d/luarestywaf_exec.conf;
 {% endif %}
 # End Include LUAWAF settings
 
-try_files $uri $uri/ /index.php?q=$uri&$args;
+try_files $uri $uri/ /index.php?$args;
 }
 
 location ~ ^/pingphpfpm$ {
