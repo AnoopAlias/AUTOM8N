@@ -54,6 +54,13 @@ FAQ
 Installation
 ---------------------
 
+.. tip:: Simpler setting must be viewed as a safe upper limit for reseller resource usage . For example you can say that reseller x cannot consume more than 75% of memory and CPU.
+         Setting very low limits on high end servers will only give you unhappy users and wasted resource . At the end of the day server is for serving not limiting !
+
+
+.. tip:: Instead of limiting the resource you can scale the Websites to multiple servers using XtendWeb cluster . Assuming that each sever can handle 128 PHP process ,adding a
+         new server to XtendWeb cluster will add another 128 PHP process capable server and allow your website to be served by 256 PHP process via DNS load balancing.
+
 Simpler needs systemd .So you will need CentOS7 or RHEL7 .The php-fpm management is provided by XtendWeb so you will need XtendWeb
 installed as well . You dont need to switch to native nginx.But we urge that you try the native nginx feature as well of XtendWeb .
 

@@ -6,10 +6,10 @@
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
 OPENRESTY_VERSION="1.11.2.3"
-OPENRESTY_RPM_ITER="1.el${OSVERSION}"
+OPENRESTY_RPM_ITER="2.el${OSVERSION}"
 NPS_VERSION="1.11.33.4"
 MY_RUBY_VERSION="2.3.1"
-PASSENGER_VERSION="5.1.2"
+PASSENGER_VERSION="5.1.4"
 NAXSI_VERSION="http2"
 PS_NGX_EXTRA_FLAGS="--with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc"
 OPENSSL_VERSION="1.0.2k"

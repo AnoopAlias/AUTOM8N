@@ -1,5 +1,6 @@
 [maxscale]
 threads=1
+auth_read_timeout=5
 
 #master
 [server1]
@@ -12,8 +13,6 @@ ssl_version=TLSv10
 ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
 ssl_cert=/etc/mysql-ssl/client-cert.pem
 ssl_key=/etc/mysql-ssl/client-key.pem
-enable_root_user=1
-#localhost_match_wildcard_host=1
 serv_weight=0
 persistpoolmax=100
 persistmaxtime=3600
@@ -29,7 +28,6 @@ ssl_version=TLSv10
 ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
 ssl_cert=/etc/mysql-ssl/client-cert.pem
 ssl_key=/etc/mysql-ssl/client-key.pem
-enable_root_user=1
 serv_weight=1
 persistpoolmax=100
 persistmaxtime=3600
@@ -51,7 +49,8 @@ passwd={{ MAXSCALEPASS }}
 weightby=serv_weight
 connection_timeout=60
 max_connections=500
-
+enable_root_user=1
+localhost_match_wildcard_host=1
 
 [MaxAdmin Service]
 type=service

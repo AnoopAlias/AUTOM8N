@@ -217,10 +217,12 @@ def php_secure_backend_add(user_name, owner_name, domain_home, clusterenabled, *
             subprocess.call(['systemctl', 'start', backend_name+'@'+user_name+'.socket'])
             subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
             # Stopping the service as a new request to socket will activate it again
-            subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
+            if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
+                subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
             if clusterenabled:
                 subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.socket state=started enabled=yes"', shell=True)
-                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.service state=stopped"', shell=True)
+                if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
+                    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.service state=stopped"', shell=True)
     return
 
 

@@ -42,7 +42,7 @@ setup_ea4_php(){
 		echo -e '\e[93m SECURITY TIP ::  I have set jail shell as default for newly created accounts \e[0m'
 		echo -e '\e[93m For existing accounts please set Jailed Shell(apply to all) at WHM >> \e[0m'
 		echo -e '\e[93m Home »Account Functions »Manage Shell Access \e[0m'
-		echo -e '\e[93m Chrooted php-fpm is simlar to cageFS provided by CloudLinux \e[0m'
+		echo -e '\e[93m Chrooted php-fpm is similar to cageFS provided by CloudLinux \e[0m'
 		echo -e '\e[93m and disables scripts from accessing files outside their home directory \e[0m'
 	}
 
