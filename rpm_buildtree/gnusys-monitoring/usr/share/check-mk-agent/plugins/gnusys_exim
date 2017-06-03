@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if which exim > /dev/null
+then
+        echo '<<<eximqueue>>>'
+        exim -bpc
+fi

@@ -10,5 +10,7 @@ Following webhost support Clustered cPanel shared, reseller, VPS, Cloud hosting 
 
 `ALPHANEXT <https://alphanext.co/>`_ Company Location: SOUTH EAST ASIA
 
+`YOORSHOP <https://www.yoorshop.fr>`_  Company Location: FRANCE,EUROPE
+
 
 .. tip:: Wish to list your webhosting business here?. Contact anoop@gnusys.net

@@ -23,7 +23,7 @@ ssl_session_timeout  5m;
 ssl_stapling on;
 ssl_stapling_verify on;
 ssl_trusted_certificate {{ CPANELCACERT }};
-resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
 {% endif %}
 {% endif %}
@@ -59,7 +59,7 @@ ssl_session_timeout  5m;
 ssl_stapling on;
 ssl_stapling_verify on;
 ssl_trusted_certificate {{ CPANELCACERT }};
-resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
 {% endif %}
 {% endif %}
@@ -95,7 +95,7 @@ ssl_session_timeout  5m;
 ssl_stapling on;
 ssl_stapling_verify on;
 ssl_trusted_certificate {{ CPANELCACERT }};
-resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
 {% endif %}
 {% endif %}
@@ -222,7 +222,7 @@ ssl_session_timeout  5m;
 ssl_stapling on;
 ssl_stapling_verify on;
 ssl_trusted_certificate {{ CPANELCACERT }};
-resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
 {% endif %}
 server_name  {{ DOMAINLIST }};

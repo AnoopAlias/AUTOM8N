@@ -13,8 +13,6 @@
 
   
   
-  
-  
 
   
 
@@ -48,7 +46,6 @@
 
 <body class="wy-body-for-nav" role="document">
 
-   
   <div class="wy-grid-for-nav">
 
     
@@ -85,10 +82,7 @@
           
             
             
-              
-            
-            
-              <p class="caption"><span class="caption-text">XtendWeb Cluster - Installation &amp; Basic Configuration</span></p>
+                <p class="caption"><span class="caption-text">XtendWeb Cluster - Installation &amp; Basic Configuration</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Cluster Installation</a><ul>
@@ -191,10 +185,8 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">XtendWeb</a>
-        
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">XtendWeb</a>
       </nav>
 
 
@@ -203,38 +195,21 @@
         <div class="rst-content">
           
 
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
-
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>Cluster Installation</li>
-    
-    
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Cluster Installation</li>
       <li class="wy-breadcrumbs-aside">
         
-            
+          
         
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -361,19 +336,6 @@ yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="referen
 <span class="n">usage</span><span class="p">:</span> <span class="n">update_cluster_ipmap</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">slave_hostname</span> <span class="n">ip_here</span> <span class="n">remote_ip</span>
 </pre></div>
 </div>
-<p>9. Setup MySQL profile on masters WHM</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>WHM &gt;&gt; Home »SQL Services »Manage MySQL® Profiles
-Add a new profile:
-  Profile Name : xtendweb
-  [select] Manually enter an existing MySQL superuser’s credentials.Manually enter an existing MySQL superuser’s credentials.
-  Host: 127.0.0.1  #Do not use localhost as this will fail
-  Port: 13306
-  Username: root
-  Password: ****  #This is mysql root password and can be obtained from /root/.my.cnf
-
-  Save and under actions click on : &quot;Validate&quot; and &quot;Activate&quot; the xtendweb pofile.
-</pre></div>
-</div>
 <p>The cluster is fully setup now and you can start adding accounts .Cluster automatically setus up DNS clustering
 and you should use master and slaves as the nameservers for the domain to ensure DNS LoadBalancing.</p>
 <p>The slave works independently (thus the scalability!) ,so ensure the backends required are installed on all slaves using</p>
@@ -396,18 +358,15 @@ and you should use master and slaves as the nameservers for the domain to ensure
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mod_remoteip.html" class="btn btn-neutral float-right" title="mod_remoteip" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="mod_remoteip.html" class="btn btn-neutral float-right" title="mod_remoteip" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="installation_standalone.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installation_standalone.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -439,11 +398,9 @@ and you should use master and slaves as the nameservers for the domain to ensure
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'4.0',
-            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
+            HAS_SOURCE:  true
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

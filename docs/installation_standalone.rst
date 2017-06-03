@@ -36,8 +36,14 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   /opt/nDeploy/scripts/easy_php_setup.sh
   # php-fpm and a selected set of modules are installed from the EA4 php repo
 
+4.1.1. (Optional) Setup per user php-fpm master process for complete user level isolation
+::
 
-4.1.1. Enable PHP-FPM selector plugin
+    #Works only on Centos7/CloudLinux7
+    /opt/nDeploy/scripts/init_backends.py secure-php
+
+
+4.1.2. Enable PHP-FPM selector plugin(to make php-fpm default in httpd)
 ::
 
   /opt/nDeploy/scripts/init_backends.py httpd-php-install

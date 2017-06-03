@@ -17,5 +17,6 @@ fi
 # Workaround for unison memory issue
 if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ];then
   /usr/sbin/service ndeploy_unison stop
+  sleep 5
   /usr/sbin/service ndeploy_unison start
 fi

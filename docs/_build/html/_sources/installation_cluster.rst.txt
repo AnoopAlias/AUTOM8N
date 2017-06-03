@@ -5,7 +5,7 @@ XtendWeb Cluster Requirements:
 --------------------------------
 .. note:: using CloudLinux will be counter productive on XtendWeb Cluster as cloudLinux is trying to solve server stability problem by limiting resources useable by a user
           XtendWeb on the other hand tries to achieve stability by using a fan-out infrastructure which is what an enterprise user would need.
-          
+
 It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this). XtendWeb cluster needs atleast 2 servers.
 
 It is highly recommended that the servers be on different geographic regions ( eg: master in US , slave in UK ) and use different providers.
@@ -131,20 +131,6 @@ XtendWeb cluster setup:
   # If you have multiple IP on master and slave, map additional IP's using command below
   /opt/nDeploy/scripts/update_cluster_ipmap.py
   usage: update_cluster_ipmap.py [-h] slave_hostname ip_here remote_ip
-
-9. Setup MySQL profile on masters WHM
-::
-
-  WHM >> Home »SQL Services »Manage MySQL® Profiles
-  Add a new profile:
-    Profile Name : xtendweb
-    [select] Manually enter an existing MySQL superuser’s credentials.Manually enter an existing MySQL superuser’s credentials.
-    Host: 127.0.0.1  #Do not use localhost as this will fail
-    Port: 13306
-    Username: root
-    Password: ****  #This is mysql root password and can be obtained from /root/.my.cnf
-
-    Save and under actions click on : "Validate" and "Activate" the xtendweb pofile.
 
 
 The cluster is fully setup now and you can start adding accounts .Cluster automatically setus up DNS clustering
