@@ -122,6 +122,15 @@ def control_php_fpm(trigger):
                 subprocess.call(['systemctl', 'disable', 'ndeploy_backends.service'])
                 if not os.path.isfile(installation_path+"/conf/secure-php-enabled"):
                     os.mknod(installation_path+"/conf/secure-php-enabled")
+        elif trigger == "disable-secure-php":
+            conf_list = os.listdir("/opt/nDeploy/secure-php-fpm.d")
+            for filename in conf_list:
+                user, extension = filename.split('.')
+                for backend_name in list(php_backends_dict.keys()):
+                    subprocess.call(['systemctl', 'stop', backend_name+'@'+user+'.socket'])
+                    subprocess.call(['systemctl', 'disable', backend_name+'@'+user+'.socket'])
+            silentremove(installation_path+"/conf/secure-php-enabled")
+            print("Please run /opt/nDeploy/scripts/attempt_autofix.sh to regenerate config")
         elif trigger == 'httpd-php-install':
             if not os.path.isfile('/var/cpanel/templates/apache2_4/vhost.local') and not os.path.isfile('/var/cpanel/templates/apache2_4/ssl_vhost.local'):
                 shutil.copy2(installation_path+"/conf/httpd_vhost.local", "/var/cpanel/templates/apache2_4/vhost.local")

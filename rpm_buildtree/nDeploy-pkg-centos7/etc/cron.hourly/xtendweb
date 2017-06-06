@@ -14,9 +14,3 @@ if [ $? -ne 0 ];then
   # Reloading nginx
   /usr/sbin/nginx -s reload
 fi
-# Workaround for unison memory issue
-if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ];then
-  /usr/sbin/service ndeploy_unison stop >/dev/null 2>&1
-  sleep 5
-  /usr/sbin/service ndeploy_unison start >/dev/null 2>&1
-fi
