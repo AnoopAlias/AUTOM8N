@@ -84,6 +84,8 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 ::
 
   /opt/nDeploy/scripts/setup_additional_templates.sh
+  # Note that Redis Full page cache is not compatible with PageSpeed - https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ
+  Disable pagespeed for any redis full page caching template domains.
 
 
 6. Install Optional additional modules

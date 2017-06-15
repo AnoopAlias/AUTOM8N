@@ -36,7 +36,7 @@ mkdir -p nginx-pkg/var/cache/nginx/ngx_pagespeed
 mkdir -p nginx-pkg/var/log/nginx
 mkdir -p nginx-pkg/var/run
 
-for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity
+for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity testcookie_access
 do
   mkdir -p nginx-module-${module}-pkg/etc/nginx/{modules,modules.d,modules.debug,modules.debug.d,conf.auto,conf.d}
   mkdir -p nginx-module-${module}-pkg/usr/nginx/scripts
@@ -171,7 +171,7 @@ rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/brotli.conf ../nginx-module-bro
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/naxsi_* ../nginx-module-naxsi-pkg/etc/nginx/conf.d/
 rsync -a ../nginx-pkg-64-common/etc/nginx/conf.d/modsecurity.conf ../nginx-module-modsecurity-pkg/etc/nginx/conf.d/
 
-for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity
+for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity testcookie_access
 do
   rsync -a tempostrip/etc/nginx/modules/ngx_http_${module}* ../nginx-module-${module}-pkg/etc/nginx/modules/
   rsync -a tempo/etc/nginx/modules/ngx_http_${module}* ../nginx-module-${module}-pkg/etc/nginx/modules.debug/
@@ -211,7 +211,7 @@ cd ../nginx-pkg
 fpm -s dir -t rpm -C ../nginx-pkg --vendor "Anoop P Alias" --version ${NGINX_VERSION} --iteration ${NGINX_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com --description "nDeploy custom nginx package" --url http://anoopalias.github.io/XtendWeb/ --conflicts nginx --conflicts openresty-nDeploy --after-install ../after_nginx_install --before-remove ../after_nginx_uninstall --name nginx-nDeploy .
 rsync -a nginx-nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/${OSVERSION}/x86_64/
 
-for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity
+for module in brotli geoip naxsi pagespeed passenger redis redis2 set_misc srcache_filter echo modsecurity testcookie_access
 do
   cd ../nginx-module-${module}-pkg
   if [ ${module} == "brotli" ];then
