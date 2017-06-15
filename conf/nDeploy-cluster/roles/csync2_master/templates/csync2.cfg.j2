@@ -3,12 +3,12 @@ group nDeployCluster
         host {{ ansible_nodename }} ({% for host in groups['ndeployslaves'] %} {{ hostvars[host]['ansible_nodename'] }} {% endfor %});
         key /etc/csync2/csync2.key;
         include /etc/nginx/ssl;
+        include /etc/nginx/conf.d/cpanel_services.conf;
         include /var/cpanel/ssl/installed;
 	      include /opt/nDeploy/php-fpm.d;
         include /opt/nDeploy/secure-php-fpm.d;
         include /opt/nDeploy/hhvm.d;
         include /etc/localdomains;
-        include /etc/nginx/conf.d/cpanel_services.conf
         action
         {
                 pattern /etc/localdomains;
