@@ -26,6 +26,11 @@ limit_req   zone=one  burst=2 nodelay;
 try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }
 
+location = /search {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
+}
+
 location = /admin/ {
 limit_req   zone=one  burst=2 nodelay;
 try_files /XTENDWEB_BF_DETECTOR @cphttpd;
@@ -46,6 +51,10 @@ limit_req   zone=one  burst=2 nodelay;
 try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }
 
+location = /search/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
+}
 
 location = /admin.php {
 limit_req   zone=one  burst=2 nodelay;
@@ -53,6 +62,11 @@ try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }
 
 location = /wp-login.php {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
+}
+
+location = /xmlrpc.php {
 limit_req   zone=one  burst=2 nodelay;
 try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }

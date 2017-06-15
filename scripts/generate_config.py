@@ -397,6 +397,10 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     else:
         pagespeed = 'disabled'
         pagespeed_filter = 'CoreFilters'
+    if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
+        test_cookie = yaml_parsed_domain_data.get('test_cookie', 'disabled')
+    else:
+        test_cookie = 'disabled'
     if domain_server_name.startswith("*"):
         wwwredirect = None
     else:
@@ -422,6 +426,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     set_expire_static = yaml_parsed_domain_data.get('set_expire_static', 'disabled')
     dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', None)
     open_file_cache = yaml_parsed_domain_data.get('open_file_cache', None)
+    symlink_protection = yaml_parsed_domain_data.get('symlink_protection', 'disabled')
     if not serveralias_list_new:
         redirect_aliases = 'disabled'
     else:
@@ -468,6 +473,8 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "MAINDOMAINNAME": kwargs.get('maindomain'),
                     "CONFIGDOMAINNAME": kwargs.get('configdomain'),
                     "PAGESPEED": pagespeed,
+                    "TEST_COOKIE": test_cookie,
+                    "SYMLINK_PROTECTION": symlink_protection,
                     "CLICKJACKING_PROTECT": clickjacking_protect,
                     "DISABLE_CONTENTTYPE_SNIFFING": disable_contenttype_sniffing,
                     "XSS_FILTER": xss_filter,

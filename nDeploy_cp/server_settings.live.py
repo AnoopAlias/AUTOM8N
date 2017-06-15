@@ -91,6 +91,8 @@ if form.getvalue('domain'):
         redirecturl = yaml_parsed_profileyaml.get('redirecturl', 'none')
         redirectstatus = yaml_parsed_profileyaml.get('redirectstatus', 'none')
         append_requesturi = yaml_parsed_profileyaml.get('append_requesturi', 'disabled')
+        test_cookie = yaml_parsed_profileyaml.get('test_cookie', 'disabled')
+        symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
         # Ok we are done with getting the settings,now lets present it to the user
         print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
         print('<form id="config" class="form-inline" action="save_server_settings.live.py" method="post">')
@@ -343,6 +345,42 @@ if form.getvalue('domain'):
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
+        # test_cookie
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        test_cookie_hint = "Disable most bots except good ones like google/yahoo etc with a cookie challenge"
+        if test_cookie == 'enabled':
+            print_green("test_cookie", test_cookie_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red("test_cookie", test_cookie_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
+        # symlink_protection
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        symlink_protection_hint = "Access to a file is denied if any component of the pathname is a symbolic link, and the link and object that the link points to have different owners"
+        if symlink_protection == 'enabled':
+            print_green("symlink_protection", symlink_protection_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red("symlink_protection", symlink_protection_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
         print('</li>')

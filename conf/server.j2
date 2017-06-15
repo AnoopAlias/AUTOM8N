@@ -167,6 +167,13 @@ modsecurity on;
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
+{% if TEST_COOKIE == 'enabled' %}
+testcookie on;
+{% endif %}
+{% if SYMLINK_PROTECTION == 'enabled' %}
+disable_symlinks if_not_owner;
+{% endif %}
+
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
@@ -279,6 +286,13 @@ modsecurity on;
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
+{% if TEST_COOKIE == 'enabled' %}
+testcookie on;
+{% endif %}
+{% if SYMLINK_PROTECTION == 'enabled' %}
+disable_symlinks if_not_owner;
+{% endif %}
+
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;

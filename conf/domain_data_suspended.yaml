@@ -16,6 +16,8 @@ disable_contenttype_sniffing: disabled
 xss_filter: disabled
 hsts: disabled
 dos_mitigate: disabled
+symlink_protection: disabled
+test_cookie: disabled
 naxsi: disabled
 naxsi_mode: learn
 naxsi_whitelist: none

@@ -296,6 +296,36 @@ else:
     print('</body>')
     print('</html>')
     sys.exit(0)
+# test_cookie
+if 'test_cookie' in form.keys():
+    test_cookie = form.getvalue('test_cookie')
+    yaml_parsed_profileyaml['test_cookie'] = test_cookie
+else:
+    print('ERROR: Forbidden::test_cookie')
+    print('</div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</body>')
+    print('</html>')
+    sys.exit(0)
+# symlink_protection
+if 'symlink_protection' in form.keys():
+    symlink_protection = form.getvalue('symlink_protection')
+    yaml_parsed_profileyaml['symlink_protection'] = symlink_protection
+else:
+    print('ERROR: Forbidden::symlink_protection')
+    print('</div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</body>')
+    print('</html>')
+    sys.exit(0)
 # redirect_to_ssl
 if 'redirect_to_ssl' in form.keys():
     redirect_to_ssl = form.getvalue('redirect_to_ssl')
