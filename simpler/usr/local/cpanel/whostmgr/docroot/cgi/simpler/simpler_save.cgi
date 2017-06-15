@@ -72,6 +72,7 @@ if form.getvalue('reseller') and form.getvalue('cpuweight') and form.getvalue('m
     with open(ownerslice, 'w') as configfile:
       config.write(configfile)
     subprocess.call(['systemctl', 'daemon-reload'])
+    subprocess.Popen('/opt/nDeploy/scripts/attempt_autofix.sh',shell=True)
     print('<div class="icon-box">')
     print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Resource settings saved')
     print('</div>')

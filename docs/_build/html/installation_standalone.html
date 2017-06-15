@@ -249,9 +249,17 @@
 <span class="c1"># php-fpm and a selected set of modules are installed from the EA4 php repo</span>
 </pre></div>
 </div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Default PHP-FPM setup above use chroot of PHP-FPM pools to /home/virtfs . This is an alternative to CageFS
+PHP process will not be able to view files not in /home/virtfs like /etc/named.conf for example.
+Ref: <a class="reference external" href="https://documentation.cpanel.net/display/ALD/PHP-FPM+User+Pools#PHP-FPMUserPools-Jailshell">https://documentation.cpanel.net/display/ALD/PHP-FPM+User+Pools#PHP-FPMUserPools-Jailshell</a></p>
+</div>
 <p>4.1.1. (Optional) Setup per user php-fpm master process for complete user level isolation</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Works only on Centos7/CloudLinux7</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">secure</span><span class="o">-</span><span class="n">php</span>
+<span class="c1"># This setup does not support chroot to virtfs as user level process cannot be chrooted!</span>
+<span class="c1"># PHP pocess is user owned but will be able to read files the user has access to</span>
 </pre></div>
 </div>
 <p>4.1.2. Enable PHP-FPM selector plugin(to make php-fpm default in httpd)</p>

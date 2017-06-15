@@ -8,6 +8,7 @@ group nDeployCluster
         include /opt/nDeploy/secure-php-fpm.d;
         include /opt/nDeploy/hhvm.d;
         include /etc/localdomains;
+        include /etc/nginx/conf.d/cpanel_services.conf
         action
         {
                 pattern /etc/localdomains;

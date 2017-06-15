@@ -36,7 +36,7 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   /opt/nDeploy/scripts/easy_php_setup.sh
   # php-fpm and a selected set of modules are installed from the EA4 php repo
 
-.. tip:: Default PHP-FPM setup above use chroot of PHP-FPM pools to /home/virtfs . This is an alternative to CageFS
+.. tip:: Default PHP-FPM setup above use chroot of PHP-FPM pools to /home/virtfs . This is an alternative to CageFS.
          PHP process will not be able to view files not in /home/virtfs like /etc/named.conf for example.
          Ref: https://documentation.cpanel.net/display/ALD/PHP-FPM+User+Pools#PHP-FPMUserPools-Jailshell
 

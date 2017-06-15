@@ -58,7 +58,7 @@ Installation
          Setting very low limits on high end servers will only give you unhappy users and wasted resource . At the end of the day server is for serving not limiting !
 
 
-.. tip:: Instead of limiting the resource you can scale the Websites to multiple servers using XtendWeb cluster . Assuming that each sever can handle 128 PHP process ,adding a
+.. tip:: Instead of limiting the resource you can scale the Websites to multiple servers using XtendWeb cluster . Assuming that each server can handle 128 PHP process ,adding a
          new server to XtendWeb cluster will add another 128 PHP process capable server and allow your website to be served by 256 PHP process via DNS load balancing.
 
 Simpler needs systemd .So you will need CentOS7 or RHEL7 .The php-fpm management is provided by XtendWeb so you will need XtendWeb

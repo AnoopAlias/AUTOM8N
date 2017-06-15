@@ -34,7 +34,7 @@
   lineinfile: dest=/etc/login.defs state=absent regexp="^UMASK"
 
 - name: create default vhost config in slave
-  shell: /opt/nDeploy/scripts/generate_default_vhost_config.py
+  shell: /opt/nDeploy/scripts/generate_default_vhost_config_slave.py
 
 - name: Ensure EA4 is enabled for php-fpm
   file:

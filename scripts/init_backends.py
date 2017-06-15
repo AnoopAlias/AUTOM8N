@@ -129,6 +129,7 @@ def control_php_fpm(trigger):
                 for backend_name in list(php_backends_dict.keys()):
                     subprocess.call(['systemctl', 'stop', backend_name+'@'+user+'.socket'])
                     subprocess.call(['systemctl', 'disable', backend_name+'@'+user+'.socket'])
+                    subprocess.call(['killall', '-SIGKILL', 'php-fpm'])
             silentremove(installation_path+"/conf/secure-php-enabled")
             print("Please run /opt/nDeploy/scripts/attempt_autofix.sh to regenerate config")
         elif trigger == 'httpd-php-install':
