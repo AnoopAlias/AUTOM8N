@@ -1,29 +1,63 @@
-#Proxy to cPanel Apache httpd service
+#Proxy to cPanel Apache httpd service with Brute Force mitigation
 
 root {{ DOCUMENTROOT }};
 
-
 location / {
-
-location = /wp-login.php {
-limit_req   zone=one  burst=1 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }
 
 location = /admin {
-limit_req   zone=one  burst=1 nodelay;
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }
 
 location = /administrator {
-limit_req   zone=one  burst=1 nodelay;
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }
 
 location = /login {
-limit_req   zone=one  burst=1 nodelay;
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }
 
-location = /admin.php {
-limit_req   zone=one  burst=1 nodelay;
+location = /wp-admin {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }
+
+location = /admin/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
+}
+
+location = /administrator/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
+}
+
+location = /login/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
+}
+
+location = /wp-admin/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
+}
+
+
+location = /admin.php {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
+}
+
+location = /wp-login.php {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BF_DETECTOR @cphttpd;
+}
+
+location @cphttpd {
 
 # Include NAXSI settings
 {% if NAXSI == 'enabled' %}

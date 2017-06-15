@@ -10,6 +10,7 @@
 # Adding Application templates
 # PROXY
 /opt/nDeploy/scripts/update_profiles.py add root main PROXY 1000.j2 "Proxy to httpd"
+/opt/nDeploy/scripts/update_profiles.py add root main PROXY 1010.j2 "httpd_proxy+Brute_Force_mitigate"
 /opt/nDeploy/scripts/update_profiles.py add root subdir PROXY 1000_subdir.j2 "Proxy subdir to httpd"
 #/opt/nDeploy/scripts/update_profiles.py add root main PROXY 1001.j2 "A ColdFusion App"
 /opt/nDeploy/scripts/update_profiles.py add root main PROXY 1002.j2 "Proxy to httpd(microcache)"
