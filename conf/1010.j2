@@ -2,6 +2,8 @@
 
 root {{ DOCUMENTROOT }};
 
+log_not_found off;
+
 location / {
 try_files /XTENDWEB_BF_DETECTOR @cphttpd;
 }
