@@ -103,8 +103,7 @@ if os.path.isfile(cluster_config_file):
             print('<span class="label label-warning">'+servername+' | OUT OF SYNC</span><br><br>')
 else:
     if not os.path.isfile(installation_path+'/conf/disable_cluster_warning'):
-        print('<span class="label label-default">XTENDWEB CLUSTER INACTIVE</span><br><br>')
-        print('<span class="label label-info">Contact your service provider</span><br><br>')
+        print('<span class="label label-default">XTENDWEB : STANDALONE MODE</span><br><br>')
 print('</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
 print('</div>')

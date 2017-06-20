@@ -231,24 +231,24 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        # lua_waf
-        print('<ul class="list-group"><li class="list-group-item">')
-        print('<div class="row">')
-        lua_waf_hint = "OpenResty LUA WAF"
-        if lua_waf == 'enabled':
-            print_green('lua_waf', lua_waf_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="lua_waf" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="lua_waf" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red('lua_waf', lua_waf_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="lua_waf" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="lua_waf" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-            print('</div>')
-        print('</li>')
+        # # lua_waf
+        # print('<ul class="list-group"><li class="list-group-item">')
+        # print('<div class="row">')
+        # lua_waf_hint = "OpenResty LUA WAF"
+        # if lua_waf == 'enabled':
+        #     print_green('lua_waf', lua_waf_hint)
+        #     print('<div class="col-sm-6 col-radio">')
+        #     print('<div class="radio"><label><input type="radio" name="lua_waf" value="enabled" checked/> Enabled</label></div>')
+        #     print('<div class="radio"><label><input type="radio" name="lua_waf" value="disabled" /> Disabled</label></div>')
+        #     print('</div>')
+        # else:
+        #     print_red('lua_waf', lua_waf_hint)
+        #     print('<div class="col-sm-6 col-radio">')
+        #     print('<div class="radio"><label><input type="radio" name="lua_waf" value="enabled" /> Enabled</label></div>')
+        #     print('<div class="radio"><label><input type="radio" name="lua_waf" value="disabled" checked/> Disabled</label></div>')
+        #     print('</div>')
+        #     print('</div>')
+        # print('</li>')
         # naxsi
         print('<ul class="list-group"><li class="list-group-item">')
         print('<div class="row">')
