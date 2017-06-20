@@ -1,21 +1,15 @@
 #!/usr/bin/env python
 
 
-import os
 import cgitb
 import subprocess
-import jinja2
-import codecs
+import os
 import cgi
-try:
-    import simplejson as json
-except ImportError:
-    import json
+import shutil
 try:
     from configparser import ConfigParser
 except ImportError:
     from ConfigParser import ConfigParser
-
 
 
 __author__ = "Anoop P Alias"
@@ -33,7 +27,7 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-print('<title>SimpleR Reseller Resource control</title>')
+print('<title>SimpleR Resource control</title>')
 print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
 print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
 print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
@@ -45,40 +39,79 @@ print('<div id="main-container" class="container text-center">')
 print('<div class="row">')
 print('<div class="col-md-6 col-md-offset-3">')
 print('<div class="logo">')
-print('<h4><span class="label label-primary">Simple</span><span class="label label-default">R</span></h4>')
-print('<h6><span class="label label-default">Reseller Resouce controller</span></h6>')
+print('<h4><span class="label label-primary">SimpleR</span></h4>')
+print('<h6><span class="label label-default">Simple Resouce controller</span></h6>')
 print('</div>')
 print('<ol class="breadcrumb">')
-print('<li><a href="simpler.cgi"><span class="glyphicon glyphicon-home"></span></a></li>')
-print('<li class="active">Save Reseller Resource</li>')
+print('<li><a href="simpler.cgi"><span class="glyphicon glyphicon-refresh"></span></a></li>')
+print('<li class="active">Save Resource</li>')
 print('</ol>')
-if form.getvalue('reseller') and form.getvalue('cpuweight') and form.getvalue('memoryhigh') and form.getvalue('ioweight'):
-    print('<div class="panel panel-default">')
-    print('<div class="panel-heading"><h3 class="panel-title"><span class="label label-default">Save reseller resource</span></h3></div>')
-    print('<div class="panel-body">')
+if form.getvalue('mode'):
+    if form.getvalue('mode') == 'user':
+        if form.getvalue('reseller') and form.getvalue('cpuweight') and form.getvalue('memoryhigh') and form.getvalue('ioweight'):
+            print('<div class="panel panel-default">')
+            print('<div class="panel-heading"><h3 class="panel-title"><span class="label label-default">Save reseller resource</span></h3></div>')
+            print('<div class="panel-body">')
 
-    thereseller = form.getvalue('reseller')
-    ownerslice = "/etc/systemd/system/"+thereseller+".slice"
-    config = ConfigParser()
-    config.optionxform = str
-    config.read(ownerslice)
-    config.set('Slice', 'CPUShares', form.getvalue('cpuweight'))
-    config.set('Slice', 'MemoryLimit', form.getvalue('memoryhigh'))
-    config.set('Slice', 'BlockIOWeight', form.getvalue('ioweight'))
-    with open(ownerslice, 'w') as configfile:
-      config.write(configfile)
-    print(('<div class="panel-heading"><h3 class="panel-title">Reseller: <strong>'+thereseller+'</strong></h3></div>'))
-    print('<div class="panel-body">')
-    with open(ownerslice, 'w') as configfile:
-      config.write(configfile)
-    subprocess.call(['systemctl', 'daemon-reload'])
-    subprocess.Popen('/opt/nDeploy/scripts/attempt_autofix.sh',shell=True)
-    print('<div class="icon-box">')
-    print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Resource settings saved')
-    print('</div>')
+            thereseller = form.getvalue('reseller')
+            ownerslice = "/etc/systemd/system/"+thereseller+".slice"
+            config = ConfigParser()
+            config.optionxform = str
+            config.read(ownerslice)
+            config.set('Slice', 'CPUShares', form.getvalue('cpuweight'))
+            config.set('Slice', 'MemoryLimit', form.getvalue('memoryhigh'))
+            config.set('Slice', 'BlockIOWeight', form.getvalue('ioweight'))
+            print(('<div class="panel-heading"><h3 class="panel-title">Reseller: <strong>'+thereseller+'</strong></h3></div>'))
+            print('<div class="panel-body">')
+            with open(ownerslice, 'w') as configfile:
+                config.write(configfile)
+            subprocess.call(['systemctl', 'daemon-reload'])
+            subprocess.Popen('/opt/nDeploy/scripts/attempt_autofix.sh', shell=True)
+            print('<div class="icon-box">')
+            print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Resource settings saved')
+            print('</div>')
+            print('</div>')
+            print('</div>')
 
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
-    print('</div>')
+            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+            print('</div>')
+        else:
+            print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Forbidden</div>')
+            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    elif form.getvalue('mode') == 'service':
+        if form.getvalue('service') and form.getvalue('cpuweight') and form.getvalue('memoryhigh') and form.getvalue('ioweight'):
+            print('<div class="panel panel-default">')
+            print('<div class="panel-heading"><h3 class="panel-title"><span class="label label-default">Save service resource</span></h3></div>')
+            print('<div class="panel-body">')
+
+            myservice = form.getvalue('service')
+            limitsconf = '/etc/systemd/system/' + myservice + '.service.d/limits.conf'
+            if not os.path.isdir('/etc/systemd/system/'+myservice+'.service.d'):
+                os.mkdir('/etc/systemd/system/'+myservice+'.service.d', 0o755)
+            if not os.path.isfile(limitsconf):
+                shutil.copyfile(xtendweb_installation_path+'/conf/simpler_service_resources.j2', limitsconf)
+            config = ConfigParser()
+            config.optionxform = str
+            config.read(limitsconf)
+            config.set('Service', 'CPUShares', form.getvalue('cpuweight'))
+            config.set('Service', 'MemoryLimit', form.getvalue('memoryhigh'))
+            config.set('Service', 'BlockIOWeight', form.getvalue('ioweight'))
+            print(('<div class="panel-heading"><h3 class="panel-title">Service: <strong>'+myservice+'</strong></h3></div>'))
+            print('<div class="panel-body">')
+            with open(limitsconf, 'w') as configfile:
+                config.write(configfile)
+            subprocess.call(['systemctl', 'daemon-reload'])
+            subprocess.Popen(['systemctl', 'restart', myservice])
+            print('<div class="icon-box">')
+            print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Resource settings saved')
+            print('</div>')
+            print('</div>')
+            print('</div>')
+            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+            print('</div>')
+        else:
+            print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Forbidden</div>')
+            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
 else:
     print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Forbidden</div>')
     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
