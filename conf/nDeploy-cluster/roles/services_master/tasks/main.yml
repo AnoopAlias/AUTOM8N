@@ -18,4 +18,4 @@
   shell: /opt/nDeploy/scripts/cluster_home_ensure_all.py
 
 - name: Start unison on master
-  service: name=ndeploy_unison enabled=yes state=started
+  service: name=ndeploy_unison enabled=yes state=restarted

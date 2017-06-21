@@ -42,3 +42,11 @@ job2:
   options: []
   recursive: false
   command: /opt/nDeploy/scripts/event_trigger.sh $filename 1 $tflags
+job3:
+  label: Watch /etc/ips
+  watch: /etc/ips
+  exclude: []
+  events: ['modify']
+  options: []
+  recursive: false
+  command: /opt/nDeploy/scripts/generate_default_vhost_config.py
