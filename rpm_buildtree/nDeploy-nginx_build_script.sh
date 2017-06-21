@@ -7,7 +7,7 @@
 OSVERSION=$1
 NGINX_VERSION="1.12.0"
 NGINX_RPM_ITER="3.el${OSVERSION}"
-NPS_VERSION="1.11.33.4"
+NPS_VERSION="1.12.34.2-stable"
 MY_RUBY_VERSION="2.3.1"
 PASSENGER_VERSION="5.1.5"
 CACHE_PURGE_VERSION="2.3"
@@ -80,11 +80,20 @@ git clone https://github.com/kyprizel/testcookie-nginx-module.git
 #tar -xvzf ngx_cache_purge-${CACHE_PURGE_VERSION}.tar.gz
 
 # Pagespeed and brotli from google
-wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.zip
-unzip release-${NPS_VERSION}-beta.zip
-cd ngx_pagespeed-release-${NPS_VERSION}-beta/
-wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
-tar -xzvf ${NPS_VERSION}.tar.gz
+#wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.zip
+#unzip release-${NPS_VERSION}-beta.zip
+#cd ngx_pagespeed-release-${NPS_VERSION}-beta/
+#wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
+#tar -xzvf ${NPS_VERSION}.tar.gz
+wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}.zip
+unzip v${NPS_VERSION}.zip
+cd ngx_pagespeed-${NPS_VERSION}/
+NPS_RELEASE_NUMBER=${NPS_VERSION/beta/}
+NPS_RELEASE_NUMBER=${NPS_VERSION/stable/}
+psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_RELEASE_NUMBER}.tar.gz
+[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
+wget ${psol_url}
+tar -xzvf $(basename ${psol_url})  # extracts to psol/
 cd ..
 
 git clone https://github.com/google/ngx_brotli.git
