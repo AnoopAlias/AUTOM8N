@@ -15,4 +15,4 @@ make build
 make DESTDIR=$(pwd)/tempo install
 cd tempo
 fpm -s dir -t rpm -C ../tempo --vendor "Anoop P Alias" --version ${LUAROCKS_VERSION} --iteration ${LUAROCKS_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom luarocks package" --url http://luarocks.github.io/ -d openresty-nDeploy --name openresty-nDeploy-luarocks .
-rsync -av openresty-nDeploy-luarocks* root@gnusys.net:/usr/share/nginx/html/CentOS/7/x86_64/
+rsync -av openresty-nDeploy-luarocks* root@autom8n.com:/usr/share/nginx/autom8n/CentOS/7/x86_64/

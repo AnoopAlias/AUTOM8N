@@ -15,4 +15,4 @@ mkdir -p ../nDeploy-unison-pkg/usr/bin
 rsync -av unison ../nDeploy-unison-pkg/usr/bin/
 cd ../nDeploy-unison-pkg
 fpm -s dir -t rpm -C ../nDeploy-unison-pkg --vendor "Anoop P Alias" --version ${UNISON_VERSION} --iteration ${UNISON_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom unison package" --url http://anoopalias.github.io/XtendWeb/ --conflicts unison --name unison-nDeploy .
-rsync -av *.rpm root@gnusys.net:/usr/share/nginx/html/CentOS/6/x86_64/
+rsync -av *.rpm root@autom8n.com:/usr/share/nginx/autom8n/CentOS/6/x86_64/

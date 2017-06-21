@@ -27,4 +27,4 @@ install -m 644 ../luarestywaf/luarestywaf.conf tempo/etc/nginx/conf.auto/
 install -m 644 ../luarestywaf/luarestywaf_exec.conf tempo/etc/nginx/conf.d/
 cd tempo
 fpm -s dir -t rpm -C ../tempo --vendor "Anoop P Alias" --version ${LUARESTYWAF_VERSION} --iteration ${LUARESTYWAF_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom lua-resty-waf package" --url https://github.com/p0pr0ck5/lua-resty-waf -d openresty-nDeploy --name openresty-nDeploy-luarestywaf .
-rsync -av openresty-nDeploy-luarestywaf* root@gnusys.net:/usr/share/nginx/html/CentOS/7/x86_64/
+rsync -av openresty-nDeploy-luarestywaf* root@autom8n.com:/usr/share/nginx/autom8n/CentOS/7/x86_64/

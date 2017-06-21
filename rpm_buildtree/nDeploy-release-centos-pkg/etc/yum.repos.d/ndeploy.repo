@@ -1,6 +1,6 @@
 [ndeploy]
 name=ndeploy repo
-baseurl=https://gnusys.net/CentOS/$releasever/$basearch/
+baseurl=https://autom8n.com/CentOS/$releasever/$basearch/
 gpgcheck=1
 gpgkey=https://raw.githubusercontent.com/AnoopAlias/XtendWeb/ndeploy4/RPM-GPG-KEY-ndeploy
 enabled=0

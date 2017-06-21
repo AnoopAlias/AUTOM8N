@@ -18,4 +18,4 @@ make DESTDIR=$(pwd)/tempo install
 cd tempo
 
 fpm -s dir -t rpm -C ../tempo --vendor "Anoop P Alias" --version ${MODSEC_VERSION} --iteration ${MODSEC_RPM_ITER} -a $(arch) -m anoopalias01@gmail.com -e --description "nDeploy custom libmodsecurity package" --url https://github.com/SpiderLabs/ModSecurity -d libcurl -d GeoIP -d yajl -d libxml2 --name libmodsecurity-nDeploy .
-rsync -av libmodsecurity-nDeploy-* root@gnusys.net:/usr/share/nginx/html/CentOS/7/x86_64/
+rsync -av libmodsecurity-nDeploy-* root@autom8n.com:/usr/share/nginx/autom8n/CentOS/7/x86_64/
