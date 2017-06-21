@@ -10,6 +10,9 @@ for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1);do echo "ConfGen:: $CPANEL
 
 rm -f /opt/nDeploy/conf/skip_nginx_reload /opt/nDeploy/conf/skip_php-fpm_reload
 
+echo -e '\e[93m Attempting to regenerate  nginx default conf  \e[0m'
+/opt/nDeploy/scripts/generate_default_vhost_config.py
+
 # Reloading nginx
 /usr/sbin/nginx -s reload
 
