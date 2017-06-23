@@ -1,12 +1,12 @@
 backend_category: PROXY
 backend_path: '9999'
 backend_version: httpd
-apptemplate_code: 1010.j2
+apptemplate_code: 1000.j2
 autoindex: disabled
 ssl_offload: disabled
-pagespeed: enabled
+pagespeed: disabled
 pagespeed_filter: CoreFilters
-brotli: enabled
+brotli: disabled
 gzip: enabled
 http2: enabled
 access_log: enabled
