@@ -19,3 +19,13 @@
 
 - name: Start unison on master
   service: name=ndeploy_unison enabled=yes state=restarted
+  when:
+    - ansible_lsb.major_release|int < 7
+
+- name: Start unison on master
+  shell: "systemctl stop ndeploy_unison && systemctl start ndeploy_unison"
+  when:
+    - ansible_lsb.major_release|int >= 7
+
+- name: Start redis on master
+  service: name=redis enabled=yes state=started
