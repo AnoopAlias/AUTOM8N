@@ -9,8 +9,8 @@
 
 # Adding Application templates
 # PROXY
-/opt/nDeploy/scripts/update_profiles.py add root main PROXY 1000.j2 "Proxy to httpd"
-/opt/nDeploy/scripts/update_profiles.py add root main PROXY 1010.j2 "Proxy+Brute mitigate"
+/opt/nDeploy/scripts/update_profiles.py add root main PROXY 1010.j2 "Proxy to httpd"
+/opt/nDeploy/scripts/update_profiles.py add root main PROXY 1000.j2 "Proxy+Brute mitigate"
 /opt/nDeploy/scripts/update_profiles.py add root subdir PROXY 1000_subdir.j2 "Proxy subdir to httpd"
 #/opt/nDeploy/scripts/update_profiles.py add root main PROXY 1001.j2 "A ColdFusion App"
 /opt/nDeploy/scripts/update_profiles.py add root main PROXY 1002.j2 "Proxy to httpd(microcache)"
@@ -191,14 +191,13 @@ if [ ! -L /opt/nDeploy/scripts/easy_passenger_setup.sh ];then
   ln -s /usr/nginx/scripts/nginx-passenger-setup.sh /opt/nDeploy/scripts/easy_passenger_setup.sh
 fi
 
-echo -e '\e[93m Installing << XtendWeb >> plugin in cPanel \e[0m'
+echo -e '\e[93m Installing XtendWeb plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
 
-echo -e '\e[93m Installing << PHP-FPM Selector >> plugin in cPanel \e[0m'
+echo -e '\e[93m Installing PHP-FPM Selector plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/PHPfpmSelector
 
 echo -e '\e[93m ########################################################################### \e[0m'
-echo -e '\e[93m #         24x7 monitoring and support for XtendWeb HA cluster             # \e[0m'
-echo -e '\e[93m #          Subscribe at https://support.gnusys.net/order.php              # \e[0m'
-echo -e '\e[93m #         Consulting | Monitoring | Support for your entire IT infra      # \e[0m'
+echo -e '\e[93m #               For AUTOM8N.COM server support plans                      # \e[0m'
+echo -e '\e[93m #             Visit https://autom8n.com/plans.html#plans                  # \e[0m'
 echo -e '\e[93m ########################################################################### \e[0m'

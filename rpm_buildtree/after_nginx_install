@@ -30,7 +30,6 @@ chmod 770 /var/log/nginx/modsecurity
 chgrp nobody /var/log/nginx/modsecurity
 
 echo -e '\e[93m ########################################################################### \e[0m'
-echo -e '\e[93m #         24x7 monitoring and support for XtendWeb HA cluster             # \e[0m'
-echo -e '\e[93m #          Subscribe at https://support.gnusys.net/order.php              # \e[0m'
-echo -e '\e[93m #         Consulting | Monitoring | Support for your entire IT infra      # \e[0m'
+echo -e '\e[93m #               For AUTOM8N.COM server support plans                      # \e[0m'
+echo -e '\e[93m #             Visit https://autom8n.com/plans.html#plans                  # \e[0m'
 echo -e '\e[93m ########################################################################### \e[0m'
