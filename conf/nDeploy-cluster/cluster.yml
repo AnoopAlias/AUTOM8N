@@ -117,6 +117,26 @@
   roles:
     - ipmap_master
 
+- name: Setup PHP-FPM app server on master
+  hosts: ndeploymaster
+  roles:
+    - php_master
+
+- name: Setup PHP-FPM app server on slaves
+  hosts: ndeployslaves
+  roles:
+    - php_slave
+
+- name: Setup stunnel to secure redis on master
+  hosts: ndeploymaster
+  roles:
+    - stunnel_master
+
+- name: Setup stunnel to secure redis on slaves
+  hosts: ndeployslaves
+  roles:
+    - stunnel_slave
+
 - name: Remove temp files from master
   hosts: ndeploymaster
   roles:

@@ -13,6 +13,8 @@
    - unison-nDeploy
    - python-pip
    - redhat-lsb-core
+   - stunnel
+   - redis
 
 - name: Install MySQL-python
   pip:

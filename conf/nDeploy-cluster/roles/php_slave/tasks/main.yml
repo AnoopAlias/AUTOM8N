@@ -1,0 +1,9 @@
+---
+
+- name: generate php.ini extra settings
+  template:
+    src: zz_xtendweb.ini.j2
+    dest: /opt/nDeploy/conf/zz_xtendweb.ini
+
+- name: Setup EasyApache4 PHP
+  shell: /opt/nDeploy/scripts/easy_php_setup.sh ea4_cluster

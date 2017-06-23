@@ -29,18 +29,18 @@ setup_ea4_php(){
 				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
 			fi
 			/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
-			if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]; then
-				rsync /opt/nDeploy/conf/zz_xtendweb.ini /opt/cpanel/ea-php$ver/root/etc/php.d/
-			fi
+
 			service ndeploy_backends stop || systemctl stop ndeploy_backends
 			service ndeploy_backends start || systemctl start ndeploy_backends
 			chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
 		done
 		# Securing php-fpm with chroot setup using virtfs
 		echo -e '\e[93m Setting up chrooted php-fpm using virtfs jails by default \e[0m'
-		/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1
-		/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1
-		/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailmountusrbinsuid value=1
+		if [ -d /opt/nDeploy/conf/nDeploy-cluster ];then
+			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1
+			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1
+			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailmountusrbinsuid value=1
+		fi
 		if [ ! -d  /var/cpanel/feature_toggles ];then
 			mkdir -p /var/cpanel/feature_toggles
 		fi
@@ -50,6 +50,37 @@ setup_ea4_php(){
 		echo -e '\e[93m Home »Account Functions »Manage Shell Access \e[0m'
 
 	}
+
+	setup_ea4_cluster_php(){
+			for ver in 54 55 56 70 71
+			do
+				yum -y install ea-php$ver ea-php$ver-php-fpm ea-php$ver-php-opcache ea-php$ver-php-mysqlnd ea-php$ver-php-gd ea-php$ver-php-imap ea-php$ver-php-intl ea-php$ver-php-ioncube-loader ea-php$ver-php-xmlrpc ea-php$ver-php-xml ea-php$ver-php-mcrypt ea-php$ver-php-mbstring
+				if [ ! -d /opt/cpanel/php$ver/root/var ];then
+					mkdir -p /opt/cpanel/ea-php$ver/root/var/log
+					mkdir -p /opt/cpanel/ea-php$ver/root/var/run
+				fi
+				/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
+				/opt/cpanel/ea-php$ver/root/usr/bin/pecl install redis
+				if [ -f /opt/nDeploy/conf/zz_xtendweb.ini ]; then
+					rsync /opt/nDeploy/conf/zz_xtendweb.ini /opt/cpanel/ea-php$ver/root/etc/php.d/
+				fi
+
+				service ndeploy_backends stop || systemctl stop ndeploy_backends
+				service ndeploy_backends start || systemctl start ndeploy_backends
+				chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
+			done
+			# Securing php-fpm with chroot setup using virtfs
+			if [ -d /opt/nDeploy/conf/nDeploy-cluster ];then
+				/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1
+				/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1
+				/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailmountusrbinsuid value=1
+			fi
+			if [ ! -d  /var/cpanel/feature_toggles ];then
+				mkdir -p /var/cpanel/feature_toggles
+			fi
+			touch  /var/cpanel/feature_toggles/apachefpmjail
+
+		}
 
 setup_remi_php(){
 		yum -y install scl-utils libmcrypt
@@ -81,9 +112,7 @@ setup_remi_php(){
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
 				fi
 				/opt/nDeploy/scripts/update_backend.py add PHP PHP$ver /opt/remi/php$ver/root
-				if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]; then
-					rsync /opt/nDeploy/conf/zz_xtendweb.ini /opt/remi/php$ver/root/etc/php.d/
-				fi
+				
 				systemctl stop ndeploy_backends
 				systemctl start ndeploy_backends
 				systemctl enable ndeploy_backends
@@ -119,6 +148,9 @@ if [ ! -z $1 ];then
 			;;
 		ea4)
 			setup_ea4_php
+			;;
+		ea4_cluster)
+			setup_ea4_cluster_php
 			;;
 		remi)
 			setup_remi_php
