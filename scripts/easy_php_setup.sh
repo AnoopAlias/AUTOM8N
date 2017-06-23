@@ -37,16 +37,14 @@ setup_ea4_php(){
 		# Securing php-fpm with chroot setup using virtfs
 		echo -e '\e[93m Setting up chrooted php-fpm using virtfs jails by default \e[0m'
 		if [ -d /opt/nDeploy/conf/nDeploy-cluster ];then
-			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1
 			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1
-			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailmountusrbinsuid value=1
 		fi
 		if [ ! -d  /var/cpanel/feature_toggles ];then
 			mkdir -p /var/cpanel/feature_toggles
 		fi
 		touch  /var/cpanel/feature_toggles/apachefpmjail
 		echo -e '\e[93m SECURITY TIP ::  CHROOTED PHP-FPM :: I have set jail shell as default for newly created accounts \e[0m'
-		echo -e '\e[93m For existing accounts please set Jailed Shell(apply to all) at WHM >> \e[0m'
+		echo -e '\e[93m For existing accounts please set Jailed Shell(apply to all) at WHM \e[0m'
 		echo -e '\e[93m Home »Account Functions »Manage Shell Access \e[0m'
 
 	}
@@ -62,7 +60,7 @@ setup_ea4_php(){
 				/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 				/opt/cpanel/ea-php$ver/root/usr/bin/pecl install redis
 				if [ -f /opt/nDeploy/conf/zz_xtendweb.ini ]; then
-					rsync /opt/nDeploy/conf/zz_xtendweb.ini /opt/cpanel/ea-php$ver/root/etc/php.d/
+					rsync -a /opt/nDeploy/conf/zz_xtendweb.ini /opt/cpanel/ea-php$ver/root/etc/php.d/
 				fi
 
 				service ndeploy_backends stop || systemctl stop ndeploy_backends
@@ -71,9 +69,7 @@ setup_ea4_php(){
 			done
 			# Securing php-fpm with chroot setup using virtfs
 			if [ -d /opt/nDeploy/conf/nDeploy-cluster ];then
-				/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1
 				/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1
-				/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailmountusrbinsuid value=1
 			fi
 			if [ ! -d  /var/cpanel/feature_toggles ];then
 				mkdir -p /var/cpanel/feature_toggles
@@ -96,9 +92,6 @@ setup_remi_php(){
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
 				fi
 				/opt/nDeploy/scripts/update_backend.py add PHP PHP$ver /opt/remi/php$ver/root
-				if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]; then
-					rsync /opt/nDeploy/conf/zz_xtendweb.ini /opt/remi/php$ver/root/etc/php.d/
-				fi
 				/etc/init.d/ndeploy_backends stop
 				/etc/init.d/ndeploy_backends start
 				chkconfig ndeploy_backends on
@@ -112,7 +105,7 @@ setup_remi_php(){
 					ln -s /var/opt/remi/php$ver /opt/remi/php$ver/root/var
 				fi
 				/opt/nDeploy/scripts/update_backend.py add PHP PHP$ver /opt/remi/php$ver/root
-				
+
 				systemctl stop ndeploy_backends
 				systemctl start ndeploy_backends
 				systemctl enable ndeploy_backends
