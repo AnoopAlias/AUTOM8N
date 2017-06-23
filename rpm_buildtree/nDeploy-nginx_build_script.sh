@@ -55,7 +55,8 @@ fi
 
 
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-\curl -sSL https://get.rvm.io | sudo bash -s stable --ruby=${MY_RUBY_VERSION}
+# \curl -sSL https://get.rvm.io | sudo bash -s stable --ruby=${MY_RUBY_VERSION}               #https://github.com/rvm/rvm/issues/4068
+\curl -sSL https://raw.githubusercontent.com/wayneeseguin/rvm/stable/binscripts/rvm-installer | sudo bash -s stable --ruby=${MY_RUBY_VERSION}
 . /usr/local/rvm/scripts/rvm
 rvm use ruby-${MY_RUBY_VERSION}
 echo ${MY_RUBY_VERSION}
