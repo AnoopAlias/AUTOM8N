@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>systemd and related stuff &mdash; GnuSys.net SysAdmin Services</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="GnuSys.net SysAdmin Services" href="index.html"/>
+        <link rel="next" title="Data Migration Specifc notes" href="data_migration.html"/>
+        <link rel="prev" title="Install LineageOS on ARM" href="Android_on_ARM.html"/>
+    <link href="_static/style.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> GNUSYS
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">GNUSYS.NET</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GNUSYS.html">GNUSYS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Systems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="GNU_Linux_on_x86.html">Installation of ArchLinux on x86</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Android_on_ARM.html">Install LineageOS on ARM</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">systemd and related stuff</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#spawning-multiple-php-fpm-masters-using-systemd-socket-activation">Spawning multiple php-fpm masters using systemd socket activation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mount-local-or-remote-filesystems-using-systemd">mount local or remote filesystems using systemd</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_migration.html">Data Migration Specifc notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="find_command.html">Find Command</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Systems in the Cloud</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Simple_Cloud_Systems_for_legacy_applications.html">A brief overview of simple cloud solutions for SME</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">GNUSYS</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>systemd and related stuff</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/systemd.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="systemd-and-related-stuff">
+<h1>systemd and related stuff<a class="headerlink" href="#systemd-and-related-stuff" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="spawning-multiple-php-fpm-masters-using-systemd-socket-activation">
+<h2>Spawning multiple php-fpm masters using systemd socket activation<a class="headerlink" href="#spawning-multiple-php-fpm-masters-using-systemd-socket-activation" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://xtendweb.gnusys.net/">XtendWeb</a>  being a nginx addon for cPanel and used in environment where user level seperation of web data is a requirement needed a way to run multiple php-fpm master process  .The primary concern for such a system is the requirement of a
+process control manager like supervisord to manage the master php-fpm process  for all the users and all the different
+php version that a user may switch to.</p>
+<p>systemd provided a neat solution for this .</p>
+<p>The reference for this is</p>
+<p><a class="reference external" href="https://wiki.php.net/rfc/socketactivation">https://wiki.php.net/rfc/socketactivation</a></p>
+<p><a class="reference external" href="http://thanatos.be/2014/04/12/php-fpm-ondemand.html">http://thanatos.be/2014/04/12/php-fpm-ondemand.html</a></p>
+<p>While the solutions mentioned above are for a system that mostly needs a single or a few such process to be spawned .I have
+used systemd&#8217;s templating ability for service and socket units to make the solution scale for all users and if required for multiple versions
+It does require a third party script to control systemd and create the php-fpm config file ;which in my case was done by
+the XtendWeb cPanel nginx plugin</p>
+<p>So here is the config
+1. Create the systemd socket template /usr/lib/systemd/system/CPANELPHP56&#64;.socket</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Socket</span><span class="p">]</span>
+<span class="n">ListenStream</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">cpanel</span><span class="o">/</span><span class="n">ea</span><span class="o">-</span><span class="n">php56</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/%</span><span class="n">i</span><span class="o">.</span><span class="n">sock</span>
+<span class="n">SocketMode</span><span class="o">=</span><span class="mi">0660</span>
+<span class="n">SocketUser</span><span class="o">=%</span><span class="n">i</span>
+<span class="n">SocketGroup</span><span class="o">=</span><span class="n">nobody</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">sockets</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>2. Create the systemd service template /usr/lib/systemd/system/CPANELPHP56&#64;.service
+Note that the socket and service names must match</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">User</span><span class="o">=%</span><span class="n">i</span>
+<span class="n">Group</span><span class="o">=</span><span class="n">nobody</span>
+<span class="n">Environment</span><span class="o">=</span><span class="s2">&quot;FPM_SOCKETS=/opt/cpanel/ea-php56/var/run/</span><span class="si">%i</span><span class="s2">.sock=3&quot;</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">cpanel</span><span class="o">/</span><span class="n">ea</span><span class="o">-</span><span class="n">php56</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">cpanel</span><span class="o">/</span><span class="n">ea</span><span class="o">-</span><span class="n">php56</span> <span class="o">--</span><span class="n">fpm</span><span class="o">-</span><span class="n">config</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">secure</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="o">.</span><span class="n">d</span><span class="o">/%</span><span class="n">i</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">KillMode</span><span class="o">=</span><span class="n">process</span>
+</pre></div>
+</div>
+<p>Once this is done the only requirement is create the php-fpm config file at /opt/nDeploy/secure-php-fpm.d/cpaneluser.conf</p>
+<p>Start the socket by</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">enable</span> <span class="n">CPANELPHP56</span><span class="nd">@myuser</span><span class="o">.</span><span class="n">socket</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">CPANELPHP56</span><span class="nd">@myuser</span><span class="o">.</span><span class="n">socket</span>
+</pre></div>
+</div>
+<p>You can see that systemd starts the socket and when a request comes to the socket for the first time ; it will spawn the corresponding
+service .</p>
+<p>The <cite>Environment=&#8221;FPM_SOCKETS=/opt/cpanel/ea-php56/var/run/%i.sock=3&#8221;</cite> is a requirement as otherwise the php-fpm service will try
+to bind to the socket which will then fail. with the above variable set php-fpm will just reuse the socket</p>
+<p>A downside of the above setup is that unused master process are not terminated . We can use a cron job to achieve this or just
+leave the process idling there.</p>
+</div>
+<div class="section" id="mount-local-or-remote-filesystems-using-systemd">
+<h2>mount local or remote filesystems using systemd<a class="headerlink" href="#mount-local-or-remote-filesystems-using-systemd" title="Permalink to this headline">¶</a></h2>
+<p>In this example I will describe how systemd can be used to mount remote NFS or CIFS in an ondemand automatic way</p>
+<p>This is similar to socket activated service . We define a automount point that when accessed mount a filesytem using details
+mentioned in a corresponding mount unit file.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cat /etc/systemd/system/media-backup.automount</span>
+<span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+  <span class="n">Description</span><span class="o">=</span><span class="n">Remote</span> <span class="n">cifs</span> <span class="n">backup</span> <span class="n">mount</span> <span class="n">script</span>
+  <span class="n">Requires</span><span class="o">=</span><span class="n">network</span><span class="o">-</span><span class="n">online</span><span class="o">.</span><span class="n">target</span>
+  <span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">-</span><span class="n">online</span><span class="o">.</span><span class="n">service</span>
+
+<span class="p">[</span><span class="n">Automount</span><span class="p">]</span>
+  <span class="n">Where</span><span class="o">=/</span><span class="n">media</span><span class="o">/</span><span class="n">backup</span>
+  <span class="n">TimeoutIdleSec</span><span class="o">=</span><span class="s2">&quot;300s&quot;</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+  <span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>Note that the automount file conveniently omits what is to be mounted and how etc as this part must be defined in the
+corresponding mount unit file. Note also the peculiarity in the name of the unit file . It must be named
+media-backup.automount as it is mounting to /media/backup. Similarly if you are mounting to /a/b/c, the file must be
+named a-b-c.automount</p>
+<p>Now lets see the corresponding mount unit file that is called by the automount</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cat /etc/systemd/system/media-backup.mount</span>
+<span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+  <span class="n">Description</span><span class="o">=</span><span class="n">Remote</span> <span class="n">cifs</span> <span class="n">backup</span> <span class="n">mount</span> <span class="n">script</span>
+  <span class="n">Requires</span><span class="o">=</span><span class="n">network</span><span class="o">-</span><span class="n">online</span><span class="o">.</span><span class="n">target</span>
+  <span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">-</span><span class="n">online</span><span class="o">.</span><span class="n">service</span>
+
+<span class="p">[</span><span class="n">Mount</span><span class="p">]</span>
+  <span class="n">What</span><span class="o">=//</span><span class="n">remoteshare</span><span class="o">.</span><span class="n">your</span><span class="o">-</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">backup</span>
+  <span class="n">Where</span><span class="o">=/</span><span class="n">media</span><span class="o">/</span><span class="n">backup</span>
+  <span class="n">Options</span><span class="o">=</span><span class="n">username</span><span class="o">=</span><span class="n">xyz</span><span class="p">,</span><span class="n">password</span><span class="o">=</span><span class="n">mysecurepass</span><span class="p">,</span><span class="n">rw</span>
+  <span class="n">Type</span><span class="o">=</span><span class="n">cifs</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+  <span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>The mount unit must be named the same as the automount unit .You can also see that since the CIFS needs network service
+to be up and running to connect; the unit file takes care of this requirement using the After= option</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="data_migration.html" class="btn btn-neutral float-right" title="Data Migration Specifc notes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Android_on_ARM.html" class="btn btn-neutral" title="Install LineageOS on ARM" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Anoop P Alias.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

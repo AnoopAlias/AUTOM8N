@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation of ArchLinux on x86 &mdash; GnuSys.net SysAdmin Services</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="GnuSys.net SysAdmin Services" href="index.html"/>
+        <link rel="next" title="Install LineageOS on ARM" href="Android_on_ARM.html"/>
+        <link rel="prev" title="GNUSYS" href="GNUSYS.html"/>
+    <link href="_static/style.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> GNUSYS
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">GNUSYS.NET</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GNUSYS.html">GNUSYS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Systems</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation of ArchLinux on x86</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-the-bootable-install-medium">Prepare the bootable install medium</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-wifi-networking">Setup WIFI Networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update-system-clock">Update system clock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#partition-the-disk">Partition the disk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bootstrap-archlinux-into-the-block-device">Bootstrap Archlinux into the block device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-fstab-entries-for-the-new-installation">Generate fstab entries for the new installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#its-time-to-chroot-to-the-new-install-and-configure">Its time to chroot to the new install and configure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-the-bootloader">Install the BootLoader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reboot-into-the-new-installation">Reboot into the new installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-a-desktop-environment">Install a Desktop Environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Android_on_ARM.html">Install LineageOS on ARM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="systemd.html">systemd and related stuff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_migration.html">Data Migration Specifc notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="find_command.html">Find Command</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Systems in the Cloud</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Simple_Cloud_Systems_for_legacy_applications.html">A brief overview of simple cloud solutions for SME</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">GNUSYS</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Installation of ArchLinux on x86</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/GNU_Linux_on_x86.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-of-archlinux-on-x86">
+<h1>Installation of ArchLinux on x86<a class="headerlink" href="#installation-of-archlinux-on-x86" title="Permalink to this headline">¶</a></h1>
+<p>This guide describes ArchLinux installation on a modern computer via USB bootable medium . The network is provided by the modem (4G) on an Android device via Wifi HotSpot</p>
+<div class="section" id="prepare-the-bootable-install-medium">
+<h2>Prepare the bootable install medium<a class="headerlink" href="#prepare-the-bootable-install-medium" title="Permalink to this headline">¶</a></h2>
+<p>Download ( <a class="reference external" href="https://www.archlinux.org/download/">https://www.archlinux.org/download/</a> ) and write the image onto the USB drive</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dd</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="n">M</span> <span class="k">if</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">archlinux</span><span class="o">.</span><span class="n">iso</span> <span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdx</span> <span class="n">status</span><span class="o">=</span><span class="n">progress</span> <span class="o">&amp;&amp;</span> <span class="n">sync</span>
+</pre></div>
+</div>
+<p>once this is done .Boot the machine you will be installing the OS using the USB drive. ArchLinux will boot up and provide you with a root shell</p>
+</div>
+<div class="section" id="setup-wifi-networking">
+<h2>Setup WIFI Networking<a class="headerlink" href="#setup-wifi-networking" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">link</span>
+</pre></div>
+</div>
+<p>Will show the network adaptor. It was named <code class="docutils literal"><span class="pre">wlp5so</span></code> in my case</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">link</span> <span class="nb">set</span> <span class="n">wlp5s0</span> <span class="n">up</span>
+</pre></div>
+</div>
+<p>The following command will show available networks .Look for the SSID row</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">iw</span> <span class="n">dev</span> <span class="n">wlp5s0</span> <span class="n">scan</span><span class="o">|</span><span class="n">less</span>
+</pre></div>
+</div>
+<p>Android Wifi Hostspot is normally WPA/WPA2 encrypted which rquire the wpa_supplicant daemon to connect
+Run the following single line command .Replace hotspot name and password with whats yours.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wpa_supplicant</span> <span class="o">-</span><span class="n">B</span> <span class="o">-</span><span class="n">D</span> <span class="n">nl80211</span><span class="p">,</span><span class="n">wext</span> <span class="o">-</span><span class="n">i</span> <span class="n">wlp5s0</span> <span class="o">-</span><span class="n">c</span> <span class="o">&lt;</span><span class="p">(</span><span class="n">wpa_passphrase</span> <span class="s2">&quot;AndoidHotspot&quot;</span> <span class="s2">&quot;my_secure_password&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run the dhcpcd to manage the IP lease from your hotspot</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dhcpcd</span> <span class="n">wlp5s0</span>
+</pre></div>
+</div>
+<p>Ensure ping and domain name resolution works</p>
+</div>
+<div class="section" id="update-system-clock">
+<h2>Update system clock<a class="headerlink" href="#update-system-clock" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">timedatectl</span> <span class="nb">set</span><span class="o">-</span><span class="n">ntp</span> <span class="n">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="partition-the-disk">
+<h2>Partition the disk<a class="headerlink" href="#partition-the-disk" title="Permalink to this headline">¶</a></h2>
+<p>I will create a single ext4 partition and setup a GUID partition table. The laptop I am using has Legacy BIOS and not UEFI or I in short i will use BIOS+GPT .Your method may vary with UEFI+GPT or BIOS+MBR
+Since my bootloader is GRUB,I will also need something called a BIOS boot partition .Note that this is not needed in BIOS+MBR scheme as MBR has fixed size and GRUB can embed its core.img after
+this fixed size .</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">parted</span>
+
+<span class="p">(</span><span class="n">parted</span><span class="p">)</span><span class="n">mklabel</span> <span class="n">gpt</span>
+<span class="p">(</span><span class="n">parted</span><span class="p">)</span><span class="n">unit</span> <span class="n">Mib</span>
+<span class="p">(</span><span class="n">parted</span><span class="p">)</span><span class="n">mkpart</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span>             <span class="c1">#creates partition 1 with 1Mib size from 1Mib to 2Mib</span>
+<span class="p">(</span><span class="n">parted</span><span class="p">)</span><span class="nb">set</span> <span class="mi">1</span> <span class="n">bios_grub</span> <span class="n">on</span>
+<span class="p">(</span><span class="n">parted</span><span class="p">)</span><span class="n">mkpart</span> <span class="n">ext4</span> <span class="mi">2</span> <span class="mi">100</span><span class="o">%</span>       <span class="c1">#creates a single partition that extends to the full disk space</span>
+<span class="p">(</span><span class="n">parted</span><span class="p">)</span><span class="n">quit</span>
+</pre></div>
+</div>
+<p>Create the ext4 filesystem on the block device which will hold your files</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkfs</span><span class="o">.</span><span class="n">ext4</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span>      <span class="c1">#assuming sda2 is the partition where you will b installing linux</span>
+</pre></div>
+</div>
+<p>Mount the block device to /mnt for installing Linux</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="o">/</span><span class="n">mnt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bootstrap-archlinux-into-the-block-device">
+<h2>Bootstrap Archlinux into the block device<a class="headerlink" href="#bootstrap-archlinux-into-the-block-device" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pacstrap</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">base</span>         <span class="c1">#This is the bare minimum</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generate-fstab-entries-for-the-new-installation">
+<h2>Generate fstab entries for the new installation<a class="headerlink" href="#generate-fstab-entries-for-the-new-installation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">genfstab</span> <span class="o">-</span><span class="n">U</span> <span class="o">/</span><span class="n">mnt</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fstab</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="its-time-to-chroot-to-the-new-install-and-configure">
+<h2>Its time to chroot to the new install and configure<a class="headerlink" href="#its-time-to-chroot-to-the-new-install-and-configure" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">arch</span><span class="o">-</span><span class="n">chroot</span> <span class="o">/</span><span class="n">mnt</span>
+</pre></div>
+</div>
+<p>Set time-zone, locale, keyboard layout, hostname,root password</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Set timezone</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">zoneinfo</span><span class="o">/</span><span class="n">Region</span><span class="o">/</span><span class="n">City</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span>
+
+<span class="c1">#Uncomment en_US.UTF-8 UTF-8 and other needed localizations in /etc/locale.gen, and generate them with:</span>
+<span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
+
+<span class="c1">#Set the LANG variable in locale.conf(5) accordingly, for example:</span>
+<span class="n">echo</span> <span class="s2">&quot;LANG=en_US.UTF-8&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="o">.</span><span class="n">conf</span>
+
+<span class="c1">#Set the keymap</span>
+<span class="n">echo</span> <span class="s2">&quot;KEYMAP=us&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">vconsole</span><span class="o">.</span><span class="n">conf</span>
+
+<span class="c1">#Set the hostname</span>
+<span class="n">echo</span> <span class="s2">&quot;thinkpad.gnusys.net&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hostname</span>
+
+<span class="c1">#Set root password</span>
+<span class="n">passwd</span>
+</pre></div>
+</div>
+<p>We install some additional packages required for networking to work that was not included in the pacstrapping of base</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">iw</span> <span class="n">wpa_supplicant</span> <span class="n">dialog</span> <span class="n">wpa_actiond</span>
+<span class="n">wifi</span><span class="o">-</span><span class="n">menu</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">netctl</span><span class="o">-</span><span class="n">auto</span><span class="nd">@wlp5s0</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<p>Initramfs is normally automatically created when the linux package is installed with pacstrap in the chroot</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkinitcpio</span> <span class="o">-</span><span class="n">p</span> <span class="n">linux</span>  <span class="c1">#not needed as the initramfs is already created as mentioned above</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-the-bootloader">
+<h2>Install the BootLoader<a class="headerlink" href="#install-the-bootloader" title="Permalink to this headline">¶</a></h2>
+<p>Install grub and run grub-install</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">grub</span>
+<span class="n">grub</span><span class="o">-</span><span class="n">install</span> <span class="o">--</span><span class="n">target</span><span class="o">=</span><span class="n">i386</span><span class="o">-</span><span class="n">pc</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span>    <span class="c1">#Assuming /dev/sda is your harddrive</span>
+<span class="n">grub</span><span class="o">-</span><span class="n">mkconfig</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">grub</span><span class="o">/</span><span class="n">grub</span><span class="o">.</span><span class="n">cfg</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reboot-into-the-new-installation">
+<h2>Reboot into the new installation<a class="headerlink" href="#reboot-into-the-new-installation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">exit</span>  <span class="c1">#exit from chroot</span>
+<span class="n">reboot</span>
+</pre></div>
+</div>
+<p>You should now be rebooted into the new ArchLinux installation with a working network. You can now proceed to install
+additional software and a GUI . There are multiple choices of Desktop Environments available <a class="reference external" href="https://wiki.archlinux.org/index.php/desktop_environment">https://wiki.archlinux.org/index.php/desktop_environment</a></p>
+</div>
+<div class="section" id="install-a-desktop-environment">
+<h2>Install a Desktop Environment<a class="headerlink" href="#install-a-desktop-environment" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">gnome</span> <span class="n">gnome</span><span class="o">-</span><span class="n">extra</span>
+<span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">firefox</span> <span class="n">noto</span><span class="o">-</span><span class="n">fonts</span>  <span class="c1">#change firefox font to noto from firefox settings</span>
+<span class="n">systmctl</span> <span class="n">enable</span> <span class="n">gdm</span>
+</pre></div>
+</div>
+<p>Thats it . Enjoy your ArchLinux Gnome3 Desktop after a reboot</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Android_on_ARM.html" class="btn btn-neutral float-right" title="Install LineageOS on ARM" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="GNUSYS.html" class="btn btn-neutral" title="GNUSYS" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Anoop P Alias.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
