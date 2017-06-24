@@ -1,4 +1,4 @@
-Simpler reseller resource control
+Simple Resource controller
 =======================================
 
 SimpleR stands for Simple Resource isolator and use systemd in modern systems to isolate CPU/Memory/IO on a per process basis
@@ -23,9 +23,9 @@ How does simpleR work
 ------------------------
 
 Application Limits - SimpleR drops in an additional resource limit under the [Service] section in systemd unit file to achieve resource limit
-for Apache/Nginx/MySQL/PHP . These limit can act as a safety net ( presuure value!) in extreme cases and prevent a single service from using up entire server resources
+for Apache/Nginx/MySQL/PHP . These limit can act as a safety net ( pressure value!) in extreme cases and prevent a single service from using up entire server resources
 
-User Limits - If PHP-FPM or HHVM process is run under user .Simpler can group the process to a reseller.slice file and ensure each user is limited in terms of memory/CPU and IO.
+User Limits - If PHP-FPM or HHVM process is run under user .Simpler can group the process to a reseller.slice and ensure each user is limited in terms of memory/CPU and IO.
 This can come handy when an admin want to allocate low resources to certain scripts and prevent them from affecting useable resources of other users
 
 
@@ -46,9 +46,8 @@ Simpler will allow setting upper limits for computing resources used by httpd/ng
 
 For user level resource isolation do the following
 
-.. note:: While running php-fpm master as user is more secure than running master server as root . cPanel EA4 PHP provides chroot support for user poolsin single root owned master setup
-          User level php-fpm cannot chroot and thus will be able to access all system files the user normally has access to. Thus root owned php-fpm master is more recommended for a shared server
-          setup and user level php-fpm masters are recommended for a private VPS setup
+.. note:: Running php-fpm master process under user forbids it from chrooting. PHP process are thus able to access any files user has access to normally.
+          Because of lack of chroot , run the following setup only on private VPS where all accounts belong to one user and are trusted.
 
 2. Enable user level PHP-FPM master process
 ::

@@ -85,22 +85,19 @@
                 <p class="caption"><span class="caption-text">XtendWeb - Installation &amp; Basic Configuration</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers">For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">XtendWeb Cluster Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-introduction">XtendWeb Cluster Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-requirements">XtendWeb Cluster Requirements:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-setup">XtendWeb cluster setup:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ModSecurity.html#install-modsecurity">Install ModSecurity</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User Documentation</span></p>
@@ -115,7 +112,7 @@
 </ul>
 <p class="caption"><span class="caption-text">SimpleR - Installation &amp; Basic Configuration</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="simpler_resource_control.html">Simpler reseller resource control</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="simpler_resource_control.html">Simple Resource controller</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#how-does-simpler-work">How does simpleR work</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#default-resource-for-user">Default resource for user</a></li>
@@ -227,7 +224,7 @@
 <h2>XtendWeb Cluster Introduction<a class="headerlink" href="#xtendweb-cluster-introduction" title="Permalink to this headline">¶</a></h2>
 <p>XtendWeb cluster is the worlds easiest web application clustering solution featuring a fully automated deployment of a clustered DNS loadbalanced LAMP stack.
 It is specifically designed for multi datacenter deployment and use encrypted communication between the server</p>
-<p>XtendWeb cluster thus provide high availability , scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
+<p>XtendWeb cluster provide high availability , scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
 Coupled with the simplicity and intutiveness of cPanel control panel ,XtendWeb cluster is a must have for any modern enterprise web application deployment</p>
 <p>Cluster Components:</p>
 <ol class="arabic simple">
@@ -242,9 +239,9 @@ Coupled with the simplicity and intutiveness of cPanel control panel ,XtendWeb c
 </ol>
 </div>
 <div class="section" id="xtendweb-cluster-requirements">
-<h2>XtendWeb Cluster Requirements:<a class="headerlink" href="#xtendweb-cluster-requirements" title="Permalink to this headline">¶</a></h2>
+<h2>XtendWeb Cluster Requirements<a class="headerlink" href="#xtendweb-cluster-requirements" title="Permalink to this headline">¶</a></h2>
 <p>It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this).</p>
-<p>We do support CentOS6, but it is less tested and some programs like stunnel startup script etc is lacking in CentOS6 .</p>
+<p>We do support CentOS6, but it is less tested and has some disadvantages like stunnel startup script is lacking in CentOS6 .</p>
 <p>XtendWeb cluster needs atleast 2 servers. Only one of the server need a valid cPanel license</p>
 <p>Cluster provide horizontal scalability for web applications using DNS loadbalancing .</p>
 <p>It is highly recommended that the servers be on different geographic regions ( eg: master in US , slave in UK ) and use different providers.
@@ -257,7 +254,7 @@ on the existing server.</p>
 <p>Slave Server&#8217;s - Centos7 ( installed with cPanel DNS only which is licensed free ).Rest of the software is installed automatically at cluster setup.</p>
 </div>
 <div class="section" id="xtendweb-cluster-setup">
-<h2>XtendWeb cluster setup:<a class="headerlink" href="#xtendweb-cluster-setup" title="Permalink to this headline">¶</a></h2>
+<h2>XtendWeb cluster setup<a class="headerlink" href="#xtendweb-cluster-setup" title="Permalink to this headline">¶</a></h2>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">Install CSF firewall on both servers and whitelist each others IP for access</p>

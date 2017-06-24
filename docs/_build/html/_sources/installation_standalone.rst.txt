@@ -32,15 +32,17 @@ We recommend CentOS7 over CloudLinux . XtendWeb support chrooted PHP (similar to
 
 
 
-.. note::  OpenResty should be used only if you need to extend nginx with LUA . OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF'sec
+.. note::  OpenResty should be used only if you need to extend nginx with LUA . OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF's
 
 .. note:: Redis Full page cache for wordpress and Drupal is not compatible with PageSpeed - https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ
 
 
 
 
-For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Application servers
+-----------------------
+
+For Enjoying native nginx speed. Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers
 
 
 2.1. Install PHP-FPM Application server

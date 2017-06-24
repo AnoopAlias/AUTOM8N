@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Simpler reseller resource control &mdash; Documentation</title>
+  <title>Simple Resource controller &mdash; Documentation</title>
   
 
   
@@ -85,22 +85,19 @@
                 <p class="caption"><span class="caption-text">XtendWeb - Installation &amp; Basic Configuration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers">For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation_cluster.html">XtendWeb Cluster Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-introduction">XtendWeb Cluster Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ModSecurity.html#install-modsecurity">Install ModSecurity</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User Documentation</span></p>
@@ -115,7 +112,7 @@
 </ul>
 <p class="caption"><span class="caption-text">SimpleR - Installation &amp; Basic Configuration</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Simpler reseller resource control</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Simple Resource controller</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-does-simpler-work">How does simpleR work</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#default-resource-for-user">Default resource for user</a></li>
@@ -209,7 +206,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Simpler reseller resource control</li>
+    <li>Simple Resource controller</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -221,8 +218,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="simpler-reseller-resource-control">
-<h1>Simpler reseller resource control<a class="headerlink" href="#simpler-reseller-resource-control" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="simple-resource-controller">
+<h1>Simple Resource controller<a class="headerlink" href="#simple-resource-controller" title="Permalink to this headline">¶</a></h1>
 <p>SimpleR stands for Simple Resource isolator and use systemd in modern systems to isolate CPU/Memory/IO on a per process basis</p>
 <p>SimpleR can also group php-fpm and HHVM application servers running under user to a reseller.slice and individually limit the resource at a reseller level</p>
 <p>Highlights are:</p>
@@ -239,8 +236,8 @@
 <div class="section" id="how-does-simpler-work">
 <h2>How does simpleR work<a class="headerlink" href="#how-does-simpler-work" title="Permalink to this headline">¶</a></h2>
 <p>Application Limits - SimpleR drops in an additional resource limit under the [Service] section in systemd unit file to achieve resource limit
-for Apache/Nginx/MySQL/PHP . These limit can act as a safety net ( presuure value!) in extreme cases and prevent a single service from using up entire server resources</p>
-<p>User Limits - If PHP-FPM or HHVM process is run under user .Simpler can group the process to a reseller.slice file and ensure each user is limited in terms of memory/CPU and IO.
+for Apache/Nginx/MySQL/PHP . These limit can act as a safety net ( pressure value!) in extreme cases and prevent a single service from using up entire server resources</p>
+<p>User Limits - If PHP-FPM or HHVM process is run under user .Simpler can group the process to a reseller.slice and ensure each user is limited in terms of memory/CPU and IO.
 This can come handy when an admin want to allocate low resources to certain scripts and prevent them from affecting useable resources of other users</p>
 </div>
 <div class="section" id="installation">
@@ -254,9 +251,8 @@ This can come handy when an admin want to allocate low resources to certain scri
 <p>For user level resource isolation do the following</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">While running php-fpm master as user is more secure than running master server as root . cPanel EA4 PHP provides chroot support for user poolsin single root owned master setup
-User level php-fpm cannot chroot and thus will be able to access all system files the user normally has access to. Thus root owned php-fpm master is more recommended for a shared server
-setup and user level php-fpm masters are recommended for a private VPS setup</p>
+<p class="last">Running php-fpm master process under user forbids it from chrooting. PHP process are thus able to access any files user has access to normally.
+Because of lack of chroot , run the following setup only on private VPS where all accounts belong to one user and are trusted.</p>
 </div>
 <p>2. Enable user level PHP-FPM master process</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">secure</span><span class="o">-</span><span class="n">php</span>

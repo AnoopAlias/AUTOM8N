@@ -23,7 +23,7 @@ Cluster Components:
 8. XtendWeb - generating and Syncing configuration for all servers
 
 
-XtendWeb Cluster Requirements:
+XtendWeb Cluster Requirements
 --------------------------------
 
 It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this).
@@ -49,7 +49,7 @@ Slave Server's - Centos7 ( installed with cPanel DNS only which is licensed free
 
 
 
-XtendWeb cluster setup:
+XtendWeb cluster setup
 --------------------------
 
 .. tip:: Install CSF firewall on both servers and whitelist each others IP for access

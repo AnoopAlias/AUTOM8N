@@ -85,22 +85,19 @@
                 <p class="caption"><span class="caption-text">XtendWeb - Installation &amp; Basic Configuration</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">XtendWeb standalone installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers">For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-servers">Application servers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation_cluster.html">XtendWeb Cluster Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-introduction">XtendWeb Cluster Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ModSecurity.html#install-modsecurity">Install ModSecurity</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User Documentation</span></p>
@@ -115,7 +112,7 @@
 </ul>
 <p class="caption"><span class="caption-text">SimpleR - Installation &amp; Basic Configuration</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="simpler_resource_control.html">Simpler reseller resource control</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="simpler_resource_control.html">Simple Resource controller</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#how-does-simpler-work">How does simpleR work</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#default-resource-for-user">Default resource for user</a></li>
@@ -255,14 +252,15 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">OpenResty should be used only if you need to extend nginx with LUA . OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF&#8217;sec</p>
+<p class="last">OpenResty should be used only if you need to extend nginx with LUA . OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF&#8217;s</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Redis Full page cache for wordpress and Drupal is not compatible with PageSpeed - <a class="reference external" href="https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ">https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ</a></p>
 </div>
-<div class="section" id="for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers">
-<h2>For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers<a class="headerlink" href="#for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="application-servers">
+<h2>Application servers<a class="headerlink" href="#application-servers" title="Permalink to this headline">¶</a></h2>
+<p>For Enjoying native nginx speed. Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers</p>
 <p>2.1. Install PHP-FPM Application server</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
 <span class="c1"># php-fpm and a selected set of modules are installed from the EA4 php repo</span>
