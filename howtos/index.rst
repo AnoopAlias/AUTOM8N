@@ -3,14 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-GNUSYS
-========
-
-.. toctree::
-   :maxdepth: 2
-   :caption: GNUSYS.NET
-
-   GNUSYS
+A U T O M 8 N
+===============
 
 .. toctree::
   :maxdepth: 2
