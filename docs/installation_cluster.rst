@@ -8,7 +8,7 @@ XtendWeb Cluster Introduction
 XtendWeb cluster is the worlds easiest web application clustering solution featuring a fully automated deployment of a clustered DNS loadbalanced LAMP stack.
 It is specifically designed for multi datacenter deployment and use encrypted communication between the server
 
-XtendWeb cluster thus provide high availability , scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
+XtendWeb cluster provide high availability , scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
 Coupled with the simplicity and intutiveness of cPanel control panel ,XtendWeb cluster is a must have for any modern enterprise web application deployment
 
 Cluster Components:
@@ -28,7 +28,7 @@ XtendWeb Cluster Requirements:
 
 It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this).
 
-We do support CentOS6, but it is less tested and some programs like stunnel startup script etc is lacking in CentOS6 .
+We do support CentOS6, but it is less tested and has some disadvantages like stunnel startup script is lacking in CentOS6 .
 
 XtendWeb cluster needs atleast 2 servers. Only one of the server need a valid cPanel license
 
