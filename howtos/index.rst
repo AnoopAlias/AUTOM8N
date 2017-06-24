@@ -15,9 +15,4 @@ A U T O M 8 N
   systemd
   data_migration
   find_command
-
-.. toctree::
-  :maxdepth: 2
-  :caption: Systems in the Cloud
-
-  Simple_Cloud_Systems_for_legacy_applications
+  

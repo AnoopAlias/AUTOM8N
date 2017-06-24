@@ -7,40 +7,35 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 .. tip:: CentOS7/CloudLinux7 is recommended
 
 
-1. Install EPEL repo
+1. Install EPEL repo and Xtendweb repo
 ::
 
   yum -y install epel-release
-
-2. Install XtendWeb yum repo
-::
-
   yum -y install https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-5.noarch.rpm
 
-
-3. Install XtendWeb plugin and nginx or openresty . Be patient as this may take several minutes to complete.
+2. Install XtendWeb plugin and nginx or openresty . Be patient as this may take several minutes to complete.
 ::
 
-  yum --enablerepo=ndeploy install nginx-nDeploy nDeploy # For nginx as webserver
+  yum --enablerepo=ndeploy -y install nginx-nDeploy nDeploy # For nginx as webserver
      OR
-  yum --enablerepo=ndeploy install openresty-nDeploy nDeploy # For openresty as webserver
+  yum --enablerepo=ndeploy -y install openresty-nDeploy nDeploy # For openresty as webserver
   # OpenResty support embedding lua code.Openresty does not include mod_security and naxsi modules (use OpenSSL)
   # Nginx include naxsi and mod_security waf ( use LibreSSL instead of OpenSSL )
   # You can use any of the webserver in an interchangeable way and swap anytime
 
 
-4.1. Install PHP-FPM Application server
+3.1. Install PHP-FPM Application server
 ::
 
   #Install PHP-FPM Application server for PHP
   /opt/nDeploy/scripts/easy_php_setup.sh
   # php-fpm and a selected set of modules are installed from the EA4 php repo
 
-.. tip:: Default PHP-FPM setup above use chroot of PHP-FPM pools to /home/virtfs . This is an alternative to CageFS
+.. tip:: Default PHP-FPM setup above use chroot of PHP-FPM pools to /home/virtfs . This is an alternative to CageFS.
          PHP process will not be able to view files not in /home/virtfs like /etc/named.conf for example.
          Ref: https://documentation.cpanel.net/display/ALD/PHP-FPM+User+Pools#PHP-FPMUserPools-Jailshell
 
-4.1.1. (Optional) Setup per user php-fpm master process for complete user level isolation
+3.1.1. (Optional) Setup per user php-fpm master process for complete user level isolation
 ::
 
     #Works only on Centos7/CloudLinux7
@@ -49,7 +44,7 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
     # PHP pocess is user owned but will be able to read files the user has access to
 
 
-4.1.2. Enable PHP-FPM selector plugin(to make php-fpm default in httpd)
+3.1.2. Enable PHP-FPM selector plugin(to make php-fpm default in httpd)
 ::
 
   /opt/nDeploy/scripts/init_backends.py httpd-php-install
@@ -57,7 +52,7 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   # This will make php-fpm the default backend for all accounts in Apache httpd
   # Users can switch PHP version on a per domain basis using PHP-FPM selector plugin in cPanel
 
-4.2. Install Phusion Passenger ( only if you need support for RUBY/PYTHON/NODEJS )
+3.2. Install Phusion Passenger ( only if you need support for RUBY/PYTHON/NODEJS )
 ::
 
   yum --enablerepo=ndeploy install nginx-nDeploy-module-passenger # Nginx
@@ -71,13 +66,13 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   # The easy_passenger script installs only one version of Ruby/Python and NodeJS
   # Additional versions can be installed and managed using rvm,pythonz and nvm respectively
 
-4.3. Install HHVM Hack/PHP Application server
+3.3. Install HHVM Hack/PHP Application server
 ::
 
   /opt/nDeploy/scripts/easy_hhvm_setup.sh
 
 
-5. Enable the plugin. This will make nginx your frontend webserver.
+4. Enable the plugin. This will make nginx your frontend webserver.
 ::
 
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
@@ -85,13 +80,15 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
 
 .. tip:: If you modify WHM service certificate run /opt/nDeploy/scripts/generate_default_vhost_config.py && nginx -s reload
 
-6. Enable Extra templates that require redis and additional nginx modules
+5. Enable Extra templates that require redis and additional nginx modules
 ::
 
   /opt/nDeploy/scripts/setup_additional_templates.sh
+  # Note that Redis Full page cache is not compatible with PageSpeed - https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ
+  Disable pagespeed for any redis full page caching template domains.
 
 
-7. Install Optional additional modules
+6. Install Optional additional modules
 ::
 
   #Note that each module increases the nginx size and processing requirements
