@@ -133,7 +133,7 @@ todo_include_todos = False
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-#html_theme_options = {"rightsidebar": "true", "relbarbgcolor": "black"}
+# html_theme_options = {"rightsidebar": "true", "relbarbgcolor": "black"}
 
 html_theme_options = {
     'collapse_navigation': False,
@@ -146,7 +146,7 @@ html_theme_options = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = u'XtendWeb nginX control v4.0'
+html_title = u'Documentation'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #

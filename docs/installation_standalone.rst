@@ -1,94 +1,97 @@
-Installation
-============
-XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed
+XtendWeb standalone installation
+===================================
+
+XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed .
+
+We recommend CentOS7 over CloudLinux . XtendWeb support chrooted PHP (similar to cageFS) and SimpleR plugin can provide application level and user level resource isolation
+
 
 .. tip:: XtendWeb can use either Nginx or OpenResty as the webserver
 
 .. tip:: CentOS7/CloudLinux7 is recommended
 
+.. note:: Starting with Xtendweb version 4.3.20 you need to subscribe to a license for installing XtendWeb
+          Please visit https://autom8n.com/plans.html#plans for more info
 
-1. Install EPEL repo and Xtendweb repo
+
+1. Install and Enable the plugin
 ::
 
   yum -y install epel-release
-  yum -y install https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-5.noarch.rpm
+  yum -y install https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-6.noarch.rpm
 
-2. Install XtendWeb plugin and nginx or openresty . Be patient as this may take several minutes to complete.
-::
+  # Purchase a license so the server can access xtendweb yum repo
 
-  yum --enablerepo=ndeploy -y install nginx-nDeploy nDeploy # For nginx as webserver
+  yum -y --enablerepo=ndeploy -y install nginx-nDeploy nDeploy # For nginx as webserver
      OR
-  yum --enablerepo=ndeploy -y install openresty-nDeploy nDeploy # For openresty as webserver
-  # OpenResty support embedding lua code.Openresty does not include mod_security and naxsi modules (use OpenSSL)
-  # Nginx include naxsi and mod_security waf ( use LibreSSL instead of OpenSSL )
-  # You can use any of the webserver in an interchangeable way and swap anytime
+  yum -y --enablerepo=ndeploy -y install openresty-nDeploy nDeploy # For openresty as webserver
+
+  /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
+
+  /opt/nDeploy/scripts/setup_additional_templates.sh  # For installing Wordpress and Drupal full page cache template
 
 
-3.1. Install PHP-FPM Application server
+
+.. note::  OpenResty should be used only if you need to extend nginx with LUA . OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF'sec
+
+.. note:: Redis Full page cache for wordpress and Drupal is not compatible with PageSpeed - https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ
+
+
+
+
+For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+2.1. Install PHP-FPM Application server
 ::
 
-  #Install PHP-FPM Application server for PHP
   /opt/nDeploy/scripts/easy_php_setup.sh
   # php-fpm and a selected set of modules are installed from the EA4 php repo
 
-.. tip:: Default PHP-FPM setup above use chroot of PHP-FPM pools to /home/virtfs . This is an alternative to CageFS.
-         PHP process will not be able to view files not in /home/virtfs like /etc/named.conf for example.
-         Ref: https://documentation.cpanel.net/display/ALD/PHP-FPM+User+Pools#PHP-FPMUserPools-Jailshell
 
-3.1.1. (Optional) Setup per user php-fpm master process for complete user level isolation
+.. note:: PHP-FPM pools are chrooted to /home/virtfs . In addition with cPanel JailShell this provides an isolated environment for each user
+
+
+2.1.1. Did you know you can make httpd use Xtendweb PHP-FPM app server?
 ::
 
-    #Works only on Centos7/CloudLinux7
-    /opt/nDeploy/scripts/init_backends.py secure-php
-    # This setup does not support chroot to virtfs as user level process cannot be chrooted!
-    # PHP pocess is user owned but will be able to read files the user has access to
-
-
-3.1.2. Enable PHP-FPM selector plugin(to make php-fpm default in httpd)
-::
-
+  # To enable Apache httpd to use Xtendweb managed PHP-FPM (Users can change PHP version using PHP-FPM selector plugin)
   /opt/nDeploy/scripts/init_backends.py httpd-php-install
-  # Note that this will add new apache vhost templates in /var/cpanel/templates/apache2_4/
-  # This will make php-fpm the default backend for all accounts in Apache httpd
-  # Users can switch PHP version on a per domain basis using PHP-FPM selector plugin in cPanel
 
-3.2. Install Phusion Passenger ( only if you need support for RUBY/PYTHON/NODEJS )
+2.1.2. Did you also know that XtendWeb can run each user in an isolated php-fpm server run under the user? (not recommended - see comment below)
 ::
 
-  yum --enablerepo=ndeploy install nginx-nDeploy-module-passenger # Nginx
-  OR
-  yum --enablerepo=ndeploy install openresty-nDeploy-module-passenger # Openresty
-  #Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.
-  /opt/nDeploy/scripts/easy_passenger_setup.sh
-  # Ruby will be compiled and installed to /usr/local/rvm
-  # Python will be compiled and installed to /usr/local/pythonz
-  # NodeJS will be installed to /usr/local/nvm
-  # The easy_passenger script installs only one version of Ruby/Python and NodeJS
-  # Additional versions can be installed and managed using rvm,pythonz and nvm respectively
+  # This is not recommended as php-fpm running as user cannot be chrooted and php will be able to access any files user has access to
+  # If you run php under user. SimpleR can additionally isolate resources on a per-user basis
+  # This is useful if you have a VPS and need certain scripts to use lesser resources than others
+  /opt/nDeploy/scripts/init_backends.py secure-php
 
-3.3. Install HHVM Hack/PHP Application server
+
+
+2.2. Install HHVM Hack/PHP Application server
 ::
 
   /opt/nDeploy/scripts/easy_hhvm_setup.sh
 
 
-4. Enable the plugin. This will make nginx your frontend webserver.
+
+2.3. Install Phusion Passenger App server for Python/Ruby/NodeJS
 ::
 
-  /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
+  yum --enablerepo=ndeploy install nginx-nDeploy-module-passenger # Nginx
+  OR
+  yum --enablerepo=ndeploy install openresty-nDeploy-module-passenger # Openresty
+
+  /opt/nDeploy/scripts/easy_passenger_setup.sh
+
 
 
 .. tip:: If you modify WHM service certificate run /opt/nDeploy/scripts/generate_default_vhost_config.py && nginx -s reload
 
-5. Enable Extra templates that require redis and additional nginx modules
-::
-
-  /opt/nDeploy/scripts/setup_additional_templates.sh
-  # Note that Redis Full page cache is not compatible with PageSpeed - https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ
-  Disable pagespeed for any redis full page caching template domains.
 
 
-6. Install Optional additional modules
+3. Install Optional additional modules
 ::
 
   #Note that each module increases the nginx size and processing requirements
@@ -106,6 +109,9 @@ XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/Clou
   (set_misc)    yum --enablerepo=ndeploy install nginx-nDeploy-module-set_misc
   (srcache)     yum --enablerepo=ndeploy install nginx-nDeploy-module-srcache_filter
   (echo)        yum --enablerepo=ndeploy install nginx-nDeploy-module-echo
+  (testcookie_access) yum --enablerepo=ndeploy install nginx-nDeploy-module-testcookie_access
+  (testcookie_access) yum --enablerepo=ndeploy install openresty-nDeploy-module-testcookie_access # OpenResty
+
   # Following modules are installed and loaded by default in nginx but can be disabled
   (headers_more)
   (ndk) Nginx Development ToolKit

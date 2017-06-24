@@ -1,12 +1,38 @@
-Cluster Installation
-=======================
+XtendWeb Cluster Installation
+=================================
+
+
+XtendWeb Cluster Introduction
+---------------------------------
+
+XtendWeb cluster is the worlds easiest web application clustering solution featuring a fully automated deployment of a clustered DNS loadbalanced LAMP stack.
+It is specifically designed for multi datacenter deployment and use encrypted communication between the server
+
+XtendWeb cluster thus provide high availability , scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
+Coupled with the simplicity and intutiveness of cPanel control panel ,XtendWeb cluster is a must have for any modern enterprise web application deployment
+
+Cluster Components:
+
+1. cPanel DNS providing multiple A records for round robin DNS loadbalancing
+2. Nginx servers running on all servers with server specific settings and serving files independandly
+3. Application servers (php-fpm. Phusion passenger )running on all servers and serving app independandly
+4. Csync2 - Syncing config across all servers
+5. Unison - Syncing files across all servers
+6. MaxScale router and mariaDB master-master replication - Database replication and query routing
+7. Redis & stunnel - Secure sharing of PHP session
+8. XtendWeb - generating and Syncing configuration for all servers
+
 
 XtendWeb Cluster Requirements:
 --------------------------------
-.. note:: using CloudLinux will be counter productive on XtendWeb Cluster as cloudLinux is trying to solve server stability problem by limiting resources useable by a user
-          XtendWeb on the other hand tries to achieve stability by using a fan-out infrastructure which is what an enterprise user would need.
 
-It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this). XtendWeb cluster needs atleast 2 servers.
+It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this).
+
+We do support CentOS6, but it is less tested and some programs like stunnel startup script etc is lacking in CentOS6 .
+
+XtendWeb cluster needs atleast 2 servers. Only one of the server need a valid cPanel license
+
+Cluster provide horizontal scalability for web applications using DNS loadbalancing .
 
 It is highly recommended that the servers be on different geographic regions ( eg: master in US , slave in UK ) and use different providers.
 The golden rule is - Dont keep all your eggs in the same basket.
@@ -21,47 +47,62 @@ Master server - Centos7 ,MariaDB 10.1
 
 Slave Server's - Centos7 ( installed with cPanel DNS only which is licensed free ).Rest of the software is installed automatically at cluster setup.
 
-.. tip:: The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
-          It is recommended that they resolve correctly on the internet
-
-
-.. tip:: CentOS7 is recommended
 
 
 XtendWeb cluster setup:
 --------------------------
 
-.. tip:: If you are using CSF whitelist all server ip's in cluster and ensure TCP ports  30865 , 4430, 9999, 13306 are allowed
+.. tip:: Install CSF firewall on both servers and whitelist each others IP for access
 
 .. tip:: The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
           It is recommended that they resolve correctly on the internet
 
+.. note:: As of XtendWeb 4.3.20 you will need a license for all servers(master and slaves) on the cluster .Else Installation will fail
+          Please visit https://autom8n.com/plans.html#plans for more info
 
-1. Install XtendWeb as normal on master and enable the plugin
+1. Install cPanel and cPanel DNS only on master and slaves respectively
 ::
 
-  Follow https://xtendweb.gnusys.net/docs/installation_standalone.html  # On master
+  # On Master
+  cd /home && curl -o latest -L https://securedownloads.cpanel.net/latest && sh latest
 
-
-2. Install cPanel DNS only on all the slaves
-::
-
+  #On Slaves
   cd /home && curl -o latest-dnsonly -L https://securedownloads.cpanel.net/latest-dnsonly && sh latest-dnsonly
-  # You do not need to install XtendWeb or make any other changes on the slave
 
 
-3. On Master Login to WHM and upgrade to MariaDB 10.1
+2. Install XtendWeb on master only
 ::
 
+  # On Master only
+  yum -y install epel-release
+  yum -y install https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-6.noarch.rpm
+
+  # Purchase a license so the server can access xtendweb yum repo
+
+  yum -y --enablerepo=ndeploy -y install nginx-nDeploy nDeploy # For nginx as webserver
+     OR
+  yum -y --enablerepo=ndeploy -y install openresty-nDeploy nDeploy # For openresty as webserver
+
+  /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
+
+  /opt/nDeploy/scripts/setup_additional_templates.sh  # For installing Wordpress and Drupal full page cache template
+
+
+
+
+
+3. On Master server Login to WHM and upgrade to MariaDB 10.1
+::
+
+  # On Master only
   Home »Software »MySQL/MariaDB Upgrade
   Select MariaDB 10.1 (General availability)
   and click "Next"
   Ensure Upgrade completes successfully
 
+  Ensure password in /root/.my.cnf is enclosed in single quotes (eg password='mysecurepass')
+  Unquoted and double-quoted password can sometimes cause issues
 
-.. tip:: On master ensure the /root/.my.cnf has mysql password enclosed in single quotes .
-         Unquoted password will fail the Ansible playbook run
-         password='mypass' is good. password=mypass and password="mypass" may cause failure in setup scripts
 
 
 4. Setup password-less ssh login between master and slaves
@@ -77,9 +118,11 @@ XtendWeb cluster setup:
 
   #Ensure passwordless login works for root
 
+
 5. Install Ansible on master
 ::
 
+  # On master only
   yum -y install python-pip libffi-devel python-paramiko python-jinja2
   pip install ansible
 
@@ -123,7 +166,7 @@ XtendWeb cluster setup:
 
 
 
-8. Add Additonal IP mapping if required
+8. (optional) Add Additonal IP mapping if required
 ::
 
   # Cluster setup automatically maps servers main IP's
@@ -133,19 +176,25 @@ XtendWeb cluster setup:
   usage: update_cluster_ipmap.py [-h] slave_hostname ip_here remote_ip
 
 
-The cluster is fully setup now and you can start adding accounts .Cluster automatically setus up DNS clustering
-and you should use master and slaves as the nameservers for the domain to ensure DNS LoadBalancing.
-
-The slave works independently (thus the scalability!) ,so ensure the backends required are installed on all slaves using
+9. Quirks for which we need a human intervention sometimes!
 ::
 
-   /opt/nDeploy/scripts/easy_php_setup.sh # For PHP
-   /opt/nDeploy/scripts/easy_hhvm_setup.sh # For HHVM
+  # The machine sometimes act weired .
+  # Here are some weired behaviour we notice that need manual intervention
+  # We are still investigating reason for these and hopefully it will be fixed soon
 
-   yum --enablerepo=ndeploy install nginx-nDeploy-module-passenger # Nginx
-   OR
-   yum --enablerepo=ndeploy install openresty-nDeploy-module-passenger # Openresty
-   AND
-   /opt/nDeploy/scripts/easy_passenger_setup.sh  #For Python/Ruby/NodeJS
+  # Unison doesnt start automatically on master after cluster setup
+  systemctl stop ndeploy_unison
+  systemctl start ndeploy_unison
 
-.. tip:: Disable chkservd on slave dns only servers as chkservd can cause troubles in cluster operation.
+  #PostFix is not running on slave( see tip below and disable checksrvd and upcp cron)
+  systemctl restart postfix
+
+
+The cluster including PHP app server is fully setup now  and you can start adding accounts .Cluster automatically setus up DNS clustering
+and you should use master and slaves as the nameservers for the domain to ensure DNS LoadBalancing.
+
+
+.. tip:: Disable chkservd and all its drivers on slave dns only servers as chkservd can cause troubles in cluster operation.
+
+         Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel componets setup by the cluster )
