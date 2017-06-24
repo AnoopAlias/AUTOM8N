@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; XtendWeb nginX control v4.0</title>
+  <title>XtendWeb standalone installation &mdash; Documentation</title>
   
 
   
@@ -33,9 +33,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
-        <link rel="next" title="Cluster Installation" href="installation_cluster.html"/>
-        <link rel="prev" title="XtendWeb Nginx Cluster Control for cPanel" href="index.html"/>
+    <link rel="top" title="Documentation" href="index.html"/>
+        <link rel="next" title="XtendWeb Cluster Installation" href="installation_cluster.html"/>
+        <link rel="prev" title="XtendWeb and SimpleR" href="index.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -82,10 +82,14 @@
           
             
             
-                <p class="caption"><span class="caption-text">XtendWeb Cluster - Installation &amp; Basic Configuration</span></p>
+                <p class="caption"><span class="caption-text">XtendWeb - Installation &amp; Basic Configuration</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation_cluster.html">Cluster Installation</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">XtendWeb standalone installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers">For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation_cluster.html">XtendWeb Cluster Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-introduction">XtendWeb Cluster Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup:</a></li>
 </ul>
@@ -98,23 +102,26 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_docs.html">XtendWeb User docs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#setup-url-redirects">Setup URL Redirects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#enable-directory-listing">Enable Directory listing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#content-optimization">Content Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#security-headers">Security Headers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="UserDocs.html">XtendWeb User docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#setup-url-redirects">Setup URL Redirects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#enable-directory-listing">Enable Directory listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#content-optimization">Content Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#security-headers">Security Headers</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption"><span class="caption-text">SimpleR - Installation &amp; Basic Configuration</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="simpler_resource_control.html">Simpler reseller resource control</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#how-does-simpler-work">How does simpleR work</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#faq">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#default-resource">Default resource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#default-resource-for-user">Default resource for user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#tools-to-view-resource-usage">Tools to view resource usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#limit-httpd-resource">Limit httpd resource</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#to-view-systemd-config-loaded">To view systemd config loaded</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#to-view-the-cgroup-tree">To view the cgroup tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#support">Support?</a></li>
 </ul>
 </li>
 </ul>
@@ -141,11 +148,10 @@
 <li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#on-centos6-centos7">On CentOS6/CentOS7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PHP.html#secure-php-fpm-setup">Secure php-fpm setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#php-fpm-user-level-master">PHP-FPM user level master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#where-are-my-php-logs">Where are my php logs?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#zendopcache-and-security-considerations-on-php-fpm-single-master-setup">ZendOpcache and security considerations on php-fpm single master setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#per-user-php-ini-custom-settings">Per user php.ini custom settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PHP.html#high-performance-wordpress-setup-using-redis-cache-and-nginx-helper-plugin">High Performance Wordpress setup using Redis cache and nginx-helper plugin</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
@@ -203,7 +209,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Installation</li>
+    <li>XtendWeb standalone installation</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -215,9 +221,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed</p>
+  <div class="section" id="xtendweb-standalone-installation">
+<h1>XtendWeb standalone installation<a class="headerlink" href="#xtendweb-standalone-installation" title="Permalink to this headline">¶</a></h1>
+<p>XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed .</p>
+<p>We recommend CentOS7 over CloudLinux . XtendWeb support chrooted PHP (similar to cageFS) and SimpleR plugin can provide application level and user level resource isolation</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">XtendWeb can use either Nginx or OpenResty as the webserver</p>
@@ -226,78 +233,74 @@
 <p class="first admonition-title">Tip</p>
 <p class="last">CentOS7/CloudLinux7 is recommended</p>
 </div>
-<p>1. Install EPEL repo and Xtendweb repo</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Starting with Xtendweb version 4.3.20 you need to subscribe to a license for installing XtendWeb
+Please visit <a class="reference external" href="https://autom8n.com/plans.html#plans">https://autom8n.com/plans.html#plans</a> for more info</p>
+</div>
+<p>1. Install and Enable the plugin</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
-<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">ndeploy4</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">5.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
-</pre></div>
-</div>
-<p>2. Install XtendWeb plugin and nginx or openresty . Be patient as this may take several minutes to complete.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For nginx as webserver</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">ndeploy4</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">6.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+
+<span class="c1"># Purchase a license so the server can access xtendweb yum repo</span>
+
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For nginx as webserver</span>
    <span class="n">OR</span>
-<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For openresty as webserver</span>
-<span class="c1"># OpenResty support embedding lua code.Openresty does not include mod_security and naxsi modules (use OpenSSL)</span>
-<span class="c1"># Nginx include naxsi and mod_security waf ( use LibreSSL instead of OpenSSL )</span>
-<span class="c1"># You can use any of the webserver in an interchangeable way and swap anytime</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For openresty as webserver</span>
+
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
+
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>  <span class="c1"># For installing Wordpress and Drupal full page cache template</span>
 </pre></div>
 </div>
-<p>3.1. Install PHP-FPM Application server</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Install PHP-FPM Application server for PHP</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">OpenResty should be used only if you need to extend nginx with LUA . OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF&#8217;sec</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Redis Full page cache for wordpress and Drupal is not compatible with PageSpeed - <a class="reference external" href="https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ">https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ</a></p>
+</div>
+<div class="section" id="for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers">
+<h2>For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers<a class="headerlink" href="#for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers" title="Permalink to this headline">¶</a></h2>
+<p>2.1. Install PHP-FPM Application server</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
 <span class="c1"># php-fpm and a selected set of modules are installed from the EA4 php repo</span>
 </pre></div>
 </div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Default PHP-FPM setup above use chroot of PHP-FPM pools to /home/virtfs . This is an alternative to CageFS.
-PHP process will not be able to view files not in /home/virtfs like /etc/named.conf for example.
-Ref: <a class="reference external" href="https://documentation.cpanel.net/display/ALD/PHP-FPM+User+Pools#PHP-FPMUserPools-Jailshell">https://documentation.cpanel.net/display/ALD/PHP-FPM+User+Pools#PHP-FPMUserPools-Jailshell</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">PHP-FPM pools are chrooted to /home/virtfs . In addition with cPanel JailShell this provides an isolated environment for each user</p>
 </div>
-<p>3.1.1. (Optional) Setup per user php-fpm master process for complete user level isolation</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Works only on Centos7/CloudLinux7</span>
+<p>2.1.1. Did you know you can make httpd use Xtendweb PHP-FPM app server?</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># To enable Apache httpd to use Xtendweb managed PHP-FPM (Users can change PHP version using PHP-FPM selector plugin)</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">httpd</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">install</span>
+</pre></div>
+</div>
+<p>2.1.2. Did you also know that XtendWeb can run each user in an isolated php-fpm server run under the user? (not recommended - see comment below)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># This is not recommended as php-fpm running as user cannot be chrooted and php will be able to access any files user has access to</span>
+<span class="c1"># If you run php under user. SimpleR can additionally isolate resources on a per-user basis</span>
+<span class="c1"># This is useful if you have a VPS and need certain scripts to use lesser resources than others</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">secure</span><span class="o">-</span><span class="n">php</span>
-<span class="c1"># This setup does not support chroot to virtfs as user level process cannot be chrooted!</span>
-<span class="c1"># PHP pocess is user owned but will be able to read files the user has access to</span>
 </pre></div>
 </div>
-<p>3.1.2. Enable PHP-FPM selector plugin(to make php-fpm default in httpd)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">httpd</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">install</span>
-<span class="c1"># Note that this will add new apache vhost templates in /var/cpanel/templates/apache2_4/</span>
-<span class="c1"># This will make php-fpm the default backend for all accounts in Apache httpd</span>
-<span class="c1"># Users can switch PHP version on a per domain basis using PHP-FPM selector plugin in cPanel</span>
-</pre></div>
-</div>
-<p>3.2. Install Phusion Passenger ( only if you need support for RUBY/PYTHON/NODEJS )</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Nginx</span>
-<span class="n">OR</span>
-<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Openresty</span>
-<span class="c1">#Enable Phusion Passenger Application Server backend. This is required for Ruby/Python/NodeJS.</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
-<span class="c1"># Ruby will be compiled and installed to /usr/local/rvm</span>
-<span class="c1"># Python will be compiled and installed to /usr/local/pythonz</span>
-<span class="c1"># NodeJS will be installed to /usr/local/nvm</span>
-<span class="c1"># The easy_passenger script installs only one version of Ruby/Python and NodeJS</span>
-<span class="c1"># Additional versions can be installed and managed using rvm,pythonz and nvm respectively</span>
-</pre></div>
-</div>
-<p>3.3. Install HHVM Hack/PHP Application server</p>
+<p>2.2. Install HHVM Hack/PHP Application server</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_hhvm_setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
-<p>4. Enable the plugin. This will make nginx your frontend webserver.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
+<p>2.3. Install Phusion Passenger App server for Python/Ruby/NodeJS</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Nginx</span>
+<span class="n">OR</span>
+<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Openresty</span>
+
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">If you modify WHM service certificate run /opt/nDeploy/scripts/generate_default_vhost_config.py &amp;&amp; nginx -s reload</p>
 </div>
-<p>5. Enable Extra templates that require redis and additional nginx modules</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>
-<span class="c1"># Note that Redis Full page cache is not compatible with PageSpeed - https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ</span>
-<span class="n">Disable</span> <span class="n">pagespeed</span> <span class="k">for</span> <span class="nb">any</span> <span class="n">redis</span> <span class="n">full</span> <span class="n">page</span> <span class="n">caching</span> <span class="n">template</span> <span class="n">domains</span><span class="o">.</span>
-</pre></div>
-</div>
-<p>6. Install Optional additional modules</p>
+<p>3. Install Optional additional modules</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Note that each module increases the nginx size and processing requirements</span>
 <span class="c1">#So install only required functionality .</span>
 <span class="p">(</span><span class="n">pagespeed</span><span class="p">)</span>   <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">pagespeed</span>
@@ -313,6 +316,9 @@ Ref: <a class="reference external" href="https://documentation.cpanel.net/displa
 <span class="p">(</span><span class="n">set_misc</span><span class="p">)</span>    <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">set_misc</span>
 <span class="p">(</span><span class="n">srcache</span><span class="p">)</span>     <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">srcache_filter</span>
 <span class="p">(</span><span class="n">echo</span><span class="p">)</span>        <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">echo</span>
+<span class="p">(</span><span class="n">testcookie_access</span><span class="p">)</span> <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">testcookie_access</span>
+<span class="p">(</span><span class="n">testcookie_access</span><span class="p">)</span> <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">testcookie_access</span> <span class="c1"># OpenResty</span>
+
 <span class="c1"># Following modules are installed and loaded by default in nginx but can be disabled</span>
 <span class="p">(</span><span class="n">headers_more</span><span class="p">)</span>
 <span class="p">(</span><span class="n">ndk</span><span class="p">)</span> <span class="n">Nginx</span> <span class="n">Development</span> <span class="n">ToolKit</span>
@@ -324,7 +330,8 @@ Ref: <a class="reference external" href="https://documentation.cpanel.net/displa
 <p class="first admonition-title">Tip</p>
 <p class="last">There are no additonal configurations required for the loadable modules. Users can control the functionality from XtendWeb UI</p>
 </div>
-<div data-disqus-identifier="Installation" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+<div data-disqus-identifier="XtendWeb standalone installation" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
 
 
            </div>
@@ -333,10 +340,10 @@ Ref: <a class="reference external" href="https://documentation.cpanel.net/displa
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installation_cluster.html" class="btn btn-neutral float-right" title="Cluster Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="installation_cluster.html" class="btn btn-neutral float-right" title="XtendWeb Cluster Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="XtendWeb Nginx Cluster Control for cPanel" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="XtendWeb and SimpleR" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

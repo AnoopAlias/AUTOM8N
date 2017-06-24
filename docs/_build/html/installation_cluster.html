@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Cluster Installation &mdash; XtendWeb nginX control v4.0</title>
+  <title>XtendWeb Cluster Installation &mdash; Documentation</title>
   
 
   
@@ -33,9 +33,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
+    <link rel="top" title="Documentation" href="index.html"/>
         <link rel="next" title="mod_remoteip" href="mod_remoteip.html"/>
-        <link rel="prev" title="Installation" href="installation_standalone.html"/>
+        <link rel="prev" title="XtendWeb standalone installation" href="installation_standalone.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -82,10 +82,14 @@
           
             
             
-                <p class="caption"><span class="caption-text">XtendWeb Cluster - Installation &amp; Basic Configuration</span></p>
+                <p class="caption"><span class="caption-text">XtendWeb - Installation &amp; Basic Configuration</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Cluster Installation</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers">For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">XtendWeb Cluster Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-introduction">XtendWeb Cluster Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-requirements">XtendWeb Cluster Requirements:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-setup">XtendWeb cluster setup:</a></li>
 </ul>
@@ -98,23 +102,26 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_docs.html">XtendWeb User docs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#setup-url-redirects">Setup URL Redirects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#enable-directory-listing">Enable Directory listing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#content-optimization">Content Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#security-headers">Security Headers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="UserDocs.html">XtendWeb User docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#setup-url-redirects">Setup URL Redirects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#enable-directory-listing">Enable Directory listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#content-optimization">Content Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#security-headers">Security Headers</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption"><span class="caption-text">SimpleR - Installation &amp; Basic Configuration</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="simpler_resource_control.html">Simpler reseller resource control</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#how-does-simpler-work">How does simpleR work</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#faq">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#default-resource">Default resource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#default-resource-for-user">Default resource for user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#tools-to-view-resource-usage">Tools to view resource usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#limit-httpd-resource">Limit httpd resource</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#to-view-systemd-config-loaded">To view systemd config loaded</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#to-view-the-cgroup-tree">To view the cgroup tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpler_resource_control.html#support">Support?</a></li>
 </ul>
 </li>
 </ul>
@@ -141,11 +148,10 @@
 <li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#on-centos6-centos7">On CentOS6/CentOS7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PHP.html#secure-php-fpm-setup">Secure php-fpm setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#php-fpm-user-level-master">PHP-FPM user level master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#where-are-my-php-logs">Where are my php logs?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#zendopcache-and-security-considerations-on-php-fpm-single-master-setup">ZendOpcache and security considerations on php-fpm single master setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#per-user-php-ini-custom-settings">Per user php.ini custom settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PHP.html#high-performance-wordpress-setup-using-redis-cache-and-nginx-helper-plugin">High Performance Wordpress setup using Redis cache and nginx-helper plugin</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
@@ -203,7 +209,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Cluster Installation</li>
+    <li>XtendWeb Cluster Installation</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -215,16 +221,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="cluster-installation">
-<h1>Cluster Installation<a class="headerlink" href="#cluster-installation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="xtendweb-cluster-installation">
+<h1>XtendWeb Cluster Installation<a class="headerlink" href="#xtendweb-cluster-installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="xtendweb-cluster-introduction">
+<h2>XtendWeb Cluster Introduction<a class="headerlink" href="#xtendweb-cluster-introduction" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb cluster is the worlds easiest web application clustering solution featuring a fully automated deployment of a clustered DNS loadbalanced LAMP stack.
+It is specifically designed for multi datacenter deployment and use encrypted communication between the server</p>
+<p>XtendWeb cluster thus provide high availability , scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
+Coupled with the simplicity and intutiveness of cPanel control panel ,XtendWeb cluster is a must have for any modern enterprise web application deployment</p>
+<p>Cluster Components:</p>
+<ol class="arabic simple">
+<li>cPanel DNS providing multiple A records for round robin DNS loadbalancing</li>
+<li>Nginx servers running on all servers with server specific settings and serving files independandly</li>
+<li>Application servers (php-fpm. Phusion passenger )running on all servers and serving app independandly</li>
+<li>Csync2 - Syncing config across all servers</li>
+<li>Unison - Syncing files across all servers</li>
+<li>MaxScale router and mariaDB master-master replication - Database replication and query routing</li>
+<li>Redis &amp; stunnel - Secure sharing of PHP session</li>
+<li>XtendWeb - generating and Syncing configuration for all servers</li>
+</ol>
+</div>
 <div class="section" id="xtendweb-cluster-requirements">
 <h2>XtendWeb Cluster Requirements:<a class="headerlink" href="#xtendweb-cluster-requirements" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">using CloudLinux will be counter productive on XtendWeb Cluster as cloudLinux is trying to solve server stability problem by limiting resources useable by a user
-XtendWeb on the other hand tries to achieve stability by using a fan-out infrastructure which is what an enterprise user would need.</p>
-</div>
-<p>It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this). XtendWeb cluster needs atleast 2 servers.</p>
+<p>It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this).</p>
+<p>We do support CentOS6, but it is less tested and some programs like stunnel startup script etc is lacking in CentOS6 .</p>
+<p>XtendWeb cluster needs atleast 2 servers. Only one of the server need a valid cPanel license</p>
+<p>Cluster provide horizontal scalability for web applications using DNS loadbalancing .</p>
 <p>It is highly recommended that the servers be on different geographic regions ( eg: master in US , slave in UK ) and use different providers.
 The golden rule is - Dont keep all your eggs in the same basket.</p>
 <p>All communication between master and slave is TLS encrypted and is therefore safe .
@@ -233,48 +255,57 @@ The master and slave just need to be able to connect via internet.</p>
 on the existing server.</p>
 <p>Master server - Centos7 ,MariaDB 10.1</p>
 <p>Slave Server&#8217;s - Centos7 ( installed with cPanel DNS only which is licensed free ).Rest of the software is installed automatically at cluster setup.</p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
-It is recommended that they resolve correctly on the internet</p>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">CentOS7 is recommended</p>
-</div>
 </div>
 <div class="section" id="xtendweb-cluster-setup">
 <h2>XtendWeb cluster setup:<a class="headerlink" href="#xtendweb-cluster-setup" title="Permalink to this headline">¶</a></h2>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">If you are using CSF whitelist all server ip&#8217;s in cluster and ensure TCP ports  30865 , 4430, 9999, 13306 are allowed</p>
+<p class="last">Install CSF firewall on both servers and whitelist each others IP for access</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
 It is recommended that they resolve correctly on the internet</p>
 </div>
-<p>1. Install XtendWeb as normal on master and enable the plugin</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Follow</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">xtendweb</span><span class="o">.</span><span class="n">gnusys</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">docs</span><span class="o">/</span><span class="n">installation_standalone</span><span class="o">.</span><span class="n">html</span>  <span class="c1"># On master</span>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As of XtendWeb 4.3.20 you will need a license for all servers(master and slaves) on the cluster .Else Installation will fail
+Please visit <a class="reference external" href="https://autom8n.com/plans.html#plans">https://autom8n.com/plans.html#plans</a> for more info</p>
+</div>
+<p>1. Install cPanel and cPanel DNS only on master and slaves respectively</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On Master</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span>
+
+<span class="c1">#On Slaves</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span>
 </pre></div>
 </div>
-<p>2. Install cPanel DNS only on all the slaves</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span>
-<span class="c1"># You do not need to install XtendWeb or make any other changes on the slave</span>
+<p>2. Install XtendWeb on master only</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On Master only</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">ndeploy4</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">6.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+
+<span class="c1"># Purchase a license so the server can access xtendweb yum repo</span>
+
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For nginx as webserver</span>
+   <span class="n">OR</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For openresty as webserver</span>
+
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
+
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>  <span class="c1"># For installing Wordpress and Drupal full page cache template</span>
 </pre></div>
 </div>
-<p>3. On Master Login to WHM and upgrade to MariaDB 10.1</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Home »Software »MySQL/MariaDB Upgrade
+<p>3. On Master server Login to WHM and upgrade to MariaDB 10.1</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span># On Master only
+Home »Software »MySQL/MariaDB Upgrade
 Select MariaDB 10.1 (General availability)
 and click &quot;Next&quot;
 Ensure Upgrade completes successfully
+
+Ensure password in /root/.my.cnf is enclosed in single quotes (eg password=&#39;mysecurepass&#39;)
+Unquoted and double-quoted password can sometimes cause issues
 </pre></div>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">On master ensure the /root/.my.cnf has mysql password enclosed in single quotes .
-Unquoted password will fail the Ansible playbook run
-password=&#8217;mypass&#8217; is good. password=mypass and password=&#8221;mypass&#8221; may cause failure in setup scripts</p>
 </div>
 <p>4. Setup password-less ssh login between master and slaves</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#On master</span>
@@ -289,7 +320,8 @@ password=&#8217;mypass&#8217; is good. password=mypass and password=&#8221;mypas
 </pre></div>
 </div>
 <p>5. Install Ansible on master</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span> <span class="n">libffi</span><span class="o">-</span><span class="n">devel</span> <span class="n">python</span><span class="o">-</span><span class="n">paramiko</span> <span class="n">python</span><span class="o">-</span><span class="n">jinja2</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On master only</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span> <span class="n">libffi</span><span class="o">-</span><span class="n">devel</span> <span class="n">python</span><span class="o">-</span><span class="n">paramiko</span> <span class="n">python</span><span class="o">-</span><span class="n">jinja2</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">ansible</span>
 </pre></div>
 </div>
@@ -328,7 +360,7 @@ password=&#8217;mypass&#8217; is good. password=mypass and password=&#8221;mypas
 <p class="last">If you see &#8220;ERROR! Unexpected Exception: &#8216;module&#8217; object has no attribute &#8216;HAVE_DECL_MPZ_POWM_SEC&#8217;&#8221; on centos6 do
 yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="reference external" href="https://github.com/ansible/ansible/issues/276">https://github.com/ansible/ansible/issues/276</a> )</p>
 </div>
-<p>8. Add Additonal IP mapping if required</p>
+<p>8. (optional) Add Additonal IP mapping if required</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Cluster setup automatically maps servers main IP&#39;s</span>
 <span class="c1"># If you are using cloud by DigitalOcean ,Linode etc the automatic mapping is enough</span>
 <span class="c1"># If you have multiple IP on master and slave, map additional IP&#39;s using command below</span>
@@ -336,22 +368,25 @@ yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="referen
 <span class="n">usage</span><span class="p">:</span> <span class="n">update_cluster_ipmap</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">slave_hostname</span> <span class="n">ip_here</span> <span class="n">remote_ip</span>
 </pre></div>
 </div>
-<p>The cluster is fully setup now and you can start adding accounts .Cluster automatically setus up DNS clustering
-and you should use master and slaves as the nameservers for the domain to ensure DNS LoadBalancing.</p>
-<p>The slave works independently (thus the scalability!) ,so ensure the backends required are installed on all slaves using</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span> <span class="c1"># For PHP</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_hhvm_setup</span><span class="o">.</span><span class="n">sh</span> <span class="c1"># For HHVM</span>
+<p>9. Quirks for which we need a human intervention sometimes!</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># The machine sometimes act weired .</span>
+<span class="c1"># Here are some weired behaviour we notice that need manual intervention</span>
+<span class="c1"># We are still investigating reason for these and hopefully it will be fixed soon</span>
 
-<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Nginx</span>
-<span class="n">OR</span>
-<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Openresty</span>
-<span class="n">AND</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>  <span class="c1">#For Python/Ruby/NodeJS</span>
+<span class="c1"># Unison doesnt start automatically on master after cluster setup</span>
+<span class="n">systemctl</span> <span class="n">stop</span> <span class="n">ndeploy_unison</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">ndeploy_unison</span>
+
+<span class="c1">#PostFix is not running on slave( see tip below and disable checksrvd and upcp cron)</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">postfix</span>
 </pre></div>
 </div>
+<p>The cluster including PHP app server is fully setup now  and you can start adding accounts .Cluster automatically setus up DNS clustering
+and you should use master and slaves as the nameservers for the domain to ensure DNS LoadBalancing.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">Disable chkservd on slave dns only servers as chkservd can cause troubles in cluster operation.</p>
+<p>Disable chkservd and all its drivers on slave dns only servers as chkservd can cause troubles in cluster operation.</p>
+<p class="last">Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel componets setup by the cluster )</p>
 </div>
 </div>
 </div>
@@ -366,7 +401,7 @@ and you should use master and slaves as the nameservers for the domain to ensure
         <a href="mod_remoteip.html" class="btn btn-neutral float-right" title="mod_remoteip" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="installation_standalone.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installation_standalone.html" class="btn btn-neutral" title="XtendWeb standalone installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

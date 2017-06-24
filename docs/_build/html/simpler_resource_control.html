@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Simpler reseller resource control &mdash; XtendWeb nginX control v4.0</title>
+  <title>Simpler reseller resource control &mdash; Documentation</title>
   
 
   
@@ -33,9 +33,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="XtendWeb nginX control v4.0" href="index.html"/>
+    <link rel="top" title="Documentation" href="index.html"/>
         <link rel="next" title="Support" href="Support.html"/>
-        <link rel="prev" title="XtendWeb User docs" href="user_docs.html"/>
+        <link rel="prev" title="XtendWeb User docs" href="UserDocs.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -82,10 +82,14 @@
           
             
             
-                <p class="caption"><span class="caption-text">XtendWeb Cluster - Installation &amp; Basic Configuration</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation_cluster.html">Cluster Installation</a><ul>
+                <p class="caption"><span class="caption-text">XtendWeb - Installation &amp; Basic Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#for-enjoying-native-nginx-speed-nginx-must-have-various-application-servers-for-processing-dynamic-content-proceed-further-to-install-various-app-servers">For Enjoying native nginx speed .Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation_cluster.html">XtendWeb Cluster Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-introduction">XtendWeb Cluster Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup:</a></li>
 </ul>
@@ -98,23 +102,26 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_docs.html">XtendWeb User docs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#setup-url-redirects">Setup URL Redirects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#enable-directory-listing">Enable Directory listing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#content-optimization">Content Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_docs.html#security-headers">Security Headers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="UserDocs.html">XtendWeb User docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#setup-url-redirects">Setup URL Redirects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#enable-directory-listing">Enable Directory listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#content-optimization">Content Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#security-headers">Security Headers</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption"><span class="caption-text">SimpleR - Installation &amp; Basic Configuration</span></p>
+<ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Simpler reseller resource control</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-does-simpler-work">How does simpleR work</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#faq">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#default-resource">Default resource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#default-resource-for-user">Default resource for user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tools-to-view-resource-usage">Tools to view resource usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#limit-httpd-resource">Limit httpd resource</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#to-view-systemd-config-loaded">To view systemd config loaded</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#to-view-the-cgroup-tree">To view the cgroup tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#support">Support?</a></li>
 </ul>
 </li>
 </ul>
@@ -141,11 +148,10 @@
 <li class="toctree-l1"><a class="reference internal" href="PHP.html">Setting up PHP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#on-centos6-centos7">On CentOS6/CentOS7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#on-cloudlinux6-cloudlinux7">On CloudLinux6/CloudLinux7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PHP.html#secure-php-fpm-setup">Secure php-fpm setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PHP.html#php-fpm-user-level-master">PHP-FPM user level master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#where-are-my-php-logs">Where are my php logs?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#zendopcache-and-security-considerations-on-php-fpm-single-master-setup">ZendOpcache and security considerations on php-fpm single master setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PHP.html#per-user-php-ini-custom-settings">Per user php.ini custom settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PHP.html#high-performance-wordpress-setup-using-redis-cache-and-nginx-helper-plugin">High Performance Wordpress setup using Redis cache and nginx-helper plugin</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PYTHON_WSGI.html">Setting up Python (WSGI app)</a></li>
@@ -217,85 +223,56 @@
             
   <div class="section" id="simpler-reseller-resource-control">
 <h1>Simpler reseller resource control<a class="headerlink" href="#simpler-reseller-resource-control" title="Permalink to this headline">¶</a></h1>
-<p>Simpler is an alternative to cloudLinux . Simpler use systemd available in modern system to offer resource control.
-The adavantages of simpler are</p>
+<p>SimpleR stands for Simple Resource isolator and use systemd in modern systems to isolate CPU/Memory/IO on a per process basis</p>
+<p>SimpleR can also group php-fpm and HHVM application servers running under user to a reseller.slice and individually limit the resource at a reseller level</p>
+<p>Highlights are:</p>
 <ol class="arabic simple">
 <li>No need of a custom kernel</li>
 <li>Resource isolation at Reseller level ,instead of user level</li>
+<li>Resource limit on a process level for Apache/Nginx/MySQL/PHP . A safety valve like setting</li>
+</ol>
+<ol class="arabic simple" start="3">
 <li>No additional software is required</li>
 <li>Future proof as Simpler can follow future development trends in Kernel and Systemd without additional patching</li>
 <li>And the best of all - Its simple and straightforward - Simplicity is the ultimate sophistication</li>
 </ol>
 <div class="section" id="how-does-simpler-work">
 <h2>How does simpleR work<a class="headerlink" href="#how-does-simpler-work" title="Permalink to this headline">¶</a></h2>
-<p>Simpler needs the php-fpm management system provided by <a class="reference external" href="https://xtendweb.gnusys.net/">https://xtendweb.gnusys.net/</a></p>
-<p>XtendWeb forks a seperate PHP-FPM/HHVM  master process for each user (did we say its more secure too?) and XtendWeb
-scripts automatically assign the process to a slice named after the reseller . The slice is a systemd unit that can have
-resource controls using cgroup. In short you can view all PHP-FPM process/HHVM process running under a reseller as a single entity
-and manage its resource simply by editing the reseller resource from the WHM User Interface</p>
-</div>
-<div class="section" id="faq">
-<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
-<li>Why are you not providing user level resource control</li>
-</ol>
-<blockquote>
-<div>In fact this is more easier than doing it at the reseller level. We thought reseller level control is more apt.
-You can say like all accounts under reseller x use 4 GB of RAM and 1/2 of the processing power .
-Its more easy to visualize and manage</div></blockquote>
-<ol class="arabic" start="2">
-<li><p class="first">Why only php-fpm?. Cant you manage Apache httpd,mysql, nginx etc?</p>
-<p>Sure why not . Each process in a systemd managed system can have resource limit . We feel that php-fpm will be the culprit when things go bad.
-Please see examples below on how you can set a upper limit to resource used by httpd,mysql etc.</p>
-</li>
-<li><p class="first">Does this work with Apache httpd?</p>
-<p>Yes it works with apache httpd as well . XtendWeb php-fpm system is integrated with apache httpd and users are provided
-with the php-fpm selector plugin from which they can manage php version on a per website basis.</p>
-</li>
-<li><p class="first">Why is Simpler Free</p>
-<p>Simpler is bundled along with <a class="reference external" href="https://xtendweb.gnusys.net/">https://xtendweb.gnusys.net/</a> . Together with Simpler,XtendWeb and XtendWeb cluster it offers a webhost or enterprise
-to have a great , stable ,high available and scalable hosting infrastructure . The software is all free and open source .
-But all support ,Installation assistance etc is commercial. GNUSYS is a service centric company and we charge only for the support services provided and not the product</p>
-</li>
-</ol>
+<p>Application Limits - SimpleR drops in an additional resource limit under the [Service] section in systemd unit file to achieve resource limit
+for Apache/Nginx/MySQL/PHP . These limit can act as a safety net ( presuure value!) in extreme cases and prevent a single service from using up entire server resources</p>
+<p>User Limits - If PHP-FPM or HHVM process is run under user .Simpler can group the process to a reseller.slice file and ensure each user is limited in terms of memory/CPU and IO.
+This can come handy when an admin want to allocate low resources to certain scripts and prevent them from affecting useable resources of other users</p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Simpler setting must be viewed as a safe upper limit for reseller resource usage . For example you can say that reseller x cannot consume more than 75% of memory and CPU.
-Setting very low limits on high end servers will only give you unhappy users and wasted resource . At the end of the day server is for serving not limiting !</p>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Instead of limiting the resource you can scale the Websites to multiple servers using XtendWeb cluster . Assuming that each server can handle 128 PHP process ,adding a
-new server to XtendWeb cluster will add another 128 PHP process capable server and allow your website to be served by 256 PHP process via DNS load balancing.</p>
-</div>
-<p>Simpler needs systemd .So you will need CentOS7 or RHEL7 .The php-fpm management is provided by XtendWeb so you will need XtendWeb
-installed as well . You dont need to switch to native nginx.But we urge that you try the native nginx feature as well of XtendWeb .</p>
-<ol class="arabic simple">
-<li>Install XtendWeb : <a class="reference external" href="https://xtendweb.gnusys.net/docs/installation_standalone.html">https://xtendweb.gnusys.net/docs/installation_standalone.html</a></li>
-</ol>
-<p>2. Enable secure PHP-FPM</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">secure</span><span class="o">-</span><span class="n">php</span>
-</pre></div>
-</div>
-<p>3. Enable httpd-php ( this enables Apache httpd to use php-fpm )</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">httpd</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">install</span>
-</pre></div>
-</div>
-<p>4. Autofix configuration</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
-</pre></div>
-</div>
-<p>5. Install SimpleR WHM plugin</p>
+<p>Simpler needs systemd .So you will need CentOS7 or RHEL7 .</p>
+<p>1. Install SimpleR WHM plugin</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">simpler</span><span class="o">-</span><span class="n">nDeploy</span>
 </pre></div>
 </div>
-<p>Installation is complete and you can manage reseller resources from WHM &gt;&gt; Home »Plugins &gt;&gt; SimpleR Reseller Resource</p>
+<p>Simpler will allow setting upper limits for computing resources used by httpd/nginx/mysql/php-fpm(xtendweb managed)</p>
+<p>For user level resource isolation do the following</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While running php-fpm master as user is more secure than running master server as root . cPanel EA4 PHP provides chroot support for user poolsin single root owned master setup
+User level php-fpm cannot chroot and thus will be able to access all system files the user normally has access to. Thus root owned php-fpm master is more recommended for a shared server
+setup and user level php-fpm masters are recommended for a private VPS setup</p>
 </div>
-<div class="section" id="default-resource">
-<h2>Default resource<a class="headerlink" href="#default-resource" title="Permalink to this headline">¶</a></h2>
+<p>2. Enable user level PHP-FPM master process</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">secure</span><span class="o">-</span><span class="n">php</span>
+</pre></div>
+</div>
+<p>2.1. Enable httpd-php ( this enables Apache httpd to use the above php-fpm process )</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">httpd</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">install</span>
+</pre></div>
+</div>
+<p>2.2. Autofix configuration</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="default-resource-for-user">
+<h2>Default resource for user<a class="headerlink" href="#default-resource-for-user" title="Permalink to this headline">¶</a></h2>
 <p>The default resource a reseller gets on creation in WHM is controlled by the file</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cat /opt/nDeploy/conf/simpler_resources.j2</span>
 <span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
@@ -347,59 +324,20 @@ May 12 07:18:37 li1311-27.members.linode.com php-fpm::godisgreat[31361]: [NOTICE
 <p>To view which reseller is consuming more resource</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemd</span><span class="o">-</span><span class="n">cgtop</span>
 
-<span class="n">Path</span>                                                                                                                                               <span class="n">Tasks</span>   <span class="o">%</span><span class="n">CPU</span>   <span class="n">Memory</span>  <span class="n">Input</span><span class="o">/</span><span class="n">s</span> <span class="n">Output</span><span class="o">/</span><span class="n">s</span>
+<span class="n">Path</span>                                                     <span class="n">Tasks</span>   <span class="o">%</span><span class="n">CPU</span>   <span class="n">Memory</span>  <span class="n">Input</span><span class="o">/</span><span class="n">s</span> <span class="n">Output</span><span class="o">/</span><span class="n">s</span>
 
-<span class="o">/</span>                                                                                                                                                    <span class="mi">106</span>    <span class="mf">1.8</span>   <span class="mf">676.8</span><span class="n">M</span>        <span class="o">-</span>        <span class="o">-</span>
-<span class="o">/</span><span class="n">user</span><span class="o">.</span><span class="n">slice</span>                                                                                                                                           <span class="mi">10</span>    <span class="mf">1.2</span>    <span class="mf">87.5</span><span class="n">M</span>        <span class="o">-</span>        <span class="o">-</span>
-<span class="o">/</span><span class="n">system</span><span class="o">.</span><span class="n">slice</span>                                                                                                                                         <span class="mi">50</span>    <span class="mf">0.5</span>   <span class="mf">158.7</span><span class="n">M</span>        <span class="o">-</span>        <span class="o">-</span>
-<span class="o">/</span><span class="n">root</span><span class="o">.</span><span class="n">slice</span>                                                                                                                                            <span class="mi">2</span>    <span class="mf">0.0</span>   <span class="mf">164.7</span><span class="n">M</span>        <span class="o">-</span>        <span class="o">-</span>
-<span class="o">/</span><span class="n">root</span><span class="o">.</span><span class="n">slice</span><span class="o">/</span><span class="n">CPANELPHP70</span><span class="nd">@godisgreat</span><span class="o">.</span><span class="n">service</span>                                                                                                             <span class="mi">1</span>      <span class="o">-</span>        <span class="o">-</span>        <span class="o">-</span>        <span class="o">-</span>
-<span class="o">/</span><span class="n">root</span><span class="o">.</span><span class="n">slice</span><span class="o">/</span><span class="n">ndeploy_hhvm</span><span class="nd">@godisgreat</span><span class="o">.</span><span class="n">service</span>                                                                                                            <span class="mi">1</span>      <span class="o">-</span>        <span class="o">-</span>        <span class="o">-</span>        <span class="o">-</span>
+<span class="o">/</span>                                                        <span class="mi">106</span>    <span class="mf">1.8</span>   <span class="mf">676.8</span><span class="n">M</span>        <span class="o">-</span>        <span class="o">-</span>
+<span class="o">/</span><span class="n">user</span><span class="o">.</span><span class="n">slice</span>                                              <span class="mi">10</span>    <span class="mf">1.2</span>    <span class="mf">87.5</span><span class="n">M</span>        <span class="o">-</span>        <span class="o">-</span>
+<span class="o">/</span><span class="n">system</span><span class="o">.</span><span class="n">slice</span>                                            <span class="mi">50</span>    <span class="mf">0.5</span>   <span class="mf">158.7</span><span class="n">M</span>        <span class="o">-</span>        <span class="o">-</span>
+<span class="o">/</span><span class="n">root</span><span class="o">.</span><span class="n">slice</span>                                              <span class="mi">2</span>    <span class="mf">0.0</span>   <span class="mf">164.7</span><span class="n">M</span>        <span class="o">-</span>        <span class="o">-</span>
+<span class="o">/</span><span class="n">root</span><span class="o">.</span><span class="n">slice</span><span class="o">/</span><span class="n">CPANELPHP70</span><span class="nd">@godisgreat</span><span class="o">.</span><span class="n">service</span>               <span class="mi">1</span>      <span class="o">-</span>        <span class="o">-</span>        <span class="o">-</span>        <span class="o">-</span>
+<span class="o">/</span><span class="n">root</span><span class="o">.</span><span class="n">slice</span><span class="o">/</span><span class="n">ndeploy_hhvm</span><span class="nd">@godisgreat</span><span class="o">.</span><span class="n">service</span>              <span class="mi">1</span>      <span class="o">-</span>        <span class="o">-</span>        <span class="o">-</span>        <span class="o">-</span>
 </pre></div>
 </div>
 <p>Note that the above gives resource usage on a per process level and also at the reseller level. Look for resellername.slice for the reseller level usage</p>
 <p>To know more about systemd-resource-control</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># man systemd.resource-control</span>
 </pre></div>
-</div>
-</div>
-<div class="section" id="limit-httpd-resource">
-<h2>Limit httpd resource<a class="headerlink" href="#limit-httpd-resource" title="Permalink to this headline">¶</a></h2>
-<p>Since dynamic page is served by php-fpm . Apache httpd is left with dealing mostly static pages and other web server jobs .
-This does not cause much issues unless you are under an attack etc. In such situation you can place an upper limit to resource
-that can be used by Apache httpd</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span># systemctl status httpd.service
-● httpd.service - Apache web server managed by cPanel EasyApache
-   Loaded: loaded (/etc/systemd/system/httpd.service; enabled; vendor preset: disabled)
-   Active: active (running) since Fri 2017-05-12 07:01:15 UTC; 3h 45min ago
- Main PID: 27720 (httpd)
-   CGroup: /system.slice/httpd.service
-           ├─ 5858 /usr/local/cpanel/3rdparty/bin/perl /usr/local/cpanel/bin/leechprotect
-           ├─ 5859 /usr/sbin/httpd -k start
-           ├─ 5860 /usr/sbin/httpd -k start
-           ├─ 5861 /usr/sbin/httpd -k start
-           ├─ 5862 /usr/sbin/httpd -k start
-           ├─ 5863 /usr/sbin/httpd -k start
-           ├─ 6117 /usr/sbin/httpd -k start
-           └─27720 /usr/sbin/httpd -k start
-
-May 12 07:01:14 li1311-27.members.linode.com systemd[1]: Starting Apache web server managed by cPanel EasyApache...
-May 12 07:01:15 li1311-27.members.linode.com systemd[1]: PID file /run/apache2/httpd.pid not readable (yet?) after start.
-May 12 07:01:15 li1311-27.members.linode.com systemd[1]: Started Apache web server managed by cPanel EasyApache.
-
-vi /etc/systemd/system/httpd.service
-# Add below settings under the [Service] section
-
-CPUShares=1024
-MemoryLimit=8G
-BlockIOWeight=1000
-</pre></div>
-</div>
-<p>You can follow the same procedure and put a upper limit to resource used by mysql by editing /etc/systemd/system/mysql.service</p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Did you know that the XtendWeb plugin you installed for Simpler can serve contents using the highly effecient nginx web server ?
-This is something you must try out instead of limiting resource used by Apache httpd</p>
 </div>
 </div>
 <div class="section" id="to-view-systemd-config-loaded">
@@ -415,11 +353,6 @@ This is something you must try out instead of limiting resource used by Apache h
 </pre></div>
 </div>
 </div>
-<div class="section" id="support">
-<h2>Support?<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
-<p>Please email <a class="reference external" href="mailto:ops&#37;&#52;&#48;gnusys&#46;net">ops<span>&#64;</span>gnusys<span>&#46;</span>net</a> for commercial support . Anoop Alias (aka gnusys) can be hired for all kinds of sysadmin/DevOps job</p>
-<p>Please contact : <a class="reference external" href="mailto:anoop&#37;&#52;&#48;gnusys&#46;net">anoop<span>&#64;</span>gnusys<span>&#46;</span>net</a> .</p>
-</div>
 </div>
 
 
@@ -432,7 +365,7 @@ This is something you must try out instead of limiting resource used by Apache h
         <a href="Support.html" class="btn btn-neutral float-right" title="Support" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="user_docs.html" class="btn btn-neutral" title="XtendWeb User docs" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="UserDocs.html" class="btn btn-neutral" title="XtendWeb User docs" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

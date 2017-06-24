@@ -3,14 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-XtendWeb Nginx Cluster Control for cPanel
-============================================
+XtendWeb and SimpleR
+=========================
 
 .. index:: XtendWeb
 
 .. toctree::
    :maxdepth: 2
-   :caption: XtendWeb Cluster - Installation & Basic Configuration
+   :caption: XtendWeb - Installation & Basic Configuration
 
    installation_standalone
    installation_cluster
@@ -19,7 +19,17 @@ XtendWeb Nginx Cluster Control for cPanel
    http2
    ModSecurity
    Naxsi
-   user_docs
+
+.. toctree::
+   :maxdepth: 2
+   :caption: User Documentation
+
+   UserDocs
+
+.. toctree::
+   :maxdepth: 2
+   :caption: SimpleR - Installation & Basic Configuration
+
    simpler_resource_control
 
 .. toctree::

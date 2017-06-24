@@ -24,7 +24,7 @@ XtendWeb and SimpleR
    :maxdepth: 2
    :caption: User Documentation
 
-    user_docs
+   UserDocs
 
 .. toctree::
    :maxdepth: 2

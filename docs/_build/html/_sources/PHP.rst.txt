@@ -41,15 +41,14 @@ may not adhere to limits setup in CloudLinux
   systemctl restart ndeploy_backends || service ndeploy_backends restart
 
 
-Secure php-fpm setup
-------------------------
+PHP-FPM user level master
+---------------------------
 
 The default PHP-FPM setup creates a single master process owned by root, which then spawns multiple pools
 which run under the user credentials .The downside of this setup is that opcode caches like OpCache,APC etc share a single
-cache making it less secure on a shared hosting environment
+cache .On the upside the root owned master process can chroot pools ensuring php scripts cannot access files (like /etc/named.conf for example )
 
-XtendWeb offers a solution on Centos7/CloudLinux7 servers by using socket activated php-fpm masters which run under each user
-This setup requires more memory as each user will have a php-fpm master spawned
+The user level php-fpm master process can have resource limits set on a per user basis using SimpleR plugin supplied with Xtendweb
 
 To use secure php-fpm
 ::
@@ -60,9 +59,7 @@ To use secure php-fpm
 To revert to single php-fpm master setup do
 ::
 
-  rm -f /opt/nDeploy/conf/secure-php-enabled
-  /opt/nDeploy/scripts/attempt_autofix.sh
-
+  /opt/nDeploy/scripts/init_backends.py disable-secure-php
 
 
 
@@ -105,14 +102,6 @@ php-fpm lets users configure settings of type PHP_INI_PERDIR and PHP_INI_USER in
 Ref: http://php.net/manual/en/configuration.file.per-user.php
 
 the settings can be provided in ini format(same as php.ini) and the file must be named .user.ini
-
-
-High Performance Wordpress setup using Redis cache and nginx-helper plugin
-----------------------------------------------------------------------------
-Install the nginx-helper plugin in wordpress https://wordpress.org/plugins/nginx-helper/
-
-Setup the nginx helper plugin to use Redis Cache purge
-Leave the "Prefix" field blank in "Redis settings"
 
 
 
