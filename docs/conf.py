@@ -55,7 +55,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'XtendWeb'
+project = u'A U T O M 8 N'
 copyright = u'2016, Anoop P Alias'
 author = u'Anoop P Alias'
 

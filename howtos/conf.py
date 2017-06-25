@@ -39,6 +39,8 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'sphinxcontrib.disqus',
+    'sphinxcontrib.youtube'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -58,7 +60,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'AUTOM8N HOWTOS'
+project = u'A U T O M 8 N'
 copyright = u'2017, Anoop P Alias'
 author = u'Anoop P Alias'
 
