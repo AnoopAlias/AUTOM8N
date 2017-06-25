@@ -10,7 +10,7 @@ XtendWeb and SimpleR
 
 .. toctree::
    :maxdepth: 2
-   :caption: XtendWeb - Installation & Basic Configuration
+   :caption: XtendWeb setup
 
    installation_standalone
    installation_cluster
@@ -28,7 +28,7 @@ XtendWeb and SimpleR
 
 .. toctree::
    :maxdepth: 2
-   :caption: SimpleR - Installation & Basic Configuration
+   :caption: SimpleR setup
 
    simpler_resource_control
 
