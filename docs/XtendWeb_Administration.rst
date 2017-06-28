@@ -1,9 +1,9 @@
 Administration of XtendWeb plugin
 =================================
 
-The end user has a intutive UI for managing domains hosted on cPanel .
+The end user has an intuitive UI for managing domains hosted on cPanel.
 
-Sysadmins can manipulate server wide settings using various scripts accessible from commandline
+Sysadmins can manipulate server wide settings using various scripts accessible from command line
 
 Layer7(Application layer) DDOS mitigation
 -----------------------------------------
@@ -48,12 +48,12 @@ You can change the default server setting by creating /opt/nDeploy/conf/domain_d
 Automatic selection of template based on application
 ---------------------------------------------------------------
 
-The following script can detect the application installed in the webroot(only!) based on filenames
+The following script can detect the application installed in the web root(only!) based on filenames
 
 While cPanel users can always change the vhost configuration for nginX
 anytime from their cPanel login
-sometimes the server administrator want to automatically switch supporting applications
-to be directly served by nginX instead of apache.
+sometimes the server administrator wants to automatically switch supporting applications
+to be directly served by Nginx instead of Apache httpd.
 ::
 
   /opt/nDeploy/scripts/auto_config.py CPANELUSER
@@ -74,7 +74,7 @@ The script works by checking the presence of certain files like for example the 
 Admin can update the appsignatures.yaml file with file names and the corresponding
 profile that auto_config.py switch the domain to if the file exists.
 The default list provided by us is not extensive.
-Admins can also remove entries from the file above to negate auto-switching should there be a need for it .
+Admins can also remove entries from the file above to negate auto-switching should there be a need for it.
 
   ``/opt/nDeploy/conf/auto_config.exclude``
 
@@ -99,13 +99,13 @@ To make this all work
 
 The first time auto_config.py runs it will ask your preference of PHP version
 that automatic switching should use.
-On cpanel servers you can safely use the same version as the default installed PHP
+On Cpanel servers, you can safely use the same version as the default installed PHP
 as most of your domains will be running that version without issues
 
 Adding application templates
 --------------------------------------------
 Application templates are a way of extending the plugin with dealing with more web applications and user specific
-nginx config customization
+Nginx config customization
 
 Application templates can be distributed server wide or to specific users
 Application templates can be created for an application in the document_root as well as a subdirectory
@@ -131,17 +131,17 @@ In short the template registration has the following syntax
 
   /opt/nDeploy/scripts/update_profiles.py [add|del] [root|cpanelusername] [main|subdir] [backend] [templatefilename] [quoted description]
 
-Templates use Python Jinja2 templating engine . But there isnt much template logic used to make application template
+Templates use Python Jinja2 templating engine. But there isn't much template logic used to make application template
 simpler for most users. You can check existing templates for the commonly used variables.
 
-.. tip:: Open an issue at the github repo if you wish template for a commonly used application to be added
+.. tip:: Open an issue at the GitHub repo if you wish template for a commonly used application to be added
 
 
 
 Adding Application servers or backends
 ---------------------------------------
 
-XtendWeb supports php-fpm or hhvm via FastCGI , Other web/application servers like httpd,tomcat etc via Proxy .
+XtendWeb supports php-fpm or hhvm via FastCGI, Other web/application servers like httpd, Tomcat etc via Proxy.
 Ruby/Python/NodeJs using the Phusion Passenger module
 
 To register a backend use the follwoing command
@@ -150,11 +150,11 @@ To register a backend use the follwoing command
   /opt/nDeploy/scripts/update_backend.py [add|del] backend_category backend_name backend_path
 
 
-Upgrading XtendWeb and nginx
+Upgrading XtendWeb and Nginx
 ----------------------------
 
 nDeploy-nginx is mated with a phusion passenger ruby gem .
-So we don't encourage unmanned upgrades and have therefore set enable=0 in the yum repository .
+So we don't encourage unmanned upgrades and have therefore set enable=0 in the yum repository.
 The upgrade must be done manually by running the following commands
 ::
 
@@ -186,7 +186,7 @@ On master
 
 Migrating Xtendweb settings
 --------------------------------
-In case you are migrating the entire cPanel accounts to a new server .
+In case you are migrating the entire cPanel accounts to a new server.
 
 1. Do the cPanel migration
 2. Install Xtendweb on the new server

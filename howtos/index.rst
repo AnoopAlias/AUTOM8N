@@ -15,4 +15,4 @@ A U T O M 8 N
   systemd
   data_migration
   find_command
-  
+  grant_access_to_autom8n_sysadmin

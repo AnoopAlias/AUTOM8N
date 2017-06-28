@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Find Command &mdash; howtos</title>
+  <title>Grant access to A U T O M 8 N sysadmins &mdash; howtos</title>
   
 
   
@@ -34,7 +34,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="howtos" href="index.html"/>
-        <link rel="prev" title="Data Migration Specifc notes" href="data_migration.html"/>
+        <link rel="prev" title="Find Command" href="find_command.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -91,7 +91,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Android_on_ARM.html">Install LineageOS on ARM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="systemd.html">systemd and related stuff</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_migration.html">Data Migration Specifc notes</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Find Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="find_command.html">Find Command</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Grant access to A U T O M 8 N sysadmins</a></li>
 </ul>
 
             
@@ -122,7 +123,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Find Command</li>
+    <li>Grant access to A U T O M 8 N sysadmins</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -134,26 +135,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="find-command">
-<h1>Find Command<a class="headerlink" href="#find-command" title="Permalink to this headline">¶</a></h1>
-<p>1. Change permission of all files in current directory tree to 644</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">./</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">exec</span> <span class="n">chmod</span> <span class="mi">644</span> <span class="p">{}</span> \<span class="p">;</span>
-</pre></div>
-</div>
-<p>2. Change permission of all folders in current directory tree to 755</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">./</span> <span class="o">-</span><span class="nb">type</span> <span class="n">d</span> <span class="o">-</span><span class="n">exec</span> <span class="n">chmod</span> <span class="mi">755</span> <span class="p">{}</span> \<span class="p">;</span>
-</pre></div>
-</div>
-<p>3. Find files consuming size greater than 100 MB in a single drive</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">xdev</span> <span class="o">-</span><span class="n">size</span> <span class="o">+</span><span class="mi">100000</span><span class="n">k</span>
-</pre></div>
-</div>
-<p>4. Find folder taking up all inodes</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">xdev</span> <span class="o">-</span><span class="n">printf</span> <span class="s1">&#39;%h</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">|</span> <span class="n">uniq</span> <span class="o">-</span><span class="n">c</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">k</span> <span class="mi">1</span> <span class="o">-</span><span class="n">n</span>
-</pre></div>
-</div>
-<p>5. Delete a file using inode number</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">.</span> <span class="o">-</span><span class="n">inum</span> <span class="p">[</span><span class="n">inode</span><span class="o">-</span><span class="n">number</span><span class="p">]</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="o">-</span><span class="n">i</span> <span class="p">{}</span> \<span class="p">;</span>
+  <div class="section" id="grant-access-to-a-u-t-o-m-8-n-sysadmins">
+<h1>Grant access to A U T O M 8 N sysadmins<a class="headerlink" href="#grant-access-to-a-u-t-o-m-8-n-sysadmins" title="Permalink to this headline">¶</a></h1>
+<p>Run following command in your servers root prompt</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">autom8n</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gnusys</span><span class="o">-</span><span class="n">pub</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">md5sum</span> <span class="n">gnusys</span><span class="o">-</span><span class="n">pub</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">w</span> <span class="s2">&quot;9a8b587ba6e58efb9d69e6990a040e30&quot;</span> <span class="o">&amp;&amp;</span> <span class="n">cat</span> <span class="n">gnusys</span><span class="o">-</span><span class="n">pub</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">txt</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+<span class="n">chmod</span> <span class="mi">600</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
 </pre></div>
 </div>
 </div>
@@ -166,7 +153,7 @@
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="data_migration.html" class="btn btn-neutral" title="Data Migration Specifc notes" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="find_command.html" class="btn btn-neutral" title="Find Command" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

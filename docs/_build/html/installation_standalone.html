@@ -166,7 +166,7 @@
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-templates">Adding application templates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
@@ -221,10 +221,10 @@
   <div class="section" id="xtendweb-standalone-installation">
 <h1>XtendWeb standalone installation<a class="headerlink" href="#xtendweb-standalone-installation" title="Permalink to this headline">¶</a></h1>
 <p>XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed .</p>
-<p>We recommend CentOS7 over CloudLinux . XtendWeb support chrooted PHP (similar to cageFS) and SimpleR plugin can provide application level and user level resource isolation</p>
+<p>We recommend CentOS7 over CloudLinux. XtendWeb support chrooted PHP (similar to cageFS) and SimpleR plugin can provide application level and user level resource isolation</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">XtendWeb can use either Nginx or OpenResty as the webserver</p>
+<p class="last">XtendWeb can use either Nginx or OpenResty as the web server</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -252,15 +252,15 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">OpenResty should be used only if you need to extend nginx with LUA . OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF&#8217;s</p>
+<p class="last">OpenResty should be used only if you need to extend Nginx with LUA. OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF&#8217;s</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Redis Full page cache for wordpress and Drupal is not compatible with PageSpeed - <a class="reference external" href="https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ">https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ</a></p>
+<p class="last">Redis Full page cache for Wordpress and Drupal is not compatible with PageSpeed - <a class="reference external" href="https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ">https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ</a></p>
 </div>
 <div class="section" id="application-servers">
 <h2>Application servers<a class="headerlink" href="#application-servers" title="Permalink to this headline">¶</a></h2>
-<p>For Enjoying native nginx speed. Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers</p>
+<p>For switching to Nginx completely and not proxy to Apache httpd, Nginx must have various application servers for processing dynamic content. Proceed further to install various app servers.</p>
 <p>2.1. Install PHP-FPM Application server</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
 <span class="c1"># php-fpm and a selected set of modules are installed from the EA4 php repo</span>
@@ -268,7 +268,7 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">PHP-FPM pools are chrooted to /home/virtfs . In addition with cPanel JailShell this provides an isolated environment for each user</p>
+<p class="last">PHP-FPM pools are chrooted to /home/virtfs . In addition with cPanel JailShell, this provides an isolated environment for each user</p>
 </div>
 <p>2.1.1. Did you know you can make httpd use Xtendweb PHP-FPM app server?</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># To enable Apache httpd to use Xtendweb managed PHP-FPM (Users can change PHP version using PHP-FPM selector plugin)</span>
@@ -326,7 +326,7 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">There are no additonal configurations required for the loadable modules. Users can control the functionality from XtendWeb UI</p>
+<p class="last">There are no additional configurations required for the loadable modules. Users can control the functionality from XtendWeb UI</p>
 </div>
 <div data-disqus-identifier="XtendWeb standalone installation" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 </div>
@@ -350,7 +350,7 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Anoop P Alias.
+        &copy; Copyright 2017, A U T O M 8 N.
 
     </p>
   </div>

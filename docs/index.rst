@@ -19,6 +19,8 @@ XtendWeb and SimpleR
    http2
    ModSecurity
    Naxsi
+   bruteforce_mitigation
+   bot_traffic_mitigation
 
 .. toctree::
    :maxdepth: 2
@@ -60,6 +62,3 @@ XtendWeb and SimpleR
    Application_template
    Monitoring
    Logs
-
-
-* :ref:`search`

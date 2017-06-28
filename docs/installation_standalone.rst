@@ -3,10 +3,10 @@ XtendWeb standalone installation
 
 XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed .
 
-We recommend CentOS7 over CloudLinux . XtendWeb support chrooted PHP (similar to cageFS) and SimpleR plugin can provide application level and user level resource isolation
+We recommend CentOS7 over CloudLinux. XtendWeb support chrooted PHP (similar to cageFS) and SimpleR plugin can provide application level and user level resource isolation
 
 
-.. tip:: XtendWeb can use either Nginx or OpenResty as the webserver
+.. tip:: XtendWeb can use either Nginx or OpenResty as the web server
 
 .. tip:: CentOS7/CloudLinux7 is recommended
 
@@ -32,9 +32,9 @@ We recommend CentOS7 over CloudLinux . XtendWeb support chrooted PHP (similar to
 
 
 
-.. note::  OpenResty should be used only if you need to extend nginx with LUA . OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF's
+.. note::  OpenResty should be used only if you need to extend Nginx with LUA. OpenResty provided by XtendWeb lacks mod_security and NAXSI WAF's
 
-.. note:: Redis Full page cache for wordpress and Drupal is not compatible with PageSpeed - https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ
+.. note:: Redis Full page cache for Wordpress and Drupal is not compatible with PageSpeed - https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ
 
 
 
@@ -42,7 +42,7 @@ We recommend CentOS7 over CloudLinux . XtendWeb support chrooted PHP (similar to
 Application servers
 -----------------------
 
-For Enjoying native nginx speed. Nginx must have various application servers for processing dynamic content .Proceed further to install various app servers
+For switching to Nginx completely and not proxy to Apache httpd, Nginx must have various application servers for processing dynamic content. Proceed further to install various app servers.
 
 
 2.1. Install PHP-FPM Application server
@@ -52,7 +52,7 @@ For Enjoying native nginx speed. Nginx must have various application servers for
   # php-fpm and a selected set of modules are installed from the EA4 php repo
 
 
-.. note:: PHP-FPM pools are chrooted to /home/virtfs . In addition with cPanel JailShell this provides an isolated environment for each user
+.. note:: PHP-FPM pools are chrooted to /home/virtfs . In addition with cPanel JailShell, this provides an isolated environment for each user
 
 
 2.1.1. Did you know you can make httpd use Xtendweb PHP-FPM app server?
@@ -120,7 +120,7 @@ For Enjoying native nginx speed. Nginx must have various application servers for
   # Following modules are installed and loaded by default in openresty
   https://openresty.org/en/components.html
 
-.. tip:: There are no additonal configurations required for the loadable modules. Users can control the functionality from XtendWeb UI
+.. tip:: There are no additional configurations required for the loadable modules. Users can control the functionality from XtendWeb UI
 
 
 .. disqus::

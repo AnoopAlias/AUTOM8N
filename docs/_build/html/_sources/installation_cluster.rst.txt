@@ -5,20 +5,20 @@ XtendWeb Cluster Installation
 XtendWeb Cluster Introduction
 ---------------------------------
 
-XtendWeb cluster is the worlds easiest web application clustering solution featuring a fully automated deployment of a clustered DNS loadbalanced LAMP stack.
-It is specifically designed for multi datacenter deployment and use encrypted communication between the server
+XtendWeb cluster is the world's easiest web application clustering solution featuring a fully automated deployment of a clustered DNS load balanced LAMP stack.
+It is specifically designed for multi-datacenter deployment and use encrypted communication between the server
 
-XtendWeb cluster provide high availability , scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
-Coupled with the simplicity and intutiveness of cPanel control panel ,XtendWeb cluster is a must have for any modern enterprise web application deployment
+XtendWeb cluster provides high availability, scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
+Coupled with the simplicity and intuitiveness of cPanel control panel , XtendWeb cluster is a must have for any modern enterprise web application deployment
 
 Cluster Components:
 
-1. cPanel DNS providing multiple A records for round robin DNS loadbalancing
-2. Nginx servers running on all servers with server specific settings and serving files independandly
-3. Application servers (php-fpm. Phusion passenger )running on all servers and serving app independandly
+1. cPanel DNS providing multiple A records for round-robin DNS load balancing
+2. Nginx servers running on all servers with server specific settings and serving files independently
+3. Application servers (php-fpm. Phusion Passenger )running on all servers and serving app independently
 4. Csync2 - Syncing config across all servers
 5. Unison - Syncing files across all servers
-6. MaxScale router and mariaDB master-master replication - Database replication and query routing
+6. MaxScale router and MariaDB master-master replication - Database replication and query routing
 7. Redis & stunnel - Secure sharing of PHP session
 8. XtendWeb - generating and Syncing configuration for all servers
 
@@ -28,17 +28,17 @@ XtendWeb Cluster Requirements
 
 It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this).
 
-We do support CentOS6, but it is less tested and has some disadvantages like stunnel startup script is lacking in CentOS6 .
+We do support CentOS6, but it is less tested and has some disadvantages like stunnel startup script is lacking in CentOS6.
 
-XtendWeb cluster needs atleast 2 servers. Only one of the server need a valid cPanel license
+XtendWeb cluster needs at least 2 servers. Only one of the server need a valid cPanel license
 
-Cluster provide horizontal scalability for web applications using DNS loadbalancing .
+The cluster provides horizontal scalability for web applications using DNS load balancing.
 
-It is highly recommended that the servers be on different geographic regions ( eg: master in US , slave in UK ) and use different providers.
-The golden rule is - Dont keep all your eggs in the same basket.
+It is highly recommended that the servers be in different geographic regions ( eg: master in the US, slave in the UK ) and use different providers.
+The golden rule is - Don't keep all your eggs in the same basket.
 
-All communication between master and slave is TLS encrypted and is therefore safe .
-The master and slave just need to be able to connect via internet.
+All communication between master and slave is TLS encrypted and is therefore safe.
+The master and slave just need to be able to connect via the internet.
 
 The recommended way to upgrade to XtendWeb cluster from cPanel is setting up the cluster and migrating the websites over rather than setting up cluster
 on the existing server.
@@ -54,10 +54,10 @@ XtendWeb cluster setup
 
 .. tip:: Install CSF firewall on both servers and whitelist each others IP for access
 
-.. tip:: The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
+.. tip:: The server's hostname must be valid and should resolve correctly(at least from inside the master and slaves).
           It is recommended that they resolve correctly on the internet
 
-.. note:: As of XtendWeb 4.3.20 you will need a license for all servers(master and slaves) on the cluster .Else Installation will fail
+.. note:: As of XtendWeb 4.3.20, you will need a license for all servers(master and slaves) on the cluster.Else Installation will fail
           Please visit https://autom8n.com/plans.html#plans for more info
 
 1. Install cPanel and cPanel DNS only on master and slaves respectively
@@ -147,11 +147,11 @@ XtendWeb cluster setup
   [ndeploymaster]  # section containing masters FQDN .Only one entry should be there
   master.example.com ansible_port=22 ansible_connection=local server_id=1 webserver=nginx
 
-  [ndeploydbslave] # This section has the DB slave .Only one entry should be there
+  [ndeploydbslave] # This section has the DB slave. Only one entry should be there
   slave1.example.com ansible_port=22 server_id=2 webserver=nginx
   # A slave can act as the DB slave too
   # In a 2 server setup use the same entry here as in [ndeployslaves]
-  # In multi slave setups, use one of the slaves as DB slave.
+  # In multi-slave setups, use one of the slaves as DB slave.
 
 
 7. Setup Cluster on master
@@ -179,11 +179,11 @@ XtendWeb cluster setup
 9. Quirks for which we need a human intervention sometimes!
 ::
 
-  # The machine sometimes act weired .
-  # Here are some weired behaviour we notice that need manual intervention
+  # The machine sometimes acts weird.
+  # Here are some weird behavior we notice that need manual intervention
   # We are still investigating reason for these and hopefully it will be fixed soon
 
-  # Unison doesnt start automatically on master after cluster setup
+  # Unison doesn't start automatically on master after cluster setup
   systemctl stop ndeploy_unison
   systemctl start ndeploy_unison
 
@@ -191,10 +191,10 @@ XtendWeb cluster setup
   systemctl restart postfix
 
 
-The cluster including PHP app server is fully setup now  and you can start adding accounts .Cluster automatically setus up DNS clustering
+The cluster including PHP app server is fully setup now and you can start adding accounts.Cluster automatically sets up DNS clustering
 and you should use master and slaves as the nameservers for the domain to ensure DNS LoadBalancing.
 
 
-.. tip:: Disable chkservd and all its drivers on slave dns only servers as chkservd can cause troubles in cluster operation.
+.. tip:: Disable chkservd and all its drivers on slave DNS only server's as chkservd can cause troubles in cluster operation.
 
-         Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel componets setup by the cluster )
+         Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel components set up by the cluster )

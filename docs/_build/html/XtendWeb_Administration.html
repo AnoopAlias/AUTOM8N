@@ -166,7 +166,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-application-templates">Adding application templates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
@@ -220,8 +220,8 @@
             
   <div class="section" id="administration-of-xtendweb-plugin">
 <h1>Administration of XtendWeb plugin<a class="headerlink" href="#administration-of-xtendweb-plugin" title="Permalink to this headline">¶</a></h1>
-<p>The end user has a intutive UI for managing domains hosted on cPanel .</p>
-<p>Sysadmins can manipulate server wide settings using various scripts accessible from commandline</p>
+<p>The end user has an intuitive UI for managing domains hosted on cPanel.</p>
+<p>Sysadmins can manipulate server wide settings using various scripts accessible from command line</p>
 <div class="section" id="layer7-application-layer-ddos-mitigation">
 <h2>Layer7(Application layer) DDOS mitigation<a class="headerlink" href="#layer7-application-layer-ddos-mitigation" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">To</span> <span class="n">deal</span> <span class="k">with</span> <span class="n">a</span> <span class="n">server</span> <span class="n">wide</span> <span class="n">DDOS</span> <span class="n">on</span> <span class="n">http</span> <span class="p">(</span><span class="n">application</span> <span class="n">layer</span><span class="p">)</span>
@@ -257,11 +257,11 @@
 </div>
 <div class="section" id="automatic-selection-of-template-based-on-application">
 <h2>Automatic selection of template based on application<a class="headerlink" href="#automatic-selection-of-template-based-on-application" title="Permalink to this headline">¶</a></h2>
-<p>The following script can detect the application installed in the webroot(only!) based on filenames</p>
+<p>The following script can detect the application installed in the web root(only!) based on filenames</p>
 <p>While cPanel users can always change the vhost configuration for nginX
 anytime from their cPanel login
-sometimes the server administrator want to automatically switch supporting applications
-to be directly served by nginX instead of apache.</p>
+sometimes the server administrator wants to automatically switch supporting applications
+to be directly served by Nginx instead of Apache httpd.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auto_config</span><span class="o">.</span><span class="n">py</span> <span class="n">CPANELUSER</span>
 </pre></div>
 </div>
@@ -278,7 +278,7 @@ to be directly served by nginX instead of apache.</p>
 <p>Admin can update the appsignatures.yaml file with file names and the corresponding
 profile that auto_config.py switch the domain to if the file exists.
 The default list provided by us is not extensive.
-Admins can also remove entries from the file above to negate auto-switching should there be a need for it .</p>
+Admins can also remove entries from the file above to negate auto-switching should there be a need for it.</p>
 <blockquote>
 <div><code class="docutils literal"><span class="pre">/opt/nDeploy/conf/auto_config.exclude</span></code></div></blockquote>
 <p>if present and contain the CPANELUSERNAME in it will prevent auto switching of profiles
@@ -301,13 +301,13 @@ for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
 </div>
 <p>The first time auto_config.py runs it will ask your preference of PHP version
 that automatic switching should use.
-On cpanel servers you can safely use the same version as the default installed PHP
+On Cpanel servers, you can safely use the same version as the default installed PHP
 as most of your domains will be running that version without issues</p>
 </div>
 <div class="section" id="adding-application-templates">
 <h2>Adding application templates<a class="headerlink" href="#adding-application-templates" title="Permalink to this headline">¶</a></h2>
 <p>Application templates are a way of extending the plugin with dealing with more web applications and user specific
-nginx config customization</p>
+Nginx config customization</p>
 <p>Application templates can be distributed server wide or to specific users
 Application templates can be created for an application in the document_root as well as a subdirectory</p>
 <p>Distributing templates to all users</p>
@@ -327,16 +327,16 @@ Application templates can be created for an application in the document_root as 
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">add</span><span class="o">|</span><span class="k">del</span><span class="p">]</span> <span class="p">[</span><span class="n">root</span><span class="o">|</span><span class="n">cpanelusername</span><span class="p">]</span> <span class="p">[</span><span class="n">main</span><span class="o">|</span><span class="n">subdir</span><span class="p">]</span> <span class="p">[</span><span class="n">backend</span><span class="p">]</span> <span class="p">[</span><span class="n">templatefilename</span><span class="p">]</span> <span class="p">[</span><span class="n">quoted</span> <span class="n">description</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Templates use Python Jinja2 templating engine . But there isnt much template logic used to make application template
+<p>Templates use Python Jinja2 templating engine. But there isn&#8217;t much template logic used to make application template
 simpler for most users. You can check existing templates for the commonly used variables.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">Open an issue at the github repo if you wish template for a commonly used application to be added</p>
+<p class="last">Open an issue at the GitHub repo if you wish template for a commonly used application to be added</p>
 </div>
 </div>
 <div class="section" id="adding-application-servers-or-backends">
 <h2>Adding Application servers or backends<a class="headerlink" href="#adding-application-servers-or-backends" title="Permalink to this headline">¶</a></h2>
-<p>XtendWeb supports php-fpm or hhvm via FastCGI , Other web/application servers like httpd,tomcat etc via Proxy .
+<p>XtendWeb supports php-fpm or hhvm via FastCGI, Other web/application servers like httpd, Tomcat etc via Proxy.
 Ruby/Python/NodeJs using the Phusion Passenger module</p>
 <p>To register a backend use the follwoing command</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">add</span><span class="o">|</span><span class="k">del</span><span class="p">]</span> <span class="n">backend_category</span> <span class="n">backend_name</span> <span class="n">backend_path</span>
@@ -344,9 +344,9 @@ Ruby/Python/NodeJs using the Phusion Passenger module</p>
 </div>
 </div>
 <div class="section" id="upgrading-xtendweb-and-nginx">
-<h2>Upgrading XtendWeb and nginx<a class="headerlink" href="#upgrading-xtendweb-and-nginx" title="Permalink to this headline">¶</a></h2>
+<h2>Upgrading XtendWeb and Nginx<a class="headerlink" href="#upgrading-xtendweb-and-nginx" title="Permalink to this headline">¶</a></h2>
 <p>nDeploy-nginx is mated with a phusion passenger ruby gem .
-So we don&#8217;t encourage unmanned upgrades and have therefore set enable=0 in the yum repository .
+So we don&#8217;t encourage unmanned upgrades and have therefore set enable=0 in the yum repository.
 The upgrade must be done manually by running the following commands</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">ndeploy4</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">5.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
 <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">upgrade</span>
@@ -372,7 +372,7 @@ The upgrade must be done manually by running the following commands</p>
 </div>
 <div class="section" id="migrating-xtendweb-settings">
 <h2>Migrating Xtendweb settings<a class="headerlink" href="#migrating-xtendweb-settings" title="Permalink to this headline">¶</a></h2>
-<p>In case you are migrating the entire cPanel accounts to a new server .</p>
+<p>In case you are migrating the entire cPanel accounts to a new server.</p>
 <ol class="arabic simple">
 <li>Do the cPanel migration</li>
 <li>Install Xtendweb on the new server</li>
@@ -413,7 +413,7 @@ The upgrade must be done manually by running the following commands</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Anoop P Alias.
+        &copy; Copyright 2017, A U T O M 8 N.
 
     </p>
   </div>

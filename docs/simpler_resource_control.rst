@@ -7,33 +7,33 @@ SimpleR can also group php-fpm and HHVM application servers running under user t
 
 Highlights are:
 
-1. No need of a custom kernel
+1. No need for a custom kernel
 
-2. Resource isolation at Reseller level ,instead of user level
+2. Resource isolation at Reseller level , instead of user level
 
-3. Resource limit on a process level for Apache/Nginx/MySQL/PHP . A safety valve like setting
+3. Resource limit on a process level for Apache/Nginx/MySQL/PHP. A safety valve like setting
 
 3. No additional software is required
 
-4. Future proof as Simpler can follow future development trends in Kernel and Systemd without additional patching
+4. Future proof as Simpler can follow future development trends in Kernel and systemd without additional patching
 
-5. And the best of all - Its simple and straightforward - Simplicity is the ultimate sophistication
+5. And the best of all - It's simple and straightforward - Simplicity is the ultimate sophistication
 
 How does simpleR work
 ------------------------
 
 Application Limits - SimpleR drops in an additional resource limit under the [Service] section in systemd unit file to achieve resource limit
-for Apache/Nginx/MySQL/PHP . These limit can act as a safety net ( pressure value!) in extreme cases and prevent a single service from using up entire server resources
+for Apache/Nginx/MySQL/PHP. These limit can act as a safety net ( pressure value!) in extreme cases and prevent a single service from using up entire server resources
 
-User Limits - If PHP-FPM or HHVM process is run under user .Simpler can group the process to a reseller.slice and ensure each user is limited in terms of memory/CPU and IO.
-This can come handy when an admin want to allocate low resources to certain scripts and prevent them from affecting useable resources of other users
+User Limits - If PHP-FPM or HHVM process is run under user.Simpler can group the process to a reseller.slice and ensure each user is limited in terms of memory/CPU and IO.
+This can come handy when an admin wants to allocate low resources to certain scripts and prevent them from affecting useable resources of other users
 
 
 Installation
 ---------------------
 
 
-Simpler needs systemd .So you will need CentOS7 or RHEL7 .
+Simpler needs systemd.So you will need CentOS7 or RHEL7.
 
 1. Install SimpleR WHM plugin
 ::
@@ -41,13 +41,13 @@ Simpler needs systemd .So you will need CentOS7 or RHEL7 .
   yum --enablerepo=ndeploy install simpler-nDeploy
 
 
-Simpler will allow setting upper limits for computing resources used by httpd/nginx/mysql/php-fpm(xtendweb managed)
+Simpler will allow setting upper limits for computing resources used by httpd/Nginx/MySQL/php-fpm(xtendweb managed)
 
 
-For user level resource isolation do the following
+For user level, resource isolation do the following
 
-.. note:: Running php-fpm master process under user forbids it from chrooting. PHP process are thus able to access any files user has access to normally.
-          Because of lack of chroot , run the following setup only on private VPS where all accounts belong to one user and are trusted.
+.. note:: Running php-fpm master process under user forbids it from chrooting. PHP process is thus able to access any files user has access to normally.
+          Because of lack of chroot, run the following setup only on private VPS where all accounts belong to one user and are trusted.
 
 2. Enable user level PHP-FPM master process
 ::
@@ -147,7 +147,7 @@ To know more about systemd-resource-control
 To view systemd config loaded
 ---------------------------------
 
-Run following command
+Run the following command
 ::
 
   systemctl cat CPANELPHP56@cpaneluser.service  # Assuming php56 is used and user is cpaneluser
@@ -158,4 +158,4 @@ To view the cgroup tree
 
 ::
 
-  systemd-cgls    # You will see a slice named aftereach reseller
+  systemd-cgls    # You will see a slice named after each reseller

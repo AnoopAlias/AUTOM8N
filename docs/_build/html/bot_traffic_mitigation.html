@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Project Sponsors &mdash; Documentation</title>
+  <title>Bad Bot Mitigation &mdash; Documentation</title>
   
 
   
@@ -34,8 +34,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Documentation" href="index.html"/>
-        <link rel="next" title="Partner Webhosts" href="Partner_webhosts.html"/>
-        <link rel="prev" title="Support" href="Support.html"/>
+        <link rel="next" title="XtendWeb User docs" href="UserDocs.html"/>
+        <link rel="prev" title="Brute Force Mitigation" href="bruteforce_mitigation.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -83,7 +83,7 @@
             
             
                 <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
 </ul>
@@ -99,6 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bruteforce_mitigation.html">Brute Force Mitigation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Bad Bot Mitigation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User Documentation</span></p>
 <ul>
@@ -123,15 +125,15 @@
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Support and Development</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Support.html#if-you-have-already-purchased-a-support-plan">If you have already purchased a support plan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Support.html#bug-report">Bug Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Support.html#announcements">Announcements</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Project Sponsors</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#credits">CREDITS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Project Sponsors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Project_sponsors.html#credits">CREDITS</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Partner_webhosts.html">Partner Webhosts</a></li>
@@ -206,7 +208,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Project Sponsors</li>
+    <li>Bad Bot Mitigation</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -218,22 +220,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="project-sponsors">
-<h1>Project Sponsors<a class="headerlink" href="#project-sponsors" title="Permalink to this headline">¶</a></h1>
-<ol class="arabic simple">
-<li><a class="reference external" href="https://www.fabiia.ae/">Fabiia Ltd UK</a></li>
-<li><a class="reference external" href="https://mataharilabs.com/">MATAHARI LABS</a></li>
-<li><a class="reference external" href="http://wepushbuttons.com.au/">WE PUSH BUTTONS</a></li>
-<li><a class="reference external" href="https://www.opentaxi.cab/">OPENTAXI</a></li>
-</ol>
-<div class="section" id="credits">
-<h2>CREDITS<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h2>
-<p>The XtendWeb Plugin User Interface was contributed by Glyn Gray <a class="reference external" href="http://www.stirstudiosdesign.com/">http://www.stirstudiosdesign.com/</a></p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Please contact <a class="reference external" href="mailto:anoop&#37;&#52;&#48;gnusys&#46;net">anoop<span>&#64;</span>gnusys<span>&#46;</span>net</a> if you wish to sponsor the development of this project</p>
+  <div class="section" id="bad-bot-mitigation">
+<h1>Bad Bot Mitigation<a class="headerlink" href="#bad-bot-mitigation" title="Permalink to this headline">¶</a></h1>
+<p>XtendWeb includes the following nginx module</p>
+<p><code class="docutils literal"><span class="pre">testcookie_access</span></code></p>
+<p>If the module is installed and the settings below in XtendWeb &gt;&gt; Server Settings section is activated</p>
+<p><code class="docutils literal"><span class="pre">test_cookie</span></code></p>
+<p>The server accepts connections only from a user agent that support cookies or prevents bots from accessing the domain</p>
+<p>To prevent good bots like google,yahoo etc from being denied ,the server whitelists a set of UserAgents for bypassing the cookie challenge test which by default is one below</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">adsbot</span><span class="o">-</span><span class="n">google</span><span class="o">|</span><span class="n">googlebot</span><span class="o">|</span><span class="n">mediapartners</span><span class="o">-</span><span class="n">google</span><span class="o">|</span><span class="n">teoma</span><span class="o">|</span><span class="n">slurp</span><span class="o">|</span><span class="n">bingbot</span><span class="o">|</span><span class="n">bingpreview</span><span class="o">|</span><span class="n">duckduckgo</span><span class="o">|</span><span class="n">yandex</span><span class="o">|</span><span class="n">msnbot</span><span class="o">|</span><span class="n">aolbuild</span><span class="o">|</span><span class="n">baidu</span><span class="o">|</span><span class="n">facebot</span><span class="o">|</span><span class="n">ia_archiver</span><span class="o">|</span><span class="n">wget</span><span class="o">|</span><span class="n">curl</span>
+</pre></div>
 </div>
-</div>
+<p>A server administrator can add/remove any other UserAgents to this list to fine tune test_cookie setting</p>
 </div>
 
 
@@ -243,10 +241,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Partner_webhosts.html" class="btn btn-neutral float-right" title="Partner Webhosts" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="UserDocs.html" class="btn btn-neutral float-right" title="XtendWeb User docs" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Support.html" class="btn btn-neutral" title="Support" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bruteforce_mitigation.html" class="btn btn-neutral" title="Brute Force Mitigation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

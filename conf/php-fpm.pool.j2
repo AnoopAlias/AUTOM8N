@@ -10,7 +10,7 @@
 ; Start a new pool named '{{ CPANELUSER }}'.
 ; the variable $pool can we used in any directive and will be replaced by the
 ; pool name ('{{ CPANELUSER }}' here)
-[{{ CPANELUSER }}]
+[{{ CPANELUSER }}_pool]
 
 ; Per pool prefix
 ; It only applies on the following directives:
@@ -28,8 +28,8 @@
 ; Unix user/group of processes
 ; Note: The user is mandatory. If the group is not set, the default user's group
 ;       will be used.
-user = $pool
-group = $pool
+user = {{ CPANELUSER }}
+group = {{ CPANELUSER }}
 
 ; The address on which to accept FastCGI requests.
 ; Valid syntaxes are:
@@ -39,7 +39,7 @@ group = $pool
 ;                            specific port;
 ;   '/path/to/unix/socket' - to listen on a unix socket.
 ; Note: This value is mandatory.
-listen = var/run/$pool.sock
+listen = var/run/{{ CPANELUSER }}.sock
 
 ; Set listen(2) backlog.
 ; Default Value: 128 (-1 on FreeBSD and OpenBSD)
@@ -50,7 +50,7 @@ listen = var/run/$pool.sock
 ; BSD-derived systems allow connections regardless of permissions.
 ; Default Values: user and group are set as the running user
 ;                 mode is set to 0660
-listen.owner = $pool
+listen.owner = {{ CPANELUSER }}
 listen.group = nobody
 listen.mode = 0660
 

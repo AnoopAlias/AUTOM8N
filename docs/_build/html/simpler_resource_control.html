@@ -166,7 +166,7 @@
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-templates">Adding application templates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
@@ -224,35 +224,35 @@
 <p>SimpleR can also group php-fpm and HHVM application servers running under user to a reseller.slice and individually limit the resource at a reseller level</p>
 <p>Highlights are:</p>
 <ol class="arabic simple">
-<li>No need of a custom kernel</li>
-<li>Resource isolation at Reseller level ,instead of user level</li>
-<li>Resource limit on a process level for Apache/Nginx/MySQL/PHP . A safety valve like setting</li>
+<li>No need for a custom kernel</li>
+<li>Resource isolation at Reseller level , instead of user level</li>
+<li>Resource limit on a process level for Apache/Nginx/MySQL/PHP. A safety valve like setting</li>
 </ol>
 <ol class="arabic simple" start="3">
 <li>No additional software is required</li>
-<li>Future proof as Simpler can follow future development trends in Kernel and Systemd without additional patching</li>
-<li>And the best of all - Its simple and straightforward - Simplicity is the ultimate sophistication</li>
+<li>Future proof as Simpler can follow future development trends in Kernel and systemd without additional patching</li>
+<li>And the best of all - It&#8217;s simple and straightforward - Simplicity is the ultimate sophistication</li>
 </ol>
 <div class="section" id="how-does-simpler-work">
 <h2>How does simpleR work<a class="headerlink" href="#how-does-simpler-work" title="Permalink to this headline">¶</a></h2>
 <p>Application Limits - SimpleR drops in an additional resource limit under the [Service] section in systemd unit file to achieve resource limit
-for Apache/Nginx/MySQL/PHP . These limit can act as a safety net ( pressure value!) in extreme cases and prevent a single service from using up entire server resources</p>
-<p>User Limits - If PHP-FPM or HHVM process is run under user .Simpler can group the process to a reseller.slice and ensure each user is limited in terms of memory/CPU and IO.
-This can come handy when an admin want to allocate low resources to certain scripts and prevent them from affecting useable resources of other users</p>
+for Apache/Nginx/MySQL/PHP. These limit can act as a safety net ( pressure value!) in extreme cases and prevent a single service from using up entire server resources</p>
+<p>User Limits - If PHP-FPM or HHVM process is run under user.Simpler can group the process to a reseller.slice and ensure each user is limited in terms of memory/CPU and IO.
+This can come handy when an admin wants to allocate low resources to certain scripts and prevent them from affecting useable resources of other users</p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Simpler needs systemd .So you will need CentOS7 or RHEL7 .</p>
+<p>Simpler needs systemd.So you will need CentOS7 or RHEL7.</p>
 <p>1. Install SimpleR WHM plugin</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">simpler</span><span class="o">-</span><span class="n">nDeploy</span>
 </pre></div>
 </div>
-<p>Simpler will allow setting upper limits for computing resources used by httpd/nginx/mysql/php-fpm(xtendweb managed)</p>
-<p>For user level resource isolation do the following</p>
+<p>Simpler will allow setting upper limits for computing resources used by httpd/Nginx/MySQL/php-fpm(xtendweb managed)</p>
+<p>For user level, resource isolation do the following</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Running php-fpm master process under user forbids it from chrooting. PHP process are thus able to access any files user has access to normally.
-Because of lack of chroot , run the following setup only on private VPS where all accounts belong to one user and are trusted.</p>
+<p class="last">Running php-fpm master process under user forbids it from chrooting. PHP process is thus able to access any files user has access to normally.
+Because of lack of chroot, run the following setup only on private VPS where all accounts belong to one user and are trusted.</p>
 </div>
 <p>2. Enable user level PHP-FPM master process</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">secure</span><span class="o">-</span><span class="n">php</span>
@@ -338,14 +338,14 @@ May 12 07:18:37 li1311-27.members.linode.com php-fpm::godisgreat[31361]: [NOTICE
 </div>
 <div class="section" id="to-view-systemd-config-loaded">
 <h2>To view systemd config loaded<a class="headerlink" href="#to-view-systemd-config-loaded" title="Permalink to this headline">¶</a></h2>
-<p>Run following command</p>
+<p>Run the following command</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">cat</span> <span class="n">CPANELPHP56</span><span class="nd">@cpaneluser</span><span class="o">.</span><span class="n">service</span>  <span class="c1"># Assuming php56 is used and user is cpaneluser</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="to-view-the-cgroup-tree">
 <h2>To view the cgroup tree<a class="headerlink" href="#to-view-the-cgroup-tree" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemd</span><span class="o">-</span><span class="n">cgls</span>    <span class="c1"># You will see a slice named aftereach reseller</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemd</span><span class="o">-</span><span class="n">cgls</span>    <span class="c1"># You will see a slice named after each reseller</span>
 </pre></div>
 </div>
 </div>
@@ -370,7 +370,7 @@ May 12 07:18:37 li1311-27.members.linode.com php-fpm::godisgreat[31361]: [NOTICE
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Anoop P Alias.
+        &copy; Copyright 2017, A U T O M 8 N.
 
     </p>
   </div>

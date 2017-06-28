@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Project Sponsors &mdash; Documentation</title>
+  <title>Brute Force Mitigation &mdash; Documentation</title>
   
 
   
@@ -34,8 +34,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Documentation" href="index.html"/>
-        <link rel="next" title="Partner Webhosts" href="Partner_webhosts.html"/>
-        <link rel="prev" title="Support" href="Support.html"/>
+        <link rel="next" title="Bad Bot Mitigation" href="bot_traffic_mitigation.html"/>
+        <link rel="prev" title="Naxsi" href="Naxsi.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -83,7 +83,7 @@
             
             
                 <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
 </ul>
@@ -99,6 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Brute Force Mitigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bot_traffic_mitigation.html">Bad Bot Mitigation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User Documentation</span></p>
 <ul>
@@ -123,15 +125,15 @@
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Support and Development</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Support.html#if-you-have-already-purchased-a-support-plan">If you have already purchased a support plan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Support.html#bug-report">Bug Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Support.html#announcements">Announcements</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Project Sponsors</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#credits">CREDITS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_sponsors.html">Project Sponsors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Project_sponsors.html#credits">CREDITS</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Partner_webhosts.html">Partner Webhosts</a></li>
@@ -206,7 +208,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Project Sponsors</li>
+    <li>Brute Force Mitigation</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -218,22 +220,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="project-sponsors">
-<h1>Project Sponsors<a class="headerlink" href="#project-sponsors" title="Permalink to this headline">¶</a></h1>
-<ol class="arabic simple">
-<li><a class="reference external" href="https://www.fabiia.ae/">Fabiia Ltd UK</a></li>
-<li><a class="reference external" href="https://mataharilabs.com/">MATAHARI LABS</a></li>
-<li><a class="reference external" href="http://wepushbuttons.com.au/">WE PUSH BUTTONS</a></li>
-<li><a class="reference external" href="https://www.opentaxi.cab/">OPENTAXI</a></li>
-</ol>
-<div class="section" id="credits">
-<h2>CREDITS<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h2>
-<p>The XtendWeb Plugin User Interface was contributed by Glyn Gray <a class="reference external" href="http://www.stirstudiosdesign.com/">http://www.stirstudiosdesign.com/</a></p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Please contact <a class="reference external" href="mailto:anoop&#37;&#52;&#48;gnusys&#46;net">anoop<span>&#64;</span>gnusys<span>&#46;</span>net</a> if you wish to sponsor the development of this project</p>
+  <div class="section" id="brute-force-mitigation">
+<h1>Brute Force Mitigation<a class="headerlink" href="#brute-force-mitigation" title="Permalink to this headline">¶</a></h1>
+<p>The default proxy template on XtendWeb rate limits access to the following URL entry points</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">admin</span>
+<span class="o">/</span><span class="n">administrator</span>
+<span class="o">/</span><span class="n">login</span>
+<span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">admin</span>
+<span class="o">/</span><span class="n">search</span>
+<span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">login</span><span class="o">.</span><span class="n">php</span>
+<span class="o">/</span><span class="n">xmlrpc</span><span class="o">.</span><span class="n">php</span>
+</pre></div>
 </div>
-</div>
+<p>Administrators can extend this list to include more URL&#8217;s by adding a custom template.</p>
+<p>This prevents a brute force attack on the above URL&#8217;s , but allows access to genuine users.</p>
 </div>
 
 
@@ -243,10 +243,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Partner_webhosts.html" class="btn btn-neutral float-right" title="Partner Webhosts" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="bot_traffic_mitigation.html" class="btn btn-neutral float-right" title="Bad Bot Mitigation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Support.html" class="btn btn-neutral" title="Support" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Naxsi.html" class="btn btn-neutral" title="Naxsi" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

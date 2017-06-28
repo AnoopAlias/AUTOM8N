@@ -166,7 +166,7 @@
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-templates">Adding application templates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and nginx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
@@ -222,18 +222,18 @@
 <h1>XtendWeb Cluster Installation<a class="headerlink" href="#xtendweb-cluster-installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="xtendweb-cluster-introduction">
 <h2>XtendWeb Cluster Introduction<a class="headerlink" href="#xtendweb-cluster-introduction" title="Permalink to this headline">¶</a></h2>
-<p>XtendWeb cluster is the worlds easiest web application clustering solution featuring a fully automated deployment of a clustered DNS loadbalanced LAMP stack.
-It is specifically designed for multi datacenter deployment and use encrypted communication between the server</p>
-<p>XtendWeb cluster provide high availability , scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
-Coupled with the simplicity and intutiveness of cPanel control panel ,XtendWeb cluster is a must have for any modern enterprise web application deployment</p>
+<p>XtendWeb cluster is the world&#8217;s easiest web application clustering solution featuring a fully automated deployment of a clustered DNS load balanced LAMP stack.
+It is specifically designed for multi-datacenter deployment and use encrypted communication between the server</p>
+<p>XtendWeb cluster provides high availability, scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
+Coupled with the simplicity and intuitiveness of cPanel control panel , XtendWeb cluster is a must have for any modern enterprise web application deployment</p>
 <p>Cluster Components:</p>
 <ol class="arabic simple">
-<li>cPanel DNS providing multiple A records for round robin DNS loadbalancing</li>
-<li>Nginx servers running on all servers with server specific settings and serving files independandly</li>
-<li>Application servers (php-fpm. Phusion passenger )running on all servers and serving app independandly</li>
+<li>cPanel DNS providing multiple A records for round-robin DNS load balancing</li>
+<li>Nginx servers running on all servers with server specific settings and serving files independently</li>
+<li>Application servers (php-fpm. Phusion Passenger )running on all servers and serving app independently</li>
 <li>Csync2 - Syncing config across all servers</li>
 <li>Unison - Syncing files across all servers</li>
-<li>MaxScale router and mariaDB master-master replication - Database replication and query routing</li>
+<li>MaxScale router and MariaDB master-master replication - Database replication and query routing</li>
 <li>Redis &amp; stunnel - Secure sharing of PHP session</li>
 <li>XtendWeb - generating and Syncing configuration for all servers</li>
 </ol>
@@ -241,13 +241,13 @@ Coupled with the simplicity and intutiveness of cPanel control panel ,XtendWeb c
 <div class="section" id="xtendweb-cluster-requirements">
 <h2>XtendWeb Cluster Requirements<a class="headerlink" href="#xtendweb-cluster-requirements" title="Permalink to this headline">¶</a></h2>
 <p>It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this).</p>
-<p>We do support CentOS6, but it is less tested and has some disadvantages like stunnel startup script is lacking in CentOS6 .</p>
-<p>XtendWeb cluster needs atleast 2 servers. Only one of the server need a valid cPanel license</p>
-<p>Cluster provide horizontal scalability for web applications using DNS loadbalancing .</p>
-<p>It is highly recommended that the servers be on different geographic regions ( eg: master in US , slave in UK ) and use different providers.
-The golden rule is - Dont keep all your eggs in the same basket.</p>
-<p>All communication between master and slave is TLS encrypted and is therefore safe .
-The master and slave just need to be able to connect via internet.</p>
+<p>We do support CentOS6, but it is less tested and has some disadvantages like stunnel startup script is lacking in CentOS6.</p>
+<p>XtendWeb cluster needs at least 2 servers. Only one of the server need a valid cPanel license</p>
+<p>The cluster provides horizontal scalability for web applications using DNS load balancing.</p>
+<p>It is highly recommended that the servers be in different geographic regions ( eg: master in the US, slave in the UK ) and use different providers.
+The golden rule is - Don&#8217;t keep all your eggs in the same basket.</p>
+<p>All communication between master and slave is TLS encrypted and is therefore safe.
+The master and slave just need to be able to connect via the internet.</p>
 <p>The recommended way to upgrade to XtendWeb cluster from cPanel is setting up the cluster and migrating the websites over rather than setting up cluster
 on the existing server.</p>
 <p>Master server - Centos7 ,MariaDB 10.1</p>
@@ -261,12 +261,12 @@ on the existing server.</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">The servers hostname must be valid and should resolve correctly(atleast from inside the master and slaves).
+<p class="last">The server&#8217;s hostname must be valid and should resolve correctly(at least from inside the master and slaves).
 It is recommended that they resolve correctly on the internet</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">As of XtendWeb 4.3.20 you will need a license for all servers(master and slaves) on the cluster .Else Installation will fail
+<p class="last">As of XtendWeb 4.3.20, you will need a license for all servers(master and slaves) on the cluster.Else Installation will fail
 Please visit <a class="reference external" href="https://autom8n.com/plans.html#plans">https://autom8n.com/plans.html#plans</a> for more info</p>
 </div>
 <p>1. Install cPanel and cPanel DNS only on master and slaves respectively</p>
@@ -340,11 +340,11 @@ Unquoted and double-quoted password can sometimes cause issues
 <span class="p">[</span><span class="n">ndeploymaster</span><span class="p">]</span>  <span class="c1"># section containing masters FQDN .Only one entry should be there</span>
 <span class="n">master</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="n">ansible_port</span><span class="o">=</span><span class="mi">22</span> <span class="n">ansible_connection</span><span class="o">=</span><span class="n">local</span> <span class="n">server_id</span><span class="o">=</span><span class="mi">1</span> <span class="n">webserver</span><span class="o">=</span><span class="n">nginx</span>
 
-<span class="p">[</span><span class="n">ndeploydbslave</span><span class="p">]</span> <span class="c1"># This section has the DB slave .Only one entry should be there</span>
+<span class="p">[</span><span class="n">ndeploydbslave</span><span class="p">]</span> <span class="c1"># This section has the DB slave. Only one entry should be there</span>
 <span class="n">slave1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="n">ansible_port</span><span class="o">=</span><span class="mi">22</span> <span class="n">server_id</span><span class="o">=</span><span class="mi">2</span> <span class="n">webserver</span><span class="o">=</span><span class="n">nginx</span>
 <span class="c1"># A slave can act as the DB slave too</span>
 <span class="c1"># In a 2 server setup use the same entry here as in [ndeployslaves]</span>
-<span class="c1"># In multi slave setups, use one of the slaves as DB slave.</span>
+<span class="c1"># In multi-slave setups, use one of the slaves as DB slave.</span>
 </pre></div>
 </div>
 <p>7. Setup Cluster on master</p>
@@ -366,11 +366,11 @@ yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="referen
 </pre></div>
 </div>
 <p>9. Quirks for which we need a human intervention sometimes!</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># The machine sometimes act weired .</span>
-<span class="c1"># Here are some weired behaviour we notice that need manual intervention</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># The machine sometimes acts weird.</span>
+<span class="c1"># Here are some weird behavior we notice that need manual intervention</span>
 <span class="c1"># We are still investigating reason for these and hopefully it will be fixed soon</span>
 
-<span class="c1"># Unison doesnt start automatically on master after cluster setup</span>
+<span class="c1"># Unison doesn&#39;t start automatically on master after cluster setup</span>
 <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">ndeploy_unison</span>
 <span class="n">systemctl</span> <span class="n">start</span> <span class="n">ndeploy_unison</span>
 
@@ -378,12 +378,12 @@ yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="referen
 <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">postfix</span>
 </pre></div>
 </div>
-<p>The cluster including PHP app server is fully setup now  and you can start adding accounts .Cluster automatically setus up DNS clustering
+<p>The cluster including PHP app server is fully setup now and you can start adding accounts.Cluster automatically sets up DNS clustering
 and you should use master and slaves as the nameservers for the domain to ensure DNS LoadBalancing.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p>Disable chkservd and all its drivers on slave dns only servers as chkservd can cause troubles in cluster operation.</p>
-<p class="last">Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel componets setup by the cluster )</p>
+<p>Disable chkservd and all its drivers on slave DNS only server&#8217;s as chkservd can cause troubles in cluster operation.</p>
+<p class="last">Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel components set up by the cluster )</p>
 </div>
 </div>
 </div>
@@ -407,7 +407,7 @@ and you should use master and slaves as the nameservers for the domain to ensure
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Anoop P Alias.
+        &copy; Copyright 2017, A U T O M 8 N.
 
     </p>
   </div>
