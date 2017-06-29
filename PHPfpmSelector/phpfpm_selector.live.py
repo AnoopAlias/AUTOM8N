@@ -84,11 +84,11 @@ if os.path.isfile(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED'):
     print('</select>')
     print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
 else:
     print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>PHP-FPM Selector not enabled </div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
 print('</div>')
 print('</div>')

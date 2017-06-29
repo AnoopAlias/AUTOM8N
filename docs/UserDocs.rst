@@ -6,6 +6,9 @@ Setup URL Redirects
 .. note:: URL redirects setup from cPanel is done via .htaccess file and will work only in PROXY mode . For native nginx (nginx+php-fpm etc),you will need to setup the redirects in XtendWeb plugin
           All rdirect types can be easily setup from XtendWeb plugin
 
+
+.. youtube:: https://www.youtube.com/watch?v=jVwvUBnUXUQ
+
 1. domain.com to www.domain.com - Select domain in XtendWeb » Server Settings » www redirect
 
 2. http://domain.com to https://domain.com - Select domain in XtendWeb » Server Settings » redirect_to_ssl

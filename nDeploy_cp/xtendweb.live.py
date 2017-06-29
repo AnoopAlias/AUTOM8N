@@ -105,7 +105,7 @@ else:
     if not os.path.isfile(installation_path+'/conf/disable_cluster_warning'):
         print('<span class="label label-default">XTENDWEB : STANDALONE MODE</span><br><br>')
 print('</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
 print('</div>')
 print('</div>')

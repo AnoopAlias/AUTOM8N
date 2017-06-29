@@ -3,7 +3,7 @@ if [[ $# -ne 3 ]];then
 	exit 1
 fi
 if [[ $2 -eq 0 ]]; then
-	if(echo $1|egrep "_SSL$");then
+	if(echo $1|egrep '_SSL$|_SSL.tmp.*');then
 		CPANELUSER=$(echo $1|awk -F'/' '{print $5}')
 		echo "$(date) Conf:Gen ${CPANELUSER}"
 		/opt/nDeploy/scripts/generate_config.py $CPANELUSER

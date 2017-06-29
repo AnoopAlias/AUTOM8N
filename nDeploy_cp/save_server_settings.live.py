@@ -60,7 +60,7 @@ if 'domain' in form.keys():
 else:
     print('ERROR: Forbidden::domain')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -78,7 +78,7 @@ if os.path.isfile(profileyaml):
 else:
     print('ERROR: Domain data file i/o error')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -93,7 +93,7 @@ if 'autoindex' in form.keys():
 else:
     print('ERROR: Forbidden::autoindex')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -108,7 +108,7 @@ if 'ssl_offload' in form.keys():
 else:
     print('ERROR: Forbidden::ssl_offload')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -123,7 +123,7 @@ if 'pagespeed' in form.keys():
 else:
     print('ERROR: Forbidden::pagespeed')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -138,7 +138,7 @@ if 'pagespeed_filter' in form.keys():
 else:
     print('ERROR: Forbidden::pagespeed_filter')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -153,7 +153,7 @@ if 'brotli' in form.keys():
 else:
     print('ERROR: Forbidden::brotli')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -168,7 +168,7 @@ if 'gzip' in form.keys():
 else:
     print('ERROR: Forbidden::gzip')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -183,7 +183,7 @@ if 'http2' in form.keys():
 else:
     print('ERROR: Forbidden::http2')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -198,7 +198,7 @@ if 'access_log' in form.keys():
 else:
     print('ERROR: Forbidden::access_log')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -213,7 +213,7 @@ if 'open_file_cache' in form.keys():
 else:
     print('ERROR: Forbidden::open_file_cache')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -228,7 +228,7 @@ if 'clickjacking_protect' in form.keys():
 else:
     print('ERROR: Forbidden::clickjacking_protect')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -243,7 +243,7 @@ if 'disable_contenttype_sniffing' in form.keys():
 else:
     print('ERROR: Forbidden::disable_contenttype_sniffing')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -258,7 +258,7 @@ if 'xss_filter' in form.keys():
 else:
     print('ERROR: Forbidden::xss_filter')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -273,7 +273,7 @@ if 'hsts' in form.keys():
 else:
     print('ERROR: Forbidden::hsts')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -288,7 +288,7 @@ if 'dos_mitigate' in form.keys():
 else:
     print('ERROR: Forbidden::dos_mitigate')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -303,7 +303,7 @@ if 'test_cookie' in form.keys():
 else:
     print('ERROR: Forbidden::test_cookie')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -318,7 +318,7 @@ if 'symlink_protection' in form.keys():
 else:
     print('ERROR: Forbidden::symlink_protection')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -333,7 +333,7 @@ if 'redirect_to_ssl' in form.keys():
 else:
     print('ERROR: Forbidden::redirect_to_ssl')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -348,7 +348,7 @@ if 'redirect_aliases' in form.keys():
 else:
     print('ERROR: Forbidden::redirect_aliases')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -363,7 +363,7 @@ if 'wwwredirect' in form.keys():
 else:
     print('ERROR: Forbidden::wwwredirect')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -378,7 +378,7 @@ if 'redirectstatus' in form.keys():
 else:
     print('ERROR: Forbidden::redirectstatus')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -402,7 +402,7 @@ if redirectstatus != "none":
             if not it_matches:
                 print('ERROR: Invalid Redirect URL. The URL must be something like https://google.com ')
                 print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -421,7 +421,7 @@ if 'append_requesturi' in form.keys():
 else:
     print('ERROR: Forbidden::append_requesturi')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -436,7 +436,7 @@ print('<div class="icon-box">')
 print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Server Settings updated')
 print('</div>')
 print('</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://xtendweb.gnusys.net/docs/user_docs.html">XtendWeb Docs</a></small></div>')
+print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
 print('</div>')
 print('</div>')
