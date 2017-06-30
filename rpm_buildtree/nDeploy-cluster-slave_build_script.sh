@@ -2,7 +2,7 @@
 #Author: Anoop P Alias
 
 NDEPLOY_VERSION="4.3"
-RPM_ITERATION="20"
+RPM_ITERATION="21"
 
 rm -f nDeploy-cluster-slave-pkg-centos7/nDeploy-*
 rsync -av ../scripts/setup_additional_templates.sh ../scripts/generate_default_vhost_config_slave.py ../scripts/easy_php_setup.sh ../scripts/easy_hhvm_setup.sh ../scripts/*ghost_hunter* ../scripts/init_backends.py ../scripts/update_backend.py nDeploy-cluster-slave-pkg-centos7/opt/nDeploy/scripts/
