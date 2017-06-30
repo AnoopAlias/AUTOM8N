@@ -5,7 +5,7 @@
 
 
 # DOCUMENTATION
-http://xtendweb.gnusys.net/docs/
+https://autom8n.com/xtendweb/
 
-# SME & WEBHOSTS COMMERCIAL SUPPORT AND CONSULTING
-https://xtendweb.gnusys.net/#support
+
+A U T O M 8 N
