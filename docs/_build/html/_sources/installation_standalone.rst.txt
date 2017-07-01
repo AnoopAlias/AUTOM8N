@@ -8,7 +8,8 @@ We recommend CentOS7 over CloudLinux. XtendWeb support chrooted PHP (similar to 
 
 .. tip:: XtendWeb can use either Nginx or OpenResty as the web server
 
-.. tip:: CentOS7/CloudLinux7 is recommended
+.. tip:: CentOS7 is the best and recommended OS. XtendWeb can filter out unwanted requests,complete requests with minimal resource requirement
+         and with the SimpleR WHM plugin set a safety valve like limit to prevent extreme resource starvation 
 
 .. note:: Starting with Xtendweb version 4.3.20 you need to subscribe to a license for installing XtendWeb
           Please visit https://autom8n.com/plans.html#plans for more info

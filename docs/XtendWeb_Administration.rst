@@ -158,7 +158,7 @@ So we don't encourage unmanned upgrades and have therefore set enable=0 in the y
 The upgrade must be done manually by running the following commands
 ::
 
-  yum -y install https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-5.noarch.rpm
+  yum -y install https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-6.noarch.rpm
   yum --enablerepo=ndeploy upgrade
   #For setups using Phusion Passenger app server
   /opt/nDeploy/scripts/easy_passenger_setup.sh
