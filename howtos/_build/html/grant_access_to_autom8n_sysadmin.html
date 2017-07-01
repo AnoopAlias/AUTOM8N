@@ -137,12 +137,19 @@
             
   <div class="section" id="grant-access-to-a-u-t-o-m-8-n-sysadmins">
 <h1>Grant access to A U T O M 8 N sysadmins<a class="headerlink" href="#grant-access-to-a-u-t-o-m-8-n-sysadmins" title="Permalink to this headline">¶</a></h1>
-<p>Run following command in your servers root prompt</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Do NOT send root password over email</p>
+</div>
+<p>instead run following command in your servers root prompt</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">autom8n</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gnusys</span><span class="o">-</span><span class="n">pub</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">md5sum</span> <span class="n">gnusys</span><span class="o">-</span><span class="n">pub</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">w</span> <span class="s2">&quot;9a8b587ba6e58efb9d69e6990a040e30&quot;</span> <span class="o">&amp;&amp;</span> <span class="n">cat</span> <span class="n">gnusys</span><span class="o">-</span><span class="n">pub</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">txt</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
 <span class="n">chmod</span> <span class="mi">600</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
 </pre></div>
 </div>
+<p>and email the servers main IP address and SSH port only to <a class="reference external" href="mailto:ops&#37;&#52;&#48;gnusys&#46;net">ops<span>&#64;</span>gnusys<span>&#46;</span>net</a></p>
+<p>Please whitelist the following IP in your server as well
+<code class="docutils literal"><span class="pre">139.162.17.224</span></code></p>
 </div>
 
 
