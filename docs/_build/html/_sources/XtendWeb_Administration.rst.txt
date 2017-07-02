@@ -162,8 +162,7 @@ The upgrade must be done manually by running the following commands
   yum --enablerepo=ndeploy upgrade
   #For setups using Phusion Passenger app server
   /opt/nDeploy/scripts/easy_passenger_setup.sh
-  #For upgrading PHP application server(additional packages are to upgraded via yum)
-  /opt/nDeploy/scripts/easy_php_setup.sh
+
 
 XtendWeb cluster upgrade
 ----------------------------
