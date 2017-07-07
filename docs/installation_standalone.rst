@@ -15,6 +15,10 @@ We recommend CentOS7 over CloudLinux. XtendWeb support chrooted PHP (similar to 
           Please visit https://autom8n.com/plans.html#plans for more info
 
 
+`PURCHASE XTENDWEB LICENSE <https://support.gnusys.net/order.php?step=0&productGroup=5>`_.
+
+
+
 1. Install and Enable the plugin
 ::
 

@@ -60,6 +60,10 @@ XtendWeb cluster setup
 .. note:: As of XtendWeb 4.3.20, you will need a license for all servers(master and slaves) on the cluster.Else Installation will fail
           Please visit https://autom8n.com/plans.html#plans for more info
 
+
+`PURCHASE XTENDWEB LICENSE <https://support.gnusys.net/order.php?step=0&productGroup=5>`_.
+
+
 1. Install cPanel and cPanel DNS only on master and slaves respectively
 ::
 
