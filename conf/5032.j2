@@ -69,11 +69,6 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
 
-# Include LUAWAF settings
-{% if LUAWAF == 'enabled' %}
-include /etc/nginx/conf.d/luarestywaf_exec.conf;
-{% endif %}
-# End Include LUAWAF settings
 
 try_files $uri @cache;
 }
@@ -128,11 +123,6 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
 {% endif %}
 # End Include NAXSI settings
 
-# Include LUAWAF settings
-{% if LUAWAF == 'enabled' %}
-include /etc/nginx/conf.d/luarestywaf_exec.conf;
-{% endif %}
-# End Include LUAWAF settings
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

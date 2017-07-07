@@ -62,7 +62,7 @@ add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
 add_header X-Microcachable "0";
 }
 
-try_files $uri $uri/ /index.php?q=$uri&$args;
+try_files $uri $uri/ /index.php$is_args$args;
 }
 
 location ~ ^/pingphpfpm$ {

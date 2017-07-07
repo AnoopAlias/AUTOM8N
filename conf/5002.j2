@@ -6,13 +6,7 @@ index index.php index.html index.htm default.html default.htm;
 
 location / {
 
-# Include LUAWAF settings
-{% if LUAWAF == 'enabled' %}
-include /etc/nginx/conf.d/luarestywaf_exec.conf;
-{% endif %}
-# End Include LUAWAF settings
-
-try_files $uri $uri/ /index.php?$args;
+try_files $uri $uri/ /index.php$is_args$args;
 }
 
 location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
@@ -27,12 +21,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
-# Include LUAWAF settings
-{% if LUAWAF == 'enabled' %}
-include /etc/nginx/conf.d/luarestywaf_exec.conf;
-{% endif %}
-# End Include LUAWAF settings
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

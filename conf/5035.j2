@@ -12,12 +12,6 @@ rewrite ^/([^/]+?)-sitemap([0-9]+)?\.xml$ /index.php?sitemap=$1&sitemap_n=$2 las
 
 location / {
 
-# Include LUAWAF settings
-{% if LUAWAF == 'enabled' %}
-include /etc/nginx/conf.d/luarestywaf_exec.conf;
-{% endif %}
-# End Include LUAWAF settings
-
 try_files $uri $uri/ /index.php?q=$uri&$args;
 }
 
@@ -39,12 +33,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
-# Include LUAWAF settings
-{% if LUAWAF == 'enabled' %}
-include /etc/nginx/conf.d/luarestywaf_exec.conf;
-{% endif %}
-# End Include LUAWAF settings
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
