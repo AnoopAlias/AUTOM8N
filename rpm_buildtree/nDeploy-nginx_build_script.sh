@@ -5,7 +5,7 @@
 #expecting 6/7 as the first arg to this scripts
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
-NGINX_VERSION="1.13.2"
+NGINX_VERSION="1.13.3"
 NGINX_RPM_ITER="1.el${OSVERSION}"
 NPS_VERSION="1.12.34.2-stable"
 MY_RUBY_VERSION="2.3.1"
