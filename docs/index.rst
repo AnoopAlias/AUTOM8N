@@ -21,6 +21,7 @@ XtendWeb and SimpleR
    Naxsi
    bruteforce_mitigation
    bot_traffic_mitigation
+   full_page_cache
 
 .. toctree::
    :maxdepth: 2

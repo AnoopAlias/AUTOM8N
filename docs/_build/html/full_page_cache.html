@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; Documentation</title>
+  <title>Full Page cache &mdash; Documentation</title>
   
 
   
@@ -32,8 +32,10 @@
   
         <link rel="index" title="Index"
               href="genindex.html"/>
-        <link rel="search" title="Search" href="#"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Documentation" href="index.html"/>
+        <link rel="next" title="XtendWeb User docs" href="UserDocs.html"/>
+        <link rel="prev" title="Bad Bot Mitigation" href="bot_traffic_mitigation.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -66,7 +68,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -81,7 +83,7 @@
             
             
                 <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
 </ul>
@@ -99,8 +101,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bruteforce_mitigation.html">Brute Force Mitigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bot_traffic_mitigation.html">Bad Bot Mitigation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="full_page_cache.html">Full Page cache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="full_page_cache.html#full-page-cache-to-redis">Full page cache to redis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Full Page cache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#full-page-cache-to-redis">Full page cache to redis</a></li>
 </ul>
 </li>
 </ul>
@@ -202,7 +204,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -210,8 +212,10 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Search</li>
+    <li>Full Page cache</li>
       <li class="wy-breadcrumbs-aside">
+        
+          
         
       </li>
   </ul>
@@ -220,23 +224,129 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="full-page-cache">
+<h1>Full Page cache<a class="headerlink" href="#full-page-cache" title="Permalink to this headline">¶</a></h1>
+<p>XtendWeb support full page caching for popular CMS Wordpress and Drupal.</p>
+<p>A dynamic website is one where content is generated dynamically by an application server .This makes a dynamic website hugely dependant on MySQL and PHP (assuming LAMP stack)
+for each and every page request. One of the mechanism to make the dependancy less is caching. There are various levels at which the cache can be configured.</p>
+<ol class="arabic simple">
+<li>WebServer level - Proxy cache, FastCGI cache and Subrequest cache are 3 common example for this
+The webserver level caches are mostly fastest because it just need the webserver to fullfill the page request.
+Note that dynamic application sets various cookies and headers so that browsers,proxies etc do not cache the content.So special config is needed in
+webserver to ignore these cookies and headers and cache content that are cacheable</li>
+<li>Application level caches - These caches are setup at application level and will require support from both application(like an extra module) and the web server to cache content
+These are often less speedier than webserver level cache as the application server is also involved. Common Examples are W3TC and WPSuperCache in wordpress. Some appliation caches do not
+need any special changes to webserver config and works purely by modifying application code.</li>
+</ol>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">What is good for cache? - A blog or e-newspaper or mostly static content served by a dynamic app like wordpress/drupal.
+What is not good to be cached? - An ecommerce shopping cart , personal non static content etc</p>
+</div>
+<div class="section" id="full-page-cache-to-redis">
+<h2>Full page cache to redis<a class="headerlink" href="#full-page-cache-to-redis" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb support very high performing full page cache to redis for wordpress and Drupal. This use the <a class="reference external" href="https://github.com/openresty/srcache-nginx-module">https://github.com/openresty/srcache-nginx-module</a> to cache the fully rendered page in redis.</p>
+<p>To enable the templates run</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>The above step will setup 3 additional templates</p>
+<ol class="arabic simple">
+<li>Wordpress+Redis+nginx-helper  - You will need to install <a class="reference external" href="https://wordpress.org/plugins/nginx-helper/">https://wordpress.org/plugins/nginx-helper/</a> plugin in wordpress to invalidate cache on changes to content.There is no prefix used so leave
+the prefix field blank in plugin setup.There is no seperate cache for mobile and desktop devices in this template</li>
+<li>Wordpress+Redis  - No additional module is required for this cache to work. Every page is cached for 10 miutes after which the cached data gets invalidated. Seperate cache exist for mobile and desktop
+versions of the website.</li>
+<li>Drupal+Redis  - No additional module is required for this cache to work. Every page is cached for 10 miutes after which the cached data gets invalidated. Seperate cache exist for mobile and desktop
+versions of the website.</li>
+</ol>
+<p>The cache logic ignore all application level cookies and urls except</p>
+<p>For Wordpress</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>map $request_method $requestnocache {
+    default &quot;&quot;;
+    POST    1;
+}
 
-  
-  <div id="search-results">
-  
-  </div>
+
+map $http_cookie $wpcookienocache {
+        default                     &quot;&quot;;
+        SESS                        1;
+        PHPSESSID                   1;
+        ~*wordpress_[a-f0-9]+       1;
+        comment_author              1;
+        wp-postpass                 1;
+        wordpress_no_cache          1;
+        woocommerce_items_in_cart   1;
+        wp_woocommerce.*            1;
+        woocommerce_cart.*          1;
+        resetpass                   1;
+        wordpress_logged_in         1;
+        wordpress_sec*              1;
+        wp-settings*                1;
+    }
+
+
+map $request_uri $wpurinocache {
+        default                                      &quot;&quot;;
+        ~*^\/wp-admin.*                              1;
+        ~*^\/wp-[a-zA-Z0-9-]+\.php$                  1;
+        ~*^\/feed\/.*                                1;
+        ~*^\/administrator\/.*                       1;
+        ~*^\/xmlrpc.php$                             1;
+        ~*^\/index.php$                              1;
+        ~*^\/wp-links-opml.php$                      1;
+        ~*^\/wp-locations.php$                       1;
+        ~*^\/sitemap(_index)?.xml                    1;
+        ~*^\/[a-z0-9_-]+-sitemap([0-9]+)?.xml        1;
+        ~*^\/cart.*                                  1;
+        ~*^\/my-account\/.*                          1;
+        ~*^\/wp-api\/.*                              1;
+        ~*^\/resetpass\/.*                           1;
+}
+</pre></div>
+</div>
+<p>For Drupal</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>map $request_method $requestnocache {
+    default &quot;&quot;;
+    POST    1;
+}
+
+map $http_cookie $drupalcookienocache {
+        default                     &quot;&quot;;
+        ~*SESS                        1;
+    }
+
+map $request_uri $drupalurinocache {
+        default                 &quot;&quot;;
+        ~*\/status\.php$         1;
+        ~*\/update\.php$         1;
+        ~*\/admin$              1;
+        ~*\/admin\/.*$          1;
+        ~*\/user$               1;
+        ~*\/user\/.*            1;
+        ~*\/flag\/.*            1;
+        ~*.*\/ajax\/.*          1;
+        ~*.*\/ahah\/.*          1;
+        ~*\/admin\/content\/backup_migrate\/export  1;
+  }
+</pre></div>
+</div>
+<p>Note that the above list of cookies and URL&#8217;s can be extended by the admnistrator in /etc/nginx/conf.d/maps.conf</p>
+</div>
+</div>
+
 
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="UserDocs.html" class="btn btn-neutral float-right" title="XtendWeb User docs" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="bot_traffic_mitigation.html" class="btn btn-neutral" title="Bad Bot Mitigation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -274,7 +384,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -291,12 +400,6 @@
       });
   </script>
   
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
-  
  
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -308,7 +411,6 @@
   ga('send', 'pageview');
 
 </script>
-
 
 
 </body>

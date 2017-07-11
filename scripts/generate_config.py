@@ -129,12 +129,17 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
     """Function to setup hhvm for user """
     hhvm_server_file = installation_path + "/hhvm.d/" + user_name + ".ini"
     if not os.path.isfile(hhvm_server_file):
+        if clusterenabled:
+            mysql_socket = "/tmp/maxscale_mysql.sock"
+        else:
+            mysql_socket = "/var/lib/mysql/mysql.sock"
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = "hhvm_secure.ini.j2"
         template = templateEnv.get_template(TEMPLATE_FILE)
         templateVars = {"CPANELUSER": user_name,
-                        "HOMEDIR": domain_home
+                        "HOMEDIR": domain_home,
+                        "MYSQLSOCK": mysql_socket
                         }
         generated_config = template.render(templateVars)
         with codecs.open(hhvm_server_file, 'w', 'utf-8') as confout:
