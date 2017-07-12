@@ -58,6 +58,6 @@ with codecs.open('/etc/nginx/conf.d/default_server.conf', 'w', 'utf-8') as defau
     default_server_config_file.write(default_server_config)
 # Generate proxy_subdomain.conf
 proxy_subdomain_template = templateEnv.get_template('proxy_subdomain.conf.j2')
-proxy_subdomain_config = default_server_template.render(templateVars)
+proxy_subdomain_config = proxy_subdomain_template.render(templateVars)
 with codecs.open('/etc/nginx/conf.d/proxy_subdomain.conf', 'w', 'utf-8') as proxy_subdomain_config_file:
     proxy_subdomain_config_file.write(proxy_subdomain_config)
