@@ -11,8 +11,6 @@
     state: present
   when:
     - ansible_lsb.major_release|int >= 7
-    - maxscale.stat.exists == false
-
 
 - name: Install MaxScale rpm
   yum:
@@ -20,7 +18,6 @@
     state: present
   when:
     - ansible_lsb.major_release|int < 7
-    - maxscale.stat.exists == false
 
 - synchronize:
     src: /var/lib/maxscale/.secrets
@@ -52,20 +49,6 @@
   shell: service maxscale restart && chkconfig maxscale on
   when:
     - ansible_lsb.major_release|int < 7
-
-- name: Create mysql.sock
-  file:
-    src: /tmp/maxscale_mysql.sock
-    dest: /var/lib/mysql/mysql.sock
-    state: link
-  when:  maxscale.stat.exists == false
-
-- name: Create mysql.sock in tmp
-  file:
-    src: /tmp/maxscale_mysql.sock
-    dest: /tmp/mysql.sock
-    state: link
-  when:  maxscale.stat.exists == false
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE

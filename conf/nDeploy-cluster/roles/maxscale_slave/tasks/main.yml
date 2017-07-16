@@ -24,7 +24,6 @@
   when:
     - ansible_lsb.major_release|int >= 7
     - inventory_hostname != groups['ndeploydbslave'][0]
-    - maxscale.stat.exists == false
 
 - name: Install MaxScale rpm
   yum:
@@ -33,7 +32,6 @@
   when:
     - ansible_lsb.major_release|int < 7
     - inventory_hostname != groups['ndeploydbslave'][0]
-    - maxscale.stat.exists == false
 
 - synchronize:
     src: /var/lib/maxscale/.secrets
@@ -71,21 +69,6 @@
   when:
     - ansible_lsb.major_release|int < 7
     - inventory_hostname != groups['ndeploydbslave'][0]
-
-
-- name: Create mysql.sock
-  file:
-    src: /tmp/maxscale_mysql.sock
-    dest: /var/lib/mysql/mysql.sock
-    state: link
-  when:  maxscale.stat.exists == false
-
-- name: Create mysql.sock in tmp
-  file:
-    src: /tmp/maxscale_mysql.sock
-    dest: /tmp/mysql.sock
-    state: link
-  when:  maxscale.stat.exists == false
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE

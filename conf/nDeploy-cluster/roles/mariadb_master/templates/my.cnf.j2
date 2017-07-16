@@ -12,7 +12,7 @@ ssl-ca=/etc/mysql-ssl/ca-cert.pem
 ssl-cert=/etc/mysql-ssl/server-cert.pem
 ssl-key=/etc/mysql-ssl/server-key.pem
 
-socket = /var/lib/mysql/mysql_original.sock
+socket = /var/lib/mysql/mysql.sock
 port = 13306
 
 #the server-id and auto_increment_offset values must be unique for each server in the cluster
@@ -38,11 +38,11 @@ binlog-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_sch
 replicate-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
 
 [mysql]
-socket = /var/lib/mysql/mysql_original.sock
+socket = /var/lib/mysql/mysql.sock
 [mysqldump]
-socket = /var/lib/mysql/mysql_original.sock
+socket = /var/lib/mysql/mysql.sock
 [mysqladmin]
-socket = /var/lib/mysql/mysql_original.sock
+socket = /var/lib/mysql/mysql.sock
 
 [client]
 ssl-ca=/etc/mysql-ssl/ca-cert.pem

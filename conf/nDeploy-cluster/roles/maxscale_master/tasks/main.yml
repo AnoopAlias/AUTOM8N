@@ -25,21 +25,6 @@
   when:
     - ansible_lsb.major_release|int < 7
 
-
-- name: Create mysql.sock
-  file:
-    src: /tmp/maxscale_mysql.sock
-    dest: /var/lib/mysql/mysql.sock
-    state: link
-  when:  maxscale.stat.exists == false
-
-- name: Create mysql.sock in tmp
-  file:
-    src: /tmp/maxscale_mysql.sock
-    dest: /tmp/mysql.sock
-    state: link
-  when:  maxscale.stat.exists == false
-
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE
     state: touch
