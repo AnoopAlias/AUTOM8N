@@ -87,6 +87,12 @@ include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
+location = /xmlrpc.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
 location ~ \.php$ {
 
 # Include NAXSI settings

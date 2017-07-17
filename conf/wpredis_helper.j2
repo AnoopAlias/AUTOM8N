@@ -139,4 +139,16 @@ more_clear_headers "Expires";
 
 }
 
+location = /xmlrpc.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+
+# No caching
+more_clear_headers "Cache-Control";
+add_header Cache-Control "private, max-age=0, no-cache, no-store";
+more_clear_headers "Expires";
+
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
 include /etc/nginx/conf.d/cpanel_services.conf;
