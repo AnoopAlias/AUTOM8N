@@ -181,6 +181,11 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Monitoring nginx and app servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#monitoring-xtendweb-cpanel-cluster">Monitoring Xtendweb cPanel cluster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#database-replication">Database Replication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unison-file-sync-status">Unison File Sync status</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
 
@@ -261,7 +266,66 @@ with &#8220;/etc/init.d/ndeploy_backends start/stop&#8221;</p>
   <span class="n">then</span> <span class="n">restart</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="monitoring-xtendweb-cpanel-cluster">
+<h1>Monitoring Xtendweb cPanel cluster<a class="headerlink" href="#monitoring-xtendweb-cpanel-cluster" title="Permalink to this headline">¶</a></h1>
+<p>XtendWeb cPanel web cluster require monitoring of File syncing and database replication. This is provided 24x7 with our Proactive cluster administration
+plan. AUTOM8N use check_mk+nagios for monitoring the infrastructure .</p>
+<p>If you have a Proactive cluster support plan do</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">gnusys</span><span class="o">-</span><span class="n">monitoring</span>
+</pre></div>
+</div>
+<div class="section" id="database-replication">
+<h2>Database Replication<a class="headerlink" href="#database-replication" title="Permalink to this headline">¶</a></h2>
+<p>Database replication health should be monitored . Since XtendWeb cPanel web cluster use MySQL Master-Master replication ,the &#8216;seconds behind master&#8217; field in
+cPanel master server and DB slave server must be monitored . This is automatically done if you enable MySQL monitoring via local check in check_mk</p>
+</div>
+<div class="section" id="unison-file-sync-status">
+<h2>Unison File Sync status<a class="headerlink" href="#unison-file-sync-status" title="Permalink to this headline">¶</a></h2>
+<p>The Following check_mk local check can monitor unison file sync</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Anoop P Alias&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright Anoop P Alias&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;GPL&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;anoopalias01@gmail.com&quot;</span>
+
+
+<span class="n">installation_path</span> <span class="o">=</span> <span class="s2">&quot;/opt/nDeploy&quot;</span>  <span class="c1"># Absolute Installation Path</span>
+<span class="n">cluster_config_file</span> <span class="o">=</span> <span class="n">installation_path</span><span class="o">+</span><span class="s2">&quot;/conf/ndeploy_cluster.yaml&quot;</span>
+
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">cluster_config_file</span><span class="p">):</span>
+    <span class="n">filesync_fail_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cluster_config_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cluster_data_yaml</span><span class="p">:</span>
+        <span class="n">cluster_data_yaml_parsed</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">cluster_data_yaml</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">servername</span> <span class="ow">in</span> <span class="n">cluster_data_yaml_parsed</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">filesync_ok</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">myprocess</span> <span class="ow">in</span> <span class="n">psutil</span><span class="o">.</span><span class="n">process_iter</span><span class="p">():</span>
+            <span class="n">mycmdline</span> <span class="o">=</span> <span class="n">myprocess</span><span class="o">.</span><span class="n">cmdline</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;/usr/bin/unison&#39;</span> <span class="ow">in</span> <span class="n">mycmdline</span> <span class="ow">and</span> <span class="n">servername</span> <span class="ow">in</span> <span class="n">mycmdline</span><span class="p">:</span>
+                <span class="n">filesync_ok</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filesync_ok</span><span class="p">:</span>
+            <span class="n">filesync_fail_count</span> <span class="o">=</span> <span class="n">filesync_fail_count</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">status</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">servername</span><span class="o">+</span><span class="s2">&quot;:FAIL&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">filesync_fail_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2 unison - &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0 unison - OK&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Health of websites and application servers must be monitored in all master and slave cPanel servers in a cluster setup.</p>
 <div data-disqus-identifier="Monitoring nginx and app servers" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
 
 
            </div>
