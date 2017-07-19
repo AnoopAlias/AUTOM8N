@@ -47,7 +47,7 @@
     path: /root/.my.cnf
     section: client
     option: socket
-    value: /var/lib/mysql/mysq.sock
+    value: /var/lib/mysql/mysql.sock
     backup: yes
   when:
     - mysqlsetup.stat.exists == false
