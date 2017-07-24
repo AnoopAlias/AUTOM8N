@@ -63,6 +63,7 @@ if cpanelnewuser != cpaneluser:
     silentremove(installation_path + "/php-fpm.d/" + cpaneluser + ".conf")
     silentremove(installation_path + "/secure-php-fpm.d/" + cpaneluser + ".conf")
     silentremove(installation_path + "/hhvm.d/" + cpaneluser + ".ini")
+    silentremove(installation_path + "/hhvm.slave.d/" + cpaneluser + ".ini")
     subprocess.Popen(installation_path+"/scripts/init_backends.py reload", shell=True)
     cpuserdatajson = installation_path+"/lock/"+cpaneluser+".userdata"
     if os.path.exists(cpuserdatajson):

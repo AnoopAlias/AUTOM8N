@@ -128,27 +128,34 @@ def php_backend_add(user_name, domain_home):
 def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluster_serverlist):
     """Function to setup hhvm for user """
     hhvm_server_file = installation_path + "/hhvm.d/" + user_name + ".ini"
+    slave_hhvm_server_file = installation_path + "/hhvm.slave.d/" + user_name + ".ini"
+    if clusterenabled:
+        HHVM_MASTER_TEMPLATE = 'hhvm_secure.ini.j2'
+    else:
+        HHVM_MASTER_TEMPLATE = 'hhvm_secure_master.ini.j2'
     if not os.path.isfile(hhvm_server_file):
-        if clusterenabled:
-            mysql_socket = "/tmp/maxscale_mysql.sock"
-        else:
-            mysql_socket = "/var/lib/mysql/mysql.sock"
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
-        TEMPLATE_FILE = "hhvm_secure.ini.j2"
-        template = templateEnv.get_template(TEMPLATE_FILE)
+        template = templateEnv.get_template(HHVM_MASTER_TEMPLATE)
         templateVars = {"CPANELUSER": user_name,
-                        "HOMEDIR": domain_home,
-                        "MYSQLSOCK": mysql_socket
+                        "HOMEDIR": domain_home
                         }
         generated_config = template.render(templateVars)
         with codecs.open(hhvm_server_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
+        if clusterenabled:
+            HHVM_SLAVE_TEMPLATE = 'hhvm_secure_slave.ini.j2'
+            if not os.path.isfile(slave_hhvm_server_file):
+                template = templateEnv.get_template(HHVM_SLAVE_TEMPLATE)
+                templateVars = {"CPANELUSER": user_name,
+                                "HOMEDIR": domain_home
+                                }
+                generated_config = template.render(templateVars)
+                with codecs.open(slave_hhvm_server_file, 'w', 'utf-8') as confout:
+                    confout.write(generated_config)
         silentremove('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf')
         if not os.path.isdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d'):
-            os.mkdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d',0o755)
-        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
-        templateEnv = jinja2.Environment(loader=templateLoader)
+            os.mkdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d', 0o755)
         TEMPLATE_FILE = "limits.conf.j2"
         template = templateEnv.get_template(TEMPLATE_FILE)
         templateVars = {"OWNER": owner_name
@@ -166,7 +173,7 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
     else:
         silentremove('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf')
         if not os.path.isdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d'):
-            os.mkdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d',0o755)
+            os.mkdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d', 0o755)
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = "limits.conf.j2"
@@ -208,7 +215,7 @@ def php_secure_backend_add(user_name, owner_name, domain_home, clusterenabled, *
         for backend_name in php_backends_dict.keys():
             silentremove('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf')
             if not os.path.isdir('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d'):
-                os.mkdir('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d',0o755)
+                os.mkdir('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d', 0o755)
             templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
             templateEnv = jinja2.Environment(loader=templateLoader)
             TEMPLATE_FILE = "limits.conf.j2"

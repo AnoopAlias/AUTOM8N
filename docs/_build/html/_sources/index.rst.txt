@@ -62,4 +62,5 @@ XtendWeb and SimpleR
    XtendWeb_Administration
    Application_template
    Monitoring
+   Security_tools
    Logs

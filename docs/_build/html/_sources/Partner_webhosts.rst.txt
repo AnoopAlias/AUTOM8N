@@ -12,5 +12,7 @@ Following webhost support Clustered cPanel shared, reseller, VPS, Cloud hosting 
 
 `YOORSHOP <https://www.yoorshop.fr>`_  Company Location: FRANCE,EUROPE
 
+`INSIDER HOSTING <http://www.insiderhosting.com/>`_ Company Location: NORTH AMERICA
+
 
 .. tip:: Wish to list your webhosting business here?. Contact anoop@gnusys.net

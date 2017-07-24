@@ -61,8 +61,6 @@
   template:
     src: mysqlgrants.j2
     dest: /root/xtendweb_mysql_grants.sql
-  when:
-    - mysqlsetup.stat.exists == false
 
 - name: Setup mysql grants
   shell: mysql < /root/xtendweb_mysql_grants.sql

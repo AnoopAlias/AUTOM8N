@@ -181,6 +181,9 @@ fi
 if [ ! -d /opt/nDeploy/hhvm.d ] ; then
 	mkdir /opt/nDeploy/hhvm.d
 fi
+if [ ! -d /opt/nDeploy/hhvm.slave.d ] ; then
+	mkdir /opt/nDeploy/hhvm.slave.d
+fi
 if [ ! -L /usr/local/cpanel/base/frontend/paper_lantern/nDeploy_cp  ];then
 	ln -s /opt/nDeploy/nDeploy_cp /usr/local/cpanel/base/frontend/paper_lantern/
 fi

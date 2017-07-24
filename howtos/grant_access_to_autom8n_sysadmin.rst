@@ -14,4 +14,4 @@ instead run following command in your servers root prompt
 and email the servers main IP address and SSH port only to ops@gnusys.net
 
 Please whitelist the following IP in your server as well
-``139.162.17.224``
+``139.162.17.224    139.162.228.126``

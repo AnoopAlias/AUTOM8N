@@ -11,6 +11,7 @@ rsync -av --exclude=backends.yaml --exclude=nDeploy-cluster --exclude=ndeploy_cl
 rsync -av root@${REMOTE_SERVER}:/opt/nDeploy/php-fpm.d/ /opt/nDeploy/php-fpm.d/
 rsync -av root@${REMOTE_SERVER}:/opt/nDeploy/secure-php-fpm.d/ /opt/nDeploy/secure-php-fpm.d/
 rsync -av root@${REMOTE_SERVER}:/opt/nDeploy/hhvm.d/ /opt/nDeploy/hhvm.d/
+rsync -av root@${REMOTE_SERVER}:/opt/nDeploy/hhvm.slave.d/ /opt/nDeploy/hhvm.slave.d/
 rsync -av --exclude=*.conf --exclude=*.include root@${REMOTE_SERVER}:/etc/nginx/sites-enabled/ /etc/nginx/sites-enabled/
 for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1);do /opt/nDeploy/scripts/fix_domain_data_permission.py $CPANELUSER;done
 /opt/nDeploy/scripts/attempt_autofix.sh
