@@ -67,6 +67,13 @@
   when:
     - mysqlsetup.stat.exists == false
 
+- name: Generate mysql grants for slaves
+  template:
+    src: mysqlgrants_slave.j2
+    dest: "/root/1xtendweb_mysql_grants_{{ item }}.sql"
+  with_items: groups['ndeployslaves']
+
+
 - name: get the master log and pos
   mysql_replication: mode=getmaster
   register: masterrepl
