@@ -1,18 +1,18 @@
 
-CREATE USER 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_nodename'] }}' IDENTIFIED BY {{ MYSQLPASS }};
-GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_nodename'] }}' REQUIRE SSL;
-GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_nodename'] }}' REQUIRE SSL;
-GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_nodename'] }}' REQUIRE SSL;
-GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_nodename'] }}' REQUIRE SSL;
-GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_nodename'] }}' REQUIRE SSL;
-GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_nodename'] }}' REQUIRE SSL;
+CREATE USER 'maxscale'@'{{ hostvars[myhost]['ansible_nodename'] }}' IDENTIFIED BY {{ MYSQLPASS }};
+GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[myhost]['ansible_nodename'] }}' REQUIRE SSL;
+GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[myhost]['ansible_nodename'] }}' REQUIRE SSL;
+GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[myhost]['ansible_nodename'] }}' REQUIRE SSL;
+GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[myhost]['ansible_nodename'] }}' REQUIRE SSL;
+GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[myhost]['ansible_nodename'] }}' REQUIRE SSL;
+GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[myhost]['ansible_nodename'] }}' REQUIRE SSL;
 
-CREATE USER 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_default_ipv4']['address'] }}' IDENTIFIED BY {{ MYSQLPASS }};
-GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
-GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
-GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
-GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
-GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
-GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[" {{ item }} "]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
+CREATE USER 'maxscale'@'{{ hostvars[myhost]['ansible_default_ipv4']['address'] }}' IDENTIFIED BY {{ MYSQLPASS }};
+GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[myhost]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
+GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[myhost]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
+GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[myhost]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
+GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[myhost]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
+GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[myhost]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
+GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[myhost]['ansible_default_ipv4']['address'] }}' REQUIRE SSL;
 
 FLUSH PRIVILEGES;
