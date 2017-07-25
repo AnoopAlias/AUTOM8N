@@ -66,6 +66,7 @@
   shell: mysql < /root/xtendweb_mysql_grants.sql
   when:
     - mysqlsetup.stat.exists == false
+  ignore_errors: yes
 
 - name: Generate mysql grants for slaves
   template:
