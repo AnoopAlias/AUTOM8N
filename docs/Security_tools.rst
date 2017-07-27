@@ -31,3 +31,6 @@ Integration Partner:
 http://opsshield.com/
 
 OpsShield.com is one of our Integration partner and we offer discounts on OpsShield.com Licenses if purchased with XtendWeb.
+
+
+.. image:: https://www.opsshield.com/images/ops.png
