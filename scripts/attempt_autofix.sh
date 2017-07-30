@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Remove all .conf files if force argument is supplied
+if [ "$#" -eq 1 ] && [ "$1" == "force" ] ; then
+  rm -f /etc/nginx/sites-enabled/*.conf
+fi
 
 ##Attempt to re-generate all nginx config
 touch /opt/nDeploy/conf/skip_nginx_reload
