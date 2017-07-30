@@ -130,9 +130,10 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
     hhvm_server_file = installation_path + "/hhvm.d/" + user_name + ".ini"
     slave_hhvm_server_file = installation_path + "/hhvm.slave.d/" + user_name + ".ini"
     if clusterenabled:
-        HHVM_MASTER_TEMPLATE = 'hhvm_secure.ini.j2'
-    else:
         HHVM_MASTER_TEMPLATE = 'hhvm_secure_master.ini.j2'
+    else:
+        HHVM_MASTER_TEMPLATE = 'hhvm_secure.ini.j2'
+    # Generate hhvm ini files
     if not os.path.isfile(hhvm_server_file):
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
@@ -153,6 +154,7 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
                 generated_config = template.render(templateVars)
                 with codecs.open(slave_hhvm_server_file, 'w', 'utf-8') as confout:
                     confout.write(generated_config)
+        # generate HHVM resource limit settings
         silentremove('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf')
         if not os.path.isdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d'):
             os.mkdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d', 0o755)
@@ -171,6 +173,7 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
             subprocess.call(['csync2', '-x'], shell=True)
             subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=started enabled=yes"', shell=True)
     else:
+        # generate HHVM resource limit settings
         silentremove('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf')
         if not os.path.isdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d'):
             os.mkdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d', 0o755)
@@ -184,10 +187,10 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
         with codecs.open('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 'w', 'utf-8') as confout:
             confout.write(generated_config)
         os.chmod('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 0o644)
-        subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
+        subprocess.call(['systemctl', 'restart', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         if clusterenabled:
-            subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=started enabled=yes"', shell=True)
+            subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=restarted enabled=yes"', shell=True)
     return
 
 

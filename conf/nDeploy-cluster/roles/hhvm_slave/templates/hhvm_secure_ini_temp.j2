@@ -35,4 +35,4 @@ mysqli.default_socket = /tmp/maxscale_mysql.sock
 
 ; Redis session store backend
 session.save_handler = redis
-session.save_path = "tcp://127.0.0.1:6379?database=2{% for host in groups['ndeployslaves'] %}{% if host != ansible_nodename %},tcp://127.0.0.1:950{{ loop.index }}?database=2{% endif %}{% endfor %}{% for host in groups['ndeploymaster'] %},tcp://127.0.0.1:960{{ loop.index }}?database=2{% endfor %}"
+session.save_path = "{% for host in groups['ndeployslaves'] %}{% if host != ansible_nodename %}tcp://127.0.0.1:950{{ loop.index }}?database=2&timeout=3,{% endif %}{% endfor %}{% for host in groups['ndeploymaster'] %}tcp://127.0.0.1:960{{ loop.index }}?database=2&timeout=3,{% endfor %}tcp://127.0.0.1:6379?database=2&timeout=3"
