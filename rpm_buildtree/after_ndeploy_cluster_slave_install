@@ -18,11 +18,8 @@ fi
 if [ ! -d /opt/nDeploy/secure-php-fpm.d ] ; then
 	mkdir /opt/nDeploy/secure-php-fpm.d
 fi
-if [ ! -d /opt/nDeploy/hhvm.slave.d ] ; then
-	mkdir /opt/nDeploy/hhvm.slave.d
-fi
-if [ ! -L /opt/nDeploy/hhvm.d  ];then
-	ln -s  /opt/nDeploy/hhvm.slave.d /opt/nDeploy/hhvm.d
+if [ ! -d /opt/nDeploy/hhvm.d ] ; then
+	mkdir /opt/nDeploy/hhvm.d
 fi
 if [ ! -L /etc/nginx/sites-enabled ] ; then
 	mkdir /etc/nginx/$(hostname)
