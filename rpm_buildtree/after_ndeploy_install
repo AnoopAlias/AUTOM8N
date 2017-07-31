@@ -197,8 +197,9 @@ fi
 echo -e '\e[93m Installing XtendWeb plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
 
-echo -e '\e[93m Installing PHP-FPM Selector plugin in cPanel \e[0m'
-/usr/local/cpanel/scripts/install_plugin /opt/nDeploy/PHPfpmSelector
+# PHP-FPM selector plugin is retired
+# echo -e '\e[93m Installing PHP-FPM Selector plugin in cPanel \e[0m'
+# /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/PHPfpmSelector
 
 echo -e '\e[93m ########################################################################### \e[0m'
 echo -e '\e[93m #                      A U T O M 8 N . C O M                              # \e[0m'
