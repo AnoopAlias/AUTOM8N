@@ -1,7 +1,7 @@
 [Service]
 User=%i
 Group=nobody
-ExecStart=/usr/local/bin/hhvm --config /opt/nDeploy/hhvm.d/%i.ini --user %i --mode daemon
+ExecStart=/usr/local/bin/hhvm --config /opt/nDeploy/hhvm.d/%i.ini --config /opt/nDeploy/conf/hhvm_extra.ini --user %i --mode daemon
 
 [Install]
 WantedBy=multi-user.target
