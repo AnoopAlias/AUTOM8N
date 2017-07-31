@@ -194,6 +194,8 @@ if [ ! -L /opt/nDeploy/scripts/easy_passenger_setup.sh ];then
   ln -s /usr/nginx/scripts/nginx-passenger-setup.sh /opt/nDeploy/scripts/easy_passenger_setup.sh
 fi
 
+touch /opt/nDeploy/conf/hhvm_extra.ini
+
 echo -e '\e[93m Installing XtendWeb plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
 

@@ -35,3 +35,4 @@ fi
 if [ -f /usr/bin/systemctl ];then
   systemctl daemon-reload
 fi
+touch /opt/nDeploy/conf/hhvm_extra.ini
