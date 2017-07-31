@@ -116,6 +116,7 @@ def control_php_fpm(trigger):
                     service_generated_config = service_template.render(templateVars)
                     with codecs.open(systemd_service_file, "w", 'utf-8') as confout:
                         confout.write(service_generated_config)
+                subprocess.call(['/usr/local/cpanel/scripts/install_plugin /opt/nDeploy/PHPfpmSelector'], shell=True)
                 subprocess.call(['systemctl', 'daemon-reload'])
                 print('Disabling root owned php-fpm master process:')
                 subprocess.call(['systemctl', 'stop', 'ndeploy_backends.service'])
