@@ -2,6 +2,8 @@ hhvm.mysql.socket = /tmp/maxscale_mysql.sock
 pdo_mysql.default_socket = /tmp/maxscale_mysql.sock
 mysqli.default_socket = /tmp/maxscale_mysql.sock
 
+
+; Redis session for HHVM currently does not work as PHP
 ; Redis session store backend
-session.save_handler = redis
-session.save_path = "{% for host in groups['ndeployslaves'] %}tcp://127.0.0.1:950{{ loop.index }}?database=2&timeout=3,{% endfor %}tcp://127.0.0.1:6379?database=2&timeout=3"
+; session.save_handler = redis
+; session.save_path = "{% for host in groups['ndeployslaves'] %}tcp://127.0.0.1:950{{ loop.index }}?database=2&timeout=3,{% endfor %}tcp://127.0.0.1:6379?database=2&timeout=3"
