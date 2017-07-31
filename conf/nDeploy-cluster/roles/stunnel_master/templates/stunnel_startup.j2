@@ -1,6 +1,6 @@
 [Unit]
 Description=Stunnel config for %i
-After=syslog.target
+After=syslog.target redis.service
 
 [Service]
 ExecStart=/usr/bin/stunnel /etc/stunnel/%i.conf
