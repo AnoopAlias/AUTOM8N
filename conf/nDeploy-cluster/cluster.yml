@@ -127,10 +127,14 @@
   roles:
     - php_slave
 
-- name: Setup HHVM template for master and slaves
+- name: Setup HHVM extras for master
   hosts: ndeploymaster
   roles:
     - hhvm_master
+
+- name: Setup HHVM extras for slaves
+  hosts: ndeployslaves
+  roles:
     - hhvm_slave
 
 - name: Setup stunnel to secure redis on master
