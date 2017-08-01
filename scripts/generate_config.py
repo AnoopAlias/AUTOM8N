@@ -156,7 +156,7 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         # Sync cluster config and call systemd remotely
         if clusterenabled:
-            subprocess.call(['csync2', '-x'], shell=True)
+            subprocess.call('/usr/sbin/csync2 -x', shell=True)
             subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=started enabled=yes"', shell=True)
     else:
         # generate HHVM resource limit settings
