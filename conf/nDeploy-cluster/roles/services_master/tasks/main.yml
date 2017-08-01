@@ -27,5 +27,10 @@
   when:
     - ansible_lsb.major_release|int >= 7
 
+- name: enable unison on master
+  shell: "systemctl enable ndeploy_unison"
+  when:
+    - ansible_lsb.major_release|int >= 7
+
 - name: Start redis on master
   service: name=redis enabled=yes state=started
