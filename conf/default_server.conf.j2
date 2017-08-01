@@ -100,6 +100,8 @@ server {
         }
 
         location ~ /netdata/(?<ndpath>.*) {
+          auth_basic "Netdata";
+          auth_basic_user_file /etc/nginx/conf.d/netdata.password;
           proxy_redirect off;
           proxy_set_header Host $host;
 
