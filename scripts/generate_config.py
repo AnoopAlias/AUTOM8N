@@ -195,7 +195,7 @@ def php_secure_backend_add(user_name, owner_name, domain_home, clusterenabled, *
         with codecs.open(phpfpm_conf_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
         if clusterenabled:
-            subprocess.call(['csync2', '-x'], shell=True)
+            subprocess.call('/usr/sbin/csync2 -x', shell=True)
     backend_config_file = installation_path+"/conf/backends.yaml"
     with open(backend_config_file, 'r') as backend_data_yaml:
         backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
