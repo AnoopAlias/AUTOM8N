@@ -15,3 +15,6 @@
 
 - name: Start redis on slave
   service: name=redis enabled=yes state=started
+
+- name: Stop dovecot on slave
+  service: name=dovecot enabled=no state=stopped
