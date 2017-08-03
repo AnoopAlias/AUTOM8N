@@ -60,7 +60,7 @@ if 'domain' in form.keys():
 else:
     print('ERROR: Forbidden::domain')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -77,7 +77,7 @@ if os.path.isfile(profileyaml):
 else:
     print('ERROR: Domain data file i/o error')
     print('</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -99,7 +99,7 @@ if form.getvalue('thesubdir'):
             else:
                 print('ERROR: Forbidden::auth_basic')
                 print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -114,7 +114,7 @@ if form.getvalue('thesubdir'):
             else:
                 print('ERROR: Forbidden::set_expire_static')
                 print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -129,7 +129,7 @@ if form.getvalue('thesubdir'):
             else:
                 print('ERROR: Forbidden::mod_security')
                 print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -144,7 +144,7 @@ if form.getvalue('thesubdir'):
             # else:
             #     print('ERROR: Forbidden::lua_waf')
             #     print('</div>')
-            #     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+            #     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
             #     print('</div>')
             #     print('</div>')
             #     print('</div>')
@@ -159,7 +159,7 @@ if form.getvalue('thesubdir'):
             else:
                 print('ERROR: Forbidden::naxsi')
                 print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -174,7 +174,7 @@ if form.getvalue('thesubdir'):
             else:
                 print('ERROR: Forbidden::naxsi_mode')
                 print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -189,7 +189,7 @@ if form.getvalue('thesubdir'):
             else:
                 print('ERROR: Forbidden::naxsi_whitelist')
                 print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -204,7 +204,7 @@ if form.getvalue('thesubdir'):
             else:
                 print('ERROR: Forbidden::redirectstatus')
                 print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -228,7 +228,7 @@ if form.getvalue('thesubdir'):
                         if not it_matches:
                             print('ERROR: Invalid Redirect URL. The URL must be something like https://google.com ')
                             print('</div>')
-                            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                             print('</div>')
                             print('</div>')
                             print('</div>')
@@ -247,7 +247,7 @@ if form.getvalue('thesubdir'):
             else:
                 print('ERROR: Forbidden::append_requesturi')
                 print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -269,7 +269,7 @@ else:
     else:
         print('ERROR: Forbidden::auth_basic')
         print('</div>')
-        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -284,7 +284,7 @@ else:
     else:
         print('ERROR: Forbidden::set_expire_static')
         print('</div>')
-        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -299,7 +299,7 @@ else:
     else:
         print('ERROR: Forbidden::mod_security')
         print('</div>')
-        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -314,7 +314,7 @@ else:
     # else:
     #     print('ERROR: Forbidden::lua_waf')
     #     print('</div>')
-    #     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+    #     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     #     print('</div>')
     #     print('</div>')
     #     print('</div>')
@@ -329,7 +329,7 @@ else:
     else:
         print('ERROR: Forbidden::naxsi')
         print('</div>')
-        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -344,7 +344,7 @@ else:
     else:
         print('ERROR: Forbidden::naxsi_mode')
         print('</div>')
-        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -359,7 +359,7 @@ else:
     else:
         print('ERROR: Forbidden::naxsi_whitelist')
         print('</div>')
-        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -377,7 +377,7 @@ print('<div class="icon-box">')
 print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Server Settings updated')
 print('</div>')
 print('</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
 print('</div>')
 print('</div>')
