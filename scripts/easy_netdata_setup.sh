@@ -10,5 +10,24 @@ git clone https://github.com/firehol/netdata.git --depth=1
 cd netdata
 ./netdata-installer.sh --install /opt
 
+echo -e '\e[93m Please set a password for user netdata below \e[0m'
 
-sed -i '/virtfs/d' /opt/netdata/etc/netdata/netdata.conf
+htpasswd -c /etc/nginx/conf.d/netdata.password netdata
+chmod 400 /etc/nginx/conf.d/netdata.password
+chown nobody /etc/nginx/conf.d/netdata.password
+
+
+echo -e '\e[93m setting up nginx httpd and mysql monitoring \e[0m'
+mysql -e "create user 'netdata'@'localhost';"
+mysql -e "grant usage on *.* to 'netdata'@'localhost' with grant option;"
+mysql -e "flush privileges;"
+
+sed -i 's/stub_status/nginx_status/' /opt/netdata/etc/netdata/python.d/nginx.conf
+
+sed -i 's/server-status/whm-server-status/' /opt/netdata/etc/netdata/python.d/apache.conf
+
+service netdata restart
+
+echo -e "\e[93m You can access netdata at https://$(hostname)/netdata with user: netdata and password you set \e[0m"
+
+echo -e "\e[93m Do not remove /root/netdata folder as it is required for software upgrade and uninstall \e[0m"
