@@ -23,8 +23,8 @@ mysql -e "grant usage on *.* to 'netdata'@'localhost' with grant option;"
 mysql -e "flush privileges;"
 
 sed -i 's/stub_status/nginx_status/' /opt/netdata/etc/netdata/python.d/nginx.conf
-
 sed -i 's/server-status/whm-server-status/' /opt/netdata/etc/netdata/python.d/apache.conf
+sed -i 's/access_log/access_log_disabled/' /opt/netdata/etc/netdata/python.d/web_log.conf
 
 service netdata restart
 
