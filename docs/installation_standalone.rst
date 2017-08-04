@@ -36,7 +36,10 @@ We recommend CentOS7 over CloudLinux. XtendWeb support chrooted PHP (similar to 
   /opt/nDeploy/scripts/setup_additional_templates.sh  # For installing Wordpress and Drupal full page cache template
 
   # For resource control using systemd (centOS7 only)
-  yum -y --enablerepo=ndeploy install simpler-nDeploy
+  yum -y --enablerepo=ndeploy install simpler-nDeploy  #Do NOT do this on CloudLinux
+
+  # For installing netdata server health monitoring
+  /opt/nDeploy/scripts/easy_netdata_setup.sh
 
 
 
@@ -63,20 +66,6 @@ For switching to Nginx completely and not proxy to Apache httpd, Nginx must have
 .. note:: PHP-FPM pools are chrooted to /home/virtfs . In addition with cPanel JailShell, this provides an isolated environment for each user
 
 
-2.1.1. Did you know you can make httpd use Xtendweb PHP-FPM app server?
-::
-
-  # To enable Apache httpd to use Xtendweb managed PHP-FPM (Users can change PHP version using PHP-FPM selector plugin)
-  /opt/nDeploy/scripts/init_backends.py httpd-php-install
-
-2.1.2. Did you also know that XtendWeb can run each user in an isolated php-fpm server run under the user? (not recommended - see comment below)
-::
-
-  # This is not recommended as php-fpm running as user cannot be chrooted and php will be able to access any files user has access to
-  # If you run php under user. SimpleR can additionally isolate resources on a per-user basis
-  # This is useful if you have a VPS and need certain scripts to use lesser resources than others
-  /opt/nDeploy/scripts/init_backends.py secure-php
-
 
 
 2.2. Install HHVM Hack/PHP Application server
@@ -99,9 +88,15 @@ For switching to Nginx completely and not proxy to Apache httpd, Nginx must have
 
 .. tip:: If you modify WHM service certificate run /opt/nDeploy/scripts/generate_default_vhost_config.py && nginx -s reload
 
+3. Best effort switch to native nginx on as many domains as possible . Wordpress, Joomla , Drupal and Magento webapps is targeted
+::
 
+  # When the script prompts for the default PHP version using the system default or the one you know is used by most domains
+  /opt/nDeploy/scripts/switch_to_native_nginx.sh
 
-3. Install Optional additional modules
+  
+
+4. Install Optional additional modules
 ::
 
   #Note that each module increases the nginx size and processing requirements

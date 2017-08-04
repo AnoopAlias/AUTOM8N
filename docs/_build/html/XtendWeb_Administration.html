@@ -98,11 +98,17 @@
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html#commercial-mod-security-rules-specifically-crafted-for-web-hosting-servers">Commercial Mod Security rules specifically crafted for web hosting servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bruteforce_mitigation.html">Brute Force Mitigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bot_traffic_mitigation.html">Bad Bot Mitigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="full_page_cache.html">Full Page cache</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="full_page_cache.html#full-page-cache-to-redis">Full page cache to redis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html">cPanel server analytics using netdata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-exim-using-netdata">Monitor exim using netdata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-dovecot-using-netdata">Monitor Dovecot using netdata</a></li>
 </ul>
 </li>
 </ul>
@@ -166,21 +172,29 @@
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Administration of XtendWeb plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quick-reference-of-scripts-for-sysadmins">Quick Reference of scripts for sysadmins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#config-generation-logic-and-customizations">Config Generation logic and customizations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#automatic-fixing-of-most-errors">Automatic fixing of most errors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#managing-default-server-settings">Managing default server settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#adding-application-templates">Adding application templates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#uninstall-the-plugin">Uninstall the plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#remove-php-fpm-selector-plugin-on-cpanel-v66-and-above-feature-overlap">Remove PHP-FPM selector plugin on cPanel v66 and above(feature overlap)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Monitoring.html#monitoring-xtendweb-cpanel-cluster">Monitoring Xtendweb cPanel cluster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Monitoring.html#database-replication">Database Replication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Monitoring.html#unison-file-sync-status">Unison File Sync status</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Security_tools.html">Securing your cPanel server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Security_tools.html#prevention-is-always-better-than-cure">Prevention is always better than cure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Security_tools.html#commercial-malware-scanners">Commercial malware scanners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
 
@@ -228,6 +242,72 @@
 <h1>Administration of XtendWeb plugin<a class="headerlink" href="#administration-of-xtendweb-plugin" title="Permalink to this headline">¶</a></h1>
 <p>The end user has an intuitive UI for managing domains hosted on cPanel.</p>
 <p>Sysadmins can manipulate server wide settings using various scripts accessible from command line</p>
+<p>The ultimate goal of XtendWeb is to be an extensible nginx config management system that is easy for the sysadmins and enduser alike .</p>
+<p>Usually a Sysadmin will need to have minimal inetraction with the system. Following are some commands that may be required to run and a brief description of what it does.</p>
+<p>Mostly only the below commands will be needed by the sysAdmin</p>
+<div class="section" id="quick-reference-of-scripts-for-sysadmins">
+<h2>Quick Reference of scripts for sysadmins<a class="headerlink" href="#quick-reference-of-scripts-for-sysadmins" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Enable or disable the plugin .Once you disable plugin the system will act as it doing prior to plugin install</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">disable</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
+
+<span class="c1"># Automatically fix all errors.Can be run if you notice nginx config error or php error etc</span>
+<span class="c1"># Following will regenerate all config and restart associated services. Use force only if normal run does not fix</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span> <span class="n">force</span>  <span class="c1"># force regenerate</span>
+
+<span class="c1"># A best effort to switch as many websites as possible to native nginx</span>
+<span class="c1"># See fle /opt/nDeploy/conf/appsignatures.yaml for switching logic</span>
+<span class="c1"># Add username to /opt/nDeploy/conf/auto_config.exclude to exclude a specific user</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">switch_to_native_nginx</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="c1">#Install various application servers</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_php_setup</span><span class="o">.</span><span class="n">sh</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_hhvm_setup</span><span class="o">.</span><span class="n">sh</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="c1">#Install netdata monitoring</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_netdata_setup</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="c1"># Restart application server .note that Passenger apps gets restarted with nginx</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_backends</span>  <span class="c1"># PHP</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_hhvm</span><span class="nd">@USER</span>  <span class="c1">#HHVM</span>
+
+<span class="c1"># Retart cluster file syncing service</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">ndeploy_unison</span>
+
+<span class="c1"># Adding/removing application servers</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">add</span><span class="o">|</span><span class="k">del</span><span class="p">]</span> <span class="n">backend_category</span> <span class="n">backend_name</span> <span class="n">backend_path</span>
+
+<span class="c1"># Adding/removing application template (generic)</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">add</span><span class="o">|</span><span class="k">del</span><span class="p">]</span> <span class="p">[</span><span class="n">root</span><span class="o">|</span><span class="n">cpanelusername</span><span class="p">]</span> <span class="p">[</span><span class="n">main</span><span class="o">|</span><span class="n">subdir</span><span class="p">]</span> <span class="p">[</span><span class="n">backend</span><span class="p">]</span> <span class="p">[</span><span class="n">templatefilename</span><span class="p">]</span> <span class="p">[</span><span class="n">quoted</span> <span class="n">description</span><span class="p">]</span>
+<span class="c1"># Examples</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">root</span> <span class="n">main</span> <span class="n">PHP</span> <span class="mf">5001.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress&quot;</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">root</span> <span class="n">subdir</span> <span class="n">PHP</span> <span class="mi">5001</span><span class="n">_subdir</span><span class="o">.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress in subdir&quot;</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">cpanelusername</span> <span class="n">main</span> <span class="n">PHP</span> <span class="mf">5001.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress&quot;</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">cpanelusername</span> <span class="n">subdir</span> <span class="n">PHP</span> <span class="mi">5001</span><span class="n">_subdir</span><span class="o">.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress in subdir&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="config-generation-logic-and-customizations">
+<h2>Config Generation logic and customizations<a class="headerlink" href="#config-generation-logic-and-customizations" title="Permalink to this headline">¶</a></h2>
+<p>Config generation is based on Templates and YAML settings (  Jinja2 templating engine and YAML settings )
+For generating a single nginx vhost following files are parsed in order .The customization options are mentioned beside them with CUSTOMIZE
+If the customized files are present ,it is used instead of original
+A Sysadmin mostly only need to add /edit application templates and this use minimum template logic for easy manipulation</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">domain</span><span class="o">-</span><span class="n">data</span><span class="o">/</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span> <span class="c1"># User settings for domain</span>
+<span class="c1"># if above file is not present ,it is created with default settings from</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_default</span><span class="o">.</span><span class="n">yaml</span> <span class="c1"># CUSTOMIZE /opt/nDeploy/conf/domain_data_default_local.yaml</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_suspended</span><span class="o">.</span><span class="n">yaml</span> <span class="c1"># CUSTOMIZE /opt/nDeploy/conf/domain_data_suspended_local.yaml</span>
+
+<span class="c1"># Following file generate /etc/nginx/sites-enabled/domain.com.conf</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">server</span><span class="o">.</span><span class="n">j2</span> <span class="c1"># CUSTOMIZE /opt/nDeploy/conf/server_local.j2</span>
+
+<span class="c1"># The application template defined in domain_data setting file is used for generating /etc/nginx/sites-enabled/domain.com.include</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">APPTEMPLATENAME</span><span class="o">.</span><span class="n">j2</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="layer7-application-layer-ddos-mitigation">
 <h2>Layer7(Application layer) DDOS mitigation<a class="headerlink" href="#layer7-application-layer-ddos-mitigation" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">To</span> <span class="n">deal</span> <span class="k">with</span> <span class="n">a</span> <span class="n">server</span> <span class="n">wide</span> <span class="n">DDOS</span> <span class="n">on</span> <span class="n">http</span> <span class="p">(</span><span class="n">application</span> <span class="n">layer</span><span class="p">)</span>
@@ -238,114 +318,6 @@
 <span class="c1"># include /etc/nginx/conf.d/dos_mitigate.conf;</span>
 
 <span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">reload</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="automatic-fixing-of-most-errors">
-<h2>Automatic fixing of most errors<a class="headerlink" href="#automatic-fixing-of-most-errors" title="Permalink to this headline">¶</a></h2>
-<p>The following script rebuilds all config and restarts backend app servers</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="managing-default-server-settings">
-<h2>Managing default server settings<a class="headerlink" href="#managing-default-server-settings" title="Permalink to this headline">¶</a></h2>
-<p>The default config generation in XtendWeb is governed by</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_default</span><span class="o">.</span><span class="n">yaml</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_suspended</span><span class="o">.</span><span class="n">yaml</span> <span class="p">(</span><span class="k">for</span> <span class="n">suspended</span> <span class="n">users</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>You can change the default server setting by creating /opt/nDeploy/conf/domain_data_default_local.conf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_default</span><span class="o">.</span><span class="n">yaml</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_default_local</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_suspended</span><span class="o">.</span><span class="n">yaml</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_suspended_local</span><span class="o">.</span><span class="n">yaml</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="automatic-selection-of-template-based-on-application">
-<h2>Automatic selection of template based on application<a class="headerlink" href="#automatic-selection-of-template-based-on-application" title="Permalink to this headline">¶</a></h2>
-<p>The following script can detect the application installed in the web root(only!) based on filenames</p>
-<p>While cPanel users can always change the vhost configuration for nginX
-anytime from their cPanel login
-sometimes the server administrator wants to automatically switch supporting applications
-to be directly served by Nginx instead of Apache httpd.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auto_config</span><span class="o">.</span><span class="n">py</span> <span class="n">CPANELUSER</span>
-</pre></div>
-</div>
-<p>does this.</p>
-<p>The script works by checking the presence of certain files like for example the wp-config.php in case of wordpress and switches the profile accordingly</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@cpanel</span> <span class="p">[</span><span class="o">~</span><span class="p">]</span><span class="c1"># cat /opt/nDeploy/conf/appsignatures.yaml</span>
-<span class="n">PHP</span><span class="p">:</span>
-  <span class="s1">&#39;/wp-config.php&#39;</span><span class="p">:</span> <span class="s1">&#39;5001.j2&#39;</span>
-  <span class="s1">&#39;/libraries/joomla/version.php&#39;</span><span class="p">:</span> <span class="s1">&#39;5002.j2&#39;</span>
-  <span class="s1">&#39;/sites/default/settings.php&#39;</span><span class="p">:</span> <span class="s1">&#39;5017.j2&#39;</span>
-  <span class="s1">&#39;/app/etc/local.xml&#39;</span><span class="p">:</span> <span class="s1">&#39;5003.j2&#39;</span>
-</pre></div>
-</div>
-<p>Admin can update the appsignatures.yaml file with file names and the corresponding
-profile that auto_config.py switch the domain to if the file exists.
-The default list provided by us is not extensive.
-Admins can also remove entries from the file above to negate auto-switching should there be a need for it.</p>
-<blockquote>
-<div><code class="docutils literal"><span class="pre">/opt/nDeploy/conf/auto_config.exclude</span></code></div></blockquote>
-<p>if present and contain the CPANELUSERNAME in it will prevent auto switching of profiles
-for any domain (addon,subdomain etc) of the cpanel user.
-This is useful while running the auto_config script in a for loop over a list of
-cpanel users and if the script should omit any user.
-To make this all work</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1. Edit /opt/nDeploy/conf/appsignatures.yaml . Add or remove filenames (relative to document root) and the corresponding profile names to switch to should the file be present in document root
-
-2.Create a file named /opt/nDeploy/conf/auto_config.exclude and add any cpanelusername for which you wish to exclude auto_config. If the file is not present or is empty ;no user is excluded
-
-3.run
-
-for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
-    do
-        echo &quot;Auto ConfGen:: $CPANELUSER&quot; &amp;&amp; /opt/nDeploy/scripts/auto_config.py $CPANELUSER
-    done
-    service nginx restart
-</pre></div>
-</div>
-<p>The first time auto_config.py runs it will ask your preference of PHP version
-that automatic switching should use.
-On Cpanel servers, you can safely use the same version as the default installed PHP
-as most of your domains will be running that version without issues</p>
-</div>
-<div class="section" id="adding-application-templates">
-<h2>Adding application templates<a class="headerlink" href="#adding-application-templates" title="Permalink to this headline">¶</a></h2>
-<p>Application templates are a way of extending the plugin with dealing with more web applications and user specific
-Nginx config customization</p>
-<p>Application templates can be distributed server wide or to specific users
-Application templates can be created for an application in the document_root as well as a subdirectory</p>
-<p>Distributing templates to all users</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">root</span> <span class="n">main</span> <span class="n">PHP</span> <span class="mf">5001.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress&quot;</span>
-</pre></div>
-</div>
-<p>Distributing templates for a subdirectory to all users</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">root</span> <span class="n">subdir</span> <span class="n">PHP</span> <span class="mi">5001</span><span class="n">_subdir</span><span class="o">.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress in subdir&quot;</span>
-</pre></div>
-</div>
-<p>Distributing template to a specific cpaneluser</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">cpanelusername</span> <span class="n">main</span> <span class="n">PHP</span> <span class="mf">5001.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress&quot;</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">cpanelusername</span> <span class="n">subdir</span> <span class="n">PHP</span> <span class="mi">5001</span><span class="n">_subdir</span><span class="o">.</span><span class="n">j2</span> <span class="s2">&quot;Wordpress in subdir&quot;</span>
-</pre></div>
-</div>
-<p>In short the template registration has the following syntax</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">add</span><span class="o">|</span><span class="k">del</span><span class="p">]</span> <span class="p">[</span><span class="n">root</span><span class="o">|</span><span class="n">cpanelusername</span><span class="p">]</span> <span class="p">[</span><span class="n">main</span><span class="o">|</span><span class="n">subdir</span><span class="p">]</span> <span class="p">[</span><span class="n">backend</span><span class="p">]</span> <span class="p">[</span><span class="n">templatefilename</span><span class="p">]</span> <span class="p">[</span><span class="n">quoted</span> <span class="n">description</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Templates use Python Jinja2 templating engine. But there isn&#8217;t much template logic used to make application template
-simpler for most users. You can check existing templates for the commonly used variables.</p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Open an issue at the GitHub repo if you wish template for a commonly used application to be added</p>
-</div>
-</div>
-<div class="section" id="adding-application-servers-or-backends">
-<h2>Adding Application servers or backends<a class="headerlink" href="#adding-application-servers-or-backends" title="Permalink to this headline">¶</a></h2>
-<p>XtendWeb supports php-fpm or hhvm via FastCGI, Other web/application servers like httpd, Tomcat etc via Proxy.
-Ruby/Python/NodeJs using the Phusion Passenger module</p>
-<p>To register a backend use the follwoing command</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">add</span><span class="o">|</span><span class="k">del</span><span class="p">]</span> <span class="n">backend_category</span> <span class="n">backend_name</span> <span class="n">backend_path</span>
 </pre></div>
 </div>
 </div>
@@ -395,6 +367,17 @@ The upgrade must be done manually by running the following commands</p>
 <span class="n">yum</span> <span class="n">remove</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="remove-php-fpm-selector-plugin-on-cpanel-v66-and-above-feature-overlap">
+<h2>Remove PHP-FPM selector plugin on cPanel v66 and above(feature overlap)<a class="headerlink" href="#remove-php-fpm-selector-plugin-on-cpanel-v66-and-above-feature-overlap" title="Permalink to this headline">¶</a></h2>
+<p>As of cPanel v66 , cPanel support setting up php-fpm as default php handler server wide .Since this feature overlap with XtendWeb&#8217;s PHP-FPM selector plugin
+We advise that you remove the php-fpm selector functionality .Folowing command does it</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">httpd</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">uninstall</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Once the above is done, you must use WHM &gt;&gt; Home »Software »MultiPHP Manager to set all domains to PHP-FPM
+as PHP-FPM will greatly improve your system performance.</p>
 <div data-disqus-identifier="Administration of XtendWeb plugin" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 </div>
 

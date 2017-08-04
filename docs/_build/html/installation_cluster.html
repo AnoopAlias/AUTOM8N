@@ -91,6 +91,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">XtendWeb Cluster Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-introduction">XtendWeb Cluster Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-resource-calculations">Example resource calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
 </ul>
 </li>
@@ -98,11 +99,17 @@
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html#commercial-mod-security-rules-specifically-crafted-for-web-hosting-servers">Commercial Mod Security rules specifically crafted for web hosting servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bruteforce_mitigation.html">Brute Force Mitigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bot_traffic_mitigation.html">Bad Bot Mitigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="full_page_cache.html">Full Page cache</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="full_page_cache.html#full-page-cache-to-redis">Full page cache to redis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html">cPanel server analytics using netdata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-exim-using-netdata">Monitor exim using netdata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-dovecot-using-netdata">Monitor Dovecot using netdata</a></li>
 </ul>
 </li>
 </ul>
@@ -166,21 +173,29 @@
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#quick-reference-of-scripts-for-sysadmins">Quick Reference of scripts for sysadmins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#config-generation-logic-and-customizations">Config Generation logic and customizations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-fixing-of-most-errors">Automatic fixing of most errors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#managing-default-server-settings">Managing default server settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-templates">Adding application templates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#uninstall-the-plugin">Uninstall the plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#remove-php-fpm-selector-plugin-on-cpanel-v66-and-above-feature-overlap">Remove PHP-FPM selector plugin on cPanel v66 and above(feature overlap)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Monitoring.html#monitoring-xtendweb-cpanel-cluster">Monitoring Xtendweb cPanel cluster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Monitoring.html#database-replication">Database Replication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Monitoring.html#unison-file-sync-status">Unison File Sync status</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Security_tools.html">Securing your cPanel server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Security_tools.html#prevention-is-always-better-than-cure">Prevention is always better than cure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Security_tools.html#commercial-malware-scanners">Commercial malware scanners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
 
@@ -236,7 +251,7 @@ Coupled with the simplicity and intuitiveness of cPanel control panel , XtendWeb
 <ol class="arabic simple">
 <li>cPanel DNS providing multiple A records for round-robin DNS load balancing</li>
 <li>Nginx servers running on all servers with server specific settings and serving files independently</li>
-<li>Application servers (php-fpm. Phusion Passenger )running on all servers and serving app independently</li>
+<li>Application servers (php-fpm, HHVM, Phusion Passenger)running on all servers and serving app independently</li>
 <li>Csync2 - Syncing config across all servers</li>
 <li>Unison - Syncing files across all servers</li>
 <li>MaxScale router and MariaDB master-master replication - Database replication and query routing</li>
@@ -246,18 +261,47 @@ Coupled with the simplicity and intuitiveness of cPanel control panel , XtendWeb
 </div>
 <div class="section" id="xtendweb-cluster-requirements">
 <h2>XtendWeb Cluster Requirements<a class="headerlink" href="#xtendweb-cluster-requirements" title="Permalink to this headline">¶</a></h2>
-<p>It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this).</p>
-<p>We do support CentOS6, but it is less tested and has some disadvantages like stunnel startup script is lacking in CentOS6.</p>
-<p>XtendWeb cluster needs at least 2 servers. Only one of the server need a valid cPanel license</p>
-<p>The cluster provides horizontal scalability for web applications using DNS load balancing.</p>
-<p>It is highly recommended that the servers be in different geographic regions ( eg: master in the US, slave in the UK ) and use different providers.
-The golden rule is - Don&#8217;t keep all your eggs in the same basket.</p>
-<p>All communication between master and slave is TLS encrypted and is therefore safe.
-The master and slave just need to be able to connect via the internet.</p>
-<p>The recommended way to upgrade to XtendWeb cluster from cPanel is setting up the cluster and migrating the websites over rather than setting up cluster
-on the existing server.</p>
-<p>Master server - Centos7 ,MariaDB 10.1</p>
-<p>Slave Server&#8217;s - Centos7 ( installed with cPanel DNS only which is licensed free ).Rest of the software is installed automatically at cluster setup.</p>
+<p>Master Server :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CentOS7</span><span class="o">+</span><span class="n">cPanel</span>
+<span class="n">On</span> <span class="n">your</span> <span class="n">normal</span> <span class="n">RAM</span> <span class="n">requirement</span> <span class="n">add</span> <span class="mi">1</span> <span class="n">GB</span> <span class="n">Ram</span> <span class="n">extra</span> <span class="n">per</span> <span class="n">slave</span> <span class="k">for</span> <span class="n">Unison</span> <span class="n">file</span> <span class="n">sync</span> <span class="n">running</span> <span class="k">for</span> <span class="n">every</span> <span class="mi">100</span><span class="n">GB</span> <span class="n">Disk</span>
+<span class="n">Also</span> <span class="n">add</span> <span class="n">enough</span> <span class="k">for</span> <span class="n">httpd</span> <span class="n">service</span> <span class="ow">and</span> <span class="n">mysql</span> <span class="n">service</span> <span class="n">which</span> <span class="n">will</span> <span class="n">be</span> <span class="n">running</span> <span class="kn">from</span> <span class="nn">master</span>
+<span class="n">That</span> <span class="ow">is</span> <span class="n">on</span> <span class="n">a</span> <span class="n">cluster</span> <span class="k">with</span> <span class="mi">200</span><span class="n">GB</span> <span class="n">disk</span> <span class="k">for</span> <span class="n">example</span>
+<span class="mi">1</span> <span class="n">slave</span> <span class="p">:</span>  <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="n">GB</span> <span class="o">=</span> <span class="mi">2</span> <span class="n">GB</span>
+<span class="mi">2</span> <span class="n">slave</span> <span class="p">:</span>  <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="n">GB</span> <span class="o">=</span> <span class="mi">4</span> <span class="n">GB</span>
+<span class="mi">3</span> <span class="n">slaves</span><span class="p">:</span>  <span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="n">GB</span> <span class="o">=</span> <span class="mi">6</span> <span class="n">GB</span>
+</pre></div>
+</div>
+<p>Slave server:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Add</span> <span class="mi">1</span> <span class="n">GB</span> <span class="n">RAM</span> <span class="k">for</span> <span class="n">every</span> <span class="mi">100</span><span class="n">GB</span> <span class="n">disk</span> <span class="k">for</span> <span class="n">unison</span> <span class="n">filesync</span>
+<span class="n">That</span> <span class="ow">is</span> <span class="k">for</span> <span class="n">a</span> <span class="n">slave</span> <span class="k">with</span> <span class="mi">200</span><span class="n">GB</span> <span class="n">disk</span> <span class="n">add</span> <span class="mi">2</span> <span class="n">GB</span> <span class="n">ram</span> <span class="n">extra</span> <span class="n">to</span> <span class="n">your</span> <span class="n">ram</span> <span class="n">requirement</span> <span class="n">calculation</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-resource-calculations">
+<h2>Example resource calculations<a class="headerlink" href="#example-resource-calculations" title="Permalink to this headline">¶</a></h2>
+<p>A typical single slave cluster setup with 200 GB disk and 8GB usable RAM would be</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Master</span> <span class="p">:</span> <span class="mi">200</span><span class="n">GB</span> <span class="n">Disk</span> <span class="ow">and</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span><span class="p">(</span><span class="n">unison</span><span class="p">)</span><span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span> <span class="p">(</span><span class="n">extra</span> <span class="k">for</span> <span class="n">httpd</span> <span class="ow">and</span> <span class="n">mysql</span><span class="p">)</span> <span class="o">=</span> <span class="mi">12</span> <span class="n">GB</span> <span class="n">Ram</span>
+<span class="n">Slave</span> <span class="p">:</span>  <span class="mi">200</span><span class="n">GB</span> <span class="n">Disk</span> <span class="ow">and</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span> <span class="p">(</span><span class="n">unison</span><span class="p">)</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">GB</span> <span class="n">ram</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>A typical 2 slave cluster setup with 200 GB disk and 8GB usable RAM would be</dt>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="n">Master</span> <span class="p">:</span> <span class="mi">200</span><span class="n">GB</span> <span class="n">Disk</span> <span class="ow">and</span> <span class="mi">8</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">4</span><span class="n">GB</span><span class="p">(</span><span class="n">unison</span><span class="p">)</span><span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span> <span class="p">(</span><span class="n">extra</span> <span class="k">for</span> <span class="n">httpd</span> <span class="ow">and</span> <span class="n">mysql</span><span class="p">)</span> <span class="o">=</span> <span class="mi">14</span> <span class="n">GB</span> <span class="n">Ram</span>
+<span class="n">Slave1</span> <span class="p">:</span>  <span class="mi">200</span><span class="n">GB</span> <span class="n">Disk</span> <span class="ow">and</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span> <span class="p">(</span><span class="n">unison</span><span class="p">)</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">GB</span> <span class="n">ram</span>
+<span class="n">Slave2</span> <span class="p">:</span>  <span class="mi">200</span><span class="n">GB</span> <span class="n">Disk</span> <span class="ow">and</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span> <span class="p">(</span><span class="n">unison</span><span class="p">)</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">GB</span> <span class="n">ram</span>
+</pre></div>
+</div>
+</dd>
+<dt>A typical 3 slave cluster setup with 200 GB disk and 8GB usable RAM would be</dt>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="n">Master</span> <span class="p">:</span> <span class="mi">200</span><span class="n">GB</span> <span class="n">Disk</span> <span class="ow">and</span> <span class="mi">8</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">+</span><span class="mi">2</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">6</span><span class="n">GB</span><span class="p">(</span><span class="n">unison</span><span class="p">)</span><span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span> <span class="p">(</span><span class="n">extra</span> <span class="k">for</span> <span class="n">httpd</span> <span class="ow">and</span> <span class="n">mysql</span><span class="p">)</span> <span class="o">=</span> <span class="mi">16</span> <span class="n">GB</span> <span class="n">Ram</span>
+<span class="n">Slave1</span> <span class="p">:</span>  <span class="mi">200</span><span class="n">GB</span> <span class="n">Disk</span> <span class="ow">and</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span> <span class="p">(</span><span class="n">unison</span><span class="p">)</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">GB</span> <span class="n">ram</span>
+<span class="n">Slave2</span> <span class="p">:</span>  <span class="mi">200</span><span class="n">GB</span> <span class="n">Disk</span> <span class="ow">and</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span> <span class="p">(</span><span class="n">unison</span><span class="p">)</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">GB</span> <span class="n">ram</span>
+<span class="n">Slave3</span> <span class="p">:</span>  <span class="mi">200</span><span class="n">GB</span> <span class="n">Disk</span> <span class="ow">and</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span> <span class="n">GB</span> <span class="p">(</span><span class="n">unison</span><span class="p">)</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">GB</span> <span class="n">ram</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>Notice how the slave RAM requirement remain same,while master need 2 GB(for the 200GB disk sync) ram extra for each slave being added</p>
 </div>
 <div class="section" id="xtendweb-cluster-setup">
 <h2>XtendWeb cluster setup<a class="headerlink" href="#xtendweb-cluster-setup" title="Permalink to this headline">¶</a></h2>

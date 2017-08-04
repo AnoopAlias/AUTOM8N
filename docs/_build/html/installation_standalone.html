@@ -172,17 +172,15 @@
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#quick-reference-of-scripts-for-sysadmins">Quick Reference of scripts for sysadmins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#config-generation-logic-and-customizations">Config Generation logic and customizations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-fixing-of-most-errors">Automatic fixing of most errors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#managing-default-server-settings">Managing default server settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-templates">Adding application templates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#uninstall-the-plugin">Uninstall the plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#remove-php-fpm-selector-plugin-on-cpanel-v66-and-above-feature-overlap">Remove PHP-FPM selector plugin on cPanel v66 and above(feature overlap)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
@@ -274,7 +272,10 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>  <span class="c1"># For installing Wordpress and Drupal full page cache template</span>
 
 <span class="c1"># For resource control using systemd (centOS7 only)</span>
-<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">simpler</span><span class="o">-</span><span class="n">nDeploy</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">simpler</span><span class="o">-</span><span class="n">nDeploy</span>  <span class="c1">#Do NOT do this on CloudLinux</span>
+
+<span class="c1"># For installing netdata server health monitoring</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_netdata_setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -297,18 +298,6 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 <p class="first admonition-title">Note</p>
 <p class="last">PHP-FPM pools are chrooted to /home/virtfs . In addition with cPanel JailShell, this provides an isolated environment for each user</p>
 </div>
-<p>2.1.1. Did you know you can make httpd use Xtendweb PHP-FPM app server?</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># To enable Apache httpd to use Xtendweb managed PHP-FPM (Users can change PHP version using PHP-FPM selector plugin)</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">httpd</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">install</span>
-</pre></div>
-</div>
-<p>2.1.2. Did you also know that XtendWeb can run each user in an isolated php-fpm server run under the user? (not recommended - see comment below)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># This is not recommended as php-fpm running as user cannot be chrooted and php will be able to access any files user has access to</span>
-<span class="c1"># If you run php under user. SimpleR can additionally isolate resources on a per-user basis</span>
-<span class="c1"># This is useful if you have a VPS and need certain scripts to use lesser resources than others</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">secure</span><span class="o">-</span><span class="n">php</span>
-</pre></div>
-</div>
 <p>2.2. Install HHVM Hack/PHP Application server</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_hhvm_setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
@@ -325,7 +314,12 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 <p class="first admonition-title">Tip</p>
 <p class="last">If you modify WHM service certificate run /opt/nDeploy/scripts/generate_default_vhost_config.py &amp;&amp; nginx -s reload</p>
 </div>
-<p>3. Install Optional additional modules</p>
+<p>3. Best effort switch to native nginx on as many domains as possible . Wordpress, Joomla , Drupal and Magento webapps is targeted</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># When the script prompts for the default PHP version using the system default or the one you know is used by most domains</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">switch_to_native_nginx</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>4. Install Optional additional modules</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Note that each module increases the nginx size and processing requirements</span>
 <span class="c1">#So install only required functionality .</span>
 <span class="p">(</span><span class="n">pagespeed</span><span class="p">)</span>   <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">pagespeed</span>

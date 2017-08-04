@@ -15,7 +15,7 @@ Cluster Components:
 
 1. cPanel DNS providing multiple A records for round-robin DNS load balancing
 2. Nginx servers running on all servers with server specific settings and serving files independently
-3. Application servers (php-fpm. Phusion Passenger )running on all servers and serving app independently
+3. Application servers (php-fpm, HHVM, Phusion Passenger)running on all servers and serving app independently
 4. Csync2 - Syncing config across all servers
 5. Unison - Syncing files across all servers
 6. MaxScale router and MariaDB master-master replication - Database replication and query routing
@@ -26,28 +26,48 @@ Cluster Components:
 XtendWeb Cluster Requirements
 --------------------------------
 
-It is recommended that you setup XtendWeb cluster on CentOS7 with latest cPanel (v64 as of writing this).
+Master Server :
+::
 
-We do support CentOS6, but it is less tested and has some disadvantages like stunnel startup script is lacking in CentOS6.
+  CentOS7+cPanel
+  On your normal RAM requirement add 1 GB Ram extra per slave for Unison file sync running for every 100GB Disk
+  Also add enough for httpd service and mysql service which will be running from master
+  That is on a cluster with 200GB disk for example
+  1 slave :  2 * 1 GB = 2 GB
+  2 slave :  2 * 2 * 1 GB = 4 GB
+  3 slaves:  3 * 2 * 1 GB = 6 GB
 
-XtendWeb cluster needs at least 2 servers. Only one of the server need a valid cPanel license
+Slave server:
+::
 
-The cluster provides horizontal scalability for web applications using DNS load balancing.
+  Add 1 GB RAM for every 100GB disk for unison filesync
+  That is for a slave with 200GB disk add 2 GB ram extra to your ram requirement calculation
 
-It is highly recommended that the servers be in different geographic regions ( eg: master in the US, slave in the UK ) and use different providers.
-The golden rule is - Don't keep all your eggs in the same basket.
+Example resource calculations
+--------------------------------
 
-All communication between master and slave is TLS encrypted and is therefore safe.
-The master and slave just need to be able to connect via the internet.
+A typical single slave cluster setup with 200 GB disk and 8GB usable RAM would be
+::
 
-The recommended way to upgrade to XtendWeb cluster from cPanel is setting up the cluster and migrating the websites over rather than setting up cluster
-on the existing server.
+  Master : 200GB Disk and 8 + 2 GB(unison)+ 2 GB (extra for httpd and mysql) = 12 GB Ram
+  Slave :  200GB Disk and 8 + 2 GB (unison) = 10 GB ram
 
-Master server - Centos7 ,MariaDB 10.1
+A typical 2 slave cluster setup with 200 GB disk and 8GB usable RAM would be
+  ::
 
-Slave Server's - Centos7 ( installed with cPanel DNS only which is licensed free ).Rest of the software is installed automatically at cluster setup.
+    Master : 200GB Disk and 8 + (2+2) = 4GB(unison)+ 2 GB (extra for httpd and mysql) = 14 GB Ram
+    Slave1 :  200GB Disk and 8 + 2 GB (unison) = 10 GB ram
+    Slave2 :  200GB Disk and 8 + 2 GB (unison) = 10 GB ram
 
+A typical 3 slave cluster setup with 200 GB disk and 8GB usable RAM would be
+  ::
 
+    Master : 200GB Disk and 8 + (2+2+2) = 6GB(unison)+ 2 GB (extra for httpd and mysql) = 16 GB Ram
+    Slave1 :  200GB Disk and 8 + 2 GB (unison) = 10 GB ram
+    Slave2 :  200GB Disk and 8 + 2 GB (unison) = 10 GB ram
+    Slave3 :  200GB Disk and 8 + 2 GB (unison) = 10 GB ram
+
+Notice how the slave RAM requirement remain same,while master need 2 GB(for the 200GB disk sync) ram extra for each slave being added
 
 XtendWeb cluster setup
 --------------------------
