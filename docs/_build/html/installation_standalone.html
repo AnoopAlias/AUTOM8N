@@ -98,11 +98,17 @@
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html#commercial-mod-security-rules-specifically-crafted-for-web-hosting-servers">Commercial Mod Security rules specifically crafted for web hosting servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bruteforce_mitigation.html">Brute Force Mitigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bot_traffic_mitigation.html">Bad Bot Mitigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="full_page_cache.html">Full Page cache</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="full_page_cache.html#full-page-cache-to-redis">Full page cache to redis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html">cPanel server analytics using netdata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-exim-using-netdata">Monitor exim using netdata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-dovecot-using-netdata">Monitor Dovecot using netdata</a></li>
 </ul>
 </li>
 </ul>
@@ -181,6 +187,16 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Monitoring.html#monitoring-xtendweb-cpanel-cluster">Monitoring Xtendweb cPanel cluster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Monitoring.html#database-replication">Database Replication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Monitoring.html#unison-file-sync-status">Unison File Sync status</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Security_tools.html">Securing your cPanel server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Security_tools.html#prevention-is-always-better-than-cure">Prevention is always better than cure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Security_tools.html#commercial-malware-scanners">Commercial malware scanners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
 
@@ -249,16 +265,16 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 
 <span class="c1"># Purchase a license so the server can access xtendweb yum repo</span>
 
-<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For nginx as webserver</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For nginx as webserver</span>
    <span class="n">OR</span>
-<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For openresty as webserver</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For openresty as webserver</span>
 
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
 
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>  <span class="c1"># For installing Wordpress and Drupal full page cache template</span>
 
 <span class="c1"># For resource control using systemd (centOS7 only)</span>
-<span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">simpler</span><span class="o">-</span><span class="n">nDeploy</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">simpler</span><span class="o">-</span><span class="n">nDeploy</span>
 </pre></div>
 </div>
 <div class="admonition note">

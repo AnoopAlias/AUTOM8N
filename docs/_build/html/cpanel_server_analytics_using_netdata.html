@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; Documentation</title>
+  <title>cPanel server analytics using netdata &mdash; Documentation</title>
   
 
   
@@ -32,8 +32,10 @@
   
         <link rel="index" title="Index"
               href="genindex.html"/>
-        <link rel="search" title="Search" href="#"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Documentation" href="index.html"/>
+        <link rel="next" title="XtendWeb User docs" href="UserDocs.html"/>
+        <link rel="prev" title="Full Page cache" href="full_page_cache.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -66,7 +68,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -81,7 +83,7 @@
             
             
                 <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
 </ul>
@@ -104,9 +106,9 @@
 <li class="toctree-l2"><a class="reference internal" href="full_page_cache.html#full-page-cache-to-redis">Full page cache to redis</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html">cPanel server analytics using netdata</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-exim-using-netdata">Monitor exim using netdata</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-dovecot-using-netdata">Monitor Dovecot using netdata</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">cPanel server analytics using netdata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#monitor-exim-using-netdata">Monitor exim using netdata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#monitor-dovecot-using-netdata">Monitor Dovecot using netdata</a></li>
 </ul>
 </li>
 </ul>
@@ -218,7 +220,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -226,8 +228,10 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Search</li>
+    <li>cPanel server analytics using netdata</li>
       <li class="wy-breadcrumbs-aside">
+        
+          
         
       </li>
   </ul>
@@ -236,23 +240,107 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="cpanel-server-analytics-using-netdata">
+<h1>cPanel server analytics using netdata<a class="headerlink" href="#cpanel-server-analytics-using-netdata" title="Permalink to this headline">¶</a></h1>
+<p>XtendWeb provides easy installation of netdata ( <a class="reference external" href="https://github.com/firehol/netdata">https://github.com/firehol/netdata</a> ) which provides a sysadmin unparalleled insights, in real-time, of everything happening on the system using modern interactive web dashboards.</p>
+<p>netdata is fast and efficient, designed to permanently run on all systems (physical &amp; virtual servers, containers, IoT devices), without disrupting their core function.</p>
+<p>To install and configure netdata on cPanel/WHM server</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_netdata_setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Please enter a secure password for the netdata user when prompted by the script</p>
+<p>Oce setup , you can access netdata from the URL :  <a class="reference external" href="https://servers-FQDN/netdata">https://servers-FQDN/netdata</a></p>
+<p>Apart from system vitals you will be monitoring Apache httpd, XtendWeb nginx, mysql and redis</p>
+<p>To monitor exim and dovecot see sections below</p>
+<div class="section" id="monitor-exim-using-netdata">
+<h2>Monitor exim using netdata<a class="headerlink" href="#monitor-exim-using-netdata" title="Permalink to this headline">¶</a></h2>
+<p>If you need to monitor Exim queue , do the following to enable netdata to monitor exim</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>1. Login to WHM
 
-  
-  <div id="search-results">
-  
-  </div>
+2. Under Home »Service Configuration »Exim Configuration Manager click on &quot;Advanced Editor&quot;
+
+3. Under &quot;Section: CONFIG&quot; click on  &quot;[+] Add additional configuration setting&quot;
+
+4.From the drop down select &quot;queue_list_requires_admin&quot; and set its value to flase
+
+5. Click &quot;Save&quot; at the bottom
+
+6. Restart netada using command systemctl restart netdata || service netdata restart
+</pre></div>
+</div>
+</div>
+<div class="section" id="monitor-dovecot-using-netdata">
+<h2>Monitor Dovecot using netdata<a class="headerlink" href="#monitor-dovecot-using-netdata" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">cpanel</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">dovecot2</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">default</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">cpanel</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">dovecot2</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">local</span>
+</pre></div>
+</div>
+<p>Edit the file and add the lines marked with ++ extra</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span># Edit and add following under heading below :
+ # Quota support must be enabled globally for the quota-status
+ # service to work
+ mail_plugins = quota quota_clone [% IF fts_support %]fts fts_solr[% END %]
+ ++ mail_plugins = $mail_plugins stats
+
+##
+## IMAP specific settings
+##
+
+
+ protocol imap {
+ # Support for dynamically loadable plugins. mail_plugins is a space separated
+ # list of plugins to load.
+ ...
+ .....
+ ++ mail_plugins = $mail_plugins imap_stats
+ #mail_plugin_dir = /usr/lib/dovecot/imap
+ ..
+ ...
+ }
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Add below lies with ++ above section Dictionary server settings</span>
+
+<span class="o">++</span> <span class="n">service</span> <span class="n">stats</span> <span class="p">{</span>
+<span class="o">++</span>  <span class="n">inet_listener</span> <span class="p">{</span>
+<span class="o">++</span>    <span class="n">address</span> <span class="o">=</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+<span class="o">++</span>    <span class="n">port</span> <span class="o">=</span> <span class="mi">24242</span>
+<span class="o">++</span>    <span class="p">}</span>
+<span class="o">++</span>  <span class="p">}</span>
+<span class="c1">##</span>
+<span class="c1">## Dictionary server settings</span>
+<span class="c1">##</span>
+
+<span class="c1"># Dictionary can be used by some plugins to store key=value lists.</span>
+<span class="c1"># Currently this is only used by dict quota backend. The dictionary can be</span>
+<span class="c1"># used either directly or though a dictionary server. The following dict block</span>
+<span class="c1"># maps dictionary names to URIs when the server is used. These can then be</span>
+</pre></div>
+</div>
+<p>Once done rebuild dovecot conf and restart dovecot</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">builddovecotconf</span>
+<span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">restartsrv</span> <span class="n">dovecot</span>
+</pre></div>
+</div>
+<p>Restart netdata so that it can pick up dovecot monitoring</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">restart</span> <span class="n">netdata</span> <span class="o">||</span> <span class="n">service</span> <span class="n">netdata</span> <span class="n">restart</span>
+</pre></div>
+</div>
+</div>
+</div>
+
 
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="UserDocs.html" class="btn btn-neutral float-right" title="XtendWeb User docs" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="full_page_cache.html" class="btn btn-neutral" title="Full Page cache" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -290,7 +378,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -306,12 +393,6 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
   
  
 <script>
@@ -335,7 +416,6 @@ po.src = '//chat.gnusys.net/index.php/chat/getstatus/(click)/internal/(position)
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 })();
 </script>
-
 
 
 </body>

@@ -22,6 +22,7 @@ XtendWeb and SimpleR
    bruteforce_mitigation
    bot_traffic_mitigation
    full_page_cache
+   cpanel_server_analytics_using_netdata
 
 .. toctree::
    :maxdepth: 2

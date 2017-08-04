@@ -27,16 +27,16 @@ We recommend CentOS7 over CloudLinux. XtendWeb support chrooted PHP (similar to 
 
   # Purchase a license so the server can access xtendweb yum repo
 
-  yum -y --enablerepo=ndeploy -y install nginx-nDeploy nDeploy # For nginx as webserver
+  yum -y --enablerepo=ndeploy install nginx-nDeploy nDeploy # For nginx as webserver
      OR
-  yum -y --enablerepo=ndeploy -y install openresty-nDeploy nDeploy # For openresty as webserver
+  yum -y --enablerepo=ndeploy install openresty-nDeploy nDeploy # For openresty as webserver
 
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
 
   /opt/nDeploy/scripts/setup_additional_templates.sh  # For installing Wordpress and Drupal full page cache template
 
   # For resource control using systemd (centOS7 only)
-  yum --enablerepo=ndeploy install simpler-nDeploy
+  yum -y --enablerepo=ndeploy install simpler-nDeploy
 
 
 
