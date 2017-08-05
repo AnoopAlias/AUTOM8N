@@ -38,7 +38,7 @@ If you need to monitor Exim queue , do the following to enable netdata to monito
 
   5. Click "Save" at the bottom
 
-  6. Restart netada using command systemctl restart netdata || service netdata restart
+  6. Restart netdata using command systemctl restart netdata || service netdata restart
 
 
 Monitor Dovecot using netdata

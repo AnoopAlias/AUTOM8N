@@ -34,7 +34,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Documentation" href="index.html"/>
-        <link rel="next" title="XtendWeb User docs" href="UserDocs.html"/>
+        <link rel="next" title="cPanel server analytics using netdata" href="cpanel_server_analytics_using_netdata.html"/>
         <link rel="prev" title="Bad Bot Mitigation" href="bot_traffic_mitigation.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
@@ -91,6 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation_cluster.html">XtendWeb Cluster Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-introduction">XtendWeb Cluster Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#example-resource-calculations">Example resource calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
 </ul>
 </li>
@@ -98,11 +99,17 @@
 <li class="toctree-l1"><a class="reference internal" href="brotli_compression.html">brotli_compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="http2.html">http2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ModSecurity.html">ModSecurity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ModSecurity.html#commercial-mod-security-rules-specifically-crafted-for-web-hosting-servers">Commercial Mod Security rules specifically crafted for web hosting servers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Naxsi.html">Naxsi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bruteforce_mitigation.html">Brute Force Mitigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bot_traffic_mitigation.html">Bad Bot Mitigation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Full Page cache</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#full-page-cache-to-redis">Full page cache to redis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html">cPanel server analytics using netdata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-exim-using-netdata">Monitor exim using netdata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-dovecot-using-netdata">Monitor Dovecot using netdata</a></li>
 </ul>
 </li>
 </ul>
@@ -166,21 +173,29 @@
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#quick-reference-of-scripts-for-sysadmins">Quick Reference of scripts for sysadmins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#config-generation-logic-and-customizations">Config Generation logic and customizations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-fixing-of-most-errors">Automatic fixing of most errors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#managing-default-server-settings">Managing default server settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automatic-selection-of-template-based-on-application">Automatic selection of template based on application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-templates">Adding application templates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#adding-application-servers-or-backends">Adding Application servers or backends</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#migrating-xtendweb-settings">Migrating Xtendweb settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#temporarily-disable-the-plugin">Temporarily disable the plugin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#uninstall-the-plugin">Uninstall the plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#remove-php-fpm-selector-plugin-on-cpanel-v66-and-above-feature-overlap">Remove PHP-FPM selector plugin on cPanel v66 and above(feature overlap)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Application_template.html">Application templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Monitoring.html">Monitoring nginx and app servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Monitoring.html#monitoring-xtendweb-cpanel-cluster">Monitoring Xtendweb cPanel cluster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Monitoring.html#database-replication">Database Replication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Monitoring.html#unison-file-sync-status">Unison File Sync status</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Security_tools.html">Securing your cPanel server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Security_tools.html#prevention-is-always-better-than-cure">Prevention is always better than cure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Security_tools.html#commercial-malware-scanners">Commercial malware scanners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logs.html">Managing Logs</a></li>
 </ul>
 
@@ -341,7 +356,7 @@ map $request_uri $drupalurinocache {
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="UserDocs.html" class="btn btn-neutral float-right" title="XtendWeb User docs" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="cpanel_server_analytics_using_netdata.html" class="btn btn-neutral float-right" title="cPanel server analytics using netdata" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="bot_traffic_mitigation.html" class="btn btn-neutral" title="Bad Bot Mitigation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

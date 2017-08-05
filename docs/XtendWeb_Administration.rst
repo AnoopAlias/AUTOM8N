@@ -16,7 +16,7 @@ Quick Reference of scripts for sysadmins
 
 ::
 
-  # Enable or disable the plugin .Once you disable plugin the system will act as it doing prior to plugin install
+  # Enable or disable the plugin .Once you disable plugin the system will act as it was prior to plugin install
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh disable
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
 
