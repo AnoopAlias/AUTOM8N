@@ -4,6 +4,8 @@ root {{ DOCUMENTROOT }};
 
 log_not_found off;
 
+if ($http_user_agent ~ WordPress) { return 444; }
+
 location / {
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }

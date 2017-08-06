@@ -2,6 +2,8 @@
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
+if ($http_user_agent ~ WordPress) { return 444; }
+
 ##########Yoast###############
 #Yoast SEO Sitemaps
 location ~ ([^/]*)sitemap(.*).x(m|s)l$ {
