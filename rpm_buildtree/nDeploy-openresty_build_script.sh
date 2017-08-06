@@ -34,8 +34,8 @@ do
   mkdir -p nginx-module-${module}-pkg/etc/nginx/{modules,modules.d,modules.debug,modules.debug.d,conf.auto,conf.d}
   mkdir -p nginx-module-${module}-pkg/usr/nginx/scripts
 done
-
-yum --enablerepo=ndeploy -y install rpm-build libcurl-devel git xz-devel GeoIP-devel
+yum -y install epel-release
+yum -y install rpm-build libcurl-devel git xz-devel GeoIP-devel
 if [ ${OSVERSION} -eq 6 ];then
   rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
   wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo

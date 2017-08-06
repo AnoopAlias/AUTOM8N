@@ -42,8 +42,14 @@ do
   mkdir -p nginx-module-${module}-pkg/usr/nginx/scripts
 done
 mkdir -p nginx-module-naxsi-pkg/etc/nginx/naxsi.d
+if [ ${OSVERSION} -eq 6 ];then
+  yum -y install epel-release
+  yum -y install rpm-build libcurl-devel git xz-devel GeoIP-devel
+else
+  yum -y install epel-release
+  yum --enablerepo=ndeploy -y install rpm-build libcurl-devel git xz-devel GeoIP-devel libmodsecurity-nDeploy
+fi
 
-yum --enablerepo=ndeploy -y install rpm-build libcurl-devel git xz-devel GeoIP-devel libmodsecurity-nDeploy
 if [ ${OSVERSION} -eq 6 ];then
   rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
   wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
