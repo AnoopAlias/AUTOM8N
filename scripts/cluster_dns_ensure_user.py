@@ -27,10 +27,30 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 def cluster_ensure_arecord(zone_name, hostname, domain_ip):
     """Function that adds necessary A record of slave server"""
     for server in serverlist:
-                connect_server_dict = cluster_data_yaml_parsed.get(server)
-                ipmap_dict = connect_server_dict.get("ipmap")
-                remote_domain_ipv4 = ipmap_dict.get(domain_ip)
-                subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=A class=IN name="+hostname+". address="+remote_domain_ipv4,shell=True)
+        connect_server_dict = cluster_data_yaml_parsed.get(server)
+        ipmap_dict = connect_server_dict.get("ipmap")
+        remote_domain_ipv4 = ipmap_dict.get(domain_ip)
+        zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
+        zone_datafeed = zonedump.stdout.read()
+        zonedump_parsed = yaml.load(zone_datafeed)
+        thezone = zonedump_parsed['data']['zone'][0]
+        resource_record = thezone['record']
+        for rr in resource_record:
+            if rr['type'] == 'A':
+                if rr['name'] == hostname+"." and rr['address'] == remote_domain_ipv4:
+                    subprocess.call("/usr/local/cpanel/bin/whmapi1 removezonerecord zone="+zone_name+" line="+str(rr['Line']), shell=True)
+        if not os.path.isfile(installation_path+"/conf/DECLUSTER_DNSZONE"):
+            if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
+                with open(installation_path+"/conf/dnscluster.exclude") as excludes:
+                    skip_flag = False
+                    for line in excludes:
+                        if str(line).rstrip() == hostname:
+                            skip_flag = True
+                    if not skip_flag:
+                        subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=A class=IN name="+hostname+". address="+remote_domain_ipv4, shell=True)
+            else:
+                subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=A class=IN name="+hostname+". address="+remote_domain_ipv4, shell=True)
+    return
 
 
 if __name__ == "__main__":
