@@ -65,6 +65,34 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     return
 
 
+def default_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
+    """Add a vhost to tomcat and restart tomcat app server"""
+    tomcat_conf = "/etc/tomcat/server.xml"
+    s1 = '<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'/" />'
+    s2 = ''
+    for domain in domain_aname_list:
+        s2 = s2+'<Alias>'+domain+'</Alias>'
+        s3 = '</Host>'
+        if s2:
+            xmlstring = s1+s2+s3
+        else:
+            xmlstring = s1+s3
+    new_xml_element = etree.fromstring(xmlstring)
+    xml_data_stream = etree.parse(tomcat_conf)
+    xml_root = xml_data_stream.getroot()
+    for node1 in xml_root.iter('Service'):
+        for node2 in node1.iter('Engine'):
+            for node3 in node2.iter('Host'):
+                if domain_name in list(node3.attrib.values()):
+                    node2.remove(node3)
+            node2.append(new_xml_element)
+    xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
+    # enabling shell as Railo probably needs shell vars like CATALINA_HOME
+    if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload'):
+        subprocess.Popen('systemctl restart tomcat', shell=True)
+    return
+
+
 # Railo is probably dead.Checkout http://lucee.org/ for a fork
 def railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_list):
     """Add a vhost to resin and restart railo-resin app server"""
@@ -529,6 +557,8 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     if backend_category == 'PROXY':
         if backend_version == 'railo_tomcat':
             railo_vhost_add_tomcat(domain_server_name, document_root, *serveralias_list)
+        elif backend_version == 'java_tomct':
+            default_vhost_add_tomcat(domain_server_name, document_root, *serveralias_list)
         elif backend_version == 'railo_resin':
             railo_vhost_add_resin(kwargs.get('configuser'), domain_server_name, document_root, *serveralias_list)
     elif backend_category == 'PHP':
