@@ -93,6 +93,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#example-resource-calculations">Example resource calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -258,7 +259,7 @@
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span> <span class="n">force</span>  <span class="c1"># force regenerate</span>
 
 <span class="c1"># A best effort to switch as many websites as possible to native nginx</span>
-<span class="c1"># See fle /opt/nDeploy/conf/appsignatures.yaml for switching logic</span>
+<span class="c1"># See file /opt/nDeploy/conf/appsignatures.yaml for switching logic</span>
 <span class="c1"># Add username to /opt/nDeploy/conf/auto_config.exclude to exclude a specific user</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">switch_to_native_nginx</span><span class="o">.</span><span class="n">sh</span>
 

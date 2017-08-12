@@ -14,7 +14,7 @@ To install and configure netdata on cPanel/WHM server
 
 Please enter a secure password for the netdata user when prompted by the script
 
-Oce setup , you can access netdata from the URL :  https://servers-FQDN/netdata
+Once setup , you can access netdata from the URL :  https://servers-FQDN/netdata
 
 Apart from system vitals you will be monitoring Apache httpd, XtendWeb nginx, mysql and redis
 

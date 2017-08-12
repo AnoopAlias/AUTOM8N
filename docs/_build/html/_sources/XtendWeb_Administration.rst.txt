@@ -26,7 +26,7 @@ Quick Reference of scripts for sysadmins
   /opt/nDeploy/scripts/attempt_autofix.sh force  # force regenerate
 
   # A best effort to switch as many websites as possible to native nginx
-  # See fle /opt/nDeploy/conf/appsignatures.yaml for switching logic
+  # See file /opt/nDeploy/conf/appsignatures.yaml for switching logic
   # Add username to /opt/nDeploy/conf/auto_config.exclude to exclude a specific user
   /opt/nDeploy/scripts/switch_to_native_nginx.sh
 

@@ -93,6 +93,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#example-resource-calculations">Example resource calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -266,9 +267,9 @@ Coupled with the simplicity and intuitiveness of cPanel control panel , XtendWeb
 <span class="n">On</span> <span class="n">your</span> <span class="n">normal</span> <span class="n">RAM</span> <span class="n">requirement</span> <span class="n">add</span> <span class="mi">1</span> <span class="n">GB</span> <span class="n">Ram</span> <span class="n">extra</span> <span class="n">per</span> <span class="n">slave</span> <span class="k">for</span> <span class="n">Unison</span> <span class="n">file</span> <span class="n">sync</span> <span class="n">running</span> <span class="k">for</span> <span class="n">every</span> <span class="mi">100</span><span class="n">GB</span> <span class="n">Disk</span>
 <span class="n">Also</span> <span class="n">add</span> <span class="n">enough</span> <span class="k">for</span> <span class="n">httpd</span> <span class="n">service</span> <span class="ow">and</span> <span class="n">mysql</span> <span class="n">service</span> <span class="n">which</span> <span class="n">will</span> <span class="n">be</span> <span class="n">running</span> <span class="kn">from</span> <span class="nn">master</span>
 <span class="n">That</span> <span class="ow">is</span> <span class="n">on</span> <span class="n">a</span> <span class="n">cluster</span> <span class="k">with</span> <span class="mi">200</span><span class="n">GB</span> <span class="n">disk</span> <span class="k">for</span> <span class="n">example</span>
-<span class="mi">1</span> <span class="n">slave</span> <span class="p">:</span>  <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="n">GB</span> <span class="o">=</span> <span class="mi">2</span> <span class="n">GB</span>
-<span class="mi">2</span> <span class="n">slave</span> <span class="p">:</span>  <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="n">GB</span> <span class="o">=</span> <span class="mi">4</span> <span class="n">GB</span>
-<span class="mi">3</span> <span class="n">slaves</span><span class="p">:</span>  <span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span> <span class="n">GB</span> <span class="o">=</span> <span class="mi">6</span> <span class="n">GB</span>
+<span class="mi">1</span> <span class="n">slave</span> <span class="k">with</span> <span class="mi">200</span><span class="n">GB</span> <span class="n">disk</span>  <span class="p">:</span>  <span class="mi">1</span> <span class="n">GB</span> <span class="k">for</span> <span class="mi">100</span><span class="n">GB</span> <span class="n">per</span> <span class="n">slave</span> <span class="o">=</span> <span class="mi">2</span> <span class="n">GB</span>
+<span class="mi">2</span> <span class="n">slave</span> <span class="k">with</span> <span class="mi">200</span><span class="n">GB</span> <span class="n">disk</span>  <span class="p">:</span>  <span class="mi">2</span><span class="p">(</span> <span class="mi">1</span> <span class="n">GB</span> <span class="k">for</span> <span class="mi">100</span><span class="n">GB</span> <span class="n">per</span> <span class="n">slave</span> <span class="p">)</span> <span class="o">=</span> <span class="mi">4</span> <span class="n">GB</span>
+<span class="mi">3</span> <span class="n">slaves</span> <span class="k">with</span> <span class="mi">200</span><span class="n">GB</span> <span class="n">disk</span> <span class="p">:</span>  <span class="mi">3</span><span class="p">(</span> <span class="mi">1</span> <span class="n">GB</span> <span class="k">for</span> <span class="mi">100</span><span class="n">GB</span> <span class="n">per</span> <span class="n">slave</span> <span class="p">)</span> <span class="o">=</span> <span class="mi">6</span> <span class="n">GB</span>
 </pre></div>
 </div>
 <p>Slave server:</p>
@@ -436,6 +437,54 @@ and you should use master and slaves as the nameservers for the domain to ensure
 <p>Disable chkservd and all its drivers on slave DNS only server&#8217;s as chkservd can cause troubles in cluster operation.</p>
 <p class="last">Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel components set up by the cluster )</p>
 </div>
+</div>
+<div class="section" id="cpanel-horizontal-scaling-adding-more-web-servers">
+<h2>cPanel Horizontal scaling . Adding more web servers<a class="headerlink" href="#cpanel-horizontal-scaling-adding-more-web-servers" title="Permalink to this headline">¶</a></h2>
+<p>XtendWeb clusters important feature is horizontal scalability. Horizontal scalability helps a web application to scale up and down horizontally .</p>
+<p>This is useful when a website has a termendous amount of traffic that one web server cannot handle. With Xtendweb all you need to add a new full processing</p>
+<p>capable webserver is as below</p>
+<p>1. Prepare a fresh server and install cPanel DNS only on it</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span>
+</pre></div>
+</div>
+<p>2. Once DNS only install is complete , Login to WHM and disable All tailwatchd drivers and MySQL service</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Home »Service Configuration »Service Manager
+
+Disable tailwatchd( all drivers)
+Disable MySQL Server and its monitoring
+</pre></div>
+</div>
+<p>3. On master server</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
+<span class="n">vim</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span><span class="o">/</span><span class="n">hosts</span>
+
+<span class="c1"># Ensure the new servers hostname is added under [ndeployslaves]</span>
+</pre></div>
+</div>
+<p>4. On new host generate ssh-key and copy it to master and on master copy its key to the new slave</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On new slave</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">root</span><span class="nd">@masters</span><span class="o">-</span><span class="n">fqdn</span>
+
+<span class="c1"># On master</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">root</span><span class="nd">@new</span><span class="o">-</span><span class="n">slaves</span><span class="o">-</span><span class="n">fqdn</span>
+</pre></div>
+</div>
+<p>5. Rerun the Ansible play which will setup the new host in the cluster</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
+<span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">hosts</span> <span class="n">cluster</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+<p>6. Setup additional grants for mysql pertaining to the new host</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>On master server login to WHM
+Home »SQL Services »Additional MySQL Access Hosts
+
+# Click on the &quot;click here&quot; link towards the end of the below message
+Important: Users must log into cPanel and use the Remote MySQL feature to set up access from these hosts. After you have done this, if you would like to configure access from all users’ accounts click here.
+</pre></div>
+</div>
+<p>Thats it. Your new host will replicate and start serving the website oce the /home data is replicated.</p>
+<p>Adding more webservers to horizontally scale a webapp will roughly take 10 minutes ( assuming a server with cPanel DNS only installed is used)</p>
 </div>
 </div>
 

@@ -219,7 +219,7 @@ The cluster including PHP app server is fully setup now and you can start adding
 and you should use master and slaves as the nameservers for the domain to ensure DNS LoadBalancing.
 
 
-.. tip:: Disable chkservd and all its drivers on slave DNS only server's as chkservd can cause troubles in cluster operation.
+.. tip:: Disable tailwatchd and all its drivers on slave DNS only server's as chkservd can cause troubles in cluster operation.
 
          Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel components set up by the cluster )
 

@@ -33,9 +33,9 @@ Master Server :
   On your normal RAM requirement add 1 GB Ram extra per slave for Unison file sync running for every 100GB Disk
   Also add enough for httpd service and mysql service which will be running from master
   That is on a cluster with 200GB disk for example
-  1 slave :  2 * 1 GB = 2 GB
-  2 slave :  2 * 2 * 1 GB = 4 GB
-  3 slaves:  3 * 2 * 1 GB = 6 GB
+  1 slave with 200GB disk  :  1 GB for 100GB per slave = 2 GB
+  2 slave with 200GB disk  :  2( 1 GB for 100GB per slave ) = 4 GB
+  3 slaves with 200GB disk :  3( 1 GB for 100GB per slave ) = 6 GB
 
 Slave server:
 ::
@@ -222,3 +222,64 @@ and you should use master and slaves as the nameservers for the domain to ensure
 .. tip:: Disable chkservd and all its drivers on slave DNS only server's as chkservd can cause troubles in cluster operation.
 
          Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel components set up by the cluster )
+
+
+cPanel Horizontal scaling . Adding more web servers
+----------------------------------------------------------
+
+XtendWeb clusters important feature is horizontal scalability. Horizontal scalability helps a web application to scale up and down horizontally .
+
+This is useful when a website has a termendous amount of traffic that one web server cannot handle. With Xtendweb all you need to add a new full processing
+
+capable webserver is as below
+
+1. Prepare a fresh server and install cPanel DNS only on it
+::
+
+  cd /home && curl -o latest-dnsonly -L https://securedownloads.cpanel.net/latest-dnsonly && sh latest-dnsonly
+
+2. Once DNS only install is complete , Login to WHM and disable All tailwatchd drivers and MySQL service
+::
+
+  Home »Service Configuration »Service Manager
+
+  Disable tailwatchd( all drivers)
+  Disable MySQL Server and its monitoring
+
+3. On master server
+::
+
+  cd /opt/nDeploy/conf/nDeploy-cluster
+  vim /opt/nDeploy/conf/nDeploy-cluster/hosts
+
+  # Ensure the new servers hostname is added under [ndeployslaves]
+
+4. On new host generate ssh-key and copy it to master and on master copy its key to the new slave
+::
+
+  # On new slave
+  ssh-keygen
+  ssh-copy-id root@masters-fqdn
+
+  # On master
+  ssh-copy-id root@new-slaves-fqdn
+
+5. Rerun the Ansible play which will setup the new host in the cluster
+::
+
+  cd /opt/nDeploy/conf/nDeploy-cluster
+  ansible-playbook -i ./hosts cluster.yml
+
+6. Setup additional grants for mysql pertaining to the new host
+::
+
+  On master server login to WHM
+  Home »SQL Services »Additional MySQL Access Hosts
+
+  # Click on the "click here" link towards the end of the below message
+  Important: Users must log into cPanel and use the Remote MySQL feature to set up access from these hosts. After you have done this, if you would like to configure access from all users’ accounts click here.
+
+
+Thats it. Your new host will replicate and start serving the website oce the /home data is replicated.
+
+Adding more webservers to horizontally scale a webapp will roughly take 10 minutes ( assuming a server with cPanel DNS only installed is used)
