@@ -65,7 +65,7 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     return
 
 
-def default_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
+def java_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     """Add a vhost to tomcat and restart tomcat app server"""
     tomcat_conf = "/etc/tomcat/server.xml"
     s1 = '<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'/" />'
@@ -557,8 +557,8 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     if backend_category == 'PROXY':
         if backend_version == 'railo_tomcat':
             railo_vhost_add_tomcat(domain_server_name, document_root, *serveralias_list)
-        elif backend_version == 'java_tomct':
-            default_vhost_add_tomcat(domain_server_name, document_root, *serveralias_list)
+        elif backend_version == 'java_tomcat':
+            java_vhost_add_tomcat(domain_server_name, document_root, *serveralias_list)
         elif backend_version == 'railo_resin':
             railo_vhost_add_resin(kwargs.get('configuser'), domain_server_name, document_root, *serveralias_list)
     elif backend_category == 'PHP':
