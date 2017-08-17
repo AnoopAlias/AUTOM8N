@@ -380,6 +380,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     apptemplate_code = yaml_parsed_domain_data.get('apptemplate_code', None)
     backend_path = yaml_parsed_domain_data.get('backend_path', None)
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
+    user_config = yaml_parsed_domain_data.get('user_config', 'disabled')
     phpfpm_selector = yaml_parsed_domain_data.get('phpfpm_selector', None)
     phpfpm_path = yaml_parsed_domain_data.get('phpfpm_path', None)
     # initialize the fastcgi_socket variable
@@ -480,6 +481,11 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         subdir_apps = {}
         subdir_apps_uniq = {}
         subdir_apps_passenger = {}
+    # Lets remove the user config files .We will regenerate it at a later stage
+    silentremove("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user")
+    if subdir_apps:
+        for subdir in subdir_apps.keys():
+            silentremove("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user")
     # Since we have all data needed ,lets render the conf to a file
     if os.path.isfile(installation_path+'/conf/server_local.j2'):
         TEMPLATE_FILE = "server_local.j2"
@@ -600,6 +606,9 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     generated_app_config = app_template.render(apptemplateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
         confout.write(generated_app_config)
+    # Copy the user config for testing if present
+    if user_config == 'enabled' and os.path.isfile(document_root+"/nginx.conf"):
+        shutil.copyfile(document_root+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test")
     # Get the subdir config also rendered
     if subdir_apps:
         for subdir in subdir_apps.keys():
@@ -672,7 +681,45 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
                 confout.write(generated_subdir_app_config)
-
+            # Copy the user config for testing if present
+            if user_config == 'enabled' and os.path.isfile(document_root+'/'+subdir+"/nginx.conf"):
+                shutil.copyfile(document_root+'/'+subdir+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test")
+    # If we have a user_config.Lets generate the test confg
+    if user_config == 'enabled':
+        # generate a temp nginx config
+        NGINX_CONF_TEMPLATE = installation_path+'/conf/nginx_test.j2'
+        nginx_test_template = templateEnv.get_template(NGINX_CONF_TEMPLATE)
+        nginxConftemplateVars = {"CONFIGDOMAINNAME": kwargs.get('configdomain')}
+        generated_nginx_config = nginx_test_template.render(nginxConftemplateVars)
+        domain_nginx_test = installation_path+"/lock/"+kwargs.get('configdomain')+".nginx_test"
+        with codecs.open(domain_nginx_test, "w", 'utf-8') as confout:
+            confout.write(generated_nginx_config)
+        # generate a temp server config
+        if os.path.isfile(installation_path+'/conf/server_test_local.j2'):
+            TEST_TEMPLATE_FILE = "server_test_local.j2"
+        else:
+            TEST_TEMPLATE_FILE = "server_test.j2"
+        test_server_template = templateEnv.get_template(TEST_TEMPLATE_FILE)
+        generated_config = test_server_template.render(templateVars)
+        with codecs.open(installation_path+"/lock/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
+            confout.write(generated_config)
+        # test the temp confg and if all ok activate the user_configs
+        nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + domain_nginx_test + " -t", shell=True)
+        if nginx_conf_test == 0:
+            # ok all seems good we copy the user_configs to /etc/nginx/sites-enabled
+            if os.path.isfile(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test"):
+                shutil.copyfile(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test", "/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user")
+            if subdir_apps:
+                for subdir in subdir_apps.keys():
+                    if os.path.isfile(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test"):
+                        shutil.copyfile(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test", "/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user")
+        # Remove all the temporary files we created for the test
+        silentremove(domain_nginx_test)
+        silentremove(installation_path+"/lock/"+kwargs.get('configdomain')+".conf")
+        silentremove(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test")
+        if subdir_apps:
+            for subdir in subdir_apps.keys():
+                silentremove(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test")
 
 # End Function defs
 
