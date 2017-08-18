@@ -484,9 +484,16 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         subdir_apps_passenger = {}
     # Lets remove the user config files .We will regenerate it at a later stage
     silentremove("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user")
+    # For cluster We remove the manualconfigs here as it is regenerated
+    if clusterenabled:
+        for server in cluster_serverlist:
+            silentremove("/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".manualconfig_user")
     if subdir_apps:
         for subdir in subdir_apps.keys():
             silentremove("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user")
+            if clusterenabled:
+                for server in cluster_serverlist:
+                    silentremove("/etc/nginx/"+server+"/" + kwargs.get('configdomain') + "_" + subdir_apps_uniq.get(subdir) + ".manualconfig_user")
     # Since we have all data needed ,lets render the conf to a file
     if os.path.isfile(installation_path+'/conf/server_local.j2'):
         TEMPLATE_FILE = "server_local.j2"
@@ -562,9 +569,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                 remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
             else:
                 remote_domain_ipv6 = None
-            # We remove the include and manualconfigs here as it is regenerated
-            for thefilename in glob.glob("/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".manualconfig*"):
-                silentremove(thefilename)
             cluster_config_out = "/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".conf"
             templateVars["CPANELIP"] = remote_domain_ipv4
             templateVars["CPIPVSIX"] = remote_domain_ipv6
