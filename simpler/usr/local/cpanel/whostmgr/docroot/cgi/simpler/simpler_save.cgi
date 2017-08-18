@@ -73,11 +73,11 @@ if form.getvalue('mode'):
             print('</div>')
             print('</div>')
 
-            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
             print('</div>')
         else:
             print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Forbidden</div>')
-            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
     elif form.getvalue('mode') == 'service':
         if form.getvalue('service') and form.getvalue('cpuweight') and form.getvalue('memoryhigh') and form.getvalue('ioweight'):
             print('<div class="panel panel-default">')
@@ -107,14 +107,14 @@ if form.getvalue('mode'):
             print('</div>')
             print('</div>')
             print('</div>')
-            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
             print('</div>')
         else:
             print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Forbidden</div>')
-            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+            print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 else:
     print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Forbidden</div>')
-    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
 print('</div>')
 print('</div>')
