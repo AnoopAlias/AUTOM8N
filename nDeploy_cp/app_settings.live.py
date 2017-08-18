@@ -89,7 +89,6 @@ if form.getvalue('domain'):
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
     document_root = json_parsed_cpaneldomain.get('documentroot')
-
     if os.path.isfile(profileyaml):
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
@@ -170,6 +169,15 @@ if form.getvalue('domain'):
         # Pass on the domain name to the next stage
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
+        print('</form>')
+        print('</div>')
+        print('</li>')
+        print('</ul>')
+        # Next section start here
+        print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+mydomain+'</strong></h3></div>'))
+        print('<div class="panel-body">')
+        print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
+        print('<ul class="list-group">')
         print('</form>')
         print('</div>')
         print('</li>')
