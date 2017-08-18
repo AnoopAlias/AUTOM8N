@@ -86,6 +86,21 @@ else:
     print('</body>')
     print('</html>')
     sys.exit(0)
+# user_config
+if 'user_config' in form.keys():
+    user_config = form.getvalue('user_config')
+    yaml_parsed_profileyaml['user_config'] = user_config
+else:
+    print('ERROR: Forbidden::user_config')
+    print('</div>')
+    print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</div>')
+    print('</body>')
+    print('</html>')
+    sys.exit(0)
 # autoindex
 if 'autoindex' in form.keys():
     autoindex = form.getvalue('autoindex')

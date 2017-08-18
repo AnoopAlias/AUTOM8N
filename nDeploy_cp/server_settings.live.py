@@ -93,9 +93,28 @@ if form.getvalue('domain'):
         append_requesturi = yaml_parsed_profileyaml.get('append_requesturi', 'disabled')
         test_cookie = yaml_parsed_profileyaml.get('test_cookie', 'disabled')
         symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
+        user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
         # Ok we are done with getting the settings,now lets present it to the user
         print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
         print('<form id="config" class="form-inline" action="save_server_settings.live.py" method="post">')
+        # user_config
+        print('<ul class="list-group"><li class="list-group-item">')
+        user_config_hint = "enable a custom nginx.conf placed in the document root"
+        print('<div class="row">')
+        if user_config == 'enabled':
+            print_green("user_config", user_config_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="user_config" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="user_config" value="disabled"/> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red("user_config", user_config_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="user_config" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="user_config" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
         # autoindex
         print('<ul class="list-group"><li class="list-group-item">')
         autoindex_hint = "enable for directory listing"
@@ -110,7 +129,7 @@ if form.getvalue('domain'):
             print_red("autoindex", autoindex_hint)
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="autoindex" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="autoindex" value="enabled" checked/> Disabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="autoindex" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
         print('</li>')
