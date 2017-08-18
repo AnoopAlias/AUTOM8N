@@ -14,7 +14,6 @@ import jinja2
 from hashlib import md5
 import json
 import time
-import glob
 
 
 __author__ = "Anoop P Alias"
