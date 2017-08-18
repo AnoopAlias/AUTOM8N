@@ -27,7 +27,7 @@ def close_cpanel_liveapisock():
 
 
 def print_green(theoption, hint):
-    print(('<div class="col-sm-6"><div class="label label-success" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-sm-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
 
 def print_red(theoption, hint):
