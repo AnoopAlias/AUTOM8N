@@ -88,7 +88,7 @@ print('</div>')
 # Next section start here
 print('<div class="panel-body">')
 if os.path.isfile(cluster_config_file):
-    print('<span class="label label-primary">XTENDWEB CLUSTER IS ACTIVE</span><br><br>')
+    print('<span class="label label-default">XTENDWEB CLUSTER IS ACTIVE</span><br><br>')
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     for servername in cluster_data_yaml_parsed.keys():
