@@ -174,12 +174,12 @@ if form.getvalue('domain'):
         print('</li>')
         print('</ul>')
         # Next section start here
-        print(('<div class="panel-heading"><h3 class="panel-title">Ruby Python NodeJS module installer: <strong>'+mydomain+'</strong></h3></div>'))
+        print(('<div class="panel-heading"><h3 class="panel-title">Passenger project deps installer: <strong>'+mydomain+'</strong></h3></div>'))
         print('<div class="panel-body">')
         print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
         print('<ul class="list-group">')
         if backend_category == "RUBY":
-            print('<div class="alert alert-info"><span class="glyphicon glyphicon-info-sign" aria-hidden="true">Ruby App : Specify your dependencies in'+ document_root +'/Gemfile</span> </div>')
+            print('<div class="alert alert-info"><span>Ruby App : Specify your dependencies in '+ document_root +'/Gemfile</span> </div>')
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="INSTALL DEPS">')
         print('</form>')
