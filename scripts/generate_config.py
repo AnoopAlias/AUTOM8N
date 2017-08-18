@@ -687,7 +687,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     # If we have a user_config.Lets generate the test confg
     if user_config == 'enabled':
         # generate a temp nginx config
-        NGINX_CONF_TEMPLATE = installation_path+'/conf/nginx_test.j2'
+        NGINX_CONF_TEMPLATE = 'nginx_test.j2'
         nginx_test_template = templateEnv.get_template(NGINX_CONF_TEMPLATE)
         nginxConftemplateVars = {"CONFIGDOMAINNAME": kwargs.get('configdomain')}
         generated_nginx_config = nginx_test_template.render(nginxConftemplateVars)
