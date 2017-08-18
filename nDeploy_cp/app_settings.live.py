@@ -179,7 +179,7 @@ if form.getvalue('domain'):
         print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
         print('<ul class="list-group">')
         if backend_category == "RUBY":
-            print('<div class="alert alert-info"><span>Ruby App : Specify your dependencies in '+ document_root +'/Gemfile</span> </div>')
+            print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">RUBY</span> project, specify your dependencies in '+ document_root +'/Gemfile</div>'))
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="INSTALL DEPS">')
         print('</form>')
