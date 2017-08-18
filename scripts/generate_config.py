@@ -541,6 +541,16 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     generated_config = server_template.render(templateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
         confout.write(generated_config)
+    if user_config == 'enabled':
+        # generate a temp server config
+        if os.path.isfile(installation_path+'/conf/server_test_local.j2'):
+            TEST_TEMPLATE_FILE = "server_test_local.j2"
+        else:
+            TEST_TEMPLATE_FILE = "server_test.j2"
+        test_server_template = templateEnv.get_template(TEST_TEMPLATE_FILE)
+        generated_config = test_server_template.render(templateVars)
+        with codecs.open(installation_path+"/lock/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
+            confout.write(generated_config)
     # If a cluster is setup.Generate nginx config for other servers as well
     if clusterenabled:
         for server in cluster_serverlist:
@@ -694,15 +704,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         domain_nginx_test = installation_path+"/lock/"+kwargs.get('configdomain')+".nginx_test"
         with codecs.open(domain_nginx_test, "w", 'utf-8') as confout:
             confout.write(generated_nginx_config)
-        # generate a temp server config
-        if os.path.isfile(installation_path+'/conf/server_test_local.j2'):
-            TEST_TEMPLATE_FILE = "server_test_local.j2"
-        else:
-            TEST_TEMPLATE_FILE = "server_test.j2"
-        test_server_template = templateEnv.get_template(TEST_TEMPLATE_FILE)
-        generated_config = test_server_template.render(templateVars)
-        with codecs.open(installation_path+"/lock/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
-            confout.write(generated_config)
         # test the temp confg and if all ok activate the user_configs
         nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + domain_nginx_test + " -t", shell=True)
         if nginx_conf_test == 0:
