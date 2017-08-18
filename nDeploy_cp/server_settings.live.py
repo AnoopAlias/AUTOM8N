@@ -533,7 +533,7 @@ if form.getvalue('domain'):
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
 print('</div>')
 print('</div>')
