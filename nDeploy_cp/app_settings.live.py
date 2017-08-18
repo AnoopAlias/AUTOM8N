@@ -28,7 +28,7 @@ cgitb.enable()
 
 
 def print_green(theoption, hint):
-    print(('<div class="col-sm-6"><div class="label label-success" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-sm-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
 
 def print_red(theoption, hint):
@@ -133,24 +133,24 @@ if form.getvalue('domain'):
             print('<li class="list-group-item">')
             print('<div class="row">')
             print('<div class="col-sm-6 col-radio"><strong>NGINX is proxying to</strong></div>')
-            print(('<div class="col-sm-6"><div class="label label-success">'+backend_version+'</div>'))
+            print(('<div class="col-sm-6"><div class="label label-info">'+backend_version+'</div>'))
             print('</div>')
             print('</li>')
             print('<li class="list-group-item">')
             print('<div class="row">')
             print('<div class="col-sm-6 col-radio"><strong>Template</strong></div>')
-            print(('<div class="col-sm-6"><div class="label label-warning">'+apptemplate_description+'</div>'))
+            print(('<div class="col-sm-6"><div class="label label-info">'+apptemplate_description+'</div>'))
         else:
             print('<li class="list-group-item">')
             print('<div class="row">')
             print('<div class="col-sm-6 col-radio"><strong>native NGINX and </strong></div>')
-            print(('<div class="col-sm-6"><div class="label label-success">'+backend_category+'</div>'))
+            print(('<div class="col-sm-6"><div class="label label-info">'+backend_category+'</div>'))
             print('</div>')
             print('</li>')
             print('<li class="list-group-item">')
             print('<div class="row">')
             print('<div class="col-sm-6 col-radio"><strong>Backend Version</strong></div>')
-            print(('<div class="col-sm-6"><div class="label label-warning">'+backend_version+'</div>'))
+            print(('<div class="col-sm-6"><div class="label label-info">'+backend_version+'</div>'))
             print('</div>')
             print('</li>')
             print('<li class="list-group-item">')
