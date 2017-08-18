@@ -14,6 +14,7 @@ import jinja2
 from hashlib import md5
 import json
 import time
+import glob
 
 
 __author__ = "Anoop P Alias"
@@ -561,6 +562,9 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                 remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
             else:
                 remote_domain_ipv6 = None
+            # We remove the include and manualconfigs here as it is regenerated
+            for thefilename in glob.glob("/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".manualconfig*"):
+                silentremove(thefilename)
             cluster_config_out = "/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".conf"
             templateVars["CPANELIP"] = remote_domain_ipv4
             templateVars["CPIPVSIX"] = remote_domain_ipv6
