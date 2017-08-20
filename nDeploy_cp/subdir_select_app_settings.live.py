@@ -157,6 +157,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 else:
                     print(('<div class="alert alert-info alert-top">Your current project is <span class="label label-info">'+apptemplate_description+'</span> on native <span class="label label-info">NGINX</span> with <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> application server</div>'))
                 print('</ul>')
+                print(('<div class="alert alert-info alert-top">You selected <span class="label label-info">'+mybackend+'</span> as the new backend, select the version and template for this backend below</div>'))
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
                 if os.path.isfile(user_app_template_file):
