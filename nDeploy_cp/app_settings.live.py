@@ -135,9 +135,9 @@ if form.getvalue('domain'):
             else:
                 print(('<div class="alert alert-info alert-top">Nginx is proxying to <span class="label label-info">'+backend_version+'</span> with settings  <span class="label label-info">'+apptemplate_description+'</span></div>'))
         else:
-            print(('<div class="alert alert-info alert-top">You have deployed  <span class="label label-info">'+apptemplate_description+'</span> project on native <span class="label label-info">NGINX</span> with <span class="label label-info">'+backend_version+'</span> application server</div>'))
+            print(('<div class="alert alert-info alert-top">You have deployed  <span class="label label-info">'+apptemplate_description+'</span> project on native <span class="label label-info">NGINX</span> with <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> application server</div>'))
         print('</ul>')
-        print('<p><em>To change application server select a BACKEND from the drop down below:</em></p>')
+        print('<p><em>To change application server select a BACKEND from the drop down below and click submit:</em></p>')
         print('<select name="backend">')
         for backends_defined in backend_data_yaml_parsed.keys():
             if backends_defined == backend_category:
