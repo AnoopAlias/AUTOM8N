@@ -66,7 +66,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     if mybackend == 'RUBY':
         if os.path.isfile(mydocroot+'/Gemfile'):
             if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
-                install_cmd = 'bundle install --path vendor/bundle'
+                install_cmd = '/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'
                 myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
                 output, err = myinstaller.communicate()
                 print('<kbd>'+output+'</kbd>')
