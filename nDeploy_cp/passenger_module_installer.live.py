@@ -71,10 +71,14 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 output, err = myinstaller.communicate()
                 if output:
                     # section start here
+                    outputlines = output.splitlines()
                     print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ output +'</kbd></div>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>
+                    for line in outputlines:
+                        print(('<kbd>'+ line +'</kbd>'))
+                    print(('</div>'))
                     print('</div>')
                     print('</li>')
                     print('</ul>')
