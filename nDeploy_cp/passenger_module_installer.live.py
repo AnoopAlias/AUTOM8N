@@ -70,7 +70,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 output, err = myinstaller.communicate()
                 print('<kbd>'+output+'</kbd>')
         else:
-            print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ document_root +'/Gemfile</kbd></div>'))
+            print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ mydocroot +'/Gemfile</kbd></div>'))
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('</div>')
