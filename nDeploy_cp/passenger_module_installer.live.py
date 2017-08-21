@@ -1,10 +1,9 @@
 #!/usr/bin/python
 import os
 import socket
-import yaml
 import cgi
 import cgitb
-import sys
+import subprocess
 
 
 __author__ = "Anoop P Alias"
@@ -58,41 +57,20 @@ print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh">
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Passenger Module Installer</li>')
 print('</ol>')
 print('<div class="panel panel-default">')
-if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backendversion') and form.getvalue('apptemplate'):
+if form.getvalue('domain') and form.getvalue('backend_category') and form.getvalue('backend_version') and form.getvalue('document_root'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
-    mybackend = form.getvalue('backend')
-    mybackendversion = form.getvalue('backendversion')
-    myapptemplate = form.getvalue('apptemplate')
-    profileyaml = installation_path + "/domain-data/" + mydomain
-    # Get data about the backends available
-    if os.path.isfile(backend_config_file):
-        with open(backend_config_file, 'r') as backend_data_yaml:
-            backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
-        mybackend_dict = backend_data_yaml_parsed.get(mybackend)
-        mybackendpath = mybackend_dict.get(mybackendversion)
-    else:
-        print('ERROR : backend data file i/o error')
-        sys.exit(0)
-    if os.path.isfile(profileyaml):
-        # Get all config settings from the domains domain-data config file
-        with open(profileyaml, 'r') as profileyaml_data_stream:
-            yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        # Ok lets save everything to the domain-data file
-        yaml_parsed_profileyaml['backend_category'] = mybackend
-        yaml_parsed_profileyaml['backend_path'] = mybackendpath
-        yaml_parsed_profileyaml['backend_version'] = mybackendversion
-        yaml_parsed_profileyaml['apptemplate_code'] = myapptemplate
-        print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div>'))
-        print('<div class="panel-body">')
-        with open(profileyaml, 'w') as yaml_file:
-            yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        print('<div class="icon-box">')
-        print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Application Settings saved')
-        print('</div>')
-        print('</form>')
-    else:
-        print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
+    mybackend = form.getvalue('backend_category')
+    mybackendversion = form.getvalue('backend_version')
+    mydocroot = form.getvalue('document_root')
+    if mybackend == 'RUBY':
+        if os.path.isfile(mydocroot+'/Gemfile'):
+            if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
+                myinstaller = subprocess.Popen('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle install --path vendor/bundle', cwd=mydocroot, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+                output, err = myinstaller.communicate()
+                print('<kbd>'+output+'</kbd>')
+        else:
+            print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ document_root +'/Gemfile</kbd></div>'))
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('</div>')

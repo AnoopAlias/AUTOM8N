@@ -160,6 +160,9 @@ if form.getvalue('domain'):
         if backend_category == "RUBY":
             print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ document_root +'/Gemfile</kbd></div>'))
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+        print(('<input class="hidden" name="document_root" value="'+document_root+'">'))
+        print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
+        print(('<input class="hidden" name="backend_version" value="'+backend_version+'">'))
         print('<input class="btn btn-primary" type="submit" value="INSTALL DEPS">')
         print('</form>')
         print('</div>')
