@@ -69,8 +69,10 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 install_cmd = '/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'
                 myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
                 output, err = myinstaller.communicate()
-                print('<kbd>'+output+'</kbd>')
-                print('<kbd>'+err+'</kbd>')
+                if output:
+                    print('<kbd>'+output+'</kbd>')
+                if err:
+                    print('<kbd>'+err+'</kbd>')
         else:
             print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ mydocroot +'/Gemfile</kbd></div>'))
 else:
