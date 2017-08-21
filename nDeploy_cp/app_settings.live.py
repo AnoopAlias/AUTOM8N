@@ -158,7 +158,7 @@ if form.getvalue('domain'):
             print('<div class="panel-body">')
             print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
             print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span>project </div>'))
+            print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project </div>'))
             if backend_category == "RUBY":
                 print(('<div class="alert alert-info alert-top">specify project dependencies in <kbd>'+ document_root +'/Gemfile</kbd></div>'))
             print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
