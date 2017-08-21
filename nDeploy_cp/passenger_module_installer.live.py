@@ -69,24 +69,24 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 install_cmd = '/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'
                 myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
                 output, err = myinstaller.communicate()
-                # section start here
-                print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
-                print('<div class="panel-body">')
-                print('<ul class="list-group">')
                 if output:
+                    # section start here
+                    print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
+                    print('<div class="panel-body">')
+                    print('<ul class="list-group">')
                     print('<kbd>'+output+'</kbd>')
-                print('</div>')
-                print('</li>')
-                print('</ul>')
-                # section start here
-                print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
-                print('<div class="panel-body">')
-                print('<ul class="list-group">')
+                    print('</div>')
+                    print('</li>')
+                    print('</ul>')
                 if err:
+                    # section start here
+                    print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
+                    print('<div class="panel-body">')
+                    print('<ul class="list-group">')
                     print('<kbd>'+err+'</kbd>')
-                print('</div>')
-                print('</li>')
-                print('</ul>')
+                    print('</div>')
+                    print('</li>')
+                    print('</ul>')
         else:
             print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ mydocroot +'/Gemfile</kbd></div>'))
 else:
