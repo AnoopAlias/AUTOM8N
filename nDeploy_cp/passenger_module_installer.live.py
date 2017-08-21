@@ -74,7 +74,9 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ output.splitlines() +'</kbd></div>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ output +'</kbd></div>'))
+                    for myline in output.splitlines():
+                        print(myline)
                     print('</div>')
                     print('</li>')
                     print('</ul>')
