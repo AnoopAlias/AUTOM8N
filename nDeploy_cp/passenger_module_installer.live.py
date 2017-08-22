@@ -63,6 +63,16 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     mybackend = form.getvalue('backend_category')
     mybackendversion = form.getvalue('backend_version')
     mydocroot = form.getvalue('document_root')
+    print(('<div class="panel-heading"><h3 class="panel-title">Project</h3></div>'))
+    print('<div class="panel-body">')
+    print('<ul class="list-group">')
+    print(('<div class="alert alert-info alert-top">'+mydomain'))
+    print(('<br><span class="label label-info">'+mybackend+'</span> <span class="label label-info">'+mybackendversion+'</span>'))
+    print(('<br>Project root: <span class="label label-info">'+mydocroot+'</span>'))
+    print('</div>')
+    print('</div>')
+    print('</li>')
+    print('</ul>')
     if mybackend == 'RUBY':
         if os.path.isfile(mydocroot+'/Gemfile'):
             if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
