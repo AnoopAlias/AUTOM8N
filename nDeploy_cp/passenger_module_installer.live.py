@@ -92,7 +92,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     elif mybackend == 'NODEJS':
         if os.path.isfile(mydocroot+'/package.json'):
             if os.path.isfile('/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm'):
-                install_cmd = '/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm install'
+                install_cmd = '/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm install --production'
                 my_env = os.environ.copy()
                 my_env["PATH"] = "/usr/local/nvm/versions/node/"+mybackendversion+"/bin:"+my_env["PATH"]
                 myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env, shell=True)
