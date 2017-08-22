@@ -113,7 +113,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
                 print('<div class="panel-body">')
                 print('<form action="subdir_select_app_settings.live.py" method="post">')
-                print('<div class="desc">select a BACKEND from the drop down below:</div>')
+                print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit. All backend category other than <span class="label label-info">PROXY</span> will be directly served by high performance nginx webserver(recommended) </div>'))
                 print('<select name="backend">')
                 for backends_defined in backend_data_yaml_parsed.keys():
                     print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
