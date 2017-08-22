@@ -68,7 +68,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'+mydomain))
     print(('<br><span class="label label-info">'+mybackend+'</span> <span class="label label-info">'+mybackendversion+'</span>'))
-    print(('<br><span class="label label-info">Project root: '+mydocroot+'</span>'))
+    print(('<br><br><span class="label label-info">Project root: '+mydocroot+'</span>'))
     print('</div>')
     print('</div>')
     print('</li>')
