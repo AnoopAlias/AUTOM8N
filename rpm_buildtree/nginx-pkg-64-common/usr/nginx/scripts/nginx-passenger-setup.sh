@@ -33,7 +33,7 @@ export NVM_DIR="/usr/local/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install v6.10.1
 echo -e '\e[93m Adding a NodeJS backend for XtendWeb.  \e[0m'
-/opt/nDeploy/scripts/update_backend.py add NODEJS nodejs-v6.10.1 /usr/local/nvm/versions/node/v6.10.1/bin/node
+/opt/nDeploy/scripts/update_backend.py add NODEJS v6.10.1 /usr/local/nvm/versions/node/v6.10.1/bin/node
 nginx -s reload
 echo -e '\e[93m Additional versions of Ruby/Python/NodeJS can be installed by following docs at.  \e[0m'
 echo -e '\e[93m https://autom8n.com/xtendweb  \e[0m'

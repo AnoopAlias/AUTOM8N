@@ -83,12 +83,39 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ err +'</kbd></div>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+err+'</kbd></div>'))
                     print('</div>')
                     print('</li>')
                     print('</ul>')
         else:
             print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ mydocroot +'/Gemfile</kbd></div>'))
+    elif mybackend == 'NODEJS':
+        if os.path.isfile(mydocroot+'/package.json'):
+            if os.path.isfile('/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm'):
+                install_cmd = '/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm install'
+                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+                output, err = myinstaller.communicate()
+                if output:
+                    # section start here
+                    print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
+                    print('<div class="panel-body">')
+                    print('<ul class="list-group">')
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+output+'</kbd></div>'))
+                    print('</div>')
+                    print('</li>')
+                    print('</ul>')
+                if err:
+                    # section start here
+                    print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
+                    print('<div class="panel-body">')
+                    print('<ul class="list-group">')
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ err +'</kbd></div>'))
+                    print('</div>')
+                    print('</li>')
+                    print('</ul>')
+        else:
+            print(('<div class="alert alert-info alert-top">package.json not found for <span class="label label-info">NODEJS</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/package.json</kbd></div>'))
+
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('</div>')
