@@ -172,7 +172,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 else:
                     print(('<div class="alert alert-info alert-top">Your current project is <span class="label label-info">'+apptemplate_description+'</span> on native <span class="label label-info">NGINX</span> with <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> application server</div>'))
                 print('</ul>')
-                print('<p><em>To change application server select a BACKEND from the drop down below:</em></p>')
+                print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit. All backend category other than <span class="label label-info">PROXY</span> will be directly served by high performance nginx webserver(recommended) </div>'))
                 print('<select name="backend">')
                 for backends_defined in backend_data_yaml_parsed.keys():
                     if backends_defined == backend_category:
@@ -397,7 +397,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         else:
             print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div><div class="panel-body">'))
             print('<form action="subdir_select_app_settings.live.py" method="post">')
-            print('<p><em>Select a BACKEND from the drop down below:</em></p>')
+            print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit. All backend category other than <span class="label label-info">PROXY</span> will be directly served by high performance nginx webserver(recommended) </div>'))
             print('<select name="backend">')
             for backends_defined in backend_data_yaml_parsed.keys():
                 print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
