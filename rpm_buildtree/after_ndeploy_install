@@ -68,6 +68,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5040.j2 "Yii"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5041.j2 "MediaWiki"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5042.j2 "XenForo"
+/opt/nDeploy/scripts/update_profiles.py add root main PHP 5043.j2 "Chevereto v3"
 
 # HHVM
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5001.j2 "Wordpress"
@@ -109,6 +110,7 @@
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5040.j2 "Yii"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5041.j2 "MediaWiki"
 /opt/nDeploy/scripts/update_profiles.py add root main HHVM 5042.j2 "XenForo"
+/opt/nDeploy/scripts/update_profiles.py add root main HHVM 5043.j2 "Chevereto v3"
 
 echo -e '\e[93m Adding cpanel hooks \e[0m'
 #Delete Hooks
