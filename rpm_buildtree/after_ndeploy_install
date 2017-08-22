@@ -26,8 +26,10 @@
 # NODEJS
 /opt/nDeploy/scripts/update_profiles.py add root main NODEJS 4001.j2 "A NodeJS application"
 /opt/nDeploy/scripts/update_profiles.py add root main NODEJS 4002.j2 "Ghost Blog"
+/opt/nDeploy/scripts/update_profiles.py add root main NODEJS 4003.j2 "NodeJS application(server.js)"
 /opt/nDeploy/scripts/update_profiles.py add root subdir NODEJS 4001_subdir.j2 "Subdir NodeJS application"
 /opt/nDeploy/scripts/update_profiles.py add root subdir NODEJS 4002_subdir.j2 "Subdir Ghost Blog"
+/opt/nDeploy/scripts/update_profiles.py add root subdir NODEJS 4003_subdir.j2 "Subdir NodeJS(server.js)"
 # PHP
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5001.j2 "Wordpress"
 /opt/nDeploy/scripts/update_profiles.py add root main PHP 5031.j2 "CakePHP"

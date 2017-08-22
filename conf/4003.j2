@@ -1,0 +1,8 @@
+#A NodeJS application server.js;
+root {{ DOCUMENTROOT }}/public;
+passenger_enabled on;
+passenger_app_type node;
+passenger_nodejs {{ PATHTONODEJS }};
+passenger_startup_file server.js;
+
+include /etc/nginx/conf.d/cpanel_services.conf;
