@@ -113,7 +113,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print('<ul class="list-group">')
                     print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ err +'</kbd><br><br>'))
                     print(('Run the following command in your shell to proceed with manual installation:<br>'))
-                    print(('export PATH="$PATH:/usr/local/nvm/versions/node/'+mybackendversion+'/bin"<br>'))
+                    print(('export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"<br>'))
                     print(('cd '+mydocroot))
                     print(('<br>npm install --production'))
                     print(('</div>'))
