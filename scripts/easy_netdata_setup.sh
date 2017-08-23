@@ -29,7 +29,12 @@ sed -i 's/# bind to = \*/bind to = 127.0.0.1:19999/' /opt/netdata/etc/netdata/ne
 
 service netdata restart
 
-/opt/nDeploy/scripts/generate_default_vhost_config.py
+if [ ! -d /opt/nDeploy/conf/nDeploy-cluster ];then
+  /opt/nDeploy/scripts/generate_default_vhost_config.py
+else
+  /opt/nDeploy/scripts/generate_default_vhost_config_slave.py
+fi
+
 nginx -s reload
 
 echo -e "\e[93m You can access netdata at https://$(hostname)/netdata with user: netdata and password you set \e[0m"
