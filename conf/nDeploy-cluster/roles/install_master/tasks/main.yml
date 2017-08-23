@@ -15,6 +15,7 @@
    - redhat-lsb-core
    - stunnel
    - redis
+   - haproxy
 
 - name: Install MySQL-python
   pip:

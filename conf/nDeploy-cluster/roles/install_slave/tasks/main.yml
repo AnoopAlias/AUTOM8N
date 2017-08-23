@@ -20,6 +20,7 @@
    - redhat-lsb-core
    - stunnel
    - redis
+   - haproxy
 
 - name: Install XtendWeb cluster slave rpm package
   yum: name={{ item }} enablerepo=ndeploy,epel state=present
