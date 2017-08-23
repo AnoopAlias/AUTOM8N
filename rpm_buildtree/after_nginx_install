@@ -12,6 +12,9 @@ fi
 if [ ! -f /etc/nginx/conf.d/main_custom_include.conf ] ; then
 	touch /etc/nginx/conf.d/main_custom_include.conf
 fi
+if [ ! -f /etc/nginx/conf.d/pagespeed_cache.conf ] ; then
+	echo 'pagespeed RedisServer "localhost:6379";' >> /etc/nginx/conf.d/pagespeed_cache.conf
+fi
 if [ ! -d /etc/nginx/ssl ] ; then
 	mkdir /etc/nginx/ssl
 fi
