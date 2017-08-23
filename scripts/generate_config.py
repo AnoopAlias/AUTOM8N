@@ -655,6 +655,8 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
             if subdir_backend_category == 'PROXY':
                 if subdir_backend_version == 'railo_tomcat':
                     railo_vhost_add_tomcat(domain_server_name, document_root, *serveralias_list)
+                elif backend_version == 'java_tomcat':
+                    java_vhost_add_tomcat(domain_server_name, document_root, *serveralias_list)
                 elif subdir_backend_version == 'railo_resin':
                     railo_vhost_add_resin(kwargs.get('configuser'), domain_server_name, document_root, *serveralias_list)
             elif subdir_backend_category == 'PHP':
