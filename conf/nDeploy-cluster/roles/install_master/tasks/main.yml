@@ -26,3 +26,6 @@
   file: path=/etc/nginx/{{ item }} state=directory
   with_items:
     - "{{ groups['ndeployslaves'] }}"
+
+- name: Fix /root/.my.cnf quotes
+  shell: /opt/nDeploy/scripts/fix_mysql_cnf_quotes.py

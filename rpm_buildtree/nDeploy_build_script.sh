@@ -17,12 +17,12 @@ rsync -av ../PHPfpmSelector/ nDeploy-pkg-centos7/opt/nDeploy/PHPfpmSelector/
 
 cd nDeploy-pkg
 mkdir opt/nDeploy/lock
-fpm -s dir -t rpm -C ../nDeploy-pkg --vendor "Anoop P Alias" --version ${NDEPLOY_VERSION} --iteration ${RPM_ITERATION}.el6 -d python-psutil -d python-inotify -d python-jinja2 -d python-simplejson -d python-argparse -d PyYAML -d python-lxml -a noarch -m anoopalias01@gmail.com -e --description "nDeploy cPanel plugin" --url http://anoopalias.github.io/XtendWeb/ --after-install ../after_ndeploy_install --before-remove ../after_ndeploy_uninstall --name nDeploy .
+fpm -s dir -t rpm -C ../nDeploy-pkg --vendor "Anoop P Alias" --version ${NDEPLOY_VERSION} --iteration ${RPM_ITERATION}.el6 -d python-psutil -d python-inotify -d python-jinja2 -d python-simplejson -d python-argparse -d PyYAML -d python-lxml -d python-configparser -a noarch -m anoopalias01@gmail.com -e --description "nDeploy cPanel plugin" --url http://anoopalias.github.io/XtendWeb/ --after-install ../after_ndeploy_install --before-remove ../after_ndeploy_uninstall --name nDeploy .
 rsync -av nDeploy-* root@autom8n.com:/usr/share/nginx/autom8n/CentOS/6/x86_64/
 
 cd ..
 cd nDeploy-pkg-centos7
 mkdir opt/nDeploy/lock
-fpm -s dir -t rpm -C ../nDeploy-pkg-centos7 --vendor "Anoop P Alias" --version ${NDEPLOY_VERSION} --iteration ${RPM_ITERATION}.el7 -d python-psutil -d python-inotify -d python-jinja2 -d python-simplejson -d python-argparse -d PyYAML -d python-lxml -a noarch -m anoopalias01@gmail.com -e --description "nDeploy cPanel plugin" --url http://anoopalias.github.io/XtendWeb/ --after-install ../after_ndeploy_install --before-remove ../after_ndeploy_uninstall --name nDeploy .
+fpm -s dir -t rpm -C ../nDeploy-pkg-centos7 --vendor "Anoop P Alias" --version ${NDEPLOY_VERSION} --iteration ${RPM_ITERATION}.el7 -d python-psutil -d python-inotify -d python-jinja2 -d python-simplejson -d python-argparse -d PyYAML -d python-lxml -d python-configparser -a noarch -m anoopalias01@gmail.com -e --description "nDeploy cPanel plugin" --url http://anoopalias.github.io/XtendWeb/ --after-install ../after_ndeploy_install --before-remove ../after_ndeploy_uninstall --name nDeploy .
 rsync -av nDeploy-* root@autom8n.com:/usr/share/nginx/autom8n/CentOS/7/x86_64/
 cd ..
