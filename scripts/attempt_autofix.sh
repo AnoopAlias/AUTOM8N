@@ -8,11 +8,12 @@ fi
 ##Attempt to re-generate all nginx config
 touch /opt/nDeploy/conf/skip_nginx_reload
 touch /opt/nDeploy/conf/skip_php-fpm_reload
+touch /opt/nDeploy/conf/skip_tomcat_reload
 
 echo -e '\e[93m Attempting to regenerate all nginx conf  \e[0m'
 for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1);do echo "ConfGen:: $CPANELUSER" && nice --adjustment=15 /opt/nDeploy/scripts/generate_config.py $CPANELUSER;done
 
-rm -f /opt/nDeploy/conf/skip_nginx_reload /opt/nDeploy/conf/skip_php-fpm_reload
+rm -f /opt/nDeploy/conf/skip_nginx_reload /opt/nDeploy/conf/skip_php-fpm_reload /opt/nDeploy/conf/skip_tomcat_reload
 
 echo -e '\e[93m Attempting to regenerate  nginx default conf  \e[0m'
 /opt/nDeploy/scripts/generate_default_vhost_config.py
