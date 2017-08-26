@@ -14,3 +14,6 @@ if [ $? -ne 0 ];then
   # Reloading nginx
   /usr/sbin/nginx -s reload
 fi
+
+# Try autocorrecting Unison file sync issues
+/opt/nDeploy/scripts/unison_filesync_repair.py
