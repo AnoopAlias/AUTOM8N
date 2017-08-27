@@ -6,7 +6,7 @@
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
 NGINX_VERSION="1.13.3"
-NGINX_RPM_ITER="1.el${OSVERSION}"
+NGINX_RPM_ITER="3.el${OSVERSION}"
 NPS_VERSION="1.12.34.2-stable"
 MY_RUBY_VERSION="2.4.1"
 PASSENGER_VERSION="5.1.8"
