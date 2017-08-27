@@ -19,6 +19,8 @@
 
 - name: Stop MySQL service
   service: name=mysqld state=stopped enabled=no
+  when:
+    - inventory_hostname != groups['ndeploydbslave'][0]
   ignore_errors: yes
 
 
