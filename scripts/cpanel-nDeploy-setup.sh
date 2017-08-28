@@ -11,7 +11,10 @@ echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
 /opt/nDeploy/scripts/attempt_autofix.sh
 /usr/local/cpanel/libexec/tailwatchd --restart
-
+if [ -f /etc/cpanel/ea4/is_ea4 ];then
+	yum -y install ea-apache24-mod_remoteip
+	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || echo 'Include "/etc/nginx/conf.d/httpd_mod_remoteip.include"' >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf
+fi
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
 /scripts/rebuildhttpdconf
 /scripts/restartsrv httpd
