@@ -7,4 +7,5 @@ extension=redis.so
 
 ; Redis session store backend
 session.save_handler = redis
-session.save_path = "{% for host in groups['ndeployslaves'] %}tcp://127.0.0.1:950{{ loop.index }}?database=2&timeout=3,{% endfor %}tcp://127.0.0.1:6379?database=2&timeout=3"
+session.save_path = tcp://127.0.0.1:7000?database=2
+; session.save_path = "{% for host in groups['ndeployslaves'] %}tcp://127.0.0.1:950{{ loop.index }}?database=2&timeout=3,{% endfor %}tcp://127.0.0.1:6379?database=2&timeout=3"
