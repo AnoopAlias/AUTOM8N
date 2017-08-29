@@ -52,7 +52,11 @@ templateVars = {"CPIPLIST": cpanel_ip_list,
                 "SLAVEIPLIST": slaveiplist
                 }
 # Generate default_server.conf
-default_server_template = templateEnv.get_template('default_server.conf.j2')
+if os.path.isfile(installation_path+'/conf/default_server_local.conf.j2'):
+    my_default_server_conf = 'default_server_local.conf.j2'
+else:
+    my_default_server_conf = 'default_server.conf.j2'
+default_server_template = templateEnv.get_template(my_default_server_conf)
 default_server_config = default_server_template.render(templateVars)
 with codecs.open('/etc/nginx/conf.d/default_server.conf', 'w', 'utf-8') as default_server_config_file:
     default_server_config_file.write(default_server_config)
