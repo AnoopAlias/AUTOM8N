@@ -37,7 +37,7 @@ sed -i 's/# bind to = \*/bind to = 127.0.0.1:19999/' /opt/netdata/etc/netdata/ne
 
 service netdata restart
 
-if [ ! -d /opt/nDeploy/conf/nDeploy-cluster ];then
+if [ -d /opt/nDeploy/conf/nDeploy-cluster ];then
   /opt/nDeploy/scripts/generate_default_vhost_config.py
 else
   /opt/nDeploy/scripts/generate_default_vhost_config_slave.py
