@@ -2,21 +2,29 @@
 #Author: Anoop P Alias
 
 
-yum -y install autoconf automake curl gcc git libmnl-devel libuuid-devel lm-sensors make nc pkgconfig python python-psycopg2 PyYAML zlib-devel python-pip
+yum -y install iproute autoconf automake curl gcc git libmnl-devel libuuid-devel lm-sensors make nc nmap-ncat pkgconfig python python-psycopg2 PyYAML zlib-devel python-pip
 pip install MySQL-python
-curl -Ss 'https://raw.githubusercontent.com/firehol/netdata-demo-site/master/install-required-packages.sh' >/tmp/kickstart.sh && bash /tmp/kickstart.sh -i netdata-all
 
-git clone https://github.com/firehol/netdata.git --depth=1
-cd netdata
-./netdata-installer.sh --install /opt
+### netdata compile from source ###
+# curl -Ss 'https://raw.githubusercontent.com/firehol/netdata-demo-site/master/install-required-packages.sh' >/tmp/kickstart.sh && bash /tmp/kickstart.sh -i netdata-all
+
+# git clone https://github.com/firehol/netdata.git --depth=1
+# cd netdata
+# ./netdata-installer.sh --install /opt
+### netdata compile from source ###
+
+### netdata static build ###
+bash <(curl -Ss https://my-netdata.io/kickstart-static64.sh)
+### netdata static build ###
 
 echo -e '\e[93m Please set a password for user netdata below \e[0m'
 
-htpasswd -c /etc/nginx/conf.d/netdata.password netdata
+printf "netdata:$(openssl passwd -apr1)" > /etc/nginx/conf.d/netdata.password
 chmod 400 /etc/nginx/conf.d/netdata.password
 chown nobody /etc/nginx/conf.d/netdata.password
 
 
+wget -O /opt/netdata/etc/netdata/netdata.conf http://127.0.0.1:19999/netdata.conf
 echo -e '\e[93m setting up nginx httpd and mysql monitoring \e[0m'
 mysql -e "create user 'netdata'@'localhost';"
 mysql -e "grant usage on *.* to 'netdata'@'localhost' with grant option;"
@@ -38,5 +46,3 @@ fi
 nginx -s reload
 
 echo -e "\e[93m You can access netdata at https://$(hostname)/netdata with user: netdata and password you set \e[0m"
-
-echo -e "\e[93m Do not remove /root/netdata folder as it is required for software upgrade and uninstall \e[0m"
