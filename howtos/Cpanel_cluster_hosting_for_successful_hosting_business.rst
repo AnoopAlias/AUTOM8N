@@ -46,7 +46,7 @@ All you need is 2 servers or virtual machines that are physically seperated (lik
 Self Mmanaged  - If you have expertise in managing a cPanel server - All you need is 2 license of XtendWeb software (16 USD per month) and request a free
 setup of the cluster
 
-Managed Single Cluster -  You can get a fully managed and monitored cPanel web cluster fom XtendWeb at 75 USD
+Managed Single Cluster -  You can get a fully managed and monitored cPanel web cluster from AUTOM8N at 75 USD
 
 Managed Multiple Cluster - If you have requirements for more than one managed cluster , our 150 USD SME plan allows you to have any
 number of managed ,monitored clusters at a flat fee of 150 USD per month
