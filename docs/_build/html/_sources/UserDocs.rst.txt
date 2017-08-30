@@ -34,3 +34,15 @@ clickjacking_protect - Disallow Iframe to be loaded in your website from externa
 disable_contenttype_sniffing - Read https://www.keycdn.com/support/what-is-mime-sniffing/ - Keeping this option [ enabled ] is good
 
 xss_filter -Read https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection - Keeping this option [ enabled ] is good
+
+Custom nginx configuration
+--------------------------------
+
+To enable custom configuration ,please upload configuration to be placed in the server{} section of your nginx configuration
+in the application's root folder (eg; /home/user/public_html/nginx.conf)
+
+Once done. You can activate the config from
+
+cPanel >> XtendWeb >> Server Settings >> user_config
+
+set to [enabled]

@@ -123,6 +123,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#enable-directory-listing">Enable Directory listing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#content-optimization">Content Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#security-headers">Security Headers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-nginx-configuration">Custom nginx configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -276,6 +277,14 @@ All rdirect types can be easily setup from XtendWeb plugin</p>
 <p>clickjacking_protect - Disallow Iframe to be loaded in your website from external domains . Disable this feature if you have external iframe</p>
 <p>disable_contenttype_sniffing - Read <a class="reference external" href="https://www.keycdn.com/support/what-is-mime-sniffing/">https://www.keycdn.com/support/what-is-mime-sniffing/</a> - Keeping this option [ enabled ] is good</p>
 <p>xss_filter -Read <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection</a> - Keeping this option [ enabled ] is good</p>
+</div>
+<div class="section" id="custom-nginx-configuration">
+<h2>Custom nginx configuration<a class="headerlink" href="#custom-nginx-configuration" title="Permalink to this headline">¶</a></h2>
+<p>To enable custom configuration ,please upload configuration to be placed in the server{} section of your nginx configuration
+in the application&#8217;s root folder (eg; /home/user/public_html/nginx.conf)</p>
+<p>Once done. You can activate the config from</p>
+<p>cPanel &gt;&gt; XtendWeb &gt;&gt; Server Settings &gt;&gt; user_config</p>
+<p>set to [enabled]</p>
 </div>
 </div>
 
