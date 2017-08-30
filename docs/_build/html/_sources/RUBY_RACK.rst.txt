@@ -1,6 +1,9 @@
 Setting up Ruby(Rack app)
 ==========================
 
+.. note:: XtendWeb includes a GUI installer of additional modules required for passenger project. Please place a Gemfile file in the application root
+          and XtendWeb can install the requirements specified in this file
+
 1. Enable the Phusion Passenger module
 ::
 
@@ -47,5 +50,3 @@ We can install any version of ruby using rvm
   bundle install --path vendor/bundle
   or
   bundle install --deployment
-
-.. disqus::

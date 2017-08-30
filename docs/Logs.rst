@@ -27,5 +27,3 @@ php errors will be logged to the webserver's error log
 
   PHPROOT/var/log/php-fpm.log
   eg : /opt/remi/php56/root/var/log/php-fpm.log
-
-.. disqus::

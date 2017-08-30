@@ -93,6 +93,9 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#example-resource-calculations">Example resource calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-slaves">The Slaves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-master">The Master</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">mod_remoteip</a></li>
@@ -168,7 +171,8 @@
 <li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion or Java</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tomcat_Java.html">Tomcat Java backend</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
@@ -241,22 +245,8 @@
             
   <div class="section" id="mod-remoteip">
 <h1>mod_remoteip<a class="headerlink" href="#mod-remoteip" title="Permalink to this headline">¶</a></h1>
-<p>One of the backend XtendWeb support is PROXY to httpd .
-You must setup mod_remoteip to provide httpd with the correct IP of clients and modify apache logging settings
-<code class="docutils literal"><span class="pre">yum</span> <span class="pre">-y</span> <span class="pre">install</span> <span class="pre">ea-apache24-mod_remoteip</span></code></p>
-<p>XtendWeb automatically generates the remoteIP configuration when the plugin is enabled
-You just need to include the file in Apache httpd as below</p>
-<ol class="arabic simple">
-<li>Navigate to WHM Home »Service Configuration »Apache Configuration »Include Editor &gt; Scroll down to &#8220;Pre VirtualHost Include&#8221;</li>
-</ol>
-<p>2. Select the version of Apache you wish to customize and add the following</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Include</span> <span class="s2">&quot;/etc/nginx/conf.d/httpd_mod_remoteip.include&quot;</span>
-</pre></div>
+<p>mod_remoteip is automatically setup when you enable the plugin</p>
 </div>
-<ol class="arabic simple" start="3">
-<li>Click Update , which will then make the above settings active</li>
-</ol>
-<div data-disqus-identifier="mod_remoteip" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
 
 
            </div>
@@ -308,7 +298,6 @@ You just need to include the file in Apache httpd as below</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/disqus.js"></script>
 
   
 

@@ -35,7 +35,7 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Documentation" href="index.html"/>
         <link rel="next" title="Application templates" href="Application_template.html"/>
-        <link rel="prev" title="Setting up ColdFusion or Java" href="ColdFusion_Java.html"/>
+        <link rel="prev" title="Tomcat Java backend" href="Tomcat_Java.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -93,6 +93,8 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#example-resource-calculations">Example resource calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-slaves">The Slaves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-master">The Master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
 </ul>
 </li>
@@ -169,7 +171,8 @@
 <li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion or Java</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tomcat_Java.html">Tomcat Java backend</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul class="current">
@@ -243,13 +246,11 @@
   <div class="section" id="administration-of-xtendweb-plugin">
 <h1>Administration of XtendWeb plugin<a class="headerlink" href="#administration-of-xtendweb-plugin" title="Permalink to this headline">¶</a></h1>
 <p>The end user has an intuitive UI for managing domains hosted on cPanel.</p>
-<p>Sysadmins can manipulate server wide settings using various scripts accessible from command line</p>
+<p>Sysadmins can manipulate server wide settings and restart services using various scripts accessible from command line</p>
 <p>The ultimate goal of XtendWeb is to be an extensible nginx config management system that is easy for the sysadmins and enduser alike .</p>
-<p>Usually a Sysadmin will need to have minimal inetraction with the system. Following are some commands that may be required to run and a brief description of what it does.</p>
-<p>Mostly only the below commands will be needed by the sysAdmin</p>
 <div class="section" id="quick-reference-of-scripts-for-sysadmins">
 <h2>Quick Reference of scripts for sysadmins<a class="headerlink" href="#quick-reference-of-scripts-for-sysadmins" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Enable or disable the plugin .Once you disable plugin the system will act as it was prior to plugin install</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Enable or disable the plugin .</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">disable</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
 
@@ -294,19 +295,22 @@
 <div class="section" id="config-generation-logic-and-customizations">
 <h2>Config Generation logic and customizations<a class="headerlink" href="#config-generation-logic-and-customizations" title="Permalink to this headline">¶</a></h2>
 <p>Config generation is based on Templates and YAML settings (  Jinja2 templating engine and YAML settings )
-For generating a single nginx vhost following files are parsed in order .The customization options are mentioned beside them with CUSTOMIZE
-If the customized files are present ,it is used instead of original
+For generating a single nginx vhost following files are parsed in order .The customization filename are mentioned beside them in brackets
+If the file mentioned in brackets is present, it is used instead of the Xtendweb package provided one
 A Sysadmin mostly only need to add /edit application templates and this use minimum template logic for easy manipulation</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">domain</span><span class="o">-</span><span class="n">data</span><span class="o">/</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span> <span class="c1"># User settings for domain</span>
 <span class="c1"># if above file is not present ,it is created with default settings from</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_default</span><span class="o">.</span><span class="n">yaml</span> <span class="c1"># CUSTOMIZE /opt/nDeploy/conf/domain_data_default_local.yaml</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_suspended</span><span class="o">.</span><span class="n">yaml</span> <span class="c1"># CUSTOMIZE /opt/nDeploy/conf/domain_data_suspended_local.yaml</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_default</span><span class="o">.</span><span class="n">yaml</span>  <span class="c1"># ( /opt/nDeploy/conf/domain_data_default_local.yaml )</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">domain_data_suspended</span><span class="o">.</span><span class="n">yaml</span> <span class="c1"># ( /opt/nDeploy/conf/domain_data_suspended_local.yaml )</span>
 
 <span class="c1"># Following file generate /etc/nginx/sites-enabled/domain.com.conf</span>
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">server</span><span class="o">.</span><span class="n">j2</span> <span class="c1"># CUSTOMIZE /opt/nDeploy/conf/server_local.j2</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">server</span><span class="o">.</span><span class="n">j2</span> <span class="c1"># ( /opt/nDeploy/conf/server_local.j2 )</span>
 
 <span class="c1"># The application template defined in domain_data setting file is used for generating /etc/nginx/sites-enabled/domain.com.include</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">APPTEMPLATENAME</span><span class="o">.</span><span class="n">j2</span>
+
+<span class="c1"># Default vhost template</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">default_server</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">j2</span> <span class="c1"># ( /opt/nDeploy/conf/default_server_local.conf.j2 )</span>
 </pre></div>
 </div>
 </div>
@@ -317,7 +321,7 @@ A Sysadmin mostly only need to add /edit application templates and this use mini
 <span class="ow">and</span> <span class="n">uncomment</span> <span class="n">the</span> <span class="n">include</span> <span class="n">line</span> <span class="k">as</span> <span class="n">mentioned</span>
 
 <span class="c1"># Uncomment following to enable DOS mitigation server wide</span>
-<span class="c1"># include /etc/nginx/conf.d/dos_mitigate.conf;</span>
+<span class="c1"># include /etc/nginx/conf.d/dos_mitigate_systemwide.conf;</span>
 
 <span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">reload</span>
 </pre></div>
@@ -360,8 +364,9 @@ The upgrade must be done manually by running the following commands</p>
 </div>
 <div class="section" id="temporarily-disable-the-plugin">
 <h2>Temporarily disable the plugin<a class="headerlink" href="#temporarily-disable-the-plugin" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><code class="docutils literal"><span class="pre">/opt/nDeploy/scripts/cpanel-nDeploy-setup.sh</span> <span class="pre">disable</span></code></div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">disable</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="uninstall-the-plugin">
 <h2>Uninstall the plugin<a class="headerlink" href="#uninstall-the-plugin" title="Permalink to this headline">¶</a></h2>
@@ -376,11 +381,12 @@ The upgrade must be done manually by running the following commands</p>
 We advise that you remove the php-fpm selector functionality .Folowing command does it</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">httpd</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">uninstall</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cpanel</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">uninstall_plugin</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">PHPfpmSelector</span>
 </pre></div>
 </div>
 <p>Once the above is done, you must use WHM &gt;&gt; Home »Software »MultiPHP Manager to set all domains to PHP-FPM
 as PHP-FPM will greatly improve your system performance.</p>
-<div data-disqus-identifier="Administration of XtendWeb plugin" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
 </div>
 
 
@@ -393,7 +399,7 @@ as PHP-FPM will greatly improve your system performance.</p>
         <a href="Application_template.html" class="btn btn-neutral float-right" title="Application templates" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ColdFusion_Java.html" class="btn btn-neutral" title="Setting up ColdFusion or Java" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Tomcat_Java.html" class="btn btn-neutral" title="Tomcat Java backend" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -433,7 +439,6 @@ as PHP-FPM will greatly improve your system performance.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/disqus.js"></script>
 
   
 

@@ -10,7 +10,3 @@ Also since the protocol is enabled on a per IP basis. enabling at least on one v
 on the same IP address. Thus user level control is guarenteed only for domains with dedicated IP address.
 
 You can test websites online using : https://tools.keycdn.com/http2-test
-
-
-
-.. disqus::

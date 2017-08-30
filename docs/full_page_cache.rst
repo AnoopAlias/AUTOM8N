@@ -16,7 +16,7 @@ for each and every page request. One of the mechanism to make the dependancy les
    need any special changes to webserver config and works purely by modifying application code.
 
 
-.. tip:: What is good for cache? - A blog or e-newspaper or mostly static content served by a dynamic app like wordpress/drupal.
+.. note:: What is good for cache? - A blog or e-newspaper or mostly static content served by a dynamic app like wordpress/drupal.
          What is not good to be cached? - An ecommerce shopping cart , personal non static content etc
 
 

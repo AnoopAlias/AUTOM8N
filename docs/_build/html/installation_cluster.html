@@ -93,6 +93,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#example-resource-calculations">Example resource calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-slaves">The Slaves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-master">The Master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
 </ul>
 </li>
@@ -169,7 +171,8 @@
 <li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion or Java</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tomcat_Java.html">Tomcat Java backend</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
@@ -306,35 +309,46 @@ Coupled with the simplicity and intuitiveness of cPanel control panel , XtendWeb
 </div>
 <div class="section" id="xtendweb-cluster-setup">
 <h2>XtendWeb cluster setup<a class="headerlink" href="#xtendweb-cluster-setup" title="Permalink to this headline">¶</a></h2>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Install CSF firewall on both servers and whitelist each others IP for access</p>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">The server&#8217;s hostname must be valid and should resolve correctly(at least from inside the master and slaves).
-It is recommended that they resolve correctly on the internet</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Install CSF firewall on both servers and whitelist each others IP for access . The server&#8217;s hostname must be valid and should resolve correctly as many cluster components reply on hostname to connect</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">As of XtendWeb 4.3.20, you will need a license for all servers(master and slaves) on the cluster.Else Installation will fail
 Please visit <a class="reference external" href="https://autom8n.com/plans.html#plans">https://autom8n.com/plans.html#plans</a> for more info</p>
 </div>
-<p><a class="reference external" href="https://support.gnusys.net/order.php?step=0&amp;productGroup=5">PURCHASE XTENDWEB LICENSE</a>.</p>
-<p>1. Install cPanel and cPanel DNS only on master and slaves respectively</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On Master</span>
-<span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span>
-
-<span class="c1">#On Slaves</span>
+</div>
+<div class="section" id="the-slaves">
+<h2>The Slaves<a class="headerlink" href="#the-slaves" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Prepare any number of servers and install cPanel DNS only on it. The slave server is auto setup by the master</span>
+<span class="c1"># So do nothing on it except install cPanel DNS only</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">root</span><span class="nd">@masters</span><span class="o">-</span><span class="n">fqdn</span>
+<span class="c1"># Login to WHM</span>
+<span class="c1"># Home »Service Configuration »Service Manager</span>
+<span class="c1"># Disable tailwatchd and all its drivers</span>
+
+<span class="c1"># Home »Server Configuration »Update Preferences</span>
+<span class="c1"># Set cPanel &amp; WHM Updates to Never Update</span>
 </pre></div>
 </div>
-<p>2. Install XtendWeb on master only</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On Master only</span>
+</div>
+<div class="section" id="the-master">
+<h2>The Master<a class="headerlink" href="#the-master" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Install cPanel</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">root</span><span class="nd">@slaves</span><span class="o">-</span><span class="n">fqdn</span>
+
+
+<span class="c1"># Login to WHM</span>
+<span class="c1"># Home »Software »MySQL/MariaDB Upgrade</span>
+<span class="c1"># Upgrade to MariaDB 10.1 (General availability)</span>
+
 <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
 <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">ndeploy4</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">6.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
-
-<span class="c1"># Purchase a license so the server can access xtendweb yum repo</span>
 
 <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span> <span class="n">nDeploy</span> <span class="c1"># For nginx as webserver</span>
    <span class="n">OR</span>
@@ -342,47 +356,18 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>  <span class="c1"># For installing Wordpress and Drupal full page cache template</span>
-</pre></div>
-</div>
-<p>3. On Master server Login to WHM and upgrade to MariaDB 10.1</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span># On Master only
-Home »Software »MySQL/MariaDB Upgrade
-Select MariaDB 10.1 (General availability)
-and click &quot;Next&quot;
-Ensure Upgrade completes successfully
-
-Ensure password in /root/.my.cnf is enclosed in single quotes (eg password=&#39;mysecurepass&#39;)
-Unquoted and double-quoted password can sometimes cause issues
-</pre></div>
-</div>
-<p>4. Setup password-less ssh login between master and slaves</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#On master</span>
-<span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span>
-<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">root</span><span class="nd">@slaves</span><span class="o">-</span><span class="n">fqdn</span>
-
-<span class="c1">#On slaves</span>
-<span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span>
-<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">root</span><span class="nd">@masters</span><span class="o">-</span><span class="n">fqdn</span>
-
-<span class="c1">#Ensure passwordless login works for root</span>
-</pre></div>
-</div>
-<p>5. Install Ansible on master</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On master only</span>
 <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span> <span class="n">libffi</span><span class="o">-</span><span class="n">devel</span> <span class="n">python</span><span class="o">-</span><span class="n">paramiko</span> <span class="n">python</span><span class="o">-</span><span class="n">jinja2</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">ansible</span>
-</pre></div>
-</div>
-<p>6. Setup the hosts file on master</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On a 2 server setup with default ssh port you just need to replace master and slave FQDN&#39;s in the sample file</span>
+
+
+
 <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
 <span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="n">hosts</span><span class="o">.</span><span class="n">sample</span> <span class="n">hosts</span>
 
 <span class="c1"># Edit the hosts file</span>
 
 <span class="n">cat</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span><span class="o">/</span><span class="n">hosts</span>
-
+<span class="c1">############################################################</span>
 <span class="p">[</span><span class="n">ndeployslaves</span><span class="p">]</span>  <span class="c1"># section containing all your slaves</span>
 <span class="n">slave1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="n">ansible_port</span><span class="o">=</span><span class="mi">22</span> <span class="n">server_id</span><span class="o">=</span><span class="mi">2</span> <span class="n">webserver</span><span class="o">=</span><span class="n">nginx</span>
 <span class="c1"># ansible_port is ssh port</span>
@@ -396,20 +381,21 @@ Unquoted and double-quoted password can sometimes cause issues
 <span class="n">slave1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="n">ansible_port</span><span class="o">=</span><span class="mi">22</span> <span class="n">server_id</span><span class="o">=</span><span class="mi">2</span> <span class="n">webserver</span><span class="o">=</span><span class="n">nginx</span>
 <span class="c1"># A slave can act as the DB slave too</span>
 <span class="c1"># In a 2 server setup use the same entry here as in [ndeployslaves]</span>
-<span class="c1"># In multi-slave setups, use one of the slaves as DB slave.</span>
-</pre></div>
-</div>
-<p>7. Setup Cluster on master</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># It is recommended that you run the command below in screen as it may take time to complete</span>
+<span class="c1"># In multi-slave setups, use any one of the slaves as DB slave.</span>
+<span class="c1">#############################################################</span>
+
+<span class="c1"># It is recommended that you run the command below in screen as it may take time to complete</span>
 <span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">hosts</span> <span class="n">cluster</span><span class="o">.</span><span class="n">yml</span>
+
+<span class="c1"># Once the Ansible play completes.The cluster is fully setup</span>
 </pre></div>
 </div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
 <p class="last">If you see &#8220;ERROR! Unexpected Exception: &#8216;module&#8217; object has no attribute &#8216;HAVE_DECL_MPZ_POWM_SEC&#8217;&#8221; on centos6 do
 yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="reference external" href="https://github.com/ansible/ansible/issues/276">https://github.com/ansible/ansible/issues/276</a> )</p>
 </div>
-<p>8. (optional) Add Additonal IP mapping if required</p>
+<p>(optional) Add Additonal IP mapping if required</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Cluster setup automatically maps servers main IP&#39;s</span>
 <span class="c1"># If you are using cloud by DigitalOcean ,Linode etc the automatic mapping is enough</span>
 <span class="c1"># If you have multiple IP on master and slave, map additional IP&#39;s using command below</span>
@@ -417,7 +403,7 @@ yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="referen
 <span class="n">usage</span><span class="p">:</span> <span class="n">update_cluster_ipmap</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">slave_hostname</span> <span class="n">ip_here</span> <span class="n">remote_ip</span>
 </pre></div>
 </div>
-<p>9. Quirks for which we need a human intervention sometimes!</p>
+<p>Quirks for which we need a human intervention sometimes!</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># The machine sometimes acts weird.</span>
 <span class="c1"># Here are some weird behavior we notice that need manual intervention</span>
 <span class="c1"># We are still investigating reason for these and hopefully it will be fixed soon</span>
@@ -430,60 +416,45 @@ yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="referen
 <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">postfix</span>
 </pre></div>
 </div>
-<p>The cluster including PHP app server is fully setup now and you can start adding accounts.Cluster automatically sets up DNS clustering
-and you should use master and slaves as the nameservers for the domain to ensure DNS LoadBalancing.</p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p>Disable tailwatchd and all its drivers on slave DNS only server&#8217;s as chkservd can cause troubles in cluster operation.</p>
-<p class="last">Disable all cronjobs including upcp cron in slaves crontab ( upcp sometimes removes non-cpanel components set up by the cluster )</p>
-</div>
 </div>
 <div class="section" id="cpanel-horizontal-scaling-adding-more-web-servers">
 <h2>cPanel Horizontal scaling . Adding more web servers<a class="headerlink" href="#cpanel-horizontal-scaling-adding-more-web-servers" title="Permalink to this headline">¶</a></h2>
-<p>XtendWeb clusters important feature is horizontal scalability. Horizontal scalability helps a web application to scale up and down horizontally .</p>
+<p>XtendWeb cluster&#8217;s important feature is horizontal scalability. Horizontal scalability helps a web application to scale up and down horizontally .</p>
 <p>This is useful when a website has a termendous amount of traffic that one web server cannot handle. With Xtendweb all you need to add a new full processing</p>
 <p>capable webserver is as below</p>
-<p>1. Prepare a fresh server and install cPanel DNS only on it</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span>
-</pre></div>
-</div>
-<p>2. Once DNS only install is complete , Login to WHM and disable All tailwatchd drivers and MySQL service</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Home »Service Configuration »Service Manager
-
-Disable tailwatchd( all drivers)
-Disable MySQL Server and its monitoring
-</pre></div>
-</div>
-<p>3. On master server</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
-<span class="n">vim</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span><span class="o">/</span><span class="n">hosts</span>
-
-<span class="c1"># Ensure the new servers hostname is added under [ndeployslaves]</span>
-</pre></div>
-</div>
-<p>4. On new host generate ssh-key and copy it to master and on master copy its key to the new slave</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># On new slave</span>
+<p>The new Slave</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Prepare a fresh server and install cPanel DNS only on it</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">securedownloads</span><span class="o">.</span><span class="n">cpanel</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span> <span class="o">&amp;&amp;</span> <span class="n">sh</span> <span class="n">latest</span><span class="o">-</span><span class="n">dnsonly</span>
 <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span>
 <span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">root</span><span class="nd">@masters</span><span class="o">-</span><span class="n">fqdn</span>
+<span class="c1"># Login to WHM</span>
+<span class="c1"># Home »Service Configuration »Service Manager</span>
+<span class="c1"># Disable tailwatchd and all its drivers</span>
 
-<span class="c1"># On master</span>
-<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">root</span><span class="nd">@new</span><span class="o">-</span><span class="n">slaves</span><span class="o">-</span><span class="n">fqdn</span>
+<span class="c1"># Home »Server Configuration »Update Preferences</span>
+<span class="c1"># Set cPanel &amp; WHM Updates to Never Update</span>
 </pre></div>
 </div>
-<p>5. Rerun the Ansible play which will setup the new host in the cluster</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
-<span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">hosts</span> <span class="n">cluster</span><span class="o">.</span><span class="n">yml</span>
-</pre></div>
-</div>
-<p>6. Setup additional grants for mysql pertaining to the new host</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>On master server login to WHM
+<p>The Master</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>cd /opt/nDeploy/conf/nDeploy-cluster
+vim /opt/nDeploy/conf/nDeploy-cluster/hosts
+
+# Ensure the new servers hostname is added under [ndeployslaves]
+
+ssh-copy-id root@new-slaves-fqdn
+
+cd /opt/nDeploy/conf/nDeploy-cluster
+ansible-playbook -i ./hosts cluster.yml
+
+
+On master server login to WHM
 Home »SQL Services »Additional MySQL Access Hosts
 
 # Click on the &quot;click here&quot; link towards the end of the below message
 Important: Users must log into cPanel and use the Remote MySQL feature to set up access from these hosts. After you have done this, if you would like to configure access from all users’ accounts click here.
 </pre></div>
 </div>
-<p>Thats it. Your new host will replicate and start serving the website oce the /home data is replicated.</p>
+<p>Thats it. Your new host will start serving the website once the /home data is replicated.You can shutdown nginx on this host until data is replicated</p>
 <p>Adding more webservers to horizontally scale a webapp will roughly take 10 minutes ( assuming a server with cPanel DNS only installed is used)</p>
 </div>
 </div>

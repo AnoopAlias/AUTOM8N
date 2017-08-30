@@ -93,6 +93,9 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#example-resource-calculations">Example resource calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-slaves">The Slaves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-master">The Master</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -168,7 +171,8 @@
 <li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion or Java</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tomcat_Java.html">Tomcat Java backend</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
@@ -242,15 +246,9 @@
   <div class="section" id="xtendweb-standalone-installation">
 <h1>XtendWeb standalone installation<a class="headerlink" href="#xtendweb-standalone-installation" title="Permalink to this headline">¶</a></h1>
 <p>XtendWeb Requirements: cPanel 60.0+ server with CentOS6/CentOS7/CloudLinux6/CloudLinux7 64 bit OS installed .</p>
-<p>We recommend CentOS7 over CloudLinux. XtendWeb support chrooted PHP (similar to cageFS) and SimpleR plugin can provide application level and user level resource isolation</p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">XtendWeb can use either Nginx or OpenResty as the web server</p>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">CentOS7 is the best and recommended OS. XtendWeb can filter out unwanted requests,complete requests with minimal resource requirement
-and with the SimpleR WHM plugin set a safety valve like limit to prevent extreme resource starvation</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">CentOS7/EA4/PHP-FPM is recommended</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -270,9 +268,7 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">cpanel</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="n">enable</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>  <span class="c1"># For installing Wordpress and Drupal full page cache template</span>
-
-<span class="c1"># For resource control using systemd (centOS7 only)</span>
+<span class="c1"># For resource control using systemd on CentOS7</span>
 <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">simpler</span><span class="o">-</span><span class="n">nDeploy</span>  <span class="c1">#Do NOT do this on CloudLinux</span>
 
 <span class="c1"># For installing netdata server health monitoring</span>
@@ -285,7 +281,7 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Redis Full page cache for Wordpress and Drupal is not compatible with PageSpeed - <a class="reference external" href="https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ">https://groups.google.com/forum/#!msg/ngx-pagespeed-discuss/vzSq8XQPGmM/9mE11D-9U8YJ</a></p>
+<p class="last">Redis Full page cache for Wordpress and Drupal is not compatible with PageSpeed and ModSec v3</p>
 </div>
 <div class="section" id="application-servers">
 <h2>Application servers<a class="headerlink" href="#application-servers" title="Permalink to this headline">¶</a></h2>
@@ -303,7 +299,12 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_hhvm_setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
-<p>2.3. Install Phusion Passenger App server for Python/Ruby/NodeJS</p>
+<p>2.3. Install Full Page Redis cache template for WordPress and Drupal</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup_additional_templates</span><span class="o">.</span><span class="n">sh</span>
+<span class="c1"># Disable PageSpeed and ModSec on domains using Full page cache</span>
+</pre></div>
+</div>
+<p>2.4. Install Phusion Passenger App server for Python/Ruby/NodeJS</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">nginx</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Nginx</span>
 <span class="n">OR</span>
 <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">install</span> <span class="n">openresty</span><span class="o">-</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">module</span><span class="o">-</span><span class="n">passenger</span> <span class="c1"># Openresty</span>
@@ -311,8 +312,8 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
 <p class="last">If you modify WHM service certificate run /opt/nDeploy/scripts/generate_default_vhost_config.py &amp;&amp; nginx -s reload</p>
 </div>
 <p>3. Best effort switch to native nginx on as many domains as possible . Wordpress, Joomla , Drupal and Magento webapps is targeted</p>
@@ -346,11 +347,11 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">openresty</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">components</span><span class="o">.</span><span class="n">html</span>
 </pre></div>
 </div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">There are no additional configurations required for the loadable modules. Users can control the functionality from XtendWeb UI</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are no additional configurations required for the loadable modules.XtendWeb activates the functionality if the rpm is found installed</p>
 </div>
-<div data-disqus-identifier="XtendWeb standalone installation" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
 </div>
 
 
@@ -403,7 +404,6 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/disqus.js"></script>
 
   
 

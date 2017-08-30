@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Partner Webhosts &mdash; Documentation</title>
+  <title>Tomcat Java backend &mdash; Documentation</title>
   
 
   
@@ -34,8 +34,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Documentation" href="index.html"/>
-        <link rel="next" title="Setting up HHVM" href="HHVM.html"/>
-        <link rel="prev" title="Project Sponsors" href="Project_sponsors.html"/>
+        <link rel="next" title="Administration of XtendWeb plugin" href="XtendWeb_Administration.html"/>
+        <link rel="prev" title="Setting up ColdFusion" href="ColdFusion_Java.html"/>
     <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 
@@ -139,7 +139,7 @@
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Support and Development</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="Support.html">Support</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Support.html#if-you-have-already-purchased-a-support-plan">If you have already purchased a support plan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Support.html#bug-report">Bug Report</a></li>
@@ -150,10 +150,10 @@
 <li class="toctree-l2"><a class="reference internal" href="Project_sponsors.html#credits">CREDITS</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Partner Webhosts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partner_webhosts.html">Partner Webhosts</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Application servers</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="HHVM.html">Setting up HHVM</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="HHVM.html#on-centos7-cloudlinux7">On CentOS7 / CloudLinux7</a></li>
 </ul>
@@ -172,7 +172,7 @@
 <li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tomcat_Java.html">Tomcat Java backend</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tomcat Java backend</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
@@ -231,7 +231,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Partner Webhosts</li>
+    <li>Tomcat Java backend</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -243,19 +243,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="partner-webhosts">
-<h1>Partner Webhosts<a class="headerlink" href="#partner-webhosts" title="Permalink to this headline">¶</a></h1>
-<p>Following webhost support Clustered cPanel shared, reseller, VPS, Cloud hosting and Nginx High Performance hosting</p>
-<p><a class="reference external" href="https://conexcol.net.co/">CONEXCOL CLOUD</a>   Company Location: SOUTH AMERICA</p>
-<p><a class="reference external" href="http://wepushbuttons.com.au/">WE PUSH BUTTONS</a>  Company Location: AUSTRALIA</p>
-<p><a class="reference external" href="https://alphanext.co/">ALPHANEXT</a> Company Location: SOUTH EAST ASIA</p>
-<p><a class="reference external" href="https://www.yoorshop.fr">YOORSHOP</a>  Company Location: FRANCE,EUROPE</p>
-<p><a class="reference external" href="http://www.insiderhosting.com/">INSIDER HOSTING</a> Company Location: NORTH AMERICA</p>
-<p><a class="reference external" href="https://tunedhosting.com/">TUNEDHOSTING</a> Company Location: NORTH AMERICA</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Wish to list your webhosting business here?. Contact <a class="reference external" href="mailto:anoop&#37;&#52;&#48;gnusys&#46;net">anoop<span>&#64;</span>gnusys<span>&#46;</span>net</a></p>
+  <div class="section" id="tomcat-java-backend">
+<h1>Tomcat Java backend<a class="headerlink" href="#tomcat-java-backend" title="Permalink to this headline">¶</a></h1>
+<p>To setup a Tomcat web application server do</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Install tomcat</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">tomcat</span>
+
+<span class="c1">#On CentOS6 edit file /etc/sysconfig/tomcat and change</span>
+<span class="c1"># What user should run tomcat</span>
+<span class="n">TOMCAT_USER</span><span class="o">=</span><span class="s2">&quot;root&quot;</span>
+
+<span class="c1"># On CentOS7</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">tomcat</span><span class="o">.</span><span class="n">service</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">tomcat</span><span class="o">.</span><span class="n">service</span>
+<span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">tomcat</span><span class="o">.</span><span class="n">service</span>
+<span class="c1"># change under [Service]</span>
+<span class="n">User</span><span class="o">=</span><span class="n">root</span>
+<span class="n">Group</span><span class="o">=</span><span class="n">root</span>
+
+<span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">tomcat</span>
+
+
+<span class="c1"># Register template</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_profiles</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">root</span> <span class="n">main</span> <span class="n">PROXY</span> <span class="mf">1007.</span><span class="n">j2</span> <span class="s2">&quot;A Java App&quot;</span>
+
+<span class="c1"># Register backend</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">update_backend</span><span class="o">.</span><span class="n">py</span> <span class="n">add</span> <span class="n">PROXY</span> <span class="n">java_tomcat</span> <span class="mi">8080</span>
+</pre></div>
 </div>
+<p>Users can select PROXY as backend and select &#8220;A Java App&#8221; as template to enable java support.</p>
 </div>
 
 
@@ -265,10 +281,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="HHVM.html" class="btn btn-neutral float-right" title="Setting up HHVM" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="XtendWeb_Administration.html" class="btn btn-neutral float-right" title="Administration of XtendWeb plugin" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Project_sponsors.html" class="btn btn-neutral" title="Project Sponsors" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ColdFusion_Java.html" class="btn btn-neutral" title="Setting up ColdFusion" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

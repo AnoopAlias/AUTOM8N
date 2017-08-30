@@ -93,6 +93,9 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-requirements">XtendWeb Cluster Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#example-resource-calculations">Example resource calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#xtendweb-cluster-setup">XtendWeb cluster setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-slaves">The Slaves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-master">The Master</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -168,7 +171,8 @@
 <li class="toctree-l1"><a class="reference internal" href="RUBY_RACK.html">Setting up Ruby(Rack app)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NodeJS.html">Setting up NodeJS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Meteor.html">Setting up Meteor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion or Java</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ColdFusion_Java.html">Setting up ColdFusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tomcat_Java.html">Tomcat Java backend</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Administration &amp; Monitoring</span></p>
 <ul>
@@ -243,8 +247,8 @@
 <h1>brotli_compression<a class="headerlink" href="#brotli-compression" title="Permalink to this headline">¶</a></h1>
 <p>Brotli is a relatively new compression format that provides 20% more compression over deflate</p>
 <p>Ref: <a class="reference external" href="http://google-opensource.blogspot.in/2015/09/introducing-brotli-new-compression.html">http://google-opensource.blogspot.in/2015/09/introducing-brotli-new-compression.html</a></p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
 <p class="last">Brotli on the fly compression is CPU intensive</p>
 </div>
 <p>To enable brotli do</p>
@@ -254,7 +258,7 @@
 <p>Once the module is installed brotli can be turned on/off from the plugin user interface in cPanel</p>
 <p>You can check if brotli is enabled using : <a class="reference external" href="https://tools.keycdn.com/brotli-test">https://tools.keycdn.com/brotli-test</a></p>
 <p>All newer Versions of Chrome,FireFox,Opera support brotli and prefers brotli over other compression if enabled</p>
-<div data-disqus-identifier="brotli_compression" data-disqus-shortname="ndeploy-readthedocs-io" id="disqus_thread"></div></div>
+</div>
 
 
            </div>
@@ -306,7 +310,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/disqus.js"></script>
 
   
 

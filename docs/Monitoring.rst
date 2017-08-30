@@ -118,7 +118,3 @@ The Following check_mk local check can monitor unison file sync
 
 
 Health of websites and application servers must be monitored in all master and slave cPanel servers in a cluster setup.
-
-
-
-.. disqus::

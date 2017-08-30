@@ -3,20 +3,17 @@ Administration of XtendWeb plugin
 
 The end user has an intuitive UI for managing domains hosted on cPanel.
 
-Sysadmins can manipulate server wide settings using various scripts accessible from command line
+Sysadmins can manipulate server wide settings and restart services using various scripts accessible from command line
 
 The ultimate goal of XtendWeb is to be an extensible nginx config management system that is easy for the sysadmins and enduser alike .
 
-Usually a Sysadmin will need to have minimal inetraction with the system. Following are some commands that may be required to run and a brief description of what it does.
-
-Mostly only the below commands will be needed by the sysAdmin
 
 Quick Reference of scripts for sysadmins
 -----------------------------------------------
 
 ::
 
-  # Enable or disable the plugin .Once you disable plugin the system will act as it was prior to plugin install
+  # Enable or disable the plugin .
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh disable
   /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh enable
 
@@ -61,22 +58,25 @@ Config Generation logic and customizations
 ------------------------------------------------
 
 Config generation is based on Templates and YAML settings (  Jinja2 templating engine and YAML settings )
-For generating a single nginx vhost following files are parsed in order .The customization options are mentioned beside them with CUSTOMIZE
-If the customized files are present ,it is used instead of original
+For generating a single nginx vhost following files are parsed in order .The customization filename are mentioned beside them in brackets
+If the file mentioned in brackets is present, it is used instead of the Xtendweb package provided one
 A Sysadmin mostly only need to add /edit application templates and this use minimum template logic for easy manipulation
 
 ::
 
   /opt/nDeploy/domain-data/domain.com # User settings for domain
   # if above file is not present ,it is created with default settings from
-  /opt/nDeploy/conf/domain_data_default.yaml # CUSTOMIZE /opt/nDeploy/conf/domain_data_default_local.yaml
-  /opt/nDeploy/conf/domain_data_suspended.yaml # CUSTOMIZE /opt/nDeploy/conf/domain_data_suspended_local.yaml
+  /opt/nDeploy/conf/domain_data_default.yaml  # ( /opt/nDeploy/conf/domain_data_default_local.yaml )
+  /opt/nDeploy/conf/domain_data_suspended.yaml # ( /opt/nDeploy/conf/domain_data_suspended_local.yaml )
 
   # Following file generate /etc/nginx/sites-enabled/domain.com.conf
-  /opt/nDeploy/conf/server.j2 # CUSTOMIZE /opt/nDeploy/conf/server_local.j2
+  /opt/nDeploy/conf/server.j2 # ( /opt/nDeploy/conf/server_local.j2 )
 
   # The application template defined in domain_data setting file is used for generating /etc/nginx/sites-enabled/domain.com.include
   /opt/nDeploy/conf/APPTEMPLATENAME.j2
+
+  # Default vhost template
+  /opt/nDeploy/conf/default_server.conf.j2 # ( /opt/nDeploy/conf/default_server_local.conf.j2 )
 
 
 Layer7(Application layer) DDOS mitigation
@@ -89,7 +89,7 @@ Layer7(Application layer) DDOS mitigation
   and uncomment the include line as mentioned
 
   # Uncomment following to enable DOS mitigation server wide
-  # include /etc/nginx/conf.d/dos_mitigate.conf;
+  # include /etc/nginx/conf.d/dos_mitigate_systemwide.conf;
 
   nginx -s reload
 
@@ -141,7 +141,9 @@ In case you are migrating the entire cPanel accounts to a new server.
 Temporarily disable the plugin
 -------------------------------
 
-  ``/opt/nDeploy/scripts/cpanel-nDeploy-setup.sh disable``
+::
+
+  /opt/nDeploy/scripts/cpanel-nDeploy-setup.sh disable
 
 Uninstall the plugin
 ---------------------
@@ -160,9 +162,7 @@ We advise that you remove the php-fpm selector functionality .Folowing command d
 
   /opt/nDeploy/scripts/init_backends.py httpd-php-uninstall
   /opt/nDeploy/scripts/attempt_autofix.sh
+  /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/PHPfpmSelector
 
 Once the above is done, you must use WHM >> Home »Software »MultiPHP Manager to set all domains to PHP-FPM
 as PHP-FPM will greatly improve your system performance.
-
-
-.. disqus::

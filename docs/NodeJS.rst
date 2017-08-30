@@ -1,6 +1,9 @@
 Setting up NodeJS
 ==================
 
+.. note:: XtendWeb includes a GUI installer of additional modules required for passenger project. Please place a package.json file in the application root
+          and XtendWeb can install the requirements specified in this file
+
 1. Enable the Phusion Passenger module
 ``/usr/nginx/scripts/nginx-passenger-setup.sh``
 
@@ -33,5 +36,3 @@ https://www.phusionpassenger.com/library/deploy/nginx/deploy/nodejs/
 
 Additonal Environment variables can be set per application by the cPanel user using custom application templates
 https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_env_var
-
-.. disqus::

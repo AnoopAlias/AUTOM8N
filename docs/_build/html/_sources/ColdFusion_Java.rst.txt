@@ -1,10 +1,10 @@
-Setting up ColdFusion or Java
+Setting up ColdFusion 
 ==============================
 
 There are 2 ways to setup ColdFusion supported by XtendWeb
 
 
-.. tip:: Railo project is probably dead . Please check ￼http://lucee.org/ or http://openbd.org/ for a Railo replacement
+.. note:: Railo project is probably dead . Please check ￼http://lucee.org/ or http://openbd.org/ for a Railo replacement
 
 
 **Using Tomcat**
@@ -169,5 +169,3 @@ Install resin or resin pro and deploy railo war to the ROOT context and add it a
 ::
 
   root@cpanel1 [~]# /opt/nDeploy/scripts/update_backend.py add PROXY railo_resin 8080
-
-.. disqus::

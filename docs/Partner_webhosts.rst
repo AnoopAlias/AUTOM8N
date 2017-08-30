@@ -14,5 +14,7 @@ Following webhost support Clustered cPanel shared, reseller, VPS, Cloud hosting 
 
 `INSIDER HOSTING <http://www.insiderhosting.com/>`_ Company Location: NORTH AMERICA
 
+`TUNEDHOSTING <https://tunedhosting.com/>`_ Company Location: NORTH AMERICA
 
-.. tip:: Wish to list your webhosting business here?. Contact anoop@gnusys.net
+
+.. note:: Wish to list your webhosting business here?. Contact anoop@gnusys.net

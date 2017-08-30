@@ -55,6 +55,7 @@ XtendWeb and SimpleR
    NodeJS
    Meteor
    ColdFusion_Java
+   Tomcat_Java
 
 .. toctree::
    :maxdepth: 2

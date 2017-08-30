@@ -102,7 +102,3 @@ php-fpm lets users configure settings of type PHP_INI_PERDIR and PHP_INI_USER in
 Ref: http://php.net/manual/en/configuration.file.per-user.php
 
 the settings can be provided in ini format(same as php.ini) and the file must be named .user.ini
-
-
-
-.. disqus::

@@ -1,10 +1,13 @@
 Setting up Python (WSGI app)
 =============================
 
+.. note:: XtendWeb includes a GUI installer of additional modules required for passenger project. Please place a requirements.txt file in the application root
+          and XtendWeb can install the requirements specified in this file
+
 1. Enable the Phusion Passenger module
 ``/usr/nginx/scripts/nginx-passenger-setup.sh``
 
-2. To install additional python 
+2. To install additional python
 ::
 
   root@cpanel1 [~]# pythonz install 3.4.2
@@ -44,5 +47,3 @@ https://www.phusionpassenger.com/library/deploy/nginx/deploy/python/
 
 Additonal Environment variables can be set per user using custom application templates
 https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_env_var
-
-.. disqus::

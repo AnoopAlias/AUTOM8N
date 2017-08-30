@@ -1,7 +1,7 @@
 Simple Resource controller
 =======================================
 
-SimpleR stands for Simple Resource isolator and use systemd in modern systems to isolate CPU/Memory/IO on a per process basis
+SimpleR stands for Simple Resource controller and use systemd in modern systems to isolate CPU/Memory/IO on a per process basis
 
 SimpleR can also group php-fpm and HHVM application servers running under user to a reseller.slice and individually limit the resource at a reseller level
 
