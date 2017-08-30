@@ -15,4 +15,5 @@ A U T O M 8 N
   systemd
   data_migration
   find_command
+  Cpanel_cluster_hosting_for_successful_hosting_business
   grant_access_to_autom8n_sysadmin
