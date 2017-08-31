@@ -8,12 +8,12 @@
 - name: Start HAPROXY on slave
   service: name=haproxy enabled=yes state=started
 
-- name: change PageSpeed cache backend port
-  lineinfile:
-    path: /etc/nginx/conf.d/pagespeed_cache.conf
-    state: present
-    regexp: '^pagespeed RedisServer'
-    line: 'pagespeed RedisServer "localhost:7000";'
+#- name: change PageSpeed cache backend port
+#  lineinfile:
+#    path: /etc/nginx/conf.d/pagespeed_cache.conf
+#    state: present
+#    regexp: '^pagespeed RedisServer'
+#    line: 'pagespeed RedisServer "localhost:7000";'
 
 - name: restart nginx on slave
   service: name=nginx enabled=yes state=restarted

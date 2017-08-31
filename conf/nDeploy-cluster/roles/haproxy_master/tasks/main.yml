@@ -8,12 +8,12 @@
 - name: Start HAPROXY on master
   service: name=haproxy enabled=yes state=started
 
-- name: Remove PageSpeed cache backend port
-  lineinfile:
-    path: /etc/nginx/conf.d/pagespeed_cache.conf
-    state: present
-    regexp: '^pagespeed RedisServer'
-    line: 'pagespeed RedisServer "localhost:7000";'
+#- name: Remove PageSpeed cache backend port
+#  lineinfile:
+#    path: /etc/nginx/conf.d/pagespeed_cache.conf
+#    state: present
+#    regexp: '^pagespeed RedisServer'
+#    line: 'pagespeed RedisServer "localhost:7000";'
 
 - name: restart nginx on master
   service: name=nginx enabled=yes state=restarted
