@@ -123,6 +123,7 @@
 <li class="toctree-l2"><a class="reference internal" href="UserDocs.html#enable-directory-listing">Enable Directory listing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="UserDocs.html#content-optimization">Content Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="UserDocs.html#security-headers">Security Headers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#custom-nginx-configuration">Custom nginx configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -405,14 +406,14 @@ yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="referen
 </div>
 <p>Quirks for which we need a human intervention sometimes!</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># The machine sometimes acts weird.</span>
-<span class="c1"># Here are some weird behavior we notice that need manual intervention</span>
+<span class="c1"># Here are some weird behavior we notice that need manual intervention Just once after cluster setup</span>
 <span class="c1"># We are still investigating reason for these and hopefully it will be fixed soon</span>
 
 <span class="c1"># Unison doesn&#39;t start automatically on master after cluster setup</span>
 <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">ndeploy_unison</span>
 <span class="n">systemctl</span> <span class="n">start</span> <span class="n">ndeploy_unison</span>
 
-<span class="c1">#PostFix is not running on slave( see tip below and disable checksrvd and upcp cron)</span>
+<span class="c1">#PostFix is not running on slave</span>
 <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">postfix</span>
 </pre></div>
 </div>

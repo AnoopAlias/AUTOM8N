@@ -43,7 +43,7 @@ server used for creating virtual machines .You can start offering clustered high
 
 All you need is 2 servers or virtual machines that are physically seperated (like for example vm's from 2 different physical server)
 
-Self Mmanaged  - If you have expertise in managing a cPanel server - All you need is 2 license of XtendWeb software (16 USD per month) and request a free
+Self Managed  - If you have expertise in managing a cPanel server - All you need is 2 license of XtendWeb software (16 USD per month) and request a free
 setup of the cluster
 
 Managed Single Cluster -  You can get a fully managed and monitored cPanel web cluster from AUTOM8N at 75 USD

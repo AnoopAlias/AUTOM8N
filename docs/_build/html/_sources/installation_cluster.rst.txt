@@ -173,14 +173,14 @@ Quirks for which we need a human intervention sometimes!
 ::
 
   # The machine sometimes acts weird.
-  # Here are some weird behavior we notice that need manual intervention
+  # Here are some weird behavior we notice that need manual intervention Just once after cluster setup
   # We are still investigating reason for these and hopefully it will be fixed soon
 
   # Unison doesn't start automatically on master after cluster setup
   systemctl stop ndeploy_unison
   systemctl start ndeploy_unison
 
-  #PostFix is not running on slave( see tip below and disable checksrvd and upcp cron)
+  #PostFix is not running on slave
   systemctl restart postfix
 
 
