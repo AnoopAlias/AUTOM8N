@@ -2,7 +2,7 @@
 #Author: Anoop P Alias
 
 NDEPLOY_VERSION="4.3"
-RPM_ITERATION="25"
+RPM_ITERATION="26"
 
 rm -rf simpler
 rsync -av ../simpler/ ./simpler/
