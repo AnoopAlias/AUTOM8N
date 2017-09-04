@@ -30,9 +30,9 @@ def cluster_ensure_arecord(zone_name, hostname, domain_ip):
         connect_server_dict = cluster_data_yaml_parsed.get(server)
         ipmap_dict = connect_server_dict.get("ipmap")
         remote_domain_ipv4 = ipmap_dict.get(domain_ip)
-        zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
+        zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
         zone_datafeed = zonedump.stdout.read()
-        zonedump_parsed = yaml.load(zone_datafeed)
+        zonedump_parsed = json.loads(zone_datafeed)
         thezone = zonedump_parsed['data']['zone'][0]
         resource_record = thezone['record']
         for rr in resource_record:
