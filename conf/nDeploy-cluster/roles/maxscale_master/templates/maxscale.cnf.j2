@@ -20,7 +20,7 @@ persistmaxtime=3600
 #slave
 [server2]
 type=server
-address={{ hostvars[groups['ndeploydbslave'][0]]['ansible_default_ipv4']['address'] }}
+address={{ hostvars[groups['ndeploydbslave'][0]]['mainip'] }}
 port=13306
 protocol=MySQLBackend
 ssl=required

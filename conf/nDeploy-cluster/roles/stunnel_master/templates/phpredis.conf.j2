@@ -10,7 +10,7 @@ connect = 127.0.0.1:6379
 [redis-client{{ loop.index }}]
 client = yes
 accept = 127.0.0.1:950{{ loop.index }}
-connect = {{ hostvars[host]['ansible_default_ipv4']['address'] }}:6379
+connect = {{ hostvars[host]['mainip'] }}:6379
 CAfile = /etc/stunnel/redis-server.crt
 verify = 4
 {% endfor %}

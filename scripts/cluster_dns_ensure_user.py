@@ -28,7 +28,7 @@ def cluster_ensure_arecord(zone_name, hostname, domain_ip):
     """Function that adds necessary A record of slave server"""
     for server in serverlist:
         connect_server_dict = cluster_data_yaml_parsed.get(server)
-        ipmap_dict = connect_server_dict.get("ipmap")
+        ipmap_dict = connect_server_dict.get("dnsmap")
         remote_domain_ipv4 = ipmap_dict.get(domain_ip)
         zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
         zone_datafeed = zonedump.stdout.read()

@@ -1,8 +1,8 @@
 {% for host in groups['ndeploymaster'] %}
 {{ host }}
-{{ hostvars[host]['ansible_default_ipv4']['address'] }}
+{{ hostvars[host]['mainip'] }}
 {% endfor %}
 {% for host in groups['ndeployslaves'] %}
 {{ host }}
-{{ hostvars[host]['ansible_default_ipv4']['address'] }}
+{{ hostvars[host]['mainip'] }}
 {% endfor %}

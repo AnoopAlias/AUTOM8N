@@ -5,8 +5,8 @@
     path: "{{ item }}"
     state: absent
   with_items:
-    - xtendweb_{{ ansible_default_ipv4['address'] }}
-    - xtendweb_{{ ansible_default_ipv4['address'] }}-dnsrole
+    - xtendweb_{{ mainip }}
+    - xtendweb_{{ mainip }}-dnsrole
     - /root/xtendweb_mysql_replication.sql
     -  /root/xtendweb_mysql_all.sql
     - /root/xtendweb_accesshash_temp
