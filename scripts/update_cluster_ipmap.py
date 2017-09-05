@@ -27,10 +27,17 @@ def update_ip_map(server, service, iphere, ipthere):
         if server in cluster_data_yaml_parsed.keys():
             connect_server_dict = cluster_data_yaml_parsed.get(server)
             if service == 'web':
-                ipmap_dict = connect_server_dict.get("ipmap")
+                if 'ipmap' in connect_server_dict:
+                    ipmap_dict = connect_server_dict.get("ipmap")
+                    ipmap_dict[iphere] = ipthere
+                else:
+                    connect_server_dict['ipmap'] = {ip_here: remote_ip}
             elif service == 'dns':
-                ipmap_dict = connect_server_dict.get("dnsmap")
-            ipmap_dict[iphere] = ipthere
+                if 'dnsmap' in connect_server_dict:
+                    dnsmap_dict = connect_server_dict.get("dnsmap")
+                    dnsmap_dict[iphere] = ipthere
+                else:
+                    connect_server_dict['dnsmap'] = {ip_here: remote_ip}
             with open(cluster_config_file, 'w') as yaml_file:
                 yaml_file.write(yaml.dump(cluster_data_yaml_parsed, default_flow_style=False))
         else:
