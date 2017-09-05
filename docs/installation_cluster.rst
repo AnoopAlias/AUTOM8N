@@ -132,16 +132,17 @@ The Master
   cat /opt/nDeploy/conf/nDeploy-cluster/hosts
   ############################################################
   [ndeployslaves]  # section containing all your slaves
-  slave1.example.com ansible_port=22 server_id=2 webserver=nginx
+  slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=y.y.y.y
   # ansible_port is ssh port
   # server_id must be unique for each server
   # webserver can be nginx or openresty
+  # mainip = the servers main ip address(external IP in a NAT-ed environment)
 
   [ndeploymaster]  # section containing masters FQDN .Only one entry should be there
-  master.example.com ansible_port=22 ansible_connection=local server_id=1 webserver=nginx
+  master.example.com ansible_port=22 ansible_connection=local server_id=1 webserver=nginx mainip=x.x.x.x
 
   [ndeploydbslave] # This section has the DB slave. Only one entry should be there
-  slave1.example.com ansible_port=22 server_id=2 webserver=nginx
+  slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=y.y.y.y
   # A slave can act as the DB slave too
   # In a 2 server setup use the same entry here as in [ndeployslaves]
   # In multi-slave setups, use any one of the slaves as DB slave.
@@ -166,7 +167,10 @@ The Master
   # If you are using cloud by DigitalOcean ,Linode etc the automatic mapping is enough
   # If you have multiple IP on master and slave, map additional IP's using command below
   /opt/nDeploy/scripts/update_cluster_ipmap.py
-  usage: update_cluster_ipmap.py [-h] slave_hostname ip_here remote_ip
+  usage: update_cluster_ipmap.py [-h] slave_hostname service ip_here remote_ip
+  service can have value web|dns
+  In a NAT-ed system service web should have the internal ip(lan ip) mapping
+  while service dns should have the external ip mapping
 
 
 Quirks for which we need a human intervention sometimes!
