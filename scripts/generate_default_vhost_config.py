@@ -6,6 +6,7 @@ import os
 import jinja2
 import codecs
 import yaml
+import socket
 
 
 __author__ = "Anoop P Alias"
@@ -17,6 +18,7 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 
+myhostname = socket.gethostname()
 iplist_json = json.loads(subprocess.Popen(['/usr/local/cpanel/bin/whmapi1', 'listips', '--output=json'], stdout=subprocess.PIPE).communicate()[0])
 data_dict = iplist_json.get('data')
 ip_list = data_dict.get('ip')
@@ -49,7 +51,8 @@ templateEnv = jinja2.Environment(loader=templateLoader)
 templateVars = {"CPIPLIST": cpanel_ip_list,
                 "MAINIP": mainip,
                 "CPSRVDSSL": cpsrvdsslfile,
-                "SLAVEIPLIST": slaveiplist
+                "SLAVEIPLIST": slaveiplist,
+                "MYHOSTNAME": myhostname
                 }
 # Generate default_server.conf
 if os.path.isfile(installation_path+'/conf/default_server_local.conf.j2'):
