@@ -19,7 +19,7 @@ proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
 
-proxy_pass http://{{ CPANELIP }}:{{ UPSTREAM_PORT }};
+proxy_pass http://{{ APPSERVERIP }}:{{ UPSTREAM_PORT }};
 proxy_redirect off;
 proxy_set_header Host $host;
 proxy_set_header X-Forwarded-Host $host;

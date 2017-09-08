@@ -268,6 +268,21 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
     cpanel_ipv4 = json_parsed_cpaneldomain.get('ip')
+    if os.path.isfile('/var/cpanel/cpnat'):
+        with open('/var/cpanel/cpnat') as f:
+            content = f.readlines()
+        content = [x.strip() for x in content]
+        if content:
+            appserver_ipv4 = cpanel_ipv4
+            for line in content:
+                internalip, externalip = line.split()
+                if internalip == cpanel_ipv4:
+                    appserver_ipv4 = externalip
+                    break
+        else:
+            appserver_ipv4 = cpanel_ipv4
+    else:
+        appserver_ipv4 = cpanel_ipv4
     domain_home = json_parsed_cpaneldomain.get('homedir')
     document_root = json_parsed_cpaneldomain.get('documentroot')
     diff_dir = document_root.replace(domain_home, "")
@@ -506,6 +521,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "REDIRECTALIASES": redirect_aliases,
                     "REDIRECTALIASES_LIST": serveralias_list_new,
                     "CPANELIP": cpanel_ipv4,
+                    "APPSERVERIP": appserver_ipv4,
                     "CPIPVSIX": ipv6_addr,
                     "IPVSIX": hasipv6,
                     "HTTP2": http2,
@@ -598,6 +614,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     # We generate the app config from template next
     apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
                        "CPANELIP": cpanel_ipv4,
+                       "APPSERVERIP": appserver_ipv4,
                        "DOCUMENTROOT": document_root,
                        "CONFIGDOMAINNAME": kwargs.get('configdomain'),
                        "HOMEDIR": domain_home,
@@ -674,6 +691,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                                      "SUBDIR": subdir,
                                      "SUBDIRAPPS": subdir_apps_uniq,
                                      "CPANELIP": cpanel_ipv4,
+                                     "APPSERVERIP": appserver_ipv4,
                                      "SSL_OFFLOAD": ssl_offload,
                                      "CPANELIP": cpanel_ipv4,
                                      "DOCUMENTROOT": document_root,
