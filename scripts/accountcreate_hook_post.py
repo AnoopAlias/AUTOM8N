@@ -33,11 +33,11 @@ domain_data_file = installation_path+"/domain-data/"+cpaneldomain
 if not os.path.isfile(domain_data_file):
     if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
         TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
-    shutil.copyfile(TEMPLATE_FILE, domain_data_file)
-    cpuser_uid = pwd.getpwnam(cpaneluser).pw_uid
-    cpuser_gid = grp.getgrnam(cpaneluser).gr_gid
-    os.chown(domain_data_file, cpuser_uid, cpuser_gid)
-    os.chmod(domain_data_file, 0o660)
+        shutil.copyfile(TEMPLATE_FILE, domain_data_file)
+        cpuser_uid = pwd.getpwnam(cpaneluser).pw_uid
+        cpuser_gid = grp.getgrnam(cpaneluser).gr_gid
+        os.chown(domain_data_file, cpuser_uid, cpuser_gid)
+        os.chmod(domain_data_file, 0o660)
 user_shell = pwd.getpwnam(cpaneluser).pw_shell
 # If nDeploy cluster is enabled we need to add users,DNS entry for the same
 if os.path.exists(cluster_config_file):
