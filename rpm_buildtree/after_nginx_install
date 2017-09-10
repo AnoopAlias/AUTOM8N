@@ -34,6 +34,4 @@ chgrp nobody /var/log/nginx/modsecurity
 
 echo -e '\e[93m ########################################################################### \e[0m'
 echo -e '\e[93m #                      A U T O M 8 N . C O M                              # \e[0m'
-echo -e '\e[93m #                 For  server or cluster support plans                    # \e[0m'
-echo -e '\e[93m #             Visit https://autom8n.com/plans.html#plans                  # \e[0m'
 echo -e '\e[93m ########################################################################### \e[0m'
