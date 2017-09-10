@@ -113,6 +113,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">cPanel server analytics using netdata</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#monitor-exim-using-netdata">Monitor exim using netdata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#monitor-dovecot-using-netdata">Monitor Dovecot using netdata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#autoupdate-netdata">Autoupdate netdata</a></li>
 </ul>
 </li>
 </ul>
@@ -123,6 +124,7 @@
 <li class="toctree-l2"><a class="reference internal" href="UserDocs.html#enable-directory-listing">Enable Directory listing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="UserDocs.html#content-optimization">Content Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="UserDocs.html#security-headers">Security Headers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#custom-nginx-configuration">Custom nginx configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -179,6 +181,7 @@
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#quick-reference-of-scripts-for-sysadmins">Quick Reference of scripts for sysadmins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#config-generation-logic-and-customizations">Config Generation logic and customizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automating-config-setting-based-on-cpanel-package">Automating config setting based on cPanel package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
@@ -326,6 +329,13 @@
 </div>
 <p>Restart netdata so that it can pick up dovecot monitoring</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">restart</span> <span class="n">netdata</span> <span class="o">||</span> <span class="n">service</span> <span class="n">netdata</span> <span class="n">restart</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="autoupdate-netdata">
+<h2>Autoupdate netdata<a class="headerlink" href="#autoupdate-netdata" title="Permalink to this headline">¶</a></h2>
+<p>You can add the following to crontab to autoupdate netadata binary . Once in a week etc would be a good frequency</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">kickstart</span><span class="o">-</span><span class="n">static64</span><span class="o">.</span><span class="n">sh</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">my</span><span class="o">-</span><span class="n">netdata</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">kickstart</span><span class="o">-</span><span class="n">static64</span><span class="o">.</span><span class="n">sh</span> <span class="o">&amp;&amp;</span> <span class="n">bash</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">kickstart</span><span class="o">-</span><span class="n">static64</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">non</span><span class="o">-</span><span class="n">interactive</span>
 </pre></div>
 </div>
 </div>

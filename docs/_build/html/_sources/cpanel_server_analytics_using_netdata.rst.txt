@@ -105,3 +105,12 @@ Restart netdata so that it can pick up dovecot monitoring
 ::
 
   systemctl restart netdata || service netdata restart
+
+
+Autoupdate netdata
+--------------------------------
+
+You can add the following to crontab to autoupdate netadata binary . Once in a week etc would be a good frequency
+::
+
+  wget -O /root/kickstart-static64.sh https://my-netdata.io/kickstart-static64.sh && bash /root/kickstart-static64.sh --non-interactive

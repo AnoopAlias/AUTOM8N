@@ -113,6 +113,7 @@
 <li class="toctree-l1"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html">cPanel server analytics using netdata</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-exim-using-netdata">Monitor exim using netdata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-dovecot-using-netdata">Monitor Dovecot using netdata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#autoupdate-netdata">Autoupdate netdata</a></li>
 </ul>
 </li>
 </ul>
@@ -123,6 +124,7 @@
 <li class="toctree-l2"><a class="reference internal" href="UserDocs.html#enable-directory-listing">Enable Directory listing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="UserDocs.html#content-optimization">Content Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="UserDocs.html#security-headers">Security Headers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="UserDocs.html#custom-nginx-configuration">Custom nginx configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -179,6 +181,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Administration of XtendWeb plugin</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#quick-reference-of-scripts-for-sysadmins">Quick Reference of scripts for sysadmins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#config-generation-logic-and-customizations">Config Generation logic and customizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#automating-config-setting-based-on-cpanel-package">Automating config setting based on cPanel package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
@@ -313,6 +316,25 @@ A Sysadmin mostly only need to add /edit application templates and this use mini
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">default_server</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">j2</span> <span class="c1"># ( /opt/nDeploy/conf/default_server_local.conf.j2 )</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="automating-config-setting-based-on-cpanel-package">
+<h2>Automating config setting based on cPanel package<a class="headerlink" href="#automating-config-setting-based-on-cpanel-package" title="Permalink to this headline">¶</a></h2>
+<p>A server administrator can set an nginx configuration based on cPanel package .</p>
+<ol class="arabic">
+<li><p class="first">Prepare the &#8220;Server Settings&#8221; and &#8220;App Settings&#8221; section to your requirement using an exisitng domain (eg: example.com)
+on the server</p>
+</li>
+<li><p class="first">Create a package on the server (for example &#8220;My Custom Package&#8221;)</p>
+</li>
+<li><p class="first">cp /opt/nDeploy/domain-data/example.com /opt/nDeploy/conf/domain_data_default_local_My_Custom_Package.yaml</p>
+<blockquote>
+<div><p>Or in general create a file named /opt/nDeploy/conf/domain_data_default_local_PACKAGENAME.yaml</p>
+<p>(If there are spaces in the package name use underscore instead of it)</p>
+</div></blockquote>
+</li>
+<li><p class="first">Further accounts created using the package will have default settings provided in the yaml settings file.</p>
+</li>
+</ol>
 </div>
 <div class="section" id="layer7-application-layer-ddos-mitigation">
 <h2>Layer7(Application layer) DDOS mitigation<a class="headerlink" href="#layer7-application-layer-ddos-mitigation" title="Permalink to this headline">¶</a></h2>

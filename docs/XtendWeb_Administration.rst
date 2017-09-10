@@ -79,6 +79,25 @@ A Sysadmin mostly only need to add /edit application templates and this use mini
   /opt/nDeploy/conf/default_server.conf.j2 # ( /opt/nDeploy/conf/default_server_local.conf.j2 )
 
 
+Automating config setting based on cPanel package
+--------------------------------------------------------
+
+A server administrator can set an nginx configuration based on cPanel package .
+
+1. Prepare the "Server Settings" and "App Settings" section to your requirement using an exisitng domain (eg: example.com)
+   on the server
+
+2. Create a package on the server (for example "My Custom Package")
+
+3. cp /opt/nDeploy/domain-data/example.com /opt/nDeploy/conf/domain_data_default_local_My_Custom_Package.yaml
+
+    Or in general create a file named /opt/nDeploy/conf/domain_data_default_local_PACKAGENAME.yaml
+
+    (If there are spaces in the package name use underscore instead of it)
+
+4. Further accounts created using the package will have default settings provided in the yaml settings file.
+
+
 Layer7(Application layer) DDOS mitigation
 -----------------------------------------
 
