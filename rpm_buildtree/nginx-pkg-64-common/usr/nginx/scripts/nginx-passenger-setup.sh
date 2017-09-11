@@ -10,13 +10,13 @@ fi
 if [ ! -d /usr/local/rvm/gems/ruby-RUBY_VERSION/gems/passenger-PASSENGER_VERSION/ext/nginx ] ; then
 	. /usr/local/rvm/scripts/rvm
 	rvm use ruby-RUBY_VERSION
-        /usr/local/rvm/rubies/ruby-RUBY_VERSION/bin/gem install passenger -v PASSENGER_VERSION
+        /usr/local/rvm/rubies/ruby-RUBY_VERSION/bin/gem install passenger -v PASSENGER_VERSION --no-rdoc --no-ri
         ln -s /usr/nginx/buildout /usr/local/rvm/gems/ruby-RUBY_VERSION/gems/passenger-PASSENGER_VERSION/
 fi
 echo -e '\e[93m Adding a Ruby backend for XtendWeb.  \e[0m'
 /opt/nDeploy/scripts/update_backend.py add RUBY ruby-RUBY_VERSION /usr/local/rvm/wrappers/ruby-RUBY_VERSION/ruby
 echo -e '\e[93m Installing bundler  \e[0m'
-/usr/local/rvm/rubies/ruby-RUBY_VERSION/bin/gem install bundler
+/usr/local/rvm/rubies/ruby-RUBY_VERSION/bin/gem install bundler --no-rdoc --no-ri
 
 echo -e '\e[93m Setting up Python. Grab a coffee as this is going to take a while \e[0m'
 curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
