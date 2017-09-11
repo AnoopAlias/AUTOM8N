@@ -14,7 +14,6 @@ return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
 
-
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
@@ -29,3 +28,4 @@ fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
 
 }
+{% endif %}
