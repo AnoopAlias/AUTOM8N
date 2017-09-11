@@ -363,6 +363,13 @@ The upgrade must be done manually by running the following commands</p>
 </div>
 <div class="section" id="xtendweb-cluster-upgrade">
 <h2>XtendWeb cluster upgrade<a class="headerlink" href="#xtendweb-cluster-upgrade" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are upgrading XtendWeb cluster from a version below 4.3-27 .You will need to edit the
+/opt/nDeploy/conf/nDeploy-cluster/hosts file and add mainip=ip.ip.ip.ip variable before upgrade.
+The mainip variable is the servers main IP in normal systems and the main external IP in case of a
+NAT-ed machine (eg: GCE AWS etc)</p>
+</div>
 <p>On All slaves</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">upgrade</span>
 </pre></div>

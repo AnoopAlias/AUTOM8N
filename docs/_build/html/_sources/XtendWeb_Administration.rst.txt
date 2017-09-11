@@ -131,6 +131,11 @@ The upgrade must be done manually by running the following commands
 XtendWeb cluster upgrade
 ----------------------------
 
+.. note:: If you are upgrading XtendWeb cluster from a version below 4.3-27 .You will need to edit the
+          /opt/nDeploy/conf/nDeploy-cluster/hosts file and add mainip=ip.ip.ip.ip variable before upgrade.
+          The mainip variable is the servers main IP in normal systems and the main external IP in case of a
+          NAT-ed machine (eg: GCE AWS etc)
+
 On All slaves
 
 ::

@@ -113,6 +113,7 @@
 <li class="toctree-l1"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html">cPanel server analytics using netdata</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-exim-using-netdata">Monitor exim using netdata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#monitor-dovecot-using-netdata">Monitor Dovecot using netdata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpanel_server_analytics_using_netdata.html#autoupdate-netdata">Autoupdate netdata</a></li>
 </ul>
 </li>
 </ul>
@@ -124,6 +125,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#content-optimization">Content Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#security-headers">Security Headers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#custom-nginx-configuration">Custom nginx configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-pagespeed-filters-are-active">What pagespeed filters are active?</a></li>
 </ul>
 </li>
 </ul>
@@ -180,6 +182,7 @@
 <li class="toctree-l1"><a class="reference internal" href="XtendWeb_Administration.html">Administration of XtendWeb plugin</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#quick-reference-of-scripts-for-sysadmins">Quick Reference of scripts for sysadmins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#config-generation-logic-and-customizations">Config Generation logic and customizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#automating-config-setting-based-on-cpanel-package">Automating config setting based on cPanel package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#layer7-application-layer-ddos-mitigation">Layer7(Application layer) DDOS mitigation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#upgrading-xtendweb-and-nginx">Upgrading XtendWeb and Nginx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="XtendWeb_Administration.html#xtendweb-cluster-upgrade">XtendWeb cluster upgrade</a></li>
@@ -285,6 +288,14 @@ in the application&#8217;s root folder (eg; /home/user/public_html/nginx.conf)</
 <p>Once done. You can activate the config from</p>
 <p>cPanel &gt;&gt; XtendWeb &gt;&gt; Server Settings &gt;&gt; user_config</p>
 <p>set to [enabled]</p>
+</div>
+<div class="section" id="what-pagespeed-filters-are-active">
+<h2>What pagespeed filters are active?<a class="headerlink" href="#what-pagespeed-filters-are-active" title="Permalink to this headline">¶</a></h2>
+<p>You can view the active filters using</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">H</span> <span class="s2">&quot;PageSpeedFilters: +debug&quot;</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="c1"># example.com must be substituted with your domain name</span>
+</pre></div>
+</div>
 </div>
 </div>
 

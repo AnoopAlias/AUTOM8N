@@ -46,3 +46,12 @@ Once done. You can activate the config from
 cPanel >> XtendWeb >> Server Settings >> user_config
 
 set to [enabled]
+
+What pagespeed filters are active?
+-------------------------------------------
+
+You can view the active filters using
+::
+
+  curl -H "PageSpeedFilters: +debug" https://example.com
+  # example.com must be substituted with your domain name
