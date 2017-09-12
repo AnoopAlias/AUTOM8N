@@ -15,9 +15,9 @@ clickjacking_protect: disabled
 disable_contenttype_sniffing: disabled
 xss_filter: disabled
 hsts: disabled
-dos_mitigate: disabled
+dos_mitigate: enabled
 symlink_protection: disabled
-test_cookie: disabled
+test_cookie: enabled
 naxsi: disabled
 naxsi_mode: learn
 naxsi_whitelist: none
