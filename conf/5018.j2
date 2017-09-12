@@ -19,7 +19,7 @@ rewrite ^/images_ie/?([^/]+)\.(jpe?g|png|gif)$ /js/jquery/plugins/fancybox/image
 
 location / {
 
-try_files $uri $uri/ /index.php?$args;
+try_files $uri $uri/ /index.php$is_args$args;
 
 }
 
