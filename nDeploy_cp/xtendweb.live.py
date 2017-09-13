@@ -101,6 +101,7 @@ if os.path.isfile(cluster_config_file):
             print('<span class="label label-info">'+servername+' | IN SYNC</span><br><br>')
         else:
             print('<span class="label label-warning">'+servername+' | OUT OF SYNC</span><br><br>')
+    print(('<div class="alert alert-info alert-top">Cluster REDIS <span class="label label-info">localhost:7000</span><br><br>Cluster MySQL port<span class="label label-info">localhost:3306</span><br><br>Cluster MySQL socket<span class="label label-info">/tmp/maxscale_mysql.sock</span></div>'))
 else:
     if not os.path.isfile(installation_path+'/conf/disable_cluster_warning'):
         print('<span class="label label-default">XTENDWEB : STANDALONE MODE</span><br><br>')
