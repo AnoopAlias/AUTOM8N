@@ -268,17 +268,20 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
     cpanel_ipv4 = json_parsed_cpaneldomain.get('ip')
-    if os.path.isfile('/var/cpanel/cpnat'):
-        with open('/var/cpanel/cpnat') as f:
-            content = f.readlines()
-        content = [x.strip() for x in content]
-        if content:
-            appserver_ipv4 = cpanel_ipv4
-            for line in content:
-                internalip, externalip = line.split()
-                if internalip == cpanel_ipv4:
-                    appserver_ipv4 = externalip
-                    break
+    if clusterenabled:
+        if os.path.isfile('/var/cpanel/cpnat'):
+            with open('/var/cpanel/cpnat') as f:
+                content = f.readlines()
+            content = [x.strip() for x in content]
+            if content:
+                appserver_ipv4 = cpanel_ipv4
+                for line in content:
+                    internalip, externalip = line.split()
+                    if internalip == cpanel_ipv4:
+                        appserver_ipv4 = externalip
+                        break
+            else:
+                appserver_ipv4 = cpanel_ipv4
         else:
             appserver_ipv4 = cpanel_ipv4
     else:
