@@ -1,6 +1,5 @@
 #Wordpress + FastCGI microcaching
 
-if ($http_user_agent ~ WordPress) { return 444; }
 
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
