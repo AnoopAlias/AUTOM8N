@@ -49,7 +49,7 @@ server {
         server_name _;
         access_log off;
         location / {
-
+           include /etc/nginx/conf.d/dos_mitigate.conf;
            proxy_send_timeout   90;
            proxy_read_timeout   90;
 
@@ -79,7 +79,7 @@ server {
         server_name _;
         access_log off;
         location / {
-
+           include /etc/nginx/conf.d/dos_mitigate.conf;
            proxy_send_timeout   90;
            proxy_read_timeout   90;
 
