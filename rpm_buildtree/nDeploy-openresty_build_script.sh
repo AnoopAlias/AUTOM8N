@@ -6,14 +6,14 @@
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
 OPENRESTY_VERSION="1.11.2.5"
-OPENRESTY_RPM_ITER="1.el${OSVERSION}"
-NPS_VERSION="1.12.34.2-stable"
-MY_RUBY_VERSION="2.4.1"
+OPENRESTY_RPM_ITER="2.el${OSVERSION}"
+NPS_VERSION="1.12.34.3-stable"
+MY_RUBY_VERSION="2.4.2"
 PASSENGER_VERSION="5.1.8"
 NAXSI_VERSION="http2"
 PS_NGX_EXTRA_FLAGS="--with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc"
 OPENSSL_VERSION="1.0.2l"
-LIBRESSL_VERSION="2.5.5"
+LIBRESSL_VERSION="2.6.2"
 PCRE_VERSION="8.41"
 ZLIB_VERSION="1.2.11"
 
