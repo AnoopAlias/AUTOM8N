@@ -562,7 +562,8 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "REDIRECT_URL": redirect_url,
                     "APPEND_REQUESTURI": append_requesturi,
                     "DOSMITIGATE": dos_mitigate,
-                    "LUAWAF": lua_waf
+                    "LUAWAF": lua_waf,
+                    "BACKEND_CATEGORY": backend_category
                     }
     generated_config = server_template.render(templateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:

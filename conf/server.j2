@@ -297,20 +297,20 @@ testcookie on;
 disable_symlinks if_not_owner;
 {% endif %}
 
+{% if BACKEND_CATEGORY != 'PROXY' %}
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
 }
-
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 }
-
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 }
+{% endif %}
 
 # Include NAXSI settings
 location ^~ /NaxsiRequestDenied {
@@ -584,6 +584,7 @@ testcookie on;
 disable_symlinks if_not_owner;
 {% endif %}
 
+{% if BACKEND_CATEGORY != 'PROXY' %}
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
@@ -592,11 +593,11 @@ allow all;
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 }
-
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 }
+{% endif %}
 
 # Include NAXSI settings
 location ^~ /NaxsiRequestDenied {
