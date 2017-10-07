@@ -18,4 +18,4 @@ backend be_redis
 {% for host in groups['ndeploymaster'] %}
  server master{{ loop.index }} 127.0.0.1:960{{ loop.index }} check
 {% endfor %}
- server slave{{ loop.index }} 127.0.0.1:6379 check backup
+ server slave 127.0.0.1:6379 check backup
