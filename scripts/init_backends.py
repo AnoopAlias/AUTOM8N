@@ -48,6 +48,9 @@ def control_php_fpm(trigger):
                 except KeyError:
                     os.remove("/opt/nDeploy/php-fpm.d/"+filename)
                 else:
+                    if os.path.isfile('/var/cpanel/feature_toggles/apachefpmjail'):
+                        user_home = pwd.getpwnam(user).pw_dir
+                        subprocess.call('su - '+user+' -c "touch '+user_home+'/public_html"', shell=True)
                     pass
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
             subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
