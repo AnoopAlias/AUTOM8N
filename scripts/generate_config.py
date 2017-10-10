@@ -148,6 +148,10 @@ def php_backend_add(user_name, domain_home):
         if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
             control_script = installation_path+"/scripts/init_backends.py"
             subprocess.Popen([control_script, 'reload'])
+            # Workaround for incomplete virtfs jail initialization
+            user_shell = pwd.getpwnam(user_name).pw_shell
+            if user_shell == '/usr/local/cpanel/bin/jailshell':
+                subprocess.call('su - '+user_name+' -c "touch '+domain_home+'/public_html"', shell=True)
         return
     else:
         return
