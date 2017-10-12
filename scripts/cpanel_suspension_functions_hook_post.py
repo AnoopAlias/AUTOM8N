@@ -21,6 +21,4 @@ mydict = cpjson["data"]
 hook_args = mydict["args"]
 cpaneluser = hook_args["user"]
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)  # Assuming escalateprivilege is enabled
-if os.path.exists(cluster_config_file):
-    subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
 print(("1 nDeploy:cPaneltrigger::Suspension:"+cpaneluser))
