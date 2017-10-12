@@ -3,21 +3,13 @@
 
 ##Vars
 MODSEC_VERSION="3.0"
-MODSEC_RPM_ITER="10.el7"
+MODSEC_RPM_ITER="11.el7"
 
 rm -rf ModSecurity*
 yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel pcre-devel
 git clone https://github.com/SpiderLabs/ModSecurity
 cd ModSecurity
 git checkout -b v3/master origin/v3/master
-#Temporary patch for memory issue Ref: https://github.com/SpiderLabs/ModSecurity-nginx/issues/67
-#wget -O memory.zip https://github.com/SpiderLabs/ModSecurity/files/1333500/memory.zip
-#unzip memory.zip
-#patch -p1 < ./memory.patch
-wget -O rules.zip https://github.com/SpiderLabs/ModSecurity/files/1348565/rules.zip
-unzip rules.zip
-rsync -av rules.h ./headers/modsecurity/
-rsync -av rules.cc ./src/
 sh build.sh
 git submodule init
 git submodule update
