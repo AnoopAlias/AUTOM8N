@@ -96,6 +96,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#the-slaves">The Slaves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-master">The Master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-domain-on-cluster-setup">Testing domain on cluster setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -464,6 +465,16 @@ Important: Users must log into cPanel and use the Remote MySQL feature to set up
 </div>
 <p>Thats it. Your new host will start serving the website once the /home data is replicated.You can shutdown nginx on this host until data is replicated</p>
 <p>Adding more webservers to horizontally scale a webapp will roughly take 10 minutes ( assuming a server with cPanel DNS only installed is used)</p>
+</div>
+<div class="section" id="testing-domain-on-cluster-setup">
+<h2>Testing domain on cluster setup<a class="headerlink" href="#testing-domain-on-cluster-setup" title="Permalink to this headline">¶</a></h2>
+<p>Since the web application runs on multiple servers that are independant of each other there is a chance that one of
+the server is not serving page correctly and this goes unnoticed because of round robin DNS</p>
+<p>To test individual servers do</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">I</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">resolve</span> <span class="s2">&quot;domain.com:443:xxx.xxx.xxx.xxx&quot;</span>
+<span class="c1"># Where xxx.xxx.xxx.xxx is the master or slave servers IP that you need to test</span>
+</pre></div>
+</div>
 </div>
 </div>
 

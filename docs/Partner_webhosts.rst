@@ -16,5 +16,7 @@ Following webhost support Clustered cPanel shared, reseller, VPS, Cloud hosting 
 
 `TUNEDHOSTING <https://tunedhosting.com/>`_ Company Location: NORTH AMERICA
 
+`BRIXLY WEBSOLUTIONS <https://brixly.uk/>`_ Company Location: UK
+
 
 .. note:: Wish to list your webhosting business here?. Contact anoop@gnusys.net

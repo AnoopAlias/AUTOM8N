@@ -237,3 +237,14 @@ The Master
 Thats it. Your new host will start serving the website once the /home data is replicated.You can shutdown nginx on this host until data is replicated
 
 Adding more webservers to horizontally scale a webapp will roughly take 10 minutes ( assuming a server with cPanel DNS only installed is used)
+
+Testing domain on cluster setup
+----------------------------------------
+Since the web application runs on multiple servers that are independant of each other there is a chance that one of
+the server is not serving page correctly and this goes unnoticed because of round robin DNS
+
+To test individual servers do
+::
+
+  curl -v -I https://domain.com --resolve "domain.com:443:xxx.xxx.xxx.xxx"
+  # Where xxx.xxx.xxx.xxx is the master or slave servers IP that you need to test
