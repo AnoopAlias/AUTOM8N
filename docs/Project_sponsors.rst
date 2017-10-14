@@ -10,6 +10,8 @@ Project Sponsors
 
 4. `OPENTAXI <https://www.opentaxi.cab/>`_
 
+5. `DELTA END Information Technology Services <http://deltaend.com/>`_
+
 
 
 CREDITS
