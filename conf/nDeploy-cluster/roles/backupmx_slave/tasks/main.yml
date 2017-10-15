@@ -18,6 +18,7 @@
     - postconf -e "relay_domains = hash:/etc/postfix/relaydomains"
     - postconf -e "relay_domains = hash:/etc/postfix/transportmaps"
     - postconf -e "inet_interfaces = all"
+    - postconf -e "inet_protocols = ipv4"
     - postconf -e "smtp_tls_security_level = may"
     - postconf -e "smtpd_tls_security_level = may"
     - postconf -e "smtpd_tls_key_file = /var/cpanel/ssl/exim/exim.key"
