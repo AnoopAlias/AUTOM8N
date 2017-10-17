@@ -336,40 +336,49 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
         sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
         sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
-        if sslcacertificatefile:
-            sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
-            ocsp = True
-            filenames = [sslcertificatefile, sslcacertificatefile]
-            # Intialize a count to prevent an infinite loop
-            wait_count = 0
-            with codecs.open(sslcombinedcert, 'w', 'utf-8') as outfile:
-                for fname in filenames:
-                    # we wait for the file to be created if it does not exist.
-                    # this will eventually be removed  when SSL events have hook as there is a risk for infinite loop
-                    # Lets wait 10 minutes in the hope that cPanel creates the SSL file
-                    while not os.path.exists(fname):
-                        time.sleep(1)
-                        wait_count = wait_count + 1
-                        if wait_count > 600:
-                            break
-                    # if we reached the timeout exit by raising an error
-                    if not wait_count < 600:
-                        print("Invalid TLS data in userdata file")
-                        sys.exit(1)
-                    with codecs.open(fname, 'r', 'utf-8') as infile:
-                        outfile.write(infile.read()+"\n")
-            os.chmod(sslcombinedcert, 0o644)
-            if os.stat(sslcombinedcert).st_size == 0:
-                hasssl = False
+        if sslcertificatekeyfile != None:
+            if sslcacertificatefile:
+                sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
+                ocsp = True
+                filenames = [sslcertificatefile, sslcacertificatefile]
+                # Intialize a count to prevent an infinite loop
+                wait_count = 0
+                with codecs.open(sslcombinedcert, 'w', 'utf-8') as outfile:
+                    for fname in filenames:
+                        # we wait for the file to be created if it does not exist.
+                        # this will eventually be removed  when SSL events have hook as there is a risk for infinite loop
+                        # Lets wait 10 minutes in the hope that cPanel creates the SSL file
+                        while not os.path.exists(fname):
+                            time.sleep(1)
+                            wait_count = wait_count + 1
+                            if wait_count > 600:
+                                break
+                        # if we reached the timeout exit by raising an error
+                        if not wait_count < 600:
+                            print("Invalid TLS data in userdata file")
+                            sys.exit(1)
+                        with codecs.open(fname, 'r', 'utf-8') as infile:
+                            outfile.write(infile.read()+"\n")
+                os.chmod(sslcombinedcert, 0o644)
+                if os.stat(sslcombinedcert).st_size == 0:
+                    hasssl = False
+                    ocsp = False
+                    sslcombinedcert = None
+                    sslcertificatefile = None
+                    sslcacertificatefile = None
+                    sslcertificatekeyfile = None
+                    print("Error:: TLS cert is invalid")
+            else:
+                sslcombinedcert = sslcertificatefile
                 ocsp = False
-                sslcombinedcert = None
-                sslcertificatefile = None
-                sslcacertificatefile = None
-                sslcertificatekeyfile = None
-                print("Error:: TLS cert is invalid")
         else:
-            sslcombinedcert = sslcertificatefile
-            ocsp = False
+            if kwargs.get('maindomain').startswith("*"):
+                sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
+                sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
+            else:
+                sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
+                sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'                
+
     else:
         hasssl = False
         ocsp = False
