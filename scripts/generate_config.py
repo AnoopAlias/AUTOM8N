@@ -372,12 +372,13 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                 sslcombinedcert = sslcertificatefile
                 ocsp = False
         else:
+            ocsp = False
             if kwargs.get('maindomain').startswith("*"):
                 sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
                 sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
             else:
                 sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
-                sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'                
+                sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
 
     else:
         hasssl = False
