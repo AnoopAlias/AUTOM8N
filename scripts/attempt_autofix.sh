@@ -14,7 +14,7 @@ echo -e '\e[93m Attempting to regenerate all nginx conf  \e[0m'
 for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1);
 do
   echo "ConfGen:: $CPANELUSER" && nice --adjustment=15 /opt/nDeploy/scripts/generate_config.py $CPANELUSER;
-  if [ ! -f /opt/nDeploy/conf/secure-php-enabled ] ; then
+  if [ ! -f /opt/nDeploy/conf/secure-php-enabled -a -f /var/cpanel/feature_toggles/apachefpmjail ] ; then
     /opt/nDeploy/scripts/fix_virtfs_jail.py $CPANELUSER;
   fi
 done
