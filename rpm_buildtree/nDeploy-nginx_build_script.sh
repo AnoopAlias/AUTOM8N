@@ -6,10 +6,10 @@
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
 NGINX_VERSION="1.13.6"
-NGINX_RPM_ITER="2.el${OSVERSION}"
+NGINX_RPM_ITER="3.el${OSVERSION}"
 NPS_VERSION="1.12.34.3-stable"
 MY_RUBY_VERSION="2.4.2"
-PASSENGER_VERSION="5.1.8"
+PASSENGER_VERSION="5.1.11"
 CACHE_PURGE_VERSION="2.3"
 NAXSI_VERSION="http2"
 PS_NGX_EXTRA_FLAGS="--with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc"
