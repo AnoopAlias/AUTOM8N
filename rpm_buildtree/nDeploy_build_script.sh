@@ -4,6 +4,8 @@
 NDEPLOY_VERSION="4.3"
 RPM_ITERATION="38"
 
+yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel pcre-devel rpm-build
+
 rm -f nDeploy-pkg/nDeploy-* nDeploy-pkg-centos7/nDeploy-*
 rsync -av ../scripts/ nDeploy-pkg/opt/nDeploy/scripts/
 rsync -av ../scripts/ nDeploy-pkg-centos7/opt/nDeploy/scripts/

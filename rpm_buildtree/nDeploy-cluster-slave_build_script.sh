@@ -4,6 +4,8 @@
 NDEPLOY_VERSION="4.3"
 RPM_ITERATION="38"
 
+yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel pcre-devel rpm-build
+
 rm -f nDeploy-cluster-slave-pkg-centos7/nDeploy-*
 rsync -av ../scripts/easy_netdata_setup.sh ../scripts/setup_additional_templates.sh ../scripts/generate_default_vhost_config_slave.py ../scripts/easy_php_setup.sh ../scripts/easy_hhvm_setup.sh ../scripts/*ghost_hunter* ../scripts/init_backends.py ../scripts/update_backend.py nDeploy-cluster-slave-pkg-centos7/opt/nDeploy/scripts/
 rsync -av ../conf/php-fpm* ../conf/cpanel_services.conf.j2 ../conf/proxy_subdomain.conf.j2 ../conf/default_server.conf.j2 ../conf/hhvm* ../conf/httpd_mod_remoteip.include.j2 ../conf/secure-php-fpm* nDeploy-cluster-slave-pkg-centos7/opt/nDeploy/conf/

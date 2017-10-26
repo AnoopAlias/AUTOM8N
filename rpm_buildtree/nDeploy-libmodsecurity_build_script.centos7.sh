@@ -6,7 +6,7 @@ MODSEC_VERSION="3.0"
 MODSEC_RPM_ITER="12.el7"
 
 rm -rf ModSecurity*
-yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel pcre-devel
+yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel pcre-devel rpm-build
 git clone https://github.com/SpiderLabs/ModSecurity
 cd ModSecurity
 git checkout -b v3/master origin/v3/master
