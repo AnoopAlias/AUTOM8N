@@ -46,7 +46,6 @@ __author__	../nDeploy_cp/subdir_save_app_settings.live.py	/^__author__ = "Anoop 
 __author__	../nDeploy_cp/subdir_select_app_settings.live.py	/^__author__ = "Anoop P Alias"$/;"	kind:variable	line:10
 __author__	../nDeploy_cp/subdir_selector.live.py	/^__author__ = "Anoop P Alias"$/;"	kind:variable	line:13
 __author__	../nDeploy_cp/xtendweb.live.py	/^__author__ = "Anoop P Alias"$/;"	kind:variable	line:15
-__author__	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^__author__ = "Anoop P Alias"$/;"	kind:variable	line:9
 __author__	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^__author__ = "Anoop P Alias"$/;"	kind:variable	line:9
 __author__	../scripts/accountcreate_hook_post.py	/^__author__ = "Anoop P Alias"$/;"	kind:variable	line:16
 __author__	../scripts/accountmodify_hook_post.py	/^__author__ = "Anoop P Alias"$/;"	kind:variable	line:15
@@ -96,7 +95,6 @@ __copyright__	../nDeploy_cp/subdir_save_app_settings.live.py	/^__copyright__ = "
 __copyright__	../nDeploy_cp/subdir_select_app_settings.live.py	/^__copyright__ = "Copyright Anoop P Alias"$/;"	kind:variable	line:11
 __copyright__	../nDeploy_cp/subdir_selector.live.py	/^__copyright__ = "Copyright Anoop P Alias"$/;"	kind:variable	line:14
 __copyright__	../nDeploy_cp/xtendweb.live.py	/^__copyright__ = "Copyright Anoop P Alias"$/;"	kind:variable	line:16
-__copyright__	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^__copyright__ = "Copyright Anoop P Alias"$/;"	kind:variable	line:10
 __copyright__	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^__copyright__ = "Copyright Anoop P Alias"$/;"	kind:variable	line:10
 __copyright__	../scripts/accountcreate_hook_post.py	/^__copyright__ = "Copyright Anoop P Alias"$/;"	kind:variable	line:17
 __copyright__	../scripts/accountmodify_hook_post.py	/^__copyright__ = "Copyright Anoop P Alias"$/;"	kind:variable	line:16
@@ -146,7 +144,6 @@ __email__	../nDeploy_cp/subdir_save_app_settings.live.py	/^__email__ = "anoopali
 __email__	../nDeploy_cp/subdir_select_app_settings.live.py	/^__email__ = "anoopalias01@gmail.com"$/;"	kind:variable	line:13
 __email__	../nDeploy_cp/subdir_selector.live.py	/^__email__ = "anoopalias01@gmail.com"$/;"	kind:variable	line:16
 __email__	../nDeploy_cp/xtendweb.live.py	/^__email__ = "anoopalias01@gmail.com"$/;"	kind:variable	line:18
-__email__	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^__email__ = "anoopalias01@gmail.com"$/;"	kind:variable	line:12
 __email__	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^__email__ = "anoopalias01@gmail.com"$/;"	kind:variable	line:12
 __email__	../scripts/accountcreate_hook_post.py	/^__email__ = "anoopalias01@gmail.com"$/;"	kind:variable	line:19
 __email__	../scripts/accountmodify_hook_post.py	/^__email__ = "anoopalias01@gmail.com"$/;"	kind:variable	line:18
@@ -198,7 +195,6 @@ __license__	../nDeploy_cp/subdir_save_app_settings.live.py	/^__license__ = "GPL"
 __license__	../nDeploy_cp/subdir_select_app_settings.live.py	/^__license__ = "GPL"$/;"	kind:variable	line:12
 __license__	../nDeploy_cp/subdir_selector.live.py	/^__license__ = "GPL"$/;"	kind:variable	line:15
 __license__	../nDeploy_cp/xtendweb.live.py	/^__license__ = "GPL"$/;"	kind:variable	line:17
-__license__	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^__license__ = "GPL"$/;"	kind:variable	line:11
 __license__	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^__license__ = "GPL"$/;"	kind:variable	line:11
 __license__	../scripts/accountcreate_hook_post.py	/^__license__ = "GPL"$/;"	kind:variable	line:18
 __license__	../scripts/accountmodify_hook_post.py	/^__license__ = "GPL"$/;"	kind:variable	line:17
@@ -426,7 +422,6 @@ close_cpanel_liveapisock	../nDeploy_cp/subdir_selector.live.py	/^def close_cpane
 close_cpanel_liveapisock	../nDeploy_cp/xtendweb.live.py	/^def close_cpanel_liveapisock():$/;"	kind:function	line:28
 cluster_config_file	../PHPfpmSelector/phpfpm_selector.live.py	/^cluster_config_file = installation_path+"\/conf\/ndeploy_cluster.yaml"$/;"	kind:variable	line:20
 cluster_config_file	../nDeploy_cp/xtendweb.live.py	/^cluster_config_file = installation_path+"\/conf\/ndeploy_cluster.yaml"$/;"	kind:variable	line:22
-cluster_config_file	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^cluster_config_file = installation_path+"\/conf\/ndeploy_cluster.yaml"$/;"	kind:variable	line:16
 cluster_config_file	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^cluster_config_file = installation_path+"\/conf\/ndeploy_cluster.yaml"$/;"	kind:variable	line:16
 cluster_config_file	../scripts/accountcreate_hook_post.py	/^cluster_config_file = installation_path+"\/conf\/ndeploy_cluster.yaml"$/;"	kind:variable	line:24
 cluster_config_file	../scripts/accountmodify_hook_post.py	/^cluster_config_file = installation_path+"\/conf\/ndeploy_cluster.yaml"$/;"	kind:variable	line:32
@@ -451,7 +446,6 @@ cluster_data_yaml	../scripts/generate_config.py	/^            cluster_data_yaml 
 cluster_data_yaml	../scripts/generate_default_vhost_config.py	/^    cluster_data_yaml = open(cluster_config_file, 'r')$/;"	kind:variable	line:39
 cluster_data_yaml	../scripts/generate_default_vhost_config_slave.py	/^    cluster_data_yaml = open(cluster_config_file, 'r')$/;"	kind:variable	line:37
 cluster_data_yaml_parsed	../nDeploy_cp/xtendweb.live.py	/^        cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)$/;"	kind:variable	line:93
-cluster_data_yaml_parsed	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^        cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)$/;"	kind:variable	line:23
 cluster_data_yaml_parsed	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^        cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)$/;"	kind:variable	line:23
 cluster_data_yaml_parsed	../scripts/accountmodify_hook_post.py	/^                        cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)$/;"	kind:variable	line:136
 cluster_data_yaml_parsed	../scripts/accountmodify_hook_post.py	/^                    cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)$/;"	kind:variable	line:122
@@ -488,7 +482,6 @@ convertaddon_hook_post.py	../scripts/convertaddon_hook_post.py	1;"	kind:file	lin
 convertaddon_hook_pre.py	../scripts/convertaddon_hook_pre.py	1;"	kind:file	line:1
 copyright	../docs/conf.py	/^copyright = u'2017, A U T O M 8 N'$/;"	kind:variable	line:59
 copyright	../howtos/conf.py	/^copyright = u'2017, A U T O M 8 N'$/;"	kind:variable	line:64
-cpanel_backup.py	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	1;"	kind:file	line:1
 cpanel_functions_hook_post.py	../scripts/cpanel_functions_hook_post.py	1;"	kind:file	line:1
 cpanel_ip_list	../scripts/generate_default_vhost_config.py	/^cpanel_ip_list = []$/;"	kind:variable	line:25
 cpanel_ip_list	../scripts/generate_default_vhost_config_slave.py	/^cpanel_ip_list = []$/;"	kind:variable	line:23
@@ -605,14 +598,10 @@ exclude_patterns	../howtos/conf.py	/^exclude_patterns = ['_build', 'Thumbs.db', 
 extensions	../docs/conf.py	/^extensions = ['sphinxcontrib.disqus', 'sphinxcontrib.youtube']$/;"	kind:variable	line:39
 extensions	../howtos/conf.py	/^extensions = [$/;"	kind:variable	line:32
 f_code	../scripts/update_profiles.py	/^f_code = args.file_name$/;"	kind:variable	line:76
-filesync_fail_count	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^            filesync_fail_count = filesync_fail_count+1$/;"	kind:variable	line:33
-filesync_fail_count	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^    filesync_fail_count = 0$/;"	kind:variable	line:20
 filesync_fail_count	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^            filesync_fail_count = filesync_fail_count+1$/;"	kind:variable	line:33
 filesync_fail_count	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^    filesync_fail_count = 0$/;"	kind:variable	line:20
 filesync_fail_count	../scripts/unison_filesync_repair.py	/^            filesync_fail_count = filesync_fail_count+1$/;"	kind:variable	line:34
 filesync_fail_count	../scripts/unison_filesync_repair.py	/^    filesync_fail_count = 0$/;"	kind:variable	line:21
-filesync_ok	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^                filesync_ok = True$/;"	kind:variable	line:29
-filesync_ok	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^        filesync_ok = False$/;"	kind:variable	line:25
 filesync_ok	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^                filesync_ok = True$/;"	kind:variable	line:29
 filesync_ok	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^        filesync_ok = False$/;"	kind:variable	line:25
 filesync_ok	../scripts/unison_filesync_repair.py	/^                filesync_ok = True$/;"	kind:variable	line:30
@@ -704,7 +693,6 @@ installation_path	../nDeploy_cp/subdir_save_app_settings.live.py	/^installation_
 installation_path	../nDeploy_cp/subdir_select_app_settings.live.py	/^installation_path = "\/opt\/nDeploy"  # Absolute Installation Path$/;"	kind:variable	line:16
 installation_path	../nDeploy_cp/subdir_selector.live.py	/^installation_path = "\/opt\/nDeploy"  # Absolute Installation Path$/;"	kind:variable	line:19
 installation_path	../nDeploy_cp/xtendweb.live.py	/^installation_path = "\/opt\/nDeploy"  # Absolute Installation Path$/;"	kind:variable	line:21
-installation_path	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^installation_path = "\/opt\/nDeploy"  # Absolute Installation Path$/;"	kind:variable	line:15
 installation_path	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^installation_path = "\/opt\/nDeploy"  # Absolute Installation Path$/;"	kind:variable	line:15
 installation_path	../scripts/accountcreate_hook_post.py	/^installation_path = "\/opt\/nDeploy"  # Absolute Installation Path$/;"	kind:variable	line:23
 installation_path	../scripts/accountmodify_hook_post.py	/^installation_path = "\/opt\/nDeploy"  # Absolute Installation Path$/;"	kind:variable	line:31
@@ -870,7 +858,6 @@ mybackendversion	../nDeploy_cp/passenger_module_installer.live.py	/^    mybacken
 mybackendversion	../nDeploy_cp/save_app_settings.live.py	/^    mybackendversion = form.getvalue('backendversion')$/;"	kind:variable	line:65
 mybackendversion	../nDeploy_cp/subdir_save_app_settings.live.py	/^    mybackendversion = form.getvalue('backendversion')$/;"	kind:variable	line:65
 mycmdline	../nDeploy_cp/xtendweb.live.py	/^            mycmdline = myprocess.cmdline()$/;"	kind:variable	line:97
-mycmdline	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^            mycmdline = myprocess.cmdline()$/;"	kind:variable	line:27
 mycmdline	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^            mycmdline = myprocess.cmdline()$/;"	kind:variable	line:27
 mycmdline	../scripts/unison_filesync_repair.py	/^            mycmdline = myprocess.cmdline()$/;"	kind:variable	line:28
 mydict	../scripts/accountcreate_hook_post.py	/^mydict = cpjson["data"]$/;"	kind:variable	line:27
@@ -966,7 +953,6 @@ os	../nDeploy_cp/subdir_save_app_settings.live.py	/^import os$/;"	kind:namespace
 os	../nDeploy_cp/subdir_select_app_settings.live.py	/^import os$/;"	kind:namespace	line:2
 os	../nDeploy_cp/subdir_selector.live.py	/^import os$/;"	kind:namespace	line:2
 os	../nDeploy_cp/xtendweb.live.py	/^import os$/;"	kind:namespace	line:4
-os	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^import os$/;"	kind:namespace	line:4
 os	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^import os$/;"	kind:namespace	line:4
 os	../scripts/accountcreate_hook_post.py	/^import os$/;"	kind:namespace	line:6
 os	../scripts/accountmodify_hook_post.py	/^import os$/;"	kind:namespace	line:3
@@ -1064,7 +1050,6 @@ proxy_subdomain_config	../scripts/generate_default_vhost_config_slave.py	/^proxy
 proxy_subdomain_template	../scripts/generate_default_vhost_config.py	/^proxy_subdomain_template = templateEnv.get_template('proxy_subdomain.conf.j2')$/;"	kind:variable	line:67
 proxy_subdomain_template	../scripts/generate_default_vhost_config_slave.py	/^proxy_subdomain_template = templateEnv.get_template('proxy_subdomain.conf.j2')$/;"	kind:variable	line:64
 psutil	../nDeploy_cp/xtendweb.live.py	/^import psutil$/;"	kind:namespace	line:7
-psutil	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^import psutil$/;"	kind:namespace	line:5
 psutil	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^import psutil$/;"	kind:namespace	line:5
 psutil	../scripts/unison_filesync_repair.py	/^import psutil$/;"	kind:namespace	line:5
 psutil	../simpler/usr/local/cpanel/whostmgr/docroot/cgi/simpler/simpler_config.cgi	/^import psutil$/;"	kind:namespace	line:7
@@ -1186,7 +1171,6 @@ sphinx_rtd_theme	../docs/conf.py	/^import sphinx_rtd_theme$/;"	kind:namespace	li
 sphinx_rtd_theme	../howtos/conf.py	/^import sphinx_rtd_theme$/;"	kind:namespace	line:134
 ssl_offload	../nDeploy_cp/save_server_settings.live.py	/^    ssl_offload = form.getvalue('ssl_offload')$/;"	kind:variable	line:121
 start	../scripts/watcher.py	/^    def start(self):$/;"	kind:member	line:99
-status	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^    status = []$/;"	kind:variable	line:21
 status	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^    status = []$/;"	kind:variable	line:21
 status	../scripts/cpanel_removeaddon_functions_hook_post.py	/^status = hook_output_dict["result"]$/;"	kind:variable	line:35
 status	../scripts/cpanel_removesubdom_functions_hook_post.py	/^status = hook_output_dict["result"]$/;"	kind:variable	line:35
@@ -1390,7 +1374,6 @@ yaml	../nDeploy_cp/subdir_save_app_settings.live.py	/^import yaml$/;"	kind:names
 yaml	../nDeploy_cp/subdir_select_app_settings.live.py	/^import yaml$/;"	kind:namespace	line:4
 yaml	../nDeploy_cp/subdir_selector.live.py	/^import yaml$/;"	kind:namespace	line:4
 yaml	../nDeploy_cp/xtendweb.live.py	/^import yaml$/;"	kind:namespace	line:8
-yaml	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/cpanel_backup.py	/^import yaml$/;"	kind:namespace	line:6
 yaml	../rpm_buildtree/gnusys-monitoring/usr/share/check-mk-agent/local/gnusys_unison.py	/^import yaml$/;"	kind:namespace	line:6
 yaml	../scripts/accountmodify_hook_post.py	/^import yaml$/;"	kind:namespace	line:8
 yaml	../scripts/accountremove_hook_post.py	/^import yaml$/;"	kind:namespace	line:8
