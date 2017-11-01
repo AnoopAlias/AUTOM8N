@@ -327,16 +327,25 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     # if domain has TLS, get details about it too
     if kwargs.get('maindomain').startswith("*"):
         cpdomainyaml_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('maindomain') + "_SSL"
+        # We setup TLS based on /var/cpanel/ssl/apache_tls/ path in cPanel v68+ first
+        sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
+        sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
+        sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
     else:
         cpdomainyaml_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL"
+        # We setup TLS based on /var/cpanel/ssl/apache_tls/ path in cPanel v68+ first
+        sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
+        sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
+        sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
     if os.path.isfile(cpdomainyaml_ssl):
         hasssl = True
-        with open(cpdomainyaml_ssl, 'r') as cpdomainyaml_ssl_data_stream:
-            yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpdomainyaml_ssl_data_stream)
-        sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
-        sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
-        sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
-        if sslcertificatekeyfile != None:
+        # If new TLS path dont exist lets get legacy TLS path from the cPanel domaindata
+        if not os.path.isfile(sslcertificatekeyfile):
+            with open(cpdomainyaml_ssl, 'r') as cpdomainyaml_ssl_data_stream:
+                yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpdomainyaml_ssl_data_stream)
+            sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
+            sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
+            sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
             if sslcacertificatefile:
                 sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
                 ocsp = True
@@ -371,17 +380,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
             else:
                 sslcombinedcert = sslcertificatefile
                 ocsp = False
-        else:
-            ocsp = False
-            if kwargs.get('maindomain').startswith("*"):
-                sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
-                sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
-                sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
-            else:
-                sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
-                sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
-                sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
-
     else:
         hasssl = False
         ocsp = False

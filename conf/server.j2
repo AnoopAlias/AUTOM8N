@@ -20,13 +20,10 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-{% endif %}
 {% endif %}
 server_name www.{{ MAINDOMAINNAME }};
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
@@ -56,13 +53,10 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-{% endif %}
 {% endif %}
 server_name {{ MAINDOMAINNAME }};
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
@@ -92,13 +86,10 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-{% endif %}
 {% endif %}
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
@@ -352,13 +343,10 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-{% endif %}
 server_name  cpanel.{{ CONFIGDOMAINNAME }};
 location / {
 
@@ -393,13 +381,10 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-{% endif %}
 server_name  webmail.{{ CONFIGDOMAINNAME }};
 location / {
 
@@ -434,13 +419,10 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-{% endif %}
 server_name  whm.{{ CONFIGDOMAINNAME }};
 location / {
 
@@ -475,13 +457,10 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-{% endif %}
 server_name  cpcontacts.{{ CONFIGDOMAINNAME }} cpcalendars.{{ CONFIGDOMAINNAME }};
 location / {
 
@@ -517,13 +496,10 @@ ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-{% endif %}
 server_name  {{ DOMAINLIST }};
 {% if ENABLEACCESSLOG == 'disabled' %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
