@@ -539,7 +539,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "HTTP2": http2,
                     "CPANELSSLCRT": sslcombinedcert,
                     "CPANELSSLKEY": sslcertificatekeyfile,
-                    "CPANELCACERT": sslcacertificatefile,
                     "MAINDOMAINNAME": kwargs.get('maindomain'),
                     "CONFIGDOMAINNAME": kwargs.get('configdomain'),
                     "PAGESPEED": pagespeed,
