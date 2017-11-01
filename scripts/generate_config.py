@@ -348,7 +348,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
             sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
             if sslcacertificatefile:
                 sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
-                ocsp = True
                 filenames = [sslcertificatefile, sslcacertificatefile]
                 # Intialize a count to prevent an infinite loop
                 wait_count = 0
@@ -371,7 +370,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                 os.chmod(sslcombinedcert, 0o644)
                 if os.stat(sslcombinedcert).st_size == 0:
                     hasssl = False
-                    ocsp = False
                     sslcombinedcert = None
                     sslcertificatefile = None
                     sslcacertificatefile = None
@@ -379,10 +377,8 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     print("Error:: TLS cert is invalid")
             else:
                 sslcombinedcert = sslcertificatefile
-                ocsp = False
     else:
         hasssl = False
-        ocsp = False
         sslcombinedcert = None
         sslcertificatefile = None
         sslcacertificatefile = None
@@ -531,8 +527,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     else:
         TEMPLATE_FILE = "server.j2"
     server_template = templateEnv.get_template(TEMPLATE_FILE)
-    templateVars = {"OCSP": ocsp,
-                    "SSL": hasssl,
+    templateVars = {"SSL": hasssl,
                     "IPVSIX": hasipv6,
                     "WWWREDIRECT": wwwredirect,
                     "REDIRECTALIASES": redirect_aliases,
