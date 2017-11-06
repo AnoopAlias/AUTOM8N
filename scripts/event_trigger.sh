@@ -16,13 +16,14 @@ elif [[ $2 -eq 1 ]]; then
 		if [ $3 = "IN_ATTRIB" ];then
 			kill -USR1 $(cat /var/run/nginx.pid)
 		else
-			echo "Domain::Data::Modify ${CPANELUSER}"
+			echo "$(date) Domain::Data::Modify ${CPANELUSER}"
 			/opt/nDeploy/scripts/generate_config.py $CPANELUSER
 		fi
 	fi
 elif [[ $2 -eq 2 ]]; then
 	CPANELDOMAIN=$(echo $1|awk -F'/' '{print $6}')
 	CPANELUSER=$(grep $CPANELDOMAIN /etc/userdomains |awk '{print $2}')
+	echo "$(date) Conf:Gen ${CPANELUSER}"
 	/opt/nDeploy/scripts/generate_config.py $CPANELUSER
 else
 	exit 1
