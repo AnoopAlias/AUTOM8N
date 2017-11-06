@@ -20,6 +20,10 @@ elif [[ $2 -eq 1 ]]; then
 			/opt/nDeploy/scripts/generate_config.py $CPANELUSER
 		fi
 	fi
+elif [[ $2 -eq 2 ]]; then
+	CPANELDOMAIN=$(echo $1|awk -F'/' '{print $6}')
+	CPANELUSER=$(grep $CPANELDOMAIN /etc/userdomains |awk '{print $2}')
+	/opt/nDeploy/scripts/generate_config.py $CPANELUSER
 else
 	exit 1
 fi
