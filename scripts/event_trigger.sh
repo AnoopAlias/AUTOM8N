@@ -21,10 +21,12 @@ elif [[ $2 -eq 1 ]]; then
 		fi
 	fi
 elif [[ $2 -eq 2 ]]; then
-	CPANELDOMAIN=$(echo $1|awk -F'/' '{print $6}')
-	CPANELUSER=$(grep $CPANELDOMAIN /etc/userdomains |awk '{print $2}')
-	echo "$(date) Conf:Gen ${CPANELUSER}"
-	/opt/nDeploy/scripts/generate_config.py $CPANELUSER
+	if(echo $1|egrep 'combined$');then
+		CPANELDOMAIN=$(echo $1|awk -F'/' '{print $6}')
+		CPANELUSER=$(grep $CPANELDOMAIN /etc/userdomains |awk '{print $2}')
+		echo "$(date) Conf:Gen:TLS ${CPANELUSER}"
+		/opt/nDeploy/scripts/generate_config.py $CPANELUSER
+	fi
 else
 	exit 1
 fi
