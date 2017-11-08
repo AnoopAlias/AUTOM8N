@@ -72,7 +72,7 @@ Notice how the slave RAM requirement remain same,while master need 2 GB(for the 
 XtendWeb cluster setup
 --------------------------
 
-.. note:: Install CSF firewall on both servers and whitelist each others IP for access . The server's hostname must be valid and should resolve correctly as many cluster components reply on hostname to connect
+.. note:: Install CSF firewall on both servers and whitelist each others IP for access . The server's hostname must be valid and should resolve correctly as many cluster components rely on hostname to connect
 
 .. note:: As of XtendWeb 4.3.20, you will need a license for all servers(master and slaves) on the cluster.Else Installation will fail
           Please visit https://autom8n.com/plans.html#plans for more info
