@@ -1,4 +1,4 @@
-response=$(/usr/bin/curl --write-out %{http_code} --silent --output /dev/null https://autom8n.com/CentOS/true.txt)
+response=$(/usr/bin/curl --insecure --write-out %{http_code} --silent --output /dev/null https://139.162.228.126/CentOS/true.txt)
 if [ $response -ne 200 ];then
 	exit 1
 fi
