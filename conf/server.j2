@@ -301,7 +301,7 @@ proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
 
-proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -319,7 +319,7 @@ proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
 
-proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -337,7 +337,7 @@ proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
 
-proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -613,7 +613,7 @@ proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
 
-proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -631,7 +631,7 @@ proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
 
-proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -649,7 +649,7 @@ proxy_temp_file_write_size 64k;
 
 proxy_connect_timeout 30s;
 
-proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;

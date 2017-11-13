@@ -533,7 +533,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "REDIRECTALIASES": redirect_aliases,
                     "REDIRECTALIASES_LIST": serveralias_list_new,
                     "CPANELIP": cpanel_ipv4,
-                    "APPSERVERIP": appserver_ipv4,
+                    "HTTPDIP": cpanel_ipv4,
                     "CPIPVSIX": ipv6_addr,
                     "IPVSIX": hasipv6,
                     "HTTP2": http2,
@@ -599,6 +599,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
             cluster_config_out = "/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".conf"
             templateVars["CPANELIP"] = remote_domain_ipv4
             templateVars["CPIPVSIX"] = remote_domain_ipv6
+            templateVars["HTTPDIP"] = appserver_ipv4
             cluster_generated_config = server_template.render(templateVars)
             with codecs.open(cluster_config_out, "w", 'utf-8') as confout:
                 confout.write(cluster_generated_config)
