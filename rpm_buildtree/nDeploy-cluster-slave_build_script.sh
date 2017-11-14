@@ -2,7 +2,7 @@
 #Author: Anoop P Alias
 
 NDEPLOY_VERSION="4.3"
-RPM_ITERATION="41"
+RPM_ITERATION="42"
 
 yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel pcre-devel rpm-build
 
