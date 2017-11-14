@@ -5,14 +5,14 @@
 #expecting 6/7 as the first arg to this scripts
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
-OPENRESTY_VERSION="1.11.2.5"
-OPENRESTY_RPM_ITER="4.el${OSVERSION}"
+OPENRESTY_VERSION="1.13.6.1"
+OPENRESTY_RPM_ITER="1.el${OSVERSION}"
 NPS_VERSION="1.12.34.3-stable"
 MY_RUBY_VERSION="2.4.2"
 PASSENGER_VERSION="5.1.11"
 NAXSI_VERSION="http2"
 PS_NGX_EXTRA_FLAGS="--with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc"
-OPENSSL_VERSION="1.0.2l"
+OPENSSL_VERSION="1.0.2m"
 LIBRESSL_VERSION="2.6.2"
 PCRE_VERSION="8.41"
 ZLIB_VERSION="1.2.11"
