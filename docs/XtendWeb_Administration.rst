@@ -126,6 +126,11 @@ The upgrade must be done manually by running the following commands
   yum --enablerepo=ndeploy upgrade
   #For setups using Phusion Passenger app server
   /opt/nDeploy/scripts/easy_passenger_setup.sh
+  #Lets regenerate config to enable changes in config Templates
+  /opt/nDeploy/scripts/attempt_autofix.sh
+  #Restart nginx if required
+  needs-restarting
+  #Check output and restart nginx only if its listed to require a restart
 
 
 XtendWeb cluster upgrade
@@ -141,6 +146,9 @@ On All slaves
 ::
 
   yum --enablerepo=ndeploy upgrade
+  #Restart nginx if required
+  needs-restarting
+  #Check output and restart nginx only if its listed to require a restart
 
 On master
 
@@ -150,6 +158,11 @@ On master
   yum --enablerepo=ndeploy upgrade
   cd /opt/nDeploy/conf/nDeploy-cluster
   ansible-playbook -i ./hosts cluster.yml
+  #Lets regenerate config to enable changes in config Templates
+  /opt/nDeploy/scripts/attempt_autofix.sh
+  #Restart nginx if required
+  needs-restarting
+  #Check output and restart nginx only if its listed to require a restart
 
 
 Migrating Xtendweb settings
