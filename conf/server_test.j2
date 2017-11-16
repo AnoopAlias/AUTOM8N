@@ -172,7 +172,7 @@ testcookie on;
 disable_symlinks if_not_owner;
 {% endif %}
 
- Allow "Well-Known URIs" as per RFC 5785
+# Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
