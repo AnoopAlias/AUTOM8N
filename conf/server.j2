@@ -1,6 +1,5 @@
 
 # Redirects if any
-
 {% if WWWREDIRECT == "tononwww" %}
 server {
 listen  {{ CPANELIP }}:80 ;
@@ -99,20 +98,15 @@ return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
 }
 {% endif %}
-
-# The server blocks
+# Redirects if any
 
 # Proxy Subdomains
-# cPanel
 server {
 listen    {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
-server_name  cpanel.{{ CONFIGDOMAINNAME }};
-{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
-return 301 https://$host$request_uri;
-{% else %}
+server_name  cpanel.{{ CONFIGDOMAINNAME }} webmail.{{ CONFIGDOMAINNAME }} whm.{{ CONFIGDOMAINNAME }} cpcontacts.{{ CONFIGDOMAINNAME }} cpcalendars.{{ CONFIGDOMAINNAME }};
 location / {
 
    proxy_send_timeout   90;
@@ -125,103 +119,11 @@ location / {
 
    proxy_connect_timeout 30s;
 
-   proxy_pass   http://127.0.0.1:2082;
+   proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
    proxy_set_header   Host   $host;
    proxy_set_header   X-Real-IP  $remote_addr;
    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
   }
-{% endif %}
-
-}
-
-# Webmail
-server {
-listen    {{ CPANELIP }}:80 ;
-{% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:80 ;
-{% endif %}
-server_name  webmail.{{ CONFIGDOMAINNAME }};
-{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
-return 301 https://$host$request_uri;
-{% else %}
-location / {
-
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-
-   proxy_connect_timeout 30s;
-
-   proxy_pass   http://127.0.0.1:2095;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-{% endif %}
-}
-
-# WHM
-server {
-listen    {{ CPANELIP }}:80 ;
-{% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:80 ;
-{% endif %}
-server_name  whm.{{ CONFIGDOMAINNAME }};
-{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
-return 301 https://$host$request_uri;
-{% else %}
-location / {
-
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-
-   proxy_connect_timeout 30s;
-
-   proxy_pass   http://127.0.0.1:2086;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-{% endif %}
-}
-
-# cpcontacts and cpcalendars
-server {
-listen    {{ CPANELIP }}:80 ;
-{% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:80 ;
-{% endif %}
-server_name  cpcontacts.{{ CONFIGDOMAINNAME }} cpcalendars.{{ CONFIGDOMAINNAME }};
-{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
-return 301 https://$host$request_uri;
-{% else %}
-location / {
-
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-
-   proxy_connect_timeout 30s;
-
-   proxy_pass   http://127.0.0.1:2079;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-{% endif %}
 }
 # Proxy Subdomains
 
@@ -369,7 +271,6 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% if SSL %}
 
 # Proxy Subdomains
-# cPanel
 server {
 listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% if IPVSIX %}
@@ -387,7 +288,7 @@ ssl_stapling on;
 ssl_stapling_verify on;
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-server_name  cpanel.{{ CONFIGDOMAINNAME }};
+server_name  cpanel.{{ CONFIGDOMAINNAME }} webmail.{{ CONFIGDOMAINNAME }} whm.{{ CONFIGDOMAINNAME }} cpcontacts.{{ CONFIGDOMAINNAME }} cpcalendars.{{ CONFIGDOMAINNAME }};
 location / {
 
    proxy_send_timeout   90;
@@ -400,128 +301,13 @@ location / {
 
    proxy_connect_timeout 30s;
 
-   proxy_pass   http://127.0.0.1:2083;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-}
-
-# Webmail
-server {
-listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
-{% if IPVSIX %}
-listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
-{% endif %}
-ssl_certificate {{ CPANELSSLCRT }};
-ssl_certificate_key {{ CPANELSSLKEY }};
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
-ssl_stapling on;
-ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
-resolver_timeout 5s;
-server_name  webmail.{{ CONFIGDOMAINNAME }};
-location / {
-
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-
-   proxy_connect_timeout 30s;
-
-   proxy_pass   http://127.0.0.1:2096;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-}
-
-# WHM
-server {
-listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
-{% if IPVSIX %}
-listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
-{% endif %}
-ssl_certificate {{ CPANELSSLCRT }};
-ssl_certificate_key {{ CPANELSSLKEY }};
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
-ssl_stapling on;
-ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
-resolver_timeout 5s;
-server_name  whm.{{ CONFIGDOMAINNAME }};
-location / {
-
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-
-   proxy_connect_timeout 30s;
-
-   proxy_pass   http://127.0.0.1:2087;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-}
-
-# cpcontacts and cpcalendars
-server {
-listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
-{% if IPVSIX %}
-listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
-{% endif %}
-ssl_certificate {{ CPANELSSLCRT }};
-ssl_certificate_key {{ CPANELSSLKEY }};
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
-ssl_stapling on;
-ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
-resolver_timeout 5s;
-server_name  cpcontacts.{{ CONFIGDOMAINNAME }} cpcalendars.{{ CONFIGDOMAINNAME }};
-location / {
-
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-
-   proxy_connect_timeout 30s;
-
-   proxy_pass   http://127.0.0.1:2080;
+   proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
    proxy_set_header   Host   $host;
    proxy_set_header   X-Real-IP  $remote_addr;
    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
   }
 }
 # Proxy Subdomains
-
 
 server {
 listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
