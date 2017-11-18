@@ -776,8 +776,9 @@ if __name__ == "__main__":
     except KeyError:
         sys.exit(0)
     else:
-        # Update the userdata cache
-        #subprocess.Popen(['/scripts/updateuserdatacache', '--force', cpaneluser], shell=True)  # May cause high server load
+        # Update the userdata cache if we are not generating config in bulk
+        if not os.path.isfile(installation_path+'/conf/skip_nginx_reload'):
+            subprocess.Popen(['/scripts/updateuserdatacache', '--force', cpaneluser], shell=True)  # May cause high server load
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
         if os.path.isfile(cpuserdatajson):
