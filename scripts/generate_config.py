@@ -777,7 +777,7 @@ if __name__ == "__main__":
         sys.exit(0)
     else:
         # Update the userdata cache
-        subprocess.Popen(['/scripts/updateuserdatacache', '--force', cpaneluser], shell=True)
+        #subprocess.Popen(['/scripts/updateuserdatacache', '--force', cpaneluser], shell=True)  # May cause high server load
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
         if os.path.isfile(cpuserdatajson):
