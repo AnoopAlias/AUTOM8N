@@ -2,7 +2,7 @@
 #Author: Anoop P Alias
 
 VERSION="1"
-RPM_ITERATION="5"
+RPM_ITERATION="6"
 
 rm -f gnusys-monitoring/gnusys-monitoring-*
 cd gnusys-monitoring
