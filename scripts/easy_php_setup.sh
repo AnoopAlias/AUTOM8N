@@ -40,12 +40,14 @@ setup_ea4_php(){
 	setup_ea4_cluster_php(){
 			for ver in 54 55 56 70 71 72
 			do
-				yum -y install ea-php$ver ea-php$ver-php-fpm ea-php$ver-php-opcache ea-php$ver-php-mysqlnd ea-php$ver-php-gd ea-php$ver-php-imap ea-php$ver-php-intl ea-php$ver-php-ioncube-loader ea-php$ver-php-xmlrpc ea-php$ver-php-xml ea-php$ver-php-mcrypt ea-php$ver-php-mbstring
-				if [ ! -d /opt/cpanel/php$ver/root/var ];then
-					mkdir -p /opt/cpanel/ea-php$ver/root/var/log
-					mkdir -p /opt/cpanel/ea-php$ver/root/var/run
-				fi
+				if [ ! -f /opt/nDeploy/conf/XTENDWEB_PHP_SETUP_LOCK_DO_NOT_REMOVE ]; then
+					yum -y install ea-php$ver ea-php$ver-php-fpm ea-php$ver-php-opcache ea-php$ver-php-mysqlnd ea-php$ver-php-gd ea-php$ver-php-imap ea-php$ver-php-intl ea-php$ver-php-ioncube-loader ea-php$ver-php-xmlrpc ea-php$ver-php-xml ea-php$ver-php-mcrypt ea-php$ver-php-mbstring
+					if [ ! -d /opt/cpanel/php$ver/root/var ];then
+						mkdir -p /opt/cpanel/ea-php$ver/root/var/log
+						mkdir -p /opt/cpanel/ea-php$ver/root/var/run
+					fi
 				/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
+				fi
 				/opt/cpanel/ea-php$ver/root/usr/bin/pecl install redis
 				if [ -f /opt/nDeploy/conf/zz_xtendweb.ini ]; then
 					rsync -a /opt/nDeploy/conf/zz_xtendweb.ini /opt/cpanel/ea-php$ver/root/etc/php.d/

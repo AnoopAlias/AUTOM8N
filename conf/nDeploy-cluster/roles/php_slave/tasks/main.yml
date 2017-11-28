@@ -7,3 +7,7 @@
 
 - name: Setup EasyApache4 PHP
   shell: /opt/nDeploy/scripts/easy_php_setup.sh ea4_cluster
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_PHP_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch

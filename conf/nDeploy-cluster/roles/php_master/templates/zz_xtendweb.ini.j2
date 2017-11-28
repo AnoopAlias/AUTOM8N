@@ -3,9 +3,10 @@ mysql.default_socket=/tmp/maxscale_mysql.sock
 mysqli.default_socket=/tmp/maxscale_mysql.sock
 
 ; Load redis php extension
-extension=redis.so
+; This is automatically added by pecl install to php.ini
+;extension=redis.so
 
-; Redis session store backend
+; Redis session store backend powered by haproxy and stunnel
 session.save_handler = redis
 session.save_path = "tcp://127.0.0.1:7000?database=2"
 ; session.save_path = "{% for host in groups['ndeployslaves'] %}tcp://127.0.0.1:950{{ loop.index }}?database=2&timeout=3,{% endfor %}tcp://127.0.0.1:6379?database=2&timeout=3"
