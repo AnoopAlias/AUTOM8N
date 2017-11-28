@@ -1,10 +1,5 @@
 ---
 
-- name: Ensure  redhat-lsb-core is present
-  yum: name={{ item }} state=present
-  with_items:
-    - redhat-lsb-core
-
 - name: synchronize stunnel cert and key
   synchronize:
     src: /etc/stunnel

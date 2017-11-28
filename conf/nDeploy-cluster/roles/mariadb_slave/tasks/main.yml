@@ -31,11 +31,6 @@
     - MariaDB-server
     - MariaDB-client
 
-- name: Ensure  redhat-lsb-core is present
-  yum: name={{ item }} state=present
-  with_items:
-    - redhat-lsb-core
-
 - name: Restart MariaDB server
   service: name=mysql enabled=yes state=started
 
