@@ -7,12 +7,12 @@ RPM_ITERATION="44"
 yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel pcre-devel rpm-build
 
 rm -f nDeploy-cluster-slave-pkg-centos7/nDeploy-*
-rsync -av ../scripts/easy_netdata_setup.sh ../scripts/setup_additional_templates.sh ../scripts/generate_default_vhost_config_slave.py ../scripts/easy_php_setup.sh ../scripts/easy_hhvm_setup.sh ../scripts/*ghost_hunter* ../scripts/init_backends.py ../scripts/update_backend.py nDeploy-cluster-slave-pkg-centos7/opt/nDeploy/scripts/
+rsync -av ../scripts/cluster_access_token_generate.py ../scripts/easy_netdata_setup.sh ../scripts/setup_additional_templates.sh ../scripts/generate_default_vhost_config_slave.py ../scripts/easy_php_setup.sh ../scripts/easy_hhvm_setup.sh ../scripts/*ghost_hunter* ../scripts/init_backends.py ../scripts/update_backend.py nDeploy-cluster-slave-pkg-centos7/opt/nDeploy/scripts/
 rsync -av ../conf/php-fpm* ../conf/cpanel_services.conf.j2 ../conf/proxy_subdomain.conf.j2 ../conf/default_server.conf.j2 ../conf/hhvm* ../conf/httpd_mod_remoteip.include.j2 ../conf/secure-php-fpm* nDeploy-cluster-slave-pkg-centos7/opt/nDeploy/conf/
 rsync -av nDeploy-pkg-centos7/usr/lib/systemd/system/ndeploy_backends.service  nDeploy-cluster-slave-pkg-centos7/usr/lib/systemd/system/ndeploy_backends.service
 
 rm -f nDeploy-cluster-slave-pkg/nDeploy-*
-rsync -av ../scripts/easy_netdata_setup.sh ../scripts/setup_additional_templates.sh ../scripts/generate_default_vhost_config_slave.py ../scripts/easy_php_setup.sh ../scripts/easy_hhvm_setup.sh ../scripts/*ghost_hunter* ../scripts/init_backends.py ../scripts/update_backend.py nDeploy-cluster-slave-pkg/opt/nDeploy/scripts/
+rsync -av ../scripts/cluster_access_token_generate.py ../scripts/easy_netdata_setup.sh ../scripts/setup_additional_templates.sh ../scripts/generate_default_vhost_config_slave.py ../scripts/easy_php_setup.sh ../scripts/easy_hhvm_setup.sh ../scripts/*ghost_hunter* ../scripts/init_backends.py ../scripts/update_backend.py nDeploy-cluster-slave-pkg/opt/nDeploy/scripts/
 rsync -av ../conf/php-fpm* ../conf/cpanel_services.conf.j2 ../conf/proxy_subdomain.conf.j2 ../conf/default_server.conf.j2 ../conf/hhvm* ../conf/httpd_mod_remoteip.include.j2 ../conf/secure-php-fpm* nDeploy-cluster-slave-pkg/opt/nDeploy/conf/
 rsync -av nDeploy-pkg/etc/rc.d/init.d/ndeploy_backends nDeploy-cluster-slave-pkg/etc/rc.d/init.d/ndeploy_backends
 

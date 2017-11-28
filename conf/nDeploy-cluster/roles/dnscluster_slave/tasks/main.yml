@@ -1,27 +1,46 @@
 ---
 
+- name: check if token generated ok
+  stat:
+    path: /root/xtendweb_accesshash_temp
+  register: accesstoken
+
 - name: Setup cluster configuration on slaves
   template:
     src: cluster.j2
     dest: /root/xtendweb_{{ mainip }}
+  when:
+    - accesstoken.stat.exists == true
+
 
 - file:
     path: /root/xtendweb_{{ mainip }}
     mode: 0600
+  when:
+    - accesstoken.stat.exists == true
+
 
 - name: Setup cluster state on slaves
   template:
     src: dnsstate.j2
     dest: /root/xtendweb_{{ mainip }}-dnsrole
+  when:
+    - accesstoken.stat.exists == true
+
 
 - name: Fetch the cluster config to master
   fetch:
     src: /root/xtendweb_{{ mainip }}
     dest: /var/cpanel/cluster/root/config/{{ mainip }}
     flat: yes
+  when:
+    - accesstoken.stat.exists == true
+
 
 - name: Fetch the cluster config role to master
   fetch:
     src: /root/xtendweb_{{ mainip }}-dnsrole
     dest: /var/cpanel/cluster/root/config/{{ mainip }}-dnsrole
     flat: yes
+  when:
+    - accesstoken.stat.exists == true
