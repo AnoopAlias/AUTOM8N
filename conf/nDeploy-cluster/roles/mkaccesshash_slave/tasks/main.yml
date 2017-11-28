@@ -1,13 +1,5 @@
 ---
 
-#- name: Create the accesshash on slave server
-#  shell: /usr/local/cpanel/bin/mkaccesshash
-#  args:
-#    creates: /root/.accesshash
-
-#- name: Remove line breaks from accesshash
-#  shell: tr -d '\n' < /root/.accesshash > /root/xtendweb_accesshash_temp
-
 - name: Generate API token
   shell: /opt/nDeploy/scripts/cluster_access_token_generate.py
 
@@ -17,7 +9,7 @@
   register: accesstoken
 
 
-- name: Fetch the accesshash to master
+- name: Fetch the API token to master
   fetch:
     src: /root/xtendweb_accesshash_temp
     dest: /root/xtendweb_accesshash_temp_{{ inventory_hostname }}
