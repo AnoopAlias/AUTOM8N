@@ -29,3 +29,4 @@
     - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::ModSecLog"
     - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::RecentAuthedMailIpTracker"
     - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::cPBandwd"
+  ignore_errors: yes

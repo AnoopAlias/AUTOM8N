@@ -19,10 +19,6 @@
   shell: "/usr/local/cpanel/libexec/tailwatchd --restart"
   ignore_errors: yes
 
-- name: Restart chkservd
-  shell: /scripts/restartsrv_chkservd
-  ignore_errors: yes
-
 - name: create the mysql-ssl directory
   file:
     path: /etc/mysql-ssl
