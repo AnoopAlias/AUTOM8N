@@ -39,11 +39,15 @@
   yum:
     name: MySQL*
     state: absent
+  when:
+    - inventory_hostname != groups['ndeploydbslave'][0]
 
 - name: Remove MySQL rpm
   yum:
     name: MariaDB*
     state: absent
+  when:
+    - inventory_hostname != groups['ndeploydbslave'][0]
 
 - name: Install MaxScale rpm
   yum:
