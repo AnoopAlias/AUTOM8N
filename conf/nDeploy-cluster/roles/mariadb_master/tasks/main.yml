@@ -16,7 +16,7 @@
   ignore_errors: yes
 
 - name: restart tailwatchd
-  shell: "/usr/local/cpanel/libexec/tailwatchd --restart"
+  shell: "/usr/local/cpanel/libexec/tailwatchd --start"
   ignore_errors: yes
 
 - name: create the mysql-ssl directory

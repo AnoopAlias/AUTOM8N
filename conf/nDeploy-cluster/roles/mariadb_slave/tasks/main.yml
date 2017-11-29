@@ -16,9 +16,9 @@
   ignore_errors: yes
 
 - name: restart tailwatchd
-  shell: "/usr/local/cpanel/libexec/tailwatchd --restart"
+  shell: "/usr/local/cpanel/libexec/tailwatchd --start"
   ignore_errors: yes
-  
+
 - name: Remove MySQL rpm
   yum:
     name: MySQL*
