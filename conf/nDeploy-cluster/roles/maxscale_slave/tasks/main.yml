@@ -35,19 +35,8 @@
     - inventory_hostname != groups['ndeploydbslave'][0]
   ignore_errors: yes
 
-- name: Remove MySQL rpm
-  yum:
-    name: MySQL*
-    state: absent
-  when:
-    - inventory_hostname != groups['ndeploydbslave'][0]
-
-- name: Remove MySQL rpm
-  yum:
-    name: MariaDB*
-    state: absent
-  when:
-    - inventory_hostname != groups['ndeploydbslave'][0]
+- name: kill any mysqld process
+  shell: "killall -9 mysqld"
 
 - name: Install MaxScale rpm
   yum:
