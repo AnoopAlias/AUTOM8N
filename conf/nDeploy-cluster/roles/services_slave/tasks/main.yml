@@ -30,3 +30,9 @@
     - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::RecentAuthedMailIpTracker"
     - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::cPBandwd"
   ignore_errors: yes
+
+- name: Ensure cPanel updates are set to manual
+  lineinfile:
+    path: /etc/cpupdate.conf
+    regexp: '^UPDATES='
+    line: 'UPDATES=manual'
