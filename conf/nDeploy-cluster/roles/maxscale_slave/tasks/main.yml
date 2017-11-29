@@ -37,6 +37,7 @@
 
 - name: kill any mysqld process
   shell: "killall -9 mysqld"
+  ignore_errors: yes
 
 - name: Install MaxScale rpm
   yum:

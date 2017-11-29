@@ -11,10 +11,14 @@
     state: absent
     line: 'mysql:1'
 
-- name: Restart chkservd
-  shell: /scripts/restartsrv_chkservd
+- name: kill any tailwatchd process
+  shell: "killall -9 tailwatchd"
   ignore_errors: yes
 
+- name: restart tailwatchd
+  shell: "/usr/local/cpanel/libexec/tailwatchd --restart"
+  ignore_errors: yes
+  
 - name: Remove MySQL rpm
   yum:
     name: MySQL*
