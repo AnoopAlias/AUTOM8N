@@ -37,6 +37,8 @@
 
 - name: kill any mysqld process
   shell: "killall -9 mysqld"
+  when:
+    - inventory_hostname != groups['ndeploydbslave'][0]
   ignore_errors: yes
 
 - name: Install MaxScale rpm
