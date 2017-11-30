@@ -1,21 +1,9 @@
 
 {% for MYIP in CPIPLIST %}
 
-#cPanel
 server {
         listen {{ MYIP }}:80;
-        server_name cpanel.*;
-        access_log off;
-        return 301 https://$host$request_uri;
-}
-
-server {
-        listen {{ MYIP }}:443;
-        ssl_certificate {{ CPSRVDSSL }};
-        ssl_certificate_key {{ CPSRVDSSL }};
-        ssl_session_cache shared:SSL:10m;
-        ssl_session_timeout  5m;
-        server_name cpanel.*;
+        server_name cpanel.* whm.* webmail.* cpcontacts.* cpcalendars.*;
         access_log off;
         location / {
 
@@ -29,19 +17,11 @@ server {
 
            proxy_connect_timeout 30s;
 
-           proxy_pass   http://127.0.0.1:2083;
+           proxy_pass   $scheme://{{ MYIP }}:$cpport;
            proxy_set_header   Host   $host;
            proxy_set_header   X-Real-IP  $remote_addr;
            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
           }
-}
-
-# WHM
-server {
-        listen {{ MYIP }}:80;
-        server_name whm.*;
-        access_log off;
-        return 301 https://$host$request_uri;
 }
 
 server {
@@ -50,7 +30,7 @@ server {
         ssl_certificate_key {{ CPSRVDSSL }};
         ssl_session_cache shared:SSL:10m;
         ssl_session_timeout  5m;
-        server_name whm.*;
+        server_name cpanel.* whm.* webmail.* cpcontacts.* cpcalendars.*;
         access_log off;
         location / {
 
@@ -64,81 +44,11 @@ server {
 
            proxy_connect_timeout 30s;
 
-           proxy_pass   http://127.0.0.1:2087;
+           proxy_pass   $scheme://{{ MYIP }}:$cpport;
            proxy_set_header   Host   $host;
            proxy_set_header   X-Real-IP  $remote_addr;
            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
           }
 }
-
-# Webmail
-server {
-        listen {{ MYIP }}:80;
-        server_name webmail.*;
-        access_log off;
-        return 301 https://$host$request_uri;
-}
-
-server {
-        listen {{ MYIP }}:443;
-        ssl_certificate {{ CPSRVDSSL }};
-        ssl_certificate_key {{ CPSRVDSSL }};
-        ssl_session_cache shared:SSL:10m;
-        ssl_session_timeout  5m;
-        server_name webmail.*;
-        access_log off;
-        location / {
-
-           proxy_send_timeout   90;
-           proxy_read_timeout   90;
-
-           proxy_buffer_size    4k;
-           proxy_buffers     16 32k;
-           proxy_busy_buffers_size 64k;
-           proxy_temp_file_write_size 64k;
-
-           proxy_connect_timeout 30s;
-
-           proxy_pass   http://127.0.0.1:2096;
-           proxy_set_header   Host   $host;
-           proxy_set_header   X-Real-IP  $remote_addr;
-           proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-          }
-}
-# cpcontacts and cpcalendars
-server {
-        listen {{ MYIP }}:80;
-        server_name cpcontacts.* cpcalendars.*;
-        access_log off;
-        return 301 https://$host$request_uri;
-}
-
-server {
-        listen {{ MYIP }}:443;
-        ssl_certificate {{ CPSRVDSSL }};
-        ssl_certificate_key {{ CPSRVDSSL }};
-        ssl_session_cache shared:SSL:10m;
-        ssl_session_timeout  5m;
-        server_name cpcontacts.* cpcalendars.*;
-        access_log off;
-        location / {
-
-           proxy_send_timeout   90;
-           proxy_read_timeout   90;
-
-           proxy_buffer_size    4k;
-           proxy_buffers     16 32k;
-           proxy_busy_buffers_size 64k;
-           proxy_temp_file_write_size 64k;
-
-           proxy_connect_timeout 30s;
-
-           proxy_pass   http://127.0.0.1:2080;
-           proxy_set_header   Host   $host;
-           proxy_set_header   X-Real-IP  $remote_addr;
-           proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-          }
-}
-
 
 {% endfor %}
