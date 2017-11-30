@@ -63,27 +63,27 @@ def cluster_ensure_mxrecord(zone_name):
                     skip_flag = True
     if not skip_flag:
         # Lets setup correct MX records for localdomains
+        mx_skip_flag = False
         with open('/etc/remotedomains') as mx_excludes:
-            mx_skip_flag = False
             for line in mx_excludes:
                 if str(line).rstrip() == zone_name:
                     mx_skip_flag = True
-            if not mx_skip_flag:
-                zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
-                zone_datafeed = zonedump.stdout.read()
-                zonedump_parsed = json.loads(zone_datafeed)
-                thezone = zonedump_parsed['data']['zone'][0]
-                resource_record = thezone['record']
-                for rr in resource_record:
-                    if rr['type'] == 'MX':
-                        subprocess.call("/usr/local/cpanel/bin/whmapi1 removezonerecord zone="+zone_name+" line="+str(rr['Line']), shell=True)
-                if not os.path.isfile(installation_path+"/conf/DECLUSTER_DNSZONE"):
-                    myhostname = socket.gethostname()
-                    subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=MX class=IN name="+zone_name+". preference=0 exchange="+myhostname+".", shell=True)
-                    for server in serverlist:
-                        subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=MX class=IN name="+zone_name+". preference=100 exchange="+server+".", shell=True)
-                else:
-                    subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=MX class=IN name="+zone_name+". preference=0 exchange="+zone_name+".", shell=True)
+        if not mx_skip_flag:
+            zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
+            zone_datafeed = zonedump.stdout.read()
+            zonedump_parsed = json.loads(zone_datafeed)
+            thezone = zonedump_parsed['data']['zone'][0]
+            resource_record = thezone['record']
+            for rr in resource_record:
+                if rr['type'] == 'MX':
+                    subprocess.call("/usr/local/cpanel/bin/whmapi1 removezonerecord zone="+zone_name+" line="+str(rr['Line']), shell=True)
+            if not os.path.isfile(installation_path+"/conf/DECLUSTER_DNSZONE"):
+                myhostname = socket.gethostname()
+                subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=MX class=IN name="+zone_name+". preference=0 exchange="+myhostname+".", shell=True)
+                for server in serverlist:
+                    subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=MX class=IN name="+zone_name+". preference=100 exchange="+server+".", shell=True)
+            else:
+                subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" type=MX class=IN name="+zone_name+". preference=0 exchange="+zone_name+".", shell=True)
     return
 
 
