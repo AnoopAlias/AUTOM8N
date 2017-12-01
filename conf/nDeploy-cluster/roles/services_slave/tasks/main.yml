@@ -19,24 +19,12 @@
 - name: Stop dovecot on slave
   service: name=dovecot enabled=no state=stopped
 
-- name: kill any tailwatchd process
-  shell: "killall -9 tailwatchd"
+- name: restart tailwatchd
+  shell: "/usr/local/cpanel/libexec/tailwatchd --stop"
   ignore_errors: yes
 
-- name: restart tailwatchd
-  shell: "/usr/local/cpanel/libexec/tailwatchd --start"
-  ignore_errors: yes
-  
-- name: Disable tailwatchd drivers
-  shell: "{{ item }}"
-  with_items:
-    - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::APNSPush"
-    - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::ChkServd"
-    - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::Eximstats"
-    - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::MailHealth"
-    - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::ModSecLog"
-    - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::RecentAuthedMailIpTracker"
-    - "/usr/local/cpanel/libexec/tailwatchd --disable=Cpanel::TailWatch::cPBandwd"
+- name: kill any tailwatchd process
+  shell: "killall -9 tailwatchd"
   ignore_errors: yes
 
 - name: Ensure cPanel updates are set to manual

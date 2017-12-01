@@ -10,7 +10,6 @@
     - install_master
     - csync2_master
     - unison_master
-    - dnszone_master
     - mysqlaccess_master
     - clusterdirs_master
 
