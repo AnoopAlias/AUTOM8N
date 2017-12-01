@@ -28,6 +28,12 @@ if [ ${osversion} -le 6 ];then
 	chkconfig ndeploy_watcher on
 	chkconfig ndeploy_backends on
 else
+	# test for OpenVZ/Virtuozzo platform
+	/usr/sbin/sysctl -w net.core.somaxconn=16384
+	if [ $? -ne 0 ];then
+		sed -i 's/ExecStartPre=\/usr\/sbin\/sysctl -w net.core.netdev_max_backlog/#ExecStartPre=\/usr\/sbin\/sysctl -w net.core.netdev_max_backlog/' /etc/systemd/system/nginx.service
+		systemctl daemon-reload
+	fi
 	systemctl restart nginx
 	systemctl restart ndeploy_watcher
 	systemctl restart ndeploy_backends
