@@ -313,56 +313,6 @@ access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log 
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% endif %}
-{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
-return 301 https://$host$request_uri;
-{% else %}
-{% if PAGESPEED == 'enabled' %}
-{% if PAGESPEED_FILTER == 'CoreFilters' %}
-include /etc/nginx/conf.d/pagespeed.conf;
-{% elif PAGESPEED_FILTER == 'PassThrough' %}
-include /etc/nginx/conf.d/pagespeed_passthrough.conf;
-{% endif %}
-{% endif %}
-{% if not OPEN_FILE_CACHE == 'enabled' %}
-open_file_cache off;
-{% endif %}
-{% if AUTOINDEX == 'enabled' %}
-autoindex on;
-{% endif %}
-{% if CLICKJACKING_PROTECT == 'enabled' %}
-add_header X-Frame-Options SAMEORIGIN;
-{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}
-add_header X-Content-Type-Options nosniff;
-{% endif %}
-{% if XSS_FILTER == 'enabled' %}
-add_header X-XSS-Protection "1; mode=block";
-{% endif %}
-{% if GZIP == 'enabled' %}
-include /etc/nginx/conf.d/gzip.conf;
-{% endif %}
-{% if DOSMITIGATE == 'enabled' %}
-include /etc/nginx/conf.d/dos_mitigate.conf;
-{% endif %}
-{% if AUTH_BASIC == 'enabled' %}
-auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
-{% endif %}
-{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
-return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
-{% else %}
-{% if MODSECURITY == 'enabled' %}
-modsecurity on;
-{% endif %}
-{% if SET_EXPIRE_STATIC == 'enabled' %}
-include /etc/nginx/conf.d/files_with_expire.conf;
-{% endif %}
-{% if TEST_COOKIE == 'enabled' %}
-testcookie on;
-{% endif %}
-{% if SYMLINK_PROTECTION == 'enabled' %}
-disable_symlinks if_not_owner;
-{% endif %}
 
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
@@ -436,6 +386,59 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
 }
 {% endfor %}
 # End Include any applications in subdirectory
+
+{% if REDIRECT_TO_SSL == 'enabled' and SSL %}
+location / {
+return 301 https://$host$request_uri;
+}
+{% else %}
+{% if PAGESPEED == 'enabled' %}
+{% if PAGESPEED_FILTER == 'CoreFilters' %}
+include /etc/nginx/conf.d/pagespeed.conf;
+{% elif PAGESPEED_FILTER == 'PassThrough' %}
+include /etc/nginx/conf.d/pagespeed_passthrough.conf;
+{% endif %}
+{% endif %}
+{% if not OPEN_FILE_CACHE == 'enabled' %}
+open_file_cache off;
+{% endif %}
+{% if AUTOINDEX == 'enabled' %}
+autoindex on;
+{% endif %}
+{% if CLICKJACKING_PROTECT == 'enabled' %}
+add_header X-Frame-Options SAMEORIGIN;
+{% endif %}
+{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}
+add_header X-Content-Type-Options nosniff;
+{% endif %}
+{% if XSS_FILTER == 'enabled' %}
+add_header X-XSS-Protection "1; mode=block";
+{% endif %}
+{% if GZIP == 'enabled' %}
+include /etc/nginx/conf.d/gzip.conf;
+{% endif %}
+{% if DOSMITIGATE == 'enabled' %}
+include /etc/nginx/conf.d/dos_mitigate.conf;
+{% endif %}
+{% if AUTH_BASIC == 'enabled' %}
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
+{% endif %}
+{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+{% else %}
+{% if MODSECURITY == 'enabled' %}
+modsecurity on;
+{% endif %}
+{% if SET_EXPIRE_STATIC == 'enabled' %}
+include /etc/nginx/conf.d/files_with_expire.conf;
+{% endif %}
+{% if TEST_COOKIE == 'enabled' %}
+testcookie on;
+{% endif %}
+{% if SYMLINK_PROTECTION == 'enabled' %}
+disable_symlinks if_not_owner;
+{% endif %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
