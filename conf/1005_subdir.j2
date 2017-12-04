@@ -53,6 +53,7 @@ proxy_ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 proxy_ssl_ciphers   HIGH:!aNULL:!MD5;
 {% endif %}
 proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
 proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;

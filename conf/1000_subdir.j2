@@ -48,6 +48,7 @@ proxy_pass   http://{{ APPSERVERIP }}:9999;
 proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
 {% endif %}
 proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
 proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
