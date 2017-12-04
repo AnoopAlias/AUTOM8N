@@ -280,7 +280,7 @@ listen    {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
-server_name  cpanel.{{ CONFIGDOMAINNAME }} webmail.{{ CONFIGDOMAINNAME }} whm.{{ CONFIGDOMAINNAME }} cpcontacts.{{ CONFIGDOMAINNAME }} cpcalendars.{{ CONFIGDOMAINNAME }};
+server_name {% for DOMAIN in DOMAINLIST_VALID %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
 location / {
 
    proxy_send_timeout   90;
@@ -306,7 +306,7 @@ listen    {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
-server_name  {{ DOMAINLIST }};
+server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}
@@ -445,6 +445,7 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% if SSL %}
 
 # Proxy Subdomains
+
 server {
 listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% if IPVSIX %}
@@ -462,7 +463,7 @@ ssl_stapling on;
 ssl_stapling_verify on;
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-server_name  cpanel.{{ CONFIGDOMAINNAME }} webmail.{{ CONFIGDOMAINNAME }} whm.{{ CONFIGDOMAINNAME }} cpcontacts.{{ CONFIGDOMAINNAME }} cpcalendars.{{ CONFIGDOMAINNAME }};
+server_name {% for DOMAIN in DOMAINLIST_VALID %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
 location / {
 
    proxy_send_timeout   90;
@@ -500,7 +501,7 @@ ssl_stapling on;
 ssl_stapling_verify on;
 resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
-server_name  {{ DOMAINLIST }};
+server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}

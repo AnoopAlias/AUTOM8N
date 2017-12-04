@@ -298,6 +298,9 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     if domain_alias_name:
         serveralias_list = domain_alias_name.split(' ')
         serveralias_list_new = list(serveralias_list)
+        domain_list = list(domain_server_name)+serveralias_list_new
+        if domain_server_name.startswith('*'):
+            domain_list_valid = domain_list.remove(domain_server_name)
         try:
             serveralias_list_new.remove('www.'+kwargs.get('maindomain'))
         except ValueError:
@@ -309,10 +312,9 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     else:
         serveralias_list = []
         serveralias_list_new = []
-    if domain_alias_name:
-        domain_list = domain_server_name + " " + domain_alias_name
-    else:
-        domain_list = domain_server_name
+        domain_list = list(domain_server_name)
+        if domain_server_name.startswith('*'):
+            domain_list_valid = domain_list.remove(domain_server_name)
     if json_parsed_cpaneldomain.get('ipv6'):
         try:
             ipv6_addr_list = json_parsed_cpaneldomain.get('ipv6').keys()
@@ -554,6 +556,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "NAXSI": naxsi,
                     "NAXSIMODE": naxsi_mode,
                     "DOMAINLIST": domain_list,
+                    "DOMAINLIST_VALID": domain_list_valid,
                     "AUTOINDEX": autoindex,
                     "REDIRECT_TO_SSL": redirect_to_ssl,
                     "ENABLEACCESSLOG": access_log,
