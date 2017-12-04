@@ -12,7 +12,8 @@ sed -i "s/80/9999/" /etc/chkserv.d/httpd
 /opt/nDeploy/scripts/attempt_autofix.sh
 /usr/local/cpanel/libexec/tailwatchd --restart
 if [ -f /etc/cpanel/ea4/is_ea4 ];then
-	yum -y remove ea-apache24-mod_ruid2
+	echo -e '\e[93m !!! Removing conflicting ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm's \e[0m'
+	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2
 	yum -y install ea-apache24-mod_remoteip
 	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || echo 'Include "/etc/nginx/conf.d/httpd_mod_remoteip.include"' >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf
 fi
