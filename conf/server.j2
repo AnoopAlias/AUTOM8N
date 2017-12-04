@@ -25,11 +25,69 @@ resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
 {% endif %}
 server_name www.{{ MAINDOMAINNAME }};
+
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
 return 301 https://{{ MAINDOMAINNAME }}$request_uri;
 {% else %}
 return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
+}
 }
 {% endif %}
 
@@ -58,11 +116,69 @@ resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
 {% endif %}
 server_name {{ MAINDOMAINNAME }};
+
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
 return 301 https://www.{{ MAINDOMAINNAME }}$request_uri;
 {% else %}
 return 301 $scheme://www.{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
+}
 }
 {% endif %}
 
@@ -91,11 +207,69 @@ resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
 resolver_timeout 5s;
 {% endif %}
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
+
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+
+proxy_connect_timeout 30s;
+
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
 return 301 https://{{ MAINDOMAINNAME }}$request_uri;
 {% else %}
 return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
+}
 }
 {% endif %}
 # Redirects if any
