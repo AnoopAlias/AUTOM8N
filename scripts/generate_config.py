@@ -301,6 +301,8 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         domain_list = list(domain_server_name)+serveralias_list_new
         if domain_server_name.startswith('*'):
             domain_list_valid = domain_list.remove(domain_server_name)
+        else:
+            domain_list_valid = domain_list
         try:
             serveralias_list_new.remove('www.'+kwargs.get('maindomain'))
         except ValueError:
@@ -315,6 +317,8 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         domain_list = list(domain_server_name)
         if domain_server_name.startswith('*'):
             domain_list_valid = domain_list.remove(domain_server_name)
+        else:
+            domain_list_valid = domain_list
     if json_parsed_cpaneldomain.get('ipv6'):
         try:
             ipv6_addr_list = json_parsed_cpaneldomain.get('ipv6').keys()
