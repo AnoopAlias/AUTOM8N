@@ -297,28 +297,23 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     domain_alias_name = json_parsed_cpaneldomain.get('serveralias')
     if domain_alias_name:
         serveralias_list = domain_alias_name.split(' ')
-        serveralias_list_new = list(serveralias_list)
-        domain_list = serveralias_list_new.append(domain_server_name)
+        domain_list = serveralias_list
         if domain_server_name.startswith('*'):
-            domain_list_valid = domain_list.remove(domain_server_name)
-        else:
-            domain_list_valid = domain_list
+            domain_list.remove(domain_server_name)
         try:
-            serveralias_list_new.remove('www.'+kwargs.get('maindomain'))
+            serveralias_list.remove('www.'+kwargs.get('maindomain'))
         except ValueError:
             pass
         try:
-            serveralias_list_new.remove(kwargs.get('maindomain'))
+            serveralias_list.remove(kwargs.get('maindomain'))
         except ValueError:
             pass
     else:
         serveralias_list = []
-        serveralias_list_new = []
-        domain_list = serveralias_list_new.append(domain_server_name)
         if domain_server_name.startswith('*'):
-            domain_list_valid = domain_list.remove(domain_server_name)
+            domain_list = []
         else:
-            domain_list_valid = domain_list
+            domain_list = [domain_server_name]
     if json_parsed_cpaneldomain.get('ipv6'):
         try:
             ipv6_addr_list = json_parsed_cpaneldomain.get('ipv6').keys()
@@ -491,7 +486,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', None)
     open_file_cache = yaml_parsed_domain_data.get('open_file_cache', None)
     symlink_protection = yaml_parsed_domain_data.get('symlink_protection', 'disabled')
-    if not serveralias_list_new:
+    if not serveralias_list:
         redirect_aliases = 'disabled'
     else:
         redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', None)
@@ -537,7 +532,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "IPVSIX": hasipv6,
                     "WWWREDIRECT": wwwredirect,
                     "REDIRECTALIASES": redirect_aliases,
-                    "REDIRECTALIASES_LIST": serveralias_list_new,
+                    "REDIRECTALIASES_LIST": serveralias_list,
                     "CPANELIP": cpanel_ipv4,
                     "HTTPDIP": cpanel_ipv4,
                     "CPIPVSIX": ipv6_addr,
@@ -560,7 +555,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "NAXSI": naxsi,
                     "NAXSIMODE": naxsi_mode,
                     "DOMAINLIST": domain_list,
-                    "DOMAINLIST_VALID": domain_list_valid,
+                    "DOMAINLIST_VALID": domain_list,
                     "AUTOINDEX": autoindex,
                     "REDIRECT_TO_SSL": redirect_to_ssl,
                     "ENABLEACCESSLOG": access_log,
