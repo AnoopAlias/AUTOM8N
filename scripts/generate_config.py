@@ -297,9 +297,10 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     domain_alias_name = json_parsed_cpaneldomain.get('serveralias')
     if domain_alias_name:
         serveralias_list = domain_alias_name.split(' ')
-        domain_list = serveralias_list
+        domain_list = list(serveralias_list).append(domain_server_name)
+        domain_list_proxy_subdomain = list(domain_list)
         if domain_server_name.startswith('*'):
-            domain_list.remove(domain_server_name)
+            domain_list_proxy_subdomain.remove(domain_server_name)
         try:
             serveralias_list.remove('www.'+kwargs.get('maindomain'))
         except ValueError:
@@ -310,10 +311,11 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
             pass
     else:
         serveralias_list = []
+        domain_list = [domain_server_name]
         if domain_server_name.startswith('*'):
-            domain_list = []
+            domain_list_proxy_subdomain = []
         else:
-            domain_list = [domain_server_name]
+            domain_list_proxy_subdomain = [domain_server_name]
     if json_parsed_cpaneldomain.get('ipv6'):
         try:
             ipv6_addr_list = json_parsed_cpaneldomain.get('ipv6').keys()
@@ -486,10 +488,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', None)
     open_file_cache = yaml_parsed_domain_data.get('open_file_cache', None)
     symlink_protection = yaml_parsed_domain_data.get('symlink_protection', 'disabled')
-    if not serveralias_list:
-        redirect_aliases = 'disabled'
-    else:
-        redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', None)
+    redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', 'disabled')
     auth_basic = yaml_parsed_domain_data.get('auth_basic', 'disabled')
     subdir_apps = yaml_parsed_domain_data.get('subdir_apps', None)
     if subdir_apps:
@@ -555,7 +554,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "NAXSI": naxsi,
                     "NAXSIMODE": naxsi_mode,
                     "DOMAINLIST": domain_list,
-                    "DOMAINLIST_VALID": domain_list,
+                    "DOMAINLIST_PROXY_SUBDOMAIN": domain_list_proxy_subdomain,
                     "AUTOINDEX": autoindex,
                     "REDIRECT_TO_SSL": redirect_to_ssl,
                     "ENABLEACCESSLOG": access_log,
@@ -727,7 +726,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                                      "REDIRECT_URL": subdir_redirect_url,
                                      "REDIRECTSTATUS": subdir_redirectstatus,
                                      "APPEND_REQUESTURI": subdir_append_requesturi,
-                                     "PATHTOPYTHON": backend_path,
                                      "LUAWAF": lua_waf
                                      }
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)

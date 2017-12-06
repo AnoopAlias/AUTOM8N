@@ -1,5 +1,5 @@
 
-# Redirects if any
+################### Redirects ###################
 {% if WWWREDIRECT == "tononwww" %}
 server {
 listen  {{ CPANELIP }}:80 ;
@@ -182,6 +182,7 @@ return 301 $scheme://www.{{ MAINDOMAINNAME }}$request_uri;
 }
 {% endif %}
 
+{% if REDIRECTALIASES_LIST %}
 {% if REDIRECTALIASES == 'enabled' %}
 server {
 listen  {{ CPANELIP }}:80 ;
@@ -272,35 +273,10 @@ return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 }
 }
 {% endif %}
-# Redirects if any
-
-# Proxy Subdomains
-server {
-listen    {{ CPANELIP }}:80 ;
-{% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
-server_name {% for DOMAIN in DOMAINLIST_VALID %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
-location / {
+################### Redirects ###################
 
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-
-   proxy_connect_timeout 30s;
-
-   proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-}
-# Proxy Subdomains
-
+################### vhosts ###################
 server {
 listen    {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
@@ -446,47 +422,6 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 }
 
 {% if SSL %}
-
-# Proxy Subdomains
-
-server {
-listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
-{% if IPVSIX %}
-listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
-{% endif %}
-ssl_certificate {{ CPANELSSLCRT }};
-ssl_certificate_key {{ CPANELSSLKEY }};
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
-ssl_stapling on;
-ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
-resolver_timeout 5s;
-server_name {% for DOMAIN in DOMAINLIST_VALID %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_VALID %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
-location / {
-
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-
-   proxy_connect_timeout 30s;
-
-   proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-}
-# Proxy Subdomains
-
 server {
 listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% if IPVSIX %}
@@ -641,3 +576,51 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
 }
 {% endif %}
+################### vhosts ###################
+
+################### Proxy Subdomains ###################
+{% if DOMAINLIST_PROXY_SUBDOMAIN %}
+server {
+listen    {{ CPANELIP }}:80 ;
+{% if IPVSIX %}
+listen  [{{ CPIPVSIX }}]:80 ;
+{% endif %}
+{% if SSL %}
+listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+{% if IPVSIX %}
+listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+{% endif %}
+ssl_certificate {{ CPANELSSLCRT }};
+ssl_certificate_key {{ CPANELSSLKEY }};
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_prefer_server_ciphers on;
+ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+ssl_session_cache shared:SSL:10m;
+ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+ssl_session_timeout  5m;
+ssl_stapling on;
+ssl_stapling_verify on;
+resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
+resolver_timeout 5s;
+{% endif %}
+server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
+location / {
+
+   proxy_send_timeout   90;
+   proxy_read_timeout   90;
+
+   proxy_buffer_size    4k;
+   proxy_buffers     16 32k;
+   proxy_busy_buffers_size 64k;
+   proxy_temp_file_write_size 64k;
+
+   proxy_connect_timeout 30s;
+
+   proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+   proxy_set_header   Host   $host;
+   proxy_set_header   X-Real-IP  $remote_addr;
+   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
+{% endif %}
+################### Proxy Subdomains ###################
