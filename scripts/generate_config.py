@@ -297,10 +297,12 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     domain_alias_name = json_parsed_cpaneldomain.get('serveralias')
     if domain_alias_name:
         serveralias_list = domain_alias_name.split(' ')
-        domain_list = list(serveralias_list).append(domain_server_name)
-        domain_list_proxy_subdomain = list(domain_list)
+        domain_list = list(serveralias_list)
+        domain_list.append(domain_server_name)
         if domain_server_name.startswith('*'):
-            domain_list_proxy_subdomain.remove(domain_server_name)
+            domain_list_proxy_subdomain = list(serveralias_list)
+        else:
+            domain_list_proxy_subdomain = list(domain_list)
         try:
             serveralias_list.remove('www.'+kwargs.get('maindomain'))
         except ValueError:
