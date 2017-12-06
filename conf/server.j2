@@ -31,14 +31,11 @@ location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -49,14 +46,11 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -67,14 +61,11 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -122,14 +113,11 @@ location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -140,14 +128,11 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -158,14 +143,11 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -214,14 +196,11 @@ location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -232,14 +211,11 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -250,14 +226,11 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -295,14 +268,11 @@ location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -313,14 +283,11 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -331,25 +298,17 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 
-# Include NAXSI settings
-location ^~ /NaxsiRequestDenied {
-return 418;
-}
-# End Include NAXSI settings
 # Include any applications in subdirectory
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
 {% if PASSENGERAPPS[KEY] == 'enabled' %}
@@ -368,6 +327,9 @@ location / {
 return 301 https://$host$request_uri;
 }
 {% else %}
+{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+{% else %}
 {% if PAGESPEED == 'enabled' %}
 {% if PAGESPEED_FILTER == 'CoreFilters' %}
 include /etc/nginx/conf.d/pagespeed.conf;
@@ -375,46 +337,21 @@ include /etc/nginx/conf.d/pagespeed.conf;
 include /etc/nginx/conf.d/pagespeed_passthrough.conf;
 {% endif %}
 {% endif %}
-{% if not OPEN_FILE_CACHE == 'enabled' %}
-open_file_cache off;
-{% endif %}
-{% if AUTOINDEX == 'enabled' %}
-autoindex on;
-{% endif %}
-{% if CLICKJACKING_PROTECT == 'enabled' %}
-add_header X-Frame-Options SAMEORIGIN;
-{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}
-add_header X-Content-Type-Options nosniff;
-{% endif %}
-{% if XSS_FILTER == 'enabled' %}
-add_header X-XSS-Protection "1; mode=block";
-{% endif %}
-{% if GZIP == 'enabled' %}
-include /etc/nginx/conf.d/gzip.conf;
-{% endif %}
-{% if DOSMITIGATE == 'enabled' %}
-include /etc/nginx/conf.d/dos_mitigate.conf;
-{% endif %}
+{% if not OPEN_FILE_CACHE == 'enabled' %}open_file_cache off;{% endif %}
+{% if AUTOINDEX == 'enabled' %}autoindex on;{% endif %}
+{% if CLICKJACKING_PROTECT == 'enabled' %}add_header X-Frame-Options SAMEORIGIN;{% endif %}
+{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}add_header X-Content-Type-Options nosniff;{% endif %}
+{% if XSS_FILTER == 'enabled' %}add_header X-XSS-Protection "1; mode=block";{% endif %}
+{% if GZIP == 'enabled' %}include /etc/nginx/conf.d/gzip.conf;{% endif %}
+{% if DOSMITIGATE == 'enabled' %}include /etc/nginx/conf.d/dos_mitigate.conf;{% endif %}
+{% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
+{% if TEST_COOKIE == 'enabled' %}testcookie on;{% endif %}
+{% if SYMLINK_PROTECTION == 'enabled' %}disable_symlinks if_not_owner;{% endif %}
 {% if AUTH_BASIC == 'enabled' %}
 auth_basic "Restricted Content";
 auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% endif %}
-{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
-return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
-{% else %}
-{% if MODSECURITY == 'enabled' %}
-modsecurity on;
-{% endif %}
-{% if SET_EXPIRE_STATIC == 'enabled' %}
-include /etc/nginx/conf.d/files_with_expire.conf;
-{% endif %}
-{% if TEST_COOKIE == 'enabled' %}
-testcookie on;
-{% endif %}
-{% if SYMLINK_PROTECTION == 'enabled' %}
-disable_symlinks if_not_owner;
-{% endif %}
+{% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
@@ -446,72 +383,18 @@ access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log 
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% endif %}
-{% if PAGESPEED == 'enabled' %}
-{% if PAGESPEED_FILTER == 'CoreFilters' %}
-include /etc/nginx/conf.d/pagespeed.conf;
-{% elif PAGESPEED_FILTER == 'PassThrough' %}
-include /etc/nginx/conf.d/pagespeed_passthrough.conf;
-{% endif %}
-{% endif %}
-{% if not OPEN_FILE_CACHE == 'enabled' %}
-open_file_cache off;
-{% endif %}
-{% if AUTOINDEX == 'enabled' %}
-autoindex on;
-{% endif %}
-{% if HSTS == 'enabled' %}
-add_header Strict-Transport-Security "max-age=31536000" always;
-{% endif %}
-{% if CLICKJACKING_PROTECT == 'enabled' %}
-add_header X-Frame-Options SAMEORIGIN;
-{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}
-add_header X-Content-Type-Options nosniff;
-{% endif %}
-{% if XSS_FILTER == 'enabled' %}
-add_header X-XSS-Protection "1; mode=block";
-{% endif %}
-{% if BROTLI == 'enabled' %}
-include /etc/nginx/conf.d/brotli.conf;
-{% elif GZIP == 'enabled' %}
-include /etc/nginx/conf.d/gzip.conf;
-{% endif %}
-{% if DOSMITIGATE == 'enabled' %}
-include /etc/nginx/conf.d/dos_mitigate.conf;
-{% endif %}
-{% if AUTH_BASIC == 'enabled' %}
-auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
-{% endif %}
-{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
-return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
-{% else %}
-{% if MODSECURITY == 'enabled' %}
-modsecurity on;
-{% endif %}
-{% if SET_EXPIRE_STATIC == 'enabled' %}
-include /etc/nginx/conf.d/files_with_expire.conf;
-{% endif %}
-{% if TEST_COOKIE == 'enabled' %}
-testcookie on;
-{% endif %}
-{% if SYMLINK_PROTECTION == 'enabled' %}
-disable_symlinks if_not_owner;
-{% endif %}
+
 
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -522,14 +405,11 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
@@ -540,25 +420,17 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-
 proxy_buffer_size    4k;
 proxy_buffers     16 32k;
 proxy_busy_buffers_size 64k;
 proxy_temp_file_write_size 64k;
-
 proxy_connect_timeout 30s;
-
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 
-# Include NAXSI settings
-location ^~ /NaxsiRequestDenied {
-return 418;
-}
-# End Include NAXSI settings
 # Include any applications in subdirectory
 {% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
 {% if PASSENGERAPPS[KEY] == 'enabled' %}
@@ -571,6 +443,38 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subinclude;
 }
 {% endfor %}
 # End Include any applications in subdirectory
+
+{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+{% else %}
+{% if PAGESPEED == 'enabled' %}
+{% if PAGESPEED_FILTER == 'CoreFilters' %}
+include /etc/nginx/conf.d/pagespeed.conf;
+{% elif PAGESPEED_FILTER == 'PassThrough' %}
+include /etc/nginx/conf.d/pagespeed_passthrough.conf;
+{% endif %}
+{% endif %}
+{% if BROTLI == 'enabled' %}
+include /etc/nginx/conf.d/brotli.conf;
+{% elif GZIP == 'enabled' %}
+include /etc/nginx/conf.d/gzip.conf;
+{% endif %}
+{% if not OPEN_FILE_CACHE == 'enabled' %}open_file_cache off;{% endif %}
+{% if AUTOINDEX == 'enabled' %}autoindex on;{% endif %}
+{% if HSTS == 'enabled' %}add_header Strict-Transport-Security "max-age=31536000" always;{% endif %}
+{% if CLICKJACKING_PROTECT == 'enabled' %}add_header X-Frame-Options SAMEORIGIN;{% endif %}
+{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}add_header X-Content-Type-Options nosniff;{% endif %}
+{% if XSS_FILTER == 'enabled' %}add_header X-XSS-Protection "1; mode=block";{% endif %}
+{% if DOSMITIGATE == 'enabled' %}include /etc/nginx/conf.d/dos_mitigate.conf;{% endif %}
+{% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
+{% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
+{% if TEST_COOKIE == 'enabled' %}testcookie on;{% endif %}
+{% if SYMLINK_PROTECTION == 'enabled' %}disable_symlinks if_not_owner;{% endif %}
+{% if AUTH_BASIC == 'enabled' %}
+auth_basic "Restricted Content";
+auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
+{% endif %}
+{% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
@@ -605,17 +509,13 @@ resolver_timeout 5s;
 {% endif %}
 server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
 location / {
-
    proxy_send_timeout   90;
    proxy_read_timeout   90;
-
    proxy_buffer_size    4k;
    proxy_buffers     16 32k;
    proxy_busy_buffers_size 64k;
    proxy_temp_file_write_size 64k;
-
    proxy_connect_timeout 30s;
-
    proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
    proxy_set_header   Host   $host;
    proxy_set_header   X-Real-IP  $remote_addr;

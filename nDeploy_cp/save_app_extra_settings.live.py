@@ -28,6 +28,7 @@ def close_cpanel_liveapisock():
     sock.sendall('<cpanelxml shutdown="1" />')
     sock.close()
 
+
 close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 print('Content-Type: text/html')
@@ -128,66 +129,6 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['mod_security'] = mod_security
             else:
                 print('ERROR: Forbidden::mod_security')
-                print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('</body>')
-                print('</html>')
-                sys.exit(0)
-            # lua_waf
-            # if 'lua_waf' in form.keys():
-            #     lua_waf = form.getvalue('lua_waf')
-            #     the_subdir_dict['lua_waf'] = lua_waf
-            # else:
-            #     print('ERROR: Forbidden::lua_waf')
-            #     print('</div>')
-            #     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-            #     print('</div>')
-            #     print('</div>')
-            #     print('</div>')
-            #     print('</div>')
-            #     print('</body>')
-            #     print('</html>')
-            #     sys.exit(0)
-            # naxsi
-            if 'naxsi' in form.keys():
-                naxsi = form.getvalue('naxsi')
-                the_subdir_dict['naxsi'] = naxsi
-            else:
-                print('ERROR: Forbidden::naxsi')
-                print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('</body>')
-                print('</html>')
-                sys.exit(0)
-            # naxsi_mode
-            if 'naxsi_mode' in form.keys():
-                naxsi_mode = form.getvalue('naxsi_mode')
-                the_subdir_dict['naxsi_mode'] = naxsi_mode
-            else:
-                print('ERROR: Forbidden::naxsi_mode')
-                print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('</body>')
-                print('</html>')
-                sys.exit(0)
-            # naxsi_whitelist
-            if 'naxsi_whitelist' in form.keys():
-                naxsi_whitelist = form.getvalue('naxsi_whitelist')
-                the_subdir_dict['naxsi_whitelist'] = naxsi_whitelist
-            else:
-                print('ERROR: Forbidden::naxsi_whitelist')
                 print('</div>')
                 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
                 print('</div>')
@@ -298,66 +239,6 @@ else:
         yaml_parsed_profileyaml['mod_security'] = mod_security
     else:
         print('ERROR: Forbidden::mod_security')
-        print('</div>')
-        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
-        print('</div>')
-        print('</div>')
-        print('</div>')
-        print('</body>')
-        print('</html>')
-        sys.exit(0)
-    # lua_waf
-    # if 'lua_waf' in form.keys():
-    #     lua_waf = form.getvalue('lua_waf')
-    #     yaml_parsed_profileyaml['lua_waf'] = lua_waf
-    # else:
-    #     print('ERROR: Forbidden::lua_waf')
-    #     print('</div>')
-    #     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-    #     print('</div>')
-    #     print('</div>')
-    #     print('</div>')
-    #     print('</div>')
-    #     print('</body>')
-    #     print('</html>')
-    #     sys.exit(0)
-    # naxsi
-    if 'naxsi' in form.keys():
-        naxsi = form.getvalue('naxsi')
-        yaml_parsed_profileyaml['naxsi'] = naxsi
-    else:
-        print('ERROR: Forbidden::naxsi')
-        print('</div>')
-        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
-        print('</div>')
-        print('</div>')
-        print('</div>')
-        print('</body>')
-        print('</html>')
-        sys.exit(0)
-    # naxsi_mode
-    if 'naxsi_mode' in form.keys():
-        naxsi_mode = form.getvalue('naxsi_mode')
-        yaml_parsed_profileyaml['naxsi_mode'] = naxsi_mode
-    else:
-        print('ERROR: Forbidden::naxsi_mode')
-        print('</div>')
-        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
-        print('</div>')
-        print('</div>')
-        print('</div>')
-        print('</body>')
-        print('</html>')
-        sys.exit(0)
-    # naxsi_whitelist
-    if 'naxsi_whitelist' in form.keys():
-        naxsi_whitelist = form.getvalue('naxsi_whitelist')
-        yaml_parsed_profileyaml['naxsi_whitelist'] = naxsi_whitelist
-    else:
-        print('ERROR: Forbidden::naxsi_whitelist')
         print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
         print('</div>')

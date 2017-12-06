@@ -98,11 +98,7 @@ if form.getvalue('domain'):
         backend_version = yaml_parsed_profileyaml.get('backend_version')
         backend_path = yaml_parsed_profileyaml.get('backend_path')
         apptemplate_code = yaml_parsed_profileyaml.get('apptemplate_code')
-        naxsi = yaml_parsed_profileyaml.get('naxsi', 'disabled')
-        naxsi_mode = yaml_parsed_profileyaml.get('naxsi_mode', 'learn')
-        naxsi_whitelist = yaml_parsed_profileyaml.get('naxsi_whitelist', 'none')
         mod_security = yaml_parsed_profileyaml.get('mod_security', 'disabled')
-        lua_waf = yaml_parsed_profileyaml.get('lua_waf', 'disabled')
         auth_basic = yaml_parsed_profileyaml.get('auth_basic', 'disabled')
         set_expire_static = yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
         # get the human friendly name of the app template
@@ -229,91 +225,6 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
-        print('</li>')
-        # # lua_waf
-        # print('<ul class="list-group"><li class="list-group-item">')
-        # print('<div class="row">')
-        # lua_waf_hint = "OpenResty LUA WAF"
-        # if lua_waf == 'enabled':
-        #     print_green('lua_waf', lua_waf_hint)
-        #     print('<div class="col-sm-6 col-radio">')
-        #     print('<div class="radio"><label><input type="radio" name="lua_waf" value="enabled" checked/> Enabled</label></div>')
-        #     print('<div class="radio"><label><input type="radio" name="lua_waf" value="disabled" /> Disabled</label></div>')
-        #     print('</div>')
-        # else:
-        #     print_red('lua_waf', lua_waf_hint)
-        #     print('<div class="col-sm-6 col-radio">')
-        #     print('<div class="radio"><label><input type="radio" name="lua_waf" value="enabled" /> Enabled</label></div>')
-        #     print('<div class="radio"><label><input type="radio" name="lua_waf" value="disabled" checked/> Disabled</label></div>')
-        #     print('</div>')
-        #     print('</div>')
-        # print('</li>')
-        # naxsi
-        print('<ul class="list-group"><li class="list-group-item">')
-        print('<div class="row">')
-        naxsi_hint = "NAXSI is a web application firewall"
-        if naxsi == 'enabled':
-            print_green("naxsi", naxsi_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="naxsi" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="naxsi" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("naxsi", naxsi_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="naxsi" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="naxsi" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-            print('</div>')
-        print('</li>')
-        # naxsi_mode
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        naxsi_mode_hint = 'active mode blocks requests, learn mode just logs it'
-        if naxsi_mode == 'learn':
-            print_red('naxsi_mode', naxsi_mode_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<select name="naxsi_mode">')
-            print(('<option selected value="learn">learn</option>'))
-            print(('<option value="active">active</option>'))
-        else:
-            print_green('naxsi_mode', naxsi_mode_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<select name="naxsi_mode">')
-            print(('<option value="learn">learn</option>'))
-            print(('<option selected value="active">active</option>'))
-        print('</select>')
-        print('</div>')
-        print('</div>')
-        print('</li>')
-        # NAXSI Whitelist
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        naxsi_whitelist_hint = 'Select community contributed NAXSI whitelist rules'
-        if naxsi_whitelist == 'none':
-            print_red('naxsi whitelist', naxsi_whitelist_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<select name="naxsi_whitelist">')
-            print(('<option selected value="none">none</option>'))
-            print(('<option value="wordpress">Wordpress</option>'))
-            print(('<option value="drupal">Drupal</option>'))
-        elif naxsi_whitelist == 'wordpress':
-            print_green('naxsi whitelist', naxsi_whitelist_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<select name="naxsi_whitelist">')
-            print(('<option value="none">none</option>'))
-            print(('<option value="drupal">Drupal</option>'))
-            print(('<option selected value="wordpress">Wordpress</option>'))
-        elif naxsi_whitelist == 'drupal':
-            print_green('naxsi whitelist', naxsi_whitelist_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<select name="naxsi_whitelist">')
-            print(('<option value="none">none</option>'))
-            print(('<option selected value="drupal">Drupal</option>'))
-            print(('<option value="wordpress">Wordpress</option>'))
-        print('</select>')
-        print('</div>')
-        print('</div>')
         print('</li>')
         # end
         print('</ul>')

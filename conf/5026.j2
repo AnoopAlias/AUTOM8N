@@ -27,36 +27,6 @@ rewrite ^/video-sitemap.xsl$ /index.php?xsl=video last;
 
 location / {
 
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
-{% endif %}
-# End Include NAXSI settings
-
-# Include LUAWAF settings
-{% if LUAWAF == 'enabled' %}
-include /etc/nginx/conf.d/luarestywaf_exec.conf;
-{% endif %}
-# End Include LUAWAF settings
-
 #If request method is POST we add a _mcnc cookie
 if ($requestnocache = "1") {
 add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
@@ -83,35 +53,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
-{% endif %}
-# End Include NAXSI settings
-
-# Include LUAWAF settings
-{% if LUAWAF == 'enabled' %}
-include /etc/nginx/conf.d/luarestywaf_exec.conf;
-{% endif %}
-# End Include LUAWAF settings
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};

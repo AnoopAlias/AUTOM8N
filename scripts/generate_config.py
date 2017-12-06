@@ -293,6 +293,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     domain_home = json_parsed_cpaneldomain.get('homedir')
     document_root = json_parsed_cpaneldomain.get('documentroot')
     diff_dir = document_root.replace(domain_home, "")
+    # Lets deal with the server_name
     domain_server_name = json_parsed_cpaneldomain.get('servername')
     domain_alias_name = json_parsed_cpaneldomain.get('serveralias')
     if domain_alias_name:
@@ -444,16 +445,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         mod_security = yaml_parsed_domain_data.get('mod_security', 'disabled')
     else:
         mod_security = 'disabled'
-    if os.path.isfile('/etc/nginx/modules.d/naxsi.load') and mod_security == 'disabled':
-        naxsi = yaml_parsed_domain_data.get('naxsi', 'disabled')
-        naxsi_whitelist = yaml_parsed_domain_data.get('naxsi_whitelist', None)
-    else:
-        naxsi = 'disabled'
-        naxsi_whitelist = 'none'
-    if os.path.isfile('/etc/nginx/conf.auto/luarestywaf.conf'):
-        lua_waf = yaml_parsed_domain_data.get('lua_waf', 'disabled')
-    else:
-        lua_waf = 'disabled'
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
         pagespeed = yaml_parsed_domain_data.get('pagespeed', 'disabled')
         pagespeed_filter = yaml_parsed_domain_data.get('pagespeed_filter', 'CoreFilters')
@@ -468,27 +459,26 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         wwwredirect = None
     else:
         wwwredirect = yaml_parsed_domain_data.get('wwwredirect', None)
-    autoindex = yaml_parsed_domain_data.get('autoindex', None)
-    redirect_to_ssl = yaml_parsed_domain_data.get('redirect_to_ssl', None)
-    clickjacking_protect = yaml_parsed_domain_data.get('clickjacking_protect', None)
-    disable_contenttype_sniffing = yaml_parsed_domain_data.get('disable_contenttype_sniffing', None)
-    xss_filter = yaml_parsed_domain_data.get('xss_filter', None)
-    hsts = yaml_parsed_domain_data.get('hsts', None)
+    autoindex = yaml_parsed_domain_data.get('autoindex', 'disabled')
+    redirect_to_ssl = yaml_parsed_domain_data.get('redirect_to_ssl', 'disabled')
+    clickjacking_protect = yaml_parsed_domain_data.get('clickjacking_protect', 'disabled')
+    disable_contenttype_sniffing = yaml_parsed_domain_data.get('disable_contenttype_sniffing', 'disabled')
+    xss_filter = yaml_parsed_domain_data.get('xss_filter', 'disabled')
+    hsts = yaml_parsed_domain_data.get('hsts', 'disabled')
     if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
-        brotli = yaml_parsed_domain_data.get('brotli', None)
+        brotli = yaml_parsed_domain_data.get('brotli', 'disabled')
     else:
         brotli = 'disabled'
-    gzip = yaml_parsed_domain_data.get('gzip', None)
-    http2 = yaml_parsed_domain_data.get('http2', None)
-    ssl_offload = yaml_parsed_domain_data.get('ssl_offload', None)
-    access_log = yaml_parsed_domain_data.get('access_log', None)
-    naxsi_mode = yaml_parsed_domain_data.get('naxsi_mode', 'learn')
+    gzip = yaml_parsed_domain_data.get('gzip', 'disabled')
+    http2 = yaml_parsed_domain_data.get('http2', 'disabled')
+    ssl_offload = yaml_parsed_domain_data.get('ssl_offload', 'disabled')
+    access_log = yaml_parsed_domain_data.get('access_log', 'disabled')
     redirect_url = yaml_parsed_domain_data.get('redirecturl', 'none')
     redirectstatus = yaml_parsed_domain_data.get('redirectstatus', 'none')
     append_requesturi = yaml_parsed_domain_data.get('append_requesturi', 'disabled')
     set_expire_static = yaml_parsed_domain_data.get('set_expire_static', 'disabled')
-    dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', None)
-    open_file_cache = yaml_parsed_domain_data.get('open_file_cache', None)
+    dos_mitigate = yaml_parsed_domain_data.get('dos_mitigate', 'disabled')
+    open_file_cache = yaml_parsed_domain_data.get('open_file_cache', 'disabled')
     symlink_protection = yaml_parsed_domain_data.get('symlink_protection', 'disabled')
     redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', 'disabled')
     auth_basic = yaml_parsed_domain_data.get('auth_basic', 'disabled')
@@ -553,8 +543,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "BROTLI": brotli,
                     "HSTS": hsts,
                     "MODSECURITY": mod_security,
-                    "NAXSI": naxsi,
-                    "NAXSIMODE": naxsi_mode,
                     "DOMAINLIST": domain_list,
                     "DOMAINLIST_PROXY_SUBDOMAIN": domain_list_proxy_subdomain,
                     "AUTOINDEX": autoindex,
@@ -565,7 +553,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "SUBDIRAPPS": subdir_apps_uniq,
                     "PASSENGERAPPS": subdir_apps_passenger,
                     "DIFFDIR": diff_dir,
-                    "NAXSI_WHITELIST": naxsi_whitelist,
                     "PAGESPEED_FILTER": pagespeed_filter,
                     "SET_EXPIRE_STATIC": set_expire_static,
                     "AUTH_BASIC": auth_basic,
@@ -573,7 +560,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     "REDIRECT_URL": redirect_url,
                     "APPEND_REQUESTURI": append_requesturi,
                     "DOSMITIGATE": dos_mitigate,
-                    "LUAWAF": lua_waf,
                     "BACKEND_CATEGORY": backend_category
                     }
     generated_config = server_template.render(templateVars)
@@ -635,8 +621,6 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                        "CONFIGDOMAINNAME": kwargs.get('configdomain'),
                        "HOMEDIR": domain_home,
                        "MODSECURITY": mod_security,
-                       "NAXSI": naxsi,
-                       "NAXSIMODE": naxsi_mode,
                        "UPSTREAM_PORT": backend_path,
                        "PATHTOPYTHON": backend_path,
                        "PATHTORUBY": backend_path,
@@ -644,14 +628,12 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                        "SOCKETFILE": fastcgi_socket,
                        "SUBDIRAPPS": subdir_apps_uniq,
                        "DIFFDIR": diff_dir,
-                       "NAXSI_WHITELIST": naxsi_whitelist,
                        "SET_EXPIRE_STATIC": set_expire_static,
                        "AUTH_BASIC": auth_basic,
                        "REDIRECTSTATUS": redirectstatus,
                        "REDIRECT_URL": redirect_url,
                        "APPEND_REQUESTURI": append_requesturi,
-                       "PATHTOPYTHON": backend_path,
-                       "LUAWAF": lua_waf
+                       "PATHTOPYTHON": backend_path
                        }
     generated_app_config = app_template.render(apptemplateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
@@ -668,17 +650,10 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
             subdir_backend_version = the_subdir_app_dict.get('backend_version')
             subdir_apptemplate_code = the_subdir_app_dict.get('apptemplate_code')
             subdir_auth_basic = the_subdir_app_dict.get('auth_basic', 'disabled')
-            subdir_naxsi_mode = the_subdir_app_dict.get('naxsi_mode', 'learn')
             if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
                 subdir_mod_security = the_subdir_app_dict.get('mod_security', 'disabled')
             else:
                 subdir_mod_security = 'disabled'
-            if os.path.isfile('/etc/nginx/modules.d/naxsi.load') and subdir_mod_security == 'disabled':
-                subdir_naxsi = the_subdir_app_dict.get('naxsi', 'disabled')
-                subdir_naxsi_whitelist = the_subdir_app_dict.get('naxsi_whitelist', None)
-            else:
-                subdir_naxsi = 'disabled'
-                subdir_naxsi_whitelist = 'none'
             subdir_redirect_url = the_subdir_app_dict.get('redirecturl', 'none')
             subdir_redirectstatus = the_subdir_app_dict.get('redirectstatus', 'none')
             subdir_set_expire_static = the_subdir_app_dict.get('set_expire_static', 'disabled')
@@ -715,20 +690,16 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                                      "HOMEDIR": domain_home,
                                      "DIFFDIR": diff_dir,
                                      "MODSECURITY": subdir_mod_security,
-                                     "NAXSI": subdir_naxsi,
-                                     "NAXSIMODE": subdir_naxsi_mode,
                                      "UPSTREAM_PORT": subdir_backend_path,
                                      "PATHTOPYTHON": subdir_backend_path,
                                      "PATHTORUBY": subdir_backend_path,
                                      "PATHTONODEJS": subdir_backend_path,
                                      "SOCKETFILE": fastcgi_socket,
-                                     "NAXSI_WHITELIST": subdir_naxsi_whitelist,
                                      "SET_EXPIRE_STATIC": subdir_set_expire_static,
                                      "AUTH_BASIC": subdir_auth_basic,
                                      "REDIRECT_URL": subdir_redirect_url,
                                      "REDIRECTSTATUS": subdir_redirectstatus,
-                                     "APPEND_REQUESTURI": subdir_append_requesturi,
-                                     "LUAWAF": lua_waf
+                                     "APPEND_REQUESTURI": subdir_append_requesturi
                                      }
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:

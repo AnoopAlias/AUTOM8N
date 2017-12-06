@@ -18,9 +18,6 @@ hsts: disabled
 dos_mitigate: enabled
 symlink_protection: disabled
 test_cookie: enabled
-naxsi: disabled
-naxsi_mode: learn
-naxsi_whitelist: none
 redirect_to_ssl: disabled
 redirect_aliases: disabled
 wwwredirect: none
@@ -31,6 +28,5 @@ redirectstatus: none
 append_requesturi: disabled
 set_expire_static: disabled
 mod_security: disabled
-lua_waf: disabled
 phpfpm_selector: CPANELPHP56
 phpfpm_path: /opt/cpanel/ea-php56/root

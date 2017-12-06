@@ -94,30 +94,6 @@ rewrite ^/wp-content/cache/minify/(.+\.(css|js))$ /wp-content/plugins/w3-total-c
 
 
 location / {
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
-{% endif %}
-# End Include NAXSI settings
-
 try_files /wp-content/w3tc/pgcache/$cache_uri/_index.html $uri $uri/ /index.php?q=$uri&$args;
 }
 
@@ -138,30 +114,6 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.naxsi.wl*;
-{% endif %}
-# End Include NAXSI settings
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
