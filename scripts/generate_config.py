@@ -298,7 +298,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     if domain_alias_name:
         serveralias_list = domain_alias_name.split(' ')
         serveralias_list_new = list(serveralias_list)
-        domain_list = list(domain_server_name)+serveralias_list_new
+        domain_list = serveralias_list_new.append(domain_server_name)
         if domain_server_name.startswith('*'):
             domain_list_valid = domain_list.remove(domain_server_name)
         else:
@@ -314,7 +314,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     else:
         serveralias_list = []
         serveralias_list_new = []
-        domain_list = list(domain_server_name)
+        domain_list = serveralias_list_new.append(domain_server_name)
         if domain_server_name.startswith('*'):
             domain_list_valid = domain_list.remove(domain_server_name)
         else:
