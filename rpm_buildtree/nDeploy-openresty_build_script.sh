@@ -10,7 +10,6 @@ OPENRESTY_RPM_ITER="1.el${OSVERSION}"
 NPS_VERSION="1.12.34.3-stable"
 MY_RUBY_VERSION="2.4.2"
 PASSENGER_VERSION="5.1.11"
-NAXSI_VERSION="http2"
 PS_NGX_EXTRA_FLAGS="--with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc"
 OPENSSL_VERSION="1.0.2m"
 LIBRESSL_VERSION="2.6.2"
@@ -40,9 +39,9 @@ if [ ${OSVERSION} -eq 6 ];then
   rpm --import https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/slc6X/i386/RPM-GPG-KEY-cern
   wget -O /etc/yum.repos.d/slc6-devtoolset.repo https://linux.web.cern.ch/linux/scientific6/docs/repository/cern/devtoolset/slc6-devtoolset.repo
   yum install devtoolset-2-gcc-c++ devtoolset-2-binutils
-  rsync -a --exclude 'usr/lib' --exclude 'etc/nginx/conf.d/modsecurity*' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/naxsi_*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/conf.d/pagespeed_passthrough.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules.debug/*' --exclude 'etc/nginx/modules.debug.d/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
+  rsync -a --exclude 'usr/lib' --exclude 'etc/nginx/conf.d/modsecurity*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/conf.d/pagespeed_passthrough.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules.debug/*' --exclude 'etc/nginx/modules.debug.d/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
 else
-  rsync -a --exclude 'etc/rc.d' --exclude 'etc/nginx/conf.d/modsecurity*' --exclude 'etc/nginx/naxsi.d/*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/naxsi_*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/conf.d/pagespeed_passthrough.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules.debug/*' --exclude 'etc/nginx/modules.debug.d/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
+  rsync -a --exclude 'etc/rc.d' --exclude 'etc/nginx/conf.d/modsecurity*' --exclude 'usr/nginx/scripts/*' --exclude 'etc/nginx/conf.d/brotli.conf' --exclude 'etc/nginx/conf.d/pagespeed.conf' --exclude 'etc/nginx/conf.d/pagespeed_passthrough.conf' --exclude 'etc/nginx/fastcgi_params_geoip' --exclude 'etc/nginx/conf.auto/*' --exclude 'etc/nginx/modules.debug/*' --exclude 'etc/nginx/modules.debug.d/*' --exclude 'etc/nginx/modules/*' --exclude 'etc/nginx/modules.d/*' nginx-pkg-64-common/ nginx-pkg/
 fi
 
 
