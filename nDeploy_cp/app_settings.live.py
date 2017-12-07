@@ -684,11 +684,11 @@ if form.getvalue('domain'):
         print('</div>')
         print('</li>')
         # end
-        print('</ul>')
-        print('</div>')  # div10
         # Pass on the domain name to the next stage
         print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
+        print('</ul>')
+        print('</div>')  # div10
         print('</form>')
         print('</div>')  # div9
     else:
