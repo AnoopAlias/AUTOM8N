@@ -71,7 +71,7 @@ print('</ol>')
 print('<div class="panel panel-default">')
 print('<div class="panel-heading"><h3 class="panel-title">Select domain to configure:</h3></div>')
 print('<div class="panel-body">')
-print('<form class="form-inline" action="selector.live.py" method="post">')
+print('<form class="form-inline" action="app_settings.live.py" method="post">')
 print('<select name="domain">')
 print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
 for domain_in_subdomains in sub_domains:
