@@ -222,6 +222,10 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')  # div11
         print('</li>')
+        print('</ul>')
+        print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div>'))
+        print('<ul class="list-group">')
+        print('<li class="list-group-item">')
         # set_expire_static
         print('<li class="list-group-item">')
         print('<div class="row">')
