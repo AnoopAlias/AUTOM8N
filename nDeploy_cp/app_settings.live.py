@@ -204,7 +204,7 @@ if form.getvalue('domain'):
         print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div>'))
         print('<div class="panel-body">')  # div10
         # auth_basic
-        print('<ul class="list-group">
+        print('<ul class="list-group">')
         print('<li class="list-group-item">')
         print('<div class="row">')  # div11
         auth_basic_hint = "Setup password for "+document_root+" in cPanel>>Files>>Directory Privacy first"
