@@ -178,10 +178,10 @@ if form.getvalue('domain'):
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS':
             # Next section start here
             print('<div class="panel panel-default">')  # div7
-            print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
             print(('<div class="panel-heading"><h3 class="panel-title">Passenger project deps installer: <strong>'+mydomain+'</strong></h3></div>'))
             print('<div class="panel-body">')  # div8
             print('<ul class="list-group">')
+            print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
             print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project </div>'))
             if backend_category == "RUBY":
                 print(('<div class="alert alert-info alert-top">specify project dependencies in <kbd>' + document_root + '/Gemfile</kbd></div>'))
@@ -194,18 +194,18 @@ if form.getvalue('domain'):
             print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
             print(('<input class="hidden" name="backend_version" value="'+backend_version+'">'))
             print('<input class="btn btn-primary" type="submit" value="INSTALL DEPS">')
+            print('</form>')
             print('</ul>')
             print('</div>')  # div8
-            print('</form>')
             print('</div>')  # div7
 
         # Next section start here
         print('<div class="panel panel-default">')  # div9
-        print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
+        print(('<div class="panel-heading"><h3 class="panel-title">Application Settings:</h3></div>'))
         print('<div class="panel-body">')  # div10
-
         print('<ul class="list-group">')
-        print(('<div class="panel-heading"><h3 class="panel-title">General Settings:</h3></div>'))
+        print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
+        print(('<div class="list-group-item-heading"><h4>General Settings:</h3></div>'))
         # auth_basic
         print('<li class="list-group-item">')
         print('<div class="row">')  # div11
@@ -767,7 +767,6 @@ if form.getvalue('domain'):
         print('</div>')  # marker2
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
-
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
