@@ -204,7 +204,8 @@ if form.getvalue('domain'):
         print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div>'))
         print('<div class="panel-body">')  # div10
         # auth_basic
-        print('<ul class="list-group"><li class="list-group-item">')
+        print('<ul class="list-group">
+        print('<li class="list-group-item">')
         print('<div class="row">')  # div11
         auth_basic_hint = "Setup password for "+document_root+" in cPanel>>Files>>Directory Privacy first"
         if auth_basic == 'enabled':
@@ -220,9 +221,9 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')  # div11
-        print('</ul>')
+        print('</li>')
         # set_expire_static
-        print('<ul class="list-group"><li class="list-group-item">')
+        print('<li class="list-group-item">')
         print('<div class="row">')
         set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
         if set_expire_static == 'enabled':
@@ -238,9 +239,9 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
-        print('</ul>')
+        print('</li>')
         # mod_security
-        print('<ul class="list-group"><li class="list-group-item">')
+        print('<li class="list-group-item">')
         print('<div class="row">')
         mod_security_hint = "mod_security v3 WAF"
         if mod_security == 'enabled':
@@ -256,9 +257,9 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
-        print('</ul>')
+        print('</li>')
         # user_config
-        print('<ul class="list-group"><li class="list-group-item">')
+        print('<li class="list-group-item">')
         user_config_hint = "enable a custom nginx.conf placed in the document root"
         print('<div class="row">')
         if user_config == 'enabled':
@@ -274,9 +275,9 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="user_config" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
-        print('</ul>')
+        print('</li>')
         # autoindex
-        print('<ul class="list-group"><li class="list-group-item">')
+        print('<li class="list-group-item">')
         autoindex_hint = "enable for directory listing"
         print('<div class="row">')
         if autoindex == 'enabled':
@@ -292,7 +293,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="autoindex" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
-        print('</ul>')
+        print('</li>')
         # ssl_offload
         print('<li class="list-group-item">')
         ssl_offload_hint = "enable for performance, disable if redirect loop error"
@@ -683,6 +684,7 @@ if form.getvalue('domain'):
         print('</div>')
         print('</li>')
         # end
+        print('</ul>')
         print('</div>')  # div10
         # Pass on the domain name to the next stage
         print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
