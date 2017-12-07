@@ -203,9 +203,9 @@ if form.getvalue('domain'):
         print('<div class="panel panel-default">')  # div9
         print(('<div class="panel-heading"><h3 class="panel-title">Application Settings:</h3></div>'))
         print('<div class="panel-body">')  # div10
-        print('<ul class="list-group">')
         print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
-        print(('<h4>General Settings:</h4>'))
+        print('<ul class="list-group">')
+        print(('<div class="panel-heading"><h3 class="panel-title">General Settings:</h3></div>'))
         # auth_basic
         print('<li class="list-group-item">')
         print('<div class="row">')  # div11
