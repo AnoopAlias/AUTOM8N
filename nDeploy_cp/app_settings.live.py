@@ -250,6 +250,7 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
+        print(('<div class="panel-heading"><h3 class="panel-title">server setting: <strong>'+mydomain+'</strong></h3></div>'))
         # user_config
         print('<ul class="list-group"><li class="list-group-item">')
         user_config_hint = "enable a custom nginx.conf placed in the document root"
