@@ -169,7 +169,7 @@ if form.getvalue('domain'):
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')
         print('</div>')
-        print('</li>')
+        #print('</li>')
         #print('</ul>')
         print('</form>')
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS':
