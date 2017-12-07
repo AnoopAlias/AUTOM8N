@@ -201,8 +201,9 @@ if form.getvalue('domain'):
         # Next section start here
         print('<div class="panel panel-default">')  # div9
         print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
-        print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div>'))
         print('<div class="panel-body">')  # div10
+
+        print(('<div class="panel-heading"><h3 class="panel-title">General Settings:</h3></div>'))
         # auth_basic
         print('<ul class="list-group">')
         print('<li class="list-group-item">')
@@ -221,46 +222,6 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')  # div11
-        print('</li>')
-        print('</ul>')
-        print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div>'))
-        print('<ul class="list-group">')
-        print('<li class="list-group-item">')
-        # set_expire_static
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
-        if set_expire_static == 'enabled':
-            print_green('set expires header', set_expire_static_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red('set expires header', set_expire_static_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-            print('</div>')
-        print('</li>')
-        # mod_security
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        mod_security_hint = "mod_security v3 WAF"
-        if mod_security == 'enabled':
-            print_green('mod_security', mod_security_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red('mod_security', mod_security_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-            print('</div>')
         print('</li>')
         # user_config
         print('<li class="list-group-item">')
@@ -313,6 +274,65 @@ if form.getvalue('domain'):
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="ssl_offload" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="ssl_offload" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
+        # access_log
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        access_log_hint = "disabling access_log increase performance but stats wont work"
+        if access_log == 'enabled':
+            print_green("access_log", access_log_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="access_log" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="access_log" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red("access_log", access_log_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="access_log" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="access_log" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
+        # open_file_cache
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        open_file_cache_hint = "increase performance, disable on dev environment for no caching"
+        if open_file_cache == 'enabled':
+            print_green("open_file_cache", open_file_cache_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="open_file_cache" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="open_file_cache" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red("open_file_cache", open_file_cache_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="open_file_cache" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="open_file_cache" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+            print('</div>')
+        print('</li>')
+        print('</ul>')
+
+        print(('<div class="panel-heading"><h3 class="panel-title">Content Optimization:</h3></div>'))
+        print('<ul class="list-group">')
+        print('<li class="list-group-item">')
+        # set_expire_static
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
+        if set_expire_static == 'enabled':
+            print_green('set expires header', set_expire_static_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red('set expires header', set_expire_static_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
         print('</li>')
@@ -406,39 +426,25 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        # access_log
+        print('</ul>')
+
+        print(('<div class="panel-heading"><h3 class="panel-title">Security settings:</h3></div>'))
+        print('<ul class="list-group">')
+        # mod_security
         print('<li class="list-group-item">')
         print('<div class="row">')
-        access_log_hint = "disabling access_log increase performance but stats wont work"
-        if access_log == 'enabled':
-            print_green("access_log", access_log_hint)
+        mod_security_hint = "mod_security v3 WAF"
+        if mod_security == 'enabled':
+            print_green('mod_security', mod_security_hint)
             print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="access_log" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="access_log" value="disabled" /> Disabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
             print('</div>')
         else:
-            print_red("access_log", access_log_hint)
+            print_red('mod_security', mod_security_hint)
             print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="access_log" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="access_log" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-            print('</div>')
-        print('</li>')
-        # open_file_cache
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        open_file_cache_hint = "increase performance, disable on dev environment for no caching"
-        if open_file_cache == 'enabled':
-            print_green("open_file_cache", open_file_cache_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="open_file_cache" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="open_file_cache" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("open_file_cache", open_file_cache_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="open_file_cache" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="open_file_cache" value="disabled" checked/> Disabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
         print('</li>')
@@ -568,6 +574,10 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
+        print('</ul>')
+
+        print(('<div class="panel-heading"><h3 class="panel-title">Redirections:</h3></div>'))
+        print('<ul class="list-group">')
         # redirect_to_ssl
         print('<li class="list-group-item">')
         print('<div class="row">')
@@ -687,16 +697,18 @@ if form.getvalue('domain'):
         print('</div>')
         print('</div>')
         print('</li>')
+        print('</ul>')
         # end
         # Pass on the domain name to the next stage
+        print('<ul class="list-group">')
         print('<li class="list-group-item">')
         print('<div class="row">')
         print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</div>')
         print('</li>')
-
         print('</ul>')
+
         print('</div>')  # div10
         print('</form>')
         print('</div>')  # div9
