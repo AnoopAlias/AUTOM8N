@@ -145,9 +145,9 @@ if form.getvalue('domain'):
             print('<div class="alert alert-danger">ERROR: app template data file error</div>')
             sys.exit(0)
         # Ok we are done with getting the settings,now lets present it to the user
+        print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
         print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+mydomain+'</strong></h3></div>'))
         print('<div class="panel-body">')
-        print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
         print('<ul class="list-group">')
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
@@ -167,15 +167,15 @@ if form.getvalue('domain'):
         # Pass on the domain name to the next stage
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
-        print('</form>')
         print('</div>')
         print('</li>')
         print('</ul>')
+        print('</form>')
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS':
             # Next section start here
+            print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
             print(('<div class="panel-heading"><h3 class="panel-title">Passenger project deps installer: <strong>'+mydomain+'</strong></h3></div>'))
             print('<div class="panel-body">')
-            print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
             print('<ul class="list-group">')
             print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project </div>'))
             if backend_category == "RUBY":
@@ -189,13 +189,14 @@ if form.getvalue('domain'):
             print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
             print(('<input class="hidden" name="backend_version" value="'+backend_version+'">'))
             print('<input class="btn btn-primary" type="submit" value="INSTALL DEPS">')
-            print('</form>')
             print('</div>')
             print('</li>')
             print('</ul>')
+            print('</form>')
         # Next section start here
-        print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div><div class="panel-body">'))
         print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
+        print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div><div class="panel-body">')
+              )
         # auth_basic
         print('<ul class="list-group"><li class="list-group-item">')
         print('<div class="row">')
@@ -250,8 +251,6 @@ if form.getvalue('domain'):
             print('</div>')
             print('</div>')
         print('</li>')
-        print('</ul>')
-        print(('<div class="panel-heading"><h3 class="panel-title">server setting: <strong>'+mydomain+'</strong></h3></div>'))
         # user_config
         print('<ul class="list-group"><li class="list-group-item">')
         user_config_hint = "enable a custom nginx.conf placed in the document root"
