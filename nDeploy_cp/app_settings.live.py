@@ -167,9 +167,10 @@ if form.getvalue('domain'):
         # Pass on the domain name to the next stage
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
+        print('</ul>')
         print('</div>')
         print('</li>')
-        print('</ul>')
+        #print('</ul>')
         print('</form>')
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS':
             # Next section start here
