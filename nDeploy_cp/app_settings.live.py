@@ -148,10 +148,10 @@ if form.getvalue('domain'):
 
         # Ok we are done with getting the settings,now lets present it to the user
         print('<div class="panel panel-default">')  # div5
-        print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
         print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+mydomain+'</strong></h3></div>'))
         print('<div class="panel-body">')  # div6
         print('<ul class="list-group">')
+        print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
                 print(('<div class="alert alert-info alert-top">Nginx is proxying to <span class="label label-info">'+backend_version+'</span> with settings  <span class="label label-info">'+apptemplate_description+'</span><br>The <span class="label label-info">.htaccess</span> file will work with your current settings </div>'))
@@ -170,9 +170,9 @@ if form.getvalue('domain'):
         # Pass on the domain name to the next stage
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
+        print('</form>')
         print('</ul>')
         print('</div>')  # div6
-        print('</form>')
         print('</div>')  # div5
 
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS':
