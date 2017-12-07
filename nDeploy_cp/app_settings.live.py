@@ -685,8 +685,13 @@ if form.getvalue('domain'):
         print('</li>')
         # end
         # Pass on the domain name to the next stage
+        print('<li class="list-group-item">')
+        print('<div class="row">')
         print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
+        print('</div>')
+        print('</li>')
+
         print('</ul>')
         print('</div>')  # div10
         print('</form>')
