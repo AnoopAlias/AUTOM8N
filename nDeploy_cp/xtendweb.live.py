@@ -33,6 +33,7 @@ def close_cpanel_liveapisock():
     sock.sendall('<cpanelxml shutdown="1" />')
     sock.close()
 
+
 close_cpanel_liveapisock()
 cpaneluser = os.environ["USER"]
 cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"

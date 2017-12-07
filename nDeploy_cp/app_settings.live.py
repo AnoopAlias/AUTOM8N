@@ -125,6 +125,7 @@ if form.getvalue('domain'):
         test_cookie = yaml_parsed_profileyaml.get('test_cookie', 'disabled')
         symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
         user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
+        subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
         # get the human friendly name of the app template
         if os.path.isfile(app_template_file):
             with open(app_template_file, 'r') as apptemplate_data_yaml:
@@ -429,24 +430,6 @@ if form.getvalue('domain'):
 
         print('<ul class="list-group">')
         print(('<div class="panel-heading"><h3 class="panel-title">Security settings:</h3></div>'))
-        # mod_security
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        mod_security_hint = "mod_security v3 WAF"
-        if mod_security == 'enabled':
-            print_green('mod_security', mod_security_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red('mod_security', mod_security_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
         # clickjacking_protect
         print('<li class="list-group-item">')
         print('<div class="row">')
@@ -570,6 +553,24 @@ if form.getvalue('domain'):
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+        print('</div>')
+        print('</li>')
+        # mod_security
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        mod_security_hint = "mod_security v3 WAF"
+        if mod_security == 'enabled':
+            print_green('mod_security', mod_security_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red('mod_security', mod_security_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
         print('</div>')
         print('</li>')
@@ -711,13 +712,65 @@ if form.getvalue('domain'):
         print('</div>')  # div10
         print('</form>')
         print('</div>')  # div9
+
+        print('<div class="panel panel-default">')  # marker1
+        print(('<div class="panel-heading"><h3 class="panel-title">Subdirectory Apps for: <strong>'+mydomain+'</strong></h3></div>'))
+        print('<div class="panel-body">')  # marker2
+        print('<div class="alert alert-info">')  # marker3
+        print('<ul class="list text-left">')
+        print('<li>The path entered below must follow these examples <kbd>/blog</kbd> <kbd>/us/forum</kbd> etc.</li>')
+        print('</ul>')
+        print('</div>')  # marker3
+        print('<div class="desc">')  # marker4
+        print(('<p>Add new subdirectory apps:</p>'))
+        print('<form class="form-inline" action="subdir_app_settings.live.py">')
+        print('<div class="form-group">')  # marker5
+        print('<div class="input-group">')  # marker6
+        print('<span class="input-group-addon">')
+        print(mydomain)
+        print('</span>')
+        print('<input class="form-control" placeholder="/blog" type="text" name="thesubdir">')
+        print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+        print(('<input class="hidden" name="action" value="add">'))
+        print('<span class="input-group-btn">')
+        print('<input class="btn btn-primary" type="submit" value="Add">')
+        print('</span>')
+        print('</div>')  # marker6
+        print('</div>')  # marker5
+        print('</div>')  # marker4
+        print('</form>')
+        # get the currently configured subdir
+        if subdir_apps:
+            print(('<p>Current subdirectory apps:</p>'))
+            print('<ul class="list-group">')
+            for thesubdir in subdir_apps.keys():
+                print('<li class="list-group-item">')
+                print('<div class="form-inline">')
+                print('<div class="form-group"><kbd>')
+                print(mydomain + '/' + thesubdir)
+                print('</kbd></div>')
+                print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
+                print('<form class="form-group" action="subdir_app_settings.live.py">')
+                print('<input class="btn btn-xs btn-info" type="submit" value="Edit">')
+                print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+                print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
+                print('</form>')
+                print('<form class="form-group" action="subdir_delete.live.py">')
+                print('<input class="btn btn-xs btn-danger" type="submit" value="Delete">')
+                print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+                print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
+                print('</form>')
+                print('</div>')
+                print('</li>')
+            print('</ul>')
+        print('</div>')  # marker1
+        print('</div>')  # marker2
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
+
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
-#print('<ol class="breadcrumb">')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-#print('</ol>')
 
 print('</div>')  # div3
 print('</div>')  # div2

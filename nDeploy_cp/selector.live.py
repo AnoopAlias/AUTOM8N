@@ -66,7 +66,7 @@ if form.getvalue('domain'):
     print('</div>')
     print('<div class="col-md-6 col-md-offset-3">')
     print('<form action="app_settings.live.py" method="post">')
-    print('<input class="btn btn-primary" data-toggle="tooltip" title="application server, version, application template" type="submit" value="APP SETTINGS">')
+    print('<input class="btn btn-primary" data-toggle="tooltip" title="application server, version, application template" type="submit" value="SETTINGS">')
     # Pass on the domain name to the next stage
     print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
     print('</form>')
