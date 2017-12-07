@@ -695,7 +695,14 @@ if form.getvalue('domain'):
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
+print('<div class="panel panel-default">')
+print('<div class="panel-body">')
+print('<ul class="list-group">')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+print('</ul>')
+print('</div>')
+print('</div>')
+
 print('</div>')  # div3
 print('</div>')  # div2
 print('</div>')  # div1
