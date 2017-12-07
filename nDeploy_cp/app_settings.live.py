@@ -171,15 +171,15 @@ if form.getvalue('domain'):
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')
         print('</div>')  # div6
-        #print('</li>')
-        #print('</ul>')
         print('</form>')
         print('</div>')  # div5
+
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS':
             # Next section start here
+            print('<div class="panel panel-default">')  # div7
             print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
             print(('<div class="panel-heading"><h3 class="panel-title">Passenger project deps installer: <strong>'+mydomain+'</strong></h3></div>'))
-            print('<div class="panel-body">')
+            print('<div class="panel-body">')  # div8
             print('<ul class="list-group">')
             print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project </div>'))
             if backend_category == "RUBY":
@@ -193,17 +193,19 @@ if form.getvalue('domain'):
             print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
             print(('<input class="hidden" name="backend_version" value="'+backend_version+'">'))
             print('<input class="btn btn-primary" type="submit" value="INSTALL DEPS">')
-            print('</div>')
-            print('</li>')
             print('</ul>')
+            print('</div>')  # div8
             print('</form>')
+            print('</div>')  # div7
+
         # Next section start here
+        print('<div class="panel panel-default">')  # div9
         print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
-        print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div><div class="panel-body">')
-              )
+        print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'</h3></div>'))
+        print('<div class="panel-body">')  # div10
         # auth_basic
         print('<ul class="list-group"><li class="list-group-item">')
-        print('<div class="row">')
+        print('<div class="row">')  # div11
         auth_basic_hint = "Setup password for "+document_root+" in cPanel>>Files>>Directory Privacy first"
         if auth_basic == 'enabled':
             print_green('password protect app url', auth_basic_hint)
@@ -217,8 +219,8 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
-        print('</li>')
+            print('</div>')  # div11
+        print('</ul>')
         # set_expire_static
         print('<ul class="list-group"><li class="list-group-item">')
         print('<div class="row">')
@@ -236,7 +238,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
-        print('</li>')
+        print('</ul>')
         # mod_security
         print('<ul class="list-group"><li class="list-group-item">')
         print('<div class="row">')
@@ -254,7 +256,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
-        print('</li>')
+        print('</ul>')
         # user_config
         print('<ul class="list-group"><li class="list-group-item">')
         user_config_hint = "enable a custom nginx.conf placed in the document root"
@@ -272,7 +274,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="user_config" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
-        print('</li>')
+        print('</ul>')
         # autoindex
         print('<ul class="list-group"><li class="list-group-item">')
         autoindex_hint = "enable for directory listing"
@@ -290,7 +292,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="autoindex" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
             print('</div>')
-        print('</li>')
+        print('</ul>')
         # ssl_offload
         print('<li class="list-group-item">')
         ssl_offload_hint = "enable for performance, disable if redirect loop error"
@@ -681,20 +683,19 @@ if form.getvalue('domain'):
         print('</div>')
         print('</li>')
         # end
-        print('</ul>')
+        print('</div>')  # div10
         # Pass on the domain name to the next stage
         print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</form>')
+        print('</div>')  # div9
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
-print('</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-print('</div>')
-print('</div>')
-print('</div>')
-print('</div>')
+print('</div>')  # div3
+print('</div>')  # div2
+print('</div>')  # div1
 print('</body>')
 print('</html>')
