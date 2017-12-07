@@ -60,18 +60,18 @@ print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')
-print('<div class="row">')
-print('<div class="col-md-6 col-md-offset-3">')
-print('<div class="logo">')
+print('<div id="main-container" class="container text-center">')  # div1
+print('<div class="row">')  # div2
+print('<div class="col-md-6 col-md-offset-3">')  # div3
+print('<div class="logo">')  # div4
 print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
 print('<h4>XtendWeb</h4>')
-print('</div>')
+print('</div>')  # div4
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Application Settings</li>')
 print('</ol>')
-print('<div class="panel panel-default">')
+
 if form.getvalue('domain'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
@@ -144,10 +144,12 @@ if form.getvalue('domain'):
         else:
             print('<div class="alert alert-danger">ERROR: app template data file error</div>')
             sys.exit(0)
+
         # Ok we are done with getting the settings,now lets present it to the user
+        print('<div class="panel panel-default">')  # div5
         print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
         print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+mydomain+'</strong></h3></div>'))
-        print('<div class="panel-body">')
+        print('<div class="panel-body">')  # div6
         print('<ul class="list-group">')
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
@@ -168,10 +170,11 @@ if form.getvalue('domain'):
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')
-        print('</div>')
+        print('</div>')  # div6
         #print('</li>')
         #print('</ul>')
         print('</form>')
+        print('</div>')  # div5
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS':
             # Next section start here
             print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
