@@ -204,8 +204,8 @@ if form.getvalue('domain'):
         print('<div class="panel-body">')  # div10
 
         print(('<div class="panel-heading"><h3 class="panel-title">General Settings:</h3></div>'))
-        # auth_basic
         print('<ul class="list-group">')
+        # auth_basic
         print('<li class="list-group-item">')
         print('<div class="row">')  # div11
         auth_basic_hint = "Setup password for "+document_root+" in cPanel>>Files>>Directory Privacy first"
@@ -221,7 +221,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')  # div11
+        print('</div>')  # div11
         print('</li>')
         # user_config
         print('<li class="list-group-item">')
@@ -239,7 +239,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="user_config" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="user_config" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # autoindex
         print('<li class="list-group-item">')
@@ -257,7 +257,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="autoindex" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="autoindex" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # ssl_offload
         print('<li class="list-group-item">')
@@ -275,7 +275,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="ssl_offload" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="ssl_offload" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # access_log
         print('<li class="list-group-item">')
@@ -293,7 +293,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="access_log" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="access_log" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # open_file_cache
         print('<li class="list-group-item">')
@@ -311,13 +311,12 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="open_file_cache" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="open_file_cache" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         print('</ul>')
 
         print(('<div class="panel-heading"><h3 class="panel-title">Content Optimization:</h3></div>'))
         print('<ul class="list-group">')
-        print('<li class="list-group-item">')
         # set_expire_static
         print('<li class="list-group-item">')
         print('<div class="row">')
@@ -334,7 +333,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # pagespeed
         print('<li class="list-group-item">')
@@ -352,7 +351,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="pagespeed" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="pagespeed" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # pagespeed filter level
         print('<li class="list-group-item">')
@@ -370,7 +369,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="CoreFilters" /> CoreFilters</label></div>')
             print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="PassThrough" checked/> PassThrough</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # brotli
         print('<li class="list-group-item">')
@@ -388,7 +387,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="brotli" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="brotli" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # gzip
         print('<li class="list-group-item">')
@@ -406,7 +405,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="gzip" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="gzip" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # http2
         print('<li class="list-group-item">')
@@ -424,7 +423,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="http2" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="http2" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         print('</ul>')
 
@@ -446,7 +445,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # clickjacking_protect
         print('<li class="list-group-item">')
@@ -464,7 +463,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # disable_contenttype_sniffing
         print('<li class="list-group-item">')
@@ -482,7 +481,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # xss_filter
         print('<li class="list-group-item">')
@@ -500,7 +499,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # hsts
         print('<li class="list-group-item">')
@@ -518,7 +517,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="hsts" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="hsts" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # dos_mitigate
         print('<li class="list-group-item">')
@@ -536,7 +535,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # test_cookie
         print('<li class="list-group-item">')
@@ -554,7 +553,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # symlink_protection
         print('<li class="list-group-item">')
@@ -572,7 +571,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         print('</ul>')
 
@@ -594,7 +593,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="redirect_to_ssl" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="redirect_to_ssl" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # redirect_aliases
         print('<li class="list-group-item">')
@@ -612,17 +611,17 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="redirect_aliases" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="redirect_aliases" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # wwwredirect
         print('<li class="list-group-item">')
         www_redirect_hint = "select redirection mode"
-        print('<div class="row">')
+        print('<div class="row">')  # marker1
         if wwwredirect == 'none':
             print_red("www redirect", www_redirect_hint)
         else:
             print_green("www redirect", www_redirect_hint)
-        print('<div class="col-sm-6 col-radio">')
+        print('<div class="col-sm-6 col-radio">')  # marker2
         print('<select name="wwwredirect">')
         if wwwredirect == 'none':
             print(('<option selected value="none">no redirection</option>'))
@@ -637,8 +636,8 @@ if form.getvalue('domain'):
             print(('<option selected value="tononwww">redirect www. to non-www</option>'))
             print(('<option value="towww">redirect non-www to www.</option>'))
         print('</select>')
-        print('</div>')
-        print('</div>')
+        print('</div>')  # marker2
+        print('</div>')  # marker1
         print('</li>')
         # URL Redirect
         print('<li class="list-group-item">')
@@ -682,7 +681,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="append_requesturi" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="append_requesturi" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
-            print('</div>')
+        print('</div>')
         print('</li>')
         # Redirect URL
         print('<li class="list-group-item">')
