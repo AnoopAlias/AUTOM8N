@@ -36,7 +36,7 @@ def print_red(theoption, hint):
 
 
 def print_disabled():
-    print(('<div class="col-sm-6"><div class="label label-warning" data-toggle="tooltip" title="An additional nginx module is required for this functionality">NO MODULE</div></div>'))
+    print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="An additional nginx module is required for this functionality">NO MODULE</div></div>'))
 
 
 def close_cpanel_liveapisock():
@@ -578,6 +578,7 @@ if form.getvalue('domain'):
                 print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
                 print('</div>')
         else:
+            print_red('mod_security', mod_security_hint)
             print_disabled()
         print('</div>')
         print('</li>')
