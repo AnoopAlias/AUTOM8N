@@ -57,9 +57,9 @@ print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')
-print('<div class="row">')
-print('<div class="col-md-6 col-md-offset-3">')
+print('<div id="main-container" class="container text-center">')  # marker1
+print('<div class="row">')  # marker2
+print('<div class="col-md-6 col-md-offset-3">')  # marker3
 print('<div class="logo">')
 print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
 print('<h4>XtendWeb</h4>')
@@ -68,9 +68,9 @@ print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li class="active">Select domain</li>')
 print('</ol>')
-print('<div class="panel panel-default">')
+print('<div class="panel panel-default">')  # marker4
 print('<div class="panel-heading"><h3 class="panel-title">Select domain to configure:</h3></div>')
-print('<div class="panel-body">')
+print('<div class="panel-body">')  # marker5
 print('<form class="form-inline" action="app_settings.live.py" method="post">')
 print('<select name="domain">')
 print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
@@ -85,14 +85,19 @@ for the_addon_domain in addon_domains_dict.keys():
     print(('<option value="'+addon_domains_dict.get(the_addon_domain)+'">'+the_addon_domain+'</option>'))
 print('</select>')
 print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
-print('</div>')
+print('</form>')
+print('</div>')  # marker5
+print('</div>')  # marker4
 # Next section start here
-print('<div class="panel-body">')
 if os.path.isfile(cluster_config_file):
-    print('<span class="label label-default">XTENDWEB CLUSTER IS ACTIVE</span><br><br>')
+    print('<div class="panel panel-default">')  # marker6
+    print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
+    print('<div class="panel-body">')  # marker7
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+    print('<ul class="list-group">')
     for servername in cluster_data_yaml_parsed.keys():
+        print('<li class="list-group-item">')
         filesync_status = False
         for myprocess in psutil.process_iter():
             mycmdline = myprocess.cmdline()
@@ -102,15 +107,13 @@ if os.path.isfile(cluster_config_file):
             print('<span class="label label-info">'+servername+' | IN SYNC</span><br><br>')
         else:
             print('<span class="label label-warning">'+servername+' | OUT OF SYNC</span><br><br>')
-    print(('<div class="alert alert-info alert-top">REDIS <span class="label label-info">localhost:7000</span><br><br>MySQL port <span class="label label-info">localhost:3306</span><br><br>MySQL socket <span class="label label-info">/tmp/maxscale_mysql.sock</span></div>'))
-else:
-    if not os.path.isfile(installation_path+'/conf/disable_cluster_warning'):
-        print('<span class="label label-default">XTENDWEB : STANDALONE MODE</span><br><br>')
-print('</div>')
+        print('</li>')
+    print('</ul>')
+    print('</div>')  # marker7
+    print('</div>')  # marker6
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-print('</div>')
-print('</div>')
-print('</div>')
-print('</div>')
+print('</div>')  # marker3
+print('</div>')  # marker2
+print('</div>')  # # marker1
 print('</body>')
 print('</html>')
