@@ -116,12 +116,17 @@ if os.path.isfile(cluster_config_file):
     print('</div>')  # marker7
     print('</div>')  # marker6
     print('<ol class="breadcrumb">')
-    print('<li>MySQL port</li>')
-    print('<li class="active">localhost:3306</li>')
+    print('<li>cluster MySQL port</li>')
+    print('<li>localhost:3306</li>')
     print('</ol>')
     print('<ol class="breadcrumb">')
-    print('<li>MySQL socket</li>')
+    print('<li>cluster MySQL socket</li>')
     print('<li>/tmp/maxscale_mysql.sock</li>')
+    print('</ol>')
+    print('</ol>')
+    print('<ol class="breadcrumb">')
+    print('<li>cluster Redis port</li>')
+    print('<li>localhost:7000</li>')
     print('</ol>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
