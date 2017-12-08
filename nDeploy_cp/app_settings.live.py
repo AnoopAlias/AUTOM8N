@@ -154,7 +154,7 @@ if form.getvalue('domain'):
         print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
-                print(('<div class="alert alert-info alert-top">Nginx is proxying to <span class="label label-info">'+backend_version+'</span> with settings  <span class="label label-info">'+apptemplate_description+'</span><br>The <span class="label label-info">.htaccess</span> file will work with your current settings </div>'))
+                print(('<div class="alert alert-info alert-top"><span class="label label-info">NGINX</span> <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <span class="label label-info">'+backend_version+'--['+apptemplate_description+']</span></div>'))
             else:
                 print(('<div class="alert alert-info alert-top">Nginx is proxying to <span class="label label-info">'+backend_version+'</span> with settings  <span class="label label-info">'+apptemplate_description+'</span></div>'))
         else:
