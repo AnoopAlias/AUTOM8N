@@ -360,6 +360,7 @@ if form.getvalue('domain'):
         else:
             print_red("pagespeed", pagespeed_hint)
             print_disabled()
+            print(('<input style="display:none" name="pagespeed" value="'+pagespeed+'">'))
         print('</div>')
         print('</li>')
         # pagespeed filter level
@@ -382,6 +383,7 @@ if form.getvalue('domain'):
         else:
             print_red("pagespeed level", pagespeed_filter_hint)
             print_disabled()
+            print(('<input style="display:none" name="pagespeed_filter" value="'+pagespeed_filter+'">'))
         print('</div>')
         print('</li>')
         # brotli
@@ -404,6 +406,7 @@ if form.getvalue('domain'):
         else:
             print_red("brotli", brotli_hint)
             print_disabled()
+            print(('<input style="display:none" name="brotli" value="'+brotli+'">'))
         print('</div>')
         print('</li>')
         # gzip
@@ -556,6 +559,7 @@ if form.getvalue('domain'):
         else:
             print_red("test_cookie", test_cookie_hint)
             print_disabled()
+            print(('<input style="display:none" name="test_cookie" value="'+test_cookie+'">'))
         print('</div>')
         print('</li>')
         # symlink_protection
@@ -596,6 +600,7 @@ if form.getvalue('domain'):
         else:
             print_red('mod_security', mod_security_hint)
             print_disabled()
+            print(('<input style="display:none" name="mod_security" value="'+mod_security+'">'))
         print('</div>')
         print('</li>')
         print('</ul>')
