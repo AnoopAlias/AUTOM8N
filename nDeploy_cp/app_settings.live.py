@@ -344,54 +344,66 @@ if form.getvalue('domain'):
         print('<li class="list-group-item">')
         print('<div class="row">')
         pagespeed_hint = "delivers pagespeed optimized webpage, resource intensive"
-        if pagespeed == 'enabled':
-            print_green("pagespeed", pagespeed_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="pagespeed" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="pagespeed" value="disabled" /> Disabled</label></div>')
-            print('</div>')
+        if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
+            if pagespeed == 'enabled':
+                print_green("pagespeed", pagespeed_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="pagespeed" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="pagespeed" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("pagespeed", pagespeed_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="pagespeed" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="pagespeed" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
         else:
             print_red("pagespeed", pagespeed_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="pagespeed" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="pagespeed" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
+            print_disabled()
         print('</div>')
         print('</li>')
         # pagespeed filter level
         print('<li class="list-group-item">')
         print('<div class="row">')
         pagespeed_filter_hint = "PassThrough breaks some pages.CoreFilters is mostly safe"
-        if pagespeed_filter == 'CoreFilters':
-            print_red("pagespeed level", pagespeed_filter_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="CoreFilters" checked/> CoreFilters</label></div>')
-            print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="PassThrough" /> PassThrough</label></div>')
-            print('</div>')
+        if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
+            if pagespeed_filter == 'CoreFilters':
+                print_red("pagespeed level", pagespeed_filter_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="CoreFilters" checked/> CoreFilters</label></div>')
+                print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="PassThrough" /> PassThrough</label></div>')
+                print('</div>')
+            else:
+                print_green("pagespeed_filter", pagespeed_filter_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="CoreFilters" /> CoreFilters</label></div>')
+                print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="PassThrough" checked/> PassThrough</label></div>')
+                print('</div>')
         else:
-            print_green("pagespeed_filter", pagespeed_filter_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="CoreFilters" /> CoreFilters</label></div>')
-            print('<div class="radio"><label><input type="radio" name="pagespeed_filter" value="PassThrough" checked/> PassThrough</label></div>')
-            print('</div>')
+            print_red("pagespeed level", pagespeed_filter_hint)
+            print_disabled()
         print('</div>')
         print('</li>')
         # brotli
         print('<li class="list-group-item">')
         print('<div class="row">')
         brotli_hint = "bandwidth optimization, resource intensive, tls only"
-        if brotli == 'enabled':
-            print_green("brotli", brotli_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="brotli" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="brotli" value="disabled" /> Disabled</label></div>')
-            print('</div>')
+        if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
+            if brotli == 'enabled':
+                print_green("brotli", brotli_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="brotli" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="brotli" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("brotli", brotli_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="brotli" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="brotli" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
         else:
             print_red("brotli", brotli_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="brotli" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="brotli" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
+            print_disabled()
         print('</div>')
         print('</li>')
         # gzip
@@ -528,18 +540,22 @@ if form.getvalue('domain'):
         print('<li class="list-group-item">')
         print('<div class="row">')
         test_cookie_hint = "Disable most bots except good ones like google/yahoo etc with a cookie challenge"
-        if test_cookie == 'enabled':
-            print_green("test_cookie", test_cookie_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" /> Disabled</label></div>')
-            print('</div>')
+        if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
+            if test_cookie == 'enabled':
+                print_green("test_cookie", test_cookie_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("test_cookie", test_cookie_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
         else:
             print_red("test_cookie", test_cookie_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
+            print_disabled()
         print('</div>')
         print('</li>')
         # symlink_protection
