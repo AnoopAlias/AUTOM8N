@@ -205,7 +205,7 @@ if form.getvalue('domain'):
         print('<div class="panel-body">')  # div10
         print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
         print('<ul class="list-group">')
-        print(('<h5 class="list-group-item-heading">General Settings</h5>'))
+        print(('<h6 class="list-group-item-heading">general settings</h6>'))
         # auth_basic
         print('<li class="list-group-item">')
         print('<div class="row">')  # div11
@@ -317,7 +317,7 @@ if form.getvalue('domain'):
         print('</ul>')
 
         print('<ul class="list-group">')
-        print(('<div class="panel-heading"><h3 class="panel-title">Content Optimization:</h3></div>'))
+        print(('<h6 class="list-group-item-heading">content optimization</h6>'))
         # set_expire_static
         print('<li class="list-group-item">')
         print('<div class="row">')
@@ -429,7 +429,7 @@ if form.getvalue('domain'):
         print('</ul>')
 
         print('<ul class="list-group">')
-        print(('<div class="panel-heading"><h3 class="panel-title">Security settings:</h3></div>'))
+        print(('<h6 class="list-group-item-heading">security settings</h6>'))
         # clickjacking_protect
         print('<li class="list-group-item">')
         print('<div class="row">')
@@ -577,7 +577,7 @@ if form.getvalue('domain'):
         print('</ul>')
 
         print('<ul class="list-group">')
-        print(('<div class="panel-heading"><h3 class="panel-title">Redirections:</h3></div>'))
+        print(('<h6 class="list-group-item-heading">redirections</h6>'))
         # redirect_to_ssl
         print('<li class="list-group-item">')
         print('<div class="row">')
