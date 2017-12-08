@@ -98,6 +98,7 @@ if os.path.isfile(cluster_config_file):
     print('<ul class="list-group">')
     for servername in cluster_data_yaml_parsed.keys():
         print('<li class="list-group-item">')
+        print('<div class="row">')
         filesync_status = False
         for myprocess in psutil.process_iter():
             mycmdline = myprocess.cmdline()
@@ -109,6 +110,7 @@ if os.path.isfile(cluster_config_file):
         else:
             print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
             print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
+        print('</div>')
         print('</li>')
     print('</ul>')
     print('</div>')  # marker7
