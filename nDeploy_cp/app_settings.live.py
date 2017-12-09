@@ -746,7 +746,7 @@ if form.getvalue('domain'):
         print('<div class="panel-body">')  # marker2
         print('<div class="alert alert-info">')  # marker3
         print('<ul class="list text-left">')
-        print('<li>The path entered below must follow these examples <kbd>/blog</kbd> <kbd>/us/forum</kbd> etc.</li>')
+        print('<li>The path entered below must follow these examples <br> <kbd>/blog</kbd> <kbd>/us/forum</kbd> etc.</li>')
         print('</ul>')
         print('</div>')  # marker3
         print('<div class="desc">')  # marker4
