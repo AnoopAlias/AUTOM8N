@@ -61,9 +61,9 @@ print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')
-print('<div class="row">')
-print('<div class="col-md-6 col-md-offset-3">')
+print('<div id="main-container" class="container text-center">')  # marker1
+print('<div class="row">')  # marker2
+print('<div class="col-md-6 col-md-offset-3">')  # marker3
 print('<div class="logo">')
 print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
 print('<h4>XtendWeb</h4>')
@@ -72,7 +72,6 @@ print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Sub-directory App Settings</li>')
 print('</ol>')
-print('<div class="panel panel-default">')
 if form.getvalue('domain') and form.getvalue('thesubdir'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
@@ -110,6 +109,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         # We do a fresh config
         if subdir_apps_dict:
             if not subdir_apps_dict.get(thesubdir):
+                print('<div class="panel panel-default">')
                 print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
                 print('<div class="panel-body">')
                 print('<form action="subdir_select_app_settings.live.py" method="post">')
@@ -123,6 +123,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('<input class="btn btn-primary" type="submit" value="Submit">')
                 print('</form>')
+                print('</div>')
+                print('</div>')
             else:
                 # we get the current app settings for the subdir
                 the_subdir_dict = subdir_apps_dict.get(thesubdir)
@@ -156,10 +158,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> ERROR: app template data file error</div>')
                     sys.exit(0)
                 # Ok we are done with getting the settings,now lets present it to the user
+                print('<div class="panel panel-default">')
                 print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
                 print('<div class="panel-body">')
                 print('<form id="config" class="form-inline config-save" action="subdir_select_app_settings.live.py" method="post">')
-                print('<ul class="list-group">')
                 if backend_category == 'PROXY':
                     if backend_version == 'httpd':
                         print(('<div class="alert alert-info alert-top">Nginx is proxying to <span class="label label-info">'+backend_version+'</span> with settings  <span class="label label-info">'+apptemplate_description+'</span><br>The <span class="label label-info">.htaccess</span> file will work with your current settings </div>'))
@@ -167,8 +169,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         print(('<div class="alert alert-info alert-top">Nginx is proxying to <span class="label label-info">'+backend_version+'</span> with settings  <span class="label label-info">'+apptemplate_description+'</span></div>'))
                 else:
                     print(('<div class="alert alert-info alert-top">Your current project is <span class="label label-info">'+apptemplate_description+'</span> on native <span class="label label-info">NGINX</span> with <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> application server</div>'))
-                print('</ul>')
-                print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit. All backend category other than <span class="label label-info">PROXY</span> will be directly served by high performance nginx webserver(recommended) </div>'))
+                print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
                 print('<select name="backend">')
                 for backends_defined in backend_data_yaml_parsed.keys():
                     if backends_defined == backend_category:
@@ -182,21 +183,19 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('<input class="btn btn-primary" type="submit" value="Submit">')
                 print('</form>')
                 print('</div>')
-                print('</li>')
-                print('</ul>')
+                print('</div>')
                 if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS':
                     # Next section start here
+                    print('<div class="panel panel-default">')
                     print(('<div class="panel-heading"><h3 class="panel-title">Passenger project deps installer: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
                     print('<div class="panel-body">')
                     print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
-                    print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project </div>'))
                     if backend_category == "RUBY":
-                        print(('<div class="alert alert-info alert-top">specify project dependencies in <kbd>'+document_root+'/'+thesubdir+'/Gemfile</kbd></div>'))
+                        print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/Gemfile</kbd></div>'))
                     elif backend_category == "NODEJS":
-                        print(('<div class="alert alert-info alert-top">specify project dependencies in <kbd>'+document_root+'/'+thesubdir+'/package.json</kbd></div>'))
+                        print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/package.json</kbd></div>'))
                     elif backend_category == 'PYTHON':
-                        print(('<div class="alert alert-info alert-top">specify project dependencies in <kbd>'+document_root+'/'+thesubdir+'/requirements.txt</kbd></div>'))
+                        print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/requirements.txt</kbd></div>'))
                     print(('<input class="hidden" name="domain" value="'+mydomain+'/'+thesubdir+'">'))
                     print(('<input class="hidden" name="document_root" value="'+document_root+'/'+thesubdir+'">'))
                     print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
@@ -204,14 +203,16 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('<input class="btn btn-primary" type="submit" value="INSTALL DEPS">')
                     print('</form>')
                     print('</div>')
-                    print('</li>')
-                    print('</ul>')
+                    print('</div>')
                 # Next section start here
-                print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'/'+thesubdir+'</h3></div><div class="panel-body">'))
+                print('<div class="panel panel-default">')  # markeru1
+                print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'/'+thesubdir+'</h3></div>'))
+                print(('<div class="panel-body">'))  # markeru2
                 print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
                 # auth_basic
-                print('<ul class="list-group"><li class="list-group-item">')
-                print('<div class="row">')
+                print('<ul class="list-group">')
+                print('<li class="list-group-item">')
+                print('<div class="row">')  # markeru3
                 auth_basic_hint = "Setup password for "+document_root+"/"+thesubdir+" in cPanel>>Files>>Directory Privacy first"
                 if auth_basic == 'enabled':
                     print_green('password protect app url', auth_basic_hint)
@@ -225,10 +226,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" /> Enabled</label></div>')
                     print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" checked/> Disabled</label></div>')
                     print('</div>')
-                    print('</div>')
+                print('</div>')  # markeru3
                 print('</li>')
                 # set_expire_static
-                print('<ul class="list-group"><li class="list-group-item">')
+                print('<li class="list-group-item">')
                 print('<div class="row">')
                 set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
                 if set_expire_static == 'enabled':
@@ -243,25 +244,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" /> Enabled</label></div>')
                     print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
                     print('</div>')
-                    print('</div>')
-                print('</li>')
-                # mod_security
-                print('<ul class="list-group"><li class="list-group-item">')
-                print('<div class="row">')
-                mod_security_hint = "mod_security v3 WAF"
-                if mod_security == 'enabled':
-                    print_green('mod_security', mod_security_hint)
-                    print('<div class="col-sm-6 col-radio">')
-                    print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
-                    print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
-                    print('</div>')
-                else:
-                    print_red('mod_security', mod_security_hint)
-                    print('<div class="col-sm-6 col-radio">')
-                    print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
-                    print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
-                    print('</div>')
-                    print('</div>')
+                print('</div>')
                 print('</li>')
                 # URL Redirect
                 print('<li class="list-group-item">')
@@ -305,7 +288,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('<div class="radio"><label><input type="radio" name="append_requesturi" value="enabled" /> Enabled</label></div>')
                     print('<div class="radio"><label><input type="radio" name="append_requesturi" value="disabled" checked/> Disabled</label></div>')
                     print('</div>')
-                    print('</div>')
+                print('</div>')
                 print('</li>')
                 # Redirect URL
                 print('<li class="list-group-item">')
@@ -327,10 +310,14 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('<input class="btn btn-primary" type="submit" value="Submit">')
                 print('</form>')
+                print('</div>')
+                print('</div>')
         else:
-            print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div><div class="panel-body">'))
+            print('<div class="panel panel-default">')  # markeru1
+            print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
+            print(('<div class="panel-body">'))  # markeru2
             print('<form action="subdir_select_app_settings.live.py" method="post">')
-            print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit. All backend category other than <span class="label label-info">PROXY</span> will be directly served by high performance nginx webserver(recommended) </div>'))
+            print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
             print('<select name="backend">')
             for backends_defined in backend_data_yaml_parsed.keys():
                 print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
@@ -340,13 +327,13 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
             print('<input class="btn btn-primary" type="submit" value="Submit">')
             print('</form>')
+            print('</div>')
+            print('</div>')
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
-print('</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-print('</div>')
 print('</div>')
 print('</div>')
 print('</div>')
