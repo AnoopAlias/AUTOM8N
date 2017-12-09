@@ -187,11 +187,11 @@ if form.getvalue('domain'):
             print('<ul class="list-group">')
             print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
             if backend_category == "RUBY":
-                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <kbd>' + document_root + '/Gemfile</kbd></div>'))
+                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>' + document_root + '/Gemfile</kbd></div>'))
             elif backend_category == "NODEJS":
-                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <kbd>' + document_root + '/package.json</kbd></div>'))
+                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>' + document_root + '/package.json</kbd></div>'))
             elif backend_category == 'PYTHON':
-                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <kbd>' + document_root + '/requirements.txt</kbd></div>'))
+                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>' + document_root + '/requirements.txt</kbd></div>'))
             print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
             print(('<input class="hidden" name="document_root" value="'+document_root+'">'))
             print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
@@ -746,7 +746,7 @@ if form.getvalue('domain'):
         print('<div class="panel-body">')  # marker2
         print('<div class="alert alert-info">')  # marker3
         print('<ul class="list text-left">')
-        print('<li>The path entered below must follow these examples <br> <kbd>/blog</kbd> <kbd>/us/forum</kbd> etc.</li>')
+        print('<li>The path entered below must follow the format <br> <kbd>/blog</kbd> <kbd>/us/forum</kbd> etc.</li>')
         print('</ul>')
         print('</div>')  # marker3
         print('<div class="desc">')  # marker4
