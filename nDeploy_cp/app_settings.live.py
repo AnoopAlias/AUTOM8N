@@ -154,7 +154,6 @@ if form.getvalue('domain'):
         print('<div class="panel panel-default">')  # div5
         print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+mydomain+'</strong></h3></div>'))
         print('<div class="panel-body">')  # div6
-        print('<ul class="list-group">')
         print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
@@ -175,7 +174,6 @@ if form.getvalue('domain'):
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</form>')
-        print('</ul>')
         print('</div>')  # div6
         print('</div>')  # div5
 
@@ -184,21 +182,19 @@ if form.getvalue('domain'):
             print('<div class="panel panel-default">')  # div7
             print(('<div class="panel-heading"><h3 class="panel-title">Passenger project deps installer: <strong>'+mydomain+'</strong></h3></div>'))
             print('<div class="panel-body">')  # div8
-            print('<ul class="list-group">')
             print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
             if backend_category == "RUBY":
-                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>' + document_root + '/Gemfile</kbd></div>'))
+                print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>' + document_root + '/Gemfile</kbd></div>'))
             elif backend_category == "NODEJS":
-                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>' + document_root + '/package.json</kbd></div>'))
+                print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>' + document_root + '/package.json</kbd></div>'))
             elif backend_category == 'PYTHON':
-                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>' + document_root + '/requirements.txt</kbd></div>'))
+                print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>' + document_root + '/requirements.txt</kbd></div>'))
             print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
             print(('<input class="hidden" name="document_root" value="'+document_root+'">'))
             print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
             print(('<input class="hidden" name="backend_version" value="'+backend_version+'">'))
             print('<input class="btn btn-primary" type="submit" value="INSTALL DEPS">')
             print('</form>')
-            print('</ul>')
             print('</div>')  # div8
             print('</div>')  # div7
 
