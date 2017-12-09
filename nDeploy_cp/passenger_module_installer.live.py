@@ -98,7 +98,12 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print('</ul>')
                     print('</div>')  # marker7
         else:
+            print(('<div class="panel-heading"><h3 class="panel-title">Project</h3></div>'))
+            print('<div class="panel-body">')  # marker4
+            print('<ul class="list-group">')
             print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ mydocroot +'/Gemfile</kbd></div>'))
+            print('</ul>')
+            print('</div>')  # marker4
     elif mybackend == 'NODEJS':
         if os.path.isfile(mydocroot+'/package.json'):
             if os.path.isfile('/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm'):
