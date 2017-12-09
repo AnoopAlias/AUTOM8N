@@ -66,8 +66,8 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     print('<div class="panel-body">')  # marker4
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'+mydomain))  # marker5
-    print(('<br><span class="label label-info">'+mybackend+'</span> <span class="label label-info">'+mybackendversion+'</span>'))
-    print(('<br><br><span class="label label-info">Project root: '+mydocroot+'</span>'))
+    print(('<br><span class="label label-primary">'+mybackend+'</span> <span class="label label-primary">'+mybackendversion+'</span>'))
+    print(('<br><br><span class="label label-primary">Project root: '+mydocroot+'</span>'))
     print('</div>')  # marker5
     print('</ul>')
     print('</div>')  # marker4
@@ -107,7 +107,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
             print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>' + mydocroot + '/Gemfile</kbd></div>'))
+            print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-primary">RUBY</span> project, specify project dependencies in <br><br><kbd>' + mydocroot + '/Gemfile</kbd></div>'))
             print('</ul>')
             print('</div>')  # marker4
             print('</div>')
@@ -149,7 +149,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
             print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">package.json not found for <span class="label label-info">NODEJS</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/package.json</kbd></div>'))
+            print(('<div class="alert alert-info alert-top">package.json not found for <span class="label label-primary">NODEJS</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/package.json</kbd></div>'))
             print('</ul>')
             print('</div>')  # marker4
             print('</div>')
@@ -189,7 +189,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
             print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">requirements.txt not found for <span class="label label-info">PYTHON</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/requirements.txt</kbd></div>'))
+            print(('<div class="alert alert-info alert-top">requirements.txt not found for <span class="label label-primary">PYTHON</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/requirements.txt</kbd></div>'))
             print('</ul>')
             print('</div>')  # marker4
             print('</div>')
