@@ -186,13 +186,12 @@ if form.getvalue('domain'):
             print('<div class="panel-body">')  # div8
             print('<ul class="list-group">')
             print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
-            print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project </div>'))
             if backend_category == "RUBY":
-                print(('<div class="alert alert-info alert-top">specify project dependencies in <kbd>' + document_root + '/Gemfile</kbd></div>'))
+                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <kbd>' + document_root + '/Gemfile</kbd></div>'))
             elif backend_category == "NODEJS":
-                print(('<div class="alert alert-info alert-top">specify project dependencies in <kbd>' + document_root + '/package.json</kbd></div>'))
+                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <kbd>' + document_root + '/package.json</kbd></div>'))
             elif backend_category == 'PYTHON':
-                print(('<div class="alert alert-info alert-top">specify project dependencies in <kbd>' + document_root + '/requirements.txt</kbd></div>'))
+                print(('<div class="alert alert-info alert-top">Detected <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> project. Specify project dependencies in <kbd>' + document_root + '/requirements.txt</kbd></div>'))
             print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
             print(('<input class="hidden" name="document_root" value="'+document_root+'">'))
             print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
