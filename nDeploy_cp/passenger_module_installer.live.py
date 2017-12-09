@@ -45,8 +45,8 @@ print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')
-print('<div class="row">')
+print('<div id="main-container" class="container text-center">')  # marker1
+print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')
 print('<div class="logo">')
 print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
@@ -56,23 +56,21 @@ print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Passenger Module Installer</li>')
 print('</ol>')
-print('<div class="panel panel-default">')
+print('<div class="panel panel-default">')  # marker3
 if form.getvalue('domain') and form.getvalue('backend_category') and form.getvalue('backend_version') and form.getvalue('document_root'):
-    # Get the domain name from form data
     mydomain = form.getvalue('domain')
     mybackend = form.getvalue('backend_category')
     mybackendversion = form.getvalue('backend_version')
     mydocroot = form.getvalue('document_root')
     print(('<div class="panel-heading"><h3 class="panel-title">Project</h3></div>'))
-    print('<div class="panel-body">')
+    print('<div class="panel-body">')  # marker4
     print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top">'+mydomain))
+    print(('<div class="alert alert-info alert-top">'+mydomain))  # marker5
     print(('<br><span class="label label-info">'+mybackend+'</span> <span class="label label-info">'+mybackendversion+'</span>'))
     print(('<br><br><span class="label label-info">Project root: '+mydocroot+'</span>'))
-    print('</div>')
-    print('</div>')
-    print('</li>')
+    print('</div>')  # marker5
     print('</ul>')
+    print('</div>')  # marker4
     if mybackend == 'RUBY':
         if os.path.isfile(mydocroot+'/Gemfile'):
             if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
@@ -81,25 +79,24 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 output, err = myinstaller.communicate()
                 if output:
                     # section start here
-                    print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
-                    print('<div class="panel-body">')
+                    print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
+                    print('<div class="panel-body">')  # marker6
                     print('<ul class="list-group">')
                     print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ output +'</kbd></div>'))
-                    print('</div>')
-                    print('</li>')
                     print('</ul>')
+                    print('</div>')  # marker6
                 if err:
                     # section start here
-                    print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
-                    print('<div class="panel-body">')
+                    print(('<div class="panel-heading"><h3 class="panel-title">Command Error:</h3></div>'))
+                    print('<div class="panel-body">')  # marker7
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ err +'</kbd><br><br>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ err +'</kbd><br><br>'))  # marker8
                     print(('Run the following command in your shell to proceed with manual installation:<br>'))
                     print(('cd '+mydocroot+'<br>'))
                     print(('/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'))
-                    print('</div>')
-                    print('</li>')
+                    print('</div>')  # marker8
                     print('</ul>')
+                    print('</div>')  # marker7
         else:
             print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ mydocroot +'/Gemfile</kbd></div>'))
     elif mybackend == 'NODEJS':
