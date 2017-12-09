@@ -56,12 +56,12 @@ print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Passenger Module Installer</li>')
 print('</ol>')
-print('<div class="panel panel-default">')  # marker3
 if form.getvalue('domain') and form.getvalue('backend_category') and form.getvalue('backend_version') and form.getvalue('document_root'):
     mydomain = form.getvalue('domain')
     mybackend = form.getvalue('backend_category')
     mybackendversion = form.getvalue('backend_version')
     mydocroot = form.getvalue('document_root')
+    print('<div class="panel panel-default">')  # marker3
     print(('<div class="panel-heading"><h3 class="panel-title">Project</h3></div>'))
     print('<div class="panel-body">')  # marker4
     print('<ul class="list-group">')
@@ -71,6 +71,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     print('</div>')  # marker5
     print('</ul>')
     print('</div>')  # marker4
+    print('</div>')  # marker3
     if mybackend == 'RUBY':
         if os.path.isfile(mydocroot+'/Gemfile'):
             if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
@@ -79,14 +80,17 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 output, err = myinstaller.communicate()
                 if output:
                     # section start here
+                    print('<div class="panel panel-default">')
                     print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
                     print('<div class="panel-body">')  # marker6
                     print('<ul class="list-group">')
                     print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ output +'</kbd></div>'))
                     print('</ul>')
                     print('</div>')  # marker6
+                    print('</div>')
                 if err:
                     # section start here
+                    print('<div class="panel panel-default">')
                     print(('<div class="panel-heading"><h3 class="panel-title">Command Error:</h3></div>'))
                     print('<div class="panel-body">')  # marker7
                     print('<ul class="list-group">')
@@ -97,13 +101,16 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print('</div>')  # marker8
                     print('</ul>')
                     print('</div>')  # marker7
+                    print('</div>')
         else:
+            print('<div class="panel panel-default">')
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
             print('<ul class="list-group">')
             print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ mydocroot +'/Gemfile</kbd></div>'))
             print('</ul>')
             print('</div>')  # marker4
+            print('</div>')
     elif mybackend == 'NODEJS':
         if os.path.isfile(mydocroot+'/package.json'):
             if os.path.isfile('/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm'):
@@ -173,6 +180,5 @@ else:
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2
-print('</div>')  # marker1
 print('</body>')
 print('</html>')
