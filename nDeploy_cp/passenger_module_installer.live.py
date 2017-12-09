@@ -84,7 +84,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
                     print('<div class="panel-body">')  # marker6
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ output +'</kbd></div>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>' + output + '</kbd></div>'))
                     print('</ul>')
                     print('</div>')  # marker6
                     print('</div>')
@@ -94,7 +94,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Command Error:</h3></div>'))
                     print('<div class="panel-body">')  # marker7
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ err +'</kbd><br><br>'))  # marker8
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>' + err + '</kbd><br><br>'))  # marker8
                     print(('Run the following command in your shell to proceed with manual installation:<br>'))
                     print(('cd '+mydocroot+'<br>'))
                     print(('/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'))
@@ -107,7 +107,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
             print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>'+ mydocroot +'/Gemfile</kbd></div>'))
+            print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-info">RUBY</span> project, specify project dependencies in <br><br><kbd>' + mydocroot + '/Gemfile</kbd></div>'))
             print('</ul>')
             print('</div>')  # marker4
             print('</div>')
@@ -121,29 +121,38 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 output, err = myinstaller.communicate()
                 if output:
                     # section start here
+                    print('<div class="panel panel-default">')
                     print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
                     print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+output+'</kbd></div>'))
-                    print('</div>')
-                    print('</li>')
                     print('</ul>')
+                    print('</div>')
+                    print('</div>')
                 if err:
                     # section start here
+                    print('<div class="panel panel-default">')
                     print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ err +'</kbd><br><br>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>' + err + '</kbd><br><br>'))
                     print(('Run the following command in your shell to proceed with manual installation:<br>'))
                     print(('export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"<br>'))
                     print(('cd '+mydocroot))
                     print(('<br>npm install --production'))
                     print(('</div>'))
-                    print('</div>')
-                    print('</li>')
                     print('</ul>')
+                    print('</div>')
+                    print('</div>')
         else:
+            print('<div class="panel panel-default">')
+            print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
+            print('<div class="panel-body">')  # marker4
+            print('<ul class="list-group">')
             print(('<div class="alert alert-info alert-top">package.json not found for <span class="label label-info">NODEJS</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/package.json</kbd></div>'))
+            print('</ul>')
+            print('</div>')  # marker4
+            print('</div>')
     elif mybackend == 'PYTHON':
         if os.path.isfile(mydocroot+'/requirements.txt'):
             if os.path.isfile('/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip'):
@@ -152,29 +161,38 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 output, err = myinstaller.communicate()
                 if output:
                     # section start here
+                    print('<div class="panel panel-default">')
                     print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
                     print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+output+'</kbd></div>'))
-                    print('</div>')
-                    print('</li>')
                     print('</ul>')
+                    print('</div>')
+                    print('</div>')
                 if err:
                     # section start here
+                    print('<div class="panel panel-default">')
                     print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+ err +'</kbd><br><br>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>' + err + '</kbd><br><br>'))
                     print(('Run the following command in your shell to proceed with manual installation:<br>'))
                     print(('export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"<br>'))
                     print(('cd '+mydocroot))
                     print(('<br>pip install --user -r requirements.txt'))
                     print(('</div>'))
-                    print('</div>')
-                    print('</li>')
                     print('</ul>')
+                    print('</div>')
+                    print('</div>')
         else:
+            print('<div class="panel panel-default">')
+            print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
+            print('<div class="panel-body">')  # marker4
+            print('<ul class="list-group">')
             print(('<div class="alert alert-info alert-top">requirements.txt not found for <span class="label label-info">PYTHON</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/requirements.txt</kbd></div>'))
+            print('</ul>')
+            print('</div>')  # marker4
+            print('</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
