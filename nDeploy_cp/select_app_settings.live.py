@@ -48,8 +48,8 @@ print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')
-print('<div class="row">')
+print('<div id="main-container" class="container text-center">')  # marker1
+print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')
 print('<div class="logo">')
 print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
@@ -59,7 +59,6 @@ print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Application Settings</li>')
 print('</ol>')
-print('<div class="panel panel-default">')
 if form.getvalue('domain') and form.getvalue('backend'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
@@ -98,15 +97,14 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('<div class="alert alert-danger">ERROR: app template data file error</div>')
             sys.exit(0)
         # Ok we are done with getting the settings,now lets present it to the user
+        print('<div class="panel panel-default">')  # marker3
         print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div>'))
-        print('<div class="panel-body">')
+        print('<div class="panel-body">')  # marker4
         print('<form id="config" class="form-inline config-save" action="save_app_settings.live.py" method="post">')
-        print('<ul class="list-group">')
         if backend_category == 'PROXY':
-            print(('<div class="alert alert-info alert-top">Your current setup is: Nginx proxying to <span class="label label-info">'+backend_version+'</span> with settings  <span class="label label-info">'+apptemplate_description+'</span></div>'))
+            print(('<div class="alert alert-info alert-top">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
         else:
-            print(('<div class="alert alert-info alert-top">Your current project is <span class="label label-info">'+apptemplate_description+'</span> on native <span class="label label-info">NGINX</span> with <span class="label label-info">'+backend_category+'</span> <span class="label label-info">'+backend_version+'</span> application server</div>'))
-        print('</ul>')
+            print(('<div class="alert alert-info alert-top">Your current project is <span class="label label-primary">'+apptemplate_description+'</span> on native <span class="label label-info">NGINX</span> with <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> application server</div>'))
         print(('<div class="alert alert-info alert-top">You selected <span class="label label-info">'+mybackend+'</span> as the new backend, select the version and template for this backend below</div>'))
         backends_dict = backend_data_yaml_parsed.get(mybackend)
         new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
@@ -115,11 +113,11 @@ if form.getvalue('domain') and form.getvalue('backend'):
         else:
             user_new_apptemplate_dict = {}
         if mybackend == backend_category:
-            print('<div class="row">')
-            print('<div class="col-sm-6">')
-            print('<div class="panel panel-default">')
+            print('<div class="row">')  # marker5
+            print('<div class="col-sm-6">')  # marker6
+            print('<div class="panel panel-default">')  # marker7
             print('<div class="panel-heading"><h3 class="panel-title">Backend version</h3></div>')
-            print('<div class="panel-body">')
+            print('<div class="panel-body">')  # marker8
             print('<select name="backendversion">')
             for mybackend_version in backends_dict.keys():
                 if mybackend_version == backend_version:
@@ -127,10 +125,10 @@ if form.getvalue('domain') and form.getvalue('backend'):
                 else:
                     print(('<option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
             print('</select>')
-            print('</div>')
-            print('</div>')
-            print('</div>')
-            print('<div class="col-sm-6">')
+            print('</div>')  # marker8
+            print('</div>')  # marker7
+            print('</div>')  # marker6
+            print('<div class="col-sm-6">')  # marker9
             print('<div class="panel panel-default">')
             print('<div class="panel-heading"><h3 class="panel-title">Application template</h3></div>')
             print('<div class="panel-body">')
@@ -149,10 +147,10 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('</select>')
             print('</div>')
             print('</div>')
-            print('</div>')
-            print('</div>')
+            print('</div>')  # marker9
+            print('</div>')  # marker5
         else:
-            print('<div class="row">')
+            print('<div class="row">')  # marker10
             print('<div class="col-sm-6">')
             print('<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Backend version</h3></div>')
             print('<div class="panel-body">')
@@ -176,21 +174,20 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('</div>')
             print('</div>')
             print('</div>')
-            print('</div>')
+            print('</div>')  # marker10
         # Pass on the domain name to the next stage
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print(('<input class="hidden" name="backend" value="'+mybackend+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</form>')
+        print('</div>')  # marker4
+        print('</div>')  # marker3
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
-print('</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-print('</div>')
-print('</div>')
-print('</div>')
-print('</div>')
+print('</div>')  # marker2
+print('</div>')  # marker1
 print('</body>')
 print('</html>')
