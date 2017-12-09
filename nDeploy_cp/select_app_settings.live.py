@@ -104,8 +104,8 @@ if form.getvalue('domain') and form.getvalue('backend'):
         if backend_category == 'PROXY':
             print(('<div class="alert alert-info alert-top">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
         else:
-            print(('<div class="alert alert-info alert-top">Your current project is <span class="label label-primary">'+apptemplate_description+'</span> on native <span class="label label-info">NGINX</span> with <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> application server</div>'))
-        print(('<div class="alert alert-info alert-top">You selected <span class="label label-info">'+mybackend+'</span> as the new backend, select the version and template for this backend below</div>'))
+            print(('<div class="alert alert-info alert-top">Your current project is <span class="label label-primary">'+apptemplate_description+'</span> on native <span class="label label-primary">NGINX</span> with <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> application server</div>'))
+        print(('<div class="alert alert-info alert-top">You selected <span class="label label-primary">'+mybackend+'</span> as the new backend, select the version and template for this backend below</div>'))
         backends_dict = backend_data_yaml_parsed.get(mybackend)
         new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
         if os.path.isfile(user_app_template_file):
