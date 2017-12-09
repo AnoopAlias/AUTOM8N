@@ -170,11 +170,9 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print(('<div class="alert alert-info alert-top">requirements.txt not found for <span class="label label-info">PYTHON</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/requirements.txt</kbd></div>'))
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
-print('</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-print('</div>')
-print('</div>')
-print('</div>')
-print('</div>')
+print('</div>')  # marker3
+print('</div>')  # marker2
+print('</div>')  # marker1
 print('</body>')
 print('</html>')
