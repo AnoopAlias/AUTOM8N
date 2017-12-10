@@ -1,7 +1,8 @@
 #!/bin/bash
 #Author: Anoop P Alias
 
-HHVM_RPM_LOCATION="http://mirrors.linuxeye.com/hhvm-repo/7/x86_64/hhvm-3.15.3-1.el7.centos.x86_64.rpm"
+# HHVM_RPM_LOCATION="http://mirrors.linuxeye.com/hhvm-repo/7/x86_64/hhvm-3.15.3-1.el7.centos.x86_64.rpm"
+HHVM_RPM_LOCATION="http://dev.sc-networks.com/centos/7/x86_64/hhvm/hhvm-3.21.3-1.x86_64.rpm"
 
 
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
@@ -16,6 +17,6 @@ else
   /opt/nDeploy/scripts/update_backend.py add HHVM hhvm-3.15 systemd
   grep "hhvm_ghost_hunter.sh" /etc/crontab || echo "0 */6 * * * bash /opt/nDeploy/scripts/hhvm_ghost_hunter.sh" >> /etc/crontab
   systemctl restart crond
-  echo -e '\e[93m Be Warned that you are using binary HHVM from mirrors.linuxeye.com - which is not part of XtendWeb project \e[0m'
+  echo -e '\e[93m ::WARNING:: Using binary HHVM from third party software mirrors \e[0m'
   echo -e '\e[93m HHVM setup : OK \e[0m'
 fi
