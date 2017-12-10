@@ -225,7 +225,6 @@ if form.getvalue('domain'):
         # User config reload
         print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
         print('<ul class="list-group">')
-        print(('<h6 class="list-group-item-heading">general settings</h6>'))
         # user_config
         print('<li class="list-group-item">')
         user_config_hint = "enable a custom nginx.conf placed in the document root"
@@ -244,6 +243,9 @@ if form.getvalue('domain'):
             print('</div>')
         print('</div>')
         print('</li>')
+        print('</ul>')
+        print('<ul class="list-group">')
+        print(('<h6 class="list-group-item-heading">general settings</h6>'))
         # auth_basic
         print('<li class="list-group-item">')
         print('<div class="row">')  # div11
