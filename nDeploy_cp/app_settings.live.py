@@ -211,7 +211,10 @@ if form.getvalue('domain'):
             print(document_root+"/nginx.conf")
             print('</kbd></div>')
             print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
-            print((' <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
+            if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
+                print((' <span class="label label-success">VALID</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
+            else:
+                print((' <span class="label label-danger">INVALID</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
             print('<form class="form-group" action="subdir_app_settings.live.py">')
             print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
             print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
