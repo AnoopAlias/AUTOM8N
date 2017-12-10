@@ -202,6 +202,22 @@ if form.getvalue('domain'):
         print('<div class="panel panel-default">')  # div9
         print(('<div class="panel-heading"><h3 class="panel-title">Application Settings:</h3></div>'))
         print('<div class="panel-body">')  # div10
+        # User config reload
+        print('<ul class="list-group">')
+        print('<li class="list-group-item">')
+        print('<div class="form-inline">')  # markerx1
+        print('<div class="form-group"><kbd>')
+        print('test')
+        print('</kbd></div>')
+        print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
+        print('<form class="form-group" action="subdir_app_settings.live.py">')
+        print('<input class="btn btn-xs btn-info" type="submit" value="Edit">')
+        print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+        print('</form>')
+        print('</div>')  # markerx1
+        print('</li>')
+        print('</ul>')
+        # User config reload
         print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
         print('<ul class="list-group">')
         print(('<h6 class="list-group-item-heading">general settings</h6>'))
@@ -216,9 +232,7 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="user_config" value="disabled"/> Disabled</label></div>')
             print('</div>')
         else:
-            # print_red("user_config", user_config_hint)
-            print(('<div class="col-sm-3"><div class="label label-default" data-toggle="tooltip" title="user_config">user_config</div></div>'))
-            print(('<div class="col-sm-3"><div class="label label-default" data-toggle="tooltip" title="test">test</div></div>'))
+            print_red("user_config", user_config_hint)
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="user_config" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="user_config" value="disabled" checked/> Disabled</label></div>')
