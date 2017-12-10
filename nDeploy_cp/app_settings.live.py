@@ -207,11 +207,11 @@ if form.getvalue('domain'):
         print('<li class="list-group-item">')
         print('<div class="form-inline">')  # markerx1
         print('<div class="form-group"><kbd>')
-        print('test')
+        print(document_root+"/nginx.conf")
         print('</kbd></div>')
         print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
         print('<form class="form-group" action="subdir_app_settings.live.py">')
-        print('<input class="btn btn-xs btn-info" type="submit" value="Edit">')
+        print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD CONFIG">')
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('</form>')
         print('</div>')  # markerx1
