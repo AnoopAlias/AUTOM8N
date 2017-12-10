@@ -726,12 +726,12 @@ if form.getvalue('domain'):
         # Pass on the domain name to the next stage
         print('<ul class="list-group">')
         # print('<li class="list-group-item">')
-        print('<div class="row">')
+        # print('<div class="row">')
         print('<li class="list-group-item">')
         print(('<input style="display:none" name="domain" value="'+mydomain+'">'))
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</li>')
-        print('</div>')
+        # print('</div>')
         # print('</li>')
         print('</ul>')
 
