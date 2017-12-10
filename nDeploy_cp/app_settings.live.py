@@ -205,24 +205,6 @@ if form.getvalue('domain'):
         print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
         print('<ul class="list-group">')
         print(('<h6 class="list-group-item-heading">general settings</h6>'))
-        # auth_basic
-        print('<li class="list-group-item">')
-        print('<div class="row">')  # div11
-        auth_basic_hint = "Setup password for "+document_root+" in cPanel>>Files>>Directory Privacy first"
-        if auth_basic == 'enabled':
-            print_green('password protect app url', auth_basic_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red('password protect app url', auth_basic_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')  # div11
-        print('</li>')
         # user_config
         print('<li class="list-group-item">')
         user_config_hint = "enable a custom nginx.conf placed in the document root"
@@ -240,6 +222,33 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="user_config" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
         print('</div>')
+        print('</li>')
+        # user_config_reload
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        print('<form class="form-group" action="subdir_app_settings.live.py">')
+        print('<input class="btn btn-xs btn-info" type="submit" value="Reload user nginx.conf">')
+        print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+        print('</form>')
+        print('</div>')
+        print('</li>')
+        # auth_basic
+        print('<li class="list-group-item">')
+        print('<div class="row">')  # div11
+        auth_basic_hint = "Setup password for "+document_root+" in cPanel>>Files>>Directory Privacy first"
+        if auth_basic == 'enabled':
+            print_green('password protect app url', auth_basic_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red('password protect app url', auth_basic_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="auth_basic" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="auth_basic" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+        print('</div>')  # div11
         print('</li>')
         # autoindex
         print('<li class="list-group-item">')
