@@ -470,7 +470,7 @@ if form.getvalue('domain'):
         # clickjacking_protect
         print('<li class="list-group-item">')
         print('<div class="row">')
-        clickjacking_protect_hint = "add_header X-Frame-Options SAMEORIGIN;"
+        clickjacking_protect_hint = "X-Frame-Options SAMEORIGIN"
         if clickjacking_protect == 'enabled':
             print_green("clickjacking_protect", clickjacking_protect_hint)
             print('<div class="col-sm-6 col-radio">')
@@ -488,7 +488,7 @@ if form.getvalue('domain'):
         # disable_contenttype_sniffing
         print('<li class="list-group-item">')
         print('<div class="row">')
-        disable_contenttype_sniffing_hint = "add_header X-Content-Type-Options nosniff;"
+        disable_contenttype_sniffing_hint = "X-Content-Type-Options nosniff"
         if disable_contenttype_sniffing == 'enabled':
             print_green("disable_contenttype_sniffing", disable_contenttype_sniffing_hint)
             print('<div class="col-sm-6 col-radio">')
@@ -506,7 +506,7 @@ if form.getvalue('domain'):
         # xss_filter
         print('<li class="list-group-item">')
         print('<div class="row">')
-        xss_filter_hint = 'add_header X-XSS-Protection "1; mode=block";'
+        xss_filter_hint = 'X-XSS-Protection'
         if xss_filter == 'enabled':
             print_green("xss_filter", xss_filter_hint)
             print('<div class="col-sm-6 col-radio">')
@@ -524,7 +524,7 @@ if form.getvalue('domain'):
         # hsts
         print('<li class="list-group-item">')
         print('<div class="row">')
-        hsts_hint = 'add_header Strict-Transport-Security "max-age=31536000" always;'
+        hsts_hint = 'Strict-Transport-Security'
         if hsts == 'enabled':
             print_green("hsts", hsts_hint)
             print('<div class="col-sm-6 col-radio">')
