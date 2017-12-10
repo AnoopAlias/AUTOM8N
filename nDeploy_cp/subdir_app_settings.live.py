@@ -6,6 +6,7 @@ import cgi
 import cgitb
 import sys
 import re
+from hashlib import md5
 try:
     import simplejson as json
 except ImportError:
@@ -138,6 +139,9 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 redirectstatus = the_subdir_dict.get('redirectstatus', 'none')
                 append_requesturi = the_subdir_dict.get('append_requesturi', 'disabled')
                 redirecturl = the_subdir_dict.get('redirecturl', 'none')
+                uniq_path = document_root+thesubdir
+                uniq_filename = md5(uniq_path.encode("utf-8")).hexdigest()
+                print(uniq_filename)
                 # get the human friendly name of the app template
                 if os.path.isfile(app_template_file):
                     with open(app_template_file, 'r') as apptemplate_data_yaml:
