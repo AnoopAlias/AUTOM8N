@@ -216,7 +216,9 @@ if form.getvalue('domain'):
             print('<div class="radio"><label><input type="radio" name="user_config" value="disabled"/> Disabled</label></div>')
             print('</div>')
         else:
-            print_red("user_config", user_config_hint)
+            # print_red("user_config", user_config_hint)
+            print(('<div class="col-sm-3"><div class="label label-default" data-toggle="tooltip" title="user_config">user_config</div></div>'))
+            print(('<div class="col-sm-3"><div class="label label-default" data-toggle="tooltip" title="test">test</div></div>'))
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="user_config" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="user_config" value="disabled" checked/> Disabled</label></div>')
