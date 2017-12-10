@@ -223,15 +223,6 @@ if form.getvalue('domain'):
             print('</div>')
         print('</div>')
         print('</li>')
-        # user_config_reload
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        print('<form class="form-group" action="subdir_app_settings.live.py">')
-        print('<input class="btn btn-xs btn-info" type="submit" value="Reload user nginx.conf">')
-        print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-        print('</form>')
-        print('</div>')
-        print('</li>')
         # auth_basic
         print('<li class="list-group-item">')
         print('<div class="row">')  # div11
