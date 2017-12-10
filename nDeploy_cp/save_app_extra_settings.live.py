@@ -43,9 +43,9 @@ print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')
-print('<div class="row">')
-print('<div class="col-md-6 col-md-offset-3">')
+print('<div id="main-container" class="container text-center">')  # marker1
+print('<div class="row">')  # marker2
+print('<div class="col-md-6 col-md-offset-3">')  # marker3
 print('<div class="logo">')
 print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
 print('<h4>XtendWeb</h4>')
@@ -54,15 +54,12 @@ print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Server Settings</li>')
 print('</ol>')
-print('<div class="panel panel-default">')
 # Get the domain name
 if 'domain' in form.keys():
     mydomain = form.getvalue('domain')
 else:
     print('ERROR: Forbidden::domain')
-    print('</div>')
     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-    print('</div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -77,9 +74,7 @@ if os.path.isfile(profileyaml):
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
 else:
     print('ERROR: Domain data file i/o error')
-    print('</div>')
     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-    print('</div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -99,9 +94,7 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['auth_basic'] = auth_basic
             else:
                 print('ERROR: Forbidden::auth_basic')
-                print('</div>')
                 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                print('</div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -114,24 +107,7 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['set_expire_static'] = set_expire_static
             else:
                 print('ERROR: Forbidden::set_expire_static')
-                print('</div>')
                 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('</body>')
-                print('</html>')
-                sys.exit(0)
-            # mod_security
-            if 'mod_security' in form.keys():
-                mod_security = form.getvalue('mod_security')
-                the_subdir_dict['mod_security'] = mod_security
-            else:
-                print('ERROR: Forbidden::mod_security')
-                print('</div>')
-                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                print('</div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -144,9 +120,7 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['redirectstatus'] = redirectstatus
             else:
                 print('ERROR: Forbidden::redirectstatus')
-                print('</div>')
                 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                print('</div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -168,9 +142,7 @@ if form.getvalue('thesubdir'):
                         it_matches = regex.match(redirecturl)
                         if not it_matches:
                             print('ERROR: Invalid Redirect URL. The URL must be something like https://google.com ')
-                            print('</div>')
                             print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                            print('</div>')
                             print('</div>')
                             print('</div>')
                             print('</div>')
@@ -187,9 +159,7 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['append_requesturi'] = append_requesturi
             else:
                 print('ERROR: Forbidden::append_requesturi')
-                print('</div>')
                 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                print('</div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -209,9 +179,7 @@ else:
         yaml_parsed_profileyaml['auth_basic'] = auth_basic
     else:
         print('ERROR: Forbidden::auth_basic')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -224,9 +192,7 @@ else:
         yaml_parsed_profileyaml['set_expire_static'] = set_expire_static
     else:
         print('ERROR: Forbidden::set_expire_static')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -239,9 +205,7 @@ else:
         yaml_parsed_profileyaml['mod_security'] = mod_security
     else:
         print('ERROR: Forbidden::mod_security')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -254,9 +218,7 @@ else:
         yaml_parsed_profileyaml['user_config'] = user_config
     else:
         print('ERROR: Forbidden::user_config')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -269,9 +231,7 @@ else:
         yaml_parsed_profileyaml['autoindex'] = autoindex
     else:
         print('ERROR: Forbidden::autoindex')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -284,9 +244,7 @@ else:
         yaml_parsed_profileyaml['ssl_offload'] = ssl_offload
     else:
         print('ERROR: Forbidden::ssl_offload')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -299,9 +257,7 @@ else:
         yaml_parsed_profileyaml['pagespeed'] = pagespeed
     else:
         print('ERROR: Forbidden::pagespeed')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -314,9 +270,7 @@ else:
         yaml_parsed_profileyaml['pagespeed_filter'] = pagespeed_filter
     else:
         print('ERROR: Forbidden::pagespeed_filter')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -329,9 +283,7 @@ else:
         yaml_parsed_profileyaml['brotli'] = brotli
     else:
         print('ERROR: Forbidden::brotli')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -344,9 +296,7 @@ else:
         yaml_parsed_profileyaml['gzip'] = gzip
     else:
         print('ERROR: Forbidden::gzip')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -359,9 +309,7 @@ else:
         yaml_parsed_profileyaml['http2'] = http2
     else:
         print('ERROR: Forbidden::http2')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -374,9 +322,7 @@ else:
         yaml_parsed_profileyaml['access_log'] = access_log
     else:
         print('ERROR: Forbidden::access_log')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -389,9 +335,7 @@ else:
         yaml_parsed_profileyaml['open_file_cache'] = open_file_cache
     else:
         print('ERROR: Forbidden::open_file_cache')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -404,9 +348,7 @@ else:
         yaml_parsed_profileyaml['clickjacking_protect'] = clickjacking_protect
     else:
         print('ERROR: Forbidden::clickjacking_protect')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -419,9 +361,7 @@ else:
         yaml_parsed_profileyaml['disable_contenttype_sniffing'] = disable_contenttype_sniffing
     else:
         print('ERROR: Forbidden::disable_contenttype_sniffing')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -434,9 +374,7 @@ else:
         yaml_parsed_profileyaml['xss_filter'] = xss_filter
     else:
         print('ERROR: Forbidden::xss_filter')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -449,9 +387,7 @@ else:
         yaml_parsed_profileyaml['hsts'] = hsts
     else:
         print('ERROR: Forbidden::hsts')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -464,9 +400,7 @@ else:
         yaml_parsed_profileyaml['dos_mitigate'] = dos_mitigate
     else:
         print('ERROR: Forbidden::dos_mitigate')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -479,9 +413,7 @@ else:
         yaml_parsed_profileyaml['test_cookie'] = test_cookie
     else:
         print('ERROR: Forbidden::test_cookie')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -494,9 +426,7 @@ else:
         yaml_parsed_profileyaml['symlink_protection'] = symlink_protection
     else:
         print('ERROR: Forbidden::symlink_protection')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -509,9 +439,7 @@ else:
         yaml_parsed_profileyaml['redirect_to_ssl'] = redirect_to_ssl
     else:
         print('ERROR: Forbidden::redirect_to_ssl')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -524,9 +452,7 @@ else:
         yaml_parsed_profileyaml['redirect_aliases'] = redirect_aliases
     else:
         print('ERROR: Forbidden::redirect_aliases')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -539,9 +465,7 @@ else:
         yaml_parsed_profileyaml['wwwredirect'] = wwwredirect
     else:
         print('ERROR: Forbidden::wwwredirect')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -554,9 +478,7 @@ else:
         yaml_parsed_profileyaml['redirectstatus'] = redirectstatus
     else:
         print('ERROR: Forbidden::redirectstatus')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -578,9 +500,7 @@ else:
                 it_matches = regex.match(redirecturl)
                 if not it_matches:
                     print('ERROR: Invalid Redirect URL. The URL must be something like https://google.com ')
-                    print('</div>')
                     print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-                    print('</div>')
                     print('</div>')
                     print('</div>')
                     print('</div>')
@@ -597,9 +517,7 @@ else:
         yaml_parsed_profileyaml['append_requesturi'] = append_requesturi
     else:
         print('ERROR: Forbidden::append_requesturi')
-        print('</div>')
         print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-        print('</div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -607,17 +525,21 @@ else:
         print('</html>')
         sys.exit(0)
 if form.getvalue('thesubdir'):
-    print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+form.getvalue('thesubdir')+'</strong></h3></div><div class="panel-body">'))
+    print('<div class="panel panel-default">')
+    print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+form.getvalue('thesubdir')+'</strong></h3></div>'))
+    print(('<div class="panel-body">'))
 else:
-    print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div><div class="panel-body">'))
+    print('<div class="panel panel-default">')
+    print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div>'))
+    print(('<div class="panel-body">'))
 with open(profileyaml, 'w') as yaml_file:
     yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
 print('<div class="icon-box">')
 print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Server Settings updated')
 print('</div>')
 print('</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
+print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
 print('</div>')
 print('</div>')
