@@ -106,6 +106,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         subdir_apps_dict = yaml_parsed_profileyaml.get('subdir_apps')
+        user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
         # If there are no entries in subdir_apps_dict or there is no specific config for the subdirectory
         # We do a fresh config
         if subdir_apps_dict:
@@ -141,7 +142,6 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 redirecturl = the_subdir_dict.get('redirecturl', 'none')
                 uniq_path = document_root+thesubdir
                 uniq_filename = md5(uniq_path.encode("utf-8")).hexdigest()
-                print(uniq_filename)
                 # get the human friendly name of the app template
                 if os.path.isfile(app_template_file):
                     with open(app_template_file, 'r') as apptemplate_data_yaml:
@@ -212,6 +212,26 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('<div class="panel panel-default">')  # markeru1
                 print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'/'+thesubdir+'</h3></div>'))
                 print(('<div class="panel-body">'))  # markeru2
+                # User config reload
+                if user_config == 'enabled':
+                    print('<ul class="list-group">')
+                    print('<li class="list-group-item">')
+                    print('<div class="form-inline">')  # markerx1
+                    print('<div class="form-group"><kbd>')
+                    print(document_root+"/"+thesubdir+"/nginx.conf")
+                    print('</kbd></div>')
+                    print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
+                    if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
+                        print((' <span class="label label-success">VALID</span><br>'))
+                    else:
+                        print((' <span class="label label-danger">INVALID</span><br>'))
+                    print('<form class="form-group" action="subdir_app_settings.live.py">')
+                    print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
+                    print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+                    print('</form>')
+                    print('</div>')  # markerx1
+                    print('</li>')
+                    print('</ul>')
                 print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
                 # auth_basic
                 print('<ul class="list-group">')
