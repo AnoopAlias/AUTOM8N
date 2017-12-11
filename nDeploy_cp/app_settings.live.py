@@ -227,7 +227,7 @@ if form.getvalue('domain'):
         print('<ul class="list-group">')
         # user_config
         print('<li class="list-group-item">')
-        user_config_hint = "Load custom nginx config from file nginx.conf in docroot: eg: "+document_root+"/nginx.conf""
+        user_config_hint = "Load custom nginx config from file nginx.conf in docroot: eg: "+document_root+"/nginx.conf"
         print('<div class="row">')
         if user_config == 'enabled':
             print_green("user_config", user_config_hint)
