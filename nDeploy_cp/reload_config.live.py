@@ -62,7 +62,7 @@ if form.getvalue('domain'):
     mydomain = form.getvalue('domain')
     profileyaml = installation_path + "/domain-data/" + mydomain
     if os.path.isfile(profileyaml):
-        os.utime(profileyaml)
+        os.utime(profileyaml, None)
         print('<div class="panel panel-default">')
         print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div>'))
         print('<div class="panel-body">')
