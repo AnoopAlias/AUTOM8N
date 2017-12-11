@@ -213,7 +213,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'/'+thesubdir+'</h3></div>'))
                 print(('<div class="panel-body">'))  # markeru2
                 # User config reload
-                if user_config == 'enabled':
+                if user_config == 'enabled' and os.path.isfile(document_root+"/"+thesubdir+"/nginx.conf"):
                     print('<ul class="list-group">')
                     print('<li class="list-group-item">')
                     print('<div class="form-inline">')  # markerx1

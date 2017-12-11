@@ -203,7 +203,7 @@ if form.getvalue('domain'):
         print(('<div class="panel-heading"><h3 class="panel-title">Application Settings:</h3></div>'))
         print('<div class="panel-body">')  # div10
         # User config reload
-        if user_config == 'enabled':
+        if user_config == 'enabled' and os.path.isfile(document_root+"/nginx.conf"):
             print('<ul class="list-group">')
             print('<li class="list-group-item">')
             print('<div class="form-inline">')  # markerx1
