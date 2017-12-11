@@ -4,7 +4,6 @@ import socket
 import yaml
 import cgi
 import cgitb
-import sys
 
 
 __author__ = "Anoop P Alias"
@@ -62,7 +61,11 @@ if form.getvalue('domain'):
     mydomain = form.getvalue('domain')
     profileyaml = installation_path + "/domain-data/" + mydomain
     if os.path.isfile(profileyaml):
-        os.utime(profileyaml, None)
+        # Get all config settings from the domains domain-data config file
+        with open(profileyaml, 'r') as profileyaml_data_stream:
+            yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+        with open(profileyaml, 'w') as yaml_file:
+            yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
         print('<div class="panel panel-default">')
         print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div>'))
         print('<div class="panel-body">')
