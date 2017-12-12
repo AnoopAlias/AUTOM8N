@@ -85,6 +85,11 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         print('<div class="panel panel-default">')
         print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div>'))
         print('<div class="panel-body">')
+        # Lets deal with settings that are mutually exclusive
+        if 'redis' in myapptemplate:
+            yaml_parsed_profileyaml['pagespeed'] = 'disabled'
+            yaml_parsed_profileyaml['mod_security'] = 'disabled'
+            print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Turned off pagespeed and mod_security options as they are incompatible with Full Page cache. The cache will not work if you turn on these options</div>')
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
         print('<div class="icon-box">')
