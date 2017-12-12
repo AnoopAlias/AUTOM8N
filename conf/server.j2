@@ -280,6 +280,7 @@ proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
@@ -295,6 +296,7 @@ proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
@@ -310,6 +312,7 @@ proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
@@ -416,6 +419,7 @@ proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
@@ -431,6 +435,7 @@ proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
@@ -446,6 +451,7 @@ proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
