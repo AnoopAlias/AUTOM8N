@@ -96,6 +96,7 @@ def nginx_conf_switch(user_name, domain_name):
                             with open(domain_data_file, 'w') as yaml_file:
                                 yaml.dump(yaml_parsed_domaindata, yaml_file, default_flow_style=False)
                             yaml_file.close()
+                            print('switched '+domain_name+' to native Nginx mode using '+my_phpversion)
                         else:
                             # Lets try using the default PHP version set by administrator
                             yaml_parsed_domaindata["backend_category"] = "PHP"
@@ -105,8 +106,11 @@ def nginx_conf_switch(user_name, domain_name):
                             with open(domain_data_file, 'w') as yaml_file:
                                 yaml.dump(yaml_parsed_domaindata, yaml_file, default_flow_style=False)
                             yaml_file.close()
+                            print('switched '+domain_name+' to native Nginx mode using '+default_phpversion)
             else:
                 print("Error loading userdata file for domain: "+domain_name)
+        else:
+            print('domain '+domain_name+' is not using PROXY. Nothing to do')
     else:
         print("Error loading domain-data file for domain: "+domain_name)
 
