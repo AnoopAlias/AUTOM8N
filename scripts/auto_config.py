@@ -148,7 +148,7 @@ if __name__ == "__main__":
                         yaml_parsed_prefphpyaml = yaml.safe_load(prefphpyaml_data_stream)
                     phpversion = yaml_parsed_prefphpyaml.get('PHP')
                     default_phpversion = str(phpversion.keys()[0])
-                    default_phppath = str(phpversion.get(my_phpversion))
+                    default_phppath = str(phpversion.get(default_phpversion))
                     sigsyaml = installation_path+"/conf/appsignatures.yaml"
                     with open(sigsyaml, 'r') as sigs_data_stream:
                         yaml_parsed_sigs = yaml.safe_load(sigs_data_stream)
