@@ -71,7 +71,7 @@ def nginx_conf_switch(user_name, domain_name):
                 for app_path in list(phpsigs.keys()):
                     if os.path.isfile(document_root+app_path):
                         # Ok we have a hit. Lets change the backend for this domain
-                        if phpversion in json_parsed_cpaneldomain:
+                        if phpversion in json_parsed_cpaneldomain.keys():
                             cpanel_phpversion = json_parsed_cpaneldomain.get('phpversion')
                             if cpanel_phpversion == 'ea-php72':
                                 my_phpversion = CPANELPHP72
