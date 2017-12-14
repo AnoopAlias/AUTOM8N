@@ -68,8 +68,19 @@ print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li class="active">Select domain</li>')
 print('</ol>')
+# Next section start here
+print('<div class="panel panel-default">')  # marker6
+print('<div class="panel-heading"><h3 class="panel-title">Switch domains automatically</h3></div>')
+print('<div class="panel-body">')  # marker7
+print('<form class="form-group" action="reload_config.live.py">')
+print('<input class="btn btn-xs btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
+print(('<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
+print('</form>')
+print('</div>')  # marker7
+print('</div>')  # marker6
+# Next section start here
 print('<div class="panel panel-default">')  # marker4
-print('<div class="panel-heading"><h3 class="panel-title">Select domain to configure:</h3></div>')
+print('<div class="panel-heading"><h3 class="panel-title">Select domain to configure manually</h3></div>')
 print('<div class="panel-body">')  # marker5
 print('<form class="form-inline" action="app_settings.live.py" method="post">')
 print('<select name="domain">')
@@ -169,16 +180,6 @@ if os.path.isfile(cluster_config_file):
     print('</ul>')
     print('</div>')  # marker7
     print('</div>')  # marker6
-# Next section start here
-print('<div class="panel panel-default">')  # marker6
-print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
-print('<div class="panel-body">')  # marker7
-print('<form class="form-group" action="reload_config.live.py">')
-print('<input class="btn btn-xs btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
-print(('<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
-print('</form>')
-print('</div>')  # marker7
-print('</div>')  # marker6
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2
