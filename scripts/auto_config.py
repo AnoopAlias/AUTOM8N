@@ -130,7 +130,7 @@ def nginx_conf_switch(user_name, domain_name):
             else:
                 print("Error loading userdata file for domain: "+domain_name)
         else:
-            print('domain '+domain_name+' is not using PROXY. Nothing to do')
+            print('domain '+domain_name+' is not using PROXY.')
     else:
         print("Error loading domain-data file for domain: "+domain_name)
 
