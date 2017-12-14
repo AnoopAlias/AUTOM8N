@@ -72,7 +72,7 @@ print('</ol>')
 print('<div class="panel panel-default">')  # marker6
 print('<div class="panel-heading"><h3 class="panel-title">Switch domains automatically</h3></div>')
 print('<div class="panel-body">')  # marker7
-print('<form class="form-group" action="reload_config.live.py">')
+print('<form class="form-group" action="autoswitch.live.py">')
 print('<input class="btn btn-xs btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
 print(('<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
 print('</form>')
