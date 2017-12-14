@@ -170,16 +170,15 @@ if os.path.isfile(cluster_config_file):
     print('</div>')  # marker7
     print('</div>')  # marker6
 # Next section start here
-if os.path.isfile(cluster_config_file):
-    print('<div class="panel panel-default">')  # marker6
-    print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
-    print('<div class="panel-body">')  # marker7
-    print('<form class="form-group" action="reload_config.live.py">')
-    print('<input class="btn btn-xs btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
-    print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-    print('</form>')
-    print('</div>')  # marker7
-    print('</div>')  # marker6
+print('<div class="panel panel-default">')  # marker6
+print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
+print('<div class="panel-body">')  # marker7
+print('<form class="form-group" action="reload_config.live.py">')
+print('<input class="btn btn-xs btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
+print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+print('</form>')
+print('</div>')  # marker7
+print('</div>')  # marker6
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2
