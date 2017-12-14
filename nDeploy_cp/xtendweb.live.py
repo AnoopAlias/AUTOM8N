@@ -115,19 +115,71 @@ if os.path.isfile(cluster_config_file):
     print('</ul>')
     print('</div>')  # marker7
     print('</div>')  # marker6
-    print('<ol class="breadcrumb">')
-    print('<li>cluster MySQL-port</li>')
-    print('<li>localhost:3306</li>')
-    print('</ol>')
-    print('<ol class="breadcrumb">')
-    print('<li>cluster MySQL-socket</li>')
-    print('<li>/tmp/maxscale_mysql.sock</li>')
-    print('</ol>')
-    print('</ol>')
-    print('<ol class="breadcrumb">')
-    print('<li>cluster Redis-port</li>')
-    print('<li>localhost:7000</li>')
-    print('</ol>')
+# Next section start here
+if os.path.isfile(cluster_config_file):
+    print('<div class="panel panel-default">')  # marker6
+    print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
+    print('<div class="panel-body">')  # marker7
+    with open(cluster_config_file, 'r') as cluster_data_yaml:
+        cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+    print('<ul class="list-group">')
+    for servername in cluster_data_yaml_parsed.keys():
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        filesync_status = False
+        for myprocess in psutil.process_iter():
+            mycmdline = myprocess.cmdline()
+            if '/usr/bin/unison' in mycmdline and servername in mycmdline:
+                filesync_status = True
+        if filesync_status:
+            print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
+            print(('<div class="col-sm-6"><div class="label label-primary">IN SYNC</div></div>'))
+        else:
+            print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
+            print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
+        print('</div>')
+        print('</li>')
+    print('</ul>')
+    print('</div>')  # marker7
+    print('</div>')  # marker6
+# Next section start here
+if os.path.isfile(cluster_config_file):
+    print('<div class="panel panel-default">')  # marker6
+    print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
+    print('<div class="panel-body">')  # marker7
+    with open(cluster_config_file, 'r') as cluster_data_yaml:
+        cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+    print('<ul class="list-group">')
+    for servername in cluster_data_yaml_parsed.keys():
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        filesync_status = False
+        for myprocess in psutil.process_iter():
+            mycmdline = myprocess.cmdline()
+            if '/usr/bin/unison' in mycmdline and servername in mycmdline:
+                filesync_status = True
+        if filesync_status:
+            print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
+            print(('<div class="col-sm-6"><div class="label label-primary">IN SYNC</div></div>'))
+        else:
+            print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
+            print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
+        print('</div>')
+        print('</li>')
+    print('</ul>')
+    print('</div>')  # marker7
+    print('</div>')  # marker6
+# Next section start here
+if os.path.isfile(cluster_config_file):
+    print('<div class="panel panel-default">')  # marker6
+    print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
+    print('<div class="panel-body">')  # marker7
+    print('<form class="form-group" action="reload_config.live.py">')
+    print('<input class="btn btn-xs btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
+    print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+    print('</form>')
+    print('</div>')  # marker7
+    print('</div>')  # marker6
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2
