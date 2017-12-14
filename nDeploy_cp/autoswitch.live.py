@@ -55,7 +55,7 @@ print('<h4>XtendWeb</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
-print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Passenger Module Installer</li>')
+print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Automatic Configuration switch</li>')
 print('</ol>')
 switch_cmd = '/opt/nDeploy/scripts/auto_config.py '+cpaneluser+' setconfig'
 myswitcher = subprocess.Popen(switch_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
