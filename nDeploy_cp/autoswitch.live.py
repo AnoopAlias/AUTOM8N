@@ -66,8 +66,7 @@ if output:
     print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
     print('<div class="panel-body">')  # marker6
     print('<ul class="list-group">')
-    # print(('<div class="alert alert-info alert-top"><kbd>' + output + '</kbd></div>'))
-    print(('<kbd><div class="alert alert-info alert-top">' + output + '</div></kbd>'))
+    print(('<div class="alert alert-info alert-top">' + output + '</div>'))
     print('</ul>')
     print('</div>')  # marker6
     print('</div>')
@@ -77,7 +76,7 @@ if err:
     print(('<div class="panel-heading"><h3 class="panel-title">Command Error:</h3></div>'))
     print('<div class="panel-body">')  # marker7
     print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top"><kbd>' + err + '</kbd></div>'))  # marker8
+    print(('<div class="alert alert-info alert-top">' + err + '</div>'))  # marker8
     print('</ul>')
     print('</div>')  # marker7
     print('</div>')

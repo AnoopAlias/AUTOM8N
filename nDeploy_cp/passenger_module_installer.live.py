@@ -84,7 +84,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
                     print('<div class="panel-body">')  # marker6
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>' + output + '</kbd></div>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + output + '</div>'))
                     print('</ul>')
                     print('</div>')  # marker6
                     print('</div>')
@@ -94,7 +94,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Command Error:</h3></div>'))
                     print('<div class="panel-body">')  # marker7
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>' + err + '</kbd><br><br>'))  # marker8
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + err + '<br><br>'))  # marker8
                     print(('Run the following command in your shell to proceed with manual installation:<br>'))
                     print(('cd '+mydocroot+'<br>'))
                     print(('/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'))
@@ -125,7 +125,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+output+'</kbd></div>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>'+output+'</div>'))
                     print('</ul>')
                     print('</div>')
                     print('</div>')
@@ -135,7 +135,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>' + err + '</kbd><br><br>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + err + '<br><br>'))
                     print(('Run the following command in your shell to proceed with manual installation:<br>'))
                     print(('export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"<br>'))
                     print(('cd '+mydocroot))
@@ -165,7 +165,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>'+output+'</kbd></div>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>'+output+'</div>'))
                     print('</ul>')
                     print('</div>')
                     print('</div>')
@@ -175,7 +175,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                     print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
                     print('<div class="panel-body">')
                     print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br><kbd>' + err + '</kbd><br><br>'))
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + err + '<br><br>'))
                     print(('Run the following command in your shell to proceed with manual installation:<br>'))
                     print(('export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"<br>'))
                     print(('cd '+mydocroot))
