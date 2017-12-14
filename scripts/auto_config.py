@@ -93,6 +93,16 @@ def nginx_conf_switch(user_name, domain_name):
                             yaml_parsed_domaindata["backend_version"] = my_phpversion
                             yaml_parsed_domaindata["backend_path"] = my_phppath
                             yaml_parsed_domaindata["apptemplate_code"] = phpsigs.get(app_path)
+                            # Lets deal with settings that are mutually exclusive
+                            if 'redis' in phpsigs.get(app_path):
+                                yaml_parsed_domaindata['pagespeed'] = 'disabled'
+                                yaml_parsed_domaindata['mod_security'] = 'disabled'
+                                print('Turned off pagespeed and mod_security options as they are incompatible with Full Page cache. The cache will not work if you turn on these options')
+                            if '5029' in phpsigs.get(app_path):
+                                yaml_parsed_domaindata['set_expire_static'] = 'disabled'
+                                yaml_parsed_domaindata['gzip'] = 'disabled'
+                                yaml_parsed_domaindata['brotli'] = 'disabled'
+                                print('Turned off gzip, brotli and set_expire_static options as they are incompatible with Wordpress Total Cache generated nginx.conf. The config will not work if you turn on these options')
                             with open(domain_data_file, 'w') as yaml_file:
                                 yaml.dump(yaml_parsed_domaindata, yaml_file, default_flow_style=False)
                             yaml_file.close()
@@ -103,6 +113,16 @@ def nginx_conf_switch(user_name, domain_name):
                             yaml_parsed_domaindata["backend_version"] = default_phpversion
                             yaml_parsed_domaindata["backend_path"] = default_phppath
                             yaml_parsed_domaindata["apptemplate_code"] = phpsigs.get(app_path)
+                            # Lets deal with settings that are mutually exclusive
+                            if 'redis' in phpsigs.get(app_path):
+                                yaml_parsed_domaindata['pagespeed'] = 'disabled'
+                                yaml_parsed_domaindata['mod_security'] = 'disabled'
+                                print('Turned off pagespeed and mod_security options as they are incompatible with Full Page cache. The cache will not work if you turn on these options')
+                            if '5029' in phpsigs.get(app_path):
+                                yaml_parsed_domaindata['set_expire_static'] = 'disabled'
+                                yaml_parsed_domaindata['gzip'] = 'disabled'
+                                yaml_parsed_domaindata['brotli'] = 'disabled'
+                                print('Turned off gzip, brotli and set_expire_static options as they are incompatible with Wordpress Total Cache generated nginx.conf. The config will not work if you turn on these options')
                             with open(domain_data_file, 'w') as yaml_file:
                                 yaml.dump(yaml_parsed_domaindata, yaml_file, default_flow_style=False)
                             yaml_file.close()
