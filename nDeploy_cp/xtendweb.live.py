@@ -175,7 +175,7 @@ print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></d
 print('<div class="panel-body">')  # marker7
 print('<form class="form-group" action="reload_config.live.py">')
 print('<input class="btn btn-xs btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
-print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+print(('<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
 print('</form>')
 print('</div>')  # marker7
 print('</div>')  # marker6
