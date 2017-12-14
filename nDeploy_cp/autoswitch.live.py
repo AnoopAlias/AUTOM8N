@@ -66,7 +66,8 @@ if output:
     print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
     print('<div class="panel-body">')  # marker6
     print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top"><kbd>' + output + '</kbd></div>'))
+    # print(('<div class="alert alert-info alert-top"><kbd>' + output + '</kbd></div>'))
+    print(('<kbd><div class="alert alert-info alert-top">' + output + '</div></kbd>'))
     print('</ul>')
     print('</div>')  # marker6
     print('</div>')
