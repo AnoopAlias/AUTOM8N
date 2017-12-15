@@ -193,6 +193,46 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print('</ul>')
             print('</div>')  # marker4
             print('</div>')
+    elif mybackend == 'PHP':
+        if os.path.isfile(mydocroot+'/composer.json'):
+            if os.path.isfile('/opt/cpanel/composer/bin/composer'):
+                install_cmd = '/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install'
+                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+                output, err = myinstaller.communicate()
+                if output:
+                    # section start here
+                    print('<div class="panel panel-default">')
+                    print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
+                    print('<div class="panel-body">')
+                    print('<ul class="list-group">')
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>'+output+'</div>'))
+                    print('</ul>')
+                    print('</div>')
+                    print('</div>')
+                if err:
+                    # section start here
+                    print('<div class="panel panel-default">')
+                    print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
+                    print('<div class="panel-body">')
+                    print('<ul class="list-group">')
+                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + err + '<br><br>'))
+                    print(('Run the following command in your shell to proceed with manual installation:<br>'))
+                    print(('export PATH="$PATH:/opt/cpanel/composer/bin"<br>'))
+                    print(('cd '+mydocroot))
+                    print(('<br>/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install'))
+                    print(('</div>'))
+                    print('</ul>')
+                    print('</div>')
+                    print('</div>')
+        else:
+            print('<div class="panel panel-default">')
+            print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
+            print('<div class="panel-body">')  # marker4
+            print('<ul class="list-group">')
+            print(('<div class="alert alert-info alert-top">requirements.txt not found for <span class="label label-primary">PYTHON</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/requirements.txt</kbd></div>'))
+            print('</ul>')
+            print('</div>')  # marker4
+            print('</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
