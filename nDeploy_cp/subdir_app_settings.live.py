@@ -188,18 +188,20 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('</form>')
                 print('</div>')
                 print('</div>')
-                if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS':
+                if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
                     # Next section start here
                     print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Passenger project deps installer: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
+                    print(('<div class="panel-heading"><h3 class="panel-title">Project deps installer: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
                     print('<div class="panel-body">')
-                    print('<form id="config" class="form-inline config-save" action="passenger_module_installer.live.py" method="post">')
+                    print('<form id="config" class="form-inline config-save" action="dependency_installer.live.py" method="post">')
                     if backend_category == "RUBY":
                         print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/Gemfile</kbd></div>'))
                     elif backend_category == "NODEJS":
                         print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/package.json</kbd></div>'))
                     elif backend_category == 'PYTHON':
                         print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/requirements.txt</kbd></div>'))
+                    elif backend_category == 'PHP':
+                        print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/composer.json</kbd></div>'))
                     print(('<input class="hidden" name="domain" value="'+mydomain+'/'+thesubdir+'">'))
                     print(('<input class="hidden" name="document_root" value="'+document_root+'/'+thesubdir+'">'))
                     print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
