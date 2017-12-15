@@ -229,7 +229,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
             print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">requirements.txt not found for <span class="label label-primary">PYTHON</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/requirements.txt</kbd></div>'))
+            print(('<div class="alert alert-info alert-top">composer.json not found for <span class="label label-primary">PHP</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/composer.json</kbd></div>'))
             print('</ul>')
             print('</div>')  # marker4
             print('</div>')
