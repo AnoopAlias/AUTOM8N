@@ -200,6 +200,17 @@ if form.getvalue('domain'):
             print('</div>')  # div8
             print('</div>')  # div7
 
+        if backend_category == 'PHP':
+            # Next section start here
+            print('<div class="panel panel-default">')  # div7
+            print(('<div class="panel-heading"><h3 class="panel-title">View Application server log: <strong>'+mydomain+'</strong></h3></div>'))
+            print('<div class="panel-body">')  # div8
+            print('<form id="config" class="form-inline config-save" action="view_log.live.py" method="post">')
+            print('<input class="btn btn-primary" type="submit" value="VIEW PHP LOG">')
+            print('</form>')
+            print('</div>')  # div8
+            print('</div>')  # div7
+
         # Next section start here
         print('<div class="panel panel-default">')  # div9
         print(('<div class="panel-heading"><h3 class="panel-title">Application Settings:</h3></div>'))
