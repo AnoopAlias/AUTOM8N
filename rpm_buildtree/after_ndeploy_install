@@ -195,14 +195,25 @@ else
 	if [ ! -L /usr/local/cpanel/base/frontend/paper_lantern/PHPfpmSelector  ];then
 		ln -s /opt/nDeploy/PHPfpmSelector /usr/local/cpanel/base/frontend/paper_lantern/
 	fi
+	if [ ! -L /usr/local/cpanel/whostmgr/docroot/cgi/nDeploy_whm ];then
+		ln -s /opt/nDeploy/nDeploy_whm /usr/local/cpanel/whostmgr/docroot/cgi/
+	fi
+	if [ ! -L /usr/local/cpanel/whostmgr/docroot/addon_plugins/nDeploy_whm ];then
+		ln -s /opt/nDeploy/nDeploy_whm /usr/local/cpanel/whostmgr/docroot/addon_plugins/
+	fi
 	if [ ! -L /opt/nDeploy/scripts/easy_passenger_setup.sh ];then
 	  ln -s /usr/nginx/scripts/nginx-passenger-setup.sh /opt/nDeploy/scripts/easy_passenger_setup.sh
+	fi
+	if [ ! -d /var/cpanel/apps ] ; then
+		mkdir /var/cpanel/apps
 	fi
 
 	touch /opt/nDeploy/conf/hhvm_extra.ini
 
 	echo -e '\e[93m Installing XtendWeb plugin in cPanel \e[0m'
 	/usr/local/cpanel/scripts/install_plugin /opt/nDeploy/nDeploy_cp
+	echo -e '\e[93m Installing XtendWeb plugin in WHM \e[0m'
+	/usr/local/cpanel/bin/register_appconfig /opt/nDeploy/nDeploy_whm/xtendweb.conf
 
 	# PHP-FPM selector plugin is retired
 	# echo -e '\e[93m Installing PHP-FPM Selector plugin in cPanel \e[0m'

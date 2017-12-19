@@ -31,4 +31,8 @@ echo -e '\e[93m Removing cpanel hooks \e[0m'
 echo -e '\e[93m Uninstalling nDeploy plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/PHPfpmSelector
+
+echo -e '\e[93m Uninstalling SimpleR plugin in WHM \e[0m'
+/usr/local/cpanel/bin/unregister_appconfig /opt/nDeploy/nDeploy_whm/xtendweb.conf
+
 fi
