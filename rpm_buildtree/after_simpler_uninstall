@@ -1,5 +1,0 @@
-if [ $1 -eq 0 ];then
-
-echo -e '\e[93m Uninstalling SimpleR plugin in WHM \e[0m'
-/usr/local/cpanel/bin/unregister_appconfig /opt/simpler/simpler.conf
-fi
