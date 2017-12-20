@@ -13,6 +13,8 @@ rsync -av ../conf/ nDeploy-pkg/opt/nDeploy/conf/
 rsync -av ../conf/ nDeploy-pkg-centos7/opt/nDeploy/conf/
 rsync -av ../nDeploy_cp/ nDeploy-pkg/opt/nDeploy/nDeploy_cp/
 rsync -av ../nDeploy_cp/ nDeploy-pkg-centos7/opt/nDeploy/nDeploy_cp/
+rsync -av ../nDeploy_whm/ nDeploy-pkg/opt/nDeploy/nDeploy_whm/
+rsync -av ../nDeploy_whm/ nDeploy-pkg-centos7/opt/nDeploy/nDeploy_whm/
 rsync -av ../PHPfpmSelector/ nDeploy-pkg/opt/nDeploy/PHPfpmSelector/
 rsync -av ../PHPfpmSelector/ nDeploy-pkg-centos7/opt/nDeploy/PHPfpmSelector/
 
