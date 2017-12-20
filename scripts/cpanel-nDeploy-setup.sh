@@ -1,6 +1,5 @@
 #!/bin/bash
 # Author: Anoop P Alias
-# SetEnvIf X-Forwarded-Proto patch provided by https://github.com/mdpuma
 
 function enable {
 echo -e '\e[93m Generating the default nginx vhosts \e[0m'
@@ -15,7 +14,8 @@ if [ -f /etc/cpanel/ea4/is_ea4 ];then
 	echo -e '\e[93m !!! Removing conflicting ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
 	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2
 	yum -y install ea-apache24-mod_remoteip
-	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || echo 'Include "/etc/nginx/conf.d/httpd_mod_remoteip.include"' >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf
+	REMOTEIPINCLUDE=$'\nInclude "/etc/nginx/conf.d/httpd_mod_remoteip.include"'
+	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || echo ${REMOTEIPINCLUDE} >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf
 fi
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
 /scripts/rebuildhttpdconf
