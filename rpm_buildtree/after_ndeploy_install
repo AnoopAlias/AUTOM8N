@@ -198,8 +198,8 @@ else
 	if [ ! -L /usr/local/cpanel/whostmgr/docroot/cgi/nDeploy_whm ];then
 		ln -s /opt/nDeploy/nDeploy_whm /usr/local/cpanel/whostmgr/docroot/cgi/
 	fi
-	if [ ! -L /usr/local/cpanel/whostmgr/docroot/addon_plugins/nDeploy_whm ];then
-		ln -s /opt/nDeploy/nDeploy_whm /usr/local/cpanel/whostmgr/docroot/addon_plugins/
+	if [ ! -L /usr/local/cpanel/whostmgr/docroot/addon_plugins/xtendweb.png ];then
+		ln -s /opt/nDeploy/nDeploy_whm/xtendweb.png /usr/local/cpanel/whostmgr/docroot/addon_plugins/
 	fi
 	if [ ! -L /opt/nDeploy/scripts/easy_passenger_setup.sh ];then
 	  ln -s /usr/nginx/scripts/nginx-passenger-setup.sh /opt/nDeploy/scripts/easy_passenger_setup.sh

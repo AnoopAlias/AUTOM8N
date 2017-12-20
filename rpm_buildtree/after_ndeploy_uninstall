@@ -28,11 +28,15 @@ echo -e '\e[93m Removing cpanel hooks \e[0m'
 /usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/convertaddon_hook_post.py --category ConvertAddon --event convert_addon --stage post --manual
 /usr/local/cpanel/bin/manage_hooks delete script  /opt/nDeploy/scripts/accountmodify_setshell_hook_post.py --category Whostmgr --event Accounts::set_shell --stage post --manual
 
-echo -e '\e[93m Uninstalling nDeploy plugin in cPanel \e[0m'
+echo -e '\e[93m Uninstalling XtendWeb plugin in cPanel \e[0m'
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/PHPfpmSelector
 
-echo -e '\e[93m Uninstalling SimpleR plugin in WHM \e[0m'
+echo -e '\e[93m Uninstalling XtendWeb plugin in WHM \e[0m'
 /usr/local/cpanel/bin/unregister_appconfig /opt/nDeploy/nDeploy_whm/xtendweb.conf
+
+rm -f /usr/local/cpanel/base/frontend/paper_lantern/nDeploy_cp
+rm -f /usr/local/cpanel/whostmgr/docroot/cgi/nDeploy_whm
+rm -f /usr/local/cpanel/whostmgr/docroot/addon_plugins/xtendweb.png
 
 fi
