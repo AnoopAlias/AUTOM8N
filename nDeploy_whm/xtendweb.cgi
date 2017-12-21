@@ -87,7 +87,7 @@ if not osrelease == 'CloudLinux':
           print(('<option value="'+reseller+'">'+reseller+'</option>'))
       print('</select>')
       print(('<input style="display:none" name="mode" value="user">'))
-      print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
+      print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
       print('</form>')
       print('</div>') # markera2
       print('</div>') # markera1
@@ -101,7 +101,7 @@ if not osrelease == 'CloudLinux':
         print(('<option value="'+service+'">'+service+'</option>'))
     print('</select>')
     print(('<input style="display:none" name="mode" value="service">'))
-    print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
+    print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
     print('</form>')
     print('</div>') # markera2
     print('</div>') # markera1
