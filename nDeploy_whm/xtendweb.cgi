@@ -48,6 +48,10 @@ print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh">
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
+print('<div class="panel panel-default">')  # markera1
+print('<div class="panel-heading"><h3 class="panel-title">Resource limit</h3></div>')
+print('<div class="panel-body">') # markera2
+
 # Next section start here
 with open('/etc/redhat-release','r') as releasefile:
   osrelease = releasefile.read().split(' ')[0]
@@ -106,6 +110,8 @@ if not osrelease == 'CloudLinux':
     print('</div>') # markera2
     print('</div>') # markera1
 
+print('</div>') # markera2
+print('</div>') # markera1
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>') # marker3
 print('</div>') # marker2
