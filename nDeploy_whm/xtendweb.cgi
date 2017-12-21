@@ -79,7 +79,7 @@ if not osrelease == 'CloudLinux':
               with codecs.open(ownerslice, 'w', 'utf-8') as confout:
                   confout.write(generated_config)
       print('<div class="panel panel-default">')  # markera1
-      print('<div class="panel-heading"><h3 class="panel-title"><span class="label label-default">Reseller Resource limit</span></h3></div>')
+      print('<div class="panel-heading"><h3 class="panel-title">Reseller resource limit</h3></div>')
       print('<div class="panel-body">') # markera2
       print('<form class="form-inline" action="simpler_config.cgi" method="post">')
       print('<select name="reseller">')
@@ -93,7 +93,7 @@ if not osrelease == 'CloudLinux':
       print('</div>') # markera1
     # Next sub-section start here
     print('<div class="panel panel-default">')  # markera1
-    print('<div class="panel-heading"><h3 class="panel-title"><span class="label label-default">Reseller Resource limit</span></h3></div>')
+    print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
     print('<div class="panel-body">') # markera2
     print('<form class="form-inline" action="simpler_config.cgi" method="post">')
     print('<select name="service">')
