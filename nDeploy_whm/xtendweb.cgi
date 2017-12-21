@@ -40,11 +40,11 @@ print('<div id="main-container" class="container text-center">')  # marker1
 print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')  # marker3
 print('<div class="logo">')
-print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
+print('<a href="xtendweb.cgi" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
 print('<h4>XtendWeb</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
+print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
