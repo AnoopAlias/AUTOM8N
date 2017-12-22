@@ -5,6 +5,7 @@ import cgitb
 import cgi
 import os
 import psutil
+import subprocess
 try:
     from configparser import ConfigParser
 except ImportError:
@@ -47,7 +48,9 @@ print('<li class="active">Server Config</li>')
 print('</ol>')
 
 if form.getvalue('mode') and form.getvalue('unit'):
-  pass
+  if form.getvalue('mode') == 'service':
+    myservice = form.getvalue('unit')+".service"
+    subprocess.check_output(['/usr/bin/systemctl', 'show', myservice, '-p', 'MemoryLimit'])
 else:
   print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 

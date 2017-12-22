@@ -65,17 +65,7 @@ if not osrelease == 'CloudLinux':
       for owner in resellerlist:
           ownerslice = "/etc/systemd/system/"+owner+".slice"
           if not os.path.isfile(ownerslice):
-              # create the slice from a template
-              templateLoader = jinja2.FileSystemLoader(xtendweb_installation_path + "/conf/")
-              templateEnv = jinja2.Environment(loader=templateLoader)
-              if os.path.isfile(xtendweb_installation_path+"/conf/simpler_resources_local.j2"):
-                  TEMPLATE_FILE = "simpler_resources_local.j2"
-              else:
-                  TEMPLATE_FILE = "simpler_resources.j2"
-              template = templateEnv.get_template(TEMPLATE_FILE)
-              templateVars = {"OWNER": owner
-                              }
-              generated_config = template.render(templateVars)
+              generated_config = '[Slice]\n'
               with codecs.open(ownerslice, 'w', 'utf-8') as confout:
                   confout.write(generated_config)
       print('<div class="panel panel-default">')  # markera1
@@ -86,7 +76,7 @@ if not osrelease == 'CloudLinux':
       print('<div class="panel panel-default">')  # markerc2
       print('<div class="panel-heading"><h3 class="panel-title">Reseller</h3></div>')
       print('<div class="panel-body">') # markerc3
-      print('<form class="form-inline" action="simpler_config.cgi" method="post">')
+      print('<form class="form-inline" action="resource_limit.cgi" method="post">')
       print('<select name="unit">')
       for reseller in resellerlist:
           print(('<option value="'+reseller+'">'+reseller+'</option>'))
@@ -102,7 +92,7 @@ if not osrelease == 'CloudLinux':
       print('<div class="panel panel-default">')  # markerc2
       print('<div class="panel-heading"><h3 class="panel-title">Service</h3></div>')
       print('<div class="panel-body">') # markerc3
-      print('<form class="form-inline" action="simpler_config.cgi" method="post">')
+      print('<form class="form-inline" action="resource_limit.cgi" method="post">')
       print('<select name="unit">')
       for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
           print(('<option value="'+service+'">'+service+'</option>'))
@@ -122,7 +112,7 @@ if not osrelease == 'CloudLinux':
       print('<div class="panel panel-default">')  # markera1
       print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
       print('<div class="panel-body">') # markera2
-      print('<form class="form-inline" action="simpler_config.cgi" method="post">')
+      print('<form class="form-inline" action="resource_limit.cgi" method="post">')
       print('<select name="unit">')
       for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
           print(('<option value="'+service+'">'+service+'</option>'))
