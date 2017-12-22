@@ -92,6 +92,7 @@ if not osrelease == 'CloudLinux':
           print(('<option value="'+reseller+'">'+reseller+'</option>'))
       print('</select>')
       print(('<input style="display:none" name="mode" value="user">'))
+      print(('<br>'))
       print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
       print('</form>')
       print('</div>') # markerc3
