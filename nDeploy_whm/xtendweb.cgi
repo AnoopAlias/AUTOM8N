@@ -104,7 +104,7 @@ if not osrelease == 'CloudLinux':
       print('<div class="panel-body">') # markerc3
       print('<form class="form-inline" action="simpler_config.cgi" method="post">')
       print('<select name="service">')
-      for service in "nginx", "httpd", "mysql", "ndeploy_backends":
+      for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
           print(('<option value="'+service+'">'+service+'</option>'))
       print('</select>')
       print(('<input style="display:none" name="mode" value="service">'))
@@ -128,7 +128,7 @@ if not osrelease == 'CloudLinux':
           print(('<option value="'+service+'">'+service+'</option>'))
       print('</select>')
       print(('<input style="display:none" name="mode" value="service">'))
-      print(('<br>'))      
+      print(('<br>'))
       print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
       print('</form>')
       print('</div>') # markera2
