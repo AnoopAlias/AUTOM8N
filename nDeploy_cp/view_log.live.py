@@ -69,7 +69,13 @@ if os.path.isfile(php_log):
         print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
         print('<div class="panel-body">')  # marker6
         print('<ul class="list-group">')
-        print(('<div class="alert alert-info alert-top">' + output + '</div>'))
+        print(('<div class="alert alert-info alert-top">'))
+        while True:
+            line = output.readline()
+            if not line:
+                break
+            print(line)
+        print(('</div>'))
         print('</ul>')
         print('</div>')  # marker6
         print('</div>')
