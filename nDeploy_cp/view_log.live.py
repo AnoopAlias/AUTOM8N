@@ -62,30 +62,20 @@ php_log = cpanelhome+"/logs/php_error_log"
 if os.path.isfile(php_log):
     tail_cmd = '/usr/bin/tail -10 '+php_log
     run_tail_cmd = subprocess.Popen(tail_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
-    # output, err = run_tail_cmd.communicate()
-    # if output:
-        # section start here
     print('<div class="panel panel-default">')
     print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
     print('<div class="panel-body">')  # marker6
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
-    for line in iter(run_tail_cmd.stdout.readline, b''):
-        print('</br> >>> {}'.format(line.rstrip()))
+    while True:
+        line = run_tail_cmd.stdout.readline()
+        if not line:
+            break
+        print('<br>'+line)
     print(('</div>'))
     print('</ul>')
     print('</div>')  # marker6
     print('</div>')
-    #if err:
-        # section start here
-    #    print('<div class="panel panel-default">')
-    #    print(('<div class="panel-heading"><h3 class="panel-title">Command Error:</h3></div>'))
-    #    print('<div class="panel-body">')  # marker7
-    #    print('<ul class="list-group">')
-    #    print(('<div class="alert alert-info alert-top">' + err + '</div>'))  # marker8
-    #    print('</ul>')
-    #    print('</div>')  # marker7
-    #    print('</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>PHP log file is not present</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
