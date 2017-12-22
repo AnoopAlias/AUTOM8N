@@ -87,7 +87,7 @@ if not osrelease == 'CloudLinux':
       print('<div class="panel-heading"><h3 class="panel-title">Reseller</h3></div>')
       print('<div class="panel-body">') # markerc3
       print('<form class="form-inline" action="simpler_config.cgi" method="post">')
-      print('<select name="reseller">')
+      print('<select name="unit">')
       for reseller in resellerlist:
           print(('<option value="'+reseller+'">'+reseller+'</option>'))
       print('</select>')
@@ -103,7 +103,7 @@ if not osrelease == 'CloudLinux':
       print('<div class="panel-heading"><h3 class="panel-title">Service</h3></div>')
       print('<div class="panel-body">') # markerc3
       print('<form class="form-inline" action="simpler_config.cgi" method="post">')
-      print('<select name="service">')
+      print('<select name="unit">')
       for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
           print(('<option value="'+service+'">'+service+'</option>'))
       print('</select>')
@@ -123,7 +123,7 @@ if not osrelease == 'CloudLinux':
       print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
       print('<div class="panel-body">') # markera2
       print('<form class="form-inline" action="simpler_config.cgi" method="post">')
-      print('<select name="service">')
+      print('<select name="unit">')
       for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
           print(('<option value="'+service+'">'+service+'</option>'))
       print('</select>')

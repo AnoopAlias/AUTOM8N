@@ -46,10 +46,10 @@ print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-refresh"></sp
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
-if form.getvalue('domain'):
-
+if form.getvalue('mode') and form.getvalue('unit'):
+  pass
 else:
-    print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
+  print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
