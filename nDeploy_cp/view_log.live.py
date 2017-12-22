@@ -61,7 +61,7 @@ print('</ol>')
 php_log = cpanelhome+"/logs/php_error_log"
 if os.path.isfile(php_log):
     tail_cmd = '/usr/bin/tail -10 '+php_log
-    run_tail_cmd = subprocess.Popen(tail_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, universal_newlines=True)
+    run_tail_cmd = subprocess.Popen(tail_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
     # output, err = run_tail_cmd.communicate()
     # if output:
         # section start here
