@@ -57,7 +57,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print(('<div class="alert alert-info alert-top">'))
     for resourcetype in 'MemoryLimit', 'CPUShares', 'BlockIOWeight':
       print(subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p '+resourcetype, shell=True))
-      print('<br>'+line)
+      print('<br>')
     print(('</div>'))
     print('</ul>')
     print('</div>')  # marker6
