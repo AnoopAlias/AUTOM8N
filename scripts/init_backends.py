@@ -102,7 +102,7 @@ def control_php_fpm(trigger):
             try:
                 subprocess.call(['systemctl', '--version'])
             except OSError:
-                print('secure-php needs systemd . upgrade your cPanel system to CentOS7/CloudLinux7 ')
+                print('secure-php needs systemd . upgrade your cPanel system to CentOS7 ')
                 sys.exit(1)
             else:
                 for backend_name in list(php_backends_dict.keys()):
@@ -119,7 +119,6 @@ def control_php_fpm(trigger):
                     service_generated_config = service_template.render(templateVars)
                     with codecs.open(systemd_service_file, "w", 'utf-8') as confout:
                         confout.write(service_generated_config)
-                subprocess.call(['/usr/local/cpanel/scripts/install_plugin /opt/nDeploy/PHPfpmSelector'], shell=True)
                 subprocess.call(['systemctl', 'daemon-reload'])
                 print('Disabling root owned php-fpm master process:')
                 subprocess.call(['systemctl', 'stop', 'ndeploy_backends.service'])
@@ -136,17 +135,7 @@ def control_php_fpm(trigger):
                     subprocess.call(['killall', '-SIGKILL', 'php-fpm'])
             silentremove(installation_path+"/conf/secure-php-enabled")
             print("Please run /opt/nDeploy/scripts/attempt_autofix.sh to regenerate config")
-        elif trigger == 'httpd-php-install':
-            if not os.path.isfile('/var/cpanel/templates/apache2_4/vhost.local') and not os.path.isfile('/var/cpanel/templates/apache2_4/ssl_vhost.local'):
-                shutil.copy2(installation_path+"/conf/httpd_vhost.local", "/var/cpanel/templates/apache2_4/vhost.local")
-                shutil.copy2(installation_path+"/conf/httpd_ssl_vhost.local", "/var/cpanel/templates/apache2_4/ssl_vhost.local")
-                subprocess.call(['/scripts/rebuildhttpdconf'], shell=True)
-                subprocess.call(['/scripts/restartsrv_httpd'], shell=True)
-                os.mknod(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED')
-                print("/var/cpanel/templates/apache2_4/vhost.local and /var/cpanel/templates/apache2_4/ssl_vhost.local was modified")
-            else:
-                print("Your /var/cpanel/templates/apache* template file has customization")
-                print("Automatic setup FAILED")
+        # Following is provided to remove legacy Apache PHPFPM selector plugin
         elif trigger == 'httpd-php-uninstall':
             silentremove('/var/cpanel/templates/apache2_4/vhost.local')
             silentremove('/var/cpanel/templates/apache2_4/ssl_vhost.local')
