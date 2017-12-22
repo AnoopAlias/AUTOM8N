@@ -71,7 +71,7 @@ if os.path.isfile(php_log):
         print('<ul class="list-group">')
         print(('<div class="alert alert-info alert-top">'))
         while True:
-            line = output.readline()
+            line = run_tail_cmd.stdout.readline()
             if not line:
                 break
             print(line)
