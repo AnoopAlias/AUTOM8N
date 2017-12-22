@@ -11,7 +11,6 @@ import pwd
 import jinja2
 import codecs
 import sys
-import shutil
 
 
 __author__ = "Anoop P Alias"
@@ -50,8 +49,18 @@ def control_php_fpm(trigger):
                 else:
                     if os.path.isfile('/var/cpanel/feature_toggles/apachefpmjail'):
                         user_home = pwd.getpwnam(user).pw_dir
+                        print('VirtfsJailFix:: '+user)
                         subprocess.call('su - '+user+' -c "touch '+user_home+'/public_html"', shell=True)
                     pass
+            subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
+            subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
+            for path in list(php_backends_dict.values()):
+                if os.path.isfile(path+"/sbin/php-fpm"):
+                    php_fpm_bin = path+"/sbin/php-fpm"
+                else:
+                    php_fpm_bin = path+"/usr/sbin/php-fpm"
+                subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
+        elif trigger == "faststart":
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
             subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
             for path in list(php_backends_dict.values()):
