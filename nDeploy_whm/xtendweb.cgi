@@ -79,8 +79,13 @@ if not osrelease == 'CloudLinux':
               with codecs.open(ownerslice, 'w', 'utf-8') as confout:
                   confout.write(generated_config)
       print('<div class="panel panel-default">')  # markera1
-      print('<div class="panel-heading"><h3 class="panel-title">Reseller resource limit</h3></div>')
+      print('<div class="panel-heading"><h3 class="panel-title">Resource limit</h3></div>')
       print('<div class="panel-body">') # markera2
+      print('<div class="row">')  # markerb1
+      print('<div class="col-sm-6">')  # markerc1
+      print('<div class="panel panel-default">')  # markerc2
+      print('<div class="panel-heading"><h3 class="panel-title">Reseller</h3></div>')
+      print('<div class="panel-body">') # markerc3
       print('<form class="form-inline" action="simpler_config.cgi" method="post">')
       print('<select name="reseller">')
       for reseller in resellerlist:
@@ -89,22 +94,42 @@ if not osrelease == 'CloudLinux':
       print(('<input style="display:none" name="mode" value="user">'))
       print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
       print('</form>')
+      print('</div>') # markerc3
+      print('</div>') # markerc2
+      print('</div>') # markerc1
+      print('<div class="col-sm-6">')  # markerc1
+      print('<div class="panel panel-default">')  # markerc2
+      print('<div class="panel-heading"><h3 class="panel-title">Service</h3></div>')
+      print('<div class="panel-body">') # markerc3
+      print('<form class="form-inline" action="simpler_config.cgi" method="post">')
+      print('<select name="service">')
+      for service in "nginx", "httpd", "mysql", "ndeploy_backends":
+          print(('<option value="'+service+'">'+service+'</option>'))
+      print('</select>')
+      print(('<input style="display:none" name="mode" value="service">'))
+      print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
+      print('</form>')
+      print('</div>') # markerc3
+      print('</div>') # markerc2
+      print('</div>') # markerc1
+      print('</div>') # markerb1
       print('</div>') # markera2
       print('</div>') # markera1
+    else:
     # Next sub-section start here
-    print('<div class="panel panel-default">')  # markera1
-    print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
-    print('<div class="panel-body">') # markera2
-    print('<form class="form-inline" action="simpler_config.cgi" method="post">')
-    print('<select name="service">')
-    for service in "nginx", "httpd", "mysql", "ndeploy_backends":
-        print(('<option value="'+service+'">'+service+'</option>'))
-    print('</select>')
-    print(('<input style="display:none" name="mode" value="service">'))
-    print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
-    print('</form>')
-    print('</div>') # markera2
-    print('</div>') # markera1
+      print('<div class="panel panel-default">')  # markera1
+      print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
+      print('<div class="panel-body">') # markera2
+      print('<form class="form-inline" action="simpler_config.cgi" method="post">')
+      print('<select name="service">')
+      for service in "nginx", "httpd", "mysql", "ndeploy_backends":
+          print(('<option value="'+service+'">'+service+'</option>'))
+      print('</select>')
+      print(('<input style="display:none" name="mode" value="service">'))
+      print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
+      print('</form>')
+      print('</div>') # markera2
+      print('</div>') # markera1
 
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>') # marker3
