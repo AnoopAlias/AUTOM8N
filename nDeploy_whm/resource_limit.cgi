@@ -50,6 +50,19 @@ print('</ol>')
 if form.getvalue('mode') and form.getvalue('unit'):
   if form.getvalue('mode') == 'service':
     myservice = form.getvalue('unit')+".service"
+    print('<div class="panel panel-default">')
+    print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:</h3></div>'))
+    print('<div class="panel-body">')  # marker6
+    print('<ul class="list-group">')
+    print(('<div class="alert alert-info alert-top">'))
+    for resourcetype in 'MemoryLimit', 'CPUShares', 'BlockIOWeight':
+      print(subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p '+resourcetype, shell=True))
+      print('<br>'+line)
+    print(('</div>'))
+    print('</ul>')
+    print('</div>')  # marker6
+    print('</div>')
+
     print(subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p MemoryLimit', shell=True))
 else:
   print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
