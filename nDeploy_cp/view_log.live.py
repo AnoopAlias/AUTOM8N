@@ -71,7 +71,7 @@ if os.path.isfile(php_log):
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
     for line in iter(run_tail_cmd.stdout.readline, b''):
-        print('>>> {}'.format(line.rstrip()))
+        print('</br> >>> {}'.format(line.rstrip()))
     print(('</div>'))
     print('</ul>')
     print('</div>')  # marker6
