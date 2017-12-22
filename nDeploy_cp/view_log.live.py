@@ -70,11 +70,8 @@ if os.path.isfile(php_log):
     print('<div class="panel-body">')  # marker6
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
-    while True:
-        line = run_tail_cmd.stdout.readline()
-        if not line:
-            break
-        print(line)
+    for line in iter(run_tail_cmd.stdout.readline, b''):
+        print('>>> {}'.format(line.rstrip()))
     print(('</div>'))
     print('</ul>')
     print('</div>')  # marker6
