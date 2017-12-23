@@ -51,7 +51,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
   if form.getvalue('mode') == 'service':
     myservice = form.getvalue('unit')+".service"
     print('<div class="panel panel-default">')
-    print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:</h3></div>'))
+    print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:'+myservice+'</h3></div>'))
     print('<div class="panel-body">')  # marker6
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
@@ -81,7 +81,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
   elif form.getvalue('mode') == 'user':
     myservice = form.getvalue('unit')+".slice"
     print('<div class="panel panel-default">')
-    print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:</h3></div>'))
+    print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:'+myservice+'</h3></div>'))
     print('<div class="panel-body">')  # marker6
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
@@ -108,6 +108,55 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('</ul>')
     print('</div>')  # marker6
     print('</div>')
+  # Next section start here
+  print('<div class="panel panel-default">')  # markera1
+  print('<div class="panel-heading"><h3 class="panel-title">Set Resource limit</h3></div>')
+  print('<div class="panel-body">') # markera2
+  print('<form class="form-inline" action="save_resource_limit.cgi" method="post">')
+  print('<div class="row">')  # markerb1
+
+  print('<div class="col-sm-4">')  # markerc1
+  print('<div class="panel panel-default">')  # markerc2
+  print('<div class="panel-heading"><h3 class="panel-title">CPU</h3></div>')
+  print('<div class="panel-body">') # markerc3
+  print('<select name="cpu">')
+  for percentage in 50, 75, 100:
+      print(('<option value="'+percentage+'">'+percentage+'%</option>'))
+  print('</select>')
+  print('</div>') # markerc3
+  print('</div>') # markerc2
+  print('</div>') # markerc1
+  print('<div class="col-sm-4">')  # markerc1
+  print('<div class="panel panel-default">')  # markerc2
+  print('<div class="panel-heading"><h3 class="panel-title">MEMORY</h3></div>')
+  print('<div class="panel-body">') # markerc3
+  print('<select name="memory">')
+  for percentage in 50, 75, 100:
+      print(('<option value="'+percentage+'">'+percentage+'%</option>'))
+  print('</select>')
+  print('</div>') # markerc3
+  print('</div>') # markerc2
+  print('</div>') # markerc1
+  print('<div class="col-sm-4">')  # markerc1
+  print('<div class="panel panel-default">')  # markerc2
+  print('<div class="panel-heading"><h3 class="panel-title">BLOCKIO</h3></div>')
+  print('<div class="panel-body">') # markerc3
+  print('<select name="blockio">')
+  for percentage in 50, 75, 100:
+      print(('<option value="'+percentage+'">'+percentage+'%</option>'))
+  print('</select>')
+  print('</div>') # markerc3
+  print('</div>') # markerc2
+  print('</div>') # markerc1
+
+  print('</div>') # markerb1
+  print(('<input style="display:none" name="mode" value="'+form.getvalue('mode')+'">'))
+  print(('<input style="display:none" name="unit" value="'+form.getvalue('unit')+'">'))
+  print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
+  print('</form>')
+  print('</div>') # markera2
+  print('</div>') # markera1
+
 else:
   print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 
