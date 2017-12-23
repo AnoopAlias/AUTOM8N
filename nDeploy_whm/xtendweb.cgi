@@ -71,7 +71,7 @@ if os.path.isfile(cluster_config_file):
             print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
             print(('<div class="col-sm-6"><div class="label label-primary">IN SYNC</div></div>'))
         else:
-            print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
+            print(('<div class="col-sm-6">'+servername+'</div>'))
             print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
         print('</div>')
         print('</li>')
