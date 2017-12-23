@@ -72,7 +72,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
       print('MemoryLimit=nolimit')
     else:
       mymem_inmb=float(mymem) / ( 1024.0 * 1024.0 )
-      print('CPUShares='+str(mymem_inmb)+'Mb')
+      print('MemoryLimit='+str(mymem_inmb)+'Mb')
     print('<br>')
     print(('</div>'))
     print('</ul>')
