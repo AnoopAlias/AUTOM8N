@@ -57,7 +57,8 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print(('<div class="alert alert-info alert-top">'))
     # for resourcetype in 'MemoryLimit', 'CPUShares', 'BlockIOWeight':
     mymem = (subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True)).split('=')[1]
-    print(mymem)
+    mymem_inmb = float(mymem) / ( 1024.0 * 1024.0 )
+    print(mymem_inmb)
     print('<br>')
     print(('</div>'))
     print('</ul>')
