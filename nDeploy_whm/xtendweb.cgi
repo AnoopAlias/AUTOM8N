@@ -68,7 +68,7 @@ if os.path.isfile(cluster_config_file):
             if '/usr/bin/unison' in mycmdline and servername in mycmdline:
                 filesync_status = True
         if filesync_status:
-            print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
+            print(('<div class="col-sm-6">'+servername+'</div>'))
             print(('<div class="col-sm-6"><div class="label label-primary">IN SYNC</div></div>'))
         else:
             print(('<div class="col-sm-6">'+servername+'</div>'))
