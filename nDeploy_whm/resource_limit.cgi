@@ -79,7 +79,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('</div>')  # marker6
     print('</div>')
   elif form.getvalue('mode') == 'user':
-    myservice = form.getvalue('unit')+".scope"
+    myservice = form.getvalue('unit')+".slice"
     print('<div class="panel panel-default">')
     print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:</h3></div>'))
     print('<div class="panel-body">')  # marker6
