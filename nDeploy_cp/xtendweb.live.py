@@ -4,8 +4,6 @@
 import os
 import socket
 import cgitb
-import psutil
-import yaml
 try:
     import simplejson as json
 except ImportError:
@@ -99,33 +97,6 @@ print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
 print('</form>')
 print('</div>')  # marker5
 print('</div>')  # marker4
-# Next section start here
-if os.path.isfile(cluster_config_file):
-    print('<div class="panel panel-default">')  # marker6
-    print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
-    print('<div class="panel-body">')  # marker7
-    with open(cluster_config_file, 'r') as cluster_data_yaml:
-        cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-    print('<ul class="list-group">')
-    for servername in cluster_data_yaml_parsed.keys():
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        filesync_status = False
-        for myprocess in psutil.process_iter():
-            mycmdline = myprocess.cmdline()
-            if '/usr/bin/unison' in mycmdline and servername in mycmdline:
-                filesync_status = True
-        if filesync_status:
-            print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
-            print(('<div class="col-sm-6"><div class="label label-primary">IN SYNC</div></div>'))
-        else:
-            print(('<div class="col-sm-6"><div class="label label-default">'+servername+'</div></div>'))
-            print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
-        print('</div>')
-        print('</li>')
-    print('</ul>')
-    print('</div>')  # marker7
-    print('</div>')  # marker6
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2
