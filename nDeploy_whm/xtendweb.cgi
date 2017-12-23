@@ -84,7 +84,7 @@ with open('/etc/redhat-release','r') as releasefile:
 if not osrelease == 'CloudLinux':
   if 'el7' in platform.uname()[2]:
     # Next sub-section start here
-    if os.path.isfile(xtendweb_installation_path+"/conf/secure-php-enabled"): # if per user php-fpm master process is set
+    if os.path.isfile(installation_path+"/conf/secure-php-enabled"): # if per user php-fpm master process is set
       # The API call and ensuring slices are present
       listresellers = subprocess.check_output('/usr/local/cpanel/bin/whmapi1 listresellers --output=json', shell=True)
       myresellers = json.loads(listresellers)
