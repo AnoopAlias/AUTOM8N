@@ -59,9 +59,20 @@ if form.getvalue('mode') and form.getvalue('unit'):
     mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
     myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
     if int(myio) == 18446744073709551615:
-      print('Hi')
+      print('BlockIOWeight=nolimit')
     else:
-      print('nope')
+      print('BlockIOWeight='+myio)
+    print('<br>')
+    if int(mycpu) == 18446744073709551615:
+      print('CPUShares=nolimit')
+    else:
+      print('CPUShares='+mycpu)
+    print('<br>')
+    if int(mymem) == 18446744073709551615:
+      print('MemoryLimit=nolimit')
+    else:
+      mymem_inmb=float(mymem) / ( 1024.0 * 1024.0 )
+      print('CPUShares='+str(mymem_inmb)+'Mb')
     print('<br>')
     print(('</div>'))
     print('</ul>')
