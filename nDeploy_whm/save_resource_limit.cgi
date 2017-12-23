@@ -76,7 +76,7 @@ if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and 
   elif form.getvalue('memory') == '75':
     subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(int(mem_threequarter)), shell=True)
   elif form.getvalue('memory') == '100':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+mymem, shell=True)
+    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(mymem), shell=True)
   subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUAccounting=yes', shell=True)
   subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOAccounting=yes', shell=True)
   subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryAccounting=yes', shell=True)
