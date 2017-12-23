@@ -21,7 +21,7 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
-xtendweb_installation_path = "/opt/nDeploy"  # Absolute Installation Path
+installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 cgitb.enable()
