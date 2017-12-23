@@ -78,6 +78,24 @@ if os.path.isfile(cluster_config_file):
     print('</ul>')
     print('</div>')  # marker7
     print('</div>')  # marker6
+    # Next section start here
+    print('<div class="panel panel-default">')  # div7
+    print(('<div class="panel-heading"><h3 class="panel-title">Repair or Reset FileSync:</h3></div>'))
+    print('<div class="panel-body">')  # div8
+    print('<ul class="list-group">')
+    print(('<div class="alert alert-danger alert-top">'))
+    print(('Only perform a hard reset if the unison archive is corrupt.Unison archive rebuild is time consuming'))
+    print(('</div>'))
+    print('</ul>')
+    print('<form id="config" class="form-inline config-save" action="view_log.live.py" method="post">')
+    print('<input class="btn btn-primary" type="submit" value="SOFT RESTART UNISON SYNC">')
+    print('</form>')
+    print(('<br>'))
+    print('<form id="config" class="form-inline config-save" action="view_log.live.py" method="post">')
+    print('<input class="btn btn-primary" type="submit" value="HARD RESET UNISON SYNC">')
+    print('</form>')
+    print('</div>')  # div8
+    print('</div>')  # div7
 # Next section start here
 with open('/etc/redhat-release','r') as releasefile:
   osrelease = releasefile.read().split(' ')[0]
