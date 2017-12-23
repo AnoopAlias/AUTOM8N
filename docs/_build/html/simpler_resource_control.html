@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -46,6 +48,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +85,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
@@ -96,6 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-slaves">The Slaves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-master">The Master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#testing-domain-on-cluster-setup">Testing domain on cluster setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -217,8 +224,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">A U T O M 8 N</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A U T O M 8 N</a>
+        
       </nav>
 
 
@@ -227,21 +236,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Simple Resource controller</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Simple Resource controller</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -260,7 +286,7 @@
 <ol class="arabic simple" start="3">
 <li>No additional software is required</li>
 <li>Future proof as Simpler can follow future development trends in Kernel and systemd without additional patching</li>
-<li>And the best of all - It&#8217;s simple and straightforward - Simplicity is the ultimate sophistication</li>
+<li>And the best of all - It’s simple and straightforward - Simplicity is the ultimate sophistication</li>
 </ol>
 <div class="section" id="how-does-simpler-work">
 <h2>How does simpleR work<a class="headerlink" href="#how-does-simpler-work" title="Permalink to this headline">¶</a></h2>
@@ -382,15 +408,18 @@ May 12 07:18:37 li1311-27.members.linode.com php-fpm::godisgreat[31361]: [NOTICE
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Support.html" class="btn btn-neutral float-right" title="Support" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Support.html" class="btn btn-neutral float-right" title="Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="UserDocs.html" class="btn btn-neutral" title="XtendWeb User docs" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="UserDocs.html" class="btn btn-neutral" title="XtendWeb User docs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -424,7 +453,8 @@ May 12 07:18:37 li1311-27.members.linode.com php-fpm::godisgreat[31361]: [NOTICE
             VERSION:'4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

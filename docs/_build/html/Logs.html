@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -45,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -81,7 +84,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
@@ -95,6 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-slaves">The Slaves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-master">The Master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#testing-domain-on-cluster-setup">Testing domain on cluster setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -216,8 +223,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">A U T O M 8 N</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A U T O M 8 N</a>
+        
       </nav>
 
 
@@ -226,21 +235,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Managing Logs</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Managing Logs</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -263,7 +289,7 @@ php-fpm ,phusion passenger etc</p>
 <div><code class="docutils literal"><span class="pre">/var/log/nginx/error_log</span></code></div></blockquote>
 <p><strong>PHP-FPM master process log</strong></p>
 <p>Note that this is not php log ;but logging related to php-fpm master process
-php errors will be logged to the webserver&#8217;s error log</p>
+php errors will be logged to the webserver’s error log</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PHPROOT</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="o">.</span><span class="n">log</span>
 <span class="n">eg</span> <span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">remi</span><span class="o">/</span><span class="n">php56</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="o">.</span><span class="n">log</span>
 </pre></div>
@@ -272,13 +298,16 @@ php errors will be logged to the webserver&#8217;s error log</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="Security_tools.html" class="btn btn-neutral" title="Securing your cPanel server" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Security_tools.html" class="btn btn-neutral" title="Securing your cPanel server" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -312,7 +341,8 @@ php errors will be logged to the webserver&#8217;s error log</p>
             VERSION:'4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

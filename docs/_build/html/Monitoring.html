@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -46,6 +48,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +85,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
@@ -96,6 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-slaves">The Slaves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-master">The Master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#testing-domain-on-cluster-setup">Testing domain on cluster setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -217,8 +224,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">A U T O M 8 N</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A U T O M 8 N</a>
+        
       </nav>
 
 
@@ -227,21 +236,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Monitoring nginx and app servers</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Monitoring nginx and app servers</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -256,8 +282,8 @@
 Local checks (for example the check_mk nginx status module) should just report
 the details fine to remote monitoring servers.</p>
 <p>Monit configuration for nginx
-Below example is for init .For systemd replace &#8220;/etc/init.d/nginx start/stop&#8221;
-with &#8220;/usr/bin/systemctl start/stop nginx.service&#8221;</p>
+Below example is for init .For systemd replace “/etc/init.d/nginx start/stop”
+with “/usr/bin/systemctl start/stop nginx.service”</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="n">process</span> <span class="n">nginx</span> <span class="k">with</span> <span class="n">pidfile</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">pid</span>
 <span class="n">start</span> <span class="n">program</span> <span class="o">=</span> <span class="s2">&quot;/etc/init.d/nginx start&quot;</span>
 <span class="n">stop</span> <span class="n">program</span>  <span class="o">=</span> <span class="s2">&quot;/etc/init.d/nginx stop&quot;</span>
@@ -273,8 +299,8 @@ and the fpm pool is setup to respond with a pong</p>
 <p>will return with a pong output if php-fpm pool is working fine .</p>
 <p>This can be easily configured for status checking</p>
 <p>Monit configuration useful to restart php-fpm in case of issues
-Below example is for systemd .For init replace &#8220;/usr/bin/systemctl start/stop ndeploy_backends.service&#8221;
-with &#8220;/etc/init.d/ndeploy_backends start/stop&#8221;</p>
+Below example is for systemd .For init replace “/usr/bin/systemctl start/stop ndeploy_backends.service”
+with “/etc/init.d/ndeploy_backends start/stop”</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="n">host</span> <span class="n">mydomain</span><span class="o">.</span><span class="n">com</span> <span class="k">with</span> <span class="n">address</span> <span class="n">mydomain</span><span class="o">.</span><span class="n">com</span>
 <span class="n">start</span> <span class="n">program</span> <span class="o">=</span> <span class="s2">&quot;/usr/bin/systemctl start ndeploy_backends.service&quot;</span>
 <span class="n">stop</span> <span class="n">program</span> <span class="o">=</span> <span class="s2">&quot;/usr/bin/systemctl stop ndeploy_backends.service&quot;</span>
@@ -295,7 +321,7 @@ plan. AUTOM8N use check_mk+nagios for monitoring the infrastructure .</p>
 </div>
 <div class="section" id="database-replication">
 <h2>Database Replication<a class="headerlink" href="#database-replication" title="Permalink to this headline">¶</a></h2>
-<p>Database replication health should be monitored . Since XtendWeb cPanel web cluster use MySQL Master-Master replication ,the &#8216;seconds behind master&#8217; field in
+<p>Database replication health should be monitored . Since XtendWeb cPanel web cluster use MySQL Master-Master replication ,the ‘seconds behind master’ field in
 cPanel master server and DB slave server must be monitored . This is automatically done if you enable MySQL monitoring via local check in check_mk</p>
 </div>
 <div class="section" id="unison-file-sync-status">
@@ -347,15 +373,18 @@ cPanel master server and DB slave server must be monitored . This is automatical
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Security_tools.html" class="btn btn-neutral float-right" title="Securing your cPanel server" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Security_tools.html" class="btn btn-neutral float-right" title="Securing your cPanel server" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Application_template.html" class="btn btn-neutral" title="Application templates" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Application_template.html" class="btn btn-neutral" title="Application templates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -389,7 +418,8 @@ cPanel master server and DB slave server must be monitored . This is automatical
             VERSION:'4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

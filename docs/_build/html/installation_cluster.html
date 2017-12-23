@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -46,6 +48,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +85,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
@@ -218,8 +224,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">A U T O M 8 N</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A U T O M 8 N</a>
+        
       </nav>
 
 
@@ -228,21 +236,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>XtendWeb Cluster Installation</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>XtendWeb Cluster Installation</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -252,7 +277,7 @@
 <h1>XtendWeb Cluster Installation<a class="headerlink" href="#xtendweb-cluster-installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="xtendweb-cluster-introduction">
 <h2>XtendWeb Cluster Introduction<a class="headerlink" href="#xtendweb-cluster-introduction" title="Permalink to this headline">¶</a></h2>
-<p>XtendWeb cluster is the world&#8217;s easiest web application clustering solution featuring a fully automated deployment of a clustered DNS load balanced LAMP stack.
+<p>XtendWeb cluster is the world’s easiest web application clustering solution featuring a fully automated deployment of a clustered DNS load balanced LAMP stack.
 It is specifically designed for multi-datacenter deployment and use encrypted communication between the server</p>
 <p>XtendWeb cluster provides high availability, scalability and an inherent data backup (application files and database are replicated and normally reside on 2 servers at any time )
 Coupled with the simplicity and intuitiveness of cPanel control panel , XtendWeb cluster is a must have for any modern enterprise web application deployment</p>
@@ -316,7 +341,7 @@ Coupled with the simplicity and intuitiveness of cPanel control panel , XtendWeb
 <h2>XtendWeb cluster setup<a class="headerlink" href="#xtendweb-cluster-setup" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Install CSF firewall on both servers and whitelist each others IP for access . The server&#8217;s hostname must be valid and should resolve correctly as many cluster components reply on hostname to connect</p>
+<p class="last">Install CSF firewall on both servers and whitelist each others IP for access . The server’s hostname must be valid and should resolve correctly as many cluster components rely on hostname to connect</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -398,7 +423,7 @@ Please visit <a class="reference external" href="https://autom8n.com/plans.html#
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you see &#8220;ERROR! Unexpected Exception: &#8216;module&#8217; object has no attribute &#8216;HAVE_DECL_MPZ_POWM_SEC&#8217;&#8221; on centos6 do
+<p class="last">If you see “ERROR! Unexpected Exception: ‘module’ object has no attribute ‘HAVE_DECL_MPZ_POWM_SEC’” on centos6 do
 yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="reference external" href="https://github.com/ansible/ansible/issues/276">https://github.com/ansible/ansible/issues/276</a> )</p>
 </div>
 <p>(optional) Add Additonal IP mapping if required</p>
@@ -428,7 +453,7 @@ yum remove python-crypto &amp;&amp; pip install ansible ( Ref: <a class="referen
 </div>
 <div class="section" id="cpanel-horizontal-scaling-adding-more-web-servers">
 <h2>cPanel Horizontal scaling . Adding more web servers<a class="headerlink" href="#cpanel-horizontal-scaling-adding-more-web-servers" title="Permalink to this headline">¶</a></h2>
-<p>XtendWeb cluster&#8217;s important feature is horizontal scalability. Horizontal scalability helps a web application to scale up and down horizontally .</p>
+<p>XtendWeb cluster’s important feature is horizontal scalability. Horizontal scalability helps a web application to scale up and down horizontally .</p>
 <p>This is useful when a website has a termendous amount of traffic that one web server cannot handle. With Xtendweb all you need to add a new full processing</p>
 <p>capable webserver is as below</p>
 <p>The new Slave</p>
@@ -480,15 +505,18 @@ the server is not serving page correctly and this goes unnoticed because of roun
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mod_remoteip.html" class="btn btn-neutral float-right" title="mod_remoteip" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="mod_remoteip.html" class="btn btn-neutral float-right" title="mod_remoteip" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="installation_standalone.html" class="btn btn-neutral" title="XtendWeb standalone installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installation_standalone.html" class="btn btn-neutral" title="XtendWeb standalone installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -522,7 +550,8 @@ the server is not serving page correctly and this goes unnoticed because of roun
             VERSION:'4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

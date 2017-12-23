@@ -18,5 +18,7 @@ CREDITS
 ---------
 The XtendWeb Plugin User Interface was contributed by Glyn Gray http://www.stirstudiosdesign.com/
 
+SEO Sponsor and support: https://www.yoorshop.fr/
+
 
 .. note:: Please contact anoop@gnusys.net if you wish to sponsor the development of this project

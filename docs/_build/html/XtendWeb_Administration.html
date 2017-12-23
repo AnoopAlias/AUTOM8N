@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -46,6 +48,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +85,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
@@ -96,6 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-slaves">The Slaves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-master">The Master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#testing-domain-on-cluster-setup">Testing domain on cluster setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -217,8 +224,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">A U T O M 8 N</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A U T O M 8 N</a>
+        
       </nav>
 
 
@@ -227,21 +236,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Administration of XtendWeb plugin</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Administration of XtendWeb plugin</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -322,10 +348,10 @@ A Sysadmin mostly only need to add /edit application templates and this use mini
 <h2>Automating config setting based on cPanel package<a class="headerlink" href="#automating-config-setting-based-on-cpanel-package" title="Permalink to this headline">¶</a></h2>
 <p>A server administrator can set an nginx configuration based on cPanel package .</p>
 <ol class="arabic">
-<li><p class="first">Prepare the &#8220;Server Settings&#8221; and &#8220;App Settings&#8221; section to your requirement using an exisitng domain (eg: example.com)
+<li><p class="first">Prepare the “Server Settings” and “App Settings” section to your requirement using an exisitng domain (eg: example.com)
 on the server</p>
 </li>
-<li><p class="first">Create a package on the server (for example &#8220;My Custom Package&#8221;)</p>
+<li><p class="first">Create a package on the server (for example “My Custom Package”)</p>
 </li>
 <li><p class="first">cp /opt/nDeploy/domain-data/example.com /opt/nDeploy/conf/domain_data_default_local_My_Custom_Package.yaml</p>
 <blockquote>
@@ -353,12 +379,17 @@ on the server</p>
 <div class="section" id="upgrading-xtendweb-and-nginx">
 <h2>Upgrading XtendWeb and Nginx<a class="headerlink" href="#upgrading-xtendweb-and-nginx" title="Permalink to this headline">¶</a></h2>
 <p>nDeploy-nginx is mated with a phusion passenger ruby gem .
-So we don&#8217;t encourage unmanned upgrades and have therefore set enable=0 in the yum repository.
+So we don’t encourage unmanned upgrades and have therefore set enable=0 in the yum repository.
 The upgrade must be done manually by running the following commands</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AnoopAlias</span><span class="o">/</span><span class="n">XtendWeb</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">ndeploy4</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mf">6.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
 <span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">upgrade</span>
 <span class="c1">#For setups using Phusion Passenger app server</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">easy_passenger_setup</span><span class="o">.</span><span class="n">sh</span>
+<span class="c1">#Lets regenerate config to enable changes in config Templates</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
+<span class="c1">#Restart nginx if required</span>
+<span class="n">needs</span><span class="o">-</span><span class="n">restarting</span>
+<span class="c1">#Check output and restart nginx only if its listed to require a restart</span>
 </pre></div>
 </div>
 </div>
@@ -373,12 +404,20 @@ NAT-ed machine (eg: GCE AWS etc)</p>
 </div>
 <p>On All slaves</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">upgrade</span>
+<span class="c1">#Restart nginx if required</span>
+<span class="n">needs</span><span class="o">-</span><span class="n">restarting</span>
+<span class="c1">#Check output and restart nginx only if its listed to require a restart</span>
 </pre></div>
 </div>
 <p>On master</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">ndeploy</span> <span class="n">upgrade</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">-</span><span class="n">cluster</span>
 <span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">hosts</span> <span class="n">cluster</span><span class="o">.</span><span class="n">yml</span>
+<span class="c1">#Lets regenerate config to enable changes in config Templates</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
+<span class="c1">#Restart nginx if required</span>
+<span class="n">needs</span><span class="o">-</span><span class="n">restarting</span>
+<span class="c1">#Check output and restart nginx only if its listed to require a restart</span>
 </pre></div>
 </div>
 </div>
@@ -388,7 +427,7 @@ NAT-ed machine (eg: GCE AWS etc)</p>
 <ol class="arabic simple">
 <li>Do the cPanel migration</li>
 <li>Install Xtendweb on the new server</li>
-<li>Edit the file /opt/nDeploy/scripts/migrate_xtendweb_settings.sh and change REMOTE_SERVER=&#8217;ip.ip.ip.ip&#8217; with the remote servers IP address</li>
+<li>Edit the file /opt/nDeploy/scripts/migrate_xtendweb_settings.sh and change REMOTE_SERVER=’ip.ip.ip.ip’ with the remote servers IP address</li>
 <li>Run the script /opt/nDeploy/scripts/migrate_xtendweb_settings.sh  #Input password of remote server whenever prompted</li>
 </ol>
 </div>
@@ -407,7 +446,7 @@ NAT-ed machine (eg: GCE AWS etc)</p>
 </div>
 <div class="section" id="remove-php-fpm-selector-plugin-on-cpanel-v66-and-above-feature-overlap">
 <h2>Remove PHP-FPM selector plugin on cPanel v66 and above(feature overlap)<a class="headerlink" href="#remove-php-fpm-selector-plugin-on-cpanel-v66-and-above-feature-overlap" title="Permalink to this headline">¶</a></h2>
-<p>As of cPanel v66 , cPanel support setting up php-fpm as default php handler server wide .Since this feature overlap with XtendWeb&#8217;s PHP-FPM selector plugin
+<p>As of cPanel v66 , cPanel support setting up php-fpm as default php handler server wide .Since this feature overlap with XtendWeb’s PHP-FPM selector plugin
 We advise that you remove the php-fpm selector functionality .Folowing command does it</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">init_backends</span><span class="o">.</span><span class="n">py</span> <span class="n">httpd</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">uninstall</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nDeploy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">attempt_autofix</span><span class="o">.</span><span class="n">sh</span>
@@ -421,15 +460,18 @@ as PHP-FPM will greatly improve your system performance.</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Application_template.html" class="btn btn-neutral float-right" title="Application templates" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Application_template.html" class="btn btn-neutral float-right" title="Application templates" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Tomcat_Java.html" class="btn btn-neutral" title="Tomcat Java backend" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Tomcat_Java.html" class="btn btn-neutral" title="Tomcat Java backend" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -463,7 +505,8 @@ as PHP-FPM will greatly improve your system performance.</p>
             VERSION:'4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

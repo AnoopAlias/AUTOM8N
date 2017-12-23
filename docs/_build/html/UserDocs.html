@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -46,6 +48,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +85,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">XtendWeb setup</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation_standalone.html">XtendWeb standalone installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation_standalone.html#application-servers">Application servers</a></li>
@@ -96,6 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-slaves">The Slaves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#the-master">The Master</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#cpanel-horizontal-scaling-adding-more-web-servers">cPanel Horizontal scaling . Adding more web servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_cluster.html#testing-domain-on-cluster-setup">Testing domain on cluster setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mod_remoteip.html">mod_remoteip</a></li>
@@ -217,8 +224,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">A U T O M 8 N</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A U T O M 8 N</a>
+        
       </nav>
 
 
@@ -227,21 +236,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>XtendWeb User docs</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>XtendWeb User docs</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -269,7 +295,7 @@ All rdirect types can be easily setup from XtendWeb plugin</p>
 </ol>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">&#8220;PassThrough&#8221; pagespeed level may sometime break page rendering . Select CoreFilters for a less drastic optimization</p>
+<p class="last">“PassThrough” pagespeed level may sometime break page rendering . Select CoreFilters for a less drastic optimization</p>
 </div>
 <ol class="arabic simple" start="2">
 <li>brotli and gzip  -  Both brotli and gzip reduce content size ,brotli gives 20% more reduction but works over <a class="reference external" href="https://">https://</a> only</li>
@@ -284,7 +310,7 @@ All rdirect types can be easily setup from XtendWeb plugin</p>
 <div class="section" id="custom-nginx-configuration">
 <h2>Custom nginx configuration<a class="headerlink" href="#custom-nginx-configuration" title="Permalink to this headline">¶</a></h2>
 <p>To enable custom configuration ,please upload configuration to be placed in the server{} section of your nginx configuration
-in the application&#8217;s root folder (eg; /home/user/public_html/nginx.conf)</p>
+in the application’s root folder (eg; /home/user/public_html/nginx.conf)</p>
 <p>Once done. You can activate the config from</p>
 <p>cPanel &gt;&gt; XtendWeb &gt;&gt; Server Settings &gt;&gt; user_config</p>
 <p>set to [enabled]</p>
@@ -301,15 +327,18 @@ in the application&#8217;s root folder (eg; /home/user/public_html/nginx.conf)</
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="simpler_resource_control.html" class="btn btn-neutral float-right" title="Simple Resource controller" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="simpler_resource_control.html" class="btn btn-neutral float-right" title="Simple Resource controller" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="cpanel_server_analytics_using_netdata.html" class="btn btn-neutral" title="cPanel server analytics using netdata" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="cpanel_server_analytics_using_netdata.html" class="btn btn-neutral" title="cPanel server analytics using netdata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -343,7 +372,8 @@ in the application&#8217;s root folder (eg; /home/user/public_html/nginx.conf)</
             VERSION:'4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
