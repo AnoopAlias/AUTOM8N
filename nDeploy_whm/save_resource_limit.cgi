@@ -72,9 +72,9 @@ if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and 
   mem_threequarter = float(mymem) * 0.75
   mem_half = float(mymem) / 2.0
   if form.getvalue('memory') == '50':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+int(mem_half), shell=True)
+    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(int(mem_half)), shell=True)
   elif form.getvalue('memory') == '75':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+int(mem_threequarter), shell=True)
+    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(int(mem_threequarter)), shell=True)
   elif form.getvalue('memory') == '100':
     subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+mymem, shell=True)
   subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUAccounting=yes', shell=True)
