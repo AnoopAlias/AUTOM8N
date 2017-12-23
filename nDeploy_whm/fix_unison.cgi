@@ -51,7 +51,7 @@ if form.getvalue('mode'):
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
     while True:
-        line = run_tail_cmd.stdout.readline()
+        line = run_cmd.stdout.readline()
         if not line:
             break
         print('<br>'+line)
@@ -67,7 +67,7 @@ if form.getvalue('mode'):
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
     while True:
-        line = run_tail_cmd.stdout.readline()
+        line = run_cmd.stdout.readline()
         if not line:
             break
         print('<br>'+line)
