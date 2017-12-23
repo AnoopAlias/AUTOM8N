@@ -55,15 +55,14 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('<div class="panel-body">')  # marker6
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
-    for resourcetype in 'MemoryLimit', 'CPUShares', 'BlockIOWeight':
-      print(subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p '+resourcetype, shell=True))
-      print('<br>')
+    # for resourcetype in 'MemoryLimit', 'CPUShares', 'BlockIOWeight':
+    mymem = (subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True)).split('=')[1]
+    print(mymem)
+    print('<br>')
     print(('</div>'))
     print('</ul>')
     print('</div>')  # marker6
     print('</div>')
-
-    print(subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p MemoryLimit', shell=True))
 else:
   print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 
