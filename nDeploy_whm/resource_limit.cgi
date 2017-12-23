@@ -61,6 +61,8 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print(myio)
     if myio == '18446744073709551615':
       print('Hi')
+    else:
+      print('nope')
     print('<br>')
     print(('</div>'))
     print('</ul>')
