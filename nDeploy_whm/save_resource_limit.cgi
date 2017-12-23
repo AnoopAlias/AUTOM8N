@@ -6,6 +6,7 @@ import subprocess
 import os
 import cgi
 import shutil
+import psutil
 try:
     from configparser import ConfigParser
 except ImportError:
@@ -67,6 +68,23 @@ if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and 
     subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOWeight=750', shell=True)
   elif form.getvalue('blockio') == '100':
     subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOWeight=1000', shell=True)
+  mymem = psutil.virtual_memory().total
+  mem_threequarter = float(mymem) * 0.75
+  mem_half = float(mymem) / 2.0
+  if form.getvalue('memory') == '50':
+    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+int(mem_half), shell=True)
+  elif form.getvalue('memory') == '75':
+    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+int(mem_threequarter), shell=True)
+  elif form.getvalue('memory') == '100':
+    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+mymem, shell=True)
+  subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUAccounting=yes', shell=True)
+  subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOAccounting=yes', shell=True)
+  subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryAccounting=yes', shell=True)
+  subprocess.call('/usr/bin/systemctl daemon-reload', shell=True)
+  print('<div class="icon-box">')
+  print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Resource Settings updated')
+  print('</div>')
+
   print('</div>') # markera2
   print('</div>') # markera1
 
