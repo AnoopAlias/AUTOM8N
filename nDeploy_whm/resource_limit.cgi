@@ -58,8 +58,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     mymem = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True).split('=')[1]
     mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
     myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
-    print(type(myio))
-    if myio == 18446744073709551615:
+    if int(myio) == 18446744073709551615:
       print('Hi')
     else:
       print('nope')
