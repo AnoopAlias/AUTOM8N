@@ -191,23 +191,23 @@ if not osrelease == 'CloudLinux':
             print('</div>')  # markerb1
             print('</div>')  # markera2
             print('</div>')  # markera1
-    else:
-        # Next sub-section start here
-        print('<div class="panel panel-default">')  # markera1
-        print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
-        print('<div class="panel-body">')  # markera2
-        print('<form class="form-inline" action="resource_limit.cgi" method="post">')
-        print('<select name="unit">')
-        for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
-            print(('<option value="'+service+'">'+service+'</option>'))
-        print('</select>')
-        print(('<input style="display:none" name="mode" value="service">'))
-        print(('<br>'))
-        print(('<br>'))
-        print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
-        print('</form>')
-        print('</div>')  # markera2
-        print('</div>')  # markera1
+        else:
+            # Next sub-section start here
+            print('<div class="panel panel-default">')  # markera1
+            print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
+            print('<div class="panel-body">')  # markera2
+            print('<form class="form-inline" action="resource_limit.cgi" method="post">')
+            print('<select name="unit">')
+            for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
+                print(('<option value="'+service+'">'+service+'</option>'))
+            print('</select>')
+            print(('<input style="display:none" name="mode" value="service">'))
+            print(('<br>'))
+            print(('<br>'))
+            print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
+            print('</form>')
+            print('</div>')  # markera2
+            print('</div>')  # markera1
 
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
