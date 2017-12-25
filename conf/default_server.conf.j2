@@ -50,6 +50,7 @@ server {
         access_log off;
         location / {
            include /etc/nginx/conf.d/dos_mitigate.conf;
+           limit_req   zone=one  burst=3 nodelay;
            proxy_send_timeout   90;
            proxy_read_timeout   90;
 
@@ -84,6 +85,7 @@ server {
         access_log off;
         location / {
            include /etc/nginx/conf.d/dos_mitigate.conf;
+           limit_req   zone=one  burst=3 nodelay;
            proxy_send_timeout   90;
            proxy_read_timeout   90;
 
