@@ -126,7 +126,7 @@ if os.path.isfile(cluster_config_file):
     print('<input class="btn btn-primary" type="submit" value="HARD RESET UNISON SYNC">')
     print('</form>')
     print('<ul class="list-group">')
-    print(('<div class="alert alert-danger alert-top">'))
+    print(('<div class="alert alert-info alert-top">'))
     print(('Only perform a hard reset if the unison archive is corrupt.Unison archive rebuild is time consuming'))
     print(('</div>'))
     print('</ul>')
