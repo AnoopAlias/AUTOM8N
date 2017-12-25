@@ -60,7 +60,7 @@ print('<div class="row">')
 nginx_status = False
 for myprocess in psutil.process_iter():
     mycmdline = myprocess.cmdline()
-    if '/usr/sbin/nginx' in mycmdline:
+    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
         nginx_status = True
         break
 if nginx_status:
