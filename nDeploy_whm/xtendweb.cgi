@@ -54,8 +54,8 @@ print('</ol>')
 print('<div class="panel panel-default">')  # marker6
 print('<div class="panel-heading"><h3 class="panel-title">System status</h3></div>')
 print('<div class="panel-body">')  # marker7
-print('<ul class="list-group">')
-print('<li class="list-group-item">')
+#print('<ul class="list-group">')
+#print('<li class="list-group-item">')
 #print('<div class="row">')
 nginx_status = False
 for myprocess in psutil.process_iter():
@@ -70,8 +70,8 @@ else:
     print(('<div class="col-sm-6">Nginx</div>'))
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
 #print('</div>')
-print('</li>')
-print('<li class="list-group-item">')
+#print('</li>')
+#print('<li class="list-group-item">')
 #print('<div class="row">')
 watcher_status = False
 for myprocess in psutil.process_iter():
@@ -86,8 +86,8 @@ else:
     print(('<div class="col-sm-6">XtendWeb Watcher</div>'))
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
 #print('</div>')
-print('</li>')
-print('</ul>')
+#print('</li>')
+#print('</ul>')
 print('</div>')  # div8
 print('</div>')  # div7
 # Next section start here
