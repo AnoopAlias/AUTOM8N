@@ -4,7 +4,6 @@
 import os
 import cgitb
 import subprocess
-import jinja2
 import codecs
 import platform
 import yaml
@@ -52,6 +51,46 @@ print('<li class="active">Server Config</li>')
 print('</ol>')
 
 # Next section start here
+print('<div class="panel panel-default">')  # marker6
+print('<div class="panel-heading"><h3 class="panel-title">System status</h3></div>')
+print('<div class="panel-body">')  # marker7
+print('<ul class="list-group">')
+print('<li class="list-group-item">')
+print('<div class="row">')
+nginx_status = False
+for myprocess in psutil.process_iter():
+    mycmdline = myprocess.cmdline()
+    if '/usr/sbin/nginx' in mycmdline:
+        nginx_status = True
+        break
+if nginx_status:
+    print(('<div class="col-sm-6">NGINX</div>'))
+    print(('<div class="col-sm-6"><div class="label label-primary">ACTIVE</div></div>'))
+else:
+    print(('<div class="col-sm-6">NGINX</div>'))
+    print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
+print('</div>')
+print('</li>')
+print('<li class="list-group-item">')
+print('<div class="row">')
+watcher_status = False
+for myprocess in psutil.process_iter():
+    mycmdline = myprocess.cmdline()
+    if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
+        watcher_status = True
+        break
+if watcher_status:
+    print(('<div class="col-sm-6">XTENDWEB WATCHER</div>'))
+    print(('<div class="col-sm-6"><div class="label label-primary">ACTIVE</div></div>'))
+else:
+    print(('<div class="col-sm-6">XTENDWEB WATCHER</div>'))
+    print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
+print('</div>')
+print('</li>')
+print('</ul>')
+print('</div>')  # div8
+print('</div>')  # div7
+# Next section start here
 if os.path.isfile(cluster_config_file):
     print('<div class="panel panel-default">')  # marker6
     print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
@@ -67,6 +106,7 @@ if os.path.isfile(cluster_config_file):
             mycmdline = myprocess.cmdline()
             if '/usr/bin/unison' in mycmdline and servername in mycmdline:
                 filesync_status = True
+                break
         if filesync_status:
             print(('<div class="col-sm-6">'+servername+'</div>'))
             print(('<div class="col-sm-6"><div class="label label-primary">IN SYNC</div></div>'))
@@ -93,85 +133,85 @@ if os.path.isfile(cluster_config_file):
     print('</div>')  # div8
     print('</div>')  # div7
 # Next section start here
-with open('/etc/redhat-release','r') as releasefile:
-  osrelease = releasefile.read().split(' ')[0]
+with open('/etc/redhat-release', 'r') as releasefile:
+    osrelease = releasefile.read().split(' ')[0]
 if not osrelease == 'CloudLinux':
-  if 'el7' in platform.uname()[2]:
-    # Next sub-section start here
-    if os.path.isfile(installation_path+"/conf/secure-php-enabled"): # if per user php-fpm master process is set
-      # The API call and ensuring slices are present
-      listresellers = subprocess.check_output('/usr/local/cpanel/bin/whmapi1 listresellers --output=json', shell=True)
-      myresellers = json.loads(listresellers)
-      resellerdata = myresellers.get('data')
-      resellerlist = resellerdata.get('reseller')
-      resellerlist.append('root')
-      # Ensure the reseller slice is present in the system
-      for owner in resellerlist:
-          ownerslice = "/etc/systemd/system/"+owner+".slice"
-          if not os.path.isfile(ownerslice):
-              generated_config = '[Slice]\n'
-              with codecs.open(ownerslice, 'w', 'utf-8') as confout:
-                  confout.write(generated_config)
-      print('<div class="panel panel-default">')  # markera1
-      print('<div class="panel-heading"><h3 class="panel-title">Resource limit</h3></div>')
-      print('<div class="panel-body">') # markera2
-      print('<div class="row">')  # markerb1
-      print('<div class="col-sm-6">')  # markerc1
-      print('<div class="panel panel-default">')  # markerc2
-      print('<div class="panel-heading"><h3 class="panel-title">Reseller</h3></div>')
-      print('<div class="panel-body">') # markerc3
-      print('<form class="form-inline" action="resource_limit.cgi" method="post">')
-      print('<select name="unit">')
-      for reseller in resellerlist:
-          print(('<option value="'+reseller+'">'+reseller+'</option>'))
-      print('</select>')
-      print(('<input style="display:none" name="mode" value="user">'))
-      print(('<br>'))
-      print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
-      print('</form>')
-      print('</div>') # markerc3
-      print('</div>') # markerc2
-      print('</div>') # markerc1
-      print('<div class="col-sm-6">')  # markerc1
-      print('<div class="panel panel-default">')  # markerc2
-      print('<div class="panel-heading"><h3 class="panel-title">Service</h3></div>')
-      print('<div class="panel-body">') # markerc3
-      print('<form class="form-inline" action="resource_limit.cgi" method="post">')
-      print('<select name="unit">')
-      for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
-          print(('<option value="'+service+'">'+service+'</option>'))
-      print('</select>')
-      print(('<input style="display:none" name="mode" value="service">'))
-      print(('<br>'))
-      print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
-      print('</form>')
-      print('</div>') # markerc3
-      print('</div>') # markerc2
-      print('</div>') # markerc1
-      print('</div>') # markerb1
-      print('</div>') # markera2
-      print('</div>') # markera1
+    if 'el7' in platform.uname()[2]:
+        # Next sub-section start here
+        if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
+            # The API call and ensuring slices are present
+            listresellers = subprocess.check_output('/usr/local/cpanel/bin/whmapi1 listresellers --output=json', shell=True)
+            myresellers = json.loads(listresellers)
+            resellerdata = myresellers.get('data')
+            resellerlist = resellerdata.get('reseller')
+            resellerlist.append('root')
+            # Ensure the reseller slice is present in the system
+            for owner in resellerlist:
+                ownerslice = "/etc/systemd/system/"+owner+".slice"
+                if not os.path.isfile(ownerslice):
+                    generated_config = '[Slice]\n'
+                    with codecs.open(ownerslice, 'w', 'utf-8') as confout:
+                        confout.write(generated_config)
+            print('<div class="panel panel-default">')  # markera1
+            print('<div class="panel-heading"><h3 class="panel-title">Resource limit</h3></div>')
+            print('<div class="panel-body">')  # markera2
+            print('<div class="row">')  # markerb1
+            print('<div class="col-sm-6">')  # markerc1
+            print('<div class="panel panel-default">')  # markerc2
+            print('<div class="panel-heading"><h3 class="panel-title">Reseller</h3></div>')
+            print('<div class="panel-body">')  # markerc3
+            print('<form class="form-inline" action="resource_limit.cgi" method="post">')
+            print('<select name="unit">')
+            for reseller in resellerlist:
+                print(('<option value="'+reseller+'">'+reseller+'</option>'))
+            print('</select>')
+            print(('<input style="display:none" name="mode" value="user">'))
+            print(('<br>'))
+            print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
+            print('</form>')
+            print('</div>')  # markerc3
+            print('</div>')  # markerc2
+            print('</div>')  # markerc1
+            print('<div class="col-sm-6">')  # markerc1
+            print('<div class="panel panel-default">')  # markerc2
+            print('<div class="panel-heading"><h3 class="panel-title">Service</h3></div>')
+            print('<div class="panel-body">')  # markerc3
+            print('<form class="form-inline" action="resource_limit.cgi" method="post">')
+            print('<select name="unit">')
+            for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
+                print(('<option value="'+service+'">'+service+'</option>'))
+            print('</select>')
+            print(('<input style="display:none" name="mode" value="service">'))
+            print(('<br>'))
+            print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
+            print('</form>')
+            print('</div>')  # markerc3
+            print('</div>')  # markerc2
+            print('</div>')  # markerc1
+            print('</div>')  # markerb1
+            print('</div>')  # markera2
+            print('</div>')  # markera1
     else:
-    # Next sub-section start here
-      print('<div class="panel panel-default">')  # markera1
-      print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
-      print('<div class="panel-body">') # markera2
-      print('<form class="form-inline" action="resource_limit.cgi" method="post">')
-      print('<select name="unit">')
-      for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
-          print(('<option value="'+service+'">'+service+'</option>'))
-      print('</select>')
-      print(('<input style="display:none" name="mode" value="service">'))
-      print(('<br>'))
-      print(('<br>'))
-      print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
-      print('</form>')
-      print('</div>') # markera2
-      print('</div>') # markera1
+        # Next sub-section start here
+        print('<div class="panel panel-default">')  # markera1
+        print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
+        print('<div class="panel-body">')  # markera2
+        print('<form class="form-inline" action="resource_limit.cgi" method="post">')
+        print('<select name="unit">')
+        for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
+            print(('<option value="'+service+'">'+service+'</option>'))
+        print('</select>')
+        print(('<input style="display:none" name="mode" value="service">'))
+        print(('<br>'))
+        print(('<br>'))
+        print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
+        print('</form>')
+        print('</div>')  # markera2
+        print('</div>')  # markera1
 
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
-print('</div>') # marker3
-print('</div>') # marker2
-print('</div>') # marker1
+print('</div>')  # marker3
+print('</div>')  # marker2
+print('</div>')  # marker1
 print('</body>')
 print('</html>')
