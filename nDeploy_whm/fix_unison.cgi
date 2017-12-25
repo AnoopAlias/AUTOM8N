@@ -1,6 +1,4 @@
 #!/usr/bin/python
-import os
-import socket
 import cgi
 import cgitb
 import subprocess
@@ -43,40 +41,40 @@ print('<li class="active">Server Config</li>')
 print('</ol>')
 
 if form.getvalue('mode'):
-  if form.getvalue('mode') == 'restart':
-    run_cmd = subprocess.Popen(installation_path+'/scripts/fix_unison_filesync.py restart', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-    print('<div class="panel panel-default">')
-    print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
-    print('<div class="panel-body">')  # marker6
-    print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top">'))
-    while True:
-        line = run_cmd.stdout.readline()
-        if not line:
-            break
-        print('<br>'+line)
-    print(('</div>'))
-    print('</ul>')
-    print('</div>')  # marker6
-    print('</div>')
-  elif form.getvalue('mode') == 'reset':
-    run_cmd = subprocess.Popen(installation_path+'/scripts/fix_unison_filesync.py reset', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-    print('<div class="panel panel-default">')
-    print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
-    print('<div class="panel-body">')  # marker6
-    print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top">'))
-    while True:
-        line = run_cmd.stdout.readline()
-        if not line:
-            break
-        print('<br>'+line)
-    print(('</div>'))
-    print('</ul>')
-    print('</div>')  # marker6
-    print('</div>')
+        if form.getvalue('mode') == 'restart':
+                run_cmd = subprocess.Popen(installation_path+'/scripts/fix_unison_filesync.py restart', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+                print('<div class="panel panel-default">')
+                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
+                print('<div class="panel-body">')  # marker6
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))
+                while True:
+                    line = run_cmd.stdout.readline()
+                    if not line:
+                        break
+                    print('<br>'+line)
+                print(('</div>'))
+                print('</ul>')
+                print('</div>')  # marker6
+                print('</div>')
+        elif form.getvalue('mode') == 'reset':
+                run_cmd = subprocess.Popen(installation_path+'/scripts/fix_unison_filesync.py reset', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+                print('<div class="panel panel-default">')
+                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
+                print('<div class="panel-body">')  # marker6
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))
+                while True:
+                        line = run_cmd.stdout.readline()
+                        if not line:
+                                break
+                        print('<br>'+line)
+                print(('</div>'))
+                print('</ul>')
+                print('</div>')  # marker6
+                print('</div>')
 else:
-    print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
+        print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2
