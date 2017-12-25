@@ -56,7 +56,7 @@ print('<div class="panel-heading"><h3 class="panel-title">System status</h3></di
 print('<div class="panel-body">')  # marker7
 print('<ul class="list-group">')
 print('<li class="list-group-item">')
-print('<div class="row">')
+#print('<div class="row">')
 nginx_status = False
 for myprocess in psutil.process_iter():
     mycmdline = myprocess.cmdline()
@@ -64,15 +64,15 @@ for myprocess in psutil.process_iter():
         nginx_status = True
         break
 if nginx_status:
-    print(('<div class="col-sm-6">NGINX</div>'))
+    print(('<div class="col-sm-6">Nginx</div>'))
     print(('<div class="col-sm-6"><div class="label label-primary">ACTIVE</div></div>'))
 else:
-    print(('<div class="col-sm-6">NGINX</div>'))
+    print(('<div class="col-sm-6">Nginx</div>'))
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
-print('</div>')
+#print('</div>')
 print('</li>')
 print('<li class="list-group-item">')
-print('<div class="row">')
+#print('<div class="row">')
 watcher_status = False
 for myprocess in psutil.process_iter():
     mycmdline = myprocess.cmdline()
@@ -80,12 +80,12 @@ for myprocess in psutil.process_iter():
         watcher_status = True
         break
 if watcher_status:
-    print(('<div class="col-sm-6">XTENDWEB WATCHER</div>'))
+    print(('<div class="col-sm-6">XtendWeb Watcher</div>'))
     print(('<div class="col-sm-6"><div class="label label-primary">ACTIVE</div></div>'))
 else:
-    print(('<div class="col-sm-6">XTENDWEB WATCHER</div>'))
+    print(('<div class="col-sm-6">XtendWeb Watcher</div>'))
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
-print('</div>')
+#print('</div>')
 print('</li>')
 print('</ul>')
 print('</div>')  # div8
