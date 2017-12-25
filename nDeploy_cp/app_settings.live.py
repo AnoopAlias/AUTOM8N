@@ -36,7 +36,7 @@ def print_red(theoption, hint):
 
 
 def print_disabled():
-    print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="An additional nginx module is required for this functionality">NO MODULE</div></div>'))
+    print(('<div class="col-sm-6"><center><div class="label label-default" data-toggle="tooltip" title="An additional nginx module is required for this functionality">NO MODULE</div></center></div>'))
 
 
 def close_cpanel_liveapisock():
