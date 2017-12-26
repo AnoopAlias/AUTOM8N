@@ -136,7 +136,7 @@ if os.path.isfile(cluster_config_file):
 listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
 mypkgs = json.loads(listpkgs)
 print('<div class="panel panel-default">')  # markera1
-print('<div class="panel-heading"><h3 class="panel-title">cPanel pkg to nginx setting</h3></div>')
+print('<div class="panel-heading"><h3 class="panel-title">Map cPanel pkg to nginx setting</h3></div>')
 print('<div class="panel-body">')  # markera2
 print('<form class="form-inline" action="pkg_profile.cgi" method="post">')
 print('<select name="cpanelpkg">')
