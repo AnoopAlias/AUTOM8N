@@ -133,6 +133,25 @@ if os.path.isfile(cluster_config_file):
     print('</div>')  # div8
     print('</div>')  # div7
 # Next section start here
+listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
+mypkgs = json.loads(listpkgs)
+print('<div class="panel panel-default">')  # markera1
+print('<div class="panel-heading"><h3 class="panel-title">cPanel pkg to nginx setting</h3></div>')
+print('<div class="panel-body">')  # markera2
+print('<form class="form-inline" action="pkg_profile.cgi" method="post">')
+print('<select name="cpanelpkg">')
+for thepkg in mypkgs.get('package'):
+    pkgname = thepkg.get('name').replace(' ', '_')
+    print(('<option value="'+pkgname+'">'+pkgname+'</option>'))
+print('</select>')
+print(('<br>'))
+print(('<br>'))
+print('<input class="btn btn-primary" type="submit" value="EDIT PKG">')
+print('</form>')
+print('</div>')  # markera2
+print('</div>')  # markera1
+
+# Next section start here
 with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
 if not osrelease == 'CloudLinux':
