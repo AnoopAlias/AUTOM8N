@@ -302,7 +302,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('<li class="list-group-item">')
                 print('<div class="row">')
                 append_requesturi_hint = 'append $$request_uri to the redirect URL'
-                if append_requesturi == 'enabled':
+                if append_requesturi == 'enabled' and redirectstatus != 'none':
                     print_green("append $request_uri to redirecturl", append_requesturi_hint)
                     print('<div class="col-sm-6 col-radio">')
                     print('<div class="radio"><label><input type="radio" name="append_requesturi" value="enabled" checked/> Enabled</label></div>')
@@ -320,7 +320,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('<li class="list-group-item">')
                 print('<div class="row">')
                 redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
-                if redirecturl == "none":
+                if redirecturl == "none" or redirectstatus == 'none':
                     print_red("Redirect to URL", redirecturl_hint)
                 else:
                     print_green("Redirect to URL", redirecturl_hint)
