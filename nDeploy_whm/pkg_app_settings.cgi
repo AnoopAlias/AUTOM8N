@@ -79,7 +79,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         print('<div class="panel panel-default">')  # marker3
         print(('<div class="panel-heading"><h3 class="panel-title">cPanel Package: <strong>'+form.getvalue('cpanelpkg')+'</strong></h3></div>'))
         print('<div class="panel-body">')  # marker4
-        print('<form id="config" class="form-inline config-save" action="save_app_settings.live.py" method="post">')
+        print('<form id="config" class="form-inline config-save" action="save_pkg_app_settings.cgi" method="post">')
         if backend_category == 'PROXY':
             print(('<div class="alert alert-info alert-top">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
         else:
