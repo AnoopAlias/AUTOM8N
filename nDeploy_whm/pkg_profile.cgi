@@ -119,10 +119,11 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Ok we are done with getting the settings,now lets present it to the user
+    # Next section start here
     print('<div class="panel panel-default">')  # div5
     print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+form.getvalue('cpanelpkg')+'</strong></h3></div>'))
     print('<div class="panel-body">')  # div6
-    print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
+    print('<form id="config" class="form-inline config-save" action="pkg_app_settings.cgi" method="post">')
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
             print(('<div class="alert alert-default alert-top"><span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></div>'))
@@ -147,9 +148,9 @@ if form.getvalue('cpanelpkg'):
 
     # Next section start here
     print('<div class="panel panel-default">')  # div9
-    print(('<div class="panel-heading"><h3 class="panel-title">Application Settings:</h3></div>'))
+    print(('<div class="panel-heading"><h3 class="panel-title">Application Settings:<strong>'+form.getvalue('cpanelpkg')+'</strong></h3></div>'))
     print('<div class="panel-body">')  # div10
-    print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
+    print('<form id="config" class="form-inline" action="pkg_server_settings.cgi" method="post">')
 
     print('<ul class="list-group">')
     print(('<h6 class="list-group-item-heading">general settings</h6>'))

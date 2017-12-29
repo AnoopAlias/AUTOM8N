@@ -765,8 +765,8 @@ if form.getvalue('domain'):
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')
 
-        print('</div>')  # div10
         print('</form>')
+        print('</div>')  # div10
         print('</div>')  # div9
 
         print('<div class="panel panel-default">')  # marker1
