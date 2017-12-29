@@ -150,7 +150,7 @@ if form.getvalue('cpanelpkg'):
     print('<div class="panel panel-default">')  # div9
     print(('<div class="panel-heading"><h3 class="panel-title">Application Settings:<strong>'+form.getvalue('cpanelpkg')+'</strong></h3></div>'))
     print('<div class="panel-body">')  # div10
-    print('<form id="config" class="form-inline" action="pkg_server_settings.cgi" method="post">')
+    print('<form id="config" class="form-inline" action="save_pkg_server_settings.cgi" method="post">')
 
     print('<ul class="list-group">')
     print(('<h6 class="list-group-item-heading">general settings</h6>'))
@@ -636,7 +636,7 @@ if form.getvalue('cpanelpkg'):
     print('</li>')
     print('</ul>')
     # end
-    # Pass on the domain name to the next stage
+    # Pass on the package name to the next stage
     print('<ul class="list-group">')
     print(('<input style="display:none" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
     print('<input class="btn btn-primary" type="submit" value="Submit">')
