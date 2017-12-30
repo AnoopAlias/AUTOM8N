@@ -146,6 +146,7 @@ else
 	/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/convertaddon_hook_pre.py --category ConvertAddon --event convert_addon --stage pre --manual
 	/usr/local/cpanel/bin/manage_hooks delete script /opt/nDeploy/scripts/convertaddon_hook_post.py --category ConvertAddon --event convert_addon --stage post --manual
 	/usr/local/cpanel/bin/manage_hooks delete script  /opt/nDeploy/scripts/accountmodify_setshell_hook_post.py --category Whostmgr --event Accounts::set_shell --stage post --manual
+	/usr/local/cpanel/bin/manage_hooks delete script  /opt/nDeploy/scripts/accountchange_package_hook_post.py --category Whostmgr --event Accounts::change_package --stage post --manual
 	#Add Hooks
 	/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::addsubdomain --stage post --manual --exectype script --escalateprivs
 	/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/cpanel_functions_hook_post.py --category Cpanel --event Api2::SubDomain::changedocroot --stage post --manual --exectype script --escalateprivs
@@ -169,6 +170,7 @@ else
 	/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/convertaddon_hook_pre.py --category ConvertAddon --event convert_addon --stage pre --manual
 	/usr/local/cpanel/bin/manage_hooks add script /opt/nDeploy/scripts/convertaddon_hook_post.py --category ConvertAddon --event convert_addon --stage post --manual
 	/usr/local/cpanel/bin/manage_hooks add script  /opt/nDeploy/scripts/accountmodify_setshell_hook_post.py --category Whostmgr --event Accounts::set_shell --stage post --manual
+	/usr/local/cpanel/bin/manage_hooks add script  /opt/nDeploy/scripts/accountchange_package_hook_post.py --category Whostmgr --event Accounts::change_package --stage post --manual
 
 
 
