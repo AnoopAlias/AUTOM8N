@@ -40,9 +40,9 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cl
     serverlist = cluster_data_yaml_parsed.keys()
     for slaveserver in serverlist:
         server_dict = cluster_data_yaml_parsed.get(slaveserver)
-        ipmap_dict = server_dict.get('ipmap')
+        ipmap_dict = server_dict.get('dnsmap')
         theiplist = ipmap_dict.values()
-        slaveiplist = slaveiplist + theiplist
+        slaveiplist = list(set(slaveiplist + theiplist))
 # Initiate Jinja2 templateEnv
 templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
 templateEnv = jinja2.Environment(loader=templateLoader)
