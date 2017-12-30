@@ -30,3 +30,4 @@ set_expire_static: disabled
 mod_security: disabled
 phpfpm_selector: CPANELPHP56
 phpfpm_path: /opt/cpanel/ea-php56/root
+phpmaxchildren: '16'

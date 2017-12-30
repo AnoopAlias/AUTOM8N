@@ -129,7 +129,7 @@ def railo_vhost_add_resin(user_name, domain_name, document_root, *domain_aname_l
     return
 
 
-def php_backend_add(user_name, domain_home):
+def php_backend_add(user_name, phpmaxchildren, domain_home):
     """Function to setup php-fpm pool for user and reload the master php-fpm"""
     phppool_file = installation_path + "/php-fpm.d/" + user_name + ".conf"
     if not os.path.isfile(phppool_file):
@@ -141,6 +141,7 @@ def php_backend_add(user_name, domain_home):
         template = templateEnv.get_template(TEMPLATE_FILE)
         templateVars = {"CPANELUSER": user_name,
                         "HOMEDIR": domain_home,
+                        "PHPMAXCHILDREN": phpmaxchildren
                         }
         generated_config = template.render(templateVars)
         with codecs.open(phppool_file, 'w', 'utf-8') as confout:
@@ -212,7 +213,7 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
     return
 
 
-def php_secure_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluster_serverlist):
+def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, clusterenabled, *cluster_serverlist):
     """Function to setup php-fpm for user using systemd socket activation"""
     phpfpm_conf_file = installation_path + "/secure-php-fpm.d/" + user_name + ".conf"
     if not os.path.isfile(phpfpm_conf_file):
@@ -221,7 +222,8 @@ def php_secure_backend_add(user_name, owner_name, domain_home, clusterenabled, *
         TEMPLATE_FILE = "secure-php-fpm.conf.j2"
         template = templateEnv.get_template(TEMPLATE_FILE)
         templateVars = {"CPANELUSER": user_name,
-                        "HOMEDIR": domain_home
+                        "HOMEDIR": domain_home,
+                        "PHPMAXCHILDREN": phpmaxchildren
                         }
         generated_config = template.render(templateVars)
         with codecs.open(phpfpm_conf_file, 'w', 'utf-8') as confout:
@@ -417,12 +419,13 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     user_config = yaml_parsed_domain_data.get('user_config', 'disabled')
     phpfpm_selector = yaml_parsed_domain_data.get('phpfpm_selector', None)
     phpfpm_path = yaml_parsed_domain_data.get('phpfpm_path', None)
+    phpmaxchildren = yaml_parsed_domain_data.get('phpmaxchildren', '16')
     # initialize the fastcgi_socket variable
     fastcgi_socket = None
     # Lets get the PHPFPM selector stuff done
     if os.path.isfile(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED') and phpfpm_selector is not None:
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-            php_secure_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
+            php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, *cluster_serverlist)
             phpfpm_secure_socket = domain_home+"/tmp/"+kwargs.get('configdomain')+".sock"
             if not os.path.islink(phpfpm_secure_socket):
                 os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_secure_socket)
@@ -431,7 +434,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                     silentremove(phpfpm_secure_socket)
                     os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_secure_socket)
         else:
-            php_backend_add(kwargs.get('configuser'), domain_home)
+            php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
             phpfpm_socket = domain_home+"/tmp/"+kwargs.get('configdomain')+".sock"
             if not os.path.islink(phpfpm_socket):
                 os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_socket)
@@ -606,9 +609,9 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         fastcgi_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
         if not os.path.isfile(fastcgi_socket):
             if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                php_secure_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
+                php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, *cluster_serverlist)
             else:
-                php_backend_add(kwargs.get('configuser'), domain_home)
+                php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
     elif backend_category == 'HHVM':
         fastcgi_socket = domain_home+"/hhvm.sock"
         if not os.path.isfile(fastcgi_socket):
@@ -671,9 +674,9 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
                 fastcgi_socket = subdir_backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
                 if not os.path.isfile(fastcgi_socket):
                     if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                        php_secure_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
+                        php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, *cluster_serverlist)
                     else:
-                        php_backend_add(kwargs.get('configuser'), domain_home)
+                        php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
             elif subdir_backend_category == 'HHVM':
                 fastcgi_socket = domain_home+"/hhvm.sock"
                 if not os.path.isfile(fastcgi_socket):

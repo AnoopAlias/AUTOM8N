@@ -102,6 +102,7 @@ if form.getvalue('cpanelpkg'):
     symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
     user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
     subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
+    phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '16')
     # get the human friendly name of the app template
     if os.path.isfile(app_template_file):
         with open(app_template_file, 'r') as apptemplate_data_yaml:
@@ -631,6 +632,16 @@ if form.getvalue('cpanelpkg'):
         print_green("Redirect to URL", redirecturl_hint)
     print('<div class="col-sm-6 col-radio">')
     print('<input class="form-control" placeholder='+redirecturl+' type="text" name="redirecturl">')
+    print('</div>')
+    print('</div>')
+    print('</li>')
+    # PHPMAXCHILDREN
+    print('<li class="list-group-item">')
+    print('<div class="row">')
+    phpmaxchildren_hint = "The maximum PHP process that can be spawned"
+    print_red("PHP MAXCHILDREN", phpmaxchildren_hint)
+    print('<div class="col-sm-6 col-radio">')
+    print('<input class="form-control" placeholder='+phpmaxchildren+' type="text" name="phpmaxchildren">')
     print('</div>')
     print('</div>')
     print('</li>')

@@ -70,6 +70,19 @@ if form.getvalue('cpanelpkg'):
         print('</body>')
         print('</html>')
         sys.exit(0)
+    # phpmaxchildren
+    if 'phpmaxchildren' in form.keys():
+        phpmaxchildren = form.getvalue('phpmaxchildren')
+        yaml_parsed_profileyaml['phpmaxchildren'] = phpmaxchildren
+    else:
+        print('ERROR: Forbidden::phpmaxchildren')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</body>')
+        print('</html>')
+        sys.exit(0)
     # mod_security
     if 'mod_security' in form.keys():
         mod_security = form.getvalue('mod_security')
