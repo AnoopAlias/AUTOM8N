@@ -31,10 +31,16 @@ hostingplan = mydict["plan"]
 hostingplan_filename = hostingplan.replace(" ", "_")
 domain_data_file = installation_path+"/domain-data/"+cpaneldomain
 if not os.path.isfile(domain_data_file):
-    if hostingplan == 'default':
-        TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+    if hostingplan_filename == 'undefined' or hostingplan_filename == 'default':
+        if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+        else:
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
     else:
-        TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
+        if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
+        else:
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
     if os.path.isfile(TEMPLATE_FILE):
         shutil.copyfile(TEMPLATE_FILE, domain_data_file)
         cpuser_uid = pwd.getpwnam(cpaneluser).pw_uid

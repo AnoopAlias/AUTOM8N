@@ -261,7 +261,7 @@ def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, c
     return
 
 
-def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kwargs):
+def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverlist, **kwargs):
     """Function that generates nginx config """
     # Initiate Jinja2 templateEnv
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
@@ -345,7 +345,7 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
         sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
         sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
         sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
-    if os.path.isfile(cpdomainyaml_ssl):
+    if os.path.isfile(cpdomainyaml_ssl) or os.path.isfile(sslcertificatekeyfile):
         hasssl = True
         # If new TLS path dont exist lets get legacy TLS path from the cPanel domaindata
         if not os.path.isfile(sslcertificatekeyfile):
@@ -400,10 +400,17 @@ def nginx_confgen(is_suspended, owner, clusterenabled, *cluster_serverlist, **kw
     else:
         domain_data_file = installation_path + "/domain-data/" + kwargs.get('configdomain')
     if not os.path.isfile(domain_data_file):
-        if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
-            TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+        hostingplan_filename = myplan.replace(" ", "_")
+        if hostingplan_filename == 'undefined' or hostingplan_filename == 'default':
+            if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+            else:
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
         else:
-            TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+            if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
+            else:
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
         shutil.copyfile(TEMPLATE_FILE, domain_data_file)
         cpuser_uid = pwd.getpwnam(kwargs.get('configuser')).pw_uid
         cpuser_gid = grp.getgrnam(kwargs.get('configuser')).gr_gid
@@ -773,6 +780,7 @@ if __name__ == "__main__":
                 else:
                     is_suspended = False
                 myowner = json_parsed_cpusersfile.get('OWNER')
+                myplan = json_parsed_cpusersfile.get('PLAN', 'default')
                 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
                     ownerslice = "/etc/systemd/system/"+myowner+".slice"
                     if not os.path.isfile(ownerslice):
@@ -806,18 +814,18 @@ if __name__ == "__main__":
             clusterenabled = False
             cluster_serverlist = []
         # Begin config generation .Do it first for the main domain
-        nginx_confgen(is_suspended, myowner, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
+        nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
         # iterate over the addon-domain ,passing the subdomain as the configdomain
         for the_addon_domain in addon_domains_dict.keys():
-            nginx_confgen(is_suspended, myowner, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
+            nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
         # iterate over sub-domains and generate config if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
             if the_sub_domain not in addon_domains_dict.values():
                 if the_sub_domain.startswith("*"):
                     subdom_config_dom = "_wildcard_."+the_sub_domain.replace('*.', '')
-                    nginx_confgen(is_suspended, myowner, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
+                    nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
                 else:
-                    nginx_confgen(is_suspended, myowner, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
+                    nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
         # Ok we are done generating .Lets reload nginx and some misc things ( Using async Popen whenever possible )
         # Unless someone has set a skip reload flag
         if not os.path.isfile(installation_path+'/conf/skip_nginx_reload'):
