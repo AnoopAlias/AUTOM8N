@@ -197,12 +197,14 @@ if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     conf_list = os.listdir("/opt/nDeploy/secure-php-fpm.d")
     for filename in conf_list:
         user, extension = filename.split('.')
-        print(('<option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
+        if user != 'nobody':
+            print(('<option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
 else:
     conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
     for filename in conf_list:
         user, extension = filename.split('.')
-        print(('<option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
+        if user != 'nobody':
+            print(('<option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
 print('</select>')
 print(('<br>'))
 print(('<br>'))
