@@ -6,6 +6,7 @@ import shutil
 import yaml
 import sys
 import configparser
+import codecs
 
 
 __author__ = "Anoop P Alias"
@@ -63,8 +64,8 @@ print('</ol>')
 if form.getvalue('poolfile'):
     myphpini = form.getvalue('poolfile')
     if os.path.isfile(myphpini):
-        config = configparser.RawConfigParser()
-        config.read(myphpini)
+        config = configparser.ConfigParser()
+        config.readfp(codecs.open(myphpini, 'r', 'utf8'))
         print(config.sections())
 else:
         print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
