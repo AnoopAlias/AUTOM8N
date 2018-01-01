@@ -66,7 +66,15 @@ if form.getvalue('poolfile'):
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
-        print(config.sections())
+        # Next section start here
+        print('<div class="panel panel-default">')  # marker6
+        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
+        print('<div class="panel-body">')  # marker7
+        myconfig = config.get(config.sections()[0])
+        for mykey in myconfig.keys():
+            print(mykey)
+        print('</div>')  # div8
+        print('</div>')  # div7
 else:
         print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
