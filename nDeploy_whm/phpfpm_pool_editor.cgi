@@ -72,7 +72,17 @@ if form.getvalue('poolfile'):
         print('<div class="panel-body">')  # marker7
         myconfig = dict(config.items(config.sections()[0]))
         for mykey in myconfig.keys():
-            print(mykey)
+            if mykey.startswith(('php_admin_value', 'php_admin_flag', 'php_flag', 'php_value')):
+                print('<ul class="list-group">')
+                print('<li class="list-group-item">')
+                print('<div class="row">')
+                print(('<div class="col-sm-6">'+mykey+'</div>'))
+                print('<div class="col-sm-6">')
+                print('<input class="form-control" placeholder='+myconfig.get(mykey)+' type="text" name="'+mykey+'">')
+                print('</div>')
+                print('</div>')
+                print('</li>')
+                print('</ul>')
         print('</div>')  # div8
         print('</div>')  # div7
 else:
