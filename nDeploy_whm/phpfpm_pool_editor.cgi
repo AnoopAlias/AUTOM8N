@@ -70,7 +70,7 @@ if form.getvalue('poolfile'):
         print('<div class="panel panel-default">')  # marker6
         print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
-        myconfig = config.get(config.sections()[0])
+        myconfig = config.options(config.sections()[0])
         for mykey in myconfig.keys():
             print(mykey)
         print('</div>')  # div8
