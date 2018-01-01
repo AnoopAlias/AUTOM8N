@@ -70,6 +70,7 @@ if form.getvalue('poolfile'):
         print('<div class="panel panel-default">')  # marker6
         print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
+        print('<form id="config" class="form-inline config-save" action="save_phpfpm_pool.cgi" method="post">')
         myconfig = dict(config.items(config.sections()[0]))
         for mykey in myconfig.keys():
             if mykey.startswith(('php_admin_value', 'php_admin_flag', 'php_flag', 'php_value')):
@@ -83,6 +84,7 @@ if form.getvalue('poolfile'):
                 print('</div>')
                 print('</li>')
                 print('</ul>')
+        print('</form>')
         print('</div>')  # div8
         print('</div>')  # div7
 else:
