@@ -98,19 +98,21 @@ setup_remi_php(){
 	}
 
 jailphp(){
-	# Securing php-fpm with chroot setup using virtfs
-	echo -e '\e[93m Setting up chrooted php-fpm using virtfs jails \e[0m'
-	if [ -d /opt/nDeploy/conf/nDeploy-cluster ];then
-		/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1
-	fi
-	/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1
-	if [ ! -d  /var/cpanel/feature_toggles ];then
-		mkdir -p /var/cpanel/feature_toggles
-	fi
-	touch  /var/cpanel/feature_toggles/apachefpmjail
-	echo -e '\e[93m For existing accounts please set Jailed Shell(apply to all) at WHM \e[0m'
-	echo -e '\e[93m Home »Account Functions »Manage Shell Access \e[0m'
-
+	if [ ! -f /opt/nDeploy/conf/secure-php-enabled ];then
+		# Securing php-fpm with chroot setup using virtfs
+		echo -e '\e[93m Setting up chrooted php-fpm using virtfs jails \e[0m'
+		if [ -d /opt/nDeploy/conf/nDeploy-cluster ];then
+			/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1
+		fi
+		/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1
+		if [ ! -d  /var/cpanel/feature_toggles ];then
+			mkdir -p /var/cpanel/feature_toggles
+		fi
+		touch  /var/cpanel/feature_toggles/apachefpmjail
+		echo -e '\e[93m For existing accounts please set Jailed Shell(apply to all) at WHM \e[0m'
+		echo -e '\e[93m Home »Account Functions »Manage Shell Access \e[0m'
+	else
+		echo -e '\e[93m Jail PHP-FPM will only work when php-fpm master process is run as root. Bailing out! \e[0m'
 }
 
 auto_setup(){
