@@ -188,6 +188,31 @@ print('</div>')  # markera2
 print('</div>')  # markera1
 
 # Next section start here
+print('<div class="panel panel-default">')  # markera1
+print('<div class="panel-heading"><h3 class="panel-title">PHP-FPM pool editor</h3></div>')
+print('<div class="panel-body">')  # markera2
+print('<form class="form-inline" action="phpfpm_pool_editor.cgi" method="post">')
+print('<select name="poolfile">')
+if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
+    conf_list = os.listdir("/opt/nDeploy/secure-php-fpm.d")
+    for filename in conf_list:
+        user, extension = filename.split('.')
+        print(('<option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
+else:
+    conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
+    for filename in conf_list:
+        user, extension = filename.split('.')
+        print(('<option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
+print('</select>')
+print(('<br>'))
+print(('<br>'))
+print('<input class="btn btn-primary" type="submit" value="EDIT PKG">')
+print('</form>')
+print('<form id="config" class="form-inline" action="lock_domain_data_to_package.cgi" method="post">')
+print('</div>')  # markera2
+print('</div>')  # markera1
+
+# Next section start here
 with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
 if not osrelease == 'CloudLinux':
