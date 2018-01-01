@@ -13,7 +13,6 @@ from lxml import etree
 import jinja2
 from hashlib import md5
 import json
-import time
 
 
 __author__ = "Anoop P Alias"
@@ -274,6 +273,7 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
     cpanel_ipv4 = json_parsed_cpaneldomain.get('ip')
+    # We deal with NAT-ed boxes here
     if clusterenabled:
         if os.path.isfile('/var/cpanel/cpnat'):
             with open('/var/cpanel/cpnat') as f:
@@ -333,64 +333,13 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
         hasipv6 = False
         ipv6_addr = None
     # if domain has TLS, get details about it too
-    if kwargs.get('maindomain').startswith("*"):
-        cpdomainyaml_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('maindomain') + "_SSL"
-        # We setup TLS based on /var/cpanel/ssl/apache_tls/ path in cPanel v68+ first
-        sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
-        sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
-        sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
-    else:
-        cpdomainyaml_ssl = "/var/cpanel/userdata/" + kwargs.get('configuser') + "/" + kwargs.get('configdomain') + "_SSL"
-        # We setup TLS based on /var/cpanel/ssl/apache_tls/ path in cPanel v68+ first
-        sslcertificatekeyfile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
-        sslcertificatefile = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
-        sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
-    if os.path.isfile(cpdomainyaml_ssl) or os.path.isfile(sslcertificatekeyfile):
+    # We setup TLS based on /var/cpanel/ssl/apache_tls/ path in cPanel v68+
+    if os.path.isfile('/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'):
         hasssl = True
-        # If new TLS path dont exist lets get legacy TLS path from the cPanel domaindata
-        if not os.path.isfile(sslcertificatekeyfile):
-            with open(cpdomainyaml_ssl, 'r') as cpdomainyaml_ssl_data_stream:
-                yaml_parsed_cpaneldomain_ssl = yaml.safe_load(cpdomainyaml_ssl_data_stream)
-            sslcertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatefile')
-            sslcertificatekeyfile = yaml_parsed_cpaneldomain_ssl.get('sslcertificatekeyfile')
-            sslcacertificatefile = yaml_parsed_cpaneldomain_ssl.get('sslcacertificatefile')
-            if sslcacertificatefile:
-                sslcombinedcert = "/etc/nginx/ssl/" + kwargs.get('configdomain') + ".crt"
-                filenames = [sslcertificatefile, sslcacertificatefile]
-                # Intialize a count to prevent an infinite loop
-                wait_count = 0
-                with codecs.open(sslcombinedcert, 'w', 'utf-8') as outfile:
-                    for fname in filenames:
-                        # we wait for the file to be created if it does not exist.
-                        # this will eventually be removed  when SSL events have hook as there is a risk for infinite loop
-                        # Lets wait 10 minutes in the hope that cPanel creates the SSL file
-                        while not os.path.exists(fname):
-                            time.sleep(1)
-                            wait_count = wait_count + 1
-                            if wait_count > 600:
-                                break
-                        # if we reached the timeout exit by raising an error
-                        if not wait_count < 600:
-                            print("Invalid TLS data in userdata file")
-                            sys.exit(1)
-                        with codecs.open(fname, 'r', 'utf-8') as infile:
-                            outfile.write(infile.read()+"\n")
-                os.chmod(sslcombinedcert, 0o644)
-                if os.stat(sslcombinedcert).st_size == 0:
-                    hasssl = False
-                    sslcombinedcert = None
-                    sslcertificatefile = None
-                    sslcacertificatefile = None
-                    sslcertificatekeyfile = None
-                    print("Error:: TLS cert is invalid")
-            else:
-                sslcombinedcert = sslcertificatefile
+        sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
     else:
         hasssl = False
         sslcombinedcert = None
-        sslcertificatefile = None
-        sslcacertificatefile = None
-        sslcertificatekeyfile = None
     # Get all data from nDeploy domain-data file
     if is_suspended:
         if os.path.isfile(installation_path + "/conf/domain_data_suspended_local.yaml"):
@@ -424,31 +373,9 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
     backend_path = yaml_parsed_domain_data.get('backend_path', None)
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
     user_config = yaml_parsed_domain_data.get('user_config', 'disabled')
-    phpfpm_selector = yaml_parsed_domain_data.get('phpfpm_selector', None)
-    phpfpm_path = yaml_parsed_domain_data.get('phpfpm_path', None)
     phpmaxchildren = yaml_parsed_domain_data.get('phpmaxchildren', '16')
     # initialize the fastcgi_socket variable
     fastcgi_socket = None
-    # Lets get the PHPFPM selector stuff done
-    if os.path.isfile(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED') and phpfpm_selector is not None:
-        if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-            php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, *cluster_serverlist)
-            phpfpm_secure_socket = domain_home+"/tmp/"+kwargs.get('configdomain')+".sock"
-            if not os.path.islink(phpfpm_secure_socket):
-                os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_secure_socket)
-            else:
-                if not os.path.realpath(phpfpm_secure_socket) == phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock":
-                    silentremove(phpfpm_secure_socket)
-                    os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_secure_socket)
-        else:
-            php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
-            phpfpm_socket = domain_home+"/tmp/"+kwargs.get('configdomain')+".sock"
-            if not os.path.islink(phpfpm_socket):
-                os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_socket)
-            else:
-                if not os.path.realpath(phpfpm_socket) == phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock":
-                    silentremove(phpfpm_socket)
-                    os.symlink(phpfpm_path + "/var/run/" + kwargs.get('configuser') + ".sock", phpfpm_socket)
     # Following are features that the UI can change . Can be expanded in future
     # as and when more features are incorporated
     if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
@@ -540,7 +467,6 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
                     "IPVSIX": hasipv6,
                     "HTTP2": http2,
                     "CPANELSSLCRT": sslcombinedcert,
-                    "CPANELSSLKEY": sslcertificatekeyfile,
                     "MAINDOMAINNAME": kwargs.get('maindomain'),
                     "CONFIGDOMAINNAME": kwargs.get('configdomain'),
                     "PAGESPEED": pagespeed,
@@ -668,6 +594,44 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
             subdir_redirectstatus = the_subdir_app_dict.get('redirectstatus', 'none')
             subdir_set_expire_static = the_subdir_app_dict.get('set_expire_static', 'disabled')
             subdir_append_requesturi = the_subdir_app_dict.get('append_requesturi', 'disabled')
+            # Since we have all data needed ,lets render the subdir conf to a file
+            if os.path.isfile(installation_path+'/conf/server_subdir_local.j2'):
+                SUBDIR_TEMPLATE_FILE = "server_subdir_local.j2"
+            else:
+                SUBDIR_TEMPLATE_FILE = "server_subdir.j2"
+            subdir_server_template = templateEnv.get_template(SUBDIR_TEMPLATE_FILE)
+            subdirtemplateVars = {"NEWDOCUMENTROOT": document_root+'/'+subdir,
+                                  "SUBDIR": subdir,
+                                  "SUBDIRAPPS": subdir_apps_uniq,
+                                  "SUBDIRAPPSUNIQUE": subdir_apps_uniq.get(subdir),
+                                  "CPANELIP": cpanel_ipv4,
+                                  "APPSERVERIP": appserver_ipv4,
+                                  "SSL_OFFLOAD": ssl_offload,
+                                  "CPANELIP": cpanel_ipv4,
+                                  "DOCUMENTROOT": document_root,
+                                  "CONFIGDOMAINNAME": kwargs.get('configdomain'),
+                                  "HOMEDIR": domain_home,
+                                  "DIFFDIR": diff_dir,
+                                  "MODSECURITY": subdir_mod_security,
+                                  "MODSECURITY_MAINDIR": mod_security,
+                                  "UPSTREAM_PORT": subdir_backend_path,
+                                  "PATHTOPYTHON": subdir_backend_path,
+                                  "PATHTORUBY": subdir_backend_path,
+                                  "PATHTONODEJS": subdir_backend_path,
+                                  "SOCKETFILE": fastcgi_socket,
+                                  "SET_EXPIRE_STATIC": subdir_set_expire_static,
+                                  "AUTH_BASIC": subdir_auth_basic,
+                                  "REDIRECT_URL": subdir_redirect_url,
+                                  "REDIRECTSTATUS": subdir_redirectstatus,
+                                  "APPEND_REQUESTURI": subdir_append_requesturi
+                                  }
+            generated_config = subdir_server_template.render(subdirtemplateVars)
+            with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subconf", "w", 'utf-8') as confout:
+                confout.write(generated_config)
+            # Copy the user config for testing if present
+            if user_config == 'enabled' and os.path.isfile(document_root+'/'+subdir+"/nginx.conf"):
+                shutil.copyfile(document_root+'/'+subdir+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test")
+            # Generate the rest of the config(subdomain.subinclude) based on the application template
             subdirApptemplate = templateEnv.get_template(subdir_apptemplate_code)
             # We configure the backends first if necessary
             if subdir_backend_category == 'PROXY':
@@ -688,9 +652,11 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
                 fastcgi_socket = domain_home+"/hhvm.sock"
                 if not os.path.isfile(fastcgi_socket):
                     hhvm_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
+            # We generate the app config from template next
             subdirApptemplateVars = {"NEWDOCUMENTROOT": document_root+'/'+subdir,
                                      "SUBDIR": subdir,
                                      "SUBDIRAPPS": subdir_apps_uniq,
+                                     "SUBDIRAPPSUNIQUE": subdir_apps_uniq.get(subdir),
                                      "CPANELIP": cpanel_ipv4,
                                      "APPSERVERIP": appserver_ipv4,
                                      "SSL_OFFLOAD": ssl_offload,
@@ -714,9 +680,6 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
                 confout.write(generated_subdir_app_config)
-            # Copy the user config for testing if present
-            if user_config == 'enabled' and os.path.isfile(document_root+'/'+subdir+"/nginx.conf"):
-                shutil.copyfile(document_root+'/'+subdir+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test")
     # If we have a user_config.Lets generate the test confg
     if user_config == 'enabled':
         # generate a temp nginx config
@@ -826,7 +789,7 @@ if __name__ == "__main__":
                     nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
                 else:
                     nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
-        # Ok we are done generating .Lets reload nginx and some misc things ( Using async Popen whenever possible )
+        # Ok we are done generating .Lets reload nginx
         # Unless someone has set a skip reload flag
         if not os.path.isfile(installation_path+'/conf/skip_nginx_reload'):
             subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'])

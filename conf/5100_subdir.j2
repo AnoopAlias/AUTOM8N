@@ -1,19 +1,5 @@
 # A PHP Webapp in subdir
 
-{% if AUTH_BASIC == 'enabled' %}
-auth_basic "Restricted Content";
-auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/{{ SUBDIR }}/passwd;
-{% endif %}
-
-{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
-return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
-{% else %}
-
-{% if SET_EXPIRE_STATIC == 'enabled' %}
-include /etc/nginx/conf.d/files_with_expire.conf;
-{% endif %}
-
-
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
@@ -28,5 +14,3 @@ fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
 
 }
-
-{% endif %}

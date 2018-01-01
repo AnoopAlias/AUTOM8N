@@ -45,7 +45,8 @@ more_set_headers 'Server: XtendWeb-nginx';
 
 sendfile off;
 aio threads=iopool;
-directio 2m;  #Serve Large files like media files using directio
+aio_write on;
+directio 2m;
 
 tcp_nodelay on;
 keepalive_timeout 65;

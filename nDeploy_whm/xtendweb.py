@@ -26,6 +26,14 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 cgitb.enable()
 
 
+def print_green(theoption, hint):
+    print(('<div class="col-sm-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+
+
+def print_red(theoption, hint):
+    print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+
+
 print('Content-Type: text/html')
 print('')
 print('<html>')
@@ -147,6 +155,32 @@ print('</select>')
 print(('<br>'))
 print(('<br>'))
 print('<input class="btn btn-primary" type="submit" value="EDIT PKG">')
+print('</form>')
+print('<form id="config" class="form-inline" action="lock_domain_data_to_package.cgi" method="post">')
+print('<ul class="list-group">')
+print(('<h6 class="list-group-item-heading">Change nginx config with cPanel package</h6>'))
+# Package Lock
+print('<li class="list-group-item">')
+print('<div class="row">')  # div11
+package_lock_hint = "Enables changing nginx config with package upgrade/downgrade in cPanel. Note that all user setting in XtendWeb panel will be lost and system will reset nginx config to package default"
+if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
+    print_green('change nginx config based on package', package_lock_hint)
+    print('<div class="col-sm-6 col-radio">')
+    print('<div class="radio"><label><input type="radio" name="package_lock" value="enabled" checked/> Enabled</label></div>')
+    print('<div class="radio"><label><input type="radio" name="package_lock" value="disabled" /> Disabled</label></div>')
+    print('</div>')
+else:
+    print_red('change nginx config based on package', package_lock_hint)
+    print('<div class="col-sm-6 col-radio">')
+    print('<div class="radio"><label><input type="radio" name="package_lock" value="enabled" /> Enabled</label></div>')
+    print('<div class="radio"><label><input type="radio" name="package_lock" value="disabled" checked/> Disabled</label></div>')
+    print('</div>')
+print('</div>')  # div11
+print('</li>')
+print('</ul>')
+print('<ul class="list-group">')
+print('<input class="btn btn-primary" type="submit" value="Submit">')
+print('</ul>')
 print('</form>')
 print('</div>')  # markera2
 print('</div>')  # markera1

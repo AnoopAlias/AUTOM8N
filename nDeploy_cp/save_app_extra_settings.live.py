@@ -101,6 +101,19 @@ if form.getvalue('thesubdir'):
                 print('</body>')
                 print('</html>')
                 sys.exit(0)
+            # mod_security
+            if 'mod_security' in form.keys():
+                mod_security = form.getvalue('mod_security')
+                the_subdir_dict['mod_security'] = mod_security
+            else:
+                print('ERROR: Forbidden::mod_security')
+                print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</body>')
+                print('</html>')
+                sys.exit(0)
             # set_expire_static
             if 'set_expire_static' in form.keys():
                 set_expire_static = form.getvalue('set_expire_static')

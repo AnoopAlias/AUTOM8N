@@ -37,6 +37,10 @@ def print_red(theoption, hint):
     print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
 
+def print_disabled():
+    print(('<div class="col-sm-6"><center><div class="label label-default" data-toggle="tooltip" title="An additional nginx module is required for this functionality"><center>NO MODULE</center></div></center></div>'))
+
+
 def close_cpanel_liveapisock():
     """We close the cpanel LiveAPI socket here as we dont need those"""
     cp_socket = os.environ["CPANEL_CONNECT_SOCKET"]
@@ -270,6 +274,29 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('<div class="radio"><label><input type="radio" name="set_expire_static" value="enabled" /> Enabled</label></div>')
                     print('<div class="radio"><label><input type="radio" name="set_expire_static" value="disabled" checked/> Disabled</label></div>')
                     print('</div>')
+                print('</div>')
+                print('</li>')
+                # mod_security
+                print('<li class="list-group-item">')
+                print('<div class="row">')
+                mod_security_hint = "mod_security v3 WAF"
+                if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+                    if mod_security == 'enabled':
+                        print_green('mod_security', mod_security_hint)
+                        print('<div class="col-sm-6 col-radio">')
+                        print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
+                        print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
+                        print('</div>')
+                    else:
+                        print_red('mod_security', mod_security_hint)
+                        print('<div class="col-sm-6 col-radio">')
+                        print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
+                        print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
+                        print('</div>')
+                else:
+                    print_red('mod_security', mod_security_hint)
+                    print_disabled()
+                    print(('<input style="display:none" name="mod_security" value="'+mod_security+'">'))
                 print('</div>')
                 print('</li>')
                 # URL Redirect
