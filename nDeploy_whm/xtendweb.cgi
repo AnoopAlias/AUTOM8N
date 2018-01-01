@@ -168,11 +168,11 @@ else:
     print('<input class="btn btn-xs btn-warning" type="submit" value="ENABLE CONFIG CHANGE WITH PKG">')
     print(('<input class="hidden" name="package_lock" value="enabled">'))
     print('</form>')
-    print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top">'))
-    print(('If you enable config change with package, nginx config for domain will be reset to package setting on plan upgrade/downgrade and all user settings will be lost'))
-    print(('</div>'))
-    print('</ul>')
+print('<ul class="list-group">')
+print(('<div class="alert alert-info alert-top">'))
+print(('If you enable config change with package, nginx config for domain will be reset to package setting on plan upgrade/downgrade and all user settings will be lost'))
+print(('</div>'))
+print('</ul>')
 print('</div>')  # markera2
 print('</div>')  # markera1
 
