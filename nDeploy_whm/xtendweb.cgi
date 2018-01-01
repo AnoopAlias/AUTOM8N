@@ -159,7 +159,7 @@ print('</form>')
 print(('<br>'))
 print(('<br>'))
 if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
-    print('<form class="form-group" action="lock_domaindata_to_package.cgi">')
+    print('<form class="form-group" action="lock_domain_data_to_package.cgi">')
     print('<input class="btn btn-xs btn-primary" type="submit" value="DISABLE CONFIG CHANGE WITH PKG">')
     print(('<input class="hidden" name="package_lock" value="disabled">'))
     print('</form>')
