@@ -165,7 +165,7 @@ if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
     print('</form>')
 else:
     print('<form class="form-group" action="lock_domaindata_to_package.cgi">')
-    print('<input class="btn btn-xs btn-info" type="submit" value="ENABLE CONFIG CHANGE WITH PKG">')
+    print('<input class="btn btn-xs btn-warning" type="submit" value="ENABLE CONFIG CHANGE WITH PKG">')
     print(('<input class="hidden" name="package_lock" value="enabled">'))
     print('</form>')
     print('<ul class="list-group">')
