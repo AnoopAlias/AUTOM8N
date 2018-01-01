@@ -62,7 +62,7 @@ print('</ol>')
 
 if form.getvalue('poolfile'):
     if os.path.isfile(form.getvalue('poolfile')):
-        config = configparser.ConfigParser()
+        config = configparser.RawConfigParser()
         config.read(form.getvalue('poolfile'))
         print(config.sections())
 else:
