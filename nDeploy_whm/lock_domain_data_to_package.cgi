@@ -63,6 +63,7 @@ if form.getvalue('package_lock'):
         print('</div>')
     elif form.getvalue('package_lock') == 'disabled':
         silentremove(installation_path+'/conf/lock_domaindata_to_package')
+        print('<div class="panel panel-default">')
         print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
         print('<div class="panel-body">')  # marker6
         print('<div class="icon-box">')
