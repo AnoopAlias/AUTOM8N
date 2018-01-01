@@ -194,7 +194,6 @@ print(('<br>'))
 print(('<br>'))
 print('<input class="btn btn-primary" type="submit" value="EDIT PKG">')
 print('</form>')
-print('<form id="config" class="form-inline" action="lock_domain_data_to_package.cgi" method="post">')
 print('</div>')  # markera2
 print('</div>')  # markera1
 
