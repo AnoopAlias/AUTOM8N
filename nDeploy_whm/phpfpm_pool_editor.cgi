@@ -93,6 +93,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('</div>')
         print('</li>')
         print(('<input style="display:none" name="section" value="'+form.getvalue('section')+'">'))
+        print(('<input class="hidden" name="poolfile" value="'+myphpini+'">'))
         print('<br>')
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')
