@@ -55,9 +55,9 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('thev
         print('<div class="panel panel-default">')  # marker6
         print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
-        myconfig = dict(config.items(config.sections()[0]))
-        myconfig[form.getvalue('thekey')] = form.getvalue('thekey')
-        with codecs.open(form.getvalue('poolfile'), 'w', encoding='utf8') as f:
+        # myconfig = dict(config.items(config.sections()[0]))
+        config.set(config.sections()[0], form.getvalue('thekey'), form.getvalue('thevalue'))
+        with codecs.open(myphpini, 'w', encoding='utf8') as f:
             config.write(f)
         print('<div class="icon-box">')
         print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> PHP-FPM pool settings updated')
