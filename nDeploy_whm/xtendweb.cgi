@@ -197,7 +197,7 @@ else:
 print('</select>')
 print(('<br>'))
 print(('<br>'))
-print('<input class="btn btn-primary" type="submit" value="EDIT PKG">')
+print('<input class="btn btn-primary" type="submit" value="EDIT PHP SETTINGS">')
 print('</form>')
 print('</div>')  # markera2
 print('</div>')  # markera1
