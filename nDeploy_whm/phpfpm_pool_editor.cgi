@@ -2,9 +2,6 @@
 import cgi
 import cgitb
 import os
-import shutil
-import yaml
-import sys
 import configparser
 import codecs
 
@@ -19,18 +16,6 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 default_domain_data_file = installation_path+'/conf/domain_data_default.yaml'
 app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
-
-
-def print_green(theoption, hint):
-    print(('<div class="col-sm-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
-
-
-def print_red(theoption, hint):
-    print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
-
-
-def print_disabled():
-    print(('<div class="col-sm-6"><center><div class="label label-default" data-toggle="tooltip" title="An additional nginx module is required for this functionality"><center>NO MODULE</center></div></center></div>'))
 
 
 cgitb.enable()
@@ -73,17 +58,21 @@ if form.getvalue('poolfile'):
         print('<form id="config" class="form-inline config-save" action="save_phpfpm_pool.cgi" method="post">')
         myconfig = dict(config.items(config.sections()[0]))
         for mykey in myconfig.keys():
-            if mykey.startswith(('php_admin_value', 'php_admin_flag', 'php_flag', 'php_value')):
-                print('<ul class="list-group">')
-                print('<li class="list-group-item">')
-                print('<div class="row">')
-                print(('<div class="col-sm-6">'+mykey+'</div>'))
-                print('<div class="col-sm-6">')
-                print('<input class="form-control" placeholder='+myconfig.get(mykey)+' type="text" name="'+mykey+'">')
-                print('</div>')
-                print('</div>')
-                print('</li>')
-                print('</ul>')
+            print('<ul class="list-group">')
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            print(('<div class="col-sm-6">'+mykey+'</div>'))
+            print('<div class="col-sm-6">')
+            print(myconfig.get(mykey))
+            print('<form class="form-group" action="subdir_app_settings.live.py">')
+            print('<input class="btn btn-xs btn-info" type="submit" value="Edit">')
+            print(('<input class="hidden" name="poolfile" value="'+myphpini+'">'))
+            print(('<input class="hidden" name="thekey" value="'+mykey+'">'))
+            print('</form>')
+            print('</div>')
+            print('</div>')
+            print('</li>')
+            print('</ul>')
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</form>')
         print('</div>')  # div8
