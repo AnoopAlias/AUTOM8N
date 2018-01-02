@@ -61,7 +61,7 @@ if form.getvalue('poolfile'):
             print('<ul class="list-group">')
             print('<li class="list-group-item">')
             print('<div class="row">')
-            print(('<div class="col-sm-6">'+mykey+'</div>'))
+            print(('<div class="col-sm-6">'+mykey+' = </div>'))
             print('<div class="col-sm-6">')
             print(myconfig.get(mykey))
             print('<form class="form-group" action="subdir_app_settings.live.py">')
