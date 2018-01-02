@@ -55,10 +55,8 @@ if form.getvalue('poolfile'):
         print('<div class="panel panel-default">')  # marker6
         print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
-        print('<form id="config" class="form-inline config-save" action="save_phpfpm_pool.cgi" method="post">')
-        myconfig = dict(config.items(config.sections()[0]))
+        print('<ul class="list-group">')
         for mykey in myconfig.keys():
-            print('<ul class="list-group">')
             print('<li class="list-group-item">')
             print('<div class="row">')
             print(('<div class="col-sm-6">'+mykey+' = </div>'))
@@ -72,7 +70,7 @@ if form.getvalue('poolfile'):
             print('</div>')
             print('</div>')
             print('</li>')
-            print('</ul>')
+        print('</ul>')
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</form>')
         print('</div>')  # div8
