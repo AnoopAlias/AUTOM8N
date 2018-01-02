@@ -56,6 +56,7 @@ if form.getvalue('poolfile'):
         print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
         print('<ul class="list-group">')
+        myconfig = dict(config.items(config.sections()[0]))
         for mykey in myconfig.keys():
             print('<li class="list-group-item">')
             print('<div class="row">')
