@@ -46,7 +46,7 @@ print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-refresh"></sp
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
-if form.getvalue('poolfile'):
+if form.getvalue('poolfile') and form.getvalue('thekey'):
     myphpini = form.getvalue('poolfile')
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
@@ -55,23 +55,24 @@ if form.getvalue('poolfile'):
         print('<div class="panel panel-default">')  # marker6
         print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
-        print('<ul class="list-group">')
         myconfig = dict(config.items(config.sections()[0]))
-        for mykey in myconfig.keys():
-            print('<li class="list-group-item">')
-            print('<div class="row">')
-            print(('<div class="col-sm-6">'+mykey+' = </div>'))
-            print('<div class="col-sm-6">')
-            print(myconfig.get(mykey))
-            print('<form class="form-group" action="save_phpfpm_pool.cgi">')
-            print('<input class="btn btn-xs btn-info" type="submit" value="Edit">')
-            print(('<input class="hidden" name="poolfile" value="'+myphpini+'">'))
-            print(('<input class="hidden" name="thekey" value="'+mykey+'">'))
-            print('</form>')
-            print('</div>')
-            print('</div>')
-            print('</li>')
+        print('<form class="form-group" action="save_phpfpm_pool.cgi">')
+        print('<ul class="list-group">')
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        print('<div class="col-sm-6 col-radio">')
+        print(form.getvalue('thekey'))
+        print('</div>')
+        print('<div class="col-sm-6 col-radio">')
+        print('<input class="form-control" placeholder='+myconfig.get(form.getvalue('thekey', ''))+' type="text" name="thevalue">')
+        print('</div>')
+        print('</div>')
+        print('</li>')
+        print(('<input style="display:none" name="poolfile" value="'+form.getvalue('poolfile')+'">'))
+        print(('<input style="display:none" name="thekey" value="'+form.getvalue('thekey')+'">'))
+        print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')
+        print('</form>')
         print('</div>')  # div8
         print('</div>')  # div7
 else:
