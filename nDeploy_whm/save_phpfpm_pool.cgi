@@ -46,16 +46,17 @@ print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-refresh"></sp
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
-if form.getvalue('poolfile') and form.getvalue('thekey'):
+if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('section'):
     myphpini = form.getvalue('poolfile')
+    mysection = int(form.getvalue('section'))
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
         # Next section start here
         print('<div class="panel panel-default">')  # marker6
-        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
+        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[mysection]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
-        myconfig = dict(config.items(config.sections()[0]))
+        myconfig = dict(config.items(config.sections()[mysection]))
         print('<form class="form-group" action="save_phpfpm_pool_file.cgi">')
         print('<ul class="list-group">')
         print('<li class="list-group-item">')
@@ -70,6 +71,7 @@ if form.getvalue('poolfile') and form.getvalue('thekey'):
         print('</li>')
         print(('<input style="display:none" name="poolfile" value="'+form.getvalue('poolfile')+'">'))
         print(('<input style="display:none" name="thekey" value="'+form.getvalue('thekey')+'">'))
+        print(('<input style="display:none" name="section" value="'+form.getvalue('section')+'">'))
         print('<br>')
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')

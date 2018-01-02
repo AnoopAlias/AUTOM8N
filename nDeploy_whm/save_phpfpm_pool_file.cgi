@@ -46,8 +46,9 @@ print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-refresh"></sp
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
-if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('thevalue'):
+if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('thevalue') and form.getvalue('section'):
     myphpini = form.getvalue('poolfile')
+    mysection = int(form.getvalue('section'))
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
@@ -56,7 +57,7 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('thev
         print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
         # myconfig = dict(config.items(config.sections()[0]))
-        config.set(config.sections()[0], form.getvalue('thekey'), form.getvalue('thevalue'))
+        config.set(config.sections()[mysection], form.getvalue('thekey'), form.getvalue('thevalue'))
         with codecs.open(myphpini, 'w', encoding='utf8') as f:
             config.write(f)
         print('<div class="icon-box">')
