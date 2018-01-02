@@ -60,7 +60,7 @@ if form.getvalue('poolfile'):
         for mykey in myconfig.keys():
             print('<li class="list-group-item">')
             print('<div class="row">')
-            print(('<div class="col-sm-6">'+mykey+' = </div>'))
+            print(('<div class="col-sm-6">'+mykey+'</div>'))
             print('<div class="col-sm-6">')
             print(myconfig.get(mykey))
             print('<form class="form-group" action="save_phpfpm_pool.cgi">')
