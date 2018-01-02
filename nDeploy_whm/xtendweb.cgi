@@ -181,12 +181,12 @@ print('<div class="panel panel-default">')  # markera1
 print('<div class="panel-heading"><h3 class="panel-title">PHP-FPM pool editor</h3></div>')
 print('<div class="panel-body">')  # markera2
 print('<form class="form-inline" action="phpfpm_pool_editor.cgi" method="post">')
-print('<select name="poolfile">')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     conf_list = os.listdir("/opt/nDeploy/secure-php-fpm.d")
     for filename in conf_list:
         user, extension = filename.split('.')
         if user != 'nobody':
+            print('<select name="poolfile">')
             print(('<option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
             print('</select>')
             print(('<input class="hidden" name="section" value="1">'))
@@ -195,6 +195,7 @@ else:
     for filename in conf_list:
         user, extension = filename.split('.')
         if user != 'nobody':
+            print('<select name="poolfile">')
             print(('<option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
             print('</select>')
             print(('<input class="hidden" name="section" value="0">'))
