@@ -76,6 +76,29 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('</ul>')
         print('</div>')  # div8
         print('</div>')  # div7
+        # Next section start here
+        print('<div class="panel panel-default">')  # marker6
+        print('<div class="panel-heading"><h3 class="panel-title">Add new pool setting</h3></div>')
+        print('<div class="panel-body">')  # marker7
+        print('<form class="form-group" action="save_phpfpm_pool_file.cgi">')
+        print('<ul class="list-group">')
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        print('<div class="col-sm-6 col-radio">')
+        print('<input class="form-control" placeholder="KEY" type="text" name="thekey">')
+        print('</div>')
+        print('<div class="col-sm-6 col-radio">')
+        print('<input class="form-control" placeholder="VALUE" type="text" name="thevalue">')
+        print('</div>')
+        print('</div>')
+        print('</li>')
+        print(('<input style="display:none" name="section" value="'+form.getvalue('section')+'">'))
+        print('<br>')
+        print('<input class="btn btn-primary" type="submit" value="Submit">')
+        print('</ul>')
+        print('</form>')
+        print('</div>')  # div8
+        print('</div>')  # div7
 else:
         print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
