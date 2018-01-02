@@ -54,7 +54,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
         # Next section start here
         print('<div class="panel panel-default">')  # marker6
-        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
+        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[mysection]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
         print('<ul class="list-group">')
         myconfig = dict(config.items(config.sections()[mysection]))
