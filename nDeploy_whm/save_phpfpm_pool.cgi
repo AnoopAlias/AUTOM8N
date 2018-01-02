@@ -56,7 +56,7 @@ if form.getvalue('poolfile') and form.getvalue('thekey'):
         print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[0]+'</h3></div>')
         print('<div class="panel-body">')  # marker7
         myconfig = dict(config.items(config.sections()[0]))
-        print('<form class="form-group" action="save_phpfpm_pool.cgi">')
+        print('<form class="form-group" action="save_phpfpm_pool_file.cgi">')
         print('<ul class="list-group">')
         print('<li class="list-group-item">')
         print('<div class="row">')
