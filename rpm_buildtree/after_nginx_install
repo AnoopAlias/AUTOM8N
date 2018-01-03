@@ -15,6 +15,13 @@ fi
 if [ ! -f /etc/nginx/conf.d/pagespeed_cache.conf ] ; then
 	echo 'pagespeed RedisServer "localhost:6379";' >> /etc/nginx/conf.d/pagespeed_cache.conf
 fi
+if [ ! -f /etc/nginx/conf.d/server_identifier.conf ] ; then
+	echo "more_set_headers 'Server: AUTOM8N-nginx';" >> /etc/nginx/conf.d/server_identifier.conf
+fi
+if [ ! -f /etc/nginx/conf.d/resolver.conf ] ; then
+	echo "resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;" >> /etc/nginx/conf.d/resolver.conf
+	echo "resolver_timeout 5s;" >> /etc/nginx/conf.d/resolver.conf
+fi
 if [ ! -d /etc/nginx/ssl ] ; then
 	mkdir /etc/nginx/ssl
 fi

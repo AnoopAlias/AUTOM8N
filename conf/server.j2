@@ -21,8 +21,6 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
 ssl_stapling on;
 ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
-resolver_timeout 5s;
 {% endif %}
 server_name www.{{ MAINDOMAINNAME }};
 
@@ -103,8 +101,6 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
 ssl_stapling on;
 ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
-resolver_timeout 5s;
 {% endif %}
 server_name {{ MAINDOMAINNAME }};
 
@@ -186,8 +182,6 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
 ssl_stapling on;
 ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
-resolver_timeout 5s;
 {% endif %}
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 
@@ -392,8 +386,6 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
 ssl_stapling on;
 ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
-resolver_timeout 5s;
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
@@ -539,8 +531,6 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
 ssl_stapling on;
 ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;
-resolver_timeout 5s;
 {% endif %}
 server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
 location / {
