@@ -282,7 +282,36 @@ if not osrelease == 'CloudLinux':
             print('</form>')
             print('</div>')  # markera2
             print('</div>')  # markera1
-
+# Next section start here
+print('<div class="panel panel-default">')  # markera1
+print('<div class="panel-heading"><h3 class="panel-title">Set Default PHP for AutoConfig</h3></div>')
+print('<div class="panel-body">')  # markera2
+print('<form class="form-inline" action="set_default_php.cgi" method="post">')
+print('<select name="phpversion">')
+backend_config_file = installation_path+"/conf/backends.yaml"
+backend_data_yaml = open(backend_config_file, 'r')
+backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+backend_data_yaml.close()
+if "PHP" in backend_data_yaml_parsed:
+    php_backends_dict = backend_data_yaml_parsed["PHP"]
+    for versions_defined in list(php_backends_dict.keys()):
+        print(('<option value="'+versions_defined+'">'+versions_defined+'</option>'))
+print('</select>')
+print(('<br>'))
+print(('<br>'))
+print('<input class="btn btn-primary" type="submit" value="SET DEFAULT PHP">')
+print('</form>')
+if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
+    preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
+    preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
+    preferred_php_yaml.close()
+    print('<ul class="list-group">')
+    print(('<div class="alert alert-info alert-top">'))
+    print(('Current default PHP: '+preferred_php_yaml_parsed.keys()[0]))
+    print(('</div>'))
+    print('</ul>')
+print('</div>')  # markera2
+print('</div>')  # markera1
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2
