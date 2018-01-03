@@ -4,6 +4,7 @@ import cgitb
 import os
 import configparser
 import codecs
+import subprocess
 
 
 __author__ = "Anoop P Alias"
@@ -60,6 +61,10 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('thev
         config.set(config.sections()[mysection], form.getvalue('thekey'), form.getvalue('thevalue'))
         with codecs.open(myphpini, 'w', encoding='utf8') as f:
             config.write(f)
+        if os.path.isfile('/opt/nDeploy/conf/secure-php-enabled'):
+            subprocess.call("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
+        else:
+            subprocess.call('service ndeploy_backends restart', shell=True)
         print('<div class="icon-box">')
         print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> PHP-FPM pool settings updated')
         print('</div>')
