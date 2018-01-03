@@ -313,7 +313,7 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     phpversion = preferred_php_yaml_parsed.get('PHP')
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
-    print(('Current default PHP: '+phpversion.keys()[0]))
+    print(('Current default PHP: '+phpversion.keys()[0])+'<br> If MultiPHP is enabled, the PHP version selected by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results')
     print(('</div>'))
     print('</ul>')
 print('</div>')  # markera2
