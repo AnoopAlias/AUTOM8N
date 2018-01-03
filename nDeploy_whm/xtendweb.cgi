@@ -98,7 +98,7 @@ print('</li>')
 print('</ul>')
 print('<ul class="list-group">')
 print(('<div class="alert alert-info alert-top">'))
-print(('nginx does not need restart. You should only use <kbd>nginx -s reload</kbd> or after rpm upgrade <kbd>/opt/nDeploy/scripts/nginx_upgrade_inplace.sh</kbd> if nginx binary is running. To restart ndeploy_watcher run <kbd>service ndeploy_watcher restart</kbd> from commandline'))
+print(('nginx does not need restart. You should only use <kbd>nginx -s reload</kbd> or after rpm upgrade <kbd>/opt/nDeploy/scripts/nginx_upgrade_inplace.sh</kbd> if nginx binary is running. To restart ndeploy_watcher run <br><kbd>service ndeploy_watcher restart</kbd> from commandline'))
 print(('</div>'))
 print('</ul>')
 print('</div>')  # div8
