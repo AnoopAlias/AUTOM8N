@@ -305,9 +305,10 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
     preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
     preferred_php_yaml.close()
+    phpversion = preferred_php_yaml_parsed.get('PHP')
     print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
-    print(('Current default PHP: '+preferred_php_yaml_parsed.keys()[0]))
+    print(('Current default PHP: '+phpversion.keys()[0]))
     print(('</div>'))
     print('</ul>')
 print('</div>')  # markera2
