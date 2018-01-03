@@ -136,26 +136,6 @@
   roles:
     - hhvm_slave
 
-- name: Setup stunnel to secure redis on master
-  hosts: ndeploymaster
-  roles:
-    - stunnel_master
-
-- name: Setup stunnel to secure redis on slaves
-  hosts: ndeployslaves
-  roles:
-    - stunnel_slave
-
-- name: Setup HAPROXY for redis on master
-  hosts: ndeploymaster
-  roles:
-    - haproxy_master
-
-- name: Setup HAPROXY for redis on slaves
-  hosts: ndeployslaves
-  roles:
-    - haproxy_slave
-
 - name: Remove temp files from master
   hosts: ndeploymaster
   roles:
