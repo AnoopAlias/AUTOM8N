@@ -73,7 +73,7 @@ for myprocess in psutil.process_iter():
         break
 if nginx_status:
     print(('<div class="col-sm-6">nginx</div>'))
-    print(('<div class="col-sm-6"><div class="label label-primary">ACTIVE</div></div>'))
+    print(('<div class="col-sm-6"><div class="label label-success">ACTIVE</div></div>'))
 else:
     print(('<div class="col-sm-6">nginx</div>'))
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
@@ -89,7 +89,7 @@ for myprocess in psutil.process_iter():
         break
 if watcher_status:
     print(('<div class="col-sm-6">ndeploy_watcher</div>'))
-    print(('<div class="col-sm-6"><div class="label label-primary">ACTIVE</div></div>'))
+    print(('<div class="col-sm-6"><div class="label label-success">ACTIVE</div></div>'))
 else:
     print(('<div class="col-sm-6">ndeploy_watcher</div>'))
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
