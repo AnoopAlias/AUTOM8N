@@ -98,7 +98,11 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')
         print('</form>')
-        
+        print('<ul class="list-group">')
+        print(('<div class="alert alert-info alert-top">'))
+        print(('WARNING : Editing pool config with invalid settings can bring down your PHP application server. Edit at your own risk'))
+        print(('</div>'))
+        print('</ul>')
         print('</div>')  # div8
         print('</div>')  # div7
 else:
