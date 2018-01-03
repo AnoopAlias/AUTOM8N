@@ -96,6 +96,11 @@ else:
 print('</div>')
 print('</li>')
 print('</ul>')
+print('<ul class="list-group">')
+print(('<div class="alert alert-info alert-top">'))
+print(('nginx does not need restart. You can only use <kbd>nginx -s reload</kbd> or after rpm upgrade <kbd>/opt/nDeploy/scripts/nginx_upgrade_inplace.sh</kbd> . To restart ndeploy_watcher run <kbd>service ndeploy_watcher restart</kbd> from commandline'))
+print(('</div>'))
+print('</ul>')
 print('</div>')  # div8
 print('</div>')  # div7
 # Next section start here
