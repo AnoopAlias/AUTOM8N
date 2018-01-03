@@ -98,6 +98,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')
         print('</form>')
+        
         print('</div>')  # div8
         print('</div>')  # div7
 else:
