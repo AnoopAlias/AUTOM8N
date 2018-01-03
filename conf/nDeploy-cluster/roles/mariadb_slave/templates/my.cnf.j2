@@ -4,8 +4,11 @@ innodb_file_per_table=1
 performance-schema=0
 max_allowed_packet=268435456
 wait_timeout = 28800
-connect_timeout = 60
-max_connections =  500
+connect_timeout = 600
+max_connections =  1000
+table_open_cache = 10000
+tmp_table_size = 64M
+max_heap_table_size = 64M
 
 
 ssl-ca=/etc/mysql-ssl/ca-cert.pem
