@@ -76,32 +76,30 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
         if os.path.isfile(mydocroot+'/Gemfile'):
             if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
                 install_cmd = '/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'
-                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-                output, err = myinstaller.communicate()
-                if output:
-                    # section start here
-                    print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
-                    print('<div class="panel-body">')  # marker6
-                    print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + output + '</div>'))
-                    print('</ul>')
-                    print('</div>')  # marker6
-                    print('</div>')
-                if err:
-                    # section start here
-                    print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Command Error:</h3></div>'))
-                    print('<div class="panel-body">')  # marker7
-                    print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + err + '<br><br>'))  # marker8
-                    print(('Run the following command in your shell to proceed with manual installation:<br>'))
-                    print(('cd '+mydocroot+'<br>'))
-                    print(('/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'))
-                    print('</div>')  # marker8
-                    print('</ul>')
-                    print('</div>')  # marker7
-                    print('</div>')
+                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
+                print('<div class="panel panel-default">')
+                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
+                print('<div class="panel-body">')  # marker6
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))
+                while True:
+                    line = myinstaller.stdout.readline()
+                    if not line:
+                        break
+                    print('<br>'+line)
+                print(('</div>'))
+                print('</ul>')
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))  # marker8
+                print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
+                print(('cd '+mydocroot+'<br>'))
+                print(('/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'))
+                print('</div>')  # marker8
+                print('</ul>')
+                print('</div>')  # marker6
+                print('</div>')
+            else:
+                print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> bundler command not found</div>')
         else:
             print('<div class="panel panel-default">')
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
@@ -117,33 +115,31 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 install_cmd = '/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm -q install --production'
                 my_env = os.environ.copy()
                 my_env["PATH"] = "/usr/local/nvm/versions/node/"+mybackendversion+"/bin:"+my_env["PATH"]
-                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env, shell=True)
-                output, err = myinstaller.communicate()
-                if output:
-                    # section start here
-                    print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
-                    print('<div class="panel-body">')
-                    print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>'+output+'</div>'))
-                    print('</ul>')
-                    print('</div>')
-                    print('</div>')
-                if err:
-                    # section start here
-                    print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
-                    print('<div class="panel-body">')
-                    print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + err + '<br><br>'))
-                    print(('Run the following command in your shell to proceed with manual installation:<br>'))
-                    print(('export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"<br>'))
-                    print(('cd '+mydocroot))
-                    print(('<br>npm install --production'))
-                    print(('</div>'))
-                    print('</ul>')
-                    print('</div>')
-                    print('</div>')
+                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=my_env, shell=True, universal_newlines=True)
+                print('<div class="panel panel-default">')
+                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
+                print('<div class="panel-body">')  # marker6
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))
+                while True:
+                    line = myinstaller.stdout.readline()
+                    if not line:
+                        break
+                    print('<br>'+line)
+                print(('</div>'))
+                print('</ul>')
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))  # marker8
+                print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
+                print(('export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"<br>'))
+                print(('cd '+mydocroot))
+                print(('<br>npm install --production'))
+                print('</div>')  # marker8
+                print('</ul>')
+                print('</div>')  # marker6
+                print('</div>')
+            else:
+                print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> npm command not found</div>')
         else:
             print('<div class="panel panel-default">')
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
@@ -157,33 +153,31 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
         if os.path.isfile(mydocroot+'/requirements.txt'):
             if os.path.isfile('/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip'):
                 install_cmd = '/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip install --user -r requirements.txt'
-                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-                output, err = myinstaller.communicate()
-                if output:
-                    # section start here
-                    print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
-                    print('<div class="panel-body">')
-                    print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>'+output+'</div>'))
-                    print('</ul>')
-                    print('</div>')
-                    print('</div>')
-                if err:
-                    # section start here
-                    print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
-                    print('<div class="panel-body">')
-                    print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + err + '<br><br>'))
-                    print(('Run the following command in your shell to proceed with manual installation:<br>'))
-                    print(('export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"<br>'))
-                    print(('cd '+mydocroot))
-                    print(('<br>pip install --user -r requirements.txt'))
-                    print(('</div>'))
-                    print('</ul>')
-                    print('</div>')
-                    print('</div>')
+                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
+                print('<div class="panel panel-default">')
+                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
+                print('<div class="panel-body">')  # marker6
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))
+                while True:
+                    line = myinstaller.stdout.readline()
+                    if not line:
+                        break
+                    print('<br>'+line)
+                print(('</div>'))
+                print('</ul>')
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))  # marker8
+                print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
+                print(('export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"<br>'))
+                print(('cd '+mydocroot))
+                print(('<br>pip install --user -r requirements.txt'))
+                print('</div>')  # marker8
+                print('</ul>')
+                print('</div>')  # marker6
+                print('</div>')
+            else:
+                print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> pip command not found</div>')
         else:
             print('<div class="panel panel-default">')
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
@@ -197,33 +191,31 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
         if os.path.isfile(mydocroot+'/composer.json'):
             if os.path.isfile('/opt/cpanel/composer/bin/composer'):
                 install_cmd = '/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install'
-                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-                output, err = myinstaller.communicate()
-                if output:
-                    # section start here
-                    print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Output:</h3></div>'))
-                    print('<div class="panel-body">')
-                    print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>'+output+'</div>'))
-                    print('</ul>')
-                    print('</div>')
-                    print('</div>')
-                if err:
-                    # section start here
-                    print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Error:</h3></div>'))
-                    print('<div class="panel-body">')
-                    print('<ul class="list-group">')
-                    print(('<div class="alert alert-info alert-top">'+install_cmd+':<br><br>' + err + '<br><br>'))
-                    print(('Run the following command in your shell to proceed with manual installation:<br>'))
-                    print(('export PATH="$PATH:/opt/cpanel/composer/bin"<br>'))
-                    print(('cd '+mydocroot))
-                    print(('<br>/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install'))
-                    print(('</div>'))
-                    print('</ul>')
-                    print('</div>')
-                    print('</div>')
+                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
+                print('<div class="panel panel-default">')
+                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
+                print('<div class="panel-body">')  # marker6
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))
+                while True:
+                    line = myinstaller.stdout.readline()
+                    if not line:
+                        break
+                    print('<br>'+line)
+                print(('</div>'))
+                print('</ul>')
+                print('<ul class="list-group">')
+                print(('<div class="alert alert-info alert-top">'))  # marker8
+                print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
+                print(('export PATH="$PATH:/opt/cpanel/composer/bin"<br>'))
+                print(('cd '+mydocroot))
+                print(('<br>/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install'))
+                print('</div>')  # marker8
+                print('</ul>')
+                print('</div>')  # marker6
+                print('</div>')
+            else:
+                print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> composer command not found</div>')
         else:
             print('<div class="panel panel-default">')
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
