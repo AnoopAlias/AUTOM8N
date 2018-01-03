@@ -5,15 +5,15 @@
 #expecting 6/7 as the first arg to this scripts
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
-NGINX_VERSION="1.13.7"
+NGINX_VERSION="1.13.8"
 NGINX_RPM_ITER="1.el${OSVERSION}"
 NPS_VERSION="1.12.34.3-stable"
-MY_RUBY_VERSION="2.4.2"
-PASSENGER_VERSION="5.1.11"
+MY_RUBY_VERSION="2.5.0"
+PASSENGER_VERSION="5.1.12"
 CACHE_PURGE_VERSION="2.3"
 PS_NGX_EXTRA_FLAGS="--with-cc=/opt/rh/devtoolset-2/root/usr/bin/gcc"
-OPENSSL_VERSION="1.0.2l"
-LIBRESSL_VERSION="2.6.3"
+OPENSSL_VERSION="1.0.2n"
+LIBRESSL_VERSION="2.6.4"
 SRCACHE_NGINX_MODULE="0.31"
 NGX_DEVEL_KIT="0.3.0"
 REDIS2_NGINX_MODULE="0.13"
