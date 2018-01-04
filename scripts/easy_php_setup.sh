@@ -32,21 +32,6 @@ setup_ea4_php(){
 		chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
 	}
 
-	setup_ea4_cluster_php(){
-				if [ ! -f /opt/nDeploy/conf/XTENDWEB_PHP_SETUP_LOCK_DO_NOT_REMOVE ]; then
-
-				fi
-				for ver in 54 55 56 70 71 72
-				do
-					if [ -f /opt/nDeploy/conf/zz_xtendweb.ini ]; then
-						rsync -a /opt/nDeploy/conf/zz_xtendweb.ini /opt/cpanel/ea-php$ver/root/etc/php.d/
-					fi
-				done
-				service ndeploy_backends stop || systemctl stop ndeploy_backends
-				service ndeploy_backends start || systemctl start ndeploy_backends
-				chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
-		}
-
 setup_remi_php(){
 		yum -y install scl-utils libmcrypt
 		osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
