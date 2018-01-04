@@ -85,6 +85,7 @@ jailphp(){
 		echo -e '\e[93m Home »Account Functions »Manage Shell Access \e[0m'
 	else
 		echo -e '\e[93m Jail PHP-FPM will only work when php-fpm master process is run as root. Bailing out! \e[0m'
+	fi
 }
 
 auto_setup(){
