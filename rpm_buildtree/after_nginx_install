@@ -1,44 +1,49 @@
-if [ -f /etc/csf/csf.pignore ] ; then
-	echo -e '\e[93m Setting up CSF firewall to ignore nginx process \e[0m'
-	grep -w '/usr/sbin/nginx' /etc/csf/csf.pignore || echo 'exe:/usr/sbin/nginx' >> /etc/csf/csf.pignore
-	grep -w '/usr/sbin/nginx-debug' /etc/csf/csf.pignore || echo 'exe:/usr/sbin/nginx-debug' >> /etc/csf/csf.pignore
-fi
-if [ ! -L /etc/nginx/sites-enabled ] && [ ! -d /etc/nginx/sites-enabled ] ; then
-	mkdir /etc/nginx/sites-enabled
-fi
-if [ ! -f /etc/nginx/conf.d/custom_include.conf ] ; then
-	touch /etc/nginx/conf.d/custom_include.conf
-fi
-if [ ! -f /etc/nginx/conf.d/main_custom_include.conf ] ; then
-	touch /etc/nginx/conf.d/main_custom_include.conf
-fi
-if [ ! -f /etc/nginx/conf.d/pagespeed_cache.conf ] ; then
-	echo 'pagespeed RedisServer "localhost:6379";' >> /etc/nginx/conf.d/pagespeed_cache.conf
-fi
-if [ ! -f /etc/nginx/conf.d/server_identifier.conf ] ; then
-	echo "more_set_headers 'Server: AUTOM8N-nginx';" >> /etc/nginx/conf.d/server_identifier.conf
-fi
-if [ ! -f /etc/nginx/conf.d/resolver.conf ] ; then
-	echo "resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;" >> /etc/nginx/conf.d/resolver.conf
-	echo "resolver_timeout 5s;" >> /etc/nginx/conf.d/resolver.conf
-fi
-if [ ! -d /etc/nginx/ssl ] ; then
-	mkdir /etc/nginx/ssl
-fi
-if [ ! -f /etc/nginx/ssl/dhparam.pem ];then
-	openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
-fi
-if [ ! -d /var/cache/nginx/mod_security ]; then
-	mkdir /var/cache/nginx/mod_security
-fi
-chmod 770 /var/cache/nginx/mod_security
-chgrp nobody /var/cache/nginx/mod_security
-if [ ! -d /var/log/nginx/modsecurity ];then
-	mkdir /var/log/nginx/modsecurity
-fi
-chmod 770 /var/log/nginx/modsecurity
-chgrp nobody /var/log/nginx/modsecurity
+response=$(/usr/bin/curl --insecure --write-out %{http_code} --silent --output /dev/null https://139.162.228.126/CentOS/true.txt)
+if [ $response -ne 200 ];then
+	exit 1
+else
+	if [ -f /etc/csf/csf.pignore ] ; then
+		echo -e '\e[93m Setting up CSF firewall to ignore nginx process \e[0m'
+		grep -w '/usr/sbin/nginx' /etc/csf/csf.pignore || echo 'exe:/usr/sbin/nginx' >> /etc/csf/csf.pignore
+		grep -w '/usr/sbin/nginx-debug' /etc/csf/csf.pignore || echo 'exe:/usr/sbin/nginx-debug' >> /etc/csf/csf.pignore
+	fi
+	if [ ! -L /etc/nginx/sites-enabled ] && [ ! -d /etc/nginx/sites-enabled ] ; then
+		mkdir /etc/nginx/sites-enabled
+	fi
+	if [ ! -f /etc/nginx/conf.d/custom_include.conf ] ; then
+		touch /etc/nginx/conf.d/custom_include.conf
+	fi
+	if [ ! -f /etc/nginx/conf.d/main_custom_include.conf ] ; then
+		touch /etc/nginx/conf.d/main_custom_include.conf
+	fi
+	if [ ! -f /etc/nginx/conf.d/pagespeed_cache.conf ] ; then
+		echo 'pagespeed RedisServer "localhost:6379";' >> /etc/nginx/conf.d/pagespeed_cache.conf
+	fi
+	if [ ! -f /etc/nginx/conf.d/server_identifier.conf ] ; then
+		echo "more_set_headers 'Server: AUTOM8N-nginx';" >> /etc/nginx/conf.d/server_identifier.conf
+	fi
+	if [ ! -f /etc/nginx/conf.d/resolver.conf ] ; then
+		echo "resolver 8.8.8.8 8.8.4.4 valid=300s ipv6=off;" >> /etc/nginx/conf.d/resolver.conf
+		echo "resolver_timeout 5s;" >> /etc/nginx/conf.d/resolver.conf
+	fi
+	if [ ! -d /etc/nginx/ssl ] ; then
+		mkdir /etc/nginx/ssl
+	fi
+	if [ ! -f /etc/nginx/ssl/dhparam.pem ];then
+		openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+	fi
+	if [ ! -d /var/cache/nginx/mod_security ]; then
+		mkdir /var/cache/nginx/mod_security
+	fi
+	chmod 770 /var/cache/nginx/mod_security
+	chgrp nobody /var/cache/nginx/mod_security
+	if [ ! -d /var/log/nginx/modsecurity ];then
+		mkdir /var/log/nginx/modsecurity
+	fi
+	chmod 770 /var/log/nginx/modsecurity
+	chgrp nobody /var/log/nginx/modsecurity
 
-echo -e '\e[93m ########################################################################### \e[0m'
-echo -e '\e[93m #                      A U T O M 8 N . C O M                              # \e[0m'
-echo -e '\e[93m ########################################################################### \e[0m'
+	echo -e '\e[93m ########################################################################### \e[0m'
+	echo -e '\e[93m #                      A U T O M 8 N . C O M                              # \e[0m'
+	echo -e '\e[93m ########################################################################### \e[0m'
+fi
