@@ -6,7 +6,7 @@
 #no sanitation is done as this would be mostly used by a person who knows what he is doing
 OSVERSION=$1
 OPENRESTY_VERSION="1.13.6.1"
-OPENRESTY_RPM_ITER="2.el${OSVERSION}"
+OPENRESTY_RPM_ITER="3.el${OSVERSION}"
 NPS_VERSION="1.12.34.3-stable"
 MY_RUBY_VERSION="2.5.0"
 PASSENGER_VERSION="5.1.12"
