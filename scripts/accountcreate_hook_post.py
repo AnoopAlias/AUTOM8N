@@ -28,7 +28,7 @@ mydict = cpjson["data"]
 cpaneluser = mydict["user"]
 cpaneldomain = mydict["domain"]
 hostingplan = mydict["plan"]
-hostingplan_filename = hostingplan.replace(" ", "_")
+hostingplan_filename = hostingplan.encode('utf-8').replace(" ", "_")
 domain_data_file = installation_path+"/domain-data/"+cpaneldomain
 if not os.path.isfile(domain_data_file):
     if hostingplan_filename == 'undefined' or hostingplan_filename == 'default':

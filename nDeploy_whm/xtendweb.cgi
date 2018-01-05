@@ -154,7 +154,7 @@ print('<div class="panel-body">')  # markera2
 print('<form class="form-inline" action="pkg_profile.cgi" method="post">')
 print('<select name="cpanelpkg">')
 for thepkg in mypkgs.get('package'):
-    pkgname = thepkg.get('name').replace(' ', '_')
+    pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
     print(('<option value="'+pkgname+'">'+pkgname+'</option>'))
 print('</select>')
 print(('<br>'))

@@ -35,8 +35,8 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
 cpaneluser = mydict["user"]
-cur_pkg = mydict["cur_pkg"]
-new_pkg = mydict["new_pkg"]
+cur_pkg = mydict["cur_pkg"].encode('utf-8')
+new_pkg = mydict["new_pkg"].encode('utf-8')
 if new_pkg != cur_pkg:
     if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
         hostingplan_filename = new_pkg.replace(" ", "_")
