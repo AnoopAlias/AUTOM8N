@@ -290,6 +290,10 @@ if not osrelease == 'CloudLinux':
             print(('<br>'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
+            print('<ul class="list-group">')
+            print(('<div class="alert alert-info alert-top">'))
+            print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
+            print(('</div>'))
             print('</div>')  # markera2
             print('</div>')  # markera1
 # Next section start here
