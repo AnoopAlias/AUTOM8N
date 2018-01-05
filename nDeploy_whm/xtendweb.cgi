@@ -268,6 +268,11 @@ if not osrelease == 'CloudLinux':
             print('</div>')  # markerc2
             print('</div>')  # markerc1
             print('</div>')  # markerb1
+            print('<ul class="list-group">')
+            print(('<div class="alert alert-info alert-top">'))
+            print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
+            print(('</div>'))
+            print('</ul>')
             print('</div>')  # markera2
             print('</div>')  # markera1
         else:
