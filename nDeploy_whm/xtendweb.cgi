@@ -98,7 +98,7 @@ print('</li>')
 print('</ul>')
 print('<ul class="list-group">')
 print(('<div class="alert alert-info alert-top">'))
-print(('Nginx support uninterrupted working with graceful config reload and inplace upgrade. Do not restart nginx instead use:<br> <kbd>nginx -s reload</kbd> on config changes <br> <kbd>/opt/nDeploy/scripts/nginx_upgrade_inplace.sh</kbd> on binary upgrade'))
+print(('Nginx support uninterrupted working with graceful config reload and inplace upgrade. Do not restart nginx, instead use:<br> <kbd>nginx -s reload</kbd> on config changes <br> <kbd>/opt/nDeploy/scripts/nginx_upgrade_inplace.sh</kbd> on binary upgrade'))
 print(('</div>'))
 print('</ul>')
 print('</div>')  # div8
