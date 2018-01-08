@@ -151,7 +151,7 @@ def control_php_fpm(trigger):
                 subprocess.call(['/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1'], shell=True)
                 if not os.path.isdir('/var/cpanel/feature_toggles'):
                     os.mkdir('/var/cpanel/feature_toggles')
-                subprocess.call(['touch', '/var/cpanel/feature_toggles/apachefpmjail'], shell=True)
+                subprocess.call(['touch /var/cpanel/feature_toggles/apachefpmjail'], shell=True)
         elif trigger == 'disable-jailphpfpm':
             silentremove('/var/cpanel/feature_toggles/apachefpmjail')
         else:
