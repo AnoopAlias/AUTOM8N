@@ -1,1 +1,0 @@
-load_module "/etc/nginx/modules/ngx_http_testcookie_access_module.so";

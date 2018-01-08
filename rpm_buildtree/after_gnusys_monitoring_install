@@ -1,6 +1,0 @@
-rsync -a /root/.my.cnf /etc/check-mk-agent/mysql.cfg
-wget -O /etc/check-mk-agent/logwatch.cfg https://gnusys.net/nagios/check_mk/agents/cfg_examples/logwatch.cfg
-
-rsync -a /usr/share/check-mk-agent/available-plugins/mk_logwatch /usr/share/check-mk-agent/plugins/
-rsync -a /usr/share/check-mk-agent/available-plugins/mk_mysql /usr/share/check-mk-agent/plugins/
-rsync -a /usr/share/check-mk-agent/available-plugins/nginx_status /usr/share/check-mk-agent/plugins/

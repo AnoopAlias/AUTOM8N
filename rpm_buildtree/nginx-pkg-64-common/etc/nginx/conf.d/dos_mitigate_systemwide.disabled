@@ -1,7 +1,0 @@
-#Tweak timeout settings below in case of a DOS attack
-client_header_timeout  10s;
-client_body_timeout 10s;
-reset_timedout_connection on;
-
-limit_req zone=FLOODVHOST burst=15;
-limit_conn PERSERVER 50;

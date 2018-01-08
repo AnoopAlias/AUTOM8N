@@ -1,1 +1,0 @@
-load_module "/etc/nginx/modules.debug/ngx_pagespeed.so";
