@@ -16,4 +16,4 @@ if [ $? -ne 0 ];then
 fi
 
 # Try autocorrecting Unison file sync issues
-/opt/nDeploy/scripts/unison_filesync_repair.py
+/opt/nDeploy/scripts/fix_unison_filesync.py restart
