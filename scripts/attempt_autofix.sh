@@ -27,21 +27,6 @@ echo -e '\e[93m Attempting to regenerate  nginx default conf  \e[0m'
 # Reloading nginx
 /usr/sbin/nginx -s reload
 
-# Getting the OS release version
-osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
-
-if [ ! -f /opt/nDeploy/conf/secure-php-enabled ] ; then
-  ##Attempt to fix backends issue
-  echo -e '\e[93m Attempting to restart all backend Application servers \e[0m'
-  if [ ${osversion} -le 6 ];then
-  	service ndeploy_backends restart
-  else
-  	systemctl restart ndeploy_backends
-  fi
-else
-  kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')
-fi
-
 ##Restart ndeploy_watcher
 echo -e '\e[93m Attempting to restart ndeploy_watcher daemon \e[0m'
 if [ ${osversion} -le 6 ];then
