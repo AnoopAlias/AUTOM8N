@@ -49,10 +49,9 @@ setup_remi_php(){
 			fi
 			/opt/nDeploy/scripts/update_backend.py add PHP PHP$ver /opt/remi/php$ver/root
 		done
-		/etc/init.d/ndeploy_backends stop
-		/etc/init.d/ndeploy_backends start
-		chkconfig ndeploy_backends on
-		done
+		service ndeploy_backends stop || systemctl stop ndeploy_backends
+		service ndeploy_backends start || systemctl start ndeploy_backends
+		chkconfig ndeploy_backends on || systemctl enable ndeploy_backends
 	}
 
 auto_setup(){
