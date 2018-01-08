@@ -141,6 +141,19 @@ def control_php_fpm(trigger):
             silentremove(installation_path+'/conf/PHPFPM_SELECTOR_ENABLED')
             subprocess.call(['/scripts/rebuildhttpdconf'], shell=True)
             subprocess.call(['/scripts/restartsrv_httpd'], shell=True)
+        elif trigger == 'jailphpfpm':
+            if os.path.isfile('/opt/nDeploy/conf/secure-php-enabled'):
+                print('php-fpm can be chrooted only if master process is run as root')
+                print('Disable  secure-php to setup chrooted php-fpm')
+            else:
+                if os.path.isdir(/opt/nDeploy/conf/nDeploy-cluster):
+                    subprocess.call(['/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1'], shell=True)
+                subprocess.call(['/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1'], shell=True)
+                if not os.path.isdir('/var/cpanel/feature_toggles'):
+                    os.mkdir('/var/cpanel/feature_toggles')
+                subprocess.call(['touch', '/var/cpanel/feature_toggles/apachefpmjail'], shell=True)
+        elif trigger == 'disable-jailphpfpm':
+            silentremove('/var/cpanel/feature_toggles/apachefpmjail')
         else:
             return
 
