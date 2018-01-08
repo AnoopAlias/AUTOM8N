@@ -9,7 +9,7 @@ echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:4430
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
 /opt/nDeploy/scripts/attempt_autofix.sh
-/usr/local/cpanel/libexec/tailwatchd --restart
+service tailwatchd restart
 if [ -f /etc/cpanel/ea4/is_ea4 ];then
 	echo -e '\e[93m !!! Removing conflicting ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
 	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2
@@ -52,7 +52,7 @@ echo -e '\e[93m Reverting apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:443
 sed -i "s/9999/80/" /etc/chkserv.d/httpd
 
-/usr/local/cpanel/libexec/tailwatchd --restart
+service tailwatchd restart
 
 echo -e '\e[93m Rebuilding Apache httpd backend configs.Apache will listen on default ports!  \e[0m'
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
