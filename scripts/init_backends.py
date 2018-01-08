@@ -146,7 +146,7 @@ def control_php_fpm(trigger):
                 print('php-fpm can be chrooted only if master process is run as root')
                 print('Disable  secure-php to setup chrooted php-fpm')
             else:
-                if os.path.isdir(/opt/nDeploy/conf/nDeploy-cluster):
+                if os.path.isdir('/opt/nDeploy/conf/nDeploy-cluster'):
                     subprocess.call(['/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jaildefaultshell value=1'], shell=True)
                 subprocess.call(['/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=jailapache value=1'], shell=True)
                 if not os.path.isdir('/var/cpanel/feature_toggles'):
