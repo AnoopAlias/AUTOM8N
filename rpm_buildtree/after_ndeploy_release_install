@@ -2,6 +2,7 @@
 
 echo -e '\e[93m ########################################################################### \e[0m'
 echo -e '\e[93m #                   A U T O M 8 N . C O M                                 # \e[0m'
-echo -e '\e[93m #      XtendWeb/SimpleR RPM repository use needs a license                # \e[0m'
-echo -e '\e[93m #           Visit https://autom8n.com/plans.html#plans                    # \e[0m'
+echo -e '\e[93m #      Access to this repo is restricted by a license                     # \e[0m'
+echo -e '\e[93m #   Subscribe to a license to avail access to software updates            # \e[0m'
+echo -e '\e[93m #           https://autom8n.com/plans.html#plans                          # \e[0m'
 echo -e '\e[93m ########################################################################### \e[0m'
