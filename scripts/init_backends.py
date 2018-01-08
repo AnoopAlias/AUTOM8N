@@ -38,7 +38,7 @@ def silentremove(filename):
 def control_php_fpm(trigger):
     if "PHP" in backend_data_yaml_parsed:
         php_backends_dict = backend_data_yaml_parsed["PHP"]
-        if trigger == "start":
+        if trigger == "autofix":
             conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
             for filename in conf_list:
                 user, extension = filename.split('.')
@@ -60,7 +60,7 @@ def control_php_fpm(trigger):
                 else:
                     php_fpm_bin = path+"/usr/sbin/php-fpm"
                 subprocess.call(php_fpm_bin+" --prefix "+path+" --fpm-config "+php_fpm_config, shell=True)
-        elif trigger == "faststart":
+        elif trigger == "start":
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
             subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
             for path in list(php_backends_dict.values()):
