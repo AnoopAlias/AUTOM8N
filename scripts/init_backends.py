@@ -47,9 +47,10 @@ def control_php_fpm(trigger):
                 except KeyError:
                     os.remove("/opt/nDeploy/php-fpm.d/"+filename)
                 if os.path.isfile('/var/cpanel/feature_toggles/apachefpmjail'):
-                    user_home = pwd.getpwnam(user).pw_dir
-                    print('VirtfsJailFix:: '+user)
-                    subprocess.call('su - '+user+' -c "touch '+user_home+'/public_html"', shell=True)
+                    if user != 'nobody':
+                        user_home = pwd.getpwnam(user).pw_dir
+                        print('VirtfsJailFix:: '+user)
+                        subprocess.call('su - '+user+' -c "touch '+user_home+'/public_html"', shell=True)
         elif trigger == "start":
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
             subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
