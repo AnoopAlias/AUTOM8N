@@ -134,7 +134,8 @@ def control_php_fpm(trigger):
                     subprocess.call(['systemctl', 'disable', backend_name+'@'+user+'.socket'])
                     subprocess.call(['killall', '-SIGKILL', 'php-fpm'])
             silentremove(installation_path+"/conf/secure-php-enabled")
-            print("Please run /opt/nDeploy/scripts/attempt_autofix.sh to regenerate config")
+            subprocess.call(['systemctl', 'enable', 'ndeploy_backends.service'])
+            subprocess.call(['systemctl', 'restart', 'ndeploy_backends.service'])
         # Following is provided to remove legacy Apache PHPFPM selector plugin
         elif trigger == 'httpd-php-uninstall':
             silentremove('/var/cpanel/templates/apache2_4/vhost.local')
