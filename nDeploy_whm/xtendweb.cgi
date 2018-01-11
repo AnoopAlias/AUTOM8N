@@ -5,7 +5,7 @@ import os
 import cgitb
 import subprocess
 import codecs
-import platform
+import jinja2
 import yaml
 import psutil
 try:
@@ -228,7 +228,17 @@ if not osrelease == 'CloudLinux':
             for owner in resellerlist:
                 ownerslice = "/etc/systemd/system/"+owner+".slice"
                 if not os.path.isfile(ownerslice):
-                    generated_config = '[Slice]\n'
+                    # create the slice from a template
+                    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+                    templateEnv = jinja2.Environment(loader=templateLoader)
+                    if os.path.isfile(installation_path+"/conf/simpler_resources_local.j2"):
+                        TEMPLATE_FILE = "simpler_resources_local.j2"
+                    else:
+                        TEMPLATE_FILE = "simpler_resources.j2"
+                    template = templateEnv.get_template(TEMPLATE_FILE)
+                    templateVars = {"OWNER": owner
+                                    }
+                    generated_config = template.render(templateVars)
                     with codecs.open(ownerslice, 'w', 'utf-8') as confout:
                         confout.write(generated_config)
             print('<div class="panel panel-default">')  # markera1
