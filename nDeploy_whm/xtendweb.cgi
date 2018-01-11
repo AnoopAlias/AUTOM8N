@@ -215,7 +215,7 @@ print('</div>')  # markera1
 with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
 if not osrelease == 'CloudLinux':
-    if 'el7' in platform.uname()[2]:
+    if os.path.isfile('/usr/bin/systemctl'):
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
             # The API call and ensuring slices are present
