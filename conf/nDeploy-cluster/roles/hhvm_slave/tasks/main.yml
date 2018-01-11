@@ -4,4 +4,4 @@
   template:
     src: hhvm_secure_ini_temp.j2
     dest: /opt/nDeploy/conf/hhvm_extra.ini
-    force: yes
+    #force: no
