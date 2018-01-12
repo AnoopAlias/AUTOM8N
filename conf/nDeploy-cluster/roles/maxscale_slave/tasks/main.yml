@@ -45,6 +45,7 @@
   yum:
     name: https://downloads.mariadb.com/MaxScale/2.1.3/rhel/7/x86_64/maxscale-2.1.3-1.rhel.7.x86_64.rpm
     state: present
+    validate_certs: no
   when:
     - ansible_lsb.major_release|int >= 7
     - inventory_hostname != groups['ndeploydbslave'][0]
@@ -53,6 +54,7 @@
   yum:
     name: https://downloads.mariadb.com/MaxScale/2.1.3/rhel/6/x86_64/maxscale-2.1.3-1.rhel.6.x86_64.rpm
     state: present
+    validate_certs: no
   when:
     - ansible_lsb.major_release|int < 7
     - inventory_hostname != groups['ndeploydbslave'][0]
