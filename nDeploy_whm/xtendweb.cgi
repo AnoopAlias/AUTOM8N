@@ -8,6 +8,7 @@ import codecs
 import jinja2
 import yaml
 import psutil
+import platform
 try:
     import simplejson as json
 except ImportError:
@@ -67,7 +68,11 @@ print('<li class="list-group-item">')
 print('<div class="row">')
 nginx_status = False
 for myprocess in psutil.process_iter():
-    mycmdline = myprocess.cmdline()
+    # Workaround for Python 2.6
+    if platform.python_version().startswith('2.6'):
+        mycmdline = myprocess.cmdline
+    else:
+        mycmdline = myprocess.cmdline()
     if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
         nginx_status = True
         break
@@ -83,7 +88,11 @@ print('<li class="list-group-item">')
 print('<div class="row">')
 watcher_status = False
 for myprocess in psutil.process_iter():
-    mycmdline = myprocess.cmdline()
+    # Workaround for Python 2.6
+    if platform.python_version().startswith('2.6'):
+        mycmdline = myprocess.cmdline
+    else:
+        mycmdline = myprocess.cmdline()
     if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
         watcher_status = True
         break
@@ -116,7 +125,11 @@ if os.path.isfile(cluster_config_file):
         print('<div class="row">')
         filesync_status = False
         for myprocess in psutil.process_iter():
-            mycmdline = myprocess.cmdline()
+            # Workaround for Python 2.6
+            if platform.python_version().startswith('2.6'):
+                mycmdline = myprocess.cmdline
+            else:
+                mycmdline = myprocess.cmdline()
             if '/usr/bin/unison' in mycmdline and servername in mycmdline:
                 filesync_status = True
                 break
