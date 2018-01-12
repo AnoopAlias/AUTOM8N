@@ -6,6 +6,7 @@ import psutil
 import yaml
 import subprocess
 import argparse
+import platform
 
 
 __author__ = "Anoop P Alias"
@@ -28,7 +29,11 @@ def fix_unison(trigger):
             for servername in cluster_data_yaml_parsed.keys():
                 filesync_ok = False
                 for myprocess in psutil.process_iter():
-                    mycmdline = myprocess.cmdline()
+                    # Workaround for Python 2.6
+                    if platform.python_version().startswith('2.6'):
+                        mycmdline = myprocess.cmdline
+                    else:
+                        mycmdline = myprocess.cmdline()
                     if '/usr/bin/unison' in mycmdline and servername in mycmdline:
                         filesync_ok = True
                     else:
