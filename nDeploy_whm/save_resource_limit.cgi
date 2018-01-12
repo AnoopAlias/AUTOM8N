@@ -3,9 +3,7 @@
 
 import cgitb
 import subprocess
-import os
 import cgi
-import shutil
 import psutil
 try:
     from configparser import ConfigParser
@@ -49,48 +47,46 @@ print('<li class="active">Server Config</li>')
 print('</ol>')
 
 if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and form.getvalue('memory') and form.getvalue('blockio'):
-  if form.getvalue('mode') == 'service':
-    myservice = form.getvalue('unit')+".service"
-  elif form.getvalue('mode') == 'user':
-    myservice = form.getvalue('unit')+".slice"
-  print('<div class="panel panel-default">')
-  print(('<div class="panel-heading"><h3 class="panel-title">Save Resource limit:'+myservice+'</h3></div>'))
-  print('<div class="panel-body">')  # marker6
-  if form.getvalue('cpu') == '50':
-   subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUShares=512', shell=True)
-  elif form.getvalue('cpu') == '75':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUShares=768', shell=True)
-  elif form.getvalue('cpu') == '100':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUShares=1024', shell=True)
-  if form.getvalue('blockio') == '50':
-   subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOWeight=500', shell=True)
-  elif form.getvalue('blockio') == '75':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOWeight=750', shell=True)
-  elif form.getvalue('blockio') == '100':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOWeight=1000', shell=True)
-  mymem = psutil.virtual_memory().total
-  mem_threequarter = float(mymem) * 0.75
-  mem_half = float(mymem) / 2.0
-  if form.getvalue('memory') == '50':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(int(mem_half)), shell=True)
-  elif form.getvalue('memory') == '75':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(int(mem_threequarter)), shell=True)
-  elif form.getvalue('memory') == '100':
-    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(mymem), shell=True)
-  subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUAccounting=yes', shell=True)
-  subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOAccounting=yes', shell=True)
-  subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryAccounting=yes', shell=True)
-  subprocess.call('/usr/bin/systemctl daemon-reload', shell=True)
-  print('<div class="icon-box">')
-  print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Resource Settings updated')
-  print('</div>')
+    if form.getvalue('mode') == 'service':
+        myservice = form.getvalue('unit')+".service"
+    elif form.getvalue('mode') == 'user':
+        myservice = form.getvalue('unit')+".slice"
+    print('<div class="panel panel-default">')
+    print(('<div class="panel-heading"><h3 class="panel-title">Save Resource limit:'+myservice+'</h3></div>'))
+    print('<div class="panel-body">')  # marker6
+    if form.getvalue('cpu') == '50':
+        subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUShares=512', shell=True)
+    elif form.getvalue('cpu') == '75':
+        subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUShares=768', shell=True)
+    elif form.getvalue('cpu') == '100':
+        subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUShares=1024', shell=True)
+    if form.getvalue('blockio') == '50':
+        subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOWeight=500', shell=True)
+    elif form.getvalue('blockio') == '75':
+        subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOWeight=750', shell=True)
+    elif form.getvalue('blockio') == '100':
+        subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOWeight=1000', shell=True)
+    mymem = psutil.virtual_memory().total
+    mem_threequarter = float(mymem) * 0.75
+    mem_half = float(mymem) / 2.0
+    if form.getvalue('memory') == '50':
+        subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(int(mem_half)), shell=True)
+    elif form.getvalue('memory') == '75':
+        subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(int(mem_threequarter)), shell=True)
+    elif form.getvalue('memory') == '100':
+        subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryLimit='+str(mymem), shell=True)
+    subprocess.call('/usr/bin/systemctl set-property '+myservice+' CPUAccounting=yes', shell=True)
+    subprocess.call('/usr/bin/systemctl set-property '+myservice+' BlockIOAccounting=yes', shell=True)
+    subprocess.call('/usr/bin/systemctl set-property '+myservice+' MemoryAccounting=yes', shell=True)
+    subprocess.call('/usr/bin/systemctl daemon-reload', shell=True)
+    print('<div class="icon-box">')
+    print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Resource Settings updated')
+    print('</div>')
 
-  print('</div>') # markera2
-  print('</div>') # markera1
-
+    print('</div>')  # markera2
+    print('</div>')  # markera1
 else:
-  print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
-
+    print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
 print('</div>')
