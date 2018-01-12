@@ -159,7 +159,11 @@ if os.path.isfile(cluster_config_file):
     print('</div>')  # div8
     print('</div>')  # div7
 # Next section start here
-listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
+# Workaround for Python 2.6
+if platform.python_version().startswith('2.6'):
+    listpkgs = subprocess.Popen('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', stdout=subprocess.PIPE, shell=True).communicate()[0]
+else:
+    listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
 mypkgs = json.loads(listpkgs)
 print('<div class="panel panel-default">')  # markera1
 print('<div class="panel-heading"><h3 class="panel-title">Map cPanel pkg to nginx setting</h3></div>')
