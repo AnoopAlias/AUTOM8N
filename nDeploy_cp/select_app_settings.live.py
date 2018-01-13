@@ -97,14 +97,15 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('<div class="alert alert-danger">ERROR: app template data file error</div>')
             sys.exit(0)
         # Ok we are done with getting the settings,now lets present it to the user
+        print('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'</strong></div>')
         print('<div class="panel panel-default">')  # marker3
-        print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div>'))
+        print(('<div class="panel-heading"><h3 class="panel-title">Domain</h3></div>'))
         print('<div class="panel-body">')  # marker4
         print('<form id="config" class="form-inline config-save" action="save_app_settings.live.py" method="post">')
         if backend_category == 'PROXY':
-            print(('<div class="alert alert-info alert-top">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
+            print(('<div class="alert alert-info">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
         else:
-            print(('<div class="alert alert-info alert-top">Your current project is <span class="label label-primary">'+apptemplate_description+'</span> on native <span class="label label-primary">NGINX</span> with <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> application server</div>'))
+            print(('<div class="alert alert-success">Your current project is <span class="label label-success">'+apptemplate_description+'</span> on native <span class="label label-success">NGINX</span> with <span class="label label-success">'+backend_category+'</span> <span class="label label-success">'+backend_version+'</span> application server</div>'))
         print(('<div class="alert alert-info alert-top">You selected <span class="label label-primary">'+mybackend+'</span> as the new backend, select the version and template for this backend below</div>'))
         backends_dict = backend_data_yaml_parsed.get(mybackend)
         new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
