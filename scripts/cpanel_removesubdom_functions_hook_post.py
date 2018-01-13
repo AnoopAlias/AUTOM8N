@@ -6,6 +6,7 @@ import json
 import subprocess
 import os
 import shutil
+import yaml
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -15,6 +16,7 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 nginx_dir = "/etc/nginx/sites-enabled/"
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 
 # Define a function to silently remove files
@@ -40,13 +42,12 @@ if status == 1:
     silentremove(installation_path+"/domain-data/"+conf_sub_domain)
     silentremove(nginx_dir+conf_sub_domain+".conf")
     silentremove(nginx_dir+conf_sub_domain+".include")
-    silentremove(nginx_dir+conf_sub_domain+".nxapi.wl")
-    if os.path.isfile(installation_path+"/conf/ndeploy_cluster_slaves"):
-        with open(installation_path+"/conf/ndeploy_cluster_slaves") as cluster_slave_list:
-            for server in cluster_slave_list:
-                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+conf_sub_domain+".conf")
-                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+conf_sub_domain+".include")
-                silentremove("/etc/nginx/"+server.replace('\n', '')+"/"+conf_sub_domain+".nxapi.wl")
+    if os.path.isfile(cluster_config_file):
+        with open(cluster_config_file, 'r') as cluster_data_yaml:
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+        for server in cluster_data_yaml_parsed.keys():
+            silentremove("/etc/nginx/"+server+"/"+conf_sub_domain+".conf")
+            silentremove("/etc/nginx/"+server+"/"+conf_sub_domain+".include")
     if os.path.exists('/var/resin/hosts/'+conf_sub_domain):
         shutil.rmtree('/var/resin/hosts/'+conf_sub_domain)
     subprocess.Popen("/usr/sbin/nginx -s reload", shell=True)

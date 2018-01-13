@@ -25,15 +25,14 @@
 # brunus.v@gmail.com or @brunus_V on tweeter
 # ---------------------------------------------------------------------------------------------
 
-
 job1:
-  label: Watch /var/cpanel/userdata
-  watch: /var/cpanel/userdata
-  exclude: ['/var/cpanel/userdata/nobody']
-  events: ['create', 'modify', 'delete']
+  label: Watch /var/cpanel/ssl/apache_tls
+  watch: /var/cpanel/ssl/apache_tls
+  exclude: []
+  events: ['create', 'modify']
   options: []
   recursive: true
-  command: /opt/nDeploy/scripts/event_trigger.sh $filename 0 $tflags
+  command: /opt/nDeploy/scripts/event_trigger.sh $filename 2 $tflags
 job2:
   label: Watch /opt/nDeploy/domain-data
   watch: /opt/nDeploy/domain-data
@@ -42,3 +41,11 @@ job2:
   options: []
   recursive: false
   command: /opt/nDeploy/scripts/event_trigger.sh $filename 1 $tflags
+job3:
+  label: Watch /etc/ips
+  watch: /etc/ips
+  exclude: []
+  events: ['modify']
+  options: []
+  recursive: false
+  command: /opt/nDeploy/scripts/generate_default_vhost_config.py

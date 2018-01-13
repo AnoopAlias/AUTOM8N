@@ -1,0 +1,9 @@
+#A NodeJS application in subdir server.js;
+
+alias {{ DOCUMENTROOT }}/{{ SUBDIR }}/public$1;
+passenger_base_uri /{{ SUBDIR }};
+passenger_document_root {{ DOCUMENTROOT }}/{{ SUBDIR }}/public;
+passenger_enabled on;
+passenger_app_type node;
+passenger_nodejs {{ PATHTONODEJS }};
+passenger_startup_file server.js;

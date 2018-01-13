@@ -1,0 +1,11 @@
+---
+
+- file:
+    path: /var/cpanel/cluster/root/config
+    state: directory
+    mode: 0700
+    recurse: yes
+
+- file:
+    path: /var/cpanel/useclusteringdns
+    state: touch

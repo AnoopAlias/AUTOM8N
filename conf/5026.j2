@@ -1,34 +1,31 @@
 #Wordpress + FastCGI microcaching
 
+
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
+##########Yoast###############
+#Yoast SEO Sitemaps
+location ~ ([^/]*)sitemap(.*).x(m|s)l$ {
+## this redirects sitemap.xml to /sitemap_index.xml
+rewrite ^/sitemap.xml$ /sitemap_index.xml permanent;
+## this makes the XML sitemaps work
+rewrite ^/([a-z]+)?-?sitemap.xsl$ /index.php?xsl=$1 last;
+rewrite ^/sitemap_index.xml$ /index.php?sitemap=1 last;
+rewrite ^/([^/]+?)-sitemap([0-9]+)?.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
+## The following lines are optional for the premium extensions
+## News SEO
+rewrite ^/news-sitemap.xml$ /index.php?sitemap=wpseo_news last;
+## Local SEO
+rewrite ^/locations.kml$ /index.php?sitemap=wpseo_local_kml last;
+rewrite ^/geo-sitemap.xml$ /index.php?sitemap=wpseo_local last;
+## Video SEO
+rewrite ^/video-sitemap.xsl$ /index.php?xsl=video last;
+}
+##########Yoast###############
+
+
 location / {
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
-
 
 #If request method is POST we add a _mcnc cookie
 if ($requestnocache = "1") {
@@ -38,14 +35,6 @@ add_header X-Microcachable "0";
 
 try_files $uri $uri/ /index.php?q=$uri&$args;
 }
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
@@ -57,31 +46,13 @@ include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
-location ~ \.php$ {
+location = /xmlrpc.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
 
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
+location ~ \.php$ {
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
@@ -89,14 +60,17 @@ fastcgi_index index.php;
 
 #MicroCache
 fastcgi_cache FASTCGIMICROCACHE;
-fastcgi_cache_bypass $requestnocache $querystringnc $wpcookienocache $wpurinocache;
-fastcgi_no_cache $requestnocache $querystringnc $wpcookienocache $wpurinocache;
+fastcgi_cache_bypass $cookie__mcnc;
+fastcgi_no_cache $cookie__mcnc;
 fastcgi_cache_valid any 1s;
 fastcgi_cache_use_stale updating error timeout invalid_header http_500;
 fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
 fastcgi_cache_lock on;
 
+add_header X-Cache-Status $upstream_cache_status;
+
 include /etc/nginx/fastcgi_params*;
+
 }
 
 include /etc/nginx/conf.d/cpanel_services.conf;

@@ -1,0 +1,105 @@
+---
+
+- name: check if Mysql is setup
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
+  register: mysqlsetup
+
+- name: Disable chkservd monitoring of mysql-ssl
+  lineinfile:
+    path: /etc/chkserv.d/chkservd.conf
+    state: absent
+    line: 'mysql:1'
+
+- name: kill any tailwatchd process
+  shell: "killall -9 tailwatchd"
+  ignore_errors: yes
+
+- name: restart tailwatchd
+  shell: "/usr/local/cpanel/libexec/tailwatchd --start"
+  ignore_errors: yes
+
+- name: create the mysql-ssl directory
+  file:
+    path: /etc/mysql-ssl
+    state: directory
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Secure mysql
+  template:
+    src: genssl.j2
+    dest: /root/xtendweb_mysql_secure.sh
+    mode: 755
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Generate certs
+  shell: /root/xtendweb_mysql_secure.sh
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Setup my.cnf
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Update socket path in /root/.my.cnf
+  ini_file:
+    path: /root/.my.cnf
+    section: client
+    option: socket
+    value: /var/lib/mysql/mysql.sock
+    backup: yes
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Restart MariaDB server
+  service: name=mysql enabled=yes state=restarted
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Generate mysql grants for master
+  template:
+    src: mysqlgrants.j2
+    dest: /root/xtendweb_mysql_grants.sql
+
+- name: Setup mysql grants for master
+  shell: mysql < /root/xtendweb_mysql_grants.sql
+  ignore_errors: yes
+
+- name: Generate mysql grants for slaves
+  template:
+    src: mysqlgrants_slave.j2
+    dest: "/root/xtendweb_mysql_grants_{{ item }}.sql"
+  with_items: "{{ groups.ndeployslaves }}"
+
+
+- name: Setup mysql grants for slaves
+  shell: "mysql < /root/xtendweb_mysql_grants_{{ item }}.sql"
+  ignore_errors: yes
+  with_items: "{{ groups.ndeployslaves }}"
+
+
+- name: get the master log and pos
+  mysql_replication: mode=getmaster
+  register: masterrepl
+
+- name: Dump all databases
+  mysql_db:
+    state: dump
+    name: all
+    target: /root/xtendweb_mysql_all.sql
+    single_transaction: True
+  when:
+    - mysqlsetup.stat.exists == false
+
+- set_fact:
+    masterlog: "{{ masterrepl.File }}"
+    masterpos: "{{ masterrepl.Position }}"
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch

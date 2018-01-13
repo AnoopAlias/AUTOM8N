@@ -1,0 +1,8 @@
+---
+
+- name: Copy EA4 and MaraDB repos to slave
+  copy: src={{ item }} dest={{ item }}
+  with_fileglob:
+    - /etc/yum.repos.d/EA4.repo
+    - /etc/yum.repos.d/MariaDB*
+    

@@ -9,4 +9,5 @@
   template:
     src: default.prf.j2
     dest: /root/.unison/{{ item }}.prf
+    # force: no
   with_items: "{{ groups['ndeployslaves'] }}"

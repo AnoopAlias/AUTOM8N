@@ -1,0 +1,53 @@
+[mysqld]
+log-error=/var/lib/mysql/{{ ansible_nodename}}.err
+innodb_file_per_table=1
+performance-schema=0
+max_allowed_packet=268435456
+wait_timeout = 28800
+connect_timeout = 600
+max_connections =  1000
+table_open_cache = 10000
+tmp_table_size = 64M
+max_heap_table_size = 64M
+
+
+ssl-ca=/etc/mysql-ssl/ca-cert.pem
+ssl-cert=/etc/mysql-ssl/server-cert.pem
+ssl-key=/etc/mysql-ssl/server-key.pem
+
+socket = /var/lib/mysql/mysql.sock
+port = 13306
+
+#the server-id and auto_increment_offset values must be unique for each server in the cluster
+gtid-domain-id=1
+server-id={{ server_id }}
+auto_increment_offset=1
+auto_increment_increment={{ server_id }}
+
+
+# binlog and relaylog size is set to 52 Mb
+log_bin=/var/lib/mysql/binlog-{{ ansible_nodename }}
+max_binlog_size=52428800
+expire_logs_days=3
+binlog-format=row
+
+relay-log=/var/lib/mysql/relylog-{{ ansible_nodename }}
+max-relay-log-size=52428800
+relay-log-recovery=1
+relay_log_purge=1
+relay_log_space_limit=5368709120
+
+binlog-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
+replicate-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
+
+[mysql]
+socket = /var/lib/mysql/mysql.sock
+[mysqldump]
+socket = /var/lib/mysql/mysql.sock
+[mysqladmin]
+socket = /var/lib/mysql/mysql.sock
+
+[client]
+ssl-ca=/etc/mysql-ssl/ca-cert.pem
+ssl-cert=/etc/mysql-ssl/client-cert.pem
+ssl-key=/etc/mysql-ssl/client-key.pem

@@ -1,0 +1,2 @@
+CHANGE MASTER TO MASTER_HOST='{{ hostvars[groups['ndeploymaster'][0]]['mainip'] }}', MASTER_LOG_FILE = '{{ hostvars[groups['ndeploymaster'][0]]['masterlog'] }}',MASTER_LOG_POS = {{ hostvars[groups['ndeploymaster'][0]]['masterpos'] }}, MASTER_USER='maxscale',MASTER_PASSWORD={{ MYSQLPASS }}, MASTER_SSL=1, MASTER_PORT=13306;
+START SLAVE;

@@ -1,0 +1,8 @@
+{% for host in groups['ndeploymaster'] %}
+{{ host }}
+{{ hostvars[host]['mainip'] }}
+{% endfor %}
+{% for host in groups['ndeployslaves'] %}
+{{ host }}
+{{ hostvars[host]['mainip'] }}
+{% endfor %}

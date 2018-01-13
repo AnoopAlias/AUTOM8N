@@ -1,0 +1,30 @@
+---
+
+- name: check if maxscale proxy is setup
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE
+  register: maxscale
+
+- name: Setup MaxScale
+  template:
+    src: maxscale.cnf.j2
+    dest: /etc/maxscale.cnf
+  when:
+    - maxscale.stat.exists == false
+
+- name: Start MaxScale
+  service:
+    name: maxscale
+    enabled: yes
+    state: started
+  when:
+    - ansible_lsb.major_release|int >= 7
+
+- name: Start maxscale
+  shell: service maxscale restart && chkconfig maxscale on
+  when:
+    - ansible_lsb.major_release|int < 7
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch

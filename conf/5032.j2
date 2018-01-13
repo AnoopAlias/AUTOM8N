@@ -1,0 +1,85 @@
+# Drupal+Boost
+# Source: https://github.com/yhager/nginx_drupal
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+# disallow access to version control directory, but return 404, not to disclose information
+location /.git {
+return 404;
+}
+
+# serve imagecache files directly or redirect to drupal if they do not exist
+location ~* imagecache {
+access_log off;
+expires 30d;
+try_files $uri @drupal;
+}
+
+
+###
+### advagg_css and advagg_js support
+###
+location ~* files/advagg_(?:css|js)/ {
+gzip_static on;
+access_log  off;
+expires     max;
+add_header  ETag "";
+add_header  Cache-Control "max-age=31449600, no-transform, public";
+try_files   $uri @drupal;
+}
+
+# Drupal 7 image stylef
+location ~* image/generate {
+access_log off;
+expires 30d;
+try_files $uri @drupal;
+}
+
+# This rewrites pages to be sent to PHP processing
+location @drupal {
+index index.php;
+if (!-e $request_filename) {
+rewrite ^/(.*)$ /index.php?q=$1 last;
+}
+}
+
+location / {
+try_files $uri @cache;
+}
+
+# This will try to see if we have a boost file in place. no harm done if this is not used
+location @cache {
+# queries, drupal cookies, or not GET methods, all require PHP processing.
+if ($query_string ~ ".+") {
+return 405;
+}
+if ($http_cookie ~ "DRUPAL_UID" ) {
+return 405;
+}
+if ($request_method !~ ^(GET|HEAD)$ ) {
+return 405;
+}
+error_page 405 = @drupal;
+# Drupal uses 1978 - I am 4 years older than Dries :)
+add_header Expires "Tue, 22 Sep 1974 08:00:00 GMT";
+add_header Cache-Control "must-revalidate, post-check=0, pre-check=0";
+try_files /cache/normal/$host/${uri}_.html /cache/perm/$host/${uri}_.css /cache/perm/$host/${uri}_.js /cache/$host/0$uri.html /cache/$host/0${uri}/index.html @drupal;
+}
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+
+location ~ '\.php$|^/update.php' {
+
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+
+}
+
+include /etc/nginx/conf.d/cpanel_services.conf;

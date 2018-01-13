@@ -1,1 +1,0 @@
-load_module "/etc/nginx/modules/ngx_http_naxsi_module.so";

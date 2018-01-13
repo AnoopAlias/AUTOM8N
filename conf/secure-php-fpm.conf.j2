@@ -111,7 +111,7 @@ systemd_interval = 10
 ; Start a new pool named '{{ CPANELUSER }}'.
 ; the variable $pool can we used in any directive and will be replaced by the
 ; pool name ('{{ CPANELUSER }}' here)
-[{{ CPANELUSER }}]
+[{{ CPANELUSER }}_pool]
 
 ; Per pool prefix
 ; It only applies on the following directives:
@@ -129,8 +129,8 @@ systemd_interval = 10
 ; Unix user/group of processes
 ; Note: The user is mandatory. If the group is not set, the default user's group
 ;       will be used.
-user = $pool
-group = $pool
+user = {{ CPANELUSER }}
+group = {{ CPANELUSER }}
 
 ; The address on which to accept FastCGI requests.
 ; Valid syntaxes are:
@@ -140,7 +140,7 @@ group = $pool
 ;                            specific port;
 ;   '/path/to/unix/socket' - to listen on a unix socket.
 ; Note: This value is mandatory.
-listen = var/run/$pool.sock
+listen = var/run/{{ CPANELUSER }}.sock
 
 ; Set listen(2) backlog.
 ; Default Value: 128 (-1 on FreeBSD and OpenBSD)
@@ -206,7 +206,7 @@ pm = ondemand
 ; forget to tweak pm.* to fit your needs.
 ; Note: Used when pm is set to 'static', 'dynamic' or 'ondemand'
 ; Note: This value is mandatory.
-pm.max_children = 64
+pm.max_children = {{ PHPMAXCHILDREN }}
 
 ; The number of child processes created on startup.
 ; Note: Used only when pm is set to 'dynamic'
@@ -504,7 +504,9 @@ env[TEMP] = {{ HOMEDIR }}/tmp
 
 ; Default Value: nothing is defined by default except the values in php.ini and
 ;                specified at startup with the -d argument
+php_value[session.save_path] = {{ HOMEDIR }}/tmp
 php_admin_flag[log_errors] = on
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
 php_admin_value[error_log] = {{ HOMEDIR }}/logs/php_error_log
 php_admin_value[opcache.restrict_api] = {{ HOMEDIR }}
 php_admin_value[opcache.blacklist_filename] = {{ HOMEDIR }}/opcache-blacklist.txt

@@ -13,7 +13,8 @@ hhvm.log.always_log_unhandled_exceptions = true
 hhvm.log.runtime_error_reporting_level = 8191
 hhvm.log.use_log_file = true
 hhvm.log.use_syslog = false
-hhvm.log.file = {{ HOMEDIR }}/log/hhvm.log
+hhvm.log.file = {{ HOMEDIR }}/logs/hhvm.log
+session.save_path = {{ HOMEDIR }}/tmp
 hhvm.log.header = true
 hhvm.log.native_stack_trace = true
 
@@ -24,6 +25,5 @@ hhvm.jit_a_size = 100000000
 hhvm.jit_a_frozen_size = 100000000
 hhvm.jit_a_cold_size = 33000000
 
-hhvm.mysql.socket = /var/lib/mysql/mysql.sock
 hhvm.mysql.typed_results = false
 hhvm.mysql.slow_query_threshold = 5000

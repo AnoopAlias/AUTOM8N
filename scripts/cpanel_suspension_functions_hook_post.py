@@ -4,6 +4,7 @@
 import sys
 import json
 import subprocess
+import os
 
 
 __author__ = "Anoop P Alias"
@@ -13,6 +14,7 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]

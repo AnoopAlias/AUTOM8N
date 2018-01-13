@@ -1,6 +1,5 @@
 #!/bin/bash
 # Author: Anoop P Alias
-# SetEnvIf X-Forwarded-Proto patch provided by https://github.com/mdpuma
 
 function enable {
 echo -e '\e[93m Generating the default nginx vhosts \e[0m'
@@ -10,8 +9,14 @@ echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:4430
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
 /opt/nDeploy/scripts/attempt_autofix.sh
-/usr/local/cpanel/libexec/tailwatchd --restart
-
+service tailwatchd restart
+if [ -f /etc/cpanel/ea4/is_ea4 ];then
+	echo -e '\e[93m !!! Removing conflicting ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
+	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2
+	yum -y install ea-apache24-mod_remoteip
+	REMOTEIPINCLUDE=$'\nInclude "/etc/nginx/conf.d/httpd_mod_remoteip.include"'
+	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || echo ${REMOTEIPINCLUDE} >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf
+fi
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
 /scripts/rebuildhttpdconf
 /scripts/restartsrv httpd
@@ -20,20 +25,22 @@ if [ ${osversion} -le 6 ];then
 	service nginx restart
 	service ndeploy_watcher restart
 	service ndeploy_backends restart
-	service memcached restart
 	chkconfig nginx on
 	chkconfig ndeploy_watcher on
 	chkconfig ndeploy_backends on
-	chkconfig memcached on
 else
+	# test for OpenVZ/Virtuozzo platform
+	/usr/sbin/sysctl -w net.core.somaxconn=16384
+	if [ $? -ne 0 ];then
+		sed -i 's/ExecStartPre=\/usr\/sbin\/sysctl -w net.core.netdev_max_backlog/#ExecStartPre=\/usr\/sbin\/sysctl -w net.core.netdev_max_backlog/' /etc/systemd/system/nginx.service
+		systemctl daemon-reload
+	fi
 	systemctl restart nginx
 	systemctl restart ndeploy_watcher
 	systemctl restart ndeploy_backends
-	systemctl restart memcached
 	systemctl enable nginx
 	systemctl enable ndeploy_watcher
 	systemctl enable ndeploy_backends
-	systemctl enable memcached
 fi
 
 }
@@ -45,7 +52,7 @@ echo -e '\e[93m Reverting apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:443
 sed -i "s/9999/80/" /etc/chkserv.d/httpd
 
-/usr/local/cpanel/libexec/tailwatchd --restart
+service tailwatchd restart
 
 echo -e '\e[93m Rebuilding Apache httpd backend configs.Apache will listen on default ports!  \e[0m'
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)

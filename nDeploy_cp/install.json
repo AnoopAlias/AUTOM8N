@@ -9,7 +9,7 @@
        "icon" : "xtendweb.png",
        "group_id" : "xtendweb_grp",
        "order" : 1,
-       "name" : "XtendWeb nginX cluster control",
+       "name" : "A U T O M 8 N",
        "type" : "link",
        "id" : "xtendweb",
        "uri" : "nDeploy_cp/xtendweb.live.py",

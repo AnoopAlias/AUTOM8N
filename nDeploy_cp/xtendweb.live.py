@@ -4,7 +4,6 @@
 import os
 import socket
 import cgitb
-import psutil
 try:
     import simplejson as json
 except ImportError:
@@ -32,6 +31,7 @@ def close_cpanel_liveapisock():
     sock.sendall('<cpanelxml shutdown="1" />')
     sock.close()
 
+
 close_cpanel_liveapisock()
 cpaneluser = os.environ["USER"]
 cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
@@ -55,21 +55,32 @@ print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')
-print('<div class="row">')
-print('<div class="col-md-6 col-md-offset-3">')
+print('<div id="main-container" class="container text-center">')  # marker1
+print('<div class="row">')  # marker2
+print('<div class="col-md-6 col-md-offset-3">')  # marker3
 print('<div class="logo">')
-print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>')
+print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
 print('<h4>XtendWeb</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-home"></span></a></li>')
+print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
 print('<li class="active">Select domain</li>')
 print('</ol>')
-print('<div class="panel panel-default">')
-print('<div class="panel-heading"><h3 class="panel-title">Select domain to configure:</h3></div>')
-print('<div class="panel-body">')
-print('<form class="form-inline" action="selector.live.py" method="post">')
+# Next section start here
+print('<div class="panel panel-default">')  # marker6
+print('<div class="panel-heading"><h3 class="panel-title">Switch domains automatically</h3></div>')
+print('<div class="panel-body">')  # marker7
+print('<form class="form-group" action="autoswitch.live.py">')
+print('<input class="btn btn-xs btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
+print(('<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
+print('</form>')
+print('</div>')  # marker7
+print('</div>')  # marker6
+# Next section start here
+print('<div class="panel panel-default">')  # marker4
+print('<div class="panel-heading"><h3 class="panel-title">Select domain to configure manually</h3></div>')
+print('<div class="panel-body">')  # marker5
+print('<form class="form-inline" action="app_settings.live.py" method="post">')
 print('<select name="domain">')
 print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
 for domain_in_subdomains in sub_domains:
@@ -83,28 +94,12 @@ for the_addon_domain in addon_domains_dict.keys():
     print(('<option value="'+addon_domains_dict.get(the_addon_domain)+'">'+the_addon_domain+'</option>'))
 print('</select>')
 print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
-print('</div>')
-print('<div class="alert alert-info">')
-if os.path.isfile(cluster_config_file):
-    with open(cluster_config_file, 'r') as cluster_data_yaml:
-        cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-    print('Nginx high available cluster is ACTIVE and config+files are synced to:')
-    print('<ul class="list text-left">')
-    for servername in cluster_data_yaml_parsed.keys():
-        filesync_status = "OFF"
-        for myprocess in psutil.process_iter():
-            mycmdline = myprocess.cmdline()
-            if '/usr/bin/unison' in mycmdline and servername in mycmdline:
-                filesync_status = "ON"
-        print(servername+' FileSync::'+filesync_status)
-    print('</ul>')
-else:
-    print('Nginx high available cluster is not enabled. Please contact service provider')
-print('</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> <a target="_blank" href="http://xtendweb.gnusys.net/">XtendWeb Docs</a></small></div>')
-print('</div>')
-print('</div>')
-print('</div>')
-print('</div>')
+print('</form>')
+print('</div>')  # marker5
+print('</div>')  # marker4
+print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+print('</div>')  # marker3
+print('</div>')  # marker2
+print('</div>')  # # marker1
 print('</body>')
 print('</html>')

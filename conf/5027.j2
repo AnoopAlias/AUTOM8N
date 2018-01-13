@@ -1,5 +1,6 @@
 #Wordpress multisite (subdirectory)
 
+
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
@@ -11,42 +12,8 @@ rewrite ^(/[^/]+)?(/.*\.php) $2 last;
 }
 
 location / {
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
-
-
 try_files $uri $uri/ /index.php?q=$uri&$args;
 }
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
@@ -58,37 +25,19 @@ include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
+location = /xmlrpc.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
 location ~ \.php$ {
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-{% if NAXSI_WHITELIST == 'wordpress' %}
-include /etc/nginx/naxsi.d/wordpress.rules;
-{% endif %}
-{% if NAXSI_WHITELIST == 'drupal' %}
-include /etc/nginx/naxsi.d/drupal.rules;
-{% endif %}
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
-
 
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
+
 }
 
 include /etc/nginx/conf.d/cpanel_services.conf;

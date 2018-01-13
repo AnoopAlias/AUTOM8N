@@ -15,17 +15,9 @@ rewrite ^/knowledgebase/([0-9]+)/([^/]*)$ /knowledgebase.php?action=displaycat&c
 rewrite ^/knowledgebase$ /knowledgebase.php last;
 
 location / {
+
 try_files $uri $uri/ /index.php;
 }
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
-
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
@@ -33,10 +25,12 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
+
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
+
 }
 
 include /etc/nginx/conf.d/cpanel_services.conf;

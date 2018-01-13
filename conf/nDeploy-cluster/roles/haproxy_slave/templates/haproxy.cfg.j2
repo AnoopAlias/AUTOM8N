@@ -1,0 +1,21 @@
+global
+  daemon
+
+defaults REDIS
+ timeout connect  4s
+ timeout server  10s
+ timeout client  10s
+ option tcpka
+
+frontend fe_redis
+ bind 127.0.0.1:7000 name redis
+ default_backend be_redis
+ option clitcpka
+
+backend be_redis
+ option redis-check
+ option srvtcpka
+{% for host in groups['ndeploymaster'] %}
+ server master{{ loop.index }} 127.0.0.1:960{{ loop.index }} check
+{% endfor %}
+ server slave 127.0.0.1:6379 check backup

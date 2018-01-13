@@ -1,0 +1,31 @@
+# Respond
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+#Remove PHP extension from requests
+location / {
+
+if (!-e $request_filename){
+rewrite ^/api/.* /api/dispatch.php?$query_string last;
+rewrite ^(.*)$ /$1.php;
+}
+error_page 400 401 402 403 404 500 = /page/error;
+try_files $uri $uri/ /index.php?$query_string;
+}
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ \.php$ {
+
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+
+}
+
+include /etc/nginx/conf.d/cpanel_services.conf;

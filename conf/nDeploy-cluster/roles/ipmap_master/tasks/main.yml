@@ -1,0 +1,23 @@
+---
+
+- name: check if initial DNS sync is done
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_DNS_SYNC_LOCK_DO_NOT_REMOVE
+  register: dnssync
+
+- name: Setup ipmap script
+  template:
+    src: ipmap.j2
+    dest: /root/xtendweb_ipmap
+
+- name: Setup ipmap
+  shell: bash /root/xtendweb_ipmap
+
+- name: Do a DNS Sync
+  shell: "for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do /opt/nDeploy/scripts/cluster_dns_ensure_user.py $CPANELUSER; done"
+  when:
+    - dnssync.stat.exists == false
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_DNS_SYNC_LOCK_DO_NOT_REMOVE
+    state: touch

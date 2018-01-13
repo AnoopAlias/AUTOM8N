@@ -4,16 +4,9 @@ root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
 location / {
+
 try_files $uri $uri/ /index.php?$query_string;
 }
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
 
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
@@ -21,11 +14,13 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
+
 fastcgi_split_path_info ^(.+\.php)(/.+)$;
 try_files $uri /index.php =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
+
 }
 
 include /etc/nginx/conf.d/cpanel_services.conf;

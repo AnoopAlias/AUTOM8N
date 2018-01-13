@@ -1,0 +1,6 @@
+---
+
+- name: Setup backupMX configuration on master
+  template:
+    src: backupmxhosts.j2
+    dest: /etc/backupmxhosts

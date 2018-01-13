@@ -3,47 +3,36 @@
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
-set $skip_cache 0;
+##########Yoast###############
+#Yoast SEO Sitemaps
+location ~ ([^/]*)sitemap(.*).x(m|s)l$ {
+## this redirects sitemap.xml to /sitemap_index.xml
+rewrite ^/sitemap.xml$ /sitemap_index.xml permanent;
+## this makes the XML sitemaps work
+rewrite ^/([a-z]+)?-?sitemap.xsl$ /index.php?xsl=$1 last;
+rewrite ^/sitemap_index.xml$ /index.php?sitemap=1 last;
+rewrite ^/([^/]+?)-sitemap([0-9]+)?.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
+## The following lines are optional for the premium extensions
+## News SEO
+rewrite ^/news-sitemap.xml$ /index.php?sitemap=wpseo_news last;
+## Local SEO
+rewrite ^/locations.kml$ /index.php?sitemap=wpseo_local_kml last;
+rewrite ^/geo-sitemap.xml$ /index.php?sitemap=wpseo_local last;
+## Video SEO
+rewrite ^/video-sitemap.xsl$ /index.php?xsl=video last;
+}
+##########Yoast###############
 
-# POST requests and urls with a query string should always go to PHP
-if ($request_method = POST) {
-set $skip_cache 1;
-}
-if ($query_string != "") {
-set $skip_cache 1;
-}
-
-# Don't cache uris containing the following segments
-if ($request_uri ~* "/wp-admin/|/xmlrpc.php|wp-.*.php|/feed/|/cart/|/my-account/|/wc-api/|/resetpass/|index.php|sitemap(_index)?.xml") {
-set $skip_cache 1;
-}
-
-# Don't use the cache for logged in users or recent commenters
-if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|woocommerce_items_in_cart|resetpass|wordpress_logged_in") {
-set $skip_cache 1;
-}
 
 location / {
-
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
-
 try_files $uri $uri/ /index.php?$args;
 }
 
 location /redis-fetch {
-internal;
+internal  ;
+sendfile off;
+aio off;
 set  $redis_key $args;
-# Assuming redis is bound to port 6379
 redis_pass  127.0.0.1:6379;
 }
 
@@ -58,17 +47,6 @@ redis2_pass  127.0.0.1:6379;
 }
 
 location ~ \.php$ {
-# Include NAXSI settings
-{% if NAXSI == 'enabled' %}
-{% if NAXSIMODE == 'learn' %}
-include /etc/nginx/conf.d/naxsi_learn.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% elif NAXSIMODE == 'active' %}
-include /etc/nginx/conf.d/naxsi_active.rules;
-include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.wl;
-{% endif %}
-{% endif %}
-# End Include NAXSI settings
 
 sendfile off;
 aio off;
@@ -76,8 +54,8 @@ aio off;
 set $key "$scheme$request_method$host$request_uri";
 try_files $uri =404;
 
-srcache_fetch_skip $skip_cache;
-srcache_store_skip $skip_cache;
+srcache_fetch_skip "$query_string$wpcookienocache$wpurinocache";
+srcache_store_skip "$query_string$wpcookienocache$wpurinocache";
 
 srcache_response_cache_control off;
 srcache_request_cache_control off;
@@ -94,15 +72,6 @@ include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
-
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
-
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
@@ -111,6 +80,24 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 location = /wp-login.php {
 limit_req   zone=one  burst=1 nodelay;
 include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+
+# No caching
+more_clear_headers "Cache-Control";
+add_header Cache-Control "private, max-age=0, no-cache, no-store";
+more_clear_headers "Expires";
+
+}
+
+location = /xmlrpc.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+
+# No caching
+more_clear_headers "Cache-Control";
+add_header Cache-Control "private, max-age=0, no-cache, no-store";
+more_clear_headers "Expires";
+
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 

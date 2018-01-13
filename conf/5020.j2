@@ -13,6 +13,8 @@ deny all;
 }
 
 location / {
+
+
 # The following 2 rules are only needed with webfinger
 rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
 rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json last;
@@ -22,21 +24,13 @@ rewrite ^(/core/doc/[^\/]+/)$ $1/index.html;
 try_files $uri $uri/ /index.php;
 }
 
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
-}
-{% endfor %}
-# End Include any applications in subdirectory
-
-
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php(?:$|/) {
+
 fastcgi_split_path_info ^(.+\.php)(/.+)$;
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};

@@ -1,0 +1,10 @@
+---
+
+- name: Setup dns zonetemplates on master
+  template:
+    src: "{{ item }}"
+    dest: /var/cpanel/zonetemplates/{{ item }}
+  with_items:
+    - root_simple
+    - root_standard
+    - root_standardvirtualftp

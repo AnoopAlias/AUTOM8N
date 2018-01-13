@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sed 's/$/ OK/' /etc/localdomains > /etc/postfix/relaydomains
+sed 's/$/ smtp:{{ hostvars[groups['ndeploymaster'][0]]['ansible_nodename'] }}:25/' /etc/localdomains > /etc/postfix/transportmaps
+chmod 644 /etc/postfix/transportmaps
+chmod 644 /etc/postfix/relaydomains
+postmap /etc/postfix/relaydomains
+postmap /etc/postfix/transportmaps
+postfix reload

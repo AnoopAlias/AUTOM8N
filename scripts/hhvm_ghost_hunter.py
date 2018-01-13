@@ -64,11 +64,4 @@ if __name__ == "__main__":
             subprocess.call(['systemctl', 'stop', 'ndeploy_hhvm@'+cpaneluser+'.service'])
             subprocess.call(['systemctl', 'disable', 'ndeploy_hhvm@'+cpaneluser+'.service'])
             if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
-                cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
-                cluster_data_yaml = open(cluster_config_file, 'r')
-                cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-                cluster_data_yaml.close()
-                cluster_serverlist = cluster_data_yaml_parsed.keys()
-                for server in cluster_serverlist:
-                    subprocess.call(['systemctl', '--host', server, 'stop', 'ndeploy_hhvm@'+cpaneluser+'.service'])
-                    subprocess.call(['systemctl', '--host', server, 'disable', 'ndeploy_hhvm@'+cpaneluser+'.service'])
+                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+cpaneluser+'.service state=stopped enabled=no"', shell=True)

@@ -1,5 +1,5 @@
-# Redirects if any
 
+################### Redirects ###################
 {% if WWWREDIRECT == "tononwww" %}
 server {
 listen  {{ CPANELIP }}:80 ;
@@ -12,27 +12,71 @@ listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
-ssl_certificate_key {{ CPANELSSLKEY }};
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_certificate_key {{ CPANELSSLCRT }};
+ssl_protocols TLSv1.1 TLSv1.2;
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
-resolver 8.8.8.8 8.8.4.4 valid=300s;
-resolver_timeout 5s;
-{% endif %}
 {% endif %}
 server_name www.{{ MAINDOMAINNAME }};
+
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
 return 301 https://{{ MAINDOMAINNAME }}$request_uri;
 {% else %}
 return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
+}
 }
 {% endif %}
 
@@ -48,30 +92,75 @@ listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
-ssl_certificate_key {{ CPANELSSLKEY }};
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_certificate_key {{ CPANELSSLCRT }};
+ssl_protocols TLSv1.1 TLSv1.2;
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
-resolver 8.8.8.8 8.8.4.4 valid=300s;
-resolver_timeout 5s;
-{% endif %}
 {% endif %}
 server_name {{ MAINDOMAINNAME }};
+
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
 return 301 https://www.{{ MAINDOMAINNAME }}$request_uri;
 {% else %}
 return 301 $scheme://www.{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
 }
+}
 {% endif %}
 
+{% if REDIRECTALIASES_LIST %}
 {% if REDIRECTALIASES == 'enabled' %}
 server {
 listen  {{ CPANELIP }}:80 ;
@@ -84,89 +173,198 @@ listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
-ssl_certificate_key {{ CPANELSSLKEY }};
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_certificate_key {{ CPANELSSLCRT }};
+ssl_protocols TLSv1.1 TLSv1.2;
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
-resolver 8.8.8.8 8.8.4.4 valid=300s;
-resolver_timeout 5s;
-{% endif %}
 {% endif %}
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
+
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
 return 301 https://{{ MAINDOMAINNAME }}$request_uri;
 {% else %}
 return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
 }
+}
 {% endif %}
+{% endif %}
+################### Redirects ###################
 
-# The server blocks
-
+################### vhosts ###################
 server {
 listen    {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
-server_name  {{ DOMAINLIST }};
+server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% endif %}
+
+# Proxy /cgi-bin/ ScriptAlias
+location ~* ^/cgi-bin/ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+{% if PASSENGERAPPS[KEY] == 'enabled' %}
+location ~ ^/{{ KEY }}(/.*|$) {
+{% else %}
+location ^~ /{{ KEY }} {
+{% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subconf;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
+location / {
 return 301 https://$host$request_uri;
+}
+{% else %}
+{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
 {% else %}
 {% if PAGESPEED == 'enabled' %}
+{% if PAGESPEED_FILTER == 'CoreFilters' %}
 include /etc/nginx/conf.d/pagespeed.conf;
+{% elif PAGESPEED_FILTER == 'PassThrough' %}
+include /etc/nginx/conf.d/pagespeed_passthrough.conf;
 {% endif %}
-{% if not OPEN_FILE_CACHE == 'enabled' %}
-open_file_cache off;
 {% endif %}
-{% if AUTOINDEX == 'enabled' %}
-autoindex on;
-{% endif %}
-{% if CLICKJACKING_PROTECT == 'enabled' %}
-add_header X-Frame-Options SAMEORIGIN;
-{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}
-add_header X-Content-Type-Options nosniff;
-{% endif %}
-{% if XSS_FILTER == 'enabled' %}
-add_header X-XSS-Protection "1; mode=block";
-{% endif %}
-{% if CONTENT_SECURITY_POLICY == 'enabled' %}
-add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
-{% endif %}
-{% if GZIP == 'enabled' %}
-include /etc/nginx/conf.d/gzip.conf;
-{% endif %}
-{% if DOSMITIGATE == 'enabled' %}
-include /etc/nginx/conf.d/dos_mitigate.conf;
-{% endif %}
+{% if not OPEN_FILE_CACHE == 'enabled' %}open_file_cache off;{% endif %}
+{% if AUTOINDEX == 'enabled' %}autoindex on;{% endif %}
+{% if CLICKJACKING_PROTECT == 'enabled' %}add_header X-Frame-Options SAMEORIGIN;{% endif %}
+{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}add_header X-Content-Type-Options nosniff;{% endif %}
+{% if XSS_FILTER == 'enabled' %}add_header X-XSS-Protection "1; mode=block";{% endif %}
+{% if GZIP == 'enabled' %}include /etc/nginx/conf.d/gzip.conf;{% endif %}
+{% if DOSMITIGATE == 'enabled' %}include /etc/nginx/conf.d/dos_mitigate.conf;{% endif %}
+{% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
+{% if TEST_COOKIE == 'enabled' %}testcookie on;{% endif %}
+{% if SYMLINK_PROTECTION == 'enabled' %}disable_symlinks if_not_owner;{% endif %}
 {% if AUTH_BASIC == 'enabled' %}
 auth_basic "Restricted Content";
 auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% endif %}
-{% if SET_EXPIRE_STATIC == 'enabled' %}
-include /etc/nginx/conf.d/files_with_expire.conf;
-{% endif %}
-# Include NAXSI settings
-location ^* /NaxsiRequestDenied {
-return 418;
-}
-# End Include NAXSI settings
-{% if SET_REDIRECT == 'enabled' %}
-return {{RETURN_CODE}} {{REDIRECT_URL}};
-{% else %}
+{% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
 {% endif %}
@@ -179,75 +377,175 @@ listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
-ssl_certificate_key {{ CPANELSSLKEY }};
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_certificate_key {{ CPANELSSLCRT }};
+ssl_protocols TLSv1.1 TLSv1.2;
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 ssl_session_timeout  5m;
-{% if OCSP %}
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate {{ CPANELCACERT }};
-resolver 8.8.8.8 8.8.4.4 valid=300s;
-resolver_timeout 5s;
-{% endif %}
-server_name  {{ DOMAINLIST }};
+server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
 {% endif %}
+
+# Proxy /cgi-bin/ ScriptAlias
+location ~* ^/cgi-bin/ {
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_send_timeout   90;
+proxy_read_timeout   90;
+proxy_buffer_size    4k;
+proxy_buffers     16 32k;
+proxy_busy_buffers_size 64k;
+proxy_temp_file_write_size 64k;
+proxy_connect_timeout 30s;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+# Include any applications in subdirectory
+{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+{% if PASSENGERAPPS[KEY] == 'enabled' %}
+location ~ ^/{{ KEY }}(/.*|$) {
+{% else %}
+location ^~ /{{ KEY }}/ {
+{% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subconf;
+}
+{% endfor %}
+# End Include any applications in subdirectory
+
+{% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+{% else %}
 {% if PAGESPEED == 'enabled' %}
+{% if PAGESPEED_FILTER == 'CoreFilters' %}
 include /etc/nginx/conf.d/pagespeed.conf;
+{% elif PAGESPEED_FILTER == 'PassThrough' %}
+include /etc/nginx/conf.d/pagespeed_passthrough.conf;
 {% endif %}
-{% if not OPEN_FILE_CACHE == 'enabled' %}
-open_file_cache off;
-{% endif %}
-{% if AUTOINDEX == 'enabled' %}
-autoindex on;
-{% endif %}
-{% if HSTS == 'enabled' %}
-add_header Strict-Transport-Security "max-age=31536000" always;
-{% endif %}
-{% if CLICKJACKING_PROTECT == 'enabled' %}
-add_header X-Frame-Options SAMEORIGIN;
-{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}
-add_header X-Content-Type-Options nosniff;
-{% endif %}
-{% if XSS_FILTER == 'enabled' %}
-add_header X-XSS-Protection "1; mode=block";
-{% endif %}
-{% if CONTENT_SECURITY_POLICY == 'enabled' %}
-add_header Content-Security-Policy "script-src 'self' www.google-analytics.com ajax.googleapis.com;";
 {% endif %}
 {% if BROTLI == 'enabled' %}
 include /etc/nginx/conf.d/brotli.conf;
 {% elif GZIP == 'enabled' %}
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
-{% if DOSMITIGATE == 'enabled' %}
-include /etc/nginx/conf.d/dos_mitigate.conf;
-{% endif %}
+{% if not OPEN_FILE_CACHE == 'enabled' %}open_file_cache off;{% endif %}
+{% if AUTOINDEX == 'enabled' %}autoindex on;{% endif %}
+{% if HSTS == 'enabled' %}add_header Strict-Transport-Security "max-age=31536000" always;{% endif %}
+{% if CLICKJACKING_PROTECT == 'enabled' %}add_header X-Frame-Options SAMEORIGIN;{% endif %}
+{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}add_header X-Content-Type-Options nosniff;{% endif %}
+{% if XSS_FILTER == 'enabled' %}add_header X-XSS-Protection "1; mode=block";{% endif %}
+{% if DOSMITIGATE == 'enabled' %}include /etc/nginx/conf.d/dos_mitigate.conf;{% endif %}
+{% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
+{% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
+{% if TEST_COOKIE == 'enabled' %}testcookie on;{% endif %}
+{% if SYMLINK_PROTECTION == 'enabled' %}disable_symlinks if_not_owner;{% endif %}
 {% if AUTH_BASIC == 'enabled' %}
 auth_basic "Restricted Content";
 auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% endif %}
-{% if SET_EXPIRE_STATIC == 'enabled' %}
-include /etc/nginx/conf.d/files_with_expire.conf;
-{% endif %}
-# Include NAXSI settings
-location ^~ /NaxsiRequestDenied {
-return 418;
-}
-# End Include NAXSI settings
-{% if SET_REDIRECT == 'enabled' %}
-return {{RETURN_CODE}} {{REDIRECT_URL}};
-{% else %}
+{% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
+include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
 }
 {% endif %}
+################### vhosts ###################
+
+################### Proxy Subdomains ###################
+{% if DOMAINLIST_PROXY_SUBDOMAIN %}
+server {
+listen    {{ CPANELIP }}:80 ;
+{% if IPVSIX %}
+listen  [{{ CPIPVSIX }}]:80 ;
+{% endif %}
+{% if SSL %}
+listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+{% if IPVSIX %}
+listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+{% endif %}
+ssl_certificate {{ CPANELSSLCRT }};
+ssl_certificate_key {{ CPANELSSLCRT }};
+ssl_protocols TLSv1.1 TLSv1.2;
+ssl_prefer_server_ciphers on;
+ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+ssl_session_cache shared:SSL:10m;
+ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+ssl_session_timeout  5m;
+ssl_stapling on;
+ssl_stapling_verify on;
+{% endif %}
+server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
+location / {
+   proxy_send_timeout   90;
+   proxy_read_timeout   90;
+   proxy_buffer_size    4k;
+   proxy_buffers     16 32k;
+   proxy_busy_buffers_size 64k;
+   proxy_temp_file_write_size 64k;
+   proxy_connect_timeout 30s;
+   proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+   proxy_set_header   Host   $host;
+   proxy_set_header   X-Real-IP  $remote_addr;
+   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
+{% endif %}
+################### Proxy Subdomains ###################

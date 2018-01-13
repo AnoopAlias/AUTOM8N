@@ -3,6 +3,10 @@
   {% for MYIP in CPIPLIST %}
   RemoteIPTrustedProxy {{ MYIP }}
   {% endfor %}
+  # Cluster slave IP's
+  {% for MYIP in SLAVEIPLIST %}
+  RemoteIPTrustedProxy {{ MYIP }}
+  {% endfor %}
 </IfModule>
 <IfModule log_config_module>
   LogFormat "%{Referer}i -> %U" referer

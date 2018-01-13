@@ -3,11 +3,19 @@ group nDeployCluster
         host {{ ansible_nodename }} ({% for host in groups['ndeployslaves'] %} {{ hostvars[host]['ansible_nodename'] }} {% endfor %});
         key /etc/csync2/csync2.key;
         include /etc/nginx/ssl;
+        include /etc/nginx/conf.d/cpanel_services.conf;
         include /var/cpanel/ssl/installed;
+        include /var/cpanel/ssl/apache_tls;
 	      include /opt/nDeploy/php-fpm.d;
         include /opt/nDeploy/secure-php-fpm.d;
         include /opt/nDeploy/hhvm.d;
         include /etc/localdomains;
+        include /opt/cpanel/ea-php54/root/etc/php.ini;
+        include /opt/cpanel/ea-php55/root/etc/php.ini;
+        include /opt/cpanel/ea-php56/root/etc/php.ini;
+        include /opt/cpanel/ea-php70/root/etc/php.ini;
+        include /opt/cpanel/ea-php71/root/etc/php.ini;
+        include /opt/cpanel/ea-php72/root/etc/php.ini;
         action
         {
                 pattern /etc/localdomains;
@@ -19,6 +27,18 @@ group nDeployCluster
                 pattern /opt/nDeploy/php-fpm.d/*;
                 exec "/opt/nDeploy/scripts/init_backends.py reload";
                 logfile "/var/log/csync2_action.log";
+        }
+        action
+        {
+                pattern /opt/cpanel/ea-php54/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php55/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php56/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php70/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php71/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php72/root/etc/php.ini;
+                exec "/opt/nDeploy/scripts/init_backends.py reload";
+                logfile "/var/log/csync2_action.log";
+                do-local;      
         }
         backup-directory /var/backups/csync2;
         backup-generations 3;

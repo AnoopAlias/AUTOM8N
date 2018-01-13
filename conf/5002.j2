@@ -5,16 +5,9 @@ root {{ DOCUMENTROOT }};
 index index.php index.html index.htm default.html default.htm;
 
 location / {
-try_files $uri $uri/ /index.php?$args;
-}
 
-# Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
-location ^~ /{{ KEY }}/ {
-include /etc/nginx/sites-enabled/{{ VALUE }}.subinclude;
+try_files $uri $uri/ /index.php$is_args$args;
 }
-{% endfor %}
-# End Include any applications in subdirectory
 
 location ~* /(images|cache|media|logs|tmp)/.*\.(php|pl|py|jsp|asp|sh|cgi)$ {
 return 403;
@@ -28,6 +21,7 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
+
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
