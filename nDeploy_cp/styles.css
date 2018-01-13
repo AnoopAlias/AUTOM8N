@@ -58,6 +58,10 @@ kbd {
 	margin-top: 10px;
 }
 
+.list-group-item kbd {
+	margin-top: 0;
+}
+
 .panel .form-inline {
 	margin-bottom: 0;
 }

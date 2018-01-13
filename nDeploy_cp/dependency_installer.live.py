@@ -61,11 +61,12 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     mybackend = form.getvalue('backend_category')
     mybackendversion = form.getvalue('backend_version')
     mydocroot = form.getvalue('document_root')
+    print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'</strong></div>'))
     print('<div class="panel panel-default">')  # marker3
     print(('<div class="panel-heading"><h3 class="panel-title">Project</h3></div>'))
     print('<div class="panel-body">')  # marker4
-    print(('<div class="alert alert-success alert-btm">'+mydomain))  # marker5
-    print(('<br><span class="label label-success">'+mybackend+'</span> <span class="label label-success">'+mybackendversion+'</span>'))
+    print('<div class="alert alert-success alert-btm">')  # marker5
+    print(('<span class="label label-success">'+mybackend+'</span> <span class="label label-success">'+mybackendversion+'</span>'))
     print(('<br><br><span class="label label-success">Project root: '+mydocroot+'</span>'))
     print('</div>')  # marker5
     print('</div>')  # marker4

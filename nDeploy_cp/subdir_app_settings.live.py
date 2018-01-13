@@ -115,11 +115,14 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         # We do a fresh config
         if subdir_apps_dict:
             if not subdir_apps_dict.get(thesubdir):
-                print('<div class="panel panel-default">')
-                print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
-                print('<div class="panel-body">')
+            	print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'/'+thesubdir+'</strong></div>'))
+            	print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
+                print('<div class="panel panel-default">')  # default
+                print('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Application Server</a></h3></div>')  # heading
+                print('<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">')  # collapse
+                print('<div class="panel-body">')  # body
                 print('<form action="subdir_select_app_settings.live.py" method="post">')
-                print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
+                print(('<div class="alert alert-info">To change the application server select a new category below and hit submit</div>'))
                 print('<select name="backend">')
                 for backends_defined in backend_data_yaml_parsed.keys():
                     print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
@@ -129,8 +132,9 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('<input class="btn btn-primary" type="submit" value="Submit">')
                 print('</form>')
-                print('</div>')
-                print('</div>')
+                print('</div>')  # body
+                print('</div>')  # collapse
+                print('</div>')  # default
             else:
                 # we get the current app settings for the subdir
                 the_subdir_dict = subdir_apps_dict.get(thesubdir)
@@ -166,17 +170,20 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> ERROR: app template data file error</div>')
                     sys.exit(0)
                 # Ok we are done with getting the settings,now lets present it to the user
-                print('<div class="panel panel-default">')
-                print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
-                print('<div class="panel-body">')
+                print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'/'+thesubdir+'</strong></div>'))
+                print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
+                print('<div class="panel panel-default">')  # default
+                print('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Application Server</a></h3></div>')  # heading
+                print('<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">')  # collapse
+                print('<div class="panel-body">') # body
                 print('<form id="config" class="form-inline config-save" action="subdir_select_app_settings.live.py" method="post">')
                 if backend_category == 'PROXY':
                     if backend_version == 'httpd':
-                        print(('<div class="alert alert-default alert-top"><span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></div>'))
+                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
                     else:
-                        print(('<div class="alert alert-default alert-top"><span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></div>'))
+                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
                 else:
-                    print(('<div class="alert alert-default alert-top"><span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></div>'))
+                    print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
                 print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
                 print('<select name="backend">')
                 for backends_defined in backend_data_yaml_parsed.keys():
@@ -190,34 +197,42 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('<input class="btn btn-primary" type="submit" value="Submit">')
                 print('</form>')
-                print('</div>')
-                print('</div>')
+                print('</div>')  # body
+                print('</div>')  # collapse
+                print('</div>')  # default
                 if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
                     # Next section start here
-                    print('<div class="panel panel-default">')
-                    print(('<div class="panel-heading"><h3 class="panel-title">Project deps installer: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
-                    print('<div class="panel-body">')
+                    print('<div class="panel panel-default">')  # default
+                    print('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Project Deps Installer</a></h3></div>')  # heading
+                    print('<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">')  # collapse
+                    print('<div class="panel-body">')  # body
                     print('<form id="config" class="form-inline config-save" action="dependency_installer.live.py" method="post">')
                     if backend_category == "RUBY":
-                        print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/Gemfile</kbd></div>'))
+                        print(('<div class="alert alert-success">Detected <span class="label label-success">'+backend_category+'</span> <span class="label label-success">'+backend_version+'</span> project.</div>'))
+                        print(('<p>Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/Gemfile</kbd></p>'))
                     elif backend_category == "NODEJS":
-                        print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/package.json</kbd></div>'))
+                        print(('<div class="alert alert-success">Detected <span class="label label-success">'+backend_category+'</span> <span class="label label-success">'+backend_version+'</span> project.</div>'))
+                        print(('<p>Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/package.json</kbd></p>'))
                     elif backend_category == 'PYTHON':
-                        print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/requirements.txt</kbd></div>'))
+                        print(('<div class="alert alert-success">Detected <span class="label label-success">'+backend_category+'</span> <span class="label label-success">'+backend_version+'</span> project.</div>'))
+                        print(('<p>Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/requirements.txt</kbd></p>'))
                     elif backend_category == 'PHP':
-                        print(('<div class="alert alert-info alert-top">Detected <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> project. Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/composer.json</kbd></div>'))
+                        print(('<div class="alert alert-success">Detected <span class="label label-success">'+backend_category+'</span> <span class="label label-success">'+backend_version+'</span> project.</div>'))
+                        print(('Specify project dependencies in <br> <kbd>'+document_root+'/'+thesubdir+'/composer.json</kbd></p>'))
                     print(('<input class="hidden" name="domain" value="'+mydomain+'/'+thesubdir+'">'))
                     print(('<input class="hidden" name="document_root" value="'+document_root+'/'+thesubdir+'">'))
                     print(('<input class="hidden" name="backend_category" value="'+backend_category+'">'))
                     print(('<input class="hidden" name="backend_version" value="'+backend_version+'">'))
-                    print('<input class="btn btn-primary" type="submit" value="INSTALL DEPS">')
+                    print('<input class="btn btn-primary btn-top" type="submit" value="INSTALL DEPS">')
                     print('</form>')
-                    print('</div>')
-                    print('</div>')
+                    print('</div>')  # body
+                    print('</div>')  # collapse
+                    print('</div>')  # default
                 # Next section start here
-                print('<div class="panel panel-default">')  # markeru1
-                print(('<div class="panel-heading"><h3 class="panel-title">Application Settings: '+mydomain+'/'+thesubdir+'</h3></div>'))
-                print(('<div class="panel-body">'))  # markeru2
+                print('<div class="panel panel-default">')  # default
+                print('<div class="panel-heading" role="tab" id="headingThree"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Application Settings</a></h3></div>')  # heading
+                print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">')  # collapse
+                print(('<div class="panel-body">'))  # body
                 # User config reload
                 if user_config == 'enabled' and os.path.isfile(document_root+"/"+thesubdir+"/nginx.conf"):
                     print('<ul class="list-group">')
@@ -363,14 +378,16 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('<input class="btn btn-primary" type="submit" value="Submit">')
                 print('</form>')
-                print('</div>')
-                print('</div>')
+                print('</div>')  # body
+                print('</div>')  # collapse
+                print('</div>')  # default
+                print('</div>')  # accordion
         else:
-            print('<div class="panel panel-default">')  # markeru1
-            print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
-            print(('<div class="panel-body">'))  # markeru2
+            print('<div class="panel panel-default">')  # default
+            print('<div class="panel-heading"><h3 class="panel-title">Domain</a></h3></div>')  # heading
+            print(('<div class="panel-body">'))  # body
             print('<form action="subdir_select_app_settings.live.py" method="post">')
-            print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
+            print(('<div class="alert alert-info">To change the application server select a new category below and hit submit</div>'))
             print('<select name="backend">')
             for backends_defined in backend_data_yaml_parsed.keys():
                 print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
@@ -380,8 +397,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print(('<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
             print('<input class="btn btn-primary" type="submit" value="Submit">')
             print('</form>')
-            print('</div>')
-            print('</div>')
+            print('</div>')  # body
+            print('</div>')  # default
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
