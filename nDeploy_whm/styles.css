@@ -152,6 +152,20 @@ kbd {
 	width: 100%;
 }
 
+#config .col-sm-6 .input-group {
+	text-align: left;
+}
+
+#config .col-sm-6 .input-group-btn .btn-primary {
+	margin: 0;
+	min-width: inherit;
+	border-radius: 0;
+}
+
+#config .col-sm-6 {
+	word-wrap: break-word;
+}
+
 #config .col-sm-6 .label {
 	font-size: 14px;
 	text-align: right;
