@@ -19,6 +19,10 @@ a:focus {
 	transition: all 0.5s ease 0s;
 }
 
+.btn-top {
+	margin-top: 15px;
+}
+
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus {
@@ -28,6 +32,7 @@ a:focus {
 
 #main-container {
 	margin-top: 20px;
+	margin-bottom: 50px;
 }
 
 .logo {
@@ -48,12 +53,50 @@ select {
 	top: 3px;
 }
 
+kbd {
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.list-group-item kbd {
+	margin-top: 0;
+}
+
 .panel .form-inline {
 	margin-bottom: 0;
 }
 
+.panel .glyphicon {
+	top: 4px;
+	margin: 0 7px;
+}
+
+#accordion .panel-heading {
+	text-transform: uppercase;
+}
+
+.panel-group .panel-footer {
+	margin-top: 7px;
+}
+
 .desc {
 	margin-bottom: 20px;
+}
+
+.last {
+	margin-bottom: 0;
+}
+
+.log {
+	text-align: left !important;
+}
+
+.log li {
+	margin-bottom: 10px;
+}
+
+.log li:last-child {
+	margin-bottom: 0
 }
 
 .radio {
@@ -68,8 +111,16 @@ select {
 	margin-top: 20px;
 }
 
+.alert-btm {
+	margin-bottom: 0;
+}
+
 .panel .panel select {
 	width: 100%;
+}
+
+.single .panel-body .form-group {
+	margin-bottom: 0;
 }
 
 .icon-box .glyphicon {
@@ -91,6 +142,10 @@ select {
 
 .col-sm-6 .panel-title {
 	text-transform: uppercase;
+}
+
+.app-status {
+	font-size: 18px;
 }
 
 #config .col-sm-6 .btn-primary {

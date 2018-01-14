@@ -51,10 +51,10 @@ if form.getvalue('mode') and form.getvalue('unit'):
   if form.getvalue('mode') == 'service':
     myservice = form.getvalue('unit')+".service"
     print('<div class="panel panel-default">')
-    print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:'+myservice+'</h3></div>'))
+    print('<div class="panel-heading"><h3 class="panel-title">Current Resource Usage</h3></div>')
     print('<div class="panel-body">')  # marker6
-    print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top">'))
+    print(('<div class="alert alert-success alert-btm">'))
+    print(('<div class="panel-heading"><h3 class="panel-title">Current Resource Usage:'+myservice+'</h3></div>'))
     mymem = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True).split('=')[1]
     mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
     myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
@@ -75,7 +75,6 @@ if form.getvalue('mode') and form.getvalue('unit'):
       print('MemoryLimit='+str(mymem_inmb)+'Mb')
     print('<br>')
     print(('</div>'))
-    print('</ul>')
     print('</div>')  # marker6
     print('</div>')
   elif form.getvalue('mode') == 'user':

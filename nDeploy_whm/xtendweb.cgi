@@ -60,9 +60,12 @@ print('<li class="active">Server Config</li>')
 print('</ol>')
 
 # Next section start here
-print('<div class="panel panel-default">')  # marker6
-print('<div class="panel-heading"><h3 class="panel-title">System status</h3></div>')
-print('<div class="panel-body">')  # marker7
+print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">System Status</a></h3></div>')  # heading
+print('<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">')  # collapse
+print('<div class="panel-body">')  # body
+print('<div id="config">')
 print('<ul class="list-group">')
 print('<li class="list-group-item">')
 print('<div class="row">')
@@ -77,11 +80,11 @@ for myprocess in psutil.process_iter():
         nginx_status = True
         break
 if nginx_status:
-    print(('<div class="col-sm-6">nginx</div>'))
     print(('<div class="col-sm-6"><div class="label label-success">ACTIVE</div></div>'))
+    print(('<div class="col-sm-6 col-radio">nginx</div>'))
 else:
-    print(('<div class="col-sm-6">nginx</div>'))
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
+    print(('<div class="col-sm-6 col-radio">nginx</div>'))
 print('</div>')
 print('</li>')
 print('<li class="list-group-item">')
@@ -97,26 +100,27 @@ for myprocess in psutil.process_iter():
         watcher_status = True
         break
 if watcher_status:
-    print(('<div class="col-sm-6">ndeploy_watcher</div>'))
     print(('<div class="col-sm-6"><div class="label label-success">ACTIVE</div></div>'))
+    print(('<div class="col-sm-6 col-radio">ndeploy_watcher</div>'))
 else:
-    print(('<div class="col-sm-6">ndeploy_watcher</div>'))
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
+    print(('<div class="col-sm-6 col-radio">ndeploy_watcher</div>'))
 print('</div>')
 print('</li>')
 print('</ul>')
-print('<ul class="list-group">')
-print(('<div class="alert alert-info alert-top">'))
-print(('Nginx support uninterrupted working with graceful config reload and inplace upgrade. Do not restart nginx, instead use:<br> <kbd>nginx -s reload</kbd> on config changes <br> <kbd>/opt/nDeploy/scripts/nginx_upgrade_inplace.sh</kbd> on binary upgrade'))
+print('</div>')
+print(('<div class="alert alert-info alert-top alert-btm">'))
+print(('Nginx support uninterrupted working with graceful config reload and in-place upgrade. Do not restart nginx, instead use:<br> <kbd>nginx -s reload</kbd> on config changes <br> <kbd>/opt/nDeploy/scripts/nginx_upgrade_inplace.sh</kbd> on binary upgrade'))
 print(('</div>'))
-print('</ul>')
-print('</div>')  # div8
-print('</div>')  # div7
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
 # Next section start here
 if os.path.isfile(cluster_config_file):
-    print('<div class="panel panel-default">')  # marker6
-    print('<div class="panel-heading"><h3 class="panel-title">Cluster status</h3></div>')
-    print('<div class="panel-body">')  # marker7
+    print('<div class="panel panel-default">')  # default
+    print('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Cluster Status</a></h3></div>')  # heading
+    print('<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">')  # collapse
+    print('<div class="panel-body">')  # body
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     print('<ul class="list-group">')
@@ -134,11 +138,11 @@ if os.path.isfile(cluster_config_file):
                 filesync_status = True
                 break
         if filesync_status:
-            print(('<div class="col-sm-6">'+servername+'</div>'))
             print(('<div class="col-sm-6"><div class="label label-primary">IN SYNC</div></div>'))
+            print(('<div class="col-sm-6 col-radio">'+servername+'</div>'))
         else:
-            print(('<div class="col-sm-6">'+servername+'</div>'))
             print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
+            print(('<div class="col-sm-6 col-radio">'+servername+'</div>'))
         print('</div>')
         print('</li>')
     print('</ul>')
@@ -151,13 +155,12 @@ if os.path.isfile(cluster_config_file):
     print(('<input style="display:none" name="mode" value="reset">'))
     print('<input class="btn btn-primary" type="submit" value="HARD RESET UNISON SYNC">')
     print('</form>')
-    print('<ul class="list-group">')
     print(('<div class="alert alert-info alert-top">'))
     print(('Only perform a hard reset if the unison archive is corrupt.Unison archive rebuild is time consuming'))
     print(('</div>'))
-    print('</ul>')
-    print('</div>')  # div8
-    print('</div>')  # div7
+    print('</div>')  # body
+    print('</div>')  # collapse
+    print('</div>')  # default
 # Next section start here
 # Workaround for Python 2.6
 if platform.python_version().startswith('2.6'):
@@ -165,43 +168,40 @@ if platform.python_version().startswith('2.6'):
 else:
     listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
 mypkgs = json.loads(listpkgs)
-print('<div class="panel panel-default">')  # markera1
-print('<div class="panel-heading"><h3 class="panel-title">Map cPanel pkg to nginx setting</h3></div>')
-print('<div class="panel-body">')  # markera2
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingThree"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Map cPanel pkg to nginx setting</a></h3></div>')  # heading
+print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">')  # collapse
+print('<div class="panel-body">')  # body
 print('<form class="form-inline" action="pkg_profile.cgi" method="post">')
 print('<select name="cpanelpkg">')
 for thepkg in mypkgs.get('package'):
     pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
     print(('<option value="'+pkgname+'">'+pkgname+'</option>'))
 print('</select>')
-print(('<br>'))
-print(('<br>'))
 print('<input class="btn btn-primary" type="submit" value="EDIT PKG">')
 print('</form>')
-print(('<br>'))
-print(('<br>'))
+print(('<div class="alert alert-info alert-top">'))
+print(('If you enable config change with package, nginx config for domain will be reset to package setting on plan upgrade/downgrade and all user settings will be lost'))
+print(('</div>'))
 if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
     print('<form class="form-group" action="lock_domain_data_to_package.cgi">')
-    print('<input class="btn btn-xs btn-primary" type="submit" value="DISABLE CONFIG CHANGE WITH PKG">')
+    print('<input class="btn btn-primary" type="submit" value="DISABLE CONFIG CHANGE WITH PKG">')
     print(('<input class="hidden" name="package_lock" value="disabled">'))
     print('</form>')
 else:
     print('<form class="form-group" action="lock_domain_data_to_package.cgi">')
-    print('<input class="btn btn-xs btn-warning" type="submit" value="ENABLE CONFIG CHANGE WITH PKG">')
+    print('<input class="btn btn-warning" type="submit" value="ENABLE CONFIG CHANGE WITH PKG">')
     print(('<input class="hidden" name="package_lock" value="enabled">'))
     print('</form>')
-print('<ul class="list-group">')
-print(('<div class="alert alert-info alert-top">'))
-print(('If you enable config change with package, nginx config for domain will be reset to package setting on plan upgrade/downgrade and all user settings will be lost'))
-print(('</div>'))
-print('</ul>')
-print('</div>')  # markera2
-print('</div>')  # markera1
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
 
 # Next section start here
-print('<div class="panel panel-default">')  # markera1
-print('<div class="panel-heading"><h3 class="panel-title">PHP-FPM pool editor</h3></div>')
-print('<div class="panel-body">')  # markera2
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingFour"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">PHP-FPM Pool Editor</a></h3></div>')  # heading
+print('<div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">')  # collapse
+print('<div class="panel-body">')  # body
 print('<form class="form-inline" action="phpfpm_pool_editor.cgi" method="post">')
 print('<select name="poolfile">')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
@@ -221,12 +221,11 @@ if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     print(('<input class="hidden" name="section" value="1">'))
 else:
     print(('<input class="hidden" name="section" value="0">'))
-print(('<br>'))
-print(('<br>'))
 print('<input class="btn btn-primary" type="submit" value="EDIT PHP SETTINGS">')
 print('</form>')
-print('</div>')  # markera2
-print('</div>')  # markera1
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
 
 # Next section start here
 with open('/etc/redhat-release', 'r') as releasefile:
@@ -258,9 +257,10 @@ if not osrelease == 'CloudLinux':
                     generated_config = template.render(templateVars)
                     with codecs.open(ownerslice, 'w', 'utf-8') as confout:
                         confout.write(generated_config)
-            print('<div class="panel panel-default">')  # markera1
-            print('<div class="panel-heading"><h3 class="panel-title">Resource limit</h3></div>')
-            print('<div class="panel-body">')  # markera2
+            print('<div class="panel panel-default">')  # general
+            print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Resource Limit</a></h3></div>')  # heading
+            print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
+            print('<div class="panel-body">')  # body
             print('<div class="row">')  # markerb1
             print('<div class="col-sm-6">')  # markerc1
             print('<div class="panel panel-default">')  # markerc2
@@ -272,7 +272,6 @@ if not osrelease == 'CloudLinux':
                 print(('<option value="'+reseller+'">'+reseller+'</option>'))
             print('</select>')
             print(('<input style="display:none" name="mode" value="user">'))
-            print(('<br>'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
             print('</div>')  # markerc3
@@ -282,51 +281,59 @@ if not osrelease == 'CloudLinux':
             print('<div class="panel panel-default">')  # markerc2
             print('<div class="panel-heading"><h3 class="panel-title">Service</h3></div>')
             print('<div class="panel-body">')  # markerc3
+            print(('<div class="alert alert-info alert-top">'))
+            print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
+            print(('</div>'))
             print('<form class="form-inline" action="resource_limit.cgi" method="post">')
             print('<select name="unit">')
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
                 print(('<option value="'+service+'">'+service+'</option>'))
             print('</select>')
             print(('<input style="display:none" name="mode" value="service">'))
-            print(('<br>'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
             print('</div>')  # markerc3
             print('</div>')  # markerc2
             print('</div>')  # markerc1
-            print('</div>')  # markerb1
-            print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">'))
-            print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
-            print(('</div>'))
-            print('</ul>')
-            print('</div>')  # markera2
-            print('</div>')  # markera1
+            print('</div>')  # body
+            print('</div>')  # collapse
+            print('</div>')  # default
         else:
             # Next sub-section start here
-            print('<div class="panel panel-default">')  # markera1
-            print('<div class="panel-heading"><h3 class="panel-title">Service resource limit</h3></div>')
-            print('<div class="panel-body">')  # markera2
+            print('<div class="panel panel-default">')  # default
+            print('<div class="panel-heading" role="tab" id="headingSix"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">Service resource limit</a></h3></div>')  # heading
+            print('<div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">')  # collapse
+            print('<div class="panel-body">')  # body
+            print(('<div class="alert alert-info">'))
+            print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
+            print(('</div>'))
             print('<form class="form-inline" action="resource_limit.cgi" method="post">')
             print('<select name="unit">')
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
                 print(('<option value="'+service+'">'+service+'</option>'))
             print('</select>')
             print(('<input style="display:none" name="mode" value="service">'))
-            print(('<br>'))
-            print(('<br>'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
-            print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">'))
-            print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
-            print(('</div>'))
-            print('</div>')  # markera2
-            print('</div>')  # markera1
+            print('</div>')  # body
+            print('</div>')  # collapse
+            print('</div>')  # default
 # Next section start here
-print('<div class="panel panel-default">')  # markera1
-print('<div class="panel-heading"><h3 class="panel-title">Set Default PHP for AutoConfig</h3></div>')
-print('<div class="panel-body">')  # markera2
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingSeven"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">Set Default PHP for AutoConfig</a></h3></div>')  # heading
+print('<div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">')  # collapse
+print('<div class="panel-body">')  # body
+if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
+    preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
+    preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
+    preferred_php_yaml.close()
+    phpversion = preferred_php_yaml_parsed.get('PHP')
+    print('<div class="alert alert-success">')
+    print(('Current default PHP: <span class="label label-success">'+phpversion.keys()[0])+'</span>')
+    print('</div>')
+    print('<div class="alert alert-info">')
+    print('If MultiPHP is enabled, the PHP version selected by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results')
+    print('</div>')
 print('<form class="form-inline" action="set_default_php.cgi" method="post">')
 print('<select name="phpversion">')
 backend_config_file = installation_path+"/conf/backends.yaml"
@@ -338,22 +345,12 @@ if "PHP" in backend_data_yaml_parsed:
     for versions_defined in list(php_backends_dict.keys()):
         print(('<option value="'+versions_defined+'">'+versions_defined+'</option>'))
 print('</select>')
-print(('<br>'))
-print(('<br>'))
 print('<input class="btn btn-primary" type="submit" value="SET DEFAULT PHP">')
 print('</form>')
-if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
-    preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
-    preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
-    preferred_php_yaml.close()
-    phpversion = preferred_php_yaml_parsed.get('PHP')
-    print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top">'))
-    print(('Current default PHP: '+phpversion.keys()[0])+'<br> If MultiPHP is enabled, the PHP version selected by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results')
-    print(('</div>'))
-    print('</ul>')
-print('</div>')  # markera2
-print('</div>')  # markera1
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
+print('</div>')  # accordion
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2

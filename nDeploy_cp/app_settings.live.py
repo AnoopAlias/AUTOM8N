@@ -64,9 +64,9 @@ print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')  # div1
-print('<div class="row">')  # div2
-print('<div class="col-md-6 col-md-offset-3">')  # div3
+print('<div id="main-container" class="container text-center">')  # main
+print('<div class="row">')  # row
+print('<div class="col-md-6 col-md-offset-3">')  # offset-col
 print('<div class="logo">')  # div4
 print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
 print('<h4>XtendWeb</h4>')
@@ -158,6 +158,7 @@ if form.getvalue('domain'):
         print('<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">')  # collapse
         print('<div class="panel-body">')  # body
         print('<form id="config" class="form-inline config-save" action="select_app_settings.live.py" method="post">')
+        print('<div class="app-status">')
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
                 print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
@@ -165,6 +166,7 @@ if form.getvalue('domain'):
                 print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
         else:
             print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
+        print('</div>')
         print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
         print('<select name="backend">')
         for backends_defined in backend_data_yaml_parsed.keys():
@@ -786,7 +788,6 @@ if form.getvalue('domain'):
         print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
         print('<div class="panel-body">')  # body
         print('<div class="alert alert-info">The path entered below must follow the format <br> <kbd>/blog</kbd> <kbd>/us/forum</kbd> etc.</div>')  # marker3
-        print('<div class="desc last">')  # marker4
         print(('<p>Add new subdirectory apps:</p>'))
         print('<form class="form-inline" action="subdir_app_settings.live.py">')
         print('<div class="form-group">')  # marker5
@@ -800,10 +801,8 @@ if form.getvalue('domain'):
         print('<span class="input-group-btn">')
         print('<input class="btn btn-primary" type="submit" value="Add">')
         print('</span>')
-        print('</div>')  # body
-        print('</div>')  # collapse
-        print('</div>')  # default
-        print('</div>')  # accordion
+        print('</div>')
+        print('</div>')
         print('</form>')
         # get the currently configured subdir
         if subdir_apps:
@@ -829,16 +828,18 @@ if form.getvalue('domain'):
                 print('</div>')
                 print('</li>')
             print('</ul>')
-        print('</div>')  # marker1
-        print('</div>')  # marker2
+        print('</div>')  # body
+        print('</div>')  # collapse
+        print('</div>')  # default
+        print('</div>')  # accordion
     else:
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 
-print('</div>')  # div3
-print('</div>')  # div2
-print('</div>')  # div1
+print('</div>')  # offset-col
+print('</div>')  # row
+print('</div>')  # main
 print('</body>')
 print('</html>')

@@ -144,6 +144,10 @@ kbd {
 	text-transform: uppercase;
 }
 
+.app-status {
+	font-size: 18px;
+}
+
 #config .col-sm-6 .btn-primary {
 	width: 100%;
 }
