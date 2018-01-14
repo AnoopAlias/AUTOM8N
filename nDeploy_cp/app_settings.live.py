@@ -784,7 +784,7 @@ if form.getvalue('domain'):
         print('</div>')  # default
 
         print('<div class="panel panel-default">')  # default
-        print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Subdirectory Apps For</a></h3></div>')  # heading
+        print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Subdirectory Apps</a></h3></div>')  # heading
         print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
         print('<div class="panel-body">')  # body
         print('<div class="alert alert-info">The path entered below must follow the format <br> <kbd>/blog</kbd> <kbd>/us/forum</kbd> etc.</div>')  # marker3
