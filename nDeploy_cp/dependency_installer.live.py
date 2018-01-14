@@ -61,15 +61,14 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     mybackend = form.getvalue('backend_category')
     mybackendversion = form.getvalue('backend_version')
     mydocroot = form.getvalue('document_root')
+    print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'</strong></div>'))
     print('<div class="panel panel-default">')  # marker3
     print(('<div class="panel-heading"><h3 class="panel-title">Project</h3></div>'))
     print('<div class="panel-body">')  # marker4
-    print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top">'+mydomain))  # marker5
-    print(('<br><span class="label label-primary">'+mybackend+'</span> <span class="label label-primary">'+mybackendversion+'</span>'))
-    print(('<br><br><span class="label label-primary">Project root: '+mydocroot+'</span>'))
+    print('<div class="alert alert-success alert-btm">')  # marker5
+    print(('<span class="label label-success">'+mybackend+'</span> <span class="label label-success">'+mybackendversion+'</span>'))
+    print(('<br><br><span class="label label-success">Project root: '+mydocroot+'</span>'))
     print('</div>')  # marker5
-    print('</ul>')
     print('</div>')  # marker4
     print('</div>')  # marker3
     if mybackend == 'RUBY':
@@ -80,22 +79,18 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('<div class="panel panel-default">')
                 print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
                 print('<div class="panel-body">')  # marker6
-                print('<ul class="list-group">')
-                print(('<div class="alert alert-info alert-top">'))
+                print(('<div class="alert alert-info alert-btm">'))
                 while True:
                     line = myinstaller.stdout.readline()
                     if not line:
                         break
                     print('<br>'+line)
                 print(('</div>'))
-                print('</ul>')
-                print('<ul class="list-group">')
-                print(('<div class="alert alert-info alert-top">'))  # marker8
+                print(('<div class="alert alert-info alert-btm">'))  # marker8
                 print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
                 print(('cd '+mydocroot+'<br>'))
                 print(('/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'))
                 print('</div>')  # marker8
-                print('</ul>')
                 print('</div>')  # marker6
                 print('</div>')
             else:
@@ -104,9 +99,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print('<div class="panel panel-default">')
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
-            print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">Gemfile not found for <span class="label label-primary">RUBY</span> project, specify project dependencies in <br><br><kbd>' + mydocroot + '/Gemfile</kbd></div>'))
-            print('</ul>')
+            print(('<div class="alert alert-warning alert-btm">Gemfile not found for <span class="label label-warning">RUBY</span> project, specify project dependencies in <br><kbd>' + mydocroot + '/Gemfile</kbd></div>'))
             print('</div>')  # marker4
             print('</div>')
     elif mybackend == 'NODEJS':
@@ -119,23 +112,19 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('<div class="panel panel-default">')
                 print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
                 print('<div class="panel-body">')  # marker6
-                print('<ul class="list-group">')
-                print(('<div class="alert alert-info alert-top">'))
+                print(('<div class="alert alert-info alert-btm">'))
                 while True:
                     line = myinstaller.stdout.readline()
                     if not line:
                         break
                     print('<br>'+line)
                 print(('</div>'))
-                print('</ul>')
-                print('<ul class="list-group">')
-                print(('<div class="alert alert-info alert-top">'))  # marker8
+                print(('<div class="alert alert-info alert-btm">'))  # marker8
                 print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
                 print(('export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"<br>'))
                 print(('cd '+mydocroot))
                 print(('<br>npm install --production'))
                 print('</div>')  # marker8
-                print('</ul>')
                 print('</div>')  # marker6
                 print('</div>')
             else:
@@ -144,9 +133,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print('<div class="panel panel-default">')
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
-            print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">package.json not found for <span class="label label-primary">NODEJS</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/package.json</kbd></div>'))
-            print('</ul>')
+            print(('<div class="alert alert-warning alert-btm">package.json not found for <span class="label label-warning">NODEJS</span> project, specify project dependencies in <br><kbd>'+mydocroot+'/package.json</kbd></div>'))
             print('</div>')  # marker4
             print('</div>')
     elif mybackend == 'PYTHON':
@@ -157,23 +144,19 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('<div class="panel panel-default">')
                 print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
                 print('<div class="panel-body">')  # marker6
-                print('<ul class="list-group">')
-                print(('<div class="alert alert-info alert-top">'))
+                print(('<div class="alert alert-info alert-btm">'))
                 while True:
                     line = myinstaller.stdout.readline()
                     if not line:
                         break
                     print('<br>'+line)
                 print(('</div>'))
-                print('</ul>')
-                print('<ul class="list-group">')
-                print(('<div class="alert alert-info alert-top">'))  # marker8
+                print(('<div class="alert alert-info alert-btm">'))  # marker8
                 print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
                 print(('export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"<br>'))
                 print(('cd '+mydocroot))
                 print(('<br>pip install --user -r requirements.txt'))
                 print('</div>')  # marker8
-                print('</ul>')
                 print('</div>')  # marker6
                 print('</div>')
             else:
@@ -182,9 +165,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print('<div class="panel panel-default">')
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
-            print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">requirements.txt not found for <span class="label label-primary">PYTHON</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/requirements.txt</kbd></div>'))
-            print('</ul>')
+            print(('<div class="alert alert-warning alert-btm">requirements.txt not found for <span class="label label-warning">PYTHON</span> project, specify project dependencies in <br><kbd>'+mydocroot+'/requirements.txt</kbd></div>'))
             print('</div>')  # marker4
             print('</div>')
     elif mybackend == 'PHP':
@@ -195,23 +176,19 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('<div class="panel panel-default">')
                 print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
                 print('<div class="panel-body">')  # marker6
-                print('<ul class="list-group">')
-                print(('<div class="alert alert-info alert-top">'))
+                print(('<div class="alert alert-info alert-btm">'))
                 while True:
                     line = myinstaller.stdout.readline()
                     if not line:
                         break
                     print('<br>'+line)
                 print(('</div>'))
-                print('</ul>')
-                print('<ul class="list-group">')
-                print(('<div class="alert alert-info alert-top">'))  # marker8
+                print(('<div class="alert alert-info alert-btm">'))  # marker8
                 print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
                 print(('export PATH="$PATH:/opt/cpanel/composer/bin"<br>'))
                 print(('cd '+mydocroot))
                 print(('<br>/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install'))
                 print('</div>')  # marker8
-                print('</ul>')
                 print('</div>')  # marker6
                 print('</div>')
             else:
@@ -220,9 +197,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
             print('<div class="panel panel-default">')
             print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
             print('<div class="panel-body">')  # marker4
-            print('<ul class="list-group">')
-            print(('<div class="alert alert-info alert-top">composer.json not found for <span class="label label-primary">PHP</span> project, specify project dependencies in <br><br><kbd>'+mydocroot+'/composer.json</kbd></div>'))
-            print('</ul>')
+            print(('<div class="alert alert-warning alert-btm">composer.json not found for <span class="label label-warning">PHP</span> project, specify project dependencies in <br><kbd>'+mydocroot+'/composer.json</kbd></div>'))
             print('</div>')  # marker4
             print('</div>')
 else:

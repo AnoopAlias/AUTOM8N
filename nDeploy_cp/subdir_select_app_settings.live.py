@@ -88,8 +88,9 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
         if subdir_apps_dict:
             if not subdir_apps_dict.get(thesubdir):
                 # Ok we are done with getting the settings,now lets present it to the user
+                print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'/'+thesubdir+'</strong></div>'))
                 print('<div class="panel panel-default">')  # markers1
-                print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
+                print('<div class="panel-heading"><h3 class="panel-title">Domain</h3></div>')
                 print('<div class="panel-body">')  # markers2
                 print('<form action="subdir_save_app_settings.live.py" method="post">')
                 print(('<div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the backend, select the version and template for this backend below</div>'))
@@ -151,15 +152,16 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                     if apptemplate_code in user_apptemplate_dict.keys():
                         apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
                 # Ok we are done with getting the settings,now lets present it to the user
+                print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'/'+thesubdir+'</strong></div>'))
                 print('<div class="panel panel-default">')
-                print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
+                print('<div class="panel-heading"><h3 class="panel-title">Domain</h3></div>')
                 print(('<div class="panel-body">'))
                 print('<form id="config" class="form-inline config-save" action="subdir_save_app_settings.live.py" method="post">')
                 if backend_category == 'PROXY':
                     print(('<div class="alert alert-info alert-top">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
                 else:
-                    print(('<div class="alert alert-info alert-top">Your current project is <span class="label label-primary">'+apptemplate_description+'</span> on native <span class="label label-primary">NGINX</span> with <span class="label label-primary">'+backend_category+'</span> <span class="label label-primary">'+backend_version+'</span> application server</div>'))
-                print(('<div class="alert alert-info alert-top">You selected <span class="label label-primary">'+mybackend+'</span> as the new backend, select the version and template for this backend below</div>'))
+                    print(('<div class="alert alert-success">Your current project is <span class="label label-success">'+apptemplate_description+'</span> on native <span class="label label-success">NGINX</span> with <span class="label label-success">'+backend_category+'</span> <span class="label label-success">'+backend_version+'</span> application server</div>'))
+                print(('<div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the new backend, select the version and template for this backend below</div>'))
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
                 if os.path.isfile(user_app_template_file):
@@ -239,8 +241,9 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('</div>')
         else:
             # Ok we are done with getting the settings,now lets present it to the user
+            print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'/'+thesubdir+'</strong></div>'))
             print('<div class="panel panel-default">')  # markerv1
-            print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
+            print('<div class="panel-heading"><h3 class="panel-title">Domain</h3></div>')
             print('<div class="panel-body">')  # markerv2
             print('<form class="form-inline" action="subdir_save_app_settings.live.py" method="post">')
             print(('<div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the backend, select the version and template for this backend below</div>'))

@@ -121,17 +121,20 @@ if form.getvalue('cpanelpkg'):
 
     # Ok we are done with getting the settings,now lets present it to the user
     # Next section start here
+    print('<div class="alert alert-warning alert-domain"><strong>'+form.getvalue('cpanelpkg')+'</strong></div>')
     print('<div class="panel panel-default">')  # div5
-    print(('<div class="panel-heading"><h3 class="panel-title">Application Server: <strong>'+form.getvalue('cpanelpkg')+'</strong></h3></div>'))
+    print(('<div class="panel-heading"><h3 class="panel-title">Application Server</h3></div>'))
     print('<div class="panel-body">')  # div6
     print('<form id="config" class="form-inline config-save" action="pkg_app_settings.cgi" method="post">')
+    print('<div class="app-status">')
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
-            print(('<div class="alert alert-default alert-top"><span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></div>'))
+            print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
         else:
-            print(('<div class="alert alert-default alert-top"><span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></div>'))
+            print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
     else:
-        print(('<div class="alert alert-default alert-top"><span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></div>'))
+        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
+    print('</div>')
     print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
     print('<select name="backend">')
     for backends_defined in backend_data_yaml_parsed.keys():
@@ -648,10 +651,8 @@ if form.getvalue('cpanelpkg'):
     print('</ul>')
     # end
     # Pass on the package name to the next stage
-    print('<ul class="list-group">')
     print(('<input style="display:none" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
     print('<input class="btn btn-primary" type="submit" value="Submit">')
-    print('</ul>')
 
     print('</form>')
     print('</div>')  # div10

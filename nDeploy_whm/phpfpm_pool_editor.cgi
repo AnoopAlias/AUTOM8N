@@ -53,8 +53,9 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
         # Next section start here
+        print('<div class="alert alert-warning alert-domain"><strong>'+config.sections()[mysection]+'</strong></div>')
         print('<div class="panel panel-default">')  # marker6
-        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[mysection]+'</h3></div>')
+        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool</h3></div>')
         print('<div class="panel-body">')  # marker7
         print('<ul class="list-group">')
         myconfig = dict(config.items(config.sections()[mysection]))
@@ -80,6 +81,9 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('<div class="panel panel-default">')  # marker6
         print('<div class="panel-heading"><h3 class="panel-title">Add new pool setting</h3></div>')
         print('<div class="panel-body">')  # marker7
+        print(('<div class="alert alert-warning">'))
+        print(('WARNING: Editing pool config with invalid settings can bring down your PHP application server. Edit at your own risk'))
+        print(('</div>'))
         print('<form class="form-group" action="save_phpfpm_pool_file.cgi">')
         print('<ul class="list-group">')
         print('<li class="list-group-item">')
@@ -94,15 +98,9 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('</li>')
         print(('<input style="display:none" name="section" value="'+form.getvalue('section')+'">'))
         print(('<input class="hidden" name="poolfile" value="'+myphpini+'">'))
-        print('<br>')
+        print('</ul>')
         print('<input class="btn btn-primary" type="submit" value="Submit">')
-        print('</ul>')
         print('</form>')
-        print('<ul class="list-group">')
-        print(('<div class="alert alert-info alert-top">'))
-        print(('WARNING : Editing pool config with invalid settings can bring down your PHP application server. Edit at your own risk'))
-        print(('</div>'))
-        print('</ul>')
         print('</div>')  # div8
         print('</div>')  # div7
 else:

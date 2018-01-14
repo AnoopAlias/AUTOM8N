@@ -49,7 +49,7 @@ print('</head>')
 print('<body>')
 print('<div id="main-container" class="container text-center">')  # marker1
 print('<div class="row">')  # marker2
-print('<div class="col-md-6 col-md-offset-3">')
+print('<div class="col-md-8 col-md-offset-2">')
 print('<div class="logo">')
 print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
 print('<h4>XtendWeb</h4>')
@@ -65,15 +65,15 @@ if os.path.isfile(php_log):
     print('<div class="panel panel-default">')
     print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
     print('<div class="panel-body">')  # marker6
-    print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top">'))
+    print(('<div class="log">'))
+    print('<ul class="list-unstyled">')
     while True:
         line = run_tail_cmd.stdout.readline()
         if not line:
             break
-        print('<br>'+line)
-    print(('</div>'))
+        print('<li>'+line+'</li>')
     print('</ul>')
+    print(('</div>'))
     print('</div>')  # marker6
     print('</div>')
 else:

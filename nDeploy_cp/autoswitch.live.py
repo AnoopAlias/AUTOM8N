@@ -62,15 +62,13 @@ myswitcher = subprocess.Popen(switch_cmd, stdout=subprocess.PIPE, stderr=subproc
 print('<div class="panel panel-default">')
 print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
 print('<div class="panel-body">')  # marker6
-print('<ul class="list-group">')
-print(('<div class="alert alert-info alert-top">'))
+print(('<div class="alert alert-warning alert-btm">'))
 while True:
     line = myswitcher.stdout.readline()
     if not line:
         break
     print('<br>'+line)
 print(('</div>'))
-print('</ul>')
 print('</div>')  # marker6
 print('</div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
