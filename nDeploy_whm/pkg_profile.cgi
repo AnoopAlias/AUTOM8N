@@ -122,9 +122,11 @@ if form.getvalue('cpanelpkg'):
     # Ok we are done with getting the settings,now lets present it to the user
     # Next section start here
     print('<div class="alert alert-warning alert-domain"><strong>'+form.getvalue('cpanelpkg')+'</strong></div>')
-    print('<div class="panel panel-default">')  # div5
-    print(('<div class="panel-heading"><h3 class="panel-title">Application Server</h3></div>'))
-    print('<div class="panel-body">')  # div6
+    print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
+    print('<div class="panel panel-default">')  # default
+    print(('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Application Server</a></h3></div>'))  # heading
+    print('<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">')  # collapse
+    print('<div class="panel-body">')  # body
     print('<form id="config" class="form-inline config-save" action="pkg_app_settings.cgi" method="post">')
     print('<div class="app-status">')
     if backend_category == 'PROXY':
@@ -147,13 +149,15 @@ if form.getvalue('cpanelpkg'):
     print(('<input class="hidden" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
     print('<input class="btn btn-primary" type="submit" value="Submit">')
     print('</form>')
-    print('</div>')  # div6
-    print('</div>')  # div5
+    print('</div>')  # body
+    print('</div>')  # collapse
+    print('</div>')  # default
 
     # Next section start here
-    print('<div class="panel panel-default">')  # div9
-    print(('<div class="panel-heading"><h3 class="panel-title">Application Settings:<strong>'+form.getvalue('cpanelpkg')+'</strong></h3></div>'))
-    print('<div class="panel-body">')  # div10
+    print('<div class="panel panel-default">')  # default
+    print(('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Application Settings</a></h3></div>'))  # heading
+    print('<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">')  # collapse
+    print('<div class="panel-body">')  # body
     print('<form id="config" class="form-inline" action="save_pkg_server_settings.cgi" method="post">')
 
     print('<ul class="list-group">')
@@ -655,8 +659,10 @@ if form.getvalue('cpanelpkg'):
     print('<input class="btn btn-primary" type="submit" value="Submit">')
 
     print('</form>')
-    print('</div>')  # div10
-    print('</div>')  # div9
+    print('</div>')  # body
+    print('</div>')  # collapse
+    print('</div>')  # default
+    print('</div>')  # accordion
 else:
         print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')

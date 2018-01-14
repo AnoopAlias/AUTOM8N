@@ -36,7 +36,7 @@ print('</head>')
 print('<body>')
 print('<div id="main-container" class="container text-center">')  # marker1
 print('<div class="row">')  # marker2
-print('<div class="col-md-6 col-md-offset-3">')  # marker3
+print('<div class="col-md-8 col-md-offset-2">')  # marker3
 print('<div class="logo">')
 print('<a href="xtendweb.cgi" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
 print('<h4>XtendWeb</h4>')
@@ -56,17 +56,20 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('<div class="alert alert-warning alert-domain"><strong>'+config.sections()[mysection]+'</strong></div>')
         print('<div class="panel panel-default">')  # marker6
         print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool</h3></div>')
-        print('<div class="panel-body">')  # marker7
+        print('<div id="config" class="panel-body">')  # marker7
         print('<ul class="list-group">')
         myconfig = dict(config.items(config.sections()[mysection]))
         for mykey in myconfig.keys():
             print('<li class="list-group-item">')
             print('<div class="row">')
-            print(('<div class="col-sm-6">'+mykey+'</div>'))
-            print('<div class="col-sm-6">')
-            print(myconfig.get(mykey))
+            print(('<div class="col-sm-6 col-radio text-left">'+mykey+'</div>'))
+            print('<div class="col-sm-6 col-radio">')
             print('<form class="form-group" action="save_phpfpm_pool.cgi">')
-            print('<input class="btn btn-xs btn-info" type="submit" value="Edit">')
+            print('<div class="input-group">')
+            print('<div class="form-control">')
+            print(myconfig.get(mykey))
+            print('</div>')
+            print('<span class="input-group-btn"><input class="btn btn-primary" type="submit" value="Edit"></span>')
             print(('<input class="hidden" name="poolfile" value="'+myphpini+'">'))
             print(('<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
             print(('<input class="hidden" name="thekey" value="'+mykey+'">'))
