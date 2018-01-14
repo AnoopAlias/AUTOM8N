@@ -11,6 +11,8 @@ a:hover,
 a:active,
 a:focus {
 	color: #075A8B;
+	outline: none;
+	text-decoration: none;
 }
 
 .btn-primary {
@@ -150,20 +152,6 @@ kbd {
 
 #config .col-sm-6 .btn-primary {
 	width: 100%;
-}
-
-#config .col-sm-6 .input-group {
-	text-align: left;
-}
-
-#config .col-sm-6 .input-group-btn .btn-primary {
-	margin: 0;
-	min-width: inherit;
-	border-radius: 0;
-}
-
-#config .col-sm-6 {
-	word-wrap: break-word;
 }
 
 #config .col-sm-6 .label {
