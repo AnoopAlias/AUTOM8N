@@ -110,7 +110,7 @@ print('</li>')
 print('</ul>')
 print('</div>')
 print(('<div class="alert alert-info alert-top alert-btm">'))
-print(('Nginx support uninterrupted working with graceful config reload and in-place upgrade. Do not restart nginx, instead use:<br> <kbd>nginx -s reload</kbd> on config changes <br> <kbd>/opt/nDeploy/scripts/nginx_upgrade_inplace.sh</kbd> on binary upgrade'))
+print(('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/process_control.html">PROCESS CONTROL</a>'))
 print(('</div>'))
 print('</div>')  # body
 print('</div>')  # collapse
