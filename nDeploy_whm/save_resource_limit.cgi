@@ -5,11 +5,6 @@ import cgitb
 import subprocess
 import cgi
 import psutil
-try:
-    from configparser import ConfigParser
-except ImportError:
-    from ConfigParser import ConfigParser
-
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"

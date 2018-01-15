@@ -3,13 +3,7 @@
 
 import cgitb
 import cgi
-import os
-import psutil
 import subprocess
-try:
-    from configparser import ConfigParser
-except ImportError:
-    from ConfigParser import ConfigParser
 
 
 __author__ = "Anoop P Alias"
@@ -48,117 +42,115 @@ print('<li class="active">Server Config</li>')
 print('</ol>')
 
 if form.getvalue('mode') and form.getvalue('unit'):
-  if form.getvalue('mode') == 'service':
-    myservice = form.getvalue('unit')+".service"
-    print('<div class="panel panel-default">')
-    print('<div class="panel-heading"><h3 class="panel-title">Current Resource Usage</h3></div>')
-    print('<div class="panel-body">')  # marker6
-    print(('<div class="alert alert-success alert-btm">'))
-    print(('<div class="panel-heading"><h3 class="panel-title">Current Resource Usage:'+myservice+'</h3></div>'))
-    mymem = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True).split('=')[1]
-    mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
-    myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
-    if int(myio) == 18446744073709551615:
-      print('BlockIOWeight=nolimit')
-    else:
-      print('BlockIOWeight='+myio)
-    print('<br>')
-    if int(mycpu) == 18446744073709551615:
-      print('CPUShares=nolimit')
-    else:
-      print('CPUShares='+mycpu)
-    print('<br>')
-    if int(mymem) == 18446744073709551615:
-      print('MemoryLimit=nolimit')
-    else:
-      mymem_inmb=float(mymem) / ( 1024.0 * 1024.0 )
-      print('MemoryLimit='+str(mymem_inmb)+'Mb')
-    print('<br>')
-    print(('</div>'))
-    print('</div>')  # marker6
-    print('</div>')
-  elif form.getvalue('mode') == 'user':
-    myservice = form.getvalue('unit')+".slice"
-    print('<div class="panel panel-default">')
-    print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:'+myservice+'</h3></div>'))
-    print('<div class="panel-body">')  # marker6
-    print('<ul class="list-group">')
-    print(('<div class="alert alert-info alert-top">'))
-    mymem = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True).split('=')[1]
-    mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
-    myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
-    if int(myio) == 18446744073709551615:
-      print('BlockIOWeight=nolimit')
-    else:
-      print('BlockIOWeight='+myio)
-    print('<br>')
-    if int(mycpu) == 18446744073709551615:
-      print('CPUShares=nolimit')
-    else:
-      print('CPUShares='+mycpu)
-    print('<br>')
-    if int(mymem) == 18446744073709551615:
-      print('MemoryLimit=nolimit')
-    else:
-      mymem_inmb=float(mymem) / ( 1024.0 * 1024.0 )
-      print('MemoryLimit='+str(mymem_inmb)+'Mb')
-    print('<br>')
-    print(('</div>'))
-    print('</ul>')
-    print('</div>')  # marker6
-    print('</div>')
-  # Next section start here
-  print('<div class="panel panel-default">')  # markera1
-  print('<div class="panel-heading"><h3 class="panel-title">Set Resource limit</h3></div>')
-  print('<div class="panel-body">') # markera2
-  print('<form class="form-inline" action="save_resource_limit.cgi" method="post">')
-  print('<div class="row">')  # markerb1
+    if form.getvalue('mode') == 'service':
+        myservice = form.getvalue('unit')+".service"
+        print('<div class="panel panel-default">')
+        print('<div class="panel-heading"><h3 class="panel-title">Current Resource Usage</h3></div>')
+        print('<div class="panel-body">')  # marker6
+        print(('<div class="alert alert-success alert-btm">'))
+        print(('<div class="panel-heading"><h3 class="panel-title">Current Resource Usage:'+myservice+'</h3></div>'))
+        mymem = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True).split('=')[1]
+        mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
+        myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
+        if int(myio) == 18446744073709551615:
+            print('BlockIOWeight=nolimit')
+        else:
+            print('BlockIOWeight='+myio)
+        print('<br>')
+        if int(mycpu) == 18446744073709551615:
+            print('CPUShares=nolimit')
+        else:
+            print('CPUShares='+mycpu)
+        print('<br>')
+        if int(mymem) == 18446744073709551615:
+            print('MemoryLimit=nolimit')
+        else:
+            mymem_inmb = float(mymem) / (1024.0 * 1024.0)
+            print('MemoryLimit='+str(mymem_inmb)+'Mb')
+        print('<br>')
+        print(('</div>'))
+        print('</div>')  # marker6
+        print('</div>')
+    elif form.getvalue('mode') == 'user':
+        myservice = form.getvalue('unit')+".slice"
+        print('<div class="panel panel-default">')
+        print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:'+myservice+'</h3></div>'))
+        print('<div class="panel-body">')  # marker6
+        print('<ul class="list-group">')
+        print(('<div class="alert alert-info alert-top">'))
+        mymem = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True).split('=')[1]
+        mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
+        myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
+        if int(myio) == 18446744073709551615:
+            print('BlockIOWeight=nolimit')
+        else:
+            print('BlockIOWeight='+myio)
+        print('<br>')
+        if int(mycpu) == 18446744073709551615:
+            print('CPUShares=nolimit')
+        else:
+            print('CPUShares='+mycpu)
+        print('<br>')
+        if int(mymem) == 18446744073709551615:
+            print('MemoryLimit=nolimit')
+        else:
+            mymem_inmb = float(mymem) / (1024.0 * 1024.0)
+            print('MemoryLimit='+str(mymem_inmb)+'Mb')
+        print('<br>')
+        print(('</div>'))
+        print('</ul>')
+        print('</div>')  # marker6
+        print('</div>')
+    # Next section start here
+    print('<div class="panel panel-default">')  # markera1
+    print('<div class="panel-heading"><h3 class="panel-title">Set Resource limit</h3></div>')
+    print('<div class="panel-body">')  # markera2
+    print('<form class="form-inline" action="save_resource_limit.cgi" method="post">')
+    print('<div class="row">')  # markerb1
 
-  print('<div class="col-sm-4">')  # markerc1
-  print('<div class="panel panel-default">')  # markerc2
-  print('<div class="panel-heading"><h3 class="panel-title">CPU</h3></div>')
-  print('<div class="panel-body">') # markerc3
-  print('<select name="cpu">')
-  for percentage in '100', '75', '50':
-    print(('<option value="'+percentage+'">'+percentage+'%</option>'))
-  print('</select>')
-  print('</div>') # markerc3
-  print('</div>') # markerc2
-  print('</div>') # markerc1
-  print('<div class="col-sm-4">')  # markerc1
-  print('<div class="panel panel-default">')  # markerc2
-  print('<div class="panel-heading"><h3 class="panel-title">MEMORY</h3></div>')
-  print('<div class="panel-body">') # markerc3
-  print('<select name="memory">')
-  for percentage in '100', '75', '50':
-    print(('<option value="'+percentage+'">'+percentage+'%</option>'))
-  print('</select>')
-  print('</div>') # markerc3
-  print('</div>') # markerc2
-  print('</div>') # markerc1
-  print('<div class="col-sm-4">')  # markerc1
-  print('<div class="panel panel-default">')  # markerc2
-  print('<div class="panel-heading"><h3 class="panel-title">BLOCKIO</h3></div>')
-  print('<div class="panel-body">') # markerc3
-  print('<select name="blockio">')
-  for percentage in '100', '75', '50':
-    print(('<option value="'+percentage+'">'+percentage+'%</option>'))
-  print('</select>')
-  print('</div>') # markerc3
-  print('</div>') # markerc2
-  print('</div>') # markerc1
+    print('<div class="col-sm-4">')  # markerc1
+    print('<div class="panel panel-default">')  # markerc2
+    print('<div class="panel-heading"><h3 class="panel-title">CPU</h3></div>')
+    print('<div class="panel-body">')  # markerc3
+    print('<select name="cpu">')
+    for percentage in '100', '75', '50':
+        print(('<option value="'+percentage+'">'+percentage+'%</option>'))
+    print('</select>')
+    print('</div>')  # markerc3
+    print('</div>')  # markerc2
+    print('</div>')  # markerc1
+    print('<div class="col-sm-4">')  # markerc1
+    print('<div class="panel panel-default">')  # markerc2
+    print('<div class="panel-heading"><h3 class="panel-title">MEMORY</h3></div>')
+    print('<div class="panel-body">')  # markerc3
+    print('<select name="memory">')
+    for percentage in '100', '75', '50':
+        print(('<option value="'+percentage+'">'+percentage+'%</option>'))
+    print('</select>')
+    print('</div>')  # markerc3
+    print('</div>')  # markerc2
+    print('</div>')  # markerc1
+    print('<div class="col-sm-4">')  # markerc1
+    print('<div class="panel panel-default">')  # markerc2
+    print('<div class="panel-heading"><h3 class="panel-title">BLOCKIO</h3></div>')
+    print('<div class="panel-body">')  # markerc3
+    print('<select name="blockio">')
+    for percentage in '100', '75', '50':
+        print(('<option value="'+percentage+'">'+percentage+'%</option>'))
+    print('</select>')
+    print('</div>')  # markerc3
+    print('</div>')  # markerc2
+    print('</div>')  # markerc1
 
-  print('</div>') # markerb1
-  print(('<input style="display:none" name="mode" value="'+form.getvalue('mode')+'">'))
-  print(('<input style="display:none" name="unit" value="'+form.getvalue('unit')+'">'))
-  print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
-  print('</form>')
-  print('</div>') # markera2
-  print('</div>') # markera1
-
+    print('</div>')  # markerb1
+    print(('<input style="display:none" name="mode" value="'+form.getvalue('mode')+'">'))
+    print(('<input style="display:none" name="unit" value="'+form.getvalue('unit')+'">'))
+    print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
+    print('</form>')
+    print('</div>')  # markera2
+    print('</div>')  # markera1
 else:
-  print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
-
+    print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
 print('</div>')
 print('</div>')
