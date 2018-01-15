@@ -101,10 +101,10 @@ for myprocess in psutil.process_iter():
         break
 if watcher_status:
     print(('<div class="col-sm-6"><div class="label label-success">ACTIVE</div></div>'))
-    print(('<div class="col-sm-6 col-radio">ndeploy_watcher (config propagation)</div>'))
+    print(('<div class="col-sm-6 col-radio">ndeploy_watcher</div>'))
 else:
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
-    print(('<div class="col-sm-6 col-radio">ndeploy_watcher (config propagation)</div>'))
+    print(('<div class="col-sm-6 col-radio">ndeploy_watcher</div>'))
 print('</div>')
 print('</li>')
 print('</ul>')
