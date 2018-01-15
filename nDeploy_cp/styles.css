@@ -11,6 +11,8 @@ a:hover,
 a:active,
 a:focus {
 	color: #075A8B;
+	outline: none;
+	text-decoration: none;
 }
 
 .btn-primary {
