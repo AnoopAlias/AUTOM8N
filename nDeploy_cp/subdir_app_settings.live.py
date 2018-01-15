@@ -115,8 +115,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         # We do a fresh config
         if subdir_apps_dict:
             if not subdir_apps_dict.get(thesubdir):
-            	print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'/'+thesubdir+'</strong></div>'))
-            	print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
+                print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'/'+thesubdir+'</strong></div>'))
+                print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
                 print('<div class="panel panel-default">')  # default
                 print('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Application Server</a></h3></div>')  # heading
                 print('<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">')  # collapse
@@ -175,15 +175,15 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('<div class="panel panel-default">')  # default
                 print('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Application Server</a></h3></div>')  # heading
                 print('<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">')  # collapse
-                print('<div class="panel-body">') # body
+                print('<div class="panel-body">')  # body
                 print('<form id="config" class="form-inline config-save" action="subdir_select_app_settings.live.py" method="post">')
                 if backend_category == 'PROXY':
                     if backend_version == 'httpd':
-                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
+                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span> <br> <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
                     else:
-                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
+                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span> <br> <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
                 else:
-                    print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
+                    print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span> <br> <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
                 print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
                 print('<select name="backend">')
                 for backends_defined in backend_data_yaml_parsed.keys():
