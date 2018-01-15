@@ -26,6 +26,7 @@ def close_cpanel_liveapisock():
     sock.sendall('<cpanelxml shutdown="1" />')
     sock.close()
 
+
 close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 print('Content-Type: text/html')
