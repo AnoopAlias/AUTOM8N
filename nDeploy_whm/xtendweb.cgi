@@ -259,15 +259,15 @@ if not osrelease == 'CloudLinux':
                     generated_config = template.render(templateVars)
                     with codecs.open(ownerslice, 'w', 'utf-8') as confout:
                         confout.write(generated_config)
-            print('<div class="panel panel-default">')  # general
+            print('<div class="panel panel-default">')  # default
             print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Resource Limit</a></h3></div>')  # heading
             print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
             print('<div class="panel-body">')  # body
-            print('<div class="row">')  # markerb1
+            print('<div class="row">')  # markerr1
             print('<div class="col-sm-6">')  # markerc1
-            print('<div class="panel panel-default">')  # markerc2
+            print('<div class="panel panel-default">')  # markerp1
             print('<div class="panel-heading"><h3 class="panel-title">Reseller</h3></div>')
-            print('<div class="panel-body">')  # markerc3
+            print('<div class="panel-body">')  # markerb1
             print('<form class="form-inline" action="resource_limit.cgi" method="post">')
             print('<select name="unit">')
             for reseller in resellerlist:
@@ -276,16 +276,13 @@ if not osrelease == 'CloudLinux':
             print(('<input style="display:none" name="mode" value="user">'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
-            print('</div>')  # markerc3
-            print('</div>')  # markerc2
+            print('</div>')  # markerb1
+            print('</div>')  # markerp1
             print('</div>')  # markerc1
-            print('<div class="col-sm-6">')  # markerc1
-            print('<div class="panel panel-default">')  # markerc2
+            print('<div class="col-sm-6">')  # markerc2
+            print('<div class="panel panel-default">')  # markerp2
             print('<div class="panel-heading"><h3 class="panel-title">Service</h3></div>')
-            print('<div class="panel-body">')  # markerc3
-            print(('<div class="alert alert-info alert-top">'))
-            print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
-            print(('</div>'))
+            print('<div class="panel-body">')  # markerb2
             print('<form class="form-inline" action="resource_limit.cgi" method="post">')
             print('<select name="unit">')
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
@@ -294,17 +291,20 @@ if not osrelease == 'CloudLinux':
             print(('<input style="display:none" name="mode" value="service">'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
-            print('</div>')  # markerc3
+            print('</div>')  # markerb2
+            print('</div>')  # markerp2
             print('</div>')  # markerc2
-            print('</div>')  # markerc1
+            print('</div>')  # markerr1
             print('</div>')  # body
             print('</div>')  # collapse
             print('</div>')  # default
         else:
             # Next sub-section start here
             print('<div class="panel panel-default">')  # default
-            print('<div class="panel-heading" role="tab" id="headingSix"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">Service resource limit</a></h3></div>')  # heading
-            print('<div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">')  # collapse
+            print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Resource Limit</a></h3></div>')  # heading
+            print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
+            # print('<div class="panel-heading" role="tab" id="headingSix"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">Service resource limit</a></h3></div>')  # heading
+            # print('<div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">')  # collapse
             print('<div class="panel-body">')  # body
             print(('<div class="alert alert-info">'))
             print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
