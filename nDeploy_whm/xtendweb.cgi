@@ -80,7 +80,7 @@ for myprocess in psutil.process_iter():
         nginx_status = True
         break
 if nginx_status:
-    print(('<div class="col-sm-6"><div class="label label-success">ACTIVE</div></div>'))
+    print(('<div class="col-sm-6"><div class="label label-info">ACTIVE</div></div>'))
     print(('<div class="col-sm-6 col-radio">NGINX</div>'))
 else:
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
@@ -100,7 +100,7 @@ for myprocess in psutil.process_iter():
         watcher_status = True
         break
 if watcher_status:
-    print(('<div class="col-sm-6"><div class="label label-success">ACTIVE</div></div>'))
+    print(('<div class="col-sm-6"><div class="label label-info">ACTIVE</div></div>'))
     print(('<div class="col-sm-6 col-radio">NDEPLOY_WATCHER</div>'))
 else:
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
