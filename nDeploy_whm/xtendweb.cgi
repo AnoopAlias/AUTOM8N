@@ -121,6 +121,7 @@ if os.path.isfile(cluster_config_file):
     print('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Cluster Status</a></h3></div>')  # heading
     print('<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">')  # collapse
     print('<div class="panel-body">')  # body
+    print('<div id="config">')
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     print('<ul class="list-group">')
@@ -138,7 +139,7 @@ if os.path.isfile(cluster_config_file):
                 filesync_status = True
                 break
         if filesync_status:
-            print(('<div class="col-sm-6"><div class="label label-primary">IN SYNC</div></div>'))
+            print(('<div class="col-sm-6"><div class="label label-info">IN SYNC</div></div>'))
             print(('<div class="col-sm-6 col-radio">'+servername+'</div>'))
         else:
             print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
@@ -157,6 +158,7 @@ if os.path.isfile(cluster_config_file):
     print('</form>')
     print(('<div class="alert alert-info alert-top">'))
     print(('Only perform a hard reset if the unison archive is corrupt.Unison archive rebuild is time consuming'))
+    print(('</div>'))
     print(('</div>'))
     print('</div>')  # body
     print('</div>')  # collapse
