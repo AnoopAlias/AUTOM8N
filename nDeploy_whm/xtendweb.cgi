@@ -303,8 +303,6 @@ if not osrelease == 'CloudLinux':
             print('<div class="panel panel-default">')  # default
             print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Resource Limit</a></h3></div>')  # heading
             print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
-            # print('<div class="panel-heading" role="tab" id="headingSix"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">Service resource limit</a></h3></div>')  # heading
-            # print('<div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">')  # collapse
             print('<div class="panel-body">')  # body
             print(('<div class="alert alert-info">'))
             print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
