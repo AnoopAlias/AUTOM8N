@@ -52,7 +52,9 @@ def cluster_ensure_arecord(zone_name, hostname, domain_ip):
                         subprocess.call("/usr/local/cpanel/bin/whmapi1 removezonerecord zone="+zone_name+" line="+str(rr['Line']), shell=True)
             if not os.path.isfile(installation_path+"/conf/DECLUSTER_DNSZONE"):
                 # Lets add DNS A record
+                print("=========addzonerecord domain="+zone_name+" ttl=300 type=A class=IN name="+hostname+". address="+remote_domain_ipv4)
                 subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=A class=IN name="+hostname+". address="+remote_domain_ipv4, shell=True)
+                print('============end addzonerecord=============')
     return
 
 
@@ -85,11 +87,17 @@ def cluster_ensure_mxrecord(zone_name):
                     subprocess.call("/usr/local/cpanel/bin/whmapi1 removezonerecord zone="+zone_name+" line="+str(rr['Line']), shell=True)
             if not os.path.isfile(installation_path+"/conf/DECLUSTER_DNSZONE"):
                 myhostname = socket.gethostname()
+                print("===================addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=0 exchange="+myhostname+".")
                 subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=0 exchange="+myhostname+".", shell=True)
+                print('============end addzonerecord=============')
                 for server in serverlist:
+                    print("=========================addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=100 exchange="+server+".")
                     subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=100 exchange="+server+".", shell=True)
+                    print('============end addzonerecord=============')
             else:
+                print("========================addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=0 exchange="+zone_name+".")
                 subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=0 exchange="+zone_name+".", shell=True)
+                print('============end addzonerecord=============')
     return
 
 
