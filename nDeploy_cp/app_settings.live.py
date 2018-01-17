@@ -243,6 +243,7 @@ if form.getvalue('domain'):
                 print((' <span class="label label-success">VALID</span><br>'))
             else:
                 print((' <span class="label label-danger">INVALID</span><br>'))
+            print(('<br>'))
             print('<form class="form-group" action="reload_config.live.py">')
             print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
             print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
