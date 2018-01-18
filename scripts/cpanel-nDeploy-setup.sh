@@ -32,7 +32,12 @@ else
 	# test for OpenVZ/Virtuozzo platform
 	/usr/sbin/sysctl -w net.core.somaxconn=16384
 	if [ $? -ne 0 ];then
-		sed -i 's/ExecStartPre=\/usr\/sbin\/sysctl -w net.core.netdev_max_backlog/#ExecStartPre=\/usr\/sbin\/sysctl -w net.core.netdev_max_backlog/' /etc/systemd/system/nginx.service
+		sed 's/^ExecStartPre=\/usr\/sbin\/sysctl/#ExecStartPre=\/usr\/sbin\/sysctl/' /usr/lib/systemd/system/nginx.service > /etc/systemd/system/nginx.service
+		systemctl daemon-reload
+	fi
+	/usr/sbin/sysctl -w net.core.netdev_max_backlog=16384
+	if [ $? -ne 0 ];then
+		sed 's/^ExecStartPre=\/usr\/sbin\/sysctl/#ExecStartPre=\/usr\/sbin\/sysctl/' /usr/lib/systemd/system/nginx.service > /etc/systemd/system/nginx.service
 		systemctl daemon-reload
 	fi
 	systemctl restart nginx
