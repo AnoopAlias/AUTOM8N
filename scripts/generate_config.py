@@ -334,9 +334,9 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
         ipv6_addr = None
     # if domain has TLS, get details about it too
     # We setup TLS based on /var/cpanel/ssl/apache_tls/ path in cPanel v68+
-    if os.path.isfile('/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'):
+    if os.path.isfile('/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'):
         hasssl = True
-        sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
+        sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('maindomain')+'/combined'
     else:
         hasssl = False
         sslcombinedcert = None
