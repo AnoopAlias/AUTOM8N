@@ -134,13 +134,13 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('<div class="panel-heading"><h3 class="panel-title">Application template</h3></div>')
             print('<div class="panel-body">')
             print('<select name="apptemplate">')
-            for myapptemplate in new_apptemplate_dict.keys():
+            for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 if myapptemplate == apptemplate_code:
                     print(('<option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
                 else:
                     print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
             if user_new_apptemplate_dict:
-                for user_myapptemplate in user_new_apptemplate_dict.keys():
+                for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
                     if user_myapptemplate == apptemplate_code:
                         print(('<option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
                     else:
@@ -166,10 +166,10 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Application template</h3></div>')
             print('<div class="panel-body">')
             print('<select name="apptemplate">')
-            for myapptemplate in new_apptemplate_dict.keys():
+            for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
             if user_new_apptemplate_dict:
-                for user_myapptemplate in user_new_apptemplate_dict.keys():
+                for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
                     print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
             print('</select>')
             print('</div>')
