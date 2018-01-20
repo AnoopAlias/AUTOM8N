@@ -109,7 +109,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('<div class="panel-heading"><h3 class="panel-title">Application template</h3></div>')
             print('<div class="panel-body">')
             print('<select name="apptemplate">')
-            for myapptemplate in new_apptemplate_dict.keys():
+            for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 if myapptemplate == apptemplate_code:
                     print(('<option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
                 else:
@@ -135,7 +135,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Application template</h3></div>')
             print('<div class="panel-body">')
             print('<select name="apptemplate">')
-            for myapptemplate in new_apptemplate_dict.keys():
+            for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
             print('</select>')
             print('</div>')
