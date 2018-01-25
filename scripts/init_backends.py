@@ -46,9 +46,12 @@ def control_php_fpm(trigger):
                     pwd.getpwnam(user)
                 except KeyError:
                     os.remove("/opt/nDeploy/php-fpm.d/"+filename)
-                if os.path.isfile('/var/cpanel/feature_toggles/apachefpmjail'):
-                    if user != 'nobody':
-                        user_home = pwd.getpwnam(user).pw_dir
+                if user != 'nobody':
+                    user_home = pwd.getpwnam(user).pw_dir
+                    user_shell = pwd.getpwnam(user).pw_shell
+                    if user_shell == '/usr/local/cpanel/bin/noshell':
+                        print('Please set Jailed shell for user: '+user)
+                    else:
                         print('VirtfsJailFix:: '+user)
                         subprocess.call('su - '+user+' -c "touch '+user_home+'/public_html"', shell=True)
         elif trigger == "start":
