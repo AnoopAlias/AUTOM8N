@@ -46,7 +46,7 @@ def control_php_fpm(trigger):
                 except KeyError:
                     silentremove("/opt/nDeploy/php-fpm.d/"+user+".conf")
                     silentremove("/opt/nDeploy/secure-php-fpm.d/"+user+".conf")
-                if user != 'nobody' or user != 'system':
+                if user != 'nobody' and user != 'system':
                     user_home = pwd.getpwnam(user).pw_dir
                     user_shell = pwd.getpwnam(user).pw_shell
                     if user_shell == '/usr/local/cpanel/bin/noshell':
