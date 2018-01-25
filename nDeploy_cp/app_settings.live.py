@@ -89,6 +89,26 @@ if form.getvalue('domain'):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     cpaneluser = os.environ["USER"]
+    if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
+        with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
+            json_parsed_cpusersfile = json.load(users_file)
+        myplan = json_parsed_cpusersfile.get('PLAN', 'default')
+    else:
+        myplan = 'default'
+    hostingplan_filename = myplan.replace(" ", "_")
+    if hostingplan_filename == 'undefined' or hostingplan_filename == 'default':
+        if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+        else:
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+    else:
+        if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
+        else:
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+    with open(TEMPLATE_FILE, 'r') as templatefile_data_stream:
+        yaml_parsed_templatefile = yaml.safe_load(templatefile_data_stream)
+    settings_lock = yaml_parsed_templatefile.get('settings_lock', 'disabled')
     cpdomainjson = "/var/cpanel/userdata/" + cpaneluser + "/" + cpmydomain + ".cache"
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
@@ -167,17 +187,20 @@ if form.getvalue('domain'):
         else:
             print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <br> <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
         print('</div>')
-        print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
-        print('<select name="backend">')
-        for backends_defined in backend_data_yaml_parsed.keys():
-            if backends_defined == backend_category:
-                print(('<option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
-            else:
-                print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
-        print('</select>')
-        # Pass on the domain name to the next stage
-        print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-        print('<input class="btn btn-primary" type="submit" value="Submit">')
+        if settings_lock == 'enabled':
+            print(('<div class="alert alert-info alert-top">Application Server settings are locked by the administrator</div>'))
+        else:
+            print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
+            print('<select name="backend">')
+            for backends_defined in backend_data_yaml_parsed.keys():
+                if backends_defined == backend_category:
+                    print(('<option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
+                else:
+                    print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
+            print('</select>')
+            # Pass on the domain name to the next stage
+            print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+            print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</form>')
         print('</div>')  # body
         print('</div>')  # collapse
