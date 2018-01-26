@@ -520,161 +520,164 @@ if form.getvalue('domain'):
 
         print('<ul class="list-group">')
         print(('<h6 class="list-group-item-heading">Security Settings</h6>'))
-        # clickjacking_protect
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        clickjacking_protect_hint = "X-Frame-Options SAMEORIGIN"
-        if clickjacking_protect == 'enabled':
-            print_green("clickjacking_protect", clickjacking_protect_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="disabled" /> Disabled</label></div>')
-            print('</div>')
+        if settings_lock == 'enabled':
+            print(('<div class="alert alert-info alert-top">Security settings are locked by the administrator</div>'))
         else:
-            print_red("clickjacking_protect", clickjacking_protect_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # disable_contenttype_sniffing
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        disable_contenttype_sniffing_hint = "X-Content-Type-Options nosniff"
-        if disable_contenttype_sniffing == 'enabled':
-            print_green("disable_contenttype_sniffing", disable_contenttype_sniffing_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("disable_contenttype_sniffing", disable_contenttype_sniffing_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # xss_filter
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        xss_filter_hint = 'X-XSS-Protection'
-        if xss_filter == 'enabled':
-            print_green("xss_filter", xss_filter_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("xss_filter", xss_filter_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # hsts
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        hsts_hint = 'Strict-Transport-Security'
-        if hsts == 'enabled':
-            print_green("hsts", hsts_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="hsts" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="hsts" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("hsts", hsts_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="hsts" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="hsts" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # dos_mitigate
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        dos_mitigate_hint = "Enable only when under a dos attack"
-        if dos_mitigate == 'enabled':
-            print_green("dos_mitigate", dos_mitigate_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("dos_mitigate", dos_mitigate_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # test_cookie
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        test_cookie_hint = "Disable most bots except good ones like google/yahoo etc with a cookie challenge"
-        if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
-            if test_cookie == 'enabled':
-                print_green("test_cookie", test_cookie_hint)
+            # clickjacking_protect
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            clickjacking_protect_hint = "X-Frame-Options SAMEORIGIN"
+            if clickjacking_protect == 'enabled':
+                print_green("clickjacking_protect", clickjacking_protect_hint)
                 print('<div class="col-sm-6 col-radio">')
-                print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" checked/> Enabled</label></div>')
-                print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" /> Disabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="disabled" /> Disabled</label></div>')
                 print('</div>')
+            else:
+                print_red("clickjacking_protect", clickjacking_protect_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # disable_contenttype_sniffing
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            disable_contenttype_sniffing_hint = "X-Content-Type-Options nosniff"
+            if disable_contenttype_sniffing == 'enabled':
+                print_green("disable_contenttype_sniffing", disable_contenttype_sniffing_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("disable_contenttype_sniffing", disable_contenttype_sniffing_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # xss_filter
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            xss_filter_hint = 'X-XSS-Protection'
+            if xss_filter == 'enabled':
+                print_green("xss_filter", xss_filter_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("xss_filter", xss_filter_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # hsts
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            hsts_hint = 'Strict-Transport-Security'
+            if hsts == 'enabled':
+                print_green("hsts", hsts_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="hsts" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="hsts" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("hsts", hsts_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="hsts" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="hsts" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # dos_mitigate
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            dos_mitigate_hint = "Enable only when under a dos attack"
+            if dos_mitigate == 'enabled':
+                print_green("dos_mitigate", dos_mitigate_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("dos_mitigate", dos_mitigate_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # test_cookie
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            test_cookie_hint = "Disable most bots except good ones like google/yahoo etc with a cookie challenge"
+            if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
+                if test_cookie == 'enabled':
+                    print_green("test_cookie", test_cookie_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" checked/> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" /> Disabled</label></div>')
+                    print('</div>')
+                else:
+                    print_red("test_cookie", test_cookie_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" /> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" checked/> Disabled</label></div>')
+                    print('</div>')
             else:
                 print_red("test_cookie", test_cookie_hint)
-                print('<div class="col-sm-6 col-radio">')
-                print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" /> Enabled</label></div>')
-                print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" checked/> Disabled</label></div>')
-                print('</div>')
-        else:
-            print_red("test_cookie", test_cookie_hint)
-            print_disabled()
-            print(('<input style="display:none" name="test_cookie" value="'+test_cookie+'">'))
-        print('</div>')
-        print('</li>')
-        # symlink_protection
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        symlink_protection_hint = "Access to a file is denied if any component of the pathname is a symbolic link, and the link and object that the link points to have different owners"
-        if symlink_protection == 'enabled':
-            print_green("symlink_protection", symlink_protection_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" /> Disabled</label></div>')
+                print_disabled()
+                print(('<input style="display:none" name="test_cookie" value="'+test_cookie+'">'))
             print('</div>')
-        else:
-            print_red("symlink_protection", symlink_protection_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # mod_security
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        mod_security_hint = "mod_security v3 WAF"
-        if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
-            if mod_security == 'enabled':
-                print_green('mod_security', mod_security_hint)
+            print('</li>')
+            # symlink_protection
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            symlink_protection_hint = "Access to a file is denied if any component of the pathname is a symbolic link, and the link and object that the link points to have different owners"
+            if symlink_protection == 'enabled':
+                print_green("symlink_protection", symlink_protection_hint)
                 print('<div class="col-sm-6 col-radio">')
-                print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
-                print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" /> Disabled</label></div>')
                 print('</div>')
             else:
-                print_red('mod_security', mod_security_hint)
+                print_red("symlink_protection", symlink_protection_hint)
                 print('<div class="col-sm-6 col-radio">')
-                print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
-                print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" checked/> Disabled</label></div>')
                 print('</div>')
-        else:
-            print_red('mod_security', mod_security_hint)
-            print_disabled()
-            print(('<input style="display:none" name="mod_security" value="'+mod_security+'">'))
-        print('</div>')
-        print('</li>')
-        print('</ul>')
+            print('</div>')
+            print('</li>')
+            # mod_security
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            mod_security_hint = "mod_security v3 WAF"
+            if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+                if mod_security == 'enabled':
+                    print_green('mod_security', mod_security_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
+                    print('</div>')
+                else:
+                    print_red('mod_security', mod_security_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
+                    print('</div>')
+            else:
+                print_red('mod_security', mod_security_hint)
+                print_disabled()
+                print(('<input style="display:none" name="mod_security" value="'+mod_security+'">'))
+            print('</div>')
+            print('</li>')
+            print('</ul>')
 
         print('<ul class="list-group">')
         print(('<h6 class="list-group-item-heading">Redirections</h6>'))
