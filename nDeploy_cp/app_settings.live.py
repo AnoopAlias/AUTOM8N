@@ -89,6 +89,7 @@ if form.getvalue('domain'):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     cpaneluser = os.environ["USER"]
+    # Settings Lock
     if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
         with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
             json_parsed_cpusersfile = json.load(users_file)

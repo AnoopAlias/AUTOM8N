@@ -3,6 +3,7 @@
 
 import os
 import socket
+import yaml
 import cgitb
 try:
     import simplejson as json
@@ -42,6 +43,27 @@ main_domain = json_parsed_cpaneluser.get('main_domain')
 addon_domains_dict = json_parsed_cpaneluser.get('addon_domains')     # So we know which addon is mapped to which sub-domain
 sub_domains = json_parsed_cpaneluser.get('sub_domains')
 
+# Settings Lock
+if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
+    with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
+        json_parsed_cpusersfile = json.load(users_file)
+    myplan = json_parsed_cpusersfile.get('PLAN', 'default')
+else:
+    myplan = 'default'
+hostingplan_filename = myplan.replace(" ", "_")
+if hostingplan_filename == 'undefined' or hostingplan_filename == 'default':
+    if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+        TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+    else:
+        TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+else:
+    if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
+        TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
+    else:
+        TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+with open(TEMPLATE_FILE, 'r') as templatefile_data_stream:
+    yaml_parsed_templatefile = yaml.safe_load(templatefile_data_stream)
+settings_lock = yaml_parsed_templatefile.get('settings_lock', 'disabled')
 
 print('Content-Type: text/html')
 print('')
@@ -70,10 +92,13 @@ print('</ol>')
 print('<div class="panel panel-default single">')  # marker6
 print('<div class="panel-heading"><h3 class="panel-title">Switch domains automatically</h3></div>')
 print('<div class="panel-body">')  # marker7
-print('<form class="form-group" action="autoswitch.live.py">')
-print('<input class="btn btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
-print(('<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
-print('</form>')
+if settings_lock == 'enabled':
+    print(('<div class="alert alert-info alert-top">Application Server settings are locked by the administrator</div>'))
+else:
+    print('<form class="form-group" action="autoswitch.live.py">')
+    print('<input class="btn btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
+    print(('<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
+    print('</form>')
 print('</div>')  # marker7
 print('</div>')  # marker6
 # Next section start here
