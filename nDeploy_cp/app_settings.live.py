@@ -522,6 +522,14 @@ if form.getvalue('domain'):
         print(('<h6 class="list-group-item-heading">Security Settings</h6>'))
         if settings_lock == 'enabled':
             print(('<div class="alert alert-info alert-top">Security settings are locked by the administrator</div>'))
+            print(('<input style="display:none" name="clickjacking_protect" value="'+clickjacking_protect+'">'))
+            print(('<input style="display:none" name="disable_contenttype_sniffing" value="'+disable_contenttype_sniffing+'">'))
+            print(('<input style="display:none" name="xss_filter" value="'+xss_filter+'">'))
+            print(('<input style="display:none" name="hsts" value="'+hsts+'">'))
+            print(('<input style="display:none" name="dos_mitigate" value="'+dos_mitigate+'">'))
+            print(('<input style="display:none" name="test_cookie" value="'+test_cookie+'">'))
+            print(('<input style="display:none" name="symlink_protection" value="'+symlink_protection+'">'))
+            print(('<input style="display:none" name="mod_security" value="'+mod_security+'">'))
         else:
             # clickjacking_protect
             print('<li class="list-group-item">')
