@@ -70,6 +70,19 @@ if form.getvalue('cpanelpkg'):
         print('</body>')
         print('</html>')
         sys.exit(0)
+    # settings_lock
+    if 'settings_lock' in form.keys():
+        settings_lock = form.getvalue('settings_lock')
+        yaml_parsed_profileyaml['settings_lock'] = settings_lock
+    else:
+        print('ERROR: Forbidden::settings_lock')
+        print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</body>')
+        print('</html>')
+        sys.exit(0)
     # phpmaxchildren
     if 'phpmaxchildren' in form.keys():
         phpmaxchildren = form.getvalue('phpmaxchildren')

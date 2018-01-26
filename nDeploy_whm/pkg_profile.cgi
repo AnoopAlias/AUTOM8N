@@ -103,6 +103,7 @@ if form.getvalue('cpanelpkg'):
     user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
     subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
     phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '16')
+    settings_lock = yaml_parsed_profileyaml.get('settings_lock', 'disabled')
     # get the human friendly name of the app template
     if os.path.isfile(app_template_file):
         with open(app_template_file, 'r') as apptemplate_data_yaml:
@@ -652,6 +653,25 @@ if form.getvalue('cpanelpkg'):
     print('</div>')
     print('</div>')
     print('</li>')
+    # settings_lock
+    print('<li class="list-group-item">')
+    settings_lock_hint = "Lock application server and security settings"
+    print('<div class="row">')
+    if settings_lock == 'enabled':
+        print_green("settings_lock", settings_lock_hint)
+        print('<div class="col-sm-6 col-radio">')
+        print('<div class="radio"><label><input type="radio" name="settings_lock" value="enabled" checked/> Enabled</label></div>')
+        print('<div class="radio"><label><input type="radio" name="settings_lock" value="disabled"/> Disabled</label></div>')
+        print('</div>')
+    else:
+        print_red("settings_lock", settings_lock_hint)
+        print('<div class="col-sm-6 col-radio">')
+        print('<div class="radio"><label><input type="radio" name="settings_lock" value="enabled" /> Enabled</label></div>')
+        print('<div class="radio"><label><input type="radio" name="settings_lock" value="disabled" checked/> Disabled</label></div>')
+        print('</div>')
+    print('</div>')
+    print('</li>')
+
     print('</ul>')
     # end
     # Pass on the package name to the next stage
