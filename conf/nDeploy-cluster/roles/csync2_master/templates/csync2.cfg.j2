@@ -6,6 +6,7 @@ group nDeployCluster
         include /etc/nginx/conf.d/cpanel_services.conf;
         include /var/cpanel/ssl/installed;
         include /var/cpanel/ssl/apache_tls;
+        include /var/cpanel/users;
 	      include /opt/nDeploy/php-fpm.d;
         include /opt/nDeploy/secure-php-fpm.d;
         include /opt/nDeploy/hhvm.d;
@@ -38,7 +39,7 @@ group nDeployCluster
                 pattern /opt/cpanel/ea-php72/root/etc/php.ini;
                 exec "/opt/nDeploy/scripts/init_backends.py reload";
                 logfile "/var/log/csync2_action.log";
-                do-local;      
+                do-local;
         }
         backup-directory /var/backups/csync2;
         backup-generations 3;
