@@ -4,7 +4,6 @@
 import sys
 import json
 import subprocess
-import os
 
 
 __author__ = "Anoop P Alias"
