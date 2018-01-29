@@ -259,6 +259,8 @@ if not osrelease == 'CloudLinux':
                     generated_config = template.render(templateVars)
                     with codecs.open(ownerslice, 'w', 'utf-8') as confout:
                         confout.write(generated_config)
+                if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
+                    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src='+ownerslice+' dest='+ownerslice+'"', shell=True)
             print('<div class="panel panel-default">')  # default
             print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Resource Limit</a></h3></div>')  # heading
             print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
