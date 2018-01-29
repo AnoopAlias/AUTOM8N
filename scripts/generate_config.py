@@ -755,8 +755,8 @@ if __name__ == "__main__":
                         generated_config = template.render(templateVars)
                         with codecs.open(ownerslice, 'w', 'utf-8') as confout:
                             confout.write(generated_config)
-                if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
-                    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src='+ownerslice+' dest='+ownerslice+'"', shell=True)
+                    if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
+                        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src='+ownerslice+' dest='+ownerslice+'"', shell=True)
             else:
                 # If cpanel users file is not present silently exit
                 sys.exit(0)
