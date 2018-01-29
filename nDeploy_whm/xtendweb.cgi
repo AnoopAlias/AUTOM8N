@@ -277,6 +277,7 @@ if not osrelease == 'CloudLinux':
             print('</select>')
             print(('<input style="display:none" name="mode" value="user">'))
             print(('<br>'))
+            print(('<br>'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
             print('</div>')  # markerb1
@@ -292,6 +293,7 @@ if not osrelease == 'CloudLinux':
                 print(('<option value="'+service+'">'+service+'</option>'))
             print('</select>')
             print(('<input style="display:none" name="mode" value="service">'))
+            print(('<br>'))
             print(('<br>'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
