@@ -9,7 +9,7 @@
        "icon" : "xtendweb.png",
        "group_id" : "xtendweb_grp",
        "order" : 1,
-       "name" : "A U T O M 8 N",
+       "name" : "XtendWeb",
        "type" : "link",
        "id" : "xtendweb",
        "uri" : "nDeploy_cp/xtendweb.live.py",
