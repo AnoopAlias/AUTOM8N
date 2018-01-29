@@ -53,7 +53,7 @@ print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" 
 print('<h4>XtendWeb</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
+print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Passenger Module Installer</li>')
 print('</ol>')
 if form.getvalue('domain') and form.getvalue('backend_category') and form.getvalue('backend_version') and form.getvalue('document_root'):

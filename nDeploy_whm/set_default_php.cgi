@@ -46,7 +46,7 @@ print('<a href="xtendweb.cgi" data-toggle="tooltip" data-placement="bottom" titl
 print('<h4>XtendWeb</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-refresh"></span></a></li>')
+print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></span></a></li>')
 print('<li class="active">Server Config</li>')
 print('</ol>')
 

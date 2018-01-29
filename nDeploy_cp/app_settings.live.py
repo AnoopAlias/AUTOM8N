@@ -72,7 +72,7 @@ print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" 
 print('<h4>XtendWeb</h4>')
 print('</div>')  # div4
 print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
+print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Settings</li>')
 print('</ol>')
 
