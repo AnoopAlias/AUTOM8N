@@ -122,7 +122,7 @@ print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
 print('</form>')
 print('</div>')  # marker5
 print('</div>')  # marker4
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a><br><a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a></small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2
 print('</div>')  # # marker1
