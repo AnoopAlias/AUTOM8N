@@ -240,7 +240,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 if os.path.isfile(document_root+"/"+thesubdir+"/nginx.conf"):
                     print(('<div class="alert alert-info alert-top">'))
                     print('<kbd>'+document_root+'/'+thesubdir+'/nginx.conf</kbd>')
-                    print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
+                    print('<br>')
                     if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
                         print((' <span class="label label-success">VALID</span><br>'))
                     else:
