@@ -367,7 +367,7 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
     apptemplate_code = yaml_parsed_domain_data.get('apptemplate_code', None)
     backend_path = yaml_parsed_domain_data.get('backend_path', None)
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
-    user_config = yaml_parsed_domain_data.get('user_config', 'disabled')
+    user_config = False
     phpmaxchildren = yaml_parsed_domain_data.get('phpmaxchildren', '16')
     # initialize the fastcgi_socket variable
     fastcgi_socket = None
@@ -496,16 +496,15 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
     generated_config = server_template.render(templateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
         confout.write(generated_config)
-    if user_config == 'enabled':
-        # generate a temp server config
-        if os.path.isfile(installation_path+'/conf/server_test_local.j2'):
-            TEST_TEMPLATE_FILE = "server_test_local.j2"
-        else:
-            TEST_TEMPLATE_FILE = "server_test.j2"
-        test_server_template = templateEnv.get_template(TEST_TEMPLATE_FILE)
-        generated_config = test_server_template.render(templateVars)
-        with codecs.open(installation_path+"/lock/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
-            confout.write(generated_config)
+    # generate a temp server config which we will use for custom nginx.conf testing
+    if os.path.isfile(installation_path+'/conf/server_test_local.j2'):
+        TEST_TEMPLATE_FILE = "server_test_local.j2"
+    else:
+        TEST_TEMPLATE_FILE = "server_test.j2"
+    test_server_template = templateEnv.get_template(TEST_TEMPLATE_FILE)
+    generated_config = test_server_template.render(templateVars)
+    with codecs.open(installation_path+"/lock/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
+        confout.write(generated_config)
     # If a cluster is setup.Generate nginx config for other servers as well
     if clusterenabled:
         for server in cluster_serverlist:
@@ -570,8 +569,9 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
         confout.write(generated_app_config)
     # Copy the user config for testing if present
-    if user_config == 'enabled' and os.path.isfile(document_root+"/nginx.conf"):
+    if os.path.isfile(document_root+"/nginx.conf"):
         shutil.copyfile(document_root+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test")
+        user_config = True
     # Get the subdir config also rendered
     if subdir_apps:
         for subdir in subdir_apps.keys():
@@ -624,8 +624,9 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subconf", "w", 'utf-8') as confout:
                 confout.write(generated_config)
             # Copy the user config for testing if present
-            if user_config == 'enabled' and os.path.isfile(document_root+'/'+subdir+"/nginx.conf"):
+            if os.path.isfile(document_root+'/'+subdir+"/nginx.conf"):
                 shutil.copyfile(document_root+'/'+subdir+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test")
+                user_config = True
             # Generate the rest of the config(subdomain.subinclude) based on the application template
             subdirApptemplate = templateEnv.get_template(subdir_apptemplate_code)
             # We configure the backends first if necessary
@@ -676,7 +677,7 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
                 confout.write(generated_subdir_app_config)
     # If we have a user_config.Lets generate the test confg
-    if user_config == 'enabled':
+    if user_config:
         # generate a temp nginx config
         NGINX_CONF_TEMPLATE = 'nginx_test.j2'
         nginx_test_template = templateEnv.get_template(NGINX_CONF_TEMPLATE)
