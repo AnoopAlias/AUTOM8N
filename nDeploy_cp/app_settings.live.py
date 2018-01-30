@@ -266,7 +266,7 @@ if form.getvalue('domain'):
             else:
                 print((' <span class="label label-danger">INVALID</span><br>'))
         else:
-            print(('<div class="alert alert-info alert-top">upload custom nginx config to be placed inside server block in <kbd>'+document_root+'/nginx.conf</kbd> and hit RELOAD</div>'))
+            print(('<div class="alert alert-info alert-top">upload custom nginx config to be placed inside server context in <kbd>'+document_root+'/nginx.conf</kbd> and hit RELOAD</div>'))
         print(('<br>'))
         print('<form class="form-group" action="reload_config.live.py">')
         print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
@@ -276,7 +276,6 @@ if form.getvalue('domain'):
         print('</li>')
         print('</ul>')
 
-        # User config reload
         print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
         print('<ul class="list-group">')
         print(('<h6 class="list-group-item-heading">General Settings</h6>'))
