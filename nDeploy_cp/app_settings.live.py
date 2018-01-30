@@ -265,7 +265,7 @@ if form.getvalue('domain'):
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
                 print((' <span class="label label-success">VALID</span><br>'))
             else:
-                print((' <span class="label label-danger">INVALID</span><br>'))
+                print((' <span class="label label-danger">INVALID/REQUIRE RELOAD</span><br>'))
             print('</div>')
         else:
             print(('<div class="alert alert-info alert-top">upload custom nginx config to be placed inside server context in <kbd>'+document_root+'/nginx.conf</kbd> and hit RELOAD</div>'))
