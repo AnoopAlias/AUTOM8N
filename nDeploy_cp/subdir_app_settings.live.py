@@ -234,25 +234,28 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">')  # collapse
                 print(('<div class="panel-body">'))  # body
                 # User config reload
-                if user_config == 'enabled' and os.path.isfile(document_root+"/"+thesubdir+"/nginx.conf"):
-                    print('<ul class="list-group">')
-                    print('<li class="list-group-item">')
-                    print('<div class="form-inline">')  # markerx1
-                    print('<div class="form-group"><kbd>')
-                    print(document_root+"/"+thesubdir+"/nginx.conf")
-                    print('</kbd></div>')
+                print('<ul class="list-group">')
+                print('<li class="list-group-item">')
+                print('<div class="form-inline">')  # markerx1
+                if os.path.isfile(document_root+"/"+thesubdir+"/nginx.conf"):
+                    print(('<div class="alert alert-info alert-top">'))
+                    print('<kbd>'+document_root+'/'+thesubdir+'/nginx.conf</kbd>')
                     print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
                     if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
                         print((' <span class="label label-success">VALID</span><br>'))
                     else:
                         print((' <span class="label label-danger">INVALID</span><br>'))
-                    print('<form class="form-group" action="reload_config.live.py">')
-                    print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
-                    print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-                    print('</form>')
-                    print('</div>')  # markerx1
-                    print('</li>')
-                    print('</ul>')
+                    print('</div>')
+                else:
+                    print(('<div class="alert alert-info alert-top">upload custom nginx config to be placed inside the ^~ /'+thesubdir+'/ location context in <kbd>'+document_root+'/'+thesubdir+'/nginx.conf</kbd> and hit RELOAD</div>'))
+                print(('<br>'))
+                print('<form class="form-group" action="reload_config.live.py">')
+                print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
+                print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+                print('</form>')
+                print('</div>')  # markerx1
+                print('</li>')
+                print('</ul>')
                 print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
                 # auth_basic
                 print('<ul class="list-group">')

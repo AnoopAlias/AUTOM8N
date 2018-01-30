@@ -259,12 +259,14 @@ if form.getvalue('domain'):
         print('<li class="list-group-item">')
         print('<div class="form-inline">')  # markerx1
         if os.path.isfile(document_root+"/nginx.conf"):
+            print(('<div class="alert alert-info alert-top">'))
             print('<kbd>'+document_root+'/nginx.conf</kbd>')
             print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
                 print((' <span class="label label-success">VALID</span><br>'))
             else:
                 print((' <span class="label label-danger">INVALID</span><br>'))
+            print('</div>')
         else:
             print(('<div class="alert alert-info alert-top">upload custom nginx config to be placed inside server context in <kbd>'+document_root+'/nginx.conf</kbd> and hit RELOAD</div>'))
         print(('<br>'))
