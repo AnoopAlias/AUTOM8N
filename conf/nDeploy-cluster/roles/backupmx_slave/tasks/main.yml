@@ -1,5 +1,9 @@
 ---
 
+- name: disable Exim
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=exim enabled=0 monitored=0"
+  ignore_errors: yes
+
 - name: Stop Exim service
   service: name=exim state=stopped
   ignore_errors: yes

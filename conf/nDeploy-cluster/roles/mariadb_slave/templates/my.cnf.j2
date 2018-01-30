@@ -1,3 +1,5 @@
+!include /etc/my.cnf.extra
+
 [mysqld]
 log-error=/var/lib/mysql/{{ ansible_nodename}}.err
 innodb_file_per_table=1
@@ -31,6 +33,7 @@ max_binlog_size=52428800
 expire_logs_days=3
 binlog-format=row
 
+# There is a spell error in relylog which is left as is for upgrade compatibility
 relay-log=/var/lib/mysql/relylog-{{ ansible_nodename }}
 max-relay-log-size=52428800
 relay-log-recovery=1
