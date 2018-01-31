@@ -149,7 +149,6 @@ if form.getvalue('domain'):
         append_requesturi = yaml_parsed_profileyaml.get('append_requesturi', 'disabled')
         test_cookie = yaml_parsed_profileyaml.get('test_cookie', 'disabled')
         symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
-        user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
         subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
         # get the human friendly name of the app template
         if os.path.isfile(app_template_file):
