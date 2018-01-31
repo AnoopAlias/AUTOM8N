@@ -29,7 +29,7 @@ job1:
   label: Watch /var/cpanel/ssl/apache_tls
   watch: /var/cpanel/ssl/apache_tls
   exclude: []
-  events: ['create', 'modify']
+  events: ['create' , 'modify' , 'atrribute_change']
   options: []
   recursive: true
   command: /opt/nDeploy/scripts/event_trigger.sh $filename 2 $tflags
