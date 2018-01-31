@@ -176,7 +176,7 @@ print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" a
 print('<div class="panel-body">')  # body
 print('<form class="form-inline" action="pkg_profile.cgi" method="post">')
 print('<select name="cpanelpkg">')
-for thepkg in mypkgs.get('package'):
+for thepkg in sorted(mypkgs.get('package')):
     pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
     print(('<option value="'+pkgname+'">'+pkgname+'</option>'))
 print('</select>')
@@ -208,13 +208,13 @@ print('<form class="form-inline" action="phpfpm_pool_editor.cgi" method="post">'
 print('<select name="poolfile">')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     conf_list = os.listdir("/opt/nDeploy/secure-php-fpm.d")
-    for filename in conf_list:
+    for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
             print(('<option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
 else:
     conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
-    for filename in conf_list:
+    for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
             print(('<option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
@@ -273,7 +273,7 @@ if not osrelease == 'CloudLinux':
             print('<div class="panel-body">')  # markerb1
             print('<form class="form-inline" action="resource_limit.cgi" method="post">')
             print('<select name="unit">')
-            for reseller in resellerlist:
+            for reseller in sorted(resellerlist):
                 print(('<option value="'+reseller+'">'+reseller+'</option>'))
             print('</select>')
             print(('<input style="display:none" name="mode" value="user">'))
