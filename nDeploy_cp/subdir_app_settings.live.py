@@ -97,7 +97,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
     if not thesubdir:
         print('ERROR: Invalid sub-directory name')
         sys.exit(0)
-    if not re.match("^[\.\\0-9a-zA-Z/_-]*$", thesubdir):
+    if not re.match("^[\.0-9a-zA-Z/_-]*$", thesubdir):
         print("Error: Invalid char in sub-directory name")
         sys.exit(0)
     profileyaml = installation_path + "/domain-data/" + mydomain
