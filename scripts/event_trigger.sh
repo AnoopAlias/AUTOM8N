@@ -23,7 +23,7 @@ elif [[ $2 -eq 1 ]]; then
 elif [[ $2 -eq 2 ]]; then
 	if(echo $1|egrep 'combined$');then
 		CPANELDOMAIN=$(echo $1|awk -F'/' '{print $6}')
-		CPANELUSER=$(grep -w $CPANELDOMAIN /etc/userdomains |awk '{print $2}')
+		CPANELUSER=$(grep -w "^${CPANELDOMAIN}:" /etc/userdomains |awk '{print $2}')
 		echo "$(date) Conf:Gen:TLS ${CPANELUSER}"
 		/opt/nDeploy/scripts/generate_config.py $CPANELUSER
 	fi
