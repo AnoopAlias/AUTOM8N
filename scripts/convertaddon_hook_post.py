@@ -54,4 +54,4 @@ if conversionstatus == 1:
     print(("1 nDeploy:cPaneltrigger:ConevrtAddon:"+addonconfigdom))
 else:
     silentremove(installation_path+"/lock/"+theaddon)
-    print(("0 nDeploy:SkipHook:ConevrtAddon:"+addonconfigdom))
+    print(("0 nDeploy:SkipHook:ConvertAddon:"+addonconfigdom))
