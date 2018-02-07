@@ -47,10 +47,9 @@ sub_domains = json_parsed_cpaneluser.get('sub_domains')
 if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
     with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
         json_parsed_cpusersfile = json.load(users_file)
-    myplan = json_parsed_cpusersfile.get('PLAN', 'default')
+    hostingplan_filename = json_parsed_cpusersfile.get('PLAN', 'default').encode('utf-8').replace(' ', '_')
 else:
-    myplan = 'default'
-hostingplan_filename = myplan.replace(" ", "_")
+    hostingplan_filename = 'default'
 if hostingplan_filename == 'undefined' or hostingplan_filename == 'default':
     if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
         TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
