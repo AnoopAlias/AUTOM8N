@@ -2,13 +2,15 @@
 # Author: Anoop P Alias
 
 function enable {
-echo -e '\e[93m Generating the default nginx vhosts \e[0m'
-python /opt/nDeploy/scripts/generate_default_vhost_config.py
+/usr/local/cpanel/cpkeyclt
+# Generate all nginx vhost first
+echo -e '\e[93m Generating nginx vhosts \e[0m'
+/opt/nDeploy/scripts/attempt_autofix.sh
+# Lets switch apache port so nginx can bind to port 80 and 443
 echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_port value=0.0.0.0:9999
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:4430
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
-/opt/nDeploy/scripts/attempt_autofix.sh
 service tailwatchd restart
 if [ -f /etc/cpanel/ea4/is_ea4 ];then
 	echo -e '\e[93m !!! Removing conflicting ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
