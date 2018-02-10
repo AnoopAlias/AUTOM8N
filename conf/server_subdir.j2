@@ -11,3 +11,17 @@ include /etc/nginx/conf.d/files_with_expire.conf;
 {% if MODSECURITY_MAINDIR == 'enabled' %}{% if MODSECURITY == 'disabled' %}modsecurity off;{% endif %}{% endif %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ SUBDIRAPPSUNIQUE }}.subinclude;
 {% endif %}
+{% if ENABLEACCESSLOG == 'disabled' %}
+{% if FOPEN_SUBDIR_ACCESSLOG %}
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+{% else %}
+access_log  off;
+{% endif %}
+{% else %}
+{% if FOPEN_SUBDIR_ACCESSLOG %}
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=32k flush=5m;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+{% else %}
+access_log  off;
+{% endif %}
+{% endif %}

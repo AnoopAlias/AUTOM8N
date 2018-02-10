@@ -364,6 +364,11 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
         yaml_parsed_domain_data = yaml.safe_load(domain_data_stream)
     # Following are the backend details that can be changed from the UI
     backend_category = yaml_parsed_domain_data.get('backend_category', None)
+    if backend_category == "PROXY":
+        # Lets disable access_log file open in nginx for efficiency
+        access_log_fopen = False
+    else:
+        access_log_fopen = True
     apptemplate_code = yaml_parsed_domain_data.get('apptemplate_code', None)
     backend_path = yaml_parsed_domain_data.get('backend_path', None)
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
@@ -479,6 +484,7 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
                     "AUTOINDEX": autoindex,
                     "REDIRECT_TO_SSL": redirect_to_ssl,
                     "ENABLEACCESSLOG": access_log,
+                    "FOPEN_ACCESSLOG": access_log_fopen,
                     "OPEN_FILE_CACHE": open_file_cache,
                     "HOMEDIR": domain_home,
                     "SUBDIRAPPS": subdir_apps_uniq,
@@ -577,6 +583,11 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
         for subdir in subdir_apps.keys():
             the_subdir_app_dict = subdir_apps.get(subdir)
             subdir_backend_category = the_subdir_app_dict.get('backend_category')
+            if subdir_backend_category == 'PROXY':
+                # Lets disable access_log file open in nginx for efficiency
+                subdir_access_log_fopen = False
+            else:
+                subdir_access_log_fopen = True
             subdir_backend_path = the_subdir_app_dict.get('backend_path')
             subdir_backend_version = the_subdir_app_dict.get('backend_version')
             subdir_apptemplate_code = the_subdir_app_dict.get('apptemplate_code')
@@ -605,6 +616,8 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
                                   "CPANELIP": cpanel_ipv4,
                                   "DOCUMENTROOT": document_root,
                                   "CONFIGDOMAINNAME": kwargs.get('configdomain'),
+                                  "ENABLEACCESSLOG": access_log,
+                                  "FOPEN_SUBDIR_ACCESSLOG": subdir_access_log_fopen,
                                   "HOMEDIR": domain_home,
                                   "DIFFDIR": diff_dir,
                                   "MODSECURITY": subdir_mod_security,
