@@ -40,9 +40,9 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     zonedump_parsed = json.loads(zone_datafeed)
     thezone = zonedump_parsed['data']['zone'][0]
     resource_record = thezone['record']
+    the_geozone["data"][""]["ns"] = []
     for rr in resource_record:
         # Lets deal with NS records first
-        the_geozone["data"][""]["ns"] = []
         if rr["type"] == "NS":
             the_geozone["data"][""]["ns"].append(rr["nsdname"])
     for server in serverlist:
