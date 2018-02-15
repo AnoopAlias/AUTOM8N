@@ -24,8 +24,27 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 # Function defs
 
-def cluster_ensure_arecord(zone_name, hostname, domain_ip):
-    """Function that adds necessary A record of slave server"""
+def cluster_ensure_zone(zone_name, hostname, domain_ip):
+    """Function that create a geoDNS zone from the cPanel DNS API"""
+    # Lets get the settings and base label done first
+    the_geozone = {}
+    the_geozone["ttl"] = 60
+    the_geozone["max_hosts"] = 2
+    the_geozone["targeting"] = "country continent @ regiongroup region"
+    the_geozone["data"] = {}
+    # Lets populate the data dict with rr data output from cPanel DNS API
+    # Default Label first
+    the_geozone["data"][""] = {}
+    zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
+    zone_datafeed = zonedump.stdout.read()
+    zonedump_parsed = json.loads(zone_datafeed)
+    thezone = zonedump_parsed['data']['zone'][0]
+    resource_record = thezone['record']
+    for rr in resource_record:
+        # Lets deal with NS records first
+        the_geozone["data"][""]["ns"] = []
+        if rr["type"] == "NS":
+            the_geozone["data"][""]["ns"].append(rr["nsdname"])
     for server in serverlist:
         connect_server_dict = cluster_data_yaml_parsed.get(server)
         ipmap_dict = connect_server_dict.get("dnsmap")
@@ -35,9 +54,8 @@ def cluster_ensure_arecord(zone_name, hostname, domain_ip):
         zonedump_parsed = json.loads(zone_datafeed)
         thezone = zonedump_parsed['data']['zone'][0]
         resource_record = thezone['record']
-        for rr in resource_record:
-            # to do
-            pass
+    with open("/root/test.json", w) as myzonefile:
+        json.dump(the_geozone, myzonefile)
     return
 
 
@@ -80,16 +98,16 @@ if __name__ == "__main__":
                 addondomain_data_stream_parsed = json.load(addondomain_data_stream)
             addondomain_ip = addondomain_data_stream_parsed.get('ip')
             print('=============='+the_addon_domain+'===============')
-            cluster_ensure_zone(the_addon_domain, the_addon_domain, addondomain_ip)
+            #cluster_ensure_zone(the_addon_domain, the_addon_domain, addondomain_ip)
             print('=============='+the_addon_domain+'===============')
         # iterate over sub-domains and add DNS RR if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
             if the_sub_domain not in addon_domains_dict.values():
                 print('=============='+the_sub_domain+'===============')
-                cluster_ensure_zone(main_domain, the_sub_domain, maindomain_ip)
+                #cluster_ensure_zone(main_domain, the_sub_domain, maindomain_ip)
                 print('=============='+the_sub_domain+'===============')
         # iterate over parked domains and add DNS RR for it . IP being that of main domain
         for the_parked_domain in parked_domains:
             print('=============='+the_parked_domain+'===============')
-            cluster_ensure_zone(the_parked_domain, the_parked_domain, maindomain_ip)
+            #cluster_ensure_zone(the_parked_domain, the_parked_domain, maindomain_ip)
             print('=============='+the_parked_domain+'===============')
