@@ -54,7 +54,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
         zonedump_parsed = json.loads(zone_datafeed)
         thezone = zonedump_parsed['data']['zone'][0]
         resource_record = thezone['record']
-    with open("/root/test.json", w) as myzonefile:
+    with open("/root/test.json", 'w') as myzonefile:
         json.dump(the_geozone, myzonefile)
     return
 
