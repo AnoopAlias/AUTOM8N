@@ -41,19 +41,26 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     thezone = zonedump_parsed['data']['zone'][0]
     resource_record = thezone['record']
     the_geozone["data"][""]["ns"] = []
+    the_geozone["data"][""]["mx"] = []
+    the_geozone["data"][""]["a"] = []
+    the_geozone["data"][""]["txt"] = []
     for rr in resource_record:
         # Lets deal with NS records first
         if rr["type"] == "NS":
             the_geozone["data"][""]["ns"].append(rr["nsdname"])
-    for server in serverlist:
-        connect_server_dict = cluster_data_yaml_parsed.get(server)
-        ipmap_dict = connect_server_dict.get("dnsmap")
-        remote_domain_ipv4 = ipmap_dict.get(domain_ip)
-        zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
-        zone_datafeed = zonedump.stdout.read()
-        zonedump_parsed = json.loads(zone_datafeed)
-        thezone = zonedump_parsed['data']['zone'][0]
-        resource_record = thezone['record']
+        elif rr["type"] == "MX":
+            the_geozone_mx = {}
+            the_geozone_mx["mx"] = rr["exchange"]
+            the_geozone_mx["preference"] = rr["preference"]
+            the_geozone["data"][""]["mx"].append(the_geozone_mx)
+        elif rr["type"] == "A":
+            the_geozone_a = []
+            the_geozone_a.append(rr["address"])
+            the_geozone_a.append("10")  # weight
+            the_geozone["data"][""]["a"].append(the_geozone_a)
+        elif rr["type"] == "TXT":
+            the_geozone["data"][""]["txt"].append(rr["txtdata"])
+
     with open("/root/test.json", 'w') as myzonefile:
         json.dump(the_geozone, myzonefile)
     return
