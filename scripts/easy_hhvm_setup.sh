@@ -16,7 +16,7 @@ else
   yum -y install ${HHVM_RPM_LOCATION}
   /opt/nDeploy/scripts/update_backend.py add HHVM hhvm-3.15 systemd
   ln -s /usr/bin/hhvm /usr/local/bin/hhvm
-  grep "hhvm_ghost_hunter.sh" /etc/crontab || echo "0 */6 * * * bash /opt/nDeploy/scripts/hhvm_ghost_hunter.sh" >> /etc/crontab
+  grep "hhvm_ghost_hunter.py" /etc/crontab || echo "0 */6 * * * /opt/nDeploy/scripts/hhvm_ghost_hunter.py" >> /etc/crontab
   systemctl restart crond
   echo -e '\e[93m ::WARNING:: Using binary HHVM from third party software mirrors \e[0m'
   echo -e '\e[93m HHVM setup : OK \e[0m'
