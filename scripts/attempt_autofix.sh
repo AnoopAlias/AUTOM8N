@@ -14,10 +14,14 @@ echo -e '\e[93m Attempting to regenerate all nginx conf  \e[0m'
 for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1);
 do
   echo "ConfGen:: $CPANELUSER" && nice --adjustment=15 /opt/nDeploy/scripts/generate_config.py $CPANELUSER;
-  if [ ! -f /opt/nDeploy/conf/secure-php-enabled -a -f /var/cpanel/feature_toggles/apachefpmjail ] ; then
-    /opt/nDeploy/scripts/fix_virtfs_jail.py $CPANELUSER;
-  fi
 done
+
+if [ ! -f /opt/nDeploy/conf/secure-php-enabled -a -f /var/cpanel/feature_toggles/apachefpmjail ] ; then
+  echo -e '\e[93m Attempting to fix PHP Chrooted environment  \e[0m'
+  /opt/nDeploy/scripts/init_backends.py autofix
+  echo -e '\e[93m Please set all users to JailShell for chrooted php-fpm \e[0m'
+  echo -e '\e[93m Run "/opt/nDeploy/scripts/init_backends.py autofix" on slaves in XtendWeb cluster \e[0m'
+fi
 
 rm -f /opt/nDeploy/conf/skip_nginx_reload /opt/nDeploy/conf/skip_php-fpm_reload /opt/nDeploy/conf/skip_tomcat_reload
 
