@@ -185,8 +185,10 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
         with codecs.open('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 'w', 'utf-8') as confout:
             confout.write(generated_config)
         os.chmod('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 0o644)
-        if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
-            subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src=/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf dest=/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf"', shell=True)
+        # We avoid ansible calls that are not critical when bulking
+        if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
+            if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
+                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src=/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf dest=/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf"', shell=True)
         subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         # Sync cluster config and call systemd remotely
@@ -194,7 +196,7 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
             subprocess.call('/usr/sbin/csync2 -x', shell=True)
             subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=started enabled=yes"', shell=True)
     else:
-        subprocess.call(['systemctl', 'restart', 'ndeploy_hhvm@'+user_name+'.service'])
+        subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         if clusterenabled:
             subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=restarted enabled=yes"', shell=True)
@@ -224,10 +226,17 @@ def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, c
     if "PHP" in backend_data_yaml_parsed:
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         for backend_name in php_backends_dict.keys():
+            subprocess.call(['systemctl', 'start', backend_name+'@'+user_name+'.socket'])
+            subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
+            if clusterenabled:
+                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.socket state=started enabled=yes"', shell=True)
+            # Lets do stuff for resource limiting
             if not os.path.isdir('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d'):
                 os.mkdir('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d', 0o755)
-            if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
-                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m file -a "path=/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d state=directory"', shell=True)
+            # We avoid ansible calls that are not critical when bulking
+            if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
+                if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
+                    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m file -a "path=/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d state=directory"', shell=True)
             templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
             templateEnv = jinja2.Environment(loader=templateLoader)
             TEMPLATE_FILE = "limits.conf.j2"
@@ -238,16 +247,14 @@ def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, c
             with codecs.open('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf', 'w', 'utf-8') as confout:
                 confout.write(generated_config)
             os.chmod('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf', 0o644)
-            if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
-                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src=/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf dest=/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf"', shell=True)
-            subprocess.call(['systemctl', 'start', backend_name+'@'+user_name+'.socket'])
-            subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
+            # We avoid ansible calls that are not critical when bulking
+            if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
+                if os.path.isfile(installation_path+'/conf/ndeploy_cluster.yaml'):
+                    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src=/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf dest=/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf"', shell=True)
             # Stopping the service as a new request to socket will activate it again
             if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
                 subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
-            if clusterenabled:
-                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.socket state=started enabled=yes"', shell=True)
-                if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
+                if os.path.isfile(installation_path+'/conf/ndeploy_cluster.yaml'):
                     subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.service state=stopped"', shell=True)
     return
 
