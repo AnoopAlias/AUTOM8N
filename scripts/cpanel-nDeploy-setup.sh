@@ -17,7 +17,7 @@ if [ -f /etc/cpanel/ea4/is_ea4 ];then
 	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2
 	yum -y install ea-apache24-mod_remoteip
 	REMOTEIPINCLUDE=$'\nInclude "/etc/nginx/conf.d/httpd_mod_remoteip.include"'
-	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || echo ${REMOTEIPINCLUDE} >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf
+	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || (echo "" >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf && echo ${REMOTEIPINCLUDE} >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf)
 fi
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
 /scripts/rebuildhttpdconf
