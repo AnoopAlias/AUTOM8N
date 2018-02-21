@@ -75,7 +75,7 @@ server {
         listen {{ MYIP }}:443 default_server ssl backlog=16384 reuseport deferred;
         ssl_certificate {{ CPSRVDSSL }};
         ssl_certificate_key {{ CPSRVDSSL }};
-        ssl_protocols TLSv1.1 TLSv1.2;
+        
         ssl_prefer_server_ciphers on;
         ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
         ssl_dhparam /etc/nginx/ssl/dhparam.pem;

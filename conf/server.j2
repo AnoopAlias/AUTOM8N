@@ -13,7 +13,7 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
+
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
@@ -93,7 +93,7 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
+
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
@@ -174,7 +174,7 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
+
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
@@ -386,7 +386,7 @@ listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
+
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
@@ -539,7 +539,7 @@ listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
+
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:10m;
