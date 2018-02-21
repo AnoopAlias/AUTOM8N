@@ -8,8 +8,8 @@
 #Core Functionality
 
 user  nobody;
-worker_processes  auto;
-worker_rlimit_nofile 30000;
+worker_processes  1;
+worker_rlimit_nofile 69152;
 worker_cpu_affinity auto;
 thread_pool iopool threads=32 max_queue=65536;
 pcre_jit on;
