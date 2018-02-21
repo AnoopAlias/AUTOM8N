@@ -1,0 +1,15 @@
+# A PHP Webapp in subdir
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+
+
+location ~ \.php$ {
+
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+
+}
