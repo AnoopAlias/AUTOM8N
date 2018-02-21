@@ -10,7 +10,6 @@ import os
 import sys
 import pwd
 import yaml
-import socket
 
 
 __author__ = "Anoop P Alias"
