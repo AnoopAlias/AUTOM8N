@@ -105,7 +105,10 @@ if form.getvalue('domain'):
         if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
             TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
         else:
-            TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+            if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+            else:
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
     with open(TEMPLATE_FILE, 'r') as templatefile_data_stream:
         yaml_parsed_templatefile = yaml.safe_load(templatefile_data_stream)
     settings_lock = yaml_parsed_templatefile.get('settings_lock', 'disabled')
