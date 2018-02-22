@@ -50,7 +50,10 @@ if new_pkg != cur_pkg:
             if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
                 TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
             else:
-                TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+                if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+                    TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+                else:
+                    TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
         if os.path.isfile(cpuserdatajson) and os.path.isfile(TEMPLATE_FILE):
             with open(TEMPLATE_FILE, 'r') as profileyaml_data_stream:
                 yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)

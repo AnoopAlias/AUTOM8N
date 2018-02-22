@@ -361,7 +361,10 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
             if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
                 TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
             else:
-                TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+                if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+                    TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+                else:
+                    TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
         shutil.copyfile(TEMPLATE_FILE, domain_data_file)
         cpuser_uid = pwd.getpwnam(kwargs.get('configuser')).pw_uid
         cpuser_gid = grp.getgrnam(kwargs.get('configuser')).gr_gid
