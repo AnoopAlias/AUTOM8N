@@ -9,7 +9,7 @@
 - name: Install XtendWeb repo
   yum: name={{ item }} state=present disable_gpg_check=yes validate_certs=False
   with_items:
-    - https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-6.noarch.rpm
+    - https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-7.noarch.rpm
 
 - name: Install XtendWeb cluster rpm packages
   yum: name={{ item }} enablerepo=ndeploy,epel state=present
