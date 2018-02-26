@@ -42,6 +42,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     the_geozone["data"][""]["ns"] = []
     the_geozone["data"][""]["mx"] = []
     the_geozone["data"][""]["a"] = []
+    the_geozone["data"][""]["a"].append(["139.162.17.224", "10"]
     the_geozone["data"][""]["txt"] = []
     for rr in resource_record:
         # Lets deal with NS records first
