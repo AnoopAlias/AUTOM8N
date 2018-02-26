@@ -29,7 +29,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     the_geozone = {}
     the_geozone["ttl"] = 60
     the_geozone["max_hosts"] = 2
-    the_geozone["targeting"] = "country continent @ regiongroup region"
+    the_geozone["closest"] = True
     the_geozone["data"] = {}
     # Lets populate the data dict with rr data output from cPanel DNS API
     # Default Label first
