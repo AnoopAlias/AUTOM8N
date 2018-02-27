@@ -54,14 +54,20 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
             the_geozone_mx["preference"] = rr["preference"]
             the_geozone["data"][""]["mx"].append(the_geozone_mx)
         elif rr["type"] == "A" and rr["name"] == zone_name+".":
-            the_geozone_a = []
-            the_geozone_a.append(rr["address"])
-            the_geozone_a.append("10")  # weight
-            the_geozone["data"][""]["a"].append(the_geozone_a)
+            if rr["name"] == zone_name+".":
+                the_geozone_a = []
+                the_geozone_a.append(rr["address"])
+                the_geozone_a.append("10")  # weight
+                the_geozone["data"][""]["a"].append(the_geozone_a)
+            else:
+                the_geozone_additional_a = []
+                the_geozone_additional_a(rr["address"])
+                the_geozone_additional_a.append("10")  # weight
+                the_geozone["data"][rr["name"]]["a"].append(the_geozone_additional_a)
         elif rr["type"] == "TXT":
             the_geozone["data"][""]["txt"].append(rr["txtdata"])
 
-    with open("/root/test.json", 'w') as myzonefile:
+    with open("/opt/geodns-nDeploy/conf/"+zone_name+".json", 'w') as myzonefile:
         json.dump(the_geozone, myzonefile)
     return
 
