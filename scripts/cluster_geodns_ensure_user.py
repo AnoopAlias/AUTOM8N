@@ -63,6 +63,8 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
                 the_geozone_additional_a = []
                 the_geozone_additional_a.append(rr["address"])
                 the_geozone_additional_a.append("10")  # weight
+                the_geozone["data"][rr["name"]] = {}
+                the_geozone["data"][rr["name"]]["a"] = []
                 the_geozone["data"][rr["name"]]["a"].append(the_geozone_additional_a)
         elif rr["type"] == "TXT":
             the_geozone["data"][""]["txt"].append(rr["txtdata"])
