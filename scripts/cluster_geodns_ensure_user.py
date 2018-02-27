@@ -28,7 +28,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     # Lets get the settings and base label done first
     the_geozone = {}
     the_geozone["ttl"] = 60
-    the_geozone["max_hosts"] = 2
+    the_geozone["max_hosts"] = 1
     the_geozone["closest"] = True
     the_geozone["data"] = {}
     # Lets populate the data dict with rr data output from cPanel DNS API
