@@ -70,6 +70,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
             if rr["name"] == zone_name+".":
                 the_geozone["data"][""]["txt"].append(rr["txtdata"])
             else:
+                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = [rr["txtdata"]]
 
     with open("/opt/geodns-nDeploy/conf/"+zone_name+".json", 'w') as myzonefile:
