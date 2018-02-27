@@ -44,6 +44,16 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     the_geozone["data"][""]["a"] = []
     the_geozone["data"][""]["a"].append(["139.162.17.224", "10"])
     the_geozone["data"][""]["txt"] = []
+    # Initialize the rr.zone.ext type dicts
+    for rr in resource_record:
+        if rr["type"] == "A":
+            if rr["name"] != zone_name+".":
+                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
+                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
+        elif rr["type"] == "TXT":
+            if rr["name"] != zone_name+".":
+                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
+                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
     for rr in resource_record:
         # Lets deal with NS records first
         if rr["type"] == "NS":
@@ -63,16 +73,12 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
                 the_geozone_additional_a = []
                 the_geozone_additional_a.append(rr["address"])
                 the_geozone_additional_a.append("10")  # weight
-                if not the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]:
-                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
-                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append(the_geozone_additional_a)
         elif rr["type"] == "TXT":
             if rr["name"] == zone_name+".":
                 the_geozone["data"][""]["txt"].append(rr["txtdata"])
             else:
-                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
-                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = [rr["txtdata"]]
+                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"].append([rr["txtdata"]])
 
     with open("/opt/geodns-nDeploy/conf/"+zone_name+".json", 'w') as myzonefile:
         json.dump(the_geozone, myzonefile)
