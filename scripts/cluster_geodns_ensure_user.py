@@ -31,8 +31,16 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     the_geozone["max_hosts"] = 1
     the_geozone["closest"] = True
     the_geozone["data"] = {}
+    health_check = {}
+    health_check["type"] = "tcp"
+    health_check["frequency"] = 15
+    health_check["retry_time"] = 5
+    health_check["retries"] = 2
+    health_check["timeout"] = 3
+    health_check["port"] = 80
     # Lets populate the data dict with rr data output from cPanel DNS API
     the_geozone["data"][""] = {}
+    the_geozone["data"][""]["health"] = health_check
     zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
     zone_datafeed = zonedump.stdout.read()
     zonedump_parsed = json.loads(zone_datafeed)
