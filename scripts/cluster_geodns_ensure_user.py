@@ -55,6 +55,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
         elif rr["type"] == "CNAME":
             the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
+            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["cname"] = []
     # Populate the Json data structure
     for rr in resource_record:
         # Lets deal with NS records first
@@ -82,7 +83,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
             else:
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"].append([rr["txtdata"]])
         elif rr["type"] == "CNAME":
-            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["cname"] = rr["cname"]+"."
+            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["cname"].append(rr["cname"]+".")
     # Lets write the zone to a JSON file
     with open("/opt/geodns-nDeploy/conf/"+zone_name+".json", 'w') as myzonefile:
         json.dump(the_geozone, myzonefile)
