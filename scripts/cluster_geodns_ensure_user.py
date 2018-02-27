@@ -53,7 +53,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
             the_geozone_mx["mx"] = rr["exchange"]
             the_geozone_mx["preference"] = rr["preference"]
             the_geozone["data"][""]["mx"].append(the_geozone_mx)
-        elif rr["type"] == "A" and rr["name"] == zone_name+".":
+        elif rr["type"] == "A":
             if rr["name"] == zone_name+".":
                 the_geozone_a = []
                 the_geozone_a.append(rr["address"])
