@@ -32,7 +32,6 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     the_geozone["closest"] = True
     the_geozone["data"] = {}
     # Lets populate the data dict with rr data output from cPanel DNS API
-    # Default Label first
     the_geozone["data"][""] = {}
     zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
     zone_datafeed = zonedump.stdout.read()
@@ -54,6 +53,9 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
             if rr["name"] != zone_name+".":
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
+        elif rr["type"] == "CNAME":
+            the_geozone["data"][rr["name"]] = {}
+    # Populate the Json data structure
     for rr in resource_record:
         # Lets deal with NS records first
         if rr["type"] == "NS":
@@ -79,7 +81,9 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
                 the_geozone["data"][""]["txt"].append(rr["txtdata"])
             else:
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"].append([rr["txtdata"]])
-
+        elif rr["type"] == "CNAME":
+            the_geozone["data"][rr["name"]]["cname"] = rr["cname"]+"."
+    # Lets write the zone to a JSON file
     with open("/opt/geodns-nDeploy/conf/"+zone_name+".json", 'w') as myzonefile:
         json.dump(the_geozone, myzonefile)
     return
