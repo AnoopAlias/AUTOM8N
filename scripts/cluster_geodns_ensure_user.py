@@ -65,8 +65,11 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
         elif rr["type"] == "TXT":
             if rr["name"] != zone_name+".":
-                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
-                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
+                try:
+                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
+                except NameError:
+                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
+                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
         elif rr["type"] == "CNAME":
             the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
     # Populate the Json data structure
