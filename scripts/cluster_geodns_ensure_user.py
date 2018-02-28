@@ -66,6 +66,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
         elif rr["type"] == "TXT":
             if rr["name"] != zone_name+".":
                 try:
+                    type(the_geozone["data"][rr["name"].replace("."+zone_name+".", "")])
                     the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
                 except NameError:
                     the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
