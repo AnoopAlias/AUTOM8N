@@ -32,13 +32,13 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     the_geozone["closest"] = True
     the_geozone["data"] = {}
     # GeoDNS inbuilt health check. Doesnt work as of now
-    health_check = {}
-    health_check["type"] = "tcp"
-    health_check["frequency"] = 15
-    health_check["retry_time"] = 5
-    health_check["retries"] = 2
-    health_check["timeout"] = 3
-    health_check["port"] = 80
+    # health_check = {}
+    # health_check["type"] = "tcp"
+    # health_check["frequency"] = 15
+    # health_check["retry_time"] = 5
+    # health_check["retries"] = 2
+    # health_check["timeout"] = 3
+    # health_check["port"] = 80
     # Lets populate the data dict with rr data output from cPanel DNS API
     the_geozone["data"][""] = {}
     # the_geozone["data"][""]["health"] = health_check
@@ -50,7 +50,12 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
     the_geozone["data"][""]["ns"] = []
     the_geozone["data"][""]["mx"] = []
     the_geozone["data"][""]["a"] = []
-    the_geozone["data"][""]["a"].append(["139.162.17.224", "10"])
+    # Add additional A record for the cluster
+    for server in serverlist:
+        connect_server_dict = cluster_data_yaml_parsed.get(server)
+        ipmap_dict = connect_server_dict.get("dnsmap")
+        remote_domain_ipv4 = ipmap_dict.get(domain_ip)
+        the_geozone["data"][""]["a"].append([remote_domain_ipv4, "10"])
     the_geozone["data"][""]["txt"] = []
     # Initialize the rr.zone.ext type dicts
     for rr in resource_record:
@@ -116,6 +121,8 @@ if __name__ == "__main__":
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             cluster_data_yaml.close()
             serverlist = cluster_data_yaml_parsed.keys()
+        else:
+            serverlist = []
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
         with open(cpuserdatajson) as cpaneluser_data_stream:
