@@ -23,7 +23,7 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 # Function defs
 
-def cluster_ensure_zone(zone_name, hostname, domain_ip):
+def cluster_ensure_zone(zone_name, *serverlist):
     """Function that create a geoDNS zone from the cPanel DNS API"""
     # Lets get the settings and base label done first
     the_geozone = {}
@@ -146,7 +146,7 @@ if __name__ == "__main__":
             maindomain_data_stream_parsed = json.load(maindomain_data_stream)
         maindomain_ip = maindomain_data_stream_parsed.get('ip')
         print('=============='+main_domain+'===============')
-        cluster_ensure_zone(main_domain, main_domain, maindomain_ip)
+        cluster_ensure_zone(main_domain, *serverlist)
         print('=============='+main_domain+'===============')
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
@@ -154,7 +154,7 @@ if __name__ == "__main__":
                 addondomain_data_stream_parsed = json.load(addondomain_data_stream)
             addondomain_ip = addondomain_data_stream_parsed.get('ip')
             print('=============='+the_addon_domain+'===============')
-            #cluster_ensure_zone(the_addon_domain, the_addon_domain, addondomain_ip)
+            cluster_ensure_zone(the_addon_domain, *serverlist)
             print('=============='+the_addon_domain+'===============')
         # iterate over sub-domains and add DNS RR if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
@@ -165,5 +165,5 @@ if __name__ == "__main__":
         # iterate over parked domains and add DNS RR for it . IP being that of main domain
         for the_parked_domain in parked_domains:
             print('=============='+the_parked_domain+'===============')
-            #cluster_ensure_zone(the_parked_domain, the_parked_domain, maindomain_ip)
+            cluster_ensure_zone(the_parked_domain, *serverlist)
             print('=============='+the_parked_domain+'===============')
