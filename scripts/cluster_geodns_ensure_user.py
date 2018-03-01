@@ -94,7 +94,7 @@ def cluster_ensure_zone(zone_name, hostname, domain_ip):
                 the_geozone_additional_a.append("10")  # weight
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append(the_geozone_additional_a)
                 # Add additional A record for the cluster
-                if not rr["name"] startswith "webdisk." or "whm." or "cpcalendars." or "cpcontacts." or "webmail." or "cpanel.":
+                if not rr["name"].startswith(("webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
                     for server in serverlist:
                         connect_server_dict = cluster_data_yaml_parsed.get(server)
                         ipmap_dict = connect_server_dict.get("dnsmap")
