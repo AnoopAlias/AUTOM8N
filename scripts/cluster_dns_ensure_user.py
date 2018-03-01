@@ -24,7 +24,7 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 # Function defs
 
-def cluster_ensure_arecord(zone_name, hostname, domain_ip):
+def cluster_ensure_arecord(zone_name, hostname, domain_ip, *serverlist, **cluster_data_yaml_parsed):
     """Function that adds necessary A record of slave server"""
     skip_flag = False
     if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
@@ -52,7 +52,7 @@ def cluster_ensure_arecord(zone_name, hostname, domain_ip):
     return
 
 
-def cluster_ensure_mxrecord(zone_name):
+def cluster_ensure_mxrecord(zone_name, *serverlist):
     """Function that adds necessary MX record"""
     skip_flag = False
     if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
@@ -132,20 +132,20 @@ if __name__ == "__main__":
         with open("/var/cpanel/userdata/"+cpaneluser+"/"+main_domain+".cache") as maindomain_data_stream:
             maindomain_data_stream_parsed = json.load(maindomain_data_stream)
         maindomain_ip = maindomain_data_stream_parsed.get('ip')
-        cluster_ensure_arecord(main_domain, main_domain, maindomain_ip)
-        cluster_ensure_mxrecord(main_domain)
+        cluster_ensure_arecord(main_domain, main_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed)
+        cluster_ensure_mxrecord(main_domain, *serverlist)
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
             with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict.get(the_addon_domain)+".cache") as addondomain_data_stream:
                 addondomain_data_stream_parsed = json.load(addondomain_data_stream)
             addondomain_ip = addondomain_data_stream_parsed.get('ip')
-            cluster_ensure_arecord(the_addon_domain, the_addon_domain, addondomain_ip)
-            cluster_ensure_mxrecord(the_addon_domain)
+            cluster_ensure_arecord(the_addon_domain, the_addon_domain, addondomain_ip, *serverlist, **cluster_data_yaml_parsed)
+            cluster_ensure_mxrecord(the_addon_domain, *serverlist)
         # iterate over sub-domains and add DNS RR if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
             if the_sub_domain not in addon_domains_dict.values():
-                cluster_ensure_arecord(main_domain, the_sub_domain, maindomain_ip)
+                cluster_ensure_arecord(main_domain, the_sub_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed)
         # iterate over parked domains and add DNS RR for it . IP being that of main domain
         for the_parked_domain in parked_domains:
-            cluster_ensure_arecord(the_parked_domain, the_parked_domain, maindomain_ip)
-            cluster_ensure_mxrecord(the_parked_domain)
+            cluster_ensure_arecord(the_parked_domain, the_parked_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed)
+            cluster_ensure_mxrecord(the_parked_domain, *serverlist)
