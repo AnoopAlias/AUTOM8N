@@ -145,25 +145,13 @@ if __name__ == "__main__":
         with open("/var/cpanel/userdata/"+cpaneluser+"/"+main_domain+".cache") as maindomain_data_stream:
             maindomain_data_stream_parsed = json.load(maindomain_data_stream)
         maindomain_ip = maindomain_data_stream_parsed.get('ip')
-        print('=============='+main_domain+'===============')
         cluster_ensure_zone(main_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed)
-        print('=============='+main_domain+'===============')
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
             with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict.get(the_addon_domain)+".cache") as addondomain_data_stream:
                 addondomain_data_stream_parsed = json.load(addondomain_data_stream)
             addondomain_ip = addondomain_data_stream_parsed.get('ip')
-            print('=============='+the_addon_domain+'===============')
             cluster_ensure_zone(the_addon_domain, addondomain_ip, *serverlist, **cluster_data_yaml_parsed)
-            print('=============='+the_addon_domain+'===============')
-        # iterate over sub-domains and add DNS RR if its not a linked sub-domain for addon-domain
-        for the_sub_domain in sub_domains:
-            if the_sub_domain not in addon_domains_dict.values():
-                print('=============='+the_sub_domain+'===============')
-                #cluster_ensure_zone(main_domain, the_sub_domain, maindomain_ip)
-                print('=============='+the_sub_domain+'===============')
         # iterate over parked domains and add DNS RR for it . IP being that of main domain
         for the_parked_domain in parked_domains:
-            print('=============='+the_parked_domain+'===============')
             cluster_ensure_zone(the_parked_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed)
-            print('=============='+the_parked_domain+'===============')
