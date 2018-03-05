@@ -31,7 +31,7 @@ def powerset(iterable):
     return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
 
 
-def cluster_ensure_zone(zone_name, domain_ip, *serverlist, **cluster_data_yaml_parsed, **xtendweb_dns_cluster):
+def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_parsed, xtendweb_dns_cluster):
     """Function that create a geoDNS zone from the cPanel DNS API"""
     for the_uniq_key in xtendweb_dns_cluster.keys():
         # Lets get the settings and base label done first
@@ -171,13 +171,13 @@ if __name__ == "__main__":
         with open("/var/cpanel/userdata/"+cpaneluser+"/"+main_domain+".cache") as maindomain_data_stream:
             maindomain_data_stream_parsed = json.load(maindomain_data_stream)
         maindomain_ip = maindomain_data_stream_parsed.get('ip')
-        cluster_ensure_zone(main_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed, **xtendweb_dns_cluster)
+        cluster_ensure_zone(main_domain, maindomain_ip, serverlist, cluster_data_yaml_parsed, xtendweb_dns_cluster)
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
             with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict.get(the_addon_domain)+".cache") as addondomain_data_stream:
                 addondomain_data_stream_parsed = json.load(addondomain_data_stream)
             addondomain_ip = addondomain_data_stream_parsed.get('ip')
-            cluster_ensure_zone(the_addon_domain, addondomain_ip, *serverlist, **cluster_data_yaml_parsed, **xtendweb_dns_cluster)
+            cluster_ensure_zone(the_addon_domain, addondomain_ip, serverlist, cluster_data_yaml_parsed, xtendweb_dns_cluster)
         # iterate over parked domains and add DNS RR for it . IP being that of main domain
         for the_parked_domain in parked_domains:
-            cluster_ensure_zone(the_parked_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed, **xtendweb_dns_cluster)
+            cluster_ensure_zone(the_parked_domain, maindomain_ip, serverlist, cluster_data_yaml_parsed, xtendweb_dns_cluster)
