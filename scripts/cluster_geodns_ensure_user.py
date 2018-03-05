@@ -143,6 +143,7 @@ if __name__ == "__main__":
         myhostname = socket.gethostname()
         the_cluster = [myhostname] + serverlist
         the_cluster.sort()
+        the_cluster_powerset = powerset(the_cluster)
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
         with open(cpuserdatajson) as cpaneluser_data_stream:
@@ -155,7 +156,7 @@ if __name__ == "__main__":
         with open("/var/cpanel/userdata/"+cpaneluser+"/"+main_domain+".cache") as maindomain_data_stream:
             maindomain_data_stream_parsed = json.load(maindomain_data_stream)
         maindomain_ip = maindomain_data_stream_parsed.get('ip')
-        for the_hostlist_tuple in the_cluster:
+        for the_hostlist_tuple in the_cluster_powerset:
             if the_hostlist_tuple:
                 the_cluster_uniq = "".join(the_hostlist_tuple)
                 print(the_cluster_uniq)
