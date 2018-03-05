@@ -12,6 +12,7 @@ import pwd
 import yaml
 import socket
 from itertools import combinations, chain
+from hashlib import md5
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -140,10 +141,18 @@ if __name__ == "__main__":
             serverlist = cluster_data_yaml_parsed.keys()
         else:
             serverlist = []
+        # Prepare a python dict that has a uniq key for each powerset in a list of all servers
         myhostname = socket.gethostname()
         the_cluster = [myhostname] + serverlist
         the_cluster.sort()
         the_cluster_powerset = powerset(the_cluster)
+        xtendweb_dns_cluster = {}
+        for the_hostlist_tuple in the_cluster_powerset:
+            if the_hostlist_tuple:
+                the_cluster_uniq = "".join(the_hostlist_tuple)
+                the_cluster_key = md5(the_cluster_uniq.encode("utf-8")).hexdigest()
+                xtendweb_dns_cluster[the_cluster_key] = the_hostlist_tuple
+        print(xtendweb_dns_cluster)
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
         with open(cpuserdatajson) as cpaneluser_data_stream:
@@ -156,10 +165,6 @@ if __name__ == "__main__":
         with open("/var/cpanel/userdata/"+cpaneluser+"/"+main_domain+".cache") as maindomain_data_stream:
             maindomain_data_stream_parsed = json.load(maindomain_data_stream)
         maindomain_ip = maindomain_data_stream_parsed.get('ip')
-        for the_hostlist_tuple in the_cluster_powerset:
-            if the_hostlist_tuple:
-                the_cluster_uniq = "".join(the_hostlist_tuple)
-                print(the_cluster_uniq)
         cluster_ensure_zone(main_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed)
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
