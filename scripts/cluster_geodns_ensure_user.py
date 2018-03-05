@@ -10,7 +10,8 @@ import os
 import sys
 import pwd
 import yaml
-
+import socket
+from itertools import combinations, chain
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -22,6 +23,12 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 
 # Function defs
+
+def powerset(iterable):
+    "powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
+    s = list(iterable)
+    return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
+
 
 def cluster_ensure_zone(zone_name, domain_ip, *serverlist, **cluster_data_yaml_parsed):
     """Function that create a geoDNS zone from the cPanel DNS API"""
@@ -133,6 +140,9 @@ if __name__ == "__main__":
             serverlist = cluster_data_yaml_parsed.keys()
         else:
             serverlist = []
+        myhostname = socket.gethostname()
+        the_cluster = [myhostname] + serverlist
+        the_cluster.sort()
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
         with open(cpuserdatajson) as cpaneluser_data_stream:
@@ -145,6 +155,10 @@ if __name__ == "__main__":
         with open("/var/cpanel/userdata/"+cpaneluser+"/"+main_domain+".cache") as maindomain_data_stream:
             maindomain_data_stream_parsed = json.load(maindomain_data_stream)
         maindomain_ip = maindomain_data_stream_parsed.get('ip')
+        for the_hostlist_tuple in the_cluster:
+            if the_hostlist_tuple:
+                the_cluster_uniq = "".join(the_hostlist_tuple)
+                print(the_cluster_uniq)
         cluster_ensure_zone(main_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed)
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
