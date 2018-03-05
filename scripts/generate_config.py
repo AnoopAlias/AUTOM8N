@@ -157,7 +157,7 @@ def php_backend_add(user_name, phpmaxchildren, domain_home):
         return
 
 
-def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluster_serverlist):
+def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, cluster_serverlist):
     """Function to setup hhvm for user """
     hhvm_server_file = installation_path + "/hhvm.d/" + user_name + ".ini"
     HHVM_MASTER_TEMPLATE = 'hhvm_secure.ini.j2'
@@ -203,7 +203,7 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, *cluste
     return
 
 
-def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, clusterenabled, *cluster_serverlist):
+def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, clusterenabled, cluster_serverlist):
     """Function to setup php-fpm for user using systemd socket activation"""
     phpfpm_conf_file = installation_path + "/secure-php-fpm.d/" + user_name + ".conf"
     if not os.path.isfile(phpfpm_conf_file):
@@ -259,7 +259,7 @@ def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, c
     return
 
 
-def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverlist, **kwargs):
+def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlist, **kwargs):
     """Function that generates nginx config """
     # Initiate Jinja2 templateEnv
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
@@ -552,13 +552,13 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
         fastcgi_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
         if not os.path.isfile(fastcgi_socket):
             if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, *cluster_serverlist)
+                php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, cluster_serverlist)
             else:
                 php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
     elif backend_category == 'HHVM':
         fastcgi_socket = domain_home+"/hhvm.sock"
         if not os.path.isfile(fastcgi_socket):
-            hhvm_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
+            hhvm_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, cluster_serverlist)
     # We generate the app config from template next
     apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
                        "CPANELIP": cpanel_ipv4,
@@ -664,13 +664,13 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, *cluster_serverli
                 fastcgi_socket = subdir_backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
                 if not os.path.isfile(fastcgi_socket):
                     if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                        php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, *cluster_serverlist)
+                        php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, cluster_serverlist)
                     else:
                         php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
             elif subdir_backend_category == 'HHVM':
                 fastcgi_socket = domain_home+"/hhvm.sock"
                 if not os.path.isfile(fastcgi_socket):
-                    hhvm_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, *cluster_serverlist)
+                    hhvm_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, cluster_serverlist)
             # We generate the app config from template next
             subdirApptemplateVars = {"NEWDOCUMENTROOT": document_root+'/'+subdir,
                                      "SUBDIR": subdir,
@@ -798,18 +798,18 @@ if __name__ == "__main__":
             clusterenabled = False
             cluster_serverlist = []
         # Begin config generation .Do it first for the main domain
-        nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
+        nginx_confgen(is_suspended, myowner, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
         # iterate over the addon-domain ,passing the subdomain as the configdomain
         for the_addon_domain in addon_domains_dict.keys():
-            nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
+            nginx_confgen(is_suspended, myowner, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
         # iterate over sub-domains and generate config if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
             if the_sub_domain not in addon_domains_dict.values():
                 if the_sub_domain.startswith("*"):
                     subdom_config_dom = "_wildcard_."+the_sub_domain.replace('*.', '')
-                    nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
+                    nginx_confgen(is_suspended, myowner, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
                 else:
-                    nginx_confgen(is_suspended, myowner, myplan, clusterenabled, *cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
+                    nginx_confgen(is_suspended, myowner, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
         # Ok we are done generating .Lets reload nginx
         # Unless someone has set a skip reload flag
         if not os.path.isfile(installation_path+'/conf/skip_nginx_reload'):
