@@ -37,10 +37,11 @@ if __name__ == "__main__":
         cluster_data_yaml = open(cluster_config_file, 'r')
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
         cluster_data_yaml.close()
-        serverlist = cluster_data_yaml_parsed.keys().sort()
+        serverlist = cluster_data_yaml_parsed.keys()
     else:
         serverlist = []
     # We generate md5(concat list of down servers)
+    serverlist.sort()
     server_down = []
     for server in serverlist:
         if not is_page_available(server, "/nginx-status"):
