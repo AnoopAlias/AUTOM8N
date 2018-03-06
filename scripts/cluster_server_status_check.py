@@ -32,8 +32,8 @@ def is_page_available(host, path="/"):
 
 
 if __name__ == "__main__":
-    if os.path.isfile("/opt/geodns-nDeploy/dns-data/geodns_cluster_.yaml"):  # get the cluster ipmap
-        cluster_config_file = "/opt/geodns-nDeploy/dns-data/geodns_cluster_.yaml"
+    if os.path.isfile("/opt/geodns-nDeploy/dns-data/geodns_cluster.yaml"):  # get the cluster ipmap
+        cluster_config_file = "/opt/geodns-nDeploy/dns-data/geodns_cluster.yaml"
         cluster_data_yaml = open(cluster_config_file, 'r')
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
         cluster_data_yaml.close()
