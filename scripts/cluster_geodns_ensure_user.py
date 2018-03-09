@@ -33,6 +33,12 @@ def powerset(iterable):
 
 def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_parsed, xtendweb_dns_cluster):
     """Function that create a geoDNS zone from the cPanel DNS API"""
+    remote_mx = False
+    with open('/etc/remotedomains') as mx_excludes:
+        for line in mx_excludes:
+            if str(line).rstrip() == zone_name:
+                remote_mx = True
+                break
     for the_uniq_key in xtendweb_dns_cluster.keys():
         # Lets get the settings and base label done first
         the_geozone = {}
@@ -58,6 +64,14 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
         resource_record = thezone['record']
         the_geozone["data"][""]["ns"] = []
         the_geozone["data"][""]["mx"] = []
+        if not remote_mx:
+            myhostname = socket.gethostname()
+            the_geozone_mx = {}
+            the_geozone_mx["mx"] = myhostname
+            the_geozone_mx["preference"] = 0
+            the_geozone["data"][""]["mx"].append(the_geozone_mx)
+            for server in serverlist:
+                the_geozone["data"][""]["mx"].append({server, 10})
         the_geozone["data"][""]["a"] = []
         # Add additional A record for ["data"][""]
         for server in serverlist:
@@ -88,10 +102,11 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
             if rr["type"] == "NS":
                 the_geozone["data"][""]["ns"].append(rr["nsdname"])
             elif rr["type"] == "MX":
-                the_geozone_mx = {}
-                the_geozone_mx["mx"] = rr["exchange"]
-                the_geozone_mx["preference"] = rr["preference"]
-                the_geozone["data"][""]["mx"].append(the_geozone_mx)
+                if remote_mx:
+                            the_geozone_mx = {}
+                            the_geozone_mx["mx"] = rr["exchange"]
+                            the_geozone_mx["preference"] = rr["preference"]
+                            the_geozone["data"][""]["mx"].append(the_geozone_mx)
             elif rr["type"] == "A":
                 if rr["name"] == zone_name+".":
                     if socket.gethostname() not in xtendweb_dns_cluster[the_uniq_key]:

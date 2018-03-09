@@ -60,6 +60,7 @@ def cluster_ensure_mxrecord(zone_name, *serverlist):
             for line in excludes:
                 if str(line).rstrip() == zone_name:
                     skip_flag = True
+                    break
     if not skip_flag:
         # Lets setup correct MX records for localdomains
         mx_skip_flag = False
@@ -67,6 +68,7 @@ def cluster_ensure_mxrecord(zone_name, *serverlist):
             for line in mx_excludes:
                 if str(line).rstrip() == zone_name:
                     mx_skip_flag = True
+                    break
         if not mx_skip_flag:
             zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
             zone_datafeed = zonedump.stdout.read()
