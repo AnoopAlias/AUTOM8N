@@ -71,7 +71,10 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
             the_geozone_mx["preference"] = 0
             the_geozone["data"][""]["mx"].append(the_geozone_mx)
             for server in serverlist:
-                the_geozone["data"][""]["mx"].append({server, 10})
+                the_geozone_mx = {}
+                the_geozone_mx["mx"] = server
+                the_geozone_mx["preference"] = 10
+                the_geozone["data"][""]["mx"].append(the_geozone_mx)
         the_geozone["data"][""]["a"] = []
         # Add additional A record for ["data"][""]
         for server in serverlist:
