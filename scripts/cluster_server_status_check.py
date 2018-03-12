@@ -5,6 +5,8 @@ import yaml
 import httplib
 import re
 from hashlib import md5
+import json
+import subprocess
 
 
 __author__ = "Anoop P Alias"
@@ -48,4 +50,25 @@ if __name__ == "__main__":
             server_down.append(server)
     server_down_uniq = "".join(server_down)
     the_cluster_key = md5(server_down_uniq.encode("utf-8")).hexdigest()
-    print(the_cluster_key)
+    # We now check the last status of the cluster and sync the respective zone files so geoDNS can pick it up
+    the_cluster_status = installation_path+"/conf/cluster_status.json"
+    if os.path.isfile(the_cluster_status):
+        with open(the_cluster_status) as cluster_status_data_stream:
+            json_parsed_cluster_status = json.load(cluster_status_data_stream)
+        status = json_parsed_cluster_status.get('status')
+        if status == the_cluster_key:
+            pass
+        else:
+            subprocess.Popen(['/usr/bin/rsync', '-a', '/opt/geodns-nDeploy/dns-data/'+the_cluster_key+'/', '/opt/geodns-nDeploy/conf/'])
+            my_cluster_status = {}
+            my_cluster_status['status'] = the_cluster_key
+            # Lets write the status to a JSON file
+            with open(the_cluster_status, 'w') as my_status_file:
+                json.dump(my_cluster_status, my_status_file)
+    else:
+        subprocess.Popen(['/usr/bin/rsync', '-a', '/opt/geodns-nDeploy/dns-data/'+the_cluster_key+'/', '/opt/geodns-nDeploy/conf/'])
+        my_cluster_status = {}
+        my_cluster_status['status'] = the_cluster_key
+        # Lets write the status to a JSON file
+        with open(the_cluster_status, 'w') as my_status_file:
+            json.dump(my_cluster_status, my_status_file)
