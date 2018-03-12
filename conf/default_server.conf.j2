@@ -69,13 +69,18 @@ server {
           location /netdata {
             return 301 https://$host$request_uri;
           }
+          location /nginx_status {
+              stub_status on;
+              include /etc/nginx/conf.d/nginx_status_allow*;
+              deny all;
+          }
 }
 
 server {
         listen {{ MYIP }}:443 default_server ssl backlog=16384 reuseport deferred;
         ssl_certificate {{ CPSRVDSSL }};
         ssl_certificate_key {{ CPSRVDSSL }};
-        
+
         ssl_prefer_server_ciphers on;
         ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
         ssl_dhparam /etc/nginx/ssl/dhparam.pem;
@@ -100,6 +105,11 @@ server {
            proxy_set_header   Host   $host;
            proxy_set_header   X-Real-IP  $remote_addr;
            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+          }
+          location /nginx_status {
+              stub_status on;
+              include /etc/nginx/conf.d/nginx_status_allow*;
+              deny all;
           }
         location /netdata {
             return 301 /netdata/;
