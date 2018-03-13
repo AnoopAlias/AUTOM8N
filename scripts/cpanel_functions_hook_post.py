@@ -21,5 +21,5 @@ mydict = cpjson["data"]
 cpaneluser = mydict["user"]
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)  # Assuming escalateprivilege is enabled
 if os.path.exists(cluster_config_file):
-    subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
+    subprocess.call(installation_path + "/scripts/cluster_geodns_ensure_user.py "+cpaneluser, shell=True)
 print(("1 nDeploy:cPaneltrigger:"+cpaneluser))

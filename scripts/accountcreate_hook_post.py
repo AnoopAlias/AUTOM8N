@@ -57,7 +57,7 @@ if os.path.exists(cluster_config_file):
     # Calling ansible ad-hoc command to create users across the cluster
     # Using subprocess.call here as we are not in a hurry and no async call is required
     subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' home='+cpaneluserhome+' shell='+user_shell+'"', shell=True)
-    subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
+    subprocess.call(installation_path + "/scripts/cluster_geodns_ensure_user.py "+cpaneluser, shell=True)
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
     print("1 nDeploy:clusteraccountcreate:"+cpaneluser)
 else:
