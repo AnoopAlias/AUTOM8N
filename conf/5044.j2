@@ -1,0 +1,74 @@
+# Prestashop 1.7
+
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+# define admin dir if not set .Users can set $admin_dir via custom nginx.conf
+if ($admin_dir = '') {
+set $admin_dir /admintest;
+}
+
+# Symfony controllers
+location ~ /(international|_profiler|module|product|feature|attribute|supplier|combination|specific-price)/(.*)$ {
+try_files $uri $uri/ /index.php?q=$uri&$args $admin_dir/index.php$is_args$args;
+}
+
+# Redirect needed to "hide" index.php
+location / {
+try_files $uri $uri/ /index.php$uri&$args;
+
+# Old image system ?
+rewrite ^/([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$1$2$3.jpg last;
+rewrite ^/([0-9])([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$2/$1$2$3$4.jpg last;
+rewrite ^/([0-9])([0-9])([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$2/$3/$1$2$3$4$5.jpg last;
+rewrite ^/([0-9])([0-9])([0-9])([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$2/$3/$4/$1$2$3$4$5$6.jpg last;
+rewrite ^/([0-9])([0-9])([0-9])([0-9])([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$2/$3/$4/$5/$1$2$3$4$5$6$7.jpg last;
+rewrite ^/([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$2/$3/$4/$5/$6/$1$2$3$4$5$6$7$8.jpg last;
+rewrite ^/([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$2/$3/$4/$5/$6/$7/$1$2$3$4$5$6$7$8$9.jpg last;
+rewrite ^/([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$2/$3/$4/$5/$6/$7/$8/$1$2$3$4$5$6$7$8$9$10.jpg last;
+rewrite ^/c/([0-9]+)(-[.*_a-zA-Z0-9-]*)(-[0-9]+)?/.+.jpg$ /img/c/$1$2$3.jpg last;
+rewrite ^/c/([a-zA-Z_-]+)(-[0-9]+)?/.+.jpg$ /img/c/$1$2.jpg last;
+}
+
+
+error_page 404 /index.php?controller=404;
+
+# Deny access to .htaccess .DS_Store .htpasswd etc
+location ~ /\. {
+deny all;
+}
+
+# Prevent injection of php files in directories a user can upload stuff
+location /upload {
+location ~ \.php$ { deny all; }
+}
+location /img {
+location ~ \.php$ {  deny all;}
+}
+
+# Ban access to source code directories
+location ~ ^/(app|bin|cache|classes|config|controllers|docs|localization|override|src|tests|tools|translations|travis-scripts|vendor)/ {
+deny all;
+}
+
+# Banned file types
+location ~ \.(htaccess|yml|log|twig|sass|git|tpl)$ {
+deny all;
+}
+
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ [^/]\.php(/|$) {
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+}
+
+
+include /etc/nginx/conf.d/cpanel_services.conf;
