@@ -56,12 +56,17 @@ localhost_match_wildcard_host=1
 type=service
 router=cli
 
-[Read-Write Listener]
+[Read-Write ListenerPort]
 type=listener
 service=XtendWeb
 protocol=MySQLClient
 address=127.0.0.1
 port=3306
+
+[Read-Write ListenerSocket]
+type=listener
+service=XtendWeb
+protocol=MySQLClient
 socket=/var/lib/maxscale/maxscale_mysql.sock
 
 [MaxAdmin Listener]
