@@ -79,56 +79,58 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
         resource_record = thezone['record']
         # Pass1 - We create the dicts/list needed for pass2
         for rr in resource_record:
-            if rr["name"] != zone_name+".":
-                # Currently we handle only  A, TXT and CNAME here
-                if rr["type"] == "A":
-                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
-                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
-                elif rr["type"] == "TXT":
-                    try:
-                        the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
-                    except KeyError:
+            if "name" in rr.keys():
+                if rr["name"] != zone_name+".":
+                    # Currently we handle only  A, TXT and CNAME here
+                    if rr["type"] == "A":
                         the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
-                        the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
-                elif rr["type"] == "CNAME":
-                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
+                        the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
+                    elif rr["type"] == "TXT":
+                        try:
+                            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
+                        except KeyError:
+                            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
+                            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
+                    elif rr["type"] == "CNAME":
+                        the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
         # Pass2 - Here we add the actual resource records to geoDNS
         for rr in resource_record:
-            # NS
-            if rr["type"] == "NS":
-                the_geozone["data"][""]["ns"].append(rr["nsdname"])
-            # MX (remote)
-            elif rr["type"] == "MX" and remote_mx:
-                the_geozone_mx = {}
-                the_geozone_mx["mx"] = rr["exchange"]
-                the_geozone_mx["preference"] = rr["preference"]
-                the_geozone["data"][""]["mx"].append(the_geozone_mx)
-            # A
-            elif rr["type"] == "A":
-                if rr["name"] == zone_name+".":
-                    if socket.gethostname() in xtendweb_dns_cluster[the_uniq_key]:
-                        the_geozone["data"][""]["a"].append([rr["address"], "10"])
-                else:
-                    # Handle case of additional subdomains except cPanel ones like ftp,cpanel,whm etc
-                    if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
-                        the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append([rr["address"], "10"])
-                    else:
+            if "name" in rr.keys():
+                # NS
+                if rr["type"] == "NS":
+                    the_geozone["data"][""]["ns"].append(rr["nsdname"])
+                # MX (remote)
+                elif rr["type"] == "MX" and remote_mx:
+                    the_geozone_mx = {}
+                    the_geozone_mx["mx"] = rr["exchange"]
+                    the_geozone_mx["preference"] = rr["preference"]
+                    the_geozone["data"][""]["mx"].append(the_geozone_mx)
+                # A
+                elif rr["type"] == "A":
+                    if rr["name"] == zone_name+".":
                         if socket.gethostname() in xtendweb_dns_cluster[the_uniq_key]:
+                            the_geozone["data"][""]["a"].append([rr["address"], "10"])
+                    else:
+                        # Handle case of additional subdomains except cPanel ones like ftp,cpanel,whm etc
+                        if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
                             the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append([rr["address"], "10"])
-                        for server in cluster_data_yaml_parsed.keys():
-                            if server in xtendweb_dns_cluster[the_uniq_key]:
-                                connect_server_dict = cluster_data_yaml_parsed.get(server)
-                                ipmap_dict = connect_server_dict.get("dnsmap")
-                                remote_domain_ipv4 = ipmap_dict.get(domain_ip)
-                                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append([remote_domain_ipv4, "10"])
-            elif rr["type"] == "TXT":
-                if rr["name"] == zone_name+".":
-                    the_geozone["data"][""]["txt"].append(rr["txtdata"])
-                else:
-                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"].append(rr["txtdata"])
-            elif rr["type"] == "CNAME":
-                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["cname"] = rr["cname"]+"."
-            # Add any other RR Types we need to handle here
+                        else:
+                            if socket.gethostname() in xtendweb_dns_cluster[the_uniq_key]:
+                                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append([rr["address"], "10"])
+                            for server in cluster_data_yaml_parsed.keys():
+                                if server in xtendweb_dns_cluster[the_uniq_key]:
+                                    connect_server_dict = cluster_data_yaml_parsed.get(server)
+                                    ipmap_dict = connect_server_dict.get("dnsmap")
+                                    remote_domain_ipv4 = ipmap_dict.get(domain_ip)
+                                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append([remote_domain_ipv4, "10"])
+                elif rr["type"] == "TXT":
+                    if rr["name"] == zone_name+".":
+                        the_geozone["data"][""]["txt"].append(rr["txtdata"])
+                    else:
+                        the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"].append(rr["txtdata"])
+                elif rr["type"] == "CNAME":
+                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["cname"] = rr["cname"]+"."
+                # Add any other RR Types we need to handle here
         # Since the JSON data is now ready, lets write it to the zone file
         with open("/opt/geodns-nDeploy/dns-data/"+the_uniq_key+"/"+zone_name+".json", 'w') as myzonefile:
             json.dump(the_geozone, myzonefile)
