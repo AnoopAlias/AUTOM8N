@@ -173,7 +173,9 @@ if __name__ == "__main__":
         for the_hostlist_tuple in the_cluster_powerset:
             if the_hostlist_tuple:
                 the_cluster_uniq = "".join(the_hostlist_tuple)
+                print(the_cluster_uniq)
                 the_cluster_key = md5(the_cluster_uniq.encode("utf-8")).hexdigest()
+                print(the_cluster_key)
                 xtendweb_dns_cluster[the_cluster_key] = the_hostlist_tuple
                 if not os.path.exists("/opt/geodns-nDeploy/dns-data/"+the_cluster_key):
                     os.makedirs("/opt/geodns-nDeploy/dns-data/"+the_cluster_key)
