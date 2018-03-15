@@ -6,11 +6,13 @@ group nDeployCluster
         include /etc/nginx/conf.d/cpanel_services.conf;
         include /var/cpanel/ssl/installed;
         include /var/cpanel/ssl/apache_tls;
+        include /opt/geodns-nDeploy/dns-data;
         include /var/cpanel/users;
-	      include /opt/nDeploy/php-fpm.d;
+        include /opt/nDeploy/php-fpm.d;
         include /opt/nDeploy/secure-php-fpm.d;
         include /opt/nDeploy/hhvm.d;
         include /etc/localdomains;
+        include /etc/nginx/conf.d/nginx_status_allow.conf;
         include /opt/cpanel/ea-php54/root/etc/php.ini;
         include /opt/cpanel/ea-php55/root/etc/php.ini;
         include /opt/cpanel/ea-php56/root/etc/php.ini;
