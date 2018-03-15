@@ -33,6 +33,16 @@ def is_page_available(host, path="/"):
         return None
 
 
+def is_nginx_overloaded(host, path="/"):
+    try:
+        conn = httplib.HTTPConnection(host)
+        conn.request("GET", path)
+        r1 = conn.getresponse()
+        return None
+    except StandardError:
+        return None
+
+
 if __name__ == "__main__":
     if os.path.isfile("/opt/geodns-nDeploy/dns-data/geodns_cluster.yaml"):  # get the cluster ipmap
         cluster_config_file = "/opt/geodns-nDeploy/dns-data/geodns_cluster.yaml"
