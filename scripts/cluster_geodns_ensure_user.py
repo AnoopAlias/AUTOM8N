@@ -81,7 +81,7 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
             print(server)
             print(xtendweb_dns_cluster[the_uniq_key])
             if server not in xtendweb_dns_cluster[the_uniq_key]:
-                print('server not in xtendweb_dns_cluster')
+                print('server not in xtendweb_dns_cluster'+the_uniq_key)
                 connect_server_dict = cluster_data_yaml_parsed.get(server)
                 ipmap_dict = connect_server_dict.get("dnsmap")
                 remote_domain_ipv4 = ipmap_dict.get(domain_ip)
@@ -176,9 +176,7 @@ if __name__ == "__main__":
         for the_hostlist_tuple in the_cluster_powerset:
             if the_hostlist_tuple:
                 the_cluster_uniq = "".join(the_hostlist_tuple)
-                print(the_cluster_uniq)
                 the_cluster_key = md5(the_cluster_uniq.encode("utf-8")).hexdigest()
-                print(the_cluster_key)
                 xtendweb_dns_cluster[the_cluster_key] = the_hostlist_tuple
                 if not os.path.exists("/opt/geodns-nDeploy/dns-data/"+the_cluster_key):
                     os.makedirs("/opt/geodns-nDeploy/dns-data/"+the_cluster_key)
