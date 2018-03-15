@@ -78,7 +78,9 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
         the_geozone["data"][""]["a"] = []
         # Add additional A record for ["data"][""]
         for server in serverlist:
+            print(server)
             if server not in xtendweb_dns_cluster[the_uniq_key]:
+                print('server not in xtendweb_dns_cluster')
                 connect_server_dict = cluster_data_yaml_parsed.get(server)
                 ipmap_dict = connect_server_dict.get("dnsmap")
                 remote_domain_ipv4 = ipmap_dict.get(domain_ip)
