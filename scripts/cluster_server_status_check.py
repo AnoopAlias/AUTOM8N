@@ -18,7 +18,7 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 
-def is_page_available(host, path="/"):
+def is_page_available(host, path="/nginx_status"):
     """ This function retreives the status code of a website by requesting
         HEAD data from the host. This means that it only requests the headers.
         If the host cannot be reached or something else goes wrong, it returns
@@ -33,7 +33,7 @@ def is_page_available(host, path="/"):
         return None
 
 
-def is_nginx_overloaded(host, path="/"):
+def is_nginx_overloaded(host, path="/nginx_status"):
     try:
         conn = httplib.HTTPConnection(host)
         conn.request("GET", path)
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     serverlist.sort()
     server_up = []
     for server in serverlist:
-        if is_page_available(server, "/nginx-status"):
+        if is_page_available(server, "/nginx_status"):
             server_up.append(server)
     server_up_uniq = "".join(server_up)
     the_cluster_key = md5(server_up_uniq.encode("utf-8")).hexdigest()
