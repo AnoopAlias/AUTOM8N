@@ -46,90 +46,77 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
         the_geozone["max_hosts"] = 1
         the_geozone["closest"] = True
         the_geozone["data"] = {}
-        # GeoDNS inbuilt health check. Doesnt work as of now
-        # health_check = {}
-        # health_check["type"] = "tcp"
-        # health_check["frequency"] = 15
-        # health_check["retry_time"] = 5
-        # health_check["retries"] = 2
-        # health_check["timeout"] = 3
-        # health_check["port"] = 80
-        # Lets populate the data dict with rr data output from cPanel DNS API
+        # init the NS,MX,A,TXT for zone itself
         the_geozone["data"][""] = {}
-        # the_geozone["data"][""]["health"] = health_check
-        zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
-        zone_datafeed = zonedump.stdout.read()
-        zonedump_parsed = json.loads(zone_datafeed)
-        thezone = zonedump_parsed['data']['zone'][0]
-        resource_record = thezone['record']
         the_geozone["data"][""]["ns"] = []
         the_geozone["data"][""]["mx"] = []
+        the_geozone["data"][""]["a"] = []
+        the_geozone["data"][""]["txt"] = []
+        # Add local MX(ignore MX data from WHMAPI )
         if not remote_mx:
             myhostname = socket.gethostname()
             the_geozone_mx = {}
             the_geozone_mx["mx"] = myhostname
             the_geozone_mx["preference"] = 0
             the_geozone["data"][""]["mx"].append(the_geozone_mx)
-            for server in serverlist:
+            for server in cluster_data_yaml_parsed.keys():
                 the_geozone_mx = {}
                 the_geozone_mx["mx"] = server
                 the_geozone_mx["preference"] = 10
                 the_geozone["data"][""]["mx"].append(the_geozone_mx)
-        the_geozone["data"][""]["a"] = []
         # Add additional A record for ["data"][""]
-        for server in serverlist:
-            print(server)
-            print(xtendweb_dns_cluster[the_uniq_key])
-            if server not in xtendweb_dns_cluster[the_uniq_key]:
-                print('server not in xtendweb_dns_cluster'+the_uniq_key)
+        for server in cluster_data_yaml_parsed.keys():
+            if server in xtendweb_dns_cluster[the_uniq_key]:
                 connect_server_dict = cluster_data_yaml_parsed.get(server)
                 ipmap_dict = connect_server_dict.get("dnsmap")
                 remote_domain_ipv4 = ipmap_dict.get(domain_ip)
                 the_geozone["data"][""]["a"].append([remote_domain_ipv4, "10"])
-        the_geozone["data"][""]["txt"] = []
-        # Initialize the sub.zone.ext type dicts
+        # Parse cPanel DNS data
+        zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
+        zone_datafeed = zonedump.stdout.read()
+        zonedump_parsed = json.loads(zone_datafeed)
+        thezone = zonedump_parsed['data']['zone'][0]
+        resource_record = thezone['record']
+        # Pass1 - We create the dicts/list needed for pass2
         for rr in resource_record:
-            if rr["type"] == "A":
-                if rr["name"] != zone_name+".":
+            if rr["name"] != zone_name+".":
+                # Currently we handle only  A, TXT and CNAME here
+                if rr["type"] == "A":
                     the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
                     the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
-            elif rr["type"] == "TXT":
-                if rr["name"] != zone_name+".":
+                elif rr["type"] == "TXT":
                     try:
                         the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
                     except KeyError:
                         the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
                         the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
-            elif rr["type"] == "CNAME":
-                the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
-        # Populate the Json data structure
+                elif rr["type"] == "CNAME":
+                    the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
+        # Pass2 - Here we add the actual resource records to geoDNS
         for rr in resource_record:
-            # Lets deal with NS records first
+            # NS
             if rr["type"] == "NS":
                 the_geozone["data"][""]["ns"].append(rr["nsdname"])
-            elif rr["type"] == "MX":
-                if remote_mx:
-                            the_geozone_mx = {}
-                            the_geozone_mx["mx"] = rr["exchange"]
-                            the_geozone_mx["preference"] = rr["preference"]
-                            the_geozone["data"][""]["mx"].append(the_geozone_mx)
+            # MX (remote)
+            elif rr["type"] == "MX" and remote_mx:
+                the_geozone_mx = {}
+                the_geozone_mx["mx"] = rr["exchange"]
+                the_geozone_mx["preference"] = rr["preference"]
+                the_geozone["data"][""]["mx"].append(the_geozone_mx)
+            # A
             elif rr["type"] == "A":
                 if rr["name"] == zone_name+".":
-                    if socket.gethostname() not in xtendweb_dns_cluster[the_uniq_key]:
-                            the_geozone_a = []
-                            the_geozone_a.append(rr["address"])
-                            the_geozone_a.append("10")  # weight
-                            the_geozone["data"][""]["a"].append(the_geozone_a)
+                    if socket.gethostname() in xtendweb_dns_cluster[the_uniq_key]:
+                        the_geozone["data"][""]["a"].append([rr["address"], "10"])
                 else:
-                    if socket.gethostname() not in xtendweb_dns_cluster[the_uniq_key]:
-                            the_geozone_additional_a = []
-                            the_geozone_additional_a.append(rr["address"])
-                            the_geozone_additional_a.append("10")  # weight
-                            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append(the_geozone_additional_a)
-                    # Add additional A record for the cluster
-                    if not rr["name"].startswith(("webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
-                        for server in serverlist:
-                            if server not in xtendweb_dns_cluster[the_uniq_key]:
+                    # Handle case of additional subdomains except cPanel ones like ftp,cpanel,whm etc
+                    if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
+                        the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append([rr["address"], "10"])
+                    else:
+                        if socket.gethostname() in xtendweb_dns_cluster[the_uniq_key]:
+                            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append([rr["address"], "10"])
+                        for server in cluster_data_yaml_parsed.keys():
+                            if server in xtendweb_dns_cluster[the_uniq_key]:
                                 connect_server_dict = cluster_data_yaml_parsed.get(server)
                                 ipmap_dict = connect_server_dict.get("dnsmap")
                                 remote_domain_ipv4 = ipmap_dict.get(domain_ip)
@@ -141,7 +128,8 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
                     the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"].append(rr["txtdata"])
             elif rr["type"] == "CNAME":
                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["cname"] = rr["cname"]+"."
-        # Lets write the zone to a JSON file
+            # Add any other RR Types we need to handle here
+        # Since the JSON data is now ready, lets write it to the zone file
         with open("/opt/geodns-nDeploy/dns-data/"+the_uniq_key+"/"+zone_name+".json", 'w') as myzonefile:
             json.dump(the_geozone, myzonefile)
     return
@@ -158,20 +146,26 @@ if __name__ == "__main__":
     except KeyError:
         sys.exit(0)
     else:
-        # Generate the server list in cluster and make it available globally
+        # Generate the slave server list in cluster and make it available globally
         if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cluster ipmap
             cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
             cluster_data_yaml = open(cluster_config_file, 'r')
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             cluster_data_yaml.close()
-            serverlist = cluster_data_yaml_parsed.keys()
+        else:
+            cluster_data_yaml_parsed = {}
+        # Prepare a python dict that has a uniq key for each powerset in a list of all servers
+        if os.path.isfile("/opt/geodns-nDeploy/dns-data/geodns_cluster.yaml"):  # get the cluster ipmap
+            cluster_config_file = "/opt/geodns-nDeploy/dns-data/geodns_cluster.yaml"
+            cluster_data_yaml = open(cluster_config_file, 'r')
+            geocluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+            cluster_data_yaml.close()
+            serverlist = geocluster_data_yaml_parsed.keys()
         else:
             serverlist = []
-        # Prepare a python dict that has a uniq key for each powerset in a list of all servers
-        myhostname = socket.gethostname()
-        the_cluster = [myhostname] + serverlist
-        the_cluster.sort()
-        the_cluster_powerset = powerset(the_cluster)
+        # We generate md5(concat list of down servers)
+        serverlist.sort()
+        the_cluster_powerset = powerset(serverlist)
         xtendweb_dns_cluster = {}
         for the_hostlist_tuple in the_cluster_powerset:
             if the_hostlist_tuple:
