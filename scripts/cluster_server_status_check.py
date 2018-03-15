@@ -44,12 +44,12 @@ if __name__ == "__main__":
         serverlist = []
     # We generate md5(concat list of down servers)
     serverlist.sort()
-    server_down = []
+    server_up = []
     for server in serverlist:
-        if not is_page_available(server, "/nginx-status"):
-            server_down.append(server)
-    server_down_uniq = "".join(server_down)
-    the_cluster_key = md5(server_down_uniq.encode("utf-8")).hexdigest()
+        if is_page_available(server, "/nginx-status"):
+            server_up.append(server)
+    server_up_uniq = "".join(server_up)
+    the_cluster_key = md5(server_up_uniq.encode("utf-8")).hexdigest()
     # We now check the last status of the cluster and sync the respective zone files so geoDNS can pick it up
     the_cluster_status = installation_path+"/conf/cluster_status.json"
     if os.path.isfile(the_cluster_status):
