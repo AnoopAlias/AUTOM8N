@@ -79,6 +79,7 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
         # Add additional A record for ["data"][""]
         for server in serverlist:
             print(server)
+            print(xtendweb_dns_cluster[the_uniq_key])
             if server not in xtendweb_dns_cluster[the_uniq_key]:
                 print('server not in xtendweb_dns_cluster')
                 connect_server_dict = cluster_data_yaml_parsed.get(server)
