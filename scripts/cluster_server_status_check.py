@@ -69,14 +69,14 @@ if __name__ == "__main__":
         if status == the_cluster_key:
             pass
         else:
-            subprocess.Popen(['/usr/bin/rsync', '-a', '/opt/geodns-nDeploy/dns-data/'+the_cluster_key+'/', '/opt/geodns-nDeploy/conf/'])
+            subprocess.Popen(['/usr/bin/cp', '/opt/geodns-nDeploy/dns-data/'+the_cluster_key+'/*', '/opt/geodns-nDeploy/conf/'])
             my_cluster_status = {}
             my_cluster_status['status'] = the_cluster_key
             # Lets write the status to a JSON file
             with open(the_cluster_status, 'w') as my_status_file:
                 json.dump(my_cluster_status, my_status_file)
     else:
-        subprocess.Popen(['/usr/bin/rsync', '-a', '/opt/geodns-nDeploy/dns-data/'+the_cluster_key+'/', '/opt/geodns-nDeploy/conf/'])
+        subprocess.Popen(['/usr/bin/cp', '/opt/geodns-nDeploy/dns-data/'+the_cluster_key+'/*', '/opt/geodns-nDeploy/conf/'])
         my_cluster_status = {}
         my_cluster_status['status'] = the_cluster_key
         # Lets write the status to a JSON file
