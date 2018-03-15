@@ -23,7 +23,7 @@
    - haproxy
 
 - name: Install XtendWeb cluster slave rpm package
-  yum: name={{ item }} enablerepo=ndeploy,epel state=present
+  yum: name={{ item }} enablerepo=ndeploy-edge,epel state=present
   with_items:
    - nDeploy-cluster-slave
 
