@@ -383,6 +383,7 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
     backend_path = yaml_parsed_domain_data.get('backend_path', None)
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
     user_config = False
+    is_unsafe = False
     phpmaxchildren = yaml_parsed_domain_data.get('phpmaxchildren', '16')
     # initialize the fastcgi_socket variable
     fastcgi_socket = None
@@ -588,8 +589,11 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
     if os.path.isfile(document_root+"/nginx.conf"):
         # SecFilter
         with open(document_root+"/nginx.conf") as usernginxconf:
-            is_problem = any('alias' or 'include' or 'client_body_temp_path' in line.split() for line in usernginxconf)
-        if not is_problem:
+            for line in usernginxconf:
+                if 'alias' or 'include' or 'client_body_temp_path' in line:
+                    is_unsafe = True
+                    break
+        if not is_unsafe:
             shutil.copyfile(document_root+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test")
             user_config = True
     # Get the subdir config also rendered
@@ -654,8 +658,11 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
             if os.path.isfile(document_root+'/'+subdir+"/nginx.conf"):
                 # SecFilter
                 with open(document_root+'/'+subdir+"/nginx.conf") as usernginxconf:
-                    is_problem = any('alias' or 'include' or 'client_body_temp_path' in line.split() for line in usernginxconf)
-                if not is_problem:
+                    for line in usernginxconf:
+                        if 'alias' or 'include' or 'client_body_temp_path' in line:
+                            is_unsafe = True
+                            break
+                if not is_unsafe:
                     shutil.copyfile(document_root+'/'+subdir+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test")
                     user_config = True
             # Generate the rest of the config(subdomain.subinclude) based on the application template
@@ -708,7 +715,7 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
                 confout.write(generated_subdir_app_config)
     # If we have a user_config.Lets generate the test confg
-    if user_config:
+    if user_config is True and is_unsafe is not True:
         # generate a temp nginx config
         NGINX_CONF_TEMPLATE = 'nginx_test.j2'
         nginx_test_template = templateEnv.get_template(NGINX_CONF_TEMPLATE)
