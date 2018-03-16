@@ -8,6 +8,7 @@
   connection: local
   roles:
     - install_master
+    - geodns_master
     - csync2_master
     - unison_master
     - mysqlaccess_master
@@ -17,6 +18,7 @@
   hosts: ndeployslaves
   roles:
     - install_slave
+    - geodns_master
     - csync2_slave
     - services_slave
     - domlog_rotate_slave
