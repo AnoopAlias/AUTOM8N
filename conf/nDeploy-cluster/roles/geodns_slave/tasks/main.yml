@@ -1,0 +1,16 @@
+---
+
+- name: disable named service
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=named enabled=0 monitored=0"
+  ignore_errors: yes
+
+- name: Stop named
+  service:
+    name: named
+    state: stopped  
+
+- name: Initialize MaxMind GeoLite database
+  shell: /opt/geodns-nDeploy/GeoIP/geoip_update.sh
+
+- name: Add server status check cron job
+  cron: name="nDeploy status check" user=root job="/opt/nDeploy/scripts/cluster_server_status_check.py"

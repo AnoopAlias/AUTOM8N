@@ -16,6 +16,9 @@
 - name: Start redis on slave
   service: name=redis enabled=yes state=started
 
+- name: Start ndeploy_geodns on master
+  service: name=ndeploy_geodns enabled=yes state=started
+  
 - name: disable imap
   shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=imap enabled=0 monitored=0"
   ignore_errors: yes

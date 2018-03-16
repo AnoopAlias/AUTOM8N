@@ -16,6 +16,7 @@
    - stunnel
    - redis
    - haproxy
+   - geodns-nDeploy
 
 - name: Install MySQL-python
   pip:

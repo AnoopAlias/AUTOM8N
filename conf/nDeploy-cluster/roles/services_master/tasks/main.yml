@@ -34,3 +34,6 @@
 
 - name: Start redis on master
   service: name=redis enabled=yes state=started
+
+- name: Start ndeploy_geodns on master
+  service: name=ndeploy_geodns enabled=yes state=started

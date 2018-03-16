@@ -21,6 +21,7 @@
    - stunnel
    - redis
    - haproxy
+   - geodns-nDeploy
 
 - name: Install XtendWeb cluster slave rpm package
   yum: name={{ item }} enablerepo=ndeploy-edge,epel state=present
