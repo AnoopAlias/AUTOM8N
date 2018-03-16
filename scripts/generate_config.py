@@ -586,8 +586,12 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
         confout.write(generated_app_config)
     # Copy the user config for testing if present
     if os.path.isfile(document_root+"/nginx.conf"):
-        shutil.copyfile(document_root+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test")
-        user_config = True
+        # SecFilter
+        with open(document_root+"/nginx.conf") as usernginxconf:
+            is_problem = any('alias' or 'include' or 'client_body_temp_path' in line.split() for line in usernginxconf)
+        if not is_problem:
+            shutil.copyfile(document_root+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test")
+            user_config = True
     # Get the subdir config also rendered
     if subdir_apps:
         for subdir in subdir_apps.keys():
@@ -648,8 +652,12 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
                 confout.write(generated_config)
             # Copy the user config for testing if present
             if os.path.isfile(document_root+'/'+subdir+"/nginx.conf"):
-                shutil.copyfile(document_root+'/'+subdir+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test")
-                user_config = True
+                # SecFilter
+                with open(document_root+'/'+subdir+"/nginx.conf") as usernginxconf:
+                    is_problem = any('alias' or 'include' or 'client_body_temp_path' in line.split() for line in usernginxconf)
+                if not is_problem:
+                    shutil.copyfile(document_root+'/'+subdir+"/nginx.conf", installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test")
+                    user_config = True
             # Generate the rest of the config(subdomain.subinclude) based on the application template
             subdirApptemplate = templateEnv.get_template(subdir_apptemplate_code)
             # We configure the backends first if necessary
