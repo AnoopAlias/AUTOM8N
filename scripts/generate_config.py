@@ -586,9 +586,9 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
         confout.write(generated_app_config)
     # Copy the user config for testing if present
-    secfilter = ['alias', 'include', 'client_body_temp_path']
     if os.path.isfile(document_root+"/nginx.conf"):
         # SecFilter
+        secfilter = ['alias', 'include', 'client_body_temp_path']
         with open(document_root+"/nginx.conf") as usernginxconf:
             for line in usernginxconf:
                 sectest = any(keyword in line for keyword in secfilter)
@@ -659,6 +659,7 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
             # Copy the user config for testing if present
             if os.path.isfile(document_root+'/'+subdir+"/nginx.conf"):
                 # SecFilter
+                secfilter = ['alias', 'include', 'client_body_temp_path']
                 with open(document_root+'/'+subdir+"/nginx.conf") as usernginxconf:
                     for line in usernginxconf:
                         sectest = any(keyword in line for keyword in secfilter)
