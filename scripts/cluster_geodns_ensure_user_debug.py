@@ -41,7 +41,6 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
                 break
     for the_uniq_key in xtendweb_dns_cluster.keys():
         # Lets get the settings and base label done first
-        print(xtendweb_dns_cluster)
         the_geozone = {}
         the_geozone["ttl"] = 60
         the_geozone["max_hosts"] = 1
@@ -67,9 +66,8 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
                 the_geozone["data"][""]["mx"].append(the_geozone_mx)
         # Add additional A record for ["data"][""]
         for server in cluster_data_yaml_parsed.keys():
-            print(server)
-            print(xtendweb_dns_cluster[the_uniq_key])
             if server in xtendweb_dns_cluster[the_uniq_key]:
+                print(server+" is in "+str(xtendweb_dns_cluster[the_uniq_key]))
                 connect_server_dict = cluster_data_yaml_parsed.get(server)
                 ipmap_dict = connect_server_dict.get("dnsmap")
                 remote_domain_ipv4 = ipmap_dict.get(domain_ip)
