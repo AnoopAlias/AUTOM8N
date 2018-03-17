@@ -2,5 +2,5 @@
 allow {{ hostvars[host]['mainip'] }};
 {% endfor %}
 {% for host in groups['ndeployslaves'] %}
-allow {{ hostvars[item]['mainip'] }};
+allow {{ hostvars[host]['mainip'] }};
 {% endfor %}
