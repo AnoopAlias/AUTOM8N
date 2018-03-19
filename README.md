@@ -1,6 +1,8 @@
 
 # XtendWeb
 
+# XtendWeb Website and HelpDesk infrastructure is down due to a DDOS attack. We apologize for the inconvenience caused. Support is available via email address anoop@gnusys.net or you can get in touch on skype: gnusys
+
 [![Join the chat at https://gitter.im/XtendWeb/Lobby](https://badges.gitter.im/XtendWeb/Lobby.svg)](https://gitter.im/XtendWeb/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
