@@ -85,9 +85,6 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
                     if rr["type"] == "A":
                         the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
                         the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
-                        # Get the zone main IP,so we can know subdomains pointing externally
-                        if rr["name"] == zone_name+".":
-                            zone_main_ip = rr["address"]
                     elif rr["type"] == "TXT":
                         try:
                             the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
@@ -115,12 +112,11 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
                             the_geozone["data"][""]["a"].append([rr["address"], "10"])
                     else:
                         # Handle case of additional subdomains except cPanel ones like ftp,cpanel,whm etc
-                        if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] == zone_main_ip:
+                        if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != domain_ip:
                             the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append([rr["address"], "10"])
                         else:
                             if socket.gethostname() in xtendweb_dns_cluster[the_uniq_key]:
                                 the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"].append([rr["address"], "10"])
-
                             for server in cluster_data_yaml_parsed.keys():
                                 if server in xtendweb_dns_cluster[the_uniq_key]:
                                     connect_server_dict = cluster_data_yaml_parsed.get(server)
