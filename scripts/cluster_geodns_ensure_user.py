@@ -83,8 +83,11 @@ def cluster_ensure_zone(zone_name, domain_ip, serverlist, cluster_data_yaml_pars
                 if rr["name"] != zone_name+".":
                     # Currently we handle only  A, TXT and CNAME here
                     if rr["type"] == "A":
-                        the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
-                        the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
+                        try:
+                            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
+                        except KeyError:
+                            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")] = {}
+                            the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["a"] = []
                     elif rr["type"] == "TXT":
                         try:
                             the_geozone["data"][rr["name"].replace("."+zone_name+".", "")]["txt"] = []
