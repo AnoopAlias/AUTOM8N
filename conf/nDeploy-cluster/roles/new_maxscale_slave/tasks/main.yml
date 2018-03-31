@@ -1,0 +1,101 @@
+---
+
+- name: check if maxscale proxy is setup
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE
+  register: maxscale
+
+- name: create the mysql-ssl directory
+  file:
+    path: /etc/mysql-ssl
+    state: directory
+  when:
+    - maxscale.stat.exists == false
+
+- synchronize:
+    src: /etc/mysql-ssl
+    dest: /etc/
+  when:  maxscale.stat.exists == false
+
+- name: Stop MySQL service
+  service: name=mysqld state=stopped enabled=no
+  when:
+    - inventory_hostname != groups['ndeploydbslave'][0]
+  ignore_errors: yes
+
+- name: Stop MySQL service
+  service: name=mysql state=stopped enabled=no
+  when:
+    - inventory_hostname != groups['ndeploydbslave'][0]
+  ignore_errors: yes
+
+- name: Stop MySQL service
+  service: name=mariadb state=stopped enabled=no
+  when:
+    - inventory_hostname != groups['ndeploydbslave'][0]
+  ignore_errors: yes
+
+- name: kill any mysqld process
+  shell: "killall -9 mysqld"
+  when:
+    - inventory_hostname != groups['ndeploydbslave'][0]
+  ignore_errors: yes
+
+- name: Install MaxScale rpm
+  yum:
+    name: https://downloads.mariadb.com/MaxScale/2.2.3/rhel/7/x86_64/maxscale-2.2.3-1.rhel.7.x86_64.rpm
+    state: present
+    validate_certs: no
+  when:
+    - ansible_lsb.major_release|int >= 7
+    - inventory_hostname != groups['ndeploydbslave'][0]
+
+- name: Install MaxScale rpm
+  yum:
+    name: https://downloads.mariadb.com/MaxScale/2.2.3/rhel/6/x86_64/maxscale-2.2.3-1.rhel.6.x86_64.rpm
+    state: present
+    validate_certs: no
+  when:
+    - ansible_lsb.major_release|int < 7
+    - inventory_hostname != groups['ndeploydbslave'][0]
+
+- synchronize:
+    src: /var/lib/maxscale/.secrets
+    dest: /var/lib/maxscale/.secrets
+  when:
+    - maxscale.stat.exists == false
+    - inventory_hostname != groups['ndeploydbslave'][0]
+    - maxscale.stat.exists == false
+
+- file:
+    path: /var/lib/maxscale/.secrets
+    owner: maxscale
+    group: maxscale
+    mode: 0400
+
+- name: Setup MaxScale
+  template:
+    src: maxscale.cnf.j2
+    dest: /etc/maxscale.cnf
+  when:
+    - inventory_hostname != groups['ndeploydbslave'][0]
+    - maxscale.stat.exists == false
+
+- name: Start MaxScale
+  service:
+    name: maxscale
+    enabled: yes
+    state: started
+  when:
+    - ansible_lsb.major_release|int >= 7
+    - inventory_hostname != groups['ndeploydbslave'][0]
+
+- name: Start maxscale
+  shell: service maxscale restart && chkconfig maxscale on
+  when:
+    - ansible_lsb.major_release|int < 7
+    - inventory_hostname != groups['ndeploydbslave'][0]
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch

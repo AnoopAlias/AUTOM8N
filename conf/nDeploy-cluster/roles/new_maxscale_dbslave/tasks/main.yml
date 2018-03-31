@@ -1,0 +1,57 @@
+---
+
+- name: check if maxscale proxy is setup
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE
+  register: maxscale
+
+- name: Install MaxScale rpm
+  yum:
+    name: https://downloads.mariadb.com/MaxScale/2.2.3/rhel/7/x86_64/maxscale-2.2.3-1.rhel.7.x86_64.rpm
+    state: present
+    validate_certs: no
+  when:
+    - ansible_lsb.major_release|int >= 7
+
+- name: Install MaxScale rpm
+  yum:
+    name: https://downloads.mariadb.com/MaxScale/2.2.3/rhel/6/x86_64/maxscale-2.2.3-1.rhel.6.x86_64.rpm
+    state: present
+    validate_certs: no
+  when:
+    - ansible_lsb.major_release|int < 7
+
+- synchronize:
+    src: /var/lib/maxscale/.secrets
+    dest: /var/lib/maxscale/.secrets
+  when:  maxscale.stat.exists == false
+
+- file:
+    path: /var/lib/maxscale/.secrets
+    owner: maxscale
+    group: maxscale
+    mode: 0400
+
+- name: Setup MaxScale
+  template:
+    src: maxscale.cnf.j2
+    dest: /etc/maxscale.cnf
+  when:
+    - maxscale.stat.exists == false
+
+- name: Start MaxScale
+  service:
+    name: maxscale
+    enabled: yes
+    state: started
+  when:
+    - ansible_lsb.major_release|int >= 7
+
+- name: Start maxscale
+  shell: service maxscale restart && chkconfig maxscale on
+  when:
+    - ansible_lsb.major_release|int < 7
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch
