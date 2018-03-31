@@ -23,8 +23,8 @@ port = 13306
 #the server-id and auto_increment_offset values must be unique for each server in the cluster
 gtid-domain-id=1
 server-id={{ server_id }}
-auto_increment_offset=1
-auto_increment_increment={{ server_id }}
+auto_increment_offset={{ server_id }}
+auto_increment_increment=10
 
 
 # binlog and relaylog size is set to 52 Mb
@@ -33,8 +33,7 @@ max_binlog_size=52428800
 expire_logs_days=3
 binlog-format=row
 
-# There is a spell error in relylog which is left as is for upgrade compatibility
-relay-log=/var/lib/mysql/relylog-{{ ansible_nodename }}
+relay-log=/var/lib/mysql/relaylog-{{ ansible_nodename }}
 max-relay-log-size=52428800
 relay-log-recovery=1
 relay_log_purge=1
