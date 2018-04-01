@@ -1,0 +1,26 @@
+# phpfox in a subdir
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+
+location ~ ^/{{ SUBDIR }}/index.php/.*$ {
+try_files $uri $uri/ /{{ SUBDIR }}/index.php?$args;
+}
+
+rewrite ^/{{ SUBDIR }}/file/(.*) /{{ SUBDIR }}/PF.Base/file/$1 last;
+rewrite ^/{{ SUBDIR }}/static/ajax.php /{{ SUBDIR }}/index.php last;
+rewrite ^/{{ SUBDIR }}/themes/default/(.*) /{{ SUBDIR }}/PF.Base/theme/default/$1 last;
+rewrite ^/{{ SUBDIR }}/(static|theme|module)/(.*) /{{ SUBDIR }}/PF.Base/$1/$2 last;
+rewrite ^/{{ SUBDIR }}/(Apps|themes)/(.*) /{{ SUBDIR }}/PF.Site/$1/$2 last;
+try_files $uri $uri/ /{{ SUBDIR }}/index.php?$query_string;
+
+location ~ \.php$ {
+
+try_files $uri =404;
+fastcgi_split_path_info ^(.+\.php)(/.+)$;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+
+}
