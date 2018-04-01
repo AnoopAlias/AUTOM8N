@@ -38,6 +38,9 @@ rewrite ^/embed/([^/]+)$ /embed.php?vid=$1;
 rewrite "^/([^/]*)_([a-zA-Z0-9]{9}).html$" /watch.php?vid=$2;
 rewrite ^/fpembed-(.*).swf$ /fpembed.php?vid=$1;
 rewrite ^/rss.xml$ /rss.php last;
+rewrite ^/user/([^/]+)/?$ /user.php?u=$1;
+rewrite ^/user/([^/]+)/(.*)/?$ /user.php?u=$1&view=$2;
+
 
 
 location / {
