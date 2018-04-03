@@ -265,8 +265,8 @@ access_log  off;
 {% endif %}
 {% endif %}
 
-# Proxy /cgi-bin/ ScriptAlias
-location ~* ^/cgi-bin/ {
+# Proxy /(cgi-bin|cgi-sys)/ ScriptAlias
+location ~* ^/(cgi-bin|cgi-sys)/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
@@ -410,8 +410,8 @@ access_log  off;
 {% endif %}
 {% endif %}
 
-# Proxy /cgi-bin/ ScriptAlias
-location ~* ^/cgi-bin/ {
+# Proxy /(cgi-bin|cgi-sys)/ ScriptAlias
+location ~* ^/(cgi-bin|cgi-sys)/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
