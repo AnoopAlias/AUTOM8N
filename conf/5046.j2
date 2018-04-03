@@ -3,6 +3,7 @@ root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
 rewrite ^/index.html$ /index.php;
+rewrite ^/browse.html$ /category.php;
 rewrite ^/browse-(.*)-videos.html$ /category.php?cat=$1;
 rewrite ^/browse-(.*)-videos-([0-9]+)-(.*).html$ /category.php?cat=$1&page=$2&sortby=$3;
 rewrite ^/videos.flv(.*)$ /videos.php$1;
