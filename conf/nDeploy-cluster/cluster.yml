@@ -42,14 +42,14 @@
   vars:
     MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
   roles:
-    - mariadb_master
+    - new_mariadb_master
 
 - name: MariaDB setup on slave
-  hosts: ndeploydbslave
+  hosts: ndeployslaves
   vars:
     MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
   roles:
-    - mariadb_slave
+    - new_mariadb_slave
 
 - name: Start MySQL replication on master
   hosts: ndeploymaster
@@ -59,7 +59,7 @@
     - dbreplication_master
 
 - name: Start MySQL replication on slave
-  hosts: ndeploydbslave
+  hosts: ndeployslaves
   vars:
     MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
   roles:
@@ -70,31 +70,31 @@
   vars:
     MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
   roles:
-    - maxscale_initmaster
+    - new_maxscale_initmaster
 
 - name: MaxScale setup on master
   hosts: ndeploymaster
   vars:
     MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
   roles:
-    - maxscale_master
+    - new_maxscale_master
 
 - name: MaxScale setup on DB slave
   hosts: ndeploydbslave
   vars:
     MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
   roles:
-    - maxscale_dbslave
+    - new_maxscale_dbslave
 
 - name: MaxScale setup on slave
   hosts: ndeployslaves
   vars:
     MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
   roles:
-    - maxscale_slave
+    - new_maxscale_slave
 
 - name: Switch to GTID
-  hosts: ndeploymaster,ndeploydbslave
+  hosts: ndeploymaster,ndeployslaves
   roles:
     - gtid_db
 
