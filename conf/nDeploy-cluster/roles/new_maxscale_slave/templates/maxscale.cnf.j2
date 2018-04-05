@@ -2,55 +2,67 @@
 threads=1
 auth_read_timeout=5
 
-#master
+#dbslave
 [server1]
 type=server
 address={{ hostvars[groups['ndeploydbslave'][0]]['mainip'] }}
 port=13306
 protocol=MySQLBackend
 ssl=required
-ssl_version=TLSv10
+ssl_version=MAX
 ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
 ssl_cert=/etc/mysql-ssl/client-cert.pem
 ssl_key=/etc/mysql-ssl/client-key.pem
-serv_weight=0
 persistpoolmax=100
 persistmaxtime=3600
 
-#slave
+#master
 [server2]
 type=server
 address={{ hostvars[groups['ndeploymaster'][0]]['mainip'] }}
 port=13306
 protocol=MySQLBackend
 ssl=required
-ssl_version=TLSv10
+ssl_version=MAX
 ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
 ssl_cert=/etc/mysql-ssl/client-cert.pem
 ssl_key=/etc/mysql-ssl/client-key.pem
-serv_weight=1
 persistpoolmax=100
 persistmaxtime=3600
 
+#thisserver
+[server3]
+type=server
+address=127.0.0.1
+port=13306
+protocol=MySQLBackend
+ssl=required
+ssl_version=MAX
+ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
+ssl_cert=/etc/mysql-ssl/client-cert.pem
+ssl_key=/etc/mysql-ssl/client-key.pem
+persistpoolmax=100
+persistmaxtime=3600
+
+
 [MySQL Monitor]
 type=monitor
-module=mmmon
-servers=server2,server1
+module=mariadbmon
+detect_replication_lag=1
+servers=server3,server2,server1
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 monitor_interval=10000
 
 [XtendWeb]
 type=service
-router=readconnroute
-servers=server2,server1
+router=readwritesplit
+servers=server3,server2,server1
 user=maxscale
 passwd={{ MAXSCALEPASS }}
-weightby=serv_weight
 connection_timeout=60
 max_connections=500
-enable_root_user=1
-localhost_match_wildcard_host=1
+#router_options=master_accept_reads=true
 
 [MaxAdmin Service]
 type=service

@@ -9,11 +9,10 @@ address=127.0.0.1
 port=13306
 protocol=MySQLBackend
 ssl=required
-ssl_version=TLSv10
+ssl_version=MAX
 ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
 ssl_cert=/etc/mysql-ssl/client-cert.pem
 ssl_key=/etc/mysql-ssl/client-key.pem
-serv_weight=1
 persistpoolmax=100
 persistmaxtime=3600
 
@@ -24,18 +23,17 @@ address={{ hostvars[groups['ndeploydbslave'][0]]['mainip'] }}
 port=13306
 protocol=MySQLBackend
 ssl=required
-ssl_version=TLSv10
+ssl_version=MAX
 ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
 ssl_cert=/etc/mysql-ssl/client-cert.pem
 ssl_key=/etc/mysql-ssl/client-key.pem
-enable_root_user=1
-serv_weight=0
 persistpoolmax=100
 persistmaxtime=3600
 
 [MySQL Monitor]
 type=monitor
-module=mmmon
+module=mariadbmon
+detect_replication_lag=1
 servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
@@ -43,15 +41,13 @@ monitor_interval=10000
 
 [XtendWeb]
 type=service
-router=readconnroute
+router=readwritesplit
 servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
-weightby=serv_weight
 connection_timeout=60
 max_connections=500
-enable_root_user=1
-localhost_match_wildcard_host=1
+router_options=master_accept_reads=true
 
 [MaxAdmin Service]
 type=service
