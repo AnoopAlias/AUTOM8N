@@ -3,10 +3,6 @@
 
 [mysqld]
 
-# Do not remove this flag
-read_only=1
-
-
 log-error=/var/lib/mysql/{{ ansible_nodename}}.err
 innodb_file_per_table=1
 performance-schema=0
