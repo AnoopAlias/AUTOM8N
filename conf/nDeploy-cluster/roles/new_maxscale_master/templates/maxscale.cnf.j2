@@ -30,7 +30,7 @@ ssl_key=/etc/mysql-ssl/client-key.pem
 persistpoolmax=100
 persistmaxtime=3600
 
-[MySQL Monitor]
+[MySQL-Monitor]
 type=monitor
 module=mariadbmon
 detect_replication_lag=1
@@ -49,24 +49,24 @@ connection_timeout=60
 max_connections=500
 router_options=master_accept_reads=true
 
-[MaxAdmin Service]
+[MaxAdmin-Service]
 type=service
 router=cli
 
-[Read-Write ListenerPort]
+[Read-Write-ListenerPort]
 type=listener
 service=XtendWeb
 protocol=MySQLClient
 address=127.0.0.1
 port=3306
 
-[Read-Write ListenerSocket]
+[Read-Write-ListenerSocket]
 type=listener
 service=XtendWeb
 protocol=MySQLClient
 socket=/var/lib/maxscale/maxscale_mysql.sock
 
-[MaxAdmin Listener]
+[MaxAdmin-Listener]
 type=listener
 service=MaxAdmin Service
 protocol=maxscaled

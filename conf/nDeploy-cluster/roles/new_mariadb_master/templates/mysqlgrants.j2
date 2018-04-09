@@ -5,6 +5,7 @@ GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] 
 GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] }}' REQUIRE SSL;
+GRANT CREATE ON *.* TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] }}' REQUIRE SSL;
 
@@ -13,6 +14,7 @@ GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[host]['mainip'] }}' REQUIR
 GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[host]['mainip'] }}' REQUIRE SSL;
 GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[host]['mainip'] }}' REQUIRE SSL;
 GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[host]['mainip'] }}' REQUIRE SSL;
+GRANT CREATE ON *.* TO 'maxscale'@'{{ hostvars[host]['mainip'] }}' REQUIRE SSL;
 GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[host]['mainip'] }}' REQUIRE SSL;
 GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[host]['mainip'] }}' REQUIRE SSL;
 {% endfor %}
@@ -21,6 +23,7 @@ GRANT SELECT ON mysql.user TO 'maxscale'@'localhost' REQUIRE SSL;
 GRANT SELECT ON mysql.db TO 'maxscale'@'localhost' REQUIRE SSL;
 GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'localhost' REQUIRE SSL;
 GRANT SHOW DATABASES ON *.* TO 'maxscale'@'localhost' REQUIRE SSL;
+GRANT CREATE ON *.* TO 'maxscale'@'localhost' REQUIRE SSL;
 GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'localhost' REQUIRE SSL;
 GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'localhost' REQUIRE SSL;
 
@@ -29,6 +32,7 @@ GRANT SELECT ON mysql.user TO 'maxscale'@'127.0.0.1' REQUIRE SSL;
 GRANT SELECT ON mysql.db TO 'maxscale'@'127.0.0.1' REQUIRE SSL;
 GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'127.0.0.1' REQUIRE SSL;
 GRANT SHOW DATABASES ON *.* TO 'maxscale'@'127.0.0.1' REQUIRE SSL;
+GRANT CREATE ON *.* TO 'maxscale'@'127.0.0.1' REQUIRE SSL;
 GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'127.0.0.1' REQUIRE SSL;
 GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'127.0.0.1' REQUIRE SSL;
 

@@ -4,6 +4,7 @@ GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[item]['ansible_nodename'] 
 GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[item]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[item]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[item]['ansible_nodename'] }}' REQUIRE SSL;
+GRANT CREATE ON *.* TO 'maxscale'@'{{ hostvars[item]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[item]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[item]['ansible_nodename'] }}' REQUIRE SSL;
 
@@ -12,6 +13,7 @@ GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[item]['mainip'] }}' REQUIR
 GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[item]['mainip'] }}' REQUIRE SSL;
 GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[item]['mainip'] }}' REQUIRE SSL;
 GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[item]['mainip'] }}' REQUIRE SSL;
+GRANT CREATE ON *.* TO 'maxscale'@'{{ hostvars[item]['mainip'] }}' REQUIRE SSL;
 GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[item]['mainip'] }}' REQUIRE SSL;
 GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[item]['mainip'] }}' REQUIRE SSL;
 
