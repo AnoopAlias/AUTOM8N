@@ -1,6 +1,8 @@
 {% for host in groups['ndeploymaster'] %}
 allow {{ hostvars[host]['mainip'] }};
+allow {{ hostvars[host]['dbip'] }};
 {% endfor %}
 {% for host in groups['ndeployslaves'] %}
 allow {{ hostvars[host]['mainip'] }};
+allow {{ hostvars[host]['dbip'] }};
 {% endfor %}
