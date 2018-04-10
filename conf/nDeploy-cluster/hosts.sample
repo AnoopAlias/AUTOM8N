@@ -1,8 +1,8 @@
 [ndeployslaves]
-slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=x.x.x.x
+slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=x.x.x.x dbip=x.x.x.x
 
 [ndeploymaster]
-master.example.com ansible_port=22 ansible_connection=local server_id=1 webserver=nginx mainip=y.y.y.y
+master.example.com ansible_port=22 ansible_connection=local server_id=1 webserver=nginx mainip=y.y.y.y dbip=y.y.y.y
 
 [ndeploydbslave]
-slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=x.x.x.x
+slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=x.x.x.x dbip=x.x.x.x

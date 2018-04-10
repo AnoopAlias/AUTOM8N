@@ -2,7 +2,7 @@
 threads=1
 auth_read_timeout=5
 
-#master
+# cPanel master
 [server1]
 type=server
 address=127.0.0.1
@@ -16,10 +16,10 @@ ssl_key=/etc/mysql-ssl/client-key.pem
 persistpoolmax=100
 persistmaxtime=3600
 
-#slave
+# DBslave
 [server2]
 type=server
-address={{ hostvars[groups['ndeploydbslave'][0]]['mainip'] }}
+address={{ hostvars[groups['ndeploydbslave'][0]]['dbip'] }}
 port=13306
 protocol=MariaDBBackend
 ssl=required

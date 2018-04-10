@@ -2,10 +2,10 @@
 threads=1
 auth_read_timeout=5
 
-#dbslave
+#master
 [server1]
 type=server
-address=127.0.0.1
+address={{ hostvars[groups['ndeploymaster'][0]]['dbip'] }}
 port=13306
 protocol=MariaDBBackend
 ssl=required
@@ -16,10 +16,10 @@ ssl_key=/etc/mysql-ssl/client-key.pem
 persistpoolmax=100
 persistmaxtime=3600
 
-#master
+#dbslave
 [server2]
 type=server
-address={{ hostvars[groups['ndeploymaster'][0]]['mainip'] }}
+address=127.0.0.1
 port=13306
 protocol=MariaDBBackend
 ssl=required
@@ -34,7 +34,7 @@ persistmaxtime=3600
 type=monitor
 module=mariadbmon
 detect_replication_lag=1
-servers=server2,server1
+servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 monitor_interval=10000
@@ -42,7 +42,7 @@ monitor_interval=10000
 [XtendWeb]
 type=service
 router=readwritesplit
-servers=server2,server1
+servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 connection_timeout=60

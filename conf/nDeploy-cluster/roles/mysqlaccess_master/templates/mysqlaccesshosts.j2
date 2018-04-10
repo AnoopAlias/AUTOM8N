@@ -1,8 +1,8 @@
 {% for host in groups['ndeploymaster'] %}
 {{ host }}
-{{ hostvars[host]['mainip'] }}
+{{ hostvars[host]['dbip'] }}
 {% endfor %}
 {% for host in groups['ndeployslaves'] %}
 {{ host }}
-{{ hostvars[host]['mainip'] }}
+{{ hostvars[host]['dbip'] }}
 {% endfor %}
