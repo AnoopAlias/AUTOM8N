@@ -47,7 +47,7 @@ user=maxscale
 passwd={{ MAXSCALEPASS }}
 connection_timeout=60
 max_connections=500
-router_options=master_accept_reads=true
+master_accept_reads=true
 
 [MaxAdmin-Service]
 type=service
@@ -68,6 +68,6 @@ socket=/var/lib/maxscale/maxscale_mysql.sock
 
 [MaxAdmin-Listener]
 type=listener
-service=MaxAdmin Service
+service=MaxAdmin-Service
 protocol=maxscaled
 socket=default
