@@ -32,8 +32,7 @@ persistmaxtime=3600
 
 [MySQL-Monitor]
 type=monitor
-module=mariadbmon
-detect_replication_lag=1
+module=mmmon
 servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
@@ -48,6 +47,7 @@ passwd={{ MAXSCALEPASS }}
 connection_timeout=60
 max_connections=500
 master_accept_reads=true
+master_failure_mode=fail_on_write
 
 [MaxAdmin-Service]
 type=service
