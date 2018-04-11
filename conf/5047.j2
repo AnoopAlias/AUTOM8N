@@ -1,0 +1,165 @@
+# ClipBucket
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+location /videos
+{
+rewrite ^/videos/(.)/(.)/(.)/(.)/(.*) /videos.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2;
+rewrite ^/videos/([0-9]+) /videos.php?page=$1;
+rewrite ^/videos/?$ /videos.php?$query_string;
+}
+
+location /video
+{
+rewrite ^/video/(.)/(.) /watch_video.php?v=$1&$query_string; rewrite ^/video/([0-9]+)(.*) /watchvideo.php?v=$1&$query_string;
+}
+
+location /
+{
+rewrite ^/(.*)v([0-9]+) /watchvideo.php?v=$2&$query_string;
+rewrite ^/([a-zA-Z0-9-]+)/?$ /view_channel.php?uid=$1&seo_diret=yes;
+}
+
+location /channels
+{
+rewrite ^/channels/(.)/(.)/(.)/(.)/(.*) /channels.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2;
+rewrite ^/channels/([0-9]+) /channels.php?page=$1;
+rewrite ^/channels/?$ /channels.php;
+}
+
+location /members
+{
+rewrite ^/members/?$ /channels.php;
+}
+
+location /users
+{ rewrite ^/users/?$ /channels.php;
+}
+
+location /user
+{
+rewrite ^/user/(.*) /view_channel.php?user=$1;
+}
+
+location /channel
+{
+rewrite ^/channel/(.*) /view_channel.php?user=$1;
+}
+
+location /my_account
+{
+rewrite ^/my_account /myaccount.php;
+}
+
+location /page
+{
+rewrite ^/page/([0-9]+)/(.*) /view_page.php?pid=$1;
+}
+
+location /search
+{
+rewrite ^/search/result/?$ /search_result.php;
+}
+
+location /upload
+{
+rewrite ^/upload/?$ /upload.php;
+}
+
+location /contact
+{
+rewrite ^/contact/?$ /contact.php;
+}
+
+location /categories
+{
+rewrite ^/categories/?$ /categories.php;
+}
+
+location /group
+{
+rewrite ^/group/([a-zA-Z0-9].+) /view_group.php?url=$1&$query_string;
+}
+
+location /view_topic
+{
+rewrite ^/view_topic/([a-zA-Z0-9].+)tid([0-9]+) /view_topic.php?tid=$2&$query_string;
+}
+
+location /groups
+{
+rewrite ^/groups/(.)/(.)/(.)/(.)/(.*) /groups.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2; rewrite ^/groups/([0-9]+) /groups.php?page=$1;
+rewrite ^/groups/?$ /groups.php;
+}
+
+location /create_group
+{
+rewrite ^/create_group /create_group.php;
+}
+
+location /collections
+{
+rewrite ^/collections/(.)/(.)/(.)/(.)/(.*) /collections.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2;
+rewrite ^/collections/([0-9]+) /collections.php?page=$1;
+rewrite ^/collections/?$ /collections.php;
+}
+
+location /photos
+{
+rewrite ^/photos/(.)/(.)/(.)/(.)/(.*) /photos.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2;
+rewrite ^/photos/([0-9]+) /photos.php?page=$1;
+rewrite ^/photos/?$ /photos.php;
+}
+
+location /collection
+{
+rewrite ^/collection/(.)/(.)/(.*) /view_collection.php?cid=$1&type=$2&$query_string;
+}
+
+location /item
+{
+rewrite ^/item/(.)/(.)/(.)/(.) /view_item.php?item=$3&type=$1&collection=$2;
+}
+
+location /photo_upload
+{
+rewrite ^/photo_upload/(.*) /photo_upload.php?collection=$1;
+rewrite ^/photo_upload/?$ /photo_upload.php;
+}
+
+location = /sitemap.xml
+{
+rewrite ^(.*)$ /sitemap.php;
+}
+
+location /signup
+{
+rewrite ^/signup/?$ /signup.php;
+}
+
+location = /rss
+{
+rewrite ^(.*)$ /rss.php;
+}
+
+location /rss
+{
+rewrite ^/rss/([a-zA-Z0-9].+)$ /rss.php?mode=$1&$query_string;
+}
+
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ \.php$ {
+
+try_files $uri =404;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+
+}
+
+include /etc/nginx/conf.d/cpanel_services.conf;
