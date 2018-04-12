@@ -5,134 +5,134 @@ index index.php index.html index.htm;
 
 
 location /video/ {
-  rewrite ^/video/(.*)/(.*) /watch_video.php?v=$1&$query_string break;
-  rewrite ^/video/([0-9]+)_(.*) /watch_video.php?v=$1&$query_string break;
+  rewrite ^/video/(.*)/(.*) /watch_video.php?v=$1&$query_string last;
+  rewrite ^/video/([0-9]+)_(.*) /watch_video.php?v=$1&$query_string last;
 }
 
 location /videos/ {
-  rewrite ^/videos/(.*)/(.*)/(.*)/(.*)/(.*) /videos.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 break;
-  rewrite ^/videos/([0-9]+) /videos.php?page=$1 break;
-  rewrite ^/videos/?$ /videos.php?$query_string break;
+  rewrite ^/videos/(.*)/(.*)/(.*)/(.*)/(.*) /videos.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 last;
+  rewrite ^/videos/([0-9]+) /videos.php?page=$1 last;
+  rewrite ^/videos/?$ /videos.php?$query_string last;
 }
 
 location /channels/ {
-  rewrite ^/channels/(.*)/(.*)/(.*)/(.*)/(.*) /channels.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 break;
-  rewrite ^/channels/([0-9]+) /channels.php?page=$1 break;
-  rewrite ^/channels/?$ /channels.php break;
+  rewrite ^/channels/(.*)/(.*)/(.*)/(.*)/(.*) /channels.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 last;
+  rewrite ^/channels/([0-9]+) /channels.php?page=$1 last;
+  rewrite ^/channels/?$ /channels.php last;
 }
 
 location /members/ {
-  rewrite ^/members/?$ /channels.php break;
+  rewrite ^/members/?$ /channels.php last;
 }
 
 location /users/ {
-  rewrite ^/users/?$ /channels.php break;
+  rewrite ^/users/?$ /channels.php last;
 }
 
 location /user/ {
-  rewrite ^/user/(.*) /view_channel.php?user=$1 break;
+  rewrite ^/user/(.*) /view_channel.php?user=$1 last;
 }
 
 location /channel/ {
-  rewrite ^/channel/(.*) /view_channel.php?user=$1 break;
+  rewrite ^/channel/(.*) /view_channel.php?user=$1 last;
 }
 
 location /my_account {
-  rewrite ^/my_account /myaccount.php break;
+  rewrite ^/my_account /myaccount.php last;
 }
 
 location /page/ {
-  rewrite ^/page/([0-9]+)/(.*) /view_page.php?pid=$1 break;
+  rewrite ^/page/([0-9]+)/(.*) /view_page.php?pid=$1 last;
 }
 
 location /search/ {
-  rewrite ^/search/result/?$ /search_result.php break;
+  rewrite ^/search/result/?$ /search_result.php last;
 }
 
 location /upload/ {
-  rewrite ^/upload/?$ /upload.php break;
+  rewrite ^/upload/?$ /upload.php last;
 }
 
 location /contact/ {
-  rewrite ^/contact/?$ /contact.php break;
+  rewrite ^/contact/?$ /contact.php last;
 }
 
 location /categories/ {
-  rewrite ^/categories/?$ /categories.php break;
+  rewrite ^/categories/?$ /categories.php last;
 }
 
 location /group/ {
-  rewrite ^/group/([a-zA-Z0-9].+) /view_group.php?url=$1&$query_string break;
+  rewrite ^/group/([a-zA-Z0-9].+) /view_group.php?url=$1&$query_string last;
 }
 
 location /view_topic/ {
-  rewrite ^/view_topic/([a-zA-Z0-9].+)_tid_([0-9]+) /view_topic.php?tid=$2&$query_string break;
+  rewrite ^/view_topic/([a-zA-Z0-9].+)_tid_([0-9]+) /view_topic.php?tid=$2&$query_string last;
 }
 
 location /groups/ {
-  rewrite ^/groups/(.*)/(.*)/(.*)/(.*)/(.*) /groups.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 break;
-  rewrite ^/groups/([0-9]+) /groups.php?page=$1 break;
-  rewrite ^/groups/?$ /groups.php break;
+  rewrite ^/groups/(.*)/(.*)/(.*)/(.*)/(.*) /groups.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 last;
+  rewrite ^/groups/([0-9]+) /groups.php?page=$1 last;
+  rewrite ^/groups/?$ /groups.php last;
 }
 
 location /create_group {
-  rewrite ^/create_group /create_group.php break;
+  rewrite ^/create_group /create_group.php last;
 }
 
 location /collections/ {
-  rewrite ^/collections/(.*)/(.*)/(.*)/(.*)/(.*) /collections.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 break;
-  rewrite ^/collections/([0-9]+) /collections.php?page=$1 break;
-  rewrite ^/collections/?$ /collections.php break;
+  rewrite ^/collections/(.*)/(.*)/(.*)/(.*)/(.*) /collections.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 last;
+  rewrite ^/collections/([0-9]+) /collections.php?page=$1 last;
+  rewrite ^/collections/?$ /collections.php last;
 }
 
 location /photos/ {
-  rewrite ^/photos/(.*)/(.*)/(.*)/(.*)/(.*) /photos.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 break;
-  rewrite ^/photos/([0-9]+) /photos.php?page=$1 break;
-  rewrite ^/photos/?$ /photos.php break;
+  rewrite ^/photos/(.*)/(.*)/(.*)/(.*)/(.*) /photos.php?cat=$1&sort=$3&time=$4&page=$5&seo_cat_name=$2 last;
+  rewrite ^/photos/([0-9]+) /photos.php?page=$1 last;
+  rewrite ^/photos/?$ /photos.php last;
 }
 
 location /collection/ {
-  rewrite ^/collection/(.*)/(.*)/(.*) /view_collection.php?cid=$1&type=$2&page=$3 break;
+  rewrite ^/collection/(.*)/(.*)/(.*) /view_collection.php?cid=$1&type=$2&page=$3 last;
 }
 
 location /item/ {
-  rewrite ^/item/(.*)/(.*)/(.*)/(.*) /view_item.php?item=$3&type=$1&collection=$2 break;
+  rewrite ^/item/(.*)/(.*)/(.*)/(.*) /view_item.php?item=$3&type=$1&collection=$2 last;
 }
 
 location /photo_upload/ {
-  rewrite ^/photo_upload/(.*) /photo_upload.php?collection=$1 break;
-  rewrite ^/photo_upload/?$ /photo_upload.php break;
+  rewrite ^/photo_upload/(.*) /photo_upload.php?collection=$1 last;
+  rewrite ^/photo_upload/?$ /photo_upload.php last;
 }
 
 location = /sitemap.xml {
-  rewrite ^(.*)$ /sitemap.php break;
+  rewrite ^(.*)$ /sitemap.php last;
 }
 
 location /signup/ {
-  rewrite ^/signup/?$ /signup.php break;
+  rewrite ^/signup/?$ /signup.php last;
 }
 
 location /manage_audios/ {
-  rewrite ^/manage_audios/?$ /module.php?s=audios&p=manage break;
-  rewrite ^/manage_audios/delete/(.*) /module.php?s=audios&p=manage&del_beat=$1 break;
-  rewrite ^/manage_audios/edit/audio/(.*) /module.php?s=audios&p=edit&audio=$1 break;
+  rewrite ^/manage_audios/?$ /module.php?s=audios&p=manage last;
+  rewrite ^/manage_audios/delete/(.*) /module.php?s=audios&p=manage&del_beat=$1 last;
+  rewrite ^/manage_audios/edit/audio/(.*) /module.php?s=audios&p=edit&audio=$1 last;
 }
 
 location /audios/ {
-  rewrite ^/audios/?$ /module.php?s=audios&p=list break;
+  rewrite ^/audios/?$ /module.php?s=audios&p=list last;
 }
 
 location /rss/ {
-  rewrite ^/rss/([a-zA-Z0-9].+)$ /rss.php?mode=$1&$query_string break;
+  rewrite ^/rss/([a-zA-Z0-9].+)$ /rss.php?mode=$1&$query_string last;
 }
 
 location /list/ {
-  rewrite ^/list/([0-9]+)/(.*)?$ /view_playlist.php?list_id=$1 break;
+  rewrite ^/list/([0-9]+)/(.*)?$ /view_playlist.php?list_id=$1 last;
 }
 
 location / {
-  rewrite ^/(.*)\_v([0-9]+) /watch_video.php?v=$2&$query_string break;
-  rewrite ^/([a-zA-Z0-9-]+)/?$ /view_channel.php?uid=$1&seo_diret=yes break;
+  rewrite ^/(.*)\_v([0-9]+) /watch_video.php?v=$2&$query_string last;
+  rewrite ^/([a-zA-Z0-9-]+)/?$ /view_channel.php?uid=$1&seo_diret=yes last;
   try_files $uri $uri/ /index.php;
 }
 
