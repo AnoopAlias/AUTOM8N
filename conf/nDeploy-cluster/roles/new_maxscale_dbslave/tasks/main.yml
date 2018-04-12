@@ -39,6 +39,19 @@
   when:
     - maxscale.stat.exists == false
 
+- name: Setup Maxscale switchover script
+  templete:
+    src: failover.sh.j2
+    dest: /var/lib/maxscale/failover.sh
+  when:
+    - maxscale.stat.exists == false
+
+- file:
+    path: /var/lib/maxscale/failover.sh
+    owner: maxscale
+    group: maxscale
+    mode: 0750
+
 - name: Start MaxScale
   service:
     name: maxscale

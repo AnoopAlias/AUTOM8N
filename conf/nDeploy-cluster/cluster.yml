@@ -83,6 +83,7 @@
   hosts: ndeploydbslave
   vars:
     MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
+    MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
   roles:
     - new_maxscale_dbslave
 

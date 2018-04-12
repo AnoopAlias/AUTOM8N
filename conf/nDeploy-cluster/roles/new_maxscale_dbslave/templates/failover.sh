@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ $# -eq 1 ]
+  then
+    if [ $1 == master_down ]
+      then
+        mysql -uroot -p{{ MYSQLPASS }} -e "SET GLOBAL READ_ONLY=0;"
+    elif [ $1 == master_up ]
+      then
+        mysql -uroot -p{{ MYSQLPASS }} -e "SET GLOBAL READ_ONLY=1;"
+    elif [ $1 == new_master ]
+      then
+        mysql -uroot -p{{ MYSQLPASS }} -e "SET GLOBAL READ_ONLY=1;"
+    fi
+fi
