@@ -117,8 +117,8 @@ print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')  # marker3
 
 print('<div class="logo">')
-print('<a href="xtendweb.live.py"><img border="0" src="',)
-print(branding_print_logo_name(),)
+print('<a href="xtendweb.live.py"><img border="0" src="')
+print(branding_print_logo_name())
 print('" width="48" height="48"></a>')
 print('<h4>')
 print(branding_print_banner())
@@ -164,8 +164,8 @@ print('</form>')
 print('</div>')  # marker5
 print('</div>')  # marker4
 
-print('<div class="panel-footer"><small>',)
-print(branding_print_footer(),)
+print('<div class="panel-footer"><small>')
+print(branding_print_footer())
 print('</small></div>')
 
 print('</div>')  # marker3
