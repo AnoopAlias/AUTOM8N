@@ -33,6 +33,17 @@ def close_cpanel_liveapisock():
     sock.close()
 
 
+def branding_print_logo_name():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
+    else:
+        brand_logo = "xtendweb.png"
+    return brand_logo
+
+
 def branding_print_banner():
     "Branding support"
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
@@ -104,13 +115,16 @@ print('<body>')
 print('<div id="main-container" class="container text-center">')  # marker1
 print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')  # marker3
+
 print('<div class="logo">')
-print('<a href="xtendweb.live.py"><img border="0" src="xtendweb.png" width="48" height="48"></a>')
-# print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
+print('<a href="xtendweb.live.py"><img border="0" src="',)
+print(branding_print_logo_name(),)
+print('" width="48" height="48"></a>')
 print('<h4>')
 print(branding_print_banner())
 print('</h4>')
 print('</div>')
+
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
 print('<li class="active">Select domain</li>')
@@ -149,9 +163,11 @@ print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
 print('</form>')
 print('</div>')  # marker5
 print('</div>')  # marker4
-print('<div class="panel-footer"><small>')
-print(branding_print_footer())
+
+print('<div class="panel-footer"><small>',)
+print(branding_print_footer(),)
 print('</small></div>')
+
 print('</div>')  # marker3
 print('</div>')  # marker2
 print('</div>')  # # marker1
