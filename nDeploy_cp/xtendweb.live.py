@@ -33,6 +33,28 @@ def close_cpanel_liveapisock():
     sock.close()
 
 
+def branding_print_banner():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_name = yaml_parsed_brand.get("brand", "XtendWeb")
+    else:
+        brand_name = "XtendWeb"
+    return brand_name
+
+
+def branding_print_footer():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">A U T O M 8 N</a>')
+    else:
+        brand_footer = '<a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">A U T O M 8 N</a>'
+    return brand_footer
+
+
 close_cpanel_liveapisock()
 cpaneluser = os.environ["USER"]
 cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
@@ -84,7 +106,9 @@ print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')  # marker3
 print('<div class="logo">')
 print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
-print('<h4>XtendWeb</h4>')
+print('<h4>')
+print(branding_print_banner())
+print('</h4>')
 print('</div>')
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
@@ -124,7 +148,9 @@ print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
 print('</form>')
 print('</div>')  # marker5
 print('</div>')  # marker4
-print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+print('<div class="panel-footer"><small>')
+print(branding_print_footer())
+print('</small></div>')
 print('</div>')  # marker3
 print('</div>')  # marker2
 print('</div>')  # # marker1
