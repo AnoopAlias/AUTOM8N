@@ -348,7 +348,9 @@ return 301 https://$host$request_uri;
 }
 {% else %}
 {% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+location / {
 return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+}
 {% else %}
 {% if PAGESPEED == 'enabled' %}
 {% if PAGESPEED_FILTER == 'CoreFilters' %}
@@ -488,7 +490,9 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subconf;
 # End Include any applications in subdirectory
 
 {% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+location / {
 return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+}
 {% else %}
 {% if PAGESPEED == 'enabled' %}
 {% if PAGESPEED_FILTER == 'CoreFilters' %}
