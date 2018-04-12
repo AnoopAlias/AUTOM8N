@@ -70,7 +70,11 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-print('<title>XtendWeb</title>')
+
+print('<title>')
+print(branding_print_banner())
+print('</title>')
+
 print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
 print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
 print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
@@ -81,10 +85,16 @@ print('<body>')
 print('<div id="main-container" class="container text-center">')  # marker1
 print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')  # marker3
+
 print('<div class="logo">')
-print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
-print('<h4>XtendWeb</h4>')
+print('<a href="xtendweb.live.py"><img border="0" src="')
+print(branding_print_logo_name())
+print('" width="48" height="48"></a>')
+print('<h4>')
+print(branding_print_banner())
+print('</h4>')
 print('</div>')
+
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Application Settings</li>')
@@ -111,7 +121,11 @@ if form.getvalue('domain'):
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
-print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+
+print('<div class="panel-footer"><small>')
+print(branding_print_footer())
+print('</small></div>')
+
 print('</div>')
 print('</div>')
 print('</div>')
