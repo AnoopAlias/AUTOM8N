@@ -3,6 +3,8 @@
 import json
 import os
 import yaml
+import fileinput
+import sys
 
 
 __author__ = "Anoop P Alias"
@@ -32,9 +34,11 @@ if __name__ == "__main__":
         with open(installation_path+"/nDeploy_cp/install.json", 'w') as cp_plugin_config_new:
             json.dump(cp_plugin_conf_data, cp_plugin_config_new)
         # Set brand name in WHM
-        with open(installation_path+"/nDeploy_whm/xtendweb.conf", 'r') as whm_plugin_config:
-            original_whm_conf = whm_plugin_config.read()
-        original_whm_conf = original_whm_conf.replace('name=XtendWeb', 'name='+brand_name)
-        original_whm_conf = original_whm_conf.replace('icon=xtendweb.png', 'icon='+brand_logo)
-        with open(installation_path+"/nDeploy_whm/xtendweb.conf", 'w') as whm_plugin_config:
-            whm_plugin_config.write(original_whm_conf)
+        for line in fileinput.input(installation_path+"/nDeploy_whm/xtendweb.conf", inplace=True):
+            if line.strip().startswith('name='):
+                line = 'name='+brand_name+'\n'
+            elif line.strip().startswith('displayname='):
+                line = 'displayname='+brand_name+'\n'
+            elif line.strip().startswith('icon='):
+                line = 'icon='+brand_logo+'\n'
+            sys.stdout.write(line)
