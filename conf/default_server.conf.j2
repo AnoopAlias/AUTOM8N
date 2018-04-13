@@ -88,8 +88,8 @@ server {
         ssl_prefer_server_ciphers on;
         ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
         ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-        ssl_session_cache shared:SSL:10m;
-        ssl_session_timeout  5m;
+        ssl_session_cache shared:SSL:50m;
+        ssl_session_timeout  10m;
         server_name _;
         access_log off;
         location / {
