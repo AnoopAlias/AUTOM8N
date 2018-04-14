@@ -837,7 +837,7 @@ if __name__ == "__main__":
         # Unless someone has set a skip reload flag
         if not os.path.isfile(installation_path+'/conf/skip_nginx_reload'):
             with open(os.devnull, 'w') as FNULL:
-                subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+                subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
         if clusterenabled:
             for server in cluster_serverlist:
                 target_dir = "/etc/nginx/"+server+"/"
