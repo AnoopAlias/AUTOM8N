@@ -729,7 +729,7 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
         with codecs.open(domain_nginx_test, "w", 'utf-8') as confout:
             confout.write(generated_nginx_config)
         # test the temp confg and if all ok activate the user_configs
-        nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + domain_nginx_test + " -t", shell=True)
+        nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + domain_nginx_test + " -t >> "+domain_home+"/logs/nginx.log", shell=True)
         if nginx_conf_test == 0:
             # ok all seems good we copy the user_configs to /etc/nginx/sites-enabled
             if os.path.isfile(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test"):
