@@ -104,7 +104,7 @@ print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">V
 print('</ol>')
 nginx_log = cpanelhome+"/logs/nginx.log"
 if os.path.isfile(nginx_log):
-    tail_cmd = '/usr/bin/tail -10 '+nginx_log
+    tail_cmd = '/usr/bin/tail -20 '+nginx_log
     run_tail_cmd = subprocess.Popen(tail_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
     print('<div class="panel panel-default">')
     print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
