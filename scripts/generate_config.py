@@ -729,7 +729,7 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
         with codecs.open(domain_nginx_test, "w", 'utf-8') as confout:
             confout.write(generated_nginx_config)
         # test the temp confg and if all ok activate the user_configs
-        with open(domain_home+'/logs/nginx.log', 'w') as nginx_test_log:
+        with open(domain_home+'/logs/nginx.log', 'a') as nginx_test_log:
             nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + domain_nginx_test + " -t ",stdout=nginx_test_log, stderr=subprocess.STDOUT, shell=True)
         cpuser_uid = pwd.getpwnam(kwargs.get('configuser')).pw_uid
         cpuser_gid = grp.getgrnam(kwargs.get('configuser')).gr_gid
