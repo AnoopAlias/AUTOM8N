@@ -730,10 +730,10 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
             confout.write(generated_nginx_config)
         # test the temp confg and if all ok activate the user_configs
         with open(domain_home+'/logs/nginx.log', 'w') as nginx_test_log:
-            nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + domain_nginx_test + " -t ",stdout=nginx_test_log, stderr=subprocess.STDOUT)
-            cpuser_uid = pwd.getpwnam(kwargs.get('configuser')).pw_uid
-            cpuser_gid = grp.getgrnam(kwargs.get('configuser')).gr_gid
-            os.chown(domain_data_file, cpuser_uid, cpuser_gid)
+            nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + domain_nginx_test + " -t ",stdout=nginx_test_log, stderr=subprocess.STDOUT, shell=True)
+        cpuser_uid = pwd.getpwnam(kwargs.get('configuser')).pw_uid
+        cpuser_gid = grp.getgrnam(kwargs.get('configuser')).gr_gid
+        os.chown(domain_home+'/logs/nginx.log', cpuser_uid, cpuser_gid)
         if nginx_conf_test == 0:
             # ok all seems good we copy the user_configs to /etc/nginx/sites-enabled
             if os.path.isfile(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test"):
