@@ -297,6 +297,9 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
                 print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print('</form>')
+                print('<form class="form-group" action="view_nginx_log.live.py">')
+                print('<input class="btn btn-xs btn-primary" type="submit" value="NGINX LOG">')
+                print('</form>')
                 print('</div>')  # markerx1
                 print('</li>')
                 print('</ul>')
