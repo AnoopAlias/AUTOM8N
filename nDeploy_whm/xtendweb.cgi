@@ -279,32 +279,7 @@ if not osrelease == 'CloudLinux':
     if os.path.isfile('/usr/bin/systemctl'):
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
-            # The API call and ensuring slices are present
-            listresellers = subprocess.check_output('/usr/local/cpanel/bin/whmapi1 listresellers --output=json', shell=True)
-            myresellers = json.loads(listresellers)
-            resellerdata = myresellers.get('data')
-            resellerlist = resellerdata.get('reseller')
-            resellerlist.append('root')
-            # Ensure the reseller slice is present in the system
-            for owner in resellerlist:
-                ownerslice = "/etc/systemd/system/"+owner+".slice"
-                if not os.path.isfile(ownerslice):
-                    # create the slice from a template
-                    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
-                    templateEnv = jinja2.Environment(loader=templateLoader)
-                    if os.path.isfile(installation_path+"/conf/simpler_resources_local.j2"):
-                        TEMPLATE_FILE = "simpler_resources_local.j2"
-                    else:
-                        TEMPLATE_FILE = "simpler_resources.j2"
-                    template = templateEnv.get_template(TEMPLATE_FILE)
-                    templateVars = {"OWNER": owner
-                                    }
-                    generated_config = template.render(templateVars)
-                    with codecs.open(ownerslice, 'w', 'utf-8') as confout:
-                        confout.write(generated_config)
-                if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
-                    with open(os.devnull, 'w') as FNULL:
-                        subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src='+ownerslice+' dest='+ownerslice+'"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
+            userlist = os.listdir("/var/cpanel/users")
             print('<div class="panel panel-default">')  # default
             print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Resource Limit</a></h3></div>')  # heading
             print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
@@ -312,12 +287,13 @@ if not osrelease == 'CloudLinux':
             print('<div class="row">')  # markerr1
             print('<div class="col-sm-6">')  # markerc1
             print('<div class="panel panel-default">')  # markerp1
-            print('<div class="panel-heading"><h3 class="panel-title">Reseller</h3></div>')
+            print('<div class="panel-heading"><h3 class="panel-title">User</h3></div>')
             print('<div class="panel-body">')  # markerb1
             print('<form class="form-inline" action="resource_limit.cgi" method="post">')
             print('<select name="unit">')
-            for reseller in sorted(resellerlist):
-                print(('<option value="'+reseller+'">'+reseller+'</option>'))
+            for cpuser in sorted(userlist):
+                if cpuser is not 'nobody' and cpuser is not 'system':
+                    print(('<option value="'+cpuser+'">'+cpuser+'</option>'))
             print('</select>')
             print(('<input style="display:none" name="mode" value="user">'))
             print(('<br>'))

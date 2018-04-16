@@ -157,7 +157,7 @@ def php_backend_add(user_name, phpmaxchildren, domain_home):
         return
 
 
-def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, cluster_serverlist):
+def hhvm_backend_add(user_name, domain_home, clusterenabled, cluster_serverlist):
     """Function to setup hhvm for user """
     hhvm_server_file = installation_path + "/hhvm.d/" + user_name + ".ini"
     HHVM_MASTER_TEMPLATE = 'hhvm_secure.ini.j2'
@@ -172,23 +172,6 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, cluster
         generated_config = template.render(templateVars)
         with codecs.open(hhvm_server_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
-        # generate HHVM resource limit settings
-        if not os.path.isdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d'):
-            os.mkdir('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d', 0o755)
-        if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
-            subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m file -a "path=/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d state=directory"', shell=True)
-        TEMPLATE_FILE = "limits.conf.j2"
-        template = templateEnv.get_template(TEMPLATE_FILE)
-        templateVars = {"OWNER": owner_name
-                        }
-        generated_config = template.render(templateVars)
-        with codecs.open('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 'w', 'utf-8') as confout:
-            confout.write(generated_config)
-        os.chmod('/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf', 0o644)
-        # We avoid ansible calls that are not critical when bulking
-        if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
-            if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
-                subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src=/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf dest=/etc/systemd/system/ndeploy_hhvm@'+user_name+'.service.d/limits.conf"', shell=True)
         subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         # Sync cluster config and call systemd remotely
@@ -198,12 +181,13 @@ def hhvm_backend_add(user_name, owner_name, domain_home, clusterenabled, cluster
     else:
         subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
+        # Sync cluster config and call systemd remotely
         if clusterenabled:
             subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=restarted enabled=yes"', shell=True)
     return
 
 
-def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, clusterenabled, cluster_serverlist):
+def php_secure_backend_add(user_name, phpmaxchildren, domain_home, clusterenabled, cluster_serverlist):
     """Function to setup php-fpm for user using systemd socket activation"""
     phpfpm_conf_file = installation_path + "/secure-php-fpm.d/" + user_name + ".conf"
     if not os.path.isfile(phpfpm_conf_file):
@@ -230,27 +214,6 @@ def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, c
             subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
             if clusterenabled:
                 subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.socket state=started enabled=yes"', shell=True)
-            # Lets do stuff for resource limiting
-            if not os.path.isdir('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d'):
-                os.mkdir('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d', 0o755)
-            # We avoid ansible calls that are not critical when bulking
-            if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
-                if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
-                    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m file -a "path=/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d state=directory"', shell=True)
-            templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
-            templateEnv = jinja2.Environment(loader=templateLoader)
-            TEMPLATE_FILE = "limits.conf.j2"
-            template = templateEnv.get_template(TEMPLATE_FILE)
-            templateVars = {"OWNER": owner_name
-                            }
-            generated_config = template.render(templateVars)
-            with codecs.open('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf', 'w', 'utf-8') as confout:
-                confout.write(generated_config)
-            os.chmod('/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf', 0o644)
-            # We avoid ansible calls that are not critical when bulking
-            if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
-                if os.path.isfile(installation_path+'/conf/ndeploy_cluster.yaml'):
-                    subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src=/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf dest=/etc/systemd/system/'+backend_name+'@'+user_name+'.service.d/limits.conf"', shell=True)
             # Stopping the service as a new request to socket will activate it again
             if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
                 subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
@@ -259,7 +222,7 @@ def php_secure_backend_add(user_name, phpmaxchildren, owner_name, domain_home, c
     return
 
 
-def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlist, **kwargs):
+def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kwargs):
     """Function that generates nginx config """
     # Initiate Jinja2 templateEnv
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
@@ -553,13 +516,13 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
         fastcgi_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
         if not os.path.isfile(fastcgi_socket):
             if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, cluster_serverlist)
+                php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home, clusterenabled, cluster_serverlist)
             else:
                 php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
     elif backend_category == 'HHVM':
         fastcgi_socket = domain_home+"/hhvm.sock"
         if not os.path.isfile(fastcgi_socket):
-            hhvm_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, cluster_serverlist)
+            hhvm_backend_add(kwargs.get('configuser'), domain_home, clusterenabled, cluster_serverlist)
     # We generate the app config from template next
     apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
                        "CPANELIP": cpanel_ipv4,
@@ -683,13 +646,13 @@ def nginx_confgen(is_suspended, owner, myplan, clusterenabled, cluster_serverlis
                 fastcgi_socket = subdir_backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
                 if not os.path.isfile(fastcgi_socket):
                     if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                        php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, owner, domain_home, clusterenabled, cluster_serverlist)
+                        php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home, clusterenabled, cluster_serverlist)
                     else:
                         php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
             elif subdir_backend_category == 'HHVM':
                 fastcgi_socket = domain_home+"/hhvm.sock"
                 if not os.path.isfile(fastcgi_socket):
-                    hhvm_backend_add(kwargs.get('configuser'), owner, domain_home, clusterenabled, cluster_serverlist)
+                    hhvm_backend_add(kwargs.get('configuser'), domain_home, clusterenabled, cluster_serverlist)
             # We generate the app config from template next
             subdirApptemplateVars = {"NEWDOCUMENTROOT": document_root+'/'+subdir,
                                      "SUBDIR": subdir,
@@ -784,26 +747,7 @@ if __name__ == "__main__":
                     is_suspended = True
                 else:
                     is_suspended = False
-                myowner = json_parsed_cpusersfile.get('OWNER')
                 myplan = json_parsed_cpusersfile.get('PLAN', 'default')
-                if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-                    ownerslice = "/etc/systemd/system/"+myowner+".slice"
-                    if not os.path.isfile(ownerslice):
-                        # create the slice from a template
-                        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
-                        templateEnv = jinja2.Environment(loader=templateLoader)
-                        if os.path.isfile(installation_path+"/conf/simpler_resources_local.j2"):
-                            TEMPLATE_FILE = "simpler_resources_local.j2"
-                        else:
-                            TEMPLATE_FILE = "simpler_resources.j2"
-                        template = templateEnv.get_template(TEMPLATE_FILE)
-                        templateVars = {"OWNER": myowner
-                                        }
-                        generated_config = template.render(templateVars)
-                        with codecs.open(ownerslice, 'w', 'utf-8') as confout:
-                            confout.write(generated_config)
-                    if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
-                        subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m copy -a "src='+ownerslice+' dest='+ownerslice+'"', shell=True)
             else:
                 # If cpanel users file is not present silently exit
                 sys.exit(0)
@@ -821,18 +765,18 @@ if __name__ == "__main__":
             clusterenabled = False
             cluster_serverlist = []
         # Begin config generation .Do it first for the main domain
-        nginx_confgen(is_suspended, myowner, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
+        nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
         # iterate over the addon-domain ,passing the subdomain as the configdomain
         for the_addon_domain in addon_domains_dict.keys():
-            nginx_confgen(is_suspended, myowner, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
+            nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
         # iterate over sub-domains and generate config if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
             if the_sub_domain not in addon_domains_dict.values():
                 if the_sub_domain.startswith("*"):
                     subdom_config_dom = "_wildcard_."+the_sub_domain.replace('*.', '')
-                    nginx_confgen(is_suspended, myowner, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
+                    nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)
                 else:
-                    nginx_confgen(is_suspended, myowner, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
+                    nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
         # Ok we are done generating .Lets reload nginx
         # Unless someone has set a skip reload flag
         if not os.path.isfile(installation_path+'/conf/skip_nginx_reload'):
