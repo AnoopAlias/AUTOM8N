@@ -4,8 +4,6 @@
 import os
 import cgitb
 import subprocess
-import codecs
-import jinja2
 import yaml
 import psutil
 import platform

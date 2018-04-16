@@ -16,6 +16,7 @@ __email__ = "anoopalias01@gmail.com"
 
 xtendweb_installation_path = "/opt/nDeploy"  # Absolute Installation Path
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+backend_config_file = installation_path+"/conf/backends.yaml"
 
 
 def branding_print_logo_name():
@@ -119,31 +120,36 @@ if form.getvalue('mode') and form.getvalue('unit'):
         print('</div>')  # marker6
         print('</div>')
     elif form.getvalue('mode') == 'user':
-        myservice = form.getvalue('unit')+".slice"
+        with open(backend_config_file, 'r') as backend_data_yaml:
+            backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+        php_backends_dict = backend_data_yaml_parsed["PHP"]
         print('<div class="panel panel-default">')
-        print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:'+myservice+'</h3></div>'))
+        print(('<div class="panel-heading"><h3 class="panel-title">Current Resource usage:'+form.getvalue('unit')+'</h3></div>'))
         print('<div class="panel-body">')  # marker6
         print('<ul class="list-group">')
         print(('<div class="alert alert-info alert-top">'))
-        mymem = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True).split('=')[1]
-        mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
-        myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
-        if int(myio) == 18446744073709551615:
-            print('BlockIOWeight=nolimit')
-        else:
-            print('BlockIOWeight='+myio)
-        print('<br>')
-        if int(mycpu) == 18446744073709551615:
-            print('CPUShares=nolimit')
-        else:
-            print('CPUShares='+mycpu)
-        print('<br>')
-        if int(mymem) == 18446744073709551615:
-            print('MemoryLimit=nolimit')
-        else:
-            mymem_inmb = float(mymem) / (1024.0 * 1024.0)
-            print('MemoryLimit='+str(mymem_inmb)+'Mb')
-        print('<br>')
+        for backend_name in list(php_backends_dict.keys()):
+            myservice = backend_name+'@'+form.getvalue('unit')+".service"
+            mymem = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True).split('=')[1]
+            mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
+            myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
+            print(myservice)
+            if int(myio) == 18446744073709551615:
+                print('BlockIOWeight=nolimit')
+            else:
+                print('BlockIOWeight='+myio)
+            print('<br>')
+            if int(mycpu) == 18446744073709551615:
+                print('CPUShares=nolimit')
+            else:
+                print('CPUShares='+mycpu)
+            print('<br>')
+            if int(mymem) == 18446744073709551615:
+                print('MemoryLimit=nolimit')
+            else:
+                mymem_inmb = float(mymem) / (1024.0 * 1024.0)
+                print('MemoryLimit='+str(mymem_inmb)+'Mb')
+            print('<br>')
         print(('</div>'))
         print('</ul>')
         print('</div>')  # marker6
