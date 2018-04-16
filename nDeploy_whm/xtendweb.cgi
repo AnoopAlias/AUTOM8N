@@ -292,7 +292,7 @@ if not osrelease == 'CloudLinux':
             print('<form class="form-inline" action="resource_limit.cgi" method="post">')
             print('<select name="unit">')
             for cpuser in sorted(userlist):
-                if cpuser != 'nobody' or cpuser != 'system':
+                if cpuser != 'nobody' and cpuser != 'system':
                     print(('<option value="'+cpuser+'">'+cpuser+'</option>'))
             print('</select>')
             print(('<input style="display:none" name="mode" value="user">'))
