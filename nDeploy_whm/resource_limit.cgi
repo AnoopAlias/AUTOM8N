@@ -191,7 +191,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('<div class="panel-heading"><h3 class="panel-title">CPU</h3></div>')
     print('<div class="panel-body">')  # markerc3
     print('<select name="cpu">')
-    for percentage in '100', '75', '50':
+    for percentage in '100', '75', '50', '25':
         print(('<option value="'+percentage+'">'+percentage+'%</option>'))
     print('</select>')
     print('</div>')  # markerc3
@@ -202,7 +202,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('<div class="panel-heading"><h3 class="panel-title">MEMORY</h3></div>')
     print('<div class="panel-body">')  # markerc3
     print('<select name="memory">')
-    for percentage in '100', '75', '50':
+    for percentage in '100', '75', '50', '25':
         print(('<option value="'+percentage+'">'+percentage+'%</option>'))
     print('</select>')
     print('</div>')  # markerc3
@@ -213,7 +213,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('<div class="panel-heading"><h3 class="panel-title">BLOCKIO</h3></div>')
     print('<div class="panel-body">')  # markerc3
     print('<select name="blockio">')
-    for percentage in '100', '75', '50':
+    for percentage in '100', '75', '50', '25':
         print(('<option value="'+percentage+'">'+percentage+'%</option>'))
     print('</select>')
     print('</div>')  # markerc3
