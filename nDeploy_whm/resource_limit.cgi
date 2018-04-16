@@ -134,6 +134,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
             mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
             myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
             print(myservice)
+            print('<br>')
             if int(myio) == 18446744073709551615:
                 print('BlockIOWeight=nolimit')
             else:
@@ -149,6 +150,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
             else:
                 mymem_inmb = float(mymem) / (1024.0 * 1024.0)
                 print('MemoryLimit='+str(mymem_inmb)+'Mb')
+            print('<br>')
             print('<br>')
         print(('</div>'))
         print('</ul>')
