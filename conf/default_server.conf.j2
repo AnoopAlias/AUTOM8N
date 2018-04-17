@@ -49,6 +49,7 @@ server {
         listen {{ MYIP }}:80 default_server backlog=16384 reuseport deferred;
         server_name _;
         access_log off;
+        include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
            include /etc/nginx/conf.d/dos_mitigate.conf;
            limit_req   zone=one  burst=3 nodelay;
@@ -92,6 +93,7 @@ server {
         ssl_session_timeout  10m;
         server_name _;
         access_log off;
+        include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
            include /etc/nginx/conf.d/dos_mitigate.conf;
            limit_req   zone=one  burst=3 nodelay;
