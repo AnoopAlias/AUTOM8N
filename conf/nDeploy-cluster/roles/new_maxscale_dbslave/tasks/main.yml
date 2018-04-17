@@ -40,7 +40,7 @@
     - maxscale.stat.exists == false
 
 - name: Setup Maxscale switchover script
-  templete:
+  template:
     src: failover.sh.j2
     dest: /var/lib/maxscale/failover.sh
   when:
