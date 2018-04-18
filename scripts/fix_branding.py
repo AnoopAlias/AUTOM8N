@@ -34,6 +34,7 @@ if __name__ == "__main__":
         with open(installation_path+"/nDeploy_cp/install.json", 'w') as cp_plugin_config_new:
             json.dump(cp_plugin_conf_data, cp_plugin_config_new)
         # Set brand name in WHM
+        os.symlink(installation_path+"/nDeploy_whm/"+brand_logo, "/usr/local/cpanel/whostmgr/docroot/addon_plugins/"+brand_logo)
         for line in fileinput.input(installation_path+"/nDeploy_whm/xtendweb.conf", inplace=True):
             if line.strip().startswith('name='):
                 line = 'name='+brand_name+'\n'
