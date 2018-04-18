@@ -37,6 +37,8 @@ servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 monitor_interval=10000
+script=/var/lib/maxscale/failover.sh $EVENT
+events=master_down,master_up
 
 [XtendWeb]
 type=service
