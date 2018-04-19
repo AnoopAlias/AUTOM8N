@@ -15,9 +15,9 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
+ssl_session_cache shared:SSL:50m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
+ssl_session_timeout  10m;
 ssl_stapling on;
 ssl_stapling_verify on;
 {% endif %}
@@ -95,9 +95,9 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
+ssl_session_cache shared:SSL:50m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
+ssl_session_timeout  10m;
 ssl_stapling on;
 ssl_stapling_verify on;
 {% endif %}
@@ -176,9 +176,9 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
+ssl_session_cache shared:SSL:50m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
+ssl_session_timeout  10m;
 ssl_stapling on;
 ssl_stapling_verify on;
 {% endif %}
@@ -370,9 +370,9 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
+ssl_session_cache shared:SSL:50m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
+ssl_session_timeout  10m;
 ssl_stapling on;
 ssl_stapling_verify on;
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
