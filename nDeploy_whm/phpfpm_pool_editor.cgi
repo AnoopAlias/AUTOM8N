@@ -77,7 +77,7 @@ print('<div class="row">')  # marker2
 print('<div class="col-md-8 col-md-offset-2">')  # marker3
 
 print('<div class="logo">')
-print('<a href="xtendweb.live.py"><img border="0" src="')
+print('<a href="xtendweb.cgi"><img border="0" src="')
 print(branding_print_logo_name())
 print('" width="48" height="48"></a>')
 print('<h4>')
