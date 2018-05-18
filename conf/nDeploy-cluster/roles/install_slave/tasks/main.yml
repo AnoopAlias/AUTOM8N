@@ -28,12 +28,6 @@
   with_items:
    - nDeploy-cluster-slave
 
-- name: Install MySQL-python
-  pip:
-    name: MySQL-python
-    state: present
-
-
 - name: ensure default UMASK is in place
   lineinfile: dest=/etc/login.defs state=absent regexp="^UMASK"
 

@@ -18,11 +18,6 @@
    - haproxy
    - geodns-nDeploy
 
-- name: Install MySQL-python
-  pip:
-    name: MySQL-python
-    state: present
-
 - name: Setup nginx config directories on master
   file: path=/etc/nginx/{{ item }} state=directory
   with_items:
