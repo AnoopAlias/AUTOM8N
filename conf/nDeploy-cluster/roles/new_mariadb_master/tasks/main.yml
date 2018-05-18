@@ -72,6 +72,10 @@
   ignore_errors: yes
   with_items: "{{ groups.ndeployslaves }}"
 
+- name: Install MySQL-python
+  pip:
+    name: MySQL-python
+    state: present
 
 - name: get the master log and pos
   mysql_replication: mode=getmaster

@@ -15,6 +15,14 @@
     name: MySQL*
     state: absent
 
+- name: Remove MySQL rpm
+  yum:
+    name: '{{ item }}'
+    state: absent
+  with_items:
+    - compat-MySQL51-shared
+    - compat-MySQL50-shared
+
 - name: Install MariaDB rpm
   yum:
     name: '{{ item }}'
@@ -66,6 +74,11 @@
     backup: yes
   when:
     - mysqlsetup.stat.exists == false
+
+- name: Install MySQL-python
+  pip:
+    name: MySQL-python
+    state: present
 
 - name: Import mysqldump from master
   mysql_db:
