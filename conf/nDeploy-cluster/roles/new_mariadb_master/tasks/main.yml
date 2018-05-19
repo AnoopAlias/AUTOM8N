@@ -72,6 +72,14 @@
   ignore_errors: yes
   with_items: "{{ groups.ndeployslaves }}"
 
+- name: Workaround for MySQL-python compile in MariaDB10.2
+  lineinfile:
+    path: /usr/include/mysql/mysql.h
+    insertbefore: 'struct st_mysql_options options;'
+    line: 'unsigned int reconnect;'
+  when:
+    - mariadb == '10.2'
+
 - name: Install MySQL-python
   pip:
     name: MySQL-python
