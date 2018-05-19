@@ -78,7 +78,7 @@
     insertbefore: 'struct st_mysql_options options;'
     line: 'unsigned int reconnect;'
   when:
-    - mariadb == '10.2'
+    - mariadb == 10.2
 
 - name: Install MySQL-python
   pip:
