@@ -25,3 +25,8 @@
 
 - name: Fix /root/.my.cnf quotes
   shell: /opt/nDeploy/scripts/fix_mysql_cnf_quotes.py
+
+#- lineinfile:
+#    path: /etc/selinux/config
+#    regexp: '^SELINUX='
+#    line: 'SELINUX=enforcing'

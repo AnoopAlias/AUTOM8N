@@ -8,8 +8,17 @@
   service: name=xinetd enabled=yes state=restarted
   when: ansible_distribution_major_version == "6"
 
-- name: Add csync2 cron job
-  cron: name="nDeploy csync2" user=root job="/usr/sbin/csync2 -x"
+- name: remove old csync2 cron job
+  cron:
+    name: nDeploy csync2
+    state: absent
+
+- name: Add csync2 cron job in /etc/crontab
+  cron:
+    name: XtendWeb csync2
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/usr/sbin/csync2 -x"
 
 - name: Restart crond on master
   service: name=crond enabled=yes state=restarted

@@ -22,5 +22,14 @@
     src: geodns_cluster.yaml.j2
     dest: /opt/geodns-nDeploy/dns-data/geodns_cluster.yaml
 
-- name: Add server status check cron job
-  cron: name="nDeploy status check" user=root job="/opt/nDeploy/scripts/cluster_server_status_check.py"
+- name: Remove old server status check cron job
+  cron:
+    name: nDeploy status check
+    state: absent
+
+- name: Add server status check cron job in /etc/crontab
+  cron:
+    name: XtendWeb status check
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/opt/nDeploy/scripts/cluster_server_status_check.py"
