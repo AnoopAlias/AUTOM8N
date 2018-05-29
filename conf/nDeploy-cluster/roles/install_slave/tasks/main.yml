@@ -43,3 +43,8 @@
   file:
     path: /etc/cpanel/ea4/is_ea4
     state: touch
+
+- lineinfile:
+    path: /etc/sysconfig/crond
+    regexp: '^CRONDARGS='
+    line: 'CRONDARGS="-c"'
