@@ -30,3 +30,6 @@
     path: /etc/sysconfig/crond
     regexp: '^CRONDARGS='
     line: 'CRONDARGS="-c"'
+
+- name: Set cluster cron master
+  shell: "echo $HOSTNAME > /var/spool/cron/.cron.hostname"
