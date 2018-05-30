@@ -48,3 +48,12 @@
     path: /etc/sysconfig/crond
     regexp: '^CRONDARGS='
     line: 'CRONDARGS="-c"'
+
+- name: Add cluster cron failover job in /etc/crontab
+  cron:
+    name: XtendWeb crond failover
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/opt/nDeploy/scripts/cluster_cron_server_status_check.py"
+  when:
+    - inventory_hostname == groups['ndeploydbslave'][0]

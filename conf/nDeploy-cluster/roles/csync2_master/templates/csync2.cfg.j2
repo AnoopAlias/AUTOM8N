@@ -4,7 +4,7 @@ group nDeployCluster
         key /etc/csync2/csync2.key;
         include /etc/nginx/ssl;
         include /etc/nginx/conf.d/cpanel_services.conf;
-        include /var/spool/cron/.cron.hostname;
+        include /var/spool/cron;
         include /var/cpanel/ssl/installed;
         include /var/cpanel/ssl/apache_tls;
         include /opt/geodns-nDeploy/dns-data;
