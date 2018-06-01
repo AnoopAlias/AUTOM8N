@@ -15,3 +15,6 @@
     - root_simple
     - root_standard
     - root_standardvirtualftp
+
+- name: Restart crond on master
+  service: name=crond enabled=yes state=restarted

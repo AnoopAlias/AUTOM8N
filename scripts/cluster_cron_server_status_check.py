@@ -32,5 +32,5 @@ def is_page_available(host, path="/nginx_status"):
 
 if __name__ == "__main__":
     if not is_page_available(server, "/nginx_status"):
-        with open("/var/spool/cron/.cron.hostname", "rw") as cronhost:
-            cronhost.write(socket.gethostname())
+        with open("/var/spool/cron/.cron.hostname", "w") as cronhost:
+            cronhost.write(socket.gethostname()+"\n")

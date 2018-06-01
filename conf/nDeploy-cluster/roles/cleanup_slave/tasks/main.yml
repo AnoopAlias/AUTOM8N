@@ -10,3 +10,6 @@
     - /root/xtendweb_mysql_replication.sql
     -  /root/xtendweb_mysql_all.sql
     - /root/xtendweb_accesshash_temp
+
+- name: Restart crond on master
+  service: name=crond enabled=yes state=restarted
