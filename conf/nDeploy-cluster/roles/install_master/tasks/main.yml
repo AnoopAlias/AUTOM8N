@@ -33,3 +33,8 @@
 
 - name: Set cluster cron master
   shell: "echo $HOSTNAME > /var/spool/cron/.cron.hostname"
+
+- name: Create ndeploy master yaml
+  template:
+    src: ndeploy_master.yaml.j2
+    dest: /opt/nDeploy/conf/ndeploy_master.yaml

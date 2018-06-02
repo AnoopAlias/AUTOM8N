@@ -3,6 +3,8 @@
 import httplib
 import re
 import socket
+import os
+import yaml
 
 
 __author__ = "Anoop P Alias"
@@ -12,7 +14,6 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-server = "master.example.com"
 
 
 def is_page_available(host, path="/nginx_status"):
@@ -31,6 +32,12 @@ def is_page_available(host, path="/nginx_status"):
 
 
 if __name__ == "__main__":
-    if not is_page_available(server, "/nginx_status"):
-        with open("/var/spool/cron/.cron.hostname", "w") as cronhost:
-            cronhost.write(socket.gethostname()+"\n")
+    if os.path.isfile("/opt/nDeploy/conf/ndeploy_master.yaml"):  # get the cluster master
+        cluster_master_file = "/opt/nDeploy/conf/ndeploy_master.yaml"
+        cluster_master_yaml = open(cluster_master_file, 'r')
+        cluster_master_yaml_parsed = yaml.safe_load(cluster_master_yaml)
+        cluster_master_yaml.close()
+        cluster_master = cluster_master_yaml_parsed.keys()[0]
+        if not is_page_available(cluster_master, "/nginx_status"):
+            with open("/var/spool/cron/.cron.hostname", "w") as cronhost:
+                cronhost.write(socket.gethostname()+"\n")
