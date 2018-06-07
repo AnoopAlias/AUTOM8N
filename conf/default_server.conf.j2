@@ -51,8 +51,10 @@ server {
         access_log off;
         include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
+        {% if DEFAULT_VHOST_DDOS == 'enabled' %}
            include /etc/nginx/conf.d/dos_mitigate.conf;
            limit_req   zone=one  burst=3 nodelay;
+        {% endif %}
            proxy_send_timeout   90;
            proxy_read_timeout   90;
 
@@ -95,8 +97,10 @@ server {
         access_log off;
         include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
+        {% if DEFAULT_VHOST_DDOS == 'enabled' %}
            include /etc/nginx/conf.d/dos_mitigate.conf;
            limit_req   zone=one  burst=3 nodelay;
+        {% endif %}        
            proxy_send_timeout   90;
            proxy_read_timeout   90;
 
