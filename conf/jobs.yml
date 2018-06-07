@@ -26,14 +26,6 @@
 # ---------------------------------------------------------------------------------------------
 
 job1:
-  label: Watch /var/cpanel/ssl/apache_tls
-  watch: /var/cpanel/ssl/apache_tls
-  exclude: []
-  events: ['create', 'move_from', 'move_to', 'delete', 'modify']
-  options: []
-  recursive: true
-  command: /opt/nDeploy/scripts/event_trigger.sh $filename 2 $tflags
-job2:
   label: Watch /opt/nDeploy/domain-data
   watch: /opt/nDeploy/domain-data
   exclude: []
@@ -41,7 +33,7 @@ job2:
   options: []
   recursive: false
   command: /opt/nDeploy/scripts/event_trigger.sh $filename 1 $tflags
-job3:
+job2:
   label: Watch /etc/ips
   watch: /etc/ips
   exclude: []
