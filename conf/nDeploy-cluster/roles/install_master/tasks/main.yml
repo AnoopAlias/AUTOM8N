@@ -34,6 +34,13 @@
 - name: Set cluster cron master
   shell: "echo $HOSTNAME > /var/spool/cron/.cron.hostname"
 
+- name: Add cluster cron failover job in /etc/crontab
+  cron:
+    name: XtendWeb crond failover
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/usr/bin/touch /var/spool/cron/.cron.hostname"
+
 - name: Create ndeploy master yaml
   template:
     src: ndeploy_master.yaml.j2

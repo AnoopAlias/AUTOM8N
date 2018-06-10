@@ -22,6 +22,7 @@
   with_items:
     - compat-MySQL51-shared
     - compat-MySQL50-shared
+    - mysql-community-common
 
 - name: Install MariaDB rpm
   yum:
