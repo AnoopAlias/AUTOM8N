@@ -85,6 +85,11 @@
     name: MySQL-python
     state: present
 
+- name: Drop the sys schema
+  mysql_db:
+    name: sys
+    state: absent
+
 - name: get the master log and pos
   mysql_replication: mode=getmaster
   register: masterrepl
