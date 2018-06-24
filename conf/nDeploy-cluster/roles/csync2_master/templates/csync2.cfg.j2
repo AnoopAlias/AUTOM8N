@@ -3,7 +3,6 @@ group nDeployCluster
         host {{ ansible_nodename }} ({% for host in groups['ndeployslaves'] %} {{ hostvars[host]['ansible_nodename'] }} {% endfor %});
         key /etc/csync2/csync2.key;
         include /etc/nginx/ssl;
-        include /etc/nginx/conf.d/cpanel_services.conf;
         include /var/spool/cron;
         include /var/cpanel/ssl/installed;
         include /var/cpanel/ssl/apache_tls;
