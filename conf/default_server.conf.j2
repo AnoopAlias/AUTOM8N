@@ -7,11 +7,6 @@ server {
            proxy_send_timeout   90;
            proxy_read_timeout   90;
 
-           proxy_buffer_size    4k;
-           proxy_buffers     16 32k;
-           proxy_busy_buffers_size 64k;
-           proxy_temp_file_write_size 64k;
-
            proxy_connect_timeout 30s;
 
            proxy_pass   http://127.0.0.1:9999;
@@ -58,11 +53,6 @@ server {
            proxy_send_timeout   90;
            proxy_read_timeout   90;
 
-           proxy_buffer_size    4k;
-           proxy_buffers     16 32k;
-           proxy_busy_buffers_size 64k;
-           proxy_temp_file_write_size 64k;
-
            proxy_connect_timeout 30s;
 
            proxy_pass   http://{{ MYIP }}:9999;
@@ -100,14 +90,9 @@ server {
         {% if DEFAULT_VHOST_DDOS == 'enabled' %}
            include /etc/nginx/conf.d/dos_mitigate.conf;
            limit_req   zone=one  burst=3 nodelay;
-        {% endif %}        
+        {% endif %}
            proxy_send_timeout   90;
            proxy_read_timeout   90;
-
-           proxy_buffer_size    4k;
-           proxy_buffers     16 32k;
-           proxy_busy_buffers_size 64k;
-           proxy_temp_file_write_size 64k;
 
            proxy_connect_timeout 30s;
 
