@@ -45,11 +45,14 @@
     dest: /opt/nDeploy/scripts/postfix_backupmx_update.sh
     mode: 0755
 
-- name: Ensure submission port is enabled in postfix 
+- name: Ensure submission port is enabled in postfix
   lineinfile:
     path: /etc/postfix/master.cf
     regexp: '^#submission'
     line: 'submission inet n       -       n       -       -       smtpd'
+
+- name: remove ssmtp from slave
+  yum: name=ssmtp state=absent
 
 - name: Restart Postfix server
   service: name=postfix enabled=yes state=restarted
