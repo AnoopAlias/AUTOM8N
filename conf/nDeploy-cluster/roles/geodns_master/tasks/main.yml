@@ -12,11 +12,6 @@
 - name: Initialize MaxMind GeoLite database
   shell: /opt/geodns-nDeploy/GeoIP/geoip_update.sh
 
-- name: Allow server status check from all cluster nodes
-  template:
-    src: nginx_status_allow.conf.j2
-    dest: /etc/nginx/conf.d/nginx_status_allow.conf
-
 - name: Create geoDNS cluster data yaml
   template:
     src: geodns_cluster.yaml.j2
