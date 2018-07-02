@@ -11,14 +11,14 @@ server {
         ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
         ssl_session_cache shared:SSL:50m;
         ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-        ssl_session_timeout  10m;
+        ssl_session_timeout  1d;
+        ssl_session_tickets off;
         server_name cpanel.* whm.* webmail.* cpcontacts.* cpcalendars.*;
         access_log off;
         location / {
            include /etc/nginx/conf.d/dos_mitigate.conf;
            proxy_send_timeout   90;
            proxy_read_timeout   90;
-
            proxy_connect_timeout 30s;
 
            proxy_pass   $scheme://{{ MYIP }}:$cpport;

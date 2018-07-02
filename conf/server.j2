@@ -13,12 +13,12 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:50m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  10m;
+ssl_session_timeout  1d;
+ssl_session_tickets off;
 ssl_stapling on;
 ssl_stapling_verify on;
 {% endif %}
@@ -29,10 +29,6 @@ location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -44,10 +40,6 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -59,10 +51,6 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -93,12 +81,12 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:50m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  10m;
+ssl_session_timeout  1d;
+ssl_session_tickets off;
 ssl_stapling on;
 ssl_stapling_verify on;
 {% endif %}
@@ -109,10 +97,6 @@ location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -124,10 +108,6 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -139,10 +119,6 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -174,12 +150,12 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:50m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  10m;
+ssl_session_timeout  1d;
+ssl_session_tickets off;
 ssl_stapling on;
 ssl_stapling_verify on;
 {% endif %}
@@ -190,10 +166,6 @@ location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -205,10 +177,6 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -220,10 +188,6 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -266,14 +230,10 @@ access_log  off;
 {% endif %}
 
 # Proxy cPanel/WHM URLs
-location ~* ^/(cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)/ {
+location ~* ^/(?:cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -286,10 +246,6 @@ location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -302,10 +258,6 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -318,10 +270,6 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -389,12 +337,12 @@ listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:50m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  10m;
+ssl_session_timeout  1d;
+ssl_session_tickets off;
 ssl_stapling on;
 ssl_stapling_verify on;
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
@@ -414,14 +362,10 @@ access_log  off;
 {% endif %}
 
 # Proxy cPanel/WHM URLs
-location ~* ^/(cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)/ {
+location ~* ^/(?:cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -434,10 +378,6 @@ location ~* ^/.well-known/ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -450,10 +390,6 @@ location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -466,10 +402,6 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
 proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 proxy_set_header   Host   $host;
@@ -545,12 +477,12 @@ listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
 ssl_session_cache shared:SSL:50m;
 ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  10m;
+ssl_session_timeout  1d;
+ssl_session_tickets off;
 ssl_stapling on;
 ssl_stapling_verify on;
 {% endif %}
@@ -558,10 +490,6 @@ server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" 
 location / {
    proxy_send_timeout   90;
    proxy_read_timeout   90;
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
    proxy_connect_timeout 30s;
    proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
    proxy_set_header   Host   $host;
