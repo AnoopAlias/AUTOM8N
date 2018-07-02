@@ -8,7 +8,6 @@
   connection: local
   roles:
     - install_master
-    - geodns_master
     - csync2_master
     - unison_master
     - mysqlaccess_master
@@ -18,12 +17,34 @@
   hosts: ndeployslaves
   roles:
     - install_slave
-    - geodns_master
     - csync2_slave
     - services_slave
     - domlog_rotate_slave
     - copyrepos_slave
     - mkaccesshash_slave
+
+- name: Setup XtendWeb DNS cluster on master cPanel server
+  hosts: ndeploymaster
+  connection: local
+  roles:
+    - geodns_master
+  when:
+    - dns == 'geodns'
+
+- name: Setup XtendWeb DNS cluster on master cPanel server
+  hosts: ndeploymaster
+  connection: local
+  roles:
+    - named_master
+  when:
+    - dns == 'named'
+
+- name: Setup XtendWeb DNS cluster on slaves
+  hosts: ndeployslaves
+  roles:
+    - geodns_slave
+  when:
+    - dns == 'geodns'
 
 - name: Setup DNS cluster config on slaves
   hosts: ndeployslaves
