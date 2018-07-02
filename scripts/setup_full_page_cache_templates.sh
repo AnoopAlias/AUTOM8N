@@ -17,7 +17,7 @@ if [ -f /opt/nDeploy/scripts/update_profiles.py ];then
   /opt/nDeploy/scripts/update_profiles.py add root main HHVM wpredis_helper.j2 "Wordpress-FullPage-Cache+nginx-helper"
   /opt/nDeploy/scripts/update_profiles.py del root main HHVM wpredis_helper_cluster.j2 "Wordpress-FullPage-Cache+nginx-helper(cluster)"
 
-  /opt/nDeploy/scripts/update_profiles.py add root main PHP wpredis_auto.j2 "Wordpress-FullPage-Cahe"
+  /opt/nDeploy/scripts/update_profiles.py add root main PHP wpredis_auto.j2 "Wordpress-FullPage-Cache"
   /opt/nDeploy/scripts/update_profiles.py add root main HHVM wpredis_auto.j2 "Wordpress-FullPage-Cache"
   /opt/nDeploy/scripts/update_profiles.py del root main PHP wpredis_auto_cluster.j2 "Wordpress-FullPage-Cache(cluster)"
   /opt/nDeploy/scripts/update_profiles.py del root main HHVM wpredis_auto_cluster.j2 "Wordpress-FullPage-Cache(cluster)"
