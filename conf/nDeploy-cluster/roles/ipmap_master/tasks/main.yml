@@ -17,6 +17,13 @@
   shell: "for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do /opt/nDeploy/scripts/cluster_geodns_ensure_user.py $CPANELUSER; done"
   when:
     - dnssync.stat.exists == false
+    - dns == 'geodns'
+
+- name: Do a DNS Sync
+  shell: "for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do /opt/nDeploy/scripts/cluster_dns_ensure_user.py $CPANELUSER; done"
+  when:
+    - dnssync.stat.exists == false
+    - dns == 'named'
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_DNS_SYNC_LOCK_DO_NOT_REMOVE
