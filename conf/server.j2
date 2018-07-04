@@ -13,14 +13,6 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:50m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  1d;
-ssl_session_tickets off;
-ssl_stapling on;
-ssl_stapling_verify on;
 {% endif %}
 server_name www.{{ MAINDOMAINNAME }};
 
@@ -81,14 +73,6 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:50m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  1d;
-ssl_session_tickets off;
-ssl_stapling on;
-ssl_stapling_verify on;
 {% endif %}
 server_name {{ MAINDOMAINNAME }};
 
@@ -150,14 +134,6 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:50m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  1d;
-ssl_session_tickets off;
-ssl_stapling on;
-ssl_stapling_verify on;
 {% endif %}
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 
@@ -337,14 +313,6 @@ listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:50m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  1d;
-ssl_session_tickets off;
-ssl_stapling on;
-ssl_stapling_verify on;
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_ACCESSLOG %}
@@ -477,14 +445,6 @@ listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:50m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  1d;
-ssl_session_tickets off;
-ssl_stapling on;
-ssl_stapling_verify on;
 {% endif %}
 server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
 location / {
