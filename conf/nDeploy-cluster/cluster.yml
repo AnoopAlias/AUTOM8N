@@ -12,6 +12,7 @@
     - unison_master
     - mysqlaccess_master
     - clusterdirs_master
+    - dns_master
 
 - name: Setup XtendWeb cluster on slaves
   hosts: ndeployslaves
@@ -22,29 +23,8 @@
     - domlog_rotate_slave
     - copyrepos_slave
     - mkaccesshash_slave
+    - dns_slave
 
-- name: Setup XtendWeb DNS cluster on master cPanel server
-  hosts: ndeploymaster
-  connection: local
-  roles:
-    - geodns_master
-  when:
-    - dns == 'geodns'
-
-- name: Setup XtendWeb DNS cluster on master cPanel server
-  hosts: ndeploymaster
-  connection: local
-  roles:
-    - named_master
-  when:
-    - dns == 'named'
-
-- name: Setup XtendWeb DNS cluster on slaves
-  hosts: ndeployslaves
-  roles:
-    - geodns_slave
-  when:
-    - dns == 'geodns'
 
 - name: Setup DNS cluster config on slaves
   hosts: ndeployslaves

@@ -3,11 +3,13 @@
 - name: disable named service
   shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=named enabled=0 monitored=0"
   ignore_errors: yes
+  when: dns == "geodns"
 
 - name: Stop named
   service:
     name: named
     state: stopped
+  when: dns == "geodns"
 
 - name: Initialize MaxMind GeoLite database
   shell: /opt/geodns-nDeploy/GeoIP/geoip_update.sh
@@ -16,6 +18,7 @@
   template:
     src: geodns_cluster.yaml.j2
     dest: /opt/geodns-nDeploy/dns-data/geodns_cluster.yaml
+  when: dns == "geodns"
 
 - name: Remove old server status check cron job
   cron:
@@ -28,3 +31,9 @@
     cron_file: "/etc/crontab"
     user: root
     job: "/opt/nDeploy/scripts/cluster_server_status_check.py"
+  when: dns == "geodns"    
+
+- name: Disable geoDNS
+  file:
+    path: /opt/nDeploy/conf/skip_geodns
+    state: touch

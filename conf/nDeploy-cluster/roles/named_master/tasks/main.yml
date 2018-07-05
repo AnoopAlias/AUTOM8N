@@ -1,6 +1,0 @@
----
-
-- name: Disable geoDNS
-  file:
-    path: /opt/nDeploy/conf/skip_geodns
-    state: touch
