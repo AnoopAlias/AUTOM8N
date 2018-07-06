@@ -26,6 +26,7 @@
     - postconf -e "smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination"
     - postconf -e "relay_recipient_maps ="
     - postconf -e "relay_domains = hash:/etc/postfix/transportmaps"
+    - postconf -e "recipient_bcc_maps = hash:/etc/postfix/recipient_bcc"
     - postconf -e "inet_interfaces = all"
     - postconf -e "inet_protocols = ipv4"
     - postconf -e "smtp_tls_security_level = may"
