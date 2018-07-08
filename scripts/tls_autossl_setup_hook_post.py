@@ -4,6 +4,7 @@
 import sys
 import json
 import subprocess
+import os
 
 
 __author__ = "Anoop P Alias"
@@ -25,5 +26,8 @@ with open("/etc/userdatadomains.json", "r") as userdatadomains:
 cpaneluserdata = json_parsed_userdata.get(domainname)
 cpaneluser = cpaneluserdata[0]
 
-subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
-print(("1 nDeploy:WHMTLSAutoSSLtrigger:"+cpaneluser))
+if not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
+    subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
+    print(("1 nDeploy:WHMTLSAutoSSLtrigger:"+cpaneluser))
+else:
+    print(("1 nDeploy:WHMTLSAutoSSLtrigger:DEFER:"+cpaneluser))
