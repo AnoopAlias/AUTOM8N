@@ -59,7 +59,7 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
             node2.append(new_xml_element)
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
     # enabling shell as Railo probably needs shell vars like CATALINA_HOME
-    if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload') or not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
+    if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload') and not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
         subprocess.Popen(['/opt/lucee/lucee_ctl', 'restart'], shell=True)
     return
 
@@ -87,7 +87,7 @@ def java_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
             node2.append(new_xml_element)
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
     # enabling shell as Railo probably needs shell vars like CATALINA_HOME
-    if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload') or not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
+    if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload') and not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
         subprocess.Popen('service tomcat restart', shell=True)
     return
 
@@ -145,7 +145,7 @@ def php_backend_add(user_name, phpmaxchildren, domain_home):
         generated_config = template.render(templateVars)
         with codecs.open(phppool_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
-        if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload') or not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
+        if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload') and not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
             control_script = installation_path+"/scripts/init_backends.py"
             subprocess.Popen([control_script, 'reload'])
             # Workaround for incomplete virtfs jail initialization
@@ -215,7 +215,7 @@ def php_secure_backend_add(user_name, phpmaxchildren, domain_home, clusterenable
             if clusterenabled:
                 subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.socket state=started enabled=yes"', shell=True)
             # Stopping the service as a new request to socket will activate it again
-            if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload') or not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
+            if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload') and not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
                 subprocess.call(['systemctl', 'stop', backend_name+'@'+user_name+'.service'])
                 if os.path.isfile(installation_path+'/conf/ndeploy_cluster.yaml'):
                     subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name='+backend_name+'@'+user_name+'.service state=stopped"', shell=True)
@@ -728,7 +728,7 @@ if __name__ == "__main__":
         sys.exit(0)
     else:
         # Update the userdata cache if we are not generating config in bulk
-        if not os.path.isfile(installation_path+'/conf/skip_nginx_reload') or not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
+        if not os.path.isfile(installation_path+'/conf/skip_nginx_reload') and not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
             subprocess.Popen(['/scripts/updateuserdatacache', '--force', cpaneluser], shell=True)  # May cause high server load
         # Try loading the main userdata cache file
         cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
@@ -779,7 +779,7 @@ if __name__ == "__main__":
                     nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=the_sub_domain, maindomain=the_sub_domain)
         # Ok we are done generating .Lets reload nginx
         # Unless someone has set a skip reload flag
-        if not os.path.isfile(installation_path+'/conf/skip_nginx_reload') or not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
+        if not os.path.isfile(installation_path+'/conf/skip_nginx_reload') and not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
             with open(os.devnull, 'w') as FNULL:
                 subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
         if clusterenabled:
