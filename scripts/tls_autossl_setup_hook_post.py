@@ -42,15 +42,5 @@ with open("/etc/userdatadomains.json", "r") as userdatadomains:
 cpaneluserdata = json_parsed_userdata.get(domainname)
 cpaneluser = cpaneluserdata[0]
 
-if not os.path.isfile('/var/cpanel/mgmt_queue/apache_update_no_restart'):
-    subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
-    print(("1 nDeploy:WHMTLSAutoSSLtrigger:"+cpaneluser))
-else:
-    silentadd('/opt/nDeploy/conf/skip_nginx_reload')
-    silentadd('/opt/nDeploy/conf/skip_php-fpm_reload')
-    silentadd('/opt/nDeploy/conf/skip_tomcat_reload')
-    subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
-    silentremove('/opt/nDeploy/conf/skip_nginx_reload')
-    silentremove('/opt/nDeploy/conf/skip_php-fpm_reload')
-    silentremove('/opt/nDeploy/conf/skip_tomcat_reload')
-    print(("1 nDeploy:WHMTLSAutoSSLtrigger:DeferReload:"+cpaneluser))
+subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
+print(("1 nDeploy:WHMTLSAutoSSLtrigger:"+cpaneluser))
