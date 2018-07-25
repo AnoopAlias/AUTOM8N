@@ -1,14 +1,8 @@
-#Proxy to cPanel Apache httpd service and micro cache the content
+#Proxy to cPanel Apache httpd service and cache the content in proxycache
 
 root {{ DOCUMENTROOT }};
 
 location / {
-
-#If request method is POST we add a _mcnc cookie
-if ($requestnocache = "1") {
-add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
-add_header X-Microcachable "0";
-}
 
 access_log  off;
 
@@ -32,14 +26,8 @@ proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header   X-Forwarded-Proto $scheme;
 proxy_redirect     off;
-proxy_cache            PROXYMICROCACHE;
-proxy_cache_valid      200  1s;
-proxy_cache_lock on;
-proxy_cache_use_stale  updating;
+proxy_cache            PROXYCACHE;
+proxy_cache_valid      200  1d;
+proxy_cache_use_stale  error timeout invalid_header updating http_500 http_502 http_503 http_504;
 proxy_set_header   Proxy "";
-# We ignore most cache control logic set by the application
-proxy_ignore_headers Expires Cache-Control Set-Cookie Vary;
-proxy_set_header Accept-Encoding "";
-proxy_no_cache $query_string$cookie__mcnc;
-proxy_cache_bypass $query_string$cookie__mcnc;
 }
