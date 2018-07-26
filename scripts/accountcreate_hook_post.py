@@ -7,6 +7,8 @@ import os
 import pwd
 import grp
 import shutil
+import platform
+import psutil
 try:
     import simplejson as json
 except ImportError:
@@ -17,6 +19,27 @@ __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
 __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
+
+
+def nginxreload():
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def safenginxreload():
+    nginx_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
+            nginx_status = True
+            break
+    if not nginx_status:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
 
 
 # This hook script is supposed to be called after account creation by cPanel
@@ -62,8 +85,10 @@ if os.path.exists(cluster_config_file):
     else:
         subprocess.call(installation_path + "/scripts/cluster_geodns_ensure_user.py "+cpaneluser, shell=True)
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
+    nginxreload()
     print("1 nDeploy:clusteraccountcreate:"+cpaneluser)
 else:
     # We just need to generate config for the local machine
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
+    nginxreload()
     print("1 nDeploy:accountcreate:"+cpaneluser)

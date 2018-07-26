@@ -8,6 +8,8 @@ import pwd
 import grp
 import shutil
 import yaml
+import platform
+import psutil
 try:
     import simplejson as json
 except ImportError:
@@ -26,6 +28,27 @@ def silentremove(filename):
         os.remove(filename)
     except OSError:
         pass
+
+
+def nginxreload():
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def safenginxreload():
+    nginx_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
+            nginx_status = True
+            break
+    if not nginx_status:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
 
 
 # This hook script is supposed to be called after account creation by cPanel
@@ -85,4 +108,5 @@ if new_pkg != cur_pkg:
             setsecurephpmaxchildren = 'sed -i "s/^pm.max_children.*/pm.max_children = '+phpmaxchildren+'" '+installation_path+'/secure-php-fpm.d/'+cpaneluser+'.conf'
             subprocess.call(setsecurephpmaxchildren, shell=True)
         subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
+        nginxreload()
         print("1 nDeploy:account_change_package:"+cpaneluser)

@@ -1,3 +1,3 @@
 #!/bin/bash
-kill -USR1 $(cat /var/run/nginx.pid)
-echo '1 nDeploy::nginX::USR1'
+/usr/sbin/nginx -s reload > /dev/null 2>&1
+echo '1 nDeploy::nginX::reload'

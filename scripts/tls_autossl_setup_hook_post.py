@@ -5,6 +5,8 @@ import sys
 import json
 import subprocess
 import os
+import platform
+import psutil
 
 
 __author__ = "Anoop P Alias"
@@ -29,6 +31,27 @@ def silentadd(filename):
         pass
 
 
+def nginxreload():
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def safenginxreload():
+    nginx_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
+            nginx_status = True
+            break
+    if not nginx_status:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
@@ -43,4 +66,5 @@ cpaneluserdata = json_parsed_userdata.get(domainname)
 cpaneluser = cpaneluserdata[0]
 
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
+nginxreload()
 print(("1 nDeploy:WHMTLSAutoSSLtrigger:"+cpaneluser))

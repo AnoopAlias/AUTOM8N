@@ -4,6 +4,8 @@ import os
 import sys
 import pwd
 import subprocess
+import platform
+import psutil
 import shutil
 import yaml
 try:
@@ -24,6 +26,27 @@ def silentremove(filename):
         os.remove(filename)
     except OSError:
         pass
+
+
+def nginxreload():
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def safenginxreload():
+    nginx_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
+            nginx_status = True
+            break
+    if not nginx_status:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
 
 
 # This script is supposed to be called by cPanel after an account is modified
@@ -99,6 +122,7 @@ if cpanelnewuser != cpaneluser:
         subprocess.Popen("/usr/sbin/nginx -s reload", shell=True)
         silentremove(cpuserdatajson)
     subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
+    nginxreload()
     if os.path.exists(cluster_config_file):
         cpaneluserhome = pwd.getpwnam(cpanelnewuser).pw_dir
         # Create the new user
@@ -108,6 +132,7 @@ if cpanelnewuser != cpaneluser:
         else:
             subprocess.call(installation_path + "/scripts/cluster_geodns_ensure_user.py "+cpaneluser, shell=True)
         subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
+        nginxreload()
     print(("1 nDeploy:postmodify:"+cpanelnewuser))
 else:
     # Get details of old main-domain and sub-domain stored in cPanel datastore
@@ -143,11 +168,13 @@ else:
                 if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
                     shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
     subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
+    nginxreload()
     if os.path.exists(cluster_config_file):
         if os.path.isfile(installation_path+"/conf/skip_geodns"):
             subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
         else:
             subprocess.call(installation_path + "/scripts/cluster_geodns_ensure_user.py "+cpaneluser, shell=True)
         subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
+        nginxreload()
     silentremove(installation_path+"/lock/"+cpaneluser+".userdata")
     print(("1 nDeploy:postmodify:"+cpaneluser))

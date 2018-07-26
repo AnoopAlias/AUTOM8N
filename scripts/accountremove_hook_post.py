@@ -6,6 +6,8 @@ import subprocess
 import os
 import shutil
 import yaml
+import platform
+import psutil
 try:
     import simplejson as json
 except ImportError:
@@ -29,6 +31,27 @@ def silentremove(filename):
         os.remove(filename)
     except OSError:
         pass
+
+
+def nginxreload():
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def safenginxreload():
+    nginx_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
+            nginx_status = True
+            break
+    if not nginx_status:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
 
 
 cpjson = json.load(sys.stdin)
@@ -90,6 +113,6 @@ if os.path.exists(cpuserdatajson):
                 silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".include")
         if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
             shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
-    subprocess.Popen("/usr/sbin/nginx -s reload", shell=True)
+    nginxreload()
     silentremove(cpuserdatajson)
     print(("1 nDeploy:remove:post:"+cpaneluser))
