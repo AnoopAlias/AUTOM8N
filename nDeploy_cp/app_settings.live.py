@@ -468,7 +468,7 @@ if form.getvalue('domain'):
         # pagespeed filter level
         print('<li class="list-group-item">')
         print('<div class="row">')
-        pagespeed_filter_hint = "PassThrough breaks some pages.CoreFilters is mostly safe"
+        pagespeed_filter_hint = "CoreFilters load the Core filters , PassThrough allows you to enable individual filters via custom nginx conf"
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
             if pagespeed_filter == 'CoreFilters':
                 print_red("pagespeed level", pagespeed_filter_hint)
