@@ -16,7 +16,7 @@ try_files $uri $uri/ /index.php?q=$uri&$args $admin_dir/index.php$is_args$args;
 
 # Redirect needed to "hide" index.php
 location / {
-try_files $uri $uri/ /index.php$uri&$args;
+try_files $uri $uri/ /index.php$is_args$args;
 
 # Old image system ?
 rewrite ^/([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$1$2$3.jpg last;
@@ -69,5 +69,3 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
 }
-
-
