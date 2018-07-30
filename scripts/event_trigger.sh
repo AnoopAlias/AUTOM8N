@@ -4,7 +4,7 @@ if [[ $# -ne 3 ]];then
 fi
 if [[ $2 -eq 1 ]]; then
 	if [ $3 = "IN_ATTRIB" ];then
-		/usr/bin/grep "backend_category: PROXY" /opt/nDeploy/domain-data/$1
+		/usr/bin/grep "backend_category: PROXY" $1
 		if [ $? -ne 0 ];then
 			CPANELUSER=$(stat -c "%U" $1)
 			if [[ $CPANELUSER == root ]];then
