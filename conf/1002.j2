@@ -1,11 +1,10 @@
-#Proxy to cPanel Apache httpd service and cache the content in proxycache
+#Proxy to cPanel Apache httpd service
 
 root {{ DOCUMENTROOT }};
 
 location / {
 
 access_log  off;
-
 proxy_send_timeout   300;
 proxy_read_timeout   300;
 proxy_connect_timeout 30s;
@@ -25,9 +24,7 @@ proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header   X-Forwarded-Proto $scheme;
-proxy_redirect     off;
-proxy_cache            PROXYCACHE;
-proxy_cache_valid      200  1d;
-proxy_cache_use_stale  error timeout invalid_header updating http_500 http_502 http_503 http_504;
+proxy_set_header   X-Scheme $scheme;
 proxy_set_header   Proxy "";
+proxy_redirect     off;
 }
