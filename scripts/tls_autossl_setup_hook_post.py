@@ -7,6 +7,7 @@ import subprocess
 import os
 import platform
 import psutil
+import signal
 
 
 __author__ = "Anoop P Alias"
@@ -52,6 +53,18 @@ def safenginxreload():
             subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
 
 
+def sighupnginx():
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+            nginxpid = myprocess.pid
+            os.kill(nginxpid, signal.SIGHUP)
+
+
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
@@ -66,5 +79,5 @@ cpaneluserdata = json_parsed_userdata.get(domainname)
 cpaneluser = cpaneluserdata[0]
 
 subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpaneluser, shell=True)
-nginxreload()
+sighupnginx()
 print(("1 nDeploy:WHMTLSAutoSSLtrigger:"+cpaneluser))

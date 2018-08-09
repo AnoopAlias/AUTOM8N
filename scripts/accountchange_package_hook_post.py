@@ -10,6 +10,7 @@ import shutil
 import yaml
 import platform
 import psutil
+import signal
 try:
     import simplejson as json
 except ImportError:
@@ -49,6 +50,18 @@ def safenginxreload():
     if not nginx_status:
         with open(os.devnull, 'w') as FNULL:
             subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def sighupnginx():
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+            nginxpid = myprocess.pid
+            os.kill(nginxpid, signal.SIGHUP)
 
 
 # This hook script is supposed to be called after account creation by cPanel
@@ -108,5 +121,5 @@ if new_pkg != cur_pkg:
             setsecurephpmaxchildren = 'sed -i "s/^pm.max_children.*/pm.max_children = '+phpmaxchildren+'" '+installation_path+'/secure-php-fpm.d/'+cpaneluser+'.conf'
             subprocess.call(setsecurephpmaxchildren, shell=True)
         subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
-        nginxreload()
+        sighupnginx()
         print("1 nDeploy:account_change_package:"+cpaneluser)
