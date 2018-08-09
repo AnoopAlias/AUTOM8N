@@ -10,17 +10,14 @@ if [[ $2 -eq 1 ]]; then
 			if [[ $CPANELUSER == root ]];then
 				exit 0
 			else
-				ps aux | grep -v grep | grep "nginx -s reload" > /dev/null
-				if [ $? -ne 0 ];then
-					/usr/bin/kill -USR1 $(cat /var/run/nginx.pid)
-					echo "$(date) Domain::Stats::Reload ${CPANELUSER}"
-				fi
+				/usr/bin/kill -SIGUSR1 $(cat /var/run/nginx.pid)
+				echo "$(date) Domain::Stats::Reload ${CPANELUSER}"
 			fi
 		fi
 	else
 		CPANELUSER=$(stat -c "%U" $1)
 		/opt/nDeploy/scripts/generate_config.py $CPANELUSER
-		/usr/sbin/nginx -s reload > /dev/null 2>&1
+		/usr/bin/kill -SIGHUP $(cat /var/run/nginx.pid)
 		echo "$(date) Domain::Data::Modify ${CPANELUSER}"
 	fi
 else
