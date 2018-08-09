@@ -29,7 +29,7 @@ echo -e '\e[93m Attempting to regenerate  nginx default conf  \e[0m'
 /opt/nDeploy/scripts/generate_default_vhost_config.py
 
 # Reloading nginx
-/usr/sbin/nginx -s reload
+service nginx reload
 
 # Getting the OS release version
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)

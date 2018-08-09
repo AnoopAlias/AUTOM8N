@@ -132,7 +132,6 @@ if cpanelnewuser != cpaneluser:
                     silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".include")
             if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):
                 shutil.rmtree('/var/resin/hosts/'+domain_in_subdomains)
-        subprocess.Popen("/usr/sbin/nginx -s reload", shell=True)
         silentremove(cpuserdatajson)
     subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
     sighupnginx()
