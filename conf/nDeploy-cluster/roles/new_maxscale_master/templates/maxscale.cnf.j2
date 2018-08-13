@@ -40,14 +40,20 @@ monitor_interval=10000
 
 [XtendWeb]
 type=service
+{% if dbmode == 'rwsplit' %}
 router=readwritesplit
+master_accept_reads=true
+master_failure_mode=fail_on_write
+{% else %}
+router=readconnroute
+router_options=master
+{% endif %}
 servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 connection_timeout=60
 max_connections=500
-master_accept_reads=true
-master_failure_mode=fail_on_write
+
 
 [MaxAdmin-Service]
 type=service
