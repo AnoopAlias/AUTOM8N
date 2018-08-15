@@ -9,7 +9,7 @@
   {% endfor %}
 </IfModule>
 <IfModule log_config_module>
-  LogFormat "%v:%p %a %l %u %t \"%r\" %>s %b" common
-  LogFormat "%v:%p %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
-  LogFormat "%v:%p %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedvhost
+  LogFormat "%v:%{local}p %a %l %u %t \"%r\" %>s %b" common
+  LogFormat "%v:%{local}p %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+  LogFormat "%v:%{local}p %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedvhost
 </IfModule>
