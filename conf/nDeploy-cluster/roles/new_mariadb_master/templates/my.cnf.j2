@@ -46,6 +46,10 @@ sync_relay_log = 0
 sync_relay_log_info = 0
 sync_master_info = 0
 
+# Parallel replication
+slave-parallel-threads={{ ansible_processor_vcpus }}
+slave-parallel-mode=optimistic
+
 binlog-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
 replicate-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
 
