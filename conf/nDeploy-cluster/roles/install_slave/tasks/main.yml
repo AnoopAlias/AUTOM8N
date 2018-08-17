@@ -57,3 +57,11 @@
     job: "/opt/nDeploy/scripts/cluster_cron_server_status_check.py"
   when:
     - inventory_hostname == groups['ndeploydbslave'][0]
+
+- name: Add cron job for recipient_bcc
+  cron:
+    name: XtendWeb postmap recipient_bcc
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/usr/sbin/postmap /etc/postfix/recipient_bcc && /usr/sbin/postfix reload"
+    minute: "*/15"
