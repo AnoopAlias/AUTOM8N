@@ -206,7 +206,7 @@ access_log  off;
 {% endif %}
 
 # Proxy cPanel/WHM URLs
-location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)/ {
+location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)($|/) {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
@@ -330,7 +330,7 @@ access_log  off;
 {% endif %}
 
 # Proxy cPanel/WHM URLs
-location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)/ {
+location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)($|/) {
 allow all;
 proxy_send_timeout   90;
 proxy_read_timeout   90;
