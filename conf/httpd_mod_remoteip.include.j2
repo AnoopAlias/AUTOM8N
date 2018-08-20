@@ -8,8 +8,9 @@
   RemoteIPTrustedProxy {{ MYIP }}
   {% endfor %}
 </IfModule>
-<IfModule log_config_module>
-  LogFormat "%v:%{local}p %a %l %u %t \"%r\" %>s %b" common
-  LogFormat "%v:%{local}p %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
-  LogFormat "%v:%{local}p %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedvhost
-</IfModule>
+# The log format  are now handled in Apache Configuration >> Global Configuration
+#<IfModule log_config_module>
+#  LogFormat "%v:%{local}p %a %l %u %t \"%r\" %>s %b" common
+#  LogFormat "%v:%{local}p %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+#  LogFormat "%v:%{local}p %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedvhost
+#</IfModule>
