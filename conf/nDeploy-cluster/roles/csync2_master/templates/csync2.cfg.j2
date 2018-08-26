@@ -21,6 +21,8 @@ group nDeployCluster
         include /etc/userdatadomains.json;
         include /etc/userdomains;
         include /etc/postfix/recipient_bcc;
+        include /etc/gdnsd/config;
+        include /etc/gdnsd/zones;
         include /etc/dovecot;
         include /opt/nDeploy/conf/ndeploy_master.yaml;
         include /etc/nginx/conf.d/nginx_status_allow.conf;
