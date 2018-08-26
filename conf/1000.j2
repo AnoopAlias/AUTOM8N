@@ -74,12 +74,7 @@ try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location @cphttpd {
-
 access_log  off;
-proxy_send_timeout   300;
-proxy_read_timeout   300;
-proxy_connect_timeout 30s;
-
 {% if SSL_OFFLOAD == 'enabled' %}
 proxy_pass   http://{{ APPSERVERIP }}:9999;
 {% else %}

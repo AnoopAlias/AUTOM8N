@@ -17,7 +17,6 @@ try_files $uri $uri/ /index.php?q=$uri&$args $admin_dir/index.php$is_args$args;
 # Redirect needed to "hide" index.php
 location / {
 try_files $uri $uri/ /index.php$is_args$args;
-
 # Old image system ?
 rewrite ^/([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$1$2$3.jpg last;
 rewrite ^/([0-9])([0-9])(-[_a-zA-Z0-9-]*)?(-[0-9]+)?/.+.jpg$ /img/p/$1/$2/$1$2$3$4.jpg last;

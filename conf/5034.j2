@@ -5,14 +5,11 @@ index index.php index.html index.htm;
 
 # The main Bolt website
 location / {
-
 try_files $uri $uri/ /index.php?$query_string;
 }
 
 # Generated thumbnail images
 location ~* /thumbs/(.*)$ {
-
-
 try_files $uri $uri/ /index.php?$query_string;
 }
 
@@ -21,13 +18,11 @@ try_files $uri $uri/ /index.php?$query_string;
 # NOTE: If you set a custom branding path, you will need to change '/bolt/'
 #       here to match
 location ~* /bolt/(.*)$ {
-
 try_files $uri $uri/ /index.php?$query_string;
 }
 
 # Backend async routes
 location ~* /async/(.*)$ {
-
 try_files $uri $uri/ /index.php?$query_string;
 }
 
@@ -72,12 +67,8 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
-
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-
 }
-

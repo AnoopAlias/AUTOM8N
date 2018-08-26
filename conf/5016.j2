@@ -54,12 +54,10 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ '\.php$|^/update.php' {
-
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-
 }
 
 location ~ ^/sites/.*/files/styles/ {
@@ -69,4 +67,3 @@ try_files $uri @rewrite;
 location @rewrite {
 rewrite ^/(.*)$ /index.php?q=$1;
 }
-

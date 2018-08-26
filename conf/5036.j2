@@ -13,7 +13,6 @@ rewrite ^/download/(.*) /index.php?route=error/not_found last;
 rewrite /admin$ $scheme://$host$uri/ permanent;
 
 location / {
-
 # This try_files directive is used to enable SEO-friendly URLs for OpenCart.
 try_files $uri @opencart;
 }
@@ -32,11 +31,8 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-
 }
-

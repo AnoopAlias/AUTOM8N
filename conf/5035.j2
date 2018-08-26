@@ -11,7 +11,6 @@ rewrite ^/sitemap_index\.xml$ /index.php?sitemap=1 last;
 rewrite ^/([^/]+?)-sitemap([0-9]+)?\.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
 
 location / {
-
 try_files $uri $uri/ /index.php?q=$uri&$args;
 }
 
@@ -33,11 +32,8 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-
 }
-

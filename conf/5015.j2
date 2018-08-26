@@ -4,9 +4,7 @@ root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
 location / {
-
 try_files $uri $uri/ /index.php;
-
 }
 
 location ~ ^/pingphpfpm$ {
@@ -15,11 +13,8 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php$ {
-
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-
 }
-

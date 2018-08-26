@@ -18,6 +18,7 @@ try_files   $uri @rewrite;
 location ~ \..*/.*\.php$ {
 return 403;
 }
+
 location ~ ^/sites/.*/private/ {
 return 403;
 }
@@ -32,12 +33,10 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ \.php(/|$) {
-
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-
 }
 
 location ~ ^/sites/.*/files/imagecache/ {
@@ -47,4 +46,3 @@ try_files $uri @rewrite;
 location @rewrite {
 rewrite ^/(.*)$ /index.php?q=$1;
 }
-
