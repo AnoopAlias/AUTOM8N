@@ -15,7 +15,7 @@ plugins => {
           {% endfor %}
         },
         # only fail through the nearest 2 before giving up:
-        auto_dc_limit => {{ ansible_play_hosts | length }},
+        auto_dc_limit => {{ groups['ndeployslaves'] | length + 1 }},
       }
     },
     resources => {
