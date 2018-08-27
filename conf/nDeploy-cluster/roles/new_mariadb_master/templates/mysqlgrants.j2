@@ -8,16 +8,8 @@ GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[host]['ansible_nodename']
 GRANT ALL PRIVILEGES ON *.* TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] }}' REQUIRE SSL;
 GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[host]['ansible_nodename'] }}' REQUIRE SSL;
-
-CREATE USER 'maxscale'@'{{ hostvars[host]['dbip'] }}' IDENTIFIED BY {{ MYSQLPASS }};
-GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[host]['dbip'] }}' REQUIRE SSL;
-GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[host]['dbip'] }}' REQUIRE SSL;
-GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[host]['dbip'] }}' REQUIRE SSL;
-GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[host]['dbip'] }}' REQUIRE SSL;
-GRANT ALL PRIVILEGES ON *.* TO 'maxscale'@'{{ hostvars[host]['dbip'] }}' REQUIRE SSL;
-GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[host]['dbip'] }}' REQUIRE SSL;
-GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[host]['dbip'] }}' REQUIRE SSL;
 {% endfor %}
+
 CREATE USER 'maxscale'@'localhost' IDENTIFIED BY {{ MYSQLPASS }};
 GRANT SELECT ON mysql.user TO 'maxscale'@'localhost' REQUIRE SSL;
 GRANT SELECT ON mysql.db TO 'maxscale'@'localhost' REQUIRE SSL;

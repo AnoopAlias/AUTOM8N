@@ -1,0 +1,11 @@
+
+CREATE USER 'maxscale'@'{{ hostvars[item]['dbip'] }}' IDENTIFIED BY {{ MYSQLPASS }};
+GRANT SELECT ON mysql.user TO 'maxscale'@'{{ hostvars[item]['dbip'] }}' REQUIRE SSL;
+GRANT SELECT ON mysql.db TO 'maxscale'@'{{ hostvars[item]['dbip'] }}' REQUIRE SSL;
+GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'{{ hostvars[item]['dbip'] }}' REQUIRE SSL;
+GRANT SHOW DATABASES ON *.* TO 'maxscale'@'{{ hostvars[item]['dbip'] }}' REQUIRE SSL;
+GRANT ALL PRIVILEGES ON *.* TO 'maxscale'@'{{ hostvars[item]['dbip'] }}' REQUIRE SSL;
+GRANT REPLICATION CLIENT ON *.* TO 'maxscale'@'{{ hostvars[item]['dbip'] }}' REQUIRE SSL;
+GRANT REPLICATION SLAVE ON *.* TO 'maxscale'@'{{ hostvars[item]['dbip'] }}' REQUIRE SSL;
+
+FLUSH PRIVILEGES;

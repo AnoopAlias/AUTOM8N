@@ -56,8 +56,17 @@
     src: mysqlgrants.j2
     dest: /root/xtendweb_mysql_grants.sql
 
+- name: Generate mysql grants for master
+  template:
+    src: mysqlgrants_ip.j2
+    dest: /root/xtendweb_mysql_grants_ip.sql
+
 - name: Setup mysql grants for master
   shell: mysql < /root/xtendweb_mysql_grants.sql
+  ignore_errors: yes
+
+- name: Setup mysql grants for master
+  shell: mysql < /root/xtendweb_mysql_grants_ip.sql
   ignore_errors: yes
 
 - name: Generate mysql grants for slaves
@@ -66,9 +75,19 @@
     dest: "/root/xtendweb_mysql_grants_{{ item }}.sql"
   with_items: "{{ groups.ndeployslaves }}"
 
+- name: Generate mysql grants for slaves
+  template:
+    src: mysqlgrants_slave_ip.j2
+    dest: "/root/xtendweb_mysql_grants_ip_{{ item }}.sql"
+  with_items: "{{ groups.ndeployslaves }}"
 
 - name: Setup mysql grants for slaves
   shell: "mysql < /root/xtendweb_mysql_grants_{{ item }}.sql"
+  ignore_errors: yes
+  with_items: "{{ groups.ndeployslaves }}"
+
+- name: Setup mysql grants for slaves
+  shell: "mysql < /root/xtendweb_mysql_grants_ip_{{ item }}.sql"
   ignore_errors: yes
   with_items: "{{ groups.ndeployslaves }}"
 
