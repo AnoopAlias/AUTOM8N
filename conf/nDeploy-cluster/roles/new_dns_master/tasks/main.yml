@@ -26,6 +26,18 @@
     dest: /etc/gdnsd/config
   when: dns == "geodns"
 
+- name: Create /etc/gdnsd/geoip_resources
+  file:
+    path: /etc/gdnsd/geoip_resources
+    state: touch
+  when: dns == "geodns"
+
+- name: Create /etc/gdnsd/metafo_resources
+  file:
+    path: /etc/gdnsd/metafo_resources
+    state: touch
+  when: dns == "geodns"
+
 - name: Disable geodns
   file:
     path: /opt/nDeploy/conf/skip_geodns
