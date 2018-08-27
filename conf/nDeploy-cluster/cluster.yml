@@ -12,7 +12,7 @@
     - unison_master
     - mysqlaccess_master
     - clusterdirs_master
-    - dns_master
+    - new_dns_master
 
 - name: Setup XtendWeb cluster on slaves
   hosts: ndeployslaves
@@ -23,7 +23,7 @@
     - domlog_rotate_slave
     - copyrepos_slave
     - mkaccesshash_slave
-    - dns_slave
+    - new_dns_slave
 
 
 - name: Setup DNS cluster config on slaves

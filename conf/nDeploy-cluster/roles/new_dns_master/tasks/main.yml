@@ -15,12 +15,6 @@
   shell: /etc/gdnsd/geoip/geoip_update.sh
   when: dns == "geodns"
 
-- name: Include vars of ndeploy_master.yaml into masterdata
-  include_vars:
-    file: /opt/nDeploy/conf/ndeploy_master.yaml
-    name: masterdata
-  when: dns == "geodns"
-
 - name: Remove old server status check cron job
   cron:
     name: nDeploy status check

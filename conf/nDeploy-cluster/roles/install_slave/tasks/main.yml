@@ -21,7 +21,7 @@
    - stunnel
    - redis
    - haproxy
-   - geodns-nDeploy
+   - gdnsd-nDeploy
 
 - name: Install XtendWeb cluster slave rpm package
   yum: name={{ item }} enablerepo=ndeploy-edge,epel state=present
@@ -65,3 +65,16 @@
     user: root
     job: "/usr/sbin/postmap /etc/postfix/recipient_bcc && /usr/sbin/postfix reload"
     minute: "*/15"
+
+- name: check if CageFS is active
+  stat:
+    path: /etc/cagefs/cagefs.mp
+  register: cagefs
+
+- name: Add /var/lib/maxscale to CageFS map
+  lineinfile:
+    path: /etc/cagefs/cagefs.mp
+    insertbefore: '/var/lib/mysql'
+    line: '/var/lib/maxscale'
+  when:
+    - cagefs.stat.exists == true

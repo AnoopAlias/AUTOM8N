@@ -16,7 +16,7 @@
    - stunnel
    - redis
    - haproxy
-   - geodns-nDeploy
+   - gdnsd-nDeploy
 
 - name: Setup nginx config directories on master
   file: path=/etc/nginx/{{ item }} state=directory
@@ -50,3 +50,16 @@
   template:
     src: nginx_status_allow.conf.j2
     dest: /etc/nginx/conf.d/nginx_status_allow.conf
+
+- name: check if CageFS is active
+  stat:
+    path: /etc/cagefs/cagefs.mp
+  register: cagefs
+
+- name: Add /var/lib/maxscale to CageFS map
+  lineinfile:
+    path: /etc/cagefs/cagefs.mp
+    insertbefore: '/var/lib/mysql'
+    line: '/var/lib/maxscale'
+  when:
+    - cagefs.stat.exists == true
