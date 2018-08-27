@@ -57,6 +57,16 @@
     - inventory_hostname != groups['ndeploydbslave'][0]
     - maxscale.stat.exists == false
 
+- name: check if CageFS is active
+  stat:
+    path: /usr/sbin/cagefsctl
+  register: cagefs
+
+- name: Cagefsctl remount
+  shell: /usr/sbin/cagefsctl --remount-all
+  when:
+    - cagefs.stat.exists == true
+
 - name: Start MaxScale
   service:
     name: maxscale
