@@ -9,12 +9,8 @@ plugins => {
         geoip2_db = GeoLite2-City.mmdb,
         datacenters => [{% for host in groups['ndeploymaster'] %}{{ hostvars[host]['ansible_hostname'] }}{% endfor %}{% for host in groups['ndeployslaves'] %}, {{ hostvars[host]['ansible_hostname'] }}{% endfor %}],
         auto_dc_coords => {
-        {% for host in groups['ndeploymaster'] %}
-           {{ hostvars[host]['ansible_hostname'] }} => [ {{ hostvars[host]['latitude'] }}, {{ hostvars[host]['longitude'] }} ],
-        {% endfor %}
-        {% for host in groups['ndeployslaves'] %}
-           {{ hostvars[host]['ansible_hostname'] }} => [ {{ hostvars[host]['latitude'] }}, {{ hostvars[host]['longitude'] }} ],
-        {% endfor %}
+          {% for host in groups['ndeploymaster'] %}{{ hostvars[host]['ansible_hostname'] }} => [ {{ hostvars[host]['latitude'] }}, {{ hostvars[host]['longitude'] }} ],{% endfor %}
+          {% for host in groups['ndeployslaves'] %}{{ hostvars[host]['ansible_hostname'] }} => [ {{ hostvars[host]['latitude'] }}, {{ hostvars[host]['longitude'] }} ],{% endfor %}
         },
         # only fail through the nearest 2 before giving up:
         auto_dc_limit => {{ ansible_play_hosts | length }},
@@ -25,12 +21,8 @@ plugins => {
         map => auto_map,
         service_types => [ xtendweb ],
         dcmap => {
-        {% for host in groups['ndeploymaster'] %}
-          {{ hostvars[host]['ansible_hostname'] }} => {{ hostvars[host]['mainip'] }},
-        {% endfor %}
-        {% for host in groups['ndeployslaves'] %}
-          {{ hostvars[host]['ansible_hostname'] }} => {{ hostvars[host]['mainip'] }},
-        {% endfor %}
+          {% for host in groups['ndeploymaster'] %}{{ hostvars[host]['ansible_hostname'] }} => {{ hostvars[host]['mainip'] }},{% endfor %}
+          {% for host in groups['ndeployslaves'] %}{{ hostvars[host]['ansible_hostname'] }} => {{ hostvars[host]['mainip'] }},{% endfor %}
         }
       },
       $include{geoip_resources}

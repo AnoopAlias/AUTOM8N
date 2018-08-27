@@ -16,8 +16,8 @@
 - name: Start redis on slave
   service: name=redis enabled=yes state=started
 
-- name: Start ndeploy_geodns on master
-  service: name=ndeploy_geodns enabled=yes state=started
+- name: Start gdnsd on master
+  service: name=gdnsd enabled=yes state=started
 
 - name: Ensure Dovecot service is running
   service: name=dovecot enabled=yes state=started
