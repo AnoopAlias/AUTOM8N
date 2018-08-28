@@ -4,5 +4,5 @@
 {% endfor %}
 {% for host in groups['ndeploymaster'] %}
 /opt/nDeploy/scripts/update_cluster_ipmap.py ndeploy_master {{ hostvars[host]['ansible_nodename'] }} mainip {{ hostvars[host]['mainip'] }} na
-/opt/nDeploy/scripts/update_cluster_ipmap.py ndeploy_master {{ hostvars[host]['ansible_nodename'] }} dnsmap {{ hostvars[host]['mainip'] }} ip0
+/opt/nDeploy/scripts/update_cluster_ipmap.py ndeploy_master {{ hostvars[host]['ansible_nodename'] }} dnsmap {{ ansible_default_ipv4.address }} ip0
 {% endfor %}
