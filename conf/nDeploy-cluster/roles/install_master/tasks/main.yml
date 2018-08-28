@@ -41,11 +41,6 @@
     user: root
     job: "/usr/bin/touch /var/spool/cron/.cron.hostname"
 
-- name: Create ndeploy master yaml
-  template:
-    src: ndeploy_master.yaml.j2
-    dest: /opt/nDeploy/conf/ndeploy_master.yaml
-
 - name: Allow server status check from all cluster nodes
   template:
     src: nginx_status_allow.conf.j2
