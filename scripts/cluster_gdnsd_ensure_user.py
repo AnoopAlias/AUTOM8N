@@ -53,10 +53,11 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
     thezone = zonedump_parsed['data']['zone'][0]
     resource_record = thezone['record']
     gdnsdzone = []
+    mx_skip_flag = False
     for rr in resource_record:
         if rr['type'] != ':RAW' or rr['type'] != '$TTL':
             if rr['type'] == 'SOA':
-                gdnsdzone.insert(0, '@ SOA '+rr['mname']+'. '+rr['rname']+'. (1; 7200; 30M; 3D; 900;)\n')
+                gdnsdzone.insert(0, '@ SOA '+rr['mname']+'. '+rr['rname']+'. (1 7200 30M 3D 900)\n')
             elif rr['type'] == 'NS':
                 gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
             elif rr['type'] == "A":
@@ -67,10 +68,10 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
             elif rr['type'] == 'CNAME':
                 if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == domainname:
                     gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
+                    gdnsdzone.append('ha-'+rr['name']+' DYNA metafo!'+resourcename+'\n')
                 else:
                     gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
-            elif rr['type'] == "MX":
-                mx_skip_flag = False
+            elif rr['type'] == "MX" and not mx_skip_flag:
                 with open('/etc/remotedomains') as mx_excludes:
                     for line in mx_excludes:
                         if str(line).rstrip() == domainname:
@@ -84,7 +85,7 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                 else:
                     gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
             elif rr['type'] == "TXT":
-                gdnsdzone.append(rr['name']+' TXT '+rr['txtdata']+'\n')
+                gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
             elif rr['type'] == 'SRV':
                 gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
             elif rr['type'] == 'AAAA':
