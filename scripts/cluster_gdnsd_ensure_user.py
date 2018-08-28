@@ -56,19 +56,19 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
     for rr in resource_record:
         if rr['type'] != ':RAW' or rr['type'] != '$TTL':
             if rr['type'] == 'SOA':
-                gdnsdzone.insert(0, '@ SOA '+rr['mname']+'. '+rr['rname']+'. (1; 7200; 30M; 3D; 900;)')
+                gdnsdzone.insert(0, '@ SOA '+rr['mname']+'. '+rr['rname']+'. (1; 7200; 30M; 3D; 900;)\n')
             elif rr['type'] == 'NS':
-                gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".")
+                gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
             elif rr['type'] == "A":
                 if rr['address'] == ipaddress and rr['name'] == domainname+".":
-                    gdnsdzone.append(rr['name']+' DYNA metafo!'+resourcename)
+                    gdnsdzone.append(rr['name']+' DYNA metafo!'+resourcename+'\n')
                 else:
-                    gdnsdzone.append(rr['name']+' A '+rr['address'])
+                    gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
             elif rr['type'] == 'CNAME':
                 if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == domainname:
-                    gdnsdzone.append(rr['name']+' A '+ipaddress)
+                    gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
                 else:
-                    gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.')
+                    gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
             elif rr['type'] == "MX":
                 mx_skip_flag = False
                 with open('/etc/remotedomains') as mx_excludes:
@@ -78,17 +78,17 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                             break
                 if not mx_skip_flag:
                     myhostname = socket.gethostname()
-                    gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.')
+                    gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
                     for server in slavelist:
-                        gdnsdzone.append(rr['name']+' MX  100 '+server+'.')
+                        gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
                 else:
-                    gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.')
+                    gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
             elif rr['type'] == "TXT":
-                gdnsdzone.append(rr['name']+' TXT '+rr['txtdata'])
+                gdnsdzone.append(rr['name']+' TXT '+rr['txtdata']+'\n')
             elif rr['type'] == 'SRV':
-                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.')
+                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
             elif rr['type'] == 'AAAA':
-                gdnsdzone.append(rr['name']+' A '+rr['address'])
+                gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
             else:
                 pass
     with codecs.open('/etc/gdnsd/zones/'+domainname, "w", 'utf-8') as confout:
