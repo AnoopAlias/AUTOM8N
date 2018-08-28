@@ -71,7 +71,7 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                     gdnsdzone.append('ha-'+rr['name']+' DYNA metafo!'+resourcename+'\n')
                 else:
                     gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
-            elif rr['type'] == "MX" and not mx_skip_flag:
+            elif rr['type'] == "MX" and mx_skip_flag:
                 with open('/etc/remotedomains') as mx_excludes:
                     for line in mx_excludes:
                         if str(line).rstrip() == domainname:
