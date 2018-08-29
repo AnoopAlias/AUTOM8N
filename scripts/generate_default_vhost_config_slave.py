@@ -54,7 +54,8 @@ if os.path.isfile(installation_path+"/conf/ndeploy_master.yaml"):  # get the clu
     master_data_yaml = open(master_config_file, 'r')
     master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
     master_data_yaml.close()
-    master_mainip = master_data_yaml_parsed[0]['mainip']
+    master_data = master_data_yaml_parsed[0]
+    master_mainip = master_data['mainip']
     master_available = True
 # Initiate Jinja2 templateEnv
 templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
