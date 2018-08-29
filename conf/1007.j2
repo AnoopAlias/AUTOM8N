@@ -16,3 +16,26 @@ proxy_set_header X-Forwarded-Server $host;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header X-Real-IP $remote_addr;
 }
+
+# Proxy PHP files to httpd
+location ~ \.php$ {
+access_log  off;
+{% if SSL_OFFLOAD == 'enabled' %}
+proxy_pass   http://{{ APPSERVERIP }}:9999;
+{% else %}
+proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
+proxy_ssl_session_reuse on;
+proxy_ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+proxy_ssl_ciphers   HIGH:!aNULL:!MD5;
+{% endif %}
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+}
