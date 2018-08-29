@@ -57,7 +57,9 @@ templateVars = {"CPIPLIST": cpanel_ip_list,
                 "CPSRVDSSL": cpsrvdsslfile,
                 "SLAVEIPLIST": slaveiplist,
                 "MYHOSTNAME": myhostname,
-                "DEFAULT_VHOST_DDOS": default_ddos
+                "DEFAULT_VHOST_DDOS": default_ddos,
+                "PROXY_TO_MASTER": False,
+                "MASTER_MAINIP": '127.0.0.1'
                 }
 # Generate default_server.conf
 if os.path.isfile(installation_path+'/conf/default_server_local.conf.j2'):

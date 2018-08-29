@@ -17,6 +17,8 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 
+master_available = False
+master_mainip = "127.0.0.1"
 iplist_json = json.loads(subprocess.Popen(['/usr/local/cpanel/bin/whmapi1', 'listips', '--output=json'], stdout=subprocess.PIPE).communicate()[0])
 data_dict = iplist_json.get('data')
 ip_list = data_dict.get('ip')
@@ -47,6 +49,13 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cl
         ipmap_dict = server_dict.get('dnsmap')
         theiplist = ipmap_dict.values()
         slaveiplist = list(set(slaveiplist + theiplist))
+if os.path.isfile(installation_path+"/conf/ndeploy_master.yaml"):  # get the cluster ipmap
+    master_config_file = installation_path+"/conf/ndeploy_master.yaml"
+    master_data_yaml = open(master_config_file, 'r')
+    master_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+    master_data_yaml.close()
+    master_mainip = master_data_yaml_parsed.keys()[0]['mainip']
+    master_available = True
 # Initiate Jinja2 templateEnv
 templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
 templateEnv = jinja2.Environment(loader=templateLoader)
@@ -54,7 +63,9 @@ templateVars = {"CPIPLIST": cpanel_ip_list,
                 "MAINIP": mainip,
                 "CPSRVDSSL": cpsrvdsslfile,
                 "SLAVEIPLIST": slaveiplist,
-                "DEFAULT_VHOST_DDOS": default_ddos
+                "DEFAULT_VHOST_DDOS": default_ddos,
+                "PROXY_TO_MASTER": master_available,
+                "MASTER_MAINIP": master_mainip
                 }
 # Generate default_server.conf
 if os.path.isfile(installation_path+'/conf/default_server_local.conf.j2'):
