@@ -142,7 +142,7 @@ if cpanelnewuser != cpaneluser:
         if os.path.isfile(installation_path+"/conf/skip_geodns"):
             subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
         else:
-            subprocess.call(installation_path + "/scripts/cluster_geodns_ensure_user.py "+cpaneluser, shell=True)
+            subprocess.call(installation_path + "/scripts/cluster_gdnsd_ensure_user.py "+cpaneluser, shell=True)
         subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
         sighupnginx()
     print(("1 nDeploy:postmodify:"+cpanelnewuser))
@@ -185,7 +185,7 @@ else:
         if os.path.isfile(installation_path+"/conf/skip_geodns"):
             subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
         else:
-            subprocess.call(installation_path + "/scripts/cluster_geodns_ensure_user.py "+cpaneluser, shell=True)
+            subprocess.call(installation_path + "/scripts/cluster_gdnsd_ensure_user.py "+cpaneluser, shell=True)
         subprocess.call("/opt/nDeploy/scripts/generate_config.py "+cpanelnewuser, shell=True)
         sighupnginx()
     silentremove(installation_path+"/lock/"+cpaneluser+".userdata")

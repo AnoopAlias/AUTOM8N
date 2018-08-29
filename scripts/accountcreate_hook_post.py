@@ -96,7 +96,7 @@ if os.path.exists(cluster_config_file):
     if os.path.isfile(installation_path+"/conf/skip_geodns"):
         subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
     else:
-        subprocess.call(installation_path + "/scripts/cluster_geodns_ensure_user.py "+cpaneluser, shell=True)
+        subprocess.call(installation_path + "/scripts/cluster_gdnsd_ensure_user.py "+cpaneluser, shell=True)
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
     sighupnginx()
     print("1 nDeploy:clusteraccountcreate:"+cpaneluser)
