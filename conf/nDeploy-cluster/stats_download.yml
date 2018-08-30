@@ -1,0 +1,17 @@
+---
+- hosts: ndeploymaster
+  tasks:
+  - name: Create staging dir to hold access log
+    file:
+      path: '/var/log/nginx-{{ item }}'
+      state: directory
+    with_items:
+      - '{{ groups[ndeployslaves] }}'
+
+- hosts: ndeployslaves
+  tasks:
+  - name: Synchronize domlogs
+    synchronize:
+      mode: pull
+      src: /var/log/nginx
+      dest: /var/log/nginx-{{ inventory_hostname }}

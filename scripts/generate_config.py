@@ -294,6 +294,10 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     else:
         hasipv6 = False
         ipv6_addr = None
+    # Cluster access logs
+    cluster_log = False
+    if os.path.isfile('/opt/nDeploy/conf/CLUSTER_LOG') and clusterenabled:
+        cluster_log = True
     # if domain has TLS, get details about it too
     # We setup TLS based on /var/cpanel/ssl/apache_tls/ path in cPanel v68+
     if kwargs.get('maindomain').startswith("*"):
@@ -471,7 +475,8 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
                     "REDIRECT_URL": redirect_url,
                     "APPEND_REQUESTURI": append_requesturi,
                     "DOSMITIGATE": dos_mitigate,
-                    "BACKEND_CATEGORY": backend_category
+                    "BACKEND_CATEGORY": backend_category,
+                    "CLUSTER_LOG": cluster_log
                     }
     generated_config = server_template.render(templateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
@@ -614,7 +619,8 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
                                   "AUTH_BASIC": subdir_auth_basic,
                                   "REDIRECT_URL": subdir_redirect_url,
                                   "REDIRECTSTATUS": subdir_redirectstatus,
-                                  "APPEND_REQUESTURI": subdir_append_requesturi
+                                  "APPEND_REQUESTURI": subdir_append_requesturi,
+                                  "CLUSTER_LOG": cluster_log
                                   }
             generated_config = subdir_server_template.render(subdirtemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subconf", "w", 'utf-8') as confout:

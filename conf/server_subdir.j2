@@ -13,14 +13,23 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ SUBDIRAPPSUNIQUE }}.s
 {% endif %}
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_SUBDIR_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}
 {% else %}
 {% if FOPEN_SUBDIR_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }} combined buffer=4k flush=5m;
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=4k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}

@@ -192,14 +192,23 @@ listen  [{{ CPIPVSIX }}]:80 ;
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}
 {% else %}
 {% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }} combined buffer=4k flush=5m;
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=4k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}
@@ -316,14 +325,23 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}
 {% else %}
 {% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=4k flush=5m;
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=4k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}
