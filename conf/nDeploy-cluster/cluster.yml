@@ -19,11 +19,11 @@
   roles:
     - install_slave
     - csync2_slave
+    - new_dns_slave
     - services_slave
     - domlog_rotate_slave
     - copyrepos_slave
     - mkaccesshash_slave
-    - new_dns_slave
 
 
 - name: Setup DNS cluster config on slaves
