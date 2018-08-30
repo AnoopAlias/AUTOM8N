@@ -53,7 +53,7 @@ def merge_logs(domain, slavelist):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate gdnsd zone file")
+    parser = argparse.ArgumentParser(description="Merge domlogs for user")
     parser.add_argument("CPANELUSER")
     args = parser.parse_args()
     cpaneluser = args.CPANELUSER
