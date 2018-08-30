@@ -56,13 +56,13 @@
     src: csf.j2
     dest: /root/xtendweb_csf
   when:
-    - cagefs.stat.exists == true
+    - csf.stat.exists == true
 
 
 - name: Add CSF whitelist
   shell: bash /root/xtendweb_csf
   when:
-  - cagefs.stat.exists == true
+  - csf.stat.exists == true
 
 - name: check if CageFS is active
   stat:
