@@ -1,0 +1,4 @@
+{% for host in groups['ndeployslaves'] %}
+/usr/sbin/csf -a {{ hostvars[host]['mainip'] }}
+/usr/sbin/csf -a {{ hostvars[host]['dbip'] }}
+{% endfor %}

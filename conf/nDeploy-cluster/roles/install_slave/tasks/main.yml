@@ -78,3 +78,20 @@
     line: '/var/lib/maxscale'
   when:
     - cagefs.stat.exists == true
+
+- name: check if CSF is active
+  stat:
+    path: /usr/sbin/csf
+  register: csf
+
+- name: Setup CSF Whitelist
+  template:
+    src: csf.j2
+    dest: /root/xtendweb_csf
+  when:
+    - cagefs.stat.exists == true
+
+- name: Add CSF whitelist
+  shell: bash /root/xtendweb_csf
+  when:
+  - cagefs.stat.exists == true
