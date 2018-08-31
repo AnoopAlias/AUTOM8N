@@ -374,6 +374,25 @@ print('</form>')
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
+# Next section start here
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingEight"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">Sync GeoDNS zone</a></h3></div>')  # heading
+print('<div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">')  # collapse
+print('<div class="panel-body">')  # body
+print('<form class="form-inline" action="resource_limit.cgi" method="post">')
+print('<select name="user">')
+user_list = os.listdir("/var/cpanel/users")
+for cpuser in sorted(user_list):
+    if cpuser != 'nobody' and cpuser != 'system':
+        print(('<option value="'+cpuser+'">'+cpuser+'</option>'))
+print('</select>')
+print(('<br>'))
+print(('<br>'))
+print('<input class="btn btn-primary" type="submit" value="SYNC GEOZONE">')
+print('</form>')
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
 print('</div>')  # accordion
 
 print('<div class="panel-footer"><small>')
