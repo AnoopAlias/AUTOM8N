@@ -37,6 +37,7 @@ group nDeployCluster
         action
         {
                 pattern /etc/localdomains;
+                pattern /etc/postfix/recipient_bcc;
                 exec "/opt/nDeploy/scripts/postfix_backupmx_update.sh";
                 logfile "/var/log/csync2_action.log";
         }
