@@ -1,6 +1,6 @@
 
 service_types => {
-  xtendweb => { plugin => http_status, vhost => xtendweb.status, url_path => "/nginx_status" }
+  xtendweb => { plugin => http_status, vhost => xtendweb.status, url_path => "/nginx_status", down_thresh => 3, interval => 5, ok_thresh => 3,up_thresh => 6 }
 }
 plugins => {
   geoip => {
