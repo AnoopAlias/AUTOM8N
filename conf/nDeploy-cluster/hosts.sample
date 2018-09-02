@@ -1,8 +1,8 @@
 [ndeployslaves]
-slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=x.x.x.x latitude="aaa.aaa" longitude="-bb.bb" dbip=x.x.x.x mariadb=10.2 dbmode=rwsplit dns=geodns
+slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=x.x.x.x latitude="aaa.aaa" longitude="-bb.bb" dbip=x.x.x.x mariadb=10.2 dbmode=rwsplit dns=geodns repo=ndeploy
 
 [ndeploymaster]
-master.example.com ansible_port=22 ansible_connection=local server_id=1 webserver=nginx mainip=y.y.y.y latitude="aaa.aaa" longitude="-bb.bb" dbip=y.y.y.y mariadb=10.2 dbmode=rwsplit dns=geodns
+master.example.com ansible_port=22 ansible_connection=local server_id=1 webserver=nginx mainip=y.y.y.y latitude="aaa.aaa" longitude="-bb.bb" dbip=y.y.y.y mariadb=10.2 dbmode=rwsplit dns=geodns repo=ndeploy
 
 [ndeploydbslave]
-slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=x.x.x.x latitude="aaa.aaa" longitude="-bb.bb" dbip=x.x.x.x mariadb=10.2 dbmode=rwsplit dns=geodns
+slave1.example.com ansible_port=22 server_id=2 webserver=nginx mainip=x.x.x.x latitude="aaa.aaa" longitude="-bb.bb" dbip=x.x.x.x mariadb=10.2 dbmode=rwsplit dns=geodns repo=ndeploy
