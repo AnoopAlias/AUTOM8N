@@ -29,6 +29,7 @@ XtendWeb provision and manage the above software stack on the popular cPanel con
 
 # Licensing Model
 XtendWeb is 100% open source GPLv3 licensed software . The Packaged RPM end-product is available along with technical support as a paid subscription
+
 In short XtendWeb is free as in free speech , but not free as in free beer 
 
 
