@@ -13,10 +13,15 @@ https://autom8n.com/xtendweb/
 
 # CLUSTER FEATURES
 Simple Ansible Automated Provisioning
+
 Clustered LEMP Stack ( Nginx + PHP-FPM/Phusion Passenger + MariaDB)
+
 File Replication using Unison
+
 Configuration replication using Csync2/Ansible
+
 MariaDB Master-Master Replication with query routing by MaxScale
+
 gdnsd for geo-aware DNS LoadBalancing 
 
 XtendWeb provision and manage the above software stack on the popular cPanel control panel 
