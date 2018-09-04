@@ -53,7 +53,7 @@ job3:
   label: Watch /var/named/cache
   watch: /var/named/cache
   exclude: []
-  events: ['modify']
+  events: ['move_to']
   options: []
   recursive: false
   command: /opt/nDeploy/scripts/sync_gdnsd_zone.sh $filename
