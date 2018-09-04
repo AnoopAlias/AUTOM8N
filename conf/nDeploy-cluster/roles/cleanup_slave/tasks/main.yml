@@ -14,3 +14,6 @@
 
 - name: Restart crond on master
   service: name=crond enabled=yes state=restarted
+
+- name: Restart gdnsd on master
+  service: name=gdnsd enabled=yes state=restarted

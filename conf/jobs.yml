@@ -49,3 +49,11 @@ job2:
   options: []
   recursive: false
   command: /opt/nDeploy/scripts/generate_default_vhost_config.py
+job3:
+  label: Watch /var/named/cache
+  watch: /var/named/cache
+  exclude: []
+  events: ['modify']
+  options: []
+  recursive: false
+  command: /opt/nDeploy/scripts/sync_gdnsd_zone.sh $filename
