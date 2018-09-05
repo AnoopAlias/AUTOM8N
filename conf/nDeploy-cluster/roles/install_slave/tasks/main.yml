@@ -95,3 +95,4 @@
   shell: bash /root/xtendweb_csf
   when:
   - csf.stat.exists == true
+  ignore_errors: yes
