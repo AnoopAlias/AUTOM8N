@@ -60,7 +60,7 @@ def railo_vhost_add_tomcat(domain_name, document_root, *domain_aname_list):
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
     # enabling shell as Railo probably needs shell vars like CATALINA_HOME
     if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload'):
-        subprocess.Popen(['/opt/lucee/lucee_ctl', 'restart'], shell=True)
+        subprocess.call('/opt/lucee/lucee_ctl restart', shell=True)
     return
 
 

@@ -18,6 +18,7 @@
 
 - name: Start gdnsd on slave
   service: name=gdnsd enabled=yes state=started
+  when: dns == "geodns"
 
 - name: Ensure Dovecot service is running
   service: name=dovecot enabled=yes state=started

@@ -21,3 +21,4 @@
 
 - name: Restart gdnsd on master
   service: name=gdnsd enabled=yes state=restarted
+  when: dns == "geodns"

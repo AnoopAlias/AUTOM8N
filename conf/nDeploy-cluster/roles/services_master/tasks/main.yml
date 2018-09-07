@@ -46,3 +46,4 @@
 
 - name: Start gdnsd on master
   service: name=gdnsd enabled=yes state=started
+  when: dns == "geodns"
