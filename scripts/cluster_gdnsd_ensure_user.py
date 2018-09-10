@@ -62,10 +62,10 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
             elif rr['type'] == 'NS':
                 gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
             elif rr['type'] == "A":
-                if rr['address'] == ipaddress and rr['name'] == domainname+".":
-                    gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
-                else:
+                if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
                     gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                else:
+                    gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
             elif rr['type'] == 'CNAME':
                 if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == domainname:
                     gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
