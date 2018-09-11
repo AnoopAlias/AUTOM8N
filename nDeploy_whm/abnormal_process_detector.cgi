@@ -118,8 +118,13 @@ for myprocess in psutil.process_iter():
         if myexe.startswith(("/usr/bin/perl", "/home")):
             malware = True
             print('<div class="icon-box">')
+            print('<br>')
+            print('<br>')
             print('<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>')
-            print('pid: <button type="button" class="btn btn-danger">'+str(mypid)+'</button> running under user: <button type="button" class="btn btn-primary">'+myusername+'</button> with commandline as: <button type="button" class="btn btn-default">'+str(mycmdline)+'</button> is actually: <button type="button" class="btn btn-warning">'+myexe+'</button>')
+            print('<button type="button" class="btn btn-danger">PID: '+str(mypid)+'</button>')
+            print('<button type="button" class="btn btn-primary">USER: '+myusername+'</button>')
+            print('<button type="button" class="btn btn-default">COMMANDLINE: '+str(mycmdline)+'</button>')
+            print('<button type="button" class="btn btn-warning">EXE: '+myexe+'</button>')
             print('</div>')
 if not malware:
     print('<div class="icon-box">')
