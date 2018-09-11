@@ -396,11 +396,11 @@ if os.path.isfile(cluster_config_file):
     print('</div>')  # default
 # Next section start here
 print('<div class="panel panel-default">')  # default
-print('<div class="panel-heading" role="tab" id="headingNine"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false" aria-controls="collapseNine">ABNORMAL PROCESS TRACKERS</a></h3></div>')  # heading
+print('<div class="panel-heading" role="tab" id="headingNine"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false" aria-controls="collapseNine">ABNORMAL PROCESS TRACKER</a></h3></div>')  # heading
 print('<div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">')  # collapse
 print('<div class="panel-body">')  # body
 print('<form class="form-group" action="abnormal_process_detector.cgi">')
-print('<input class="btn btn-primary" type="submit" value="TRACK DOWN PROCESS">')
+print('<input class="btn btn-primary" type="submit" value="TRACK PROCESS">')
 print('</form>')
 print('</div>')  # body
 print('</div>')  # collapse
