@@ -118,8 +118,8 @@ for myprocess in psutil.process_iter():
         if myexe.startswith(("/usr/bin/perl", "/home")):
             malware = True
             print('<div class="icon-box">')
-            print('<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> PID: '+mypid)
-            print('pid: '+mypid+' running under user: '+myusername+' with commandline as: '+mycmdline+' is actually: '+myexe)
+            print('<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> PID: '+str(mypid))
+            print('pid: '+str(mypid)+' running under user: '+myusername+' with commandline as: '+mycmdline+' is actually: '+myexe)
             print('</div>')
 if not malware:
     print('<div class="icon-box">')
