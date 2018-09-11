@@ -400,7 +400,7 @@ print('<div class="panel-heading" role="tab" id="headingNine"><h3 class="panel-t
 print('<div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">')  # collapse
 print('<div class="panel-body">')  # body
 print('<form class="form-group" action="abnormal_process_detector.cgi">')
-print('<input class="btn btn-primary" type="submit" value="TRACK PROCESS">')
+print('<input class="btn btn-primary" type="submit" value="CHECK PROCESS">')
 print('</form>')
 print('</div>')  # body
 print('</div>')  # collapse
