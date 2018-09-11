@@ -126,6 +126,7 @@ for myprocess in psutil.process_iter():
             print('COMMANDLINE: <kbd>'+str(mycmdline)+'</kbd><br>')
             print('EXE: <kbd>'+myexe+'</kbd>')
             print('</div>')
+            print('<hr>')
 if not malware:
     print('<div class="icon-box">')
     print('<span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>No suspicious process found')
