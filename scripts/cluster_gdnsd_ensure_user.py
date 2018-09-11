@@ -65,7 +65,7 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                 if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
                     gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                 else:
-                    if rr["name"].rstrip('.') in sub_domains:
+                    if rr["name"].rstrip('.') in sub_domains or rr["name"].rstrip('.') == domainname:
                         gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
                     else:
                         gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
