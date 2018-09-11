@@ -123,8 +123,8 @@ for myprocess in psutil.process_iter():
             print('<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>')
             print('PID: <kbd>'+str(mypid)+'</kbd><br>')
             print('USER: <kbd>'+myusername+'</kbd><br>')
-            print('<button type="button" class="btn btn-basic">COMMANDLINE: '+str(mycmdline)+'</button><br>')
-            print('<button type="button" class="btn btn-danger">EXE: '+myexe+'</button>')
+            print('COMMANDLINE: <kbd>'+str(mycmdline)+'</kbd><br>')
+            print('EXE: <kbd>'+myexe+'</kbd>')
             print('</div>')
 if not malware:
     print('<div class="icon-box">')
