@@ -92,7 +92,7 @@ print('</div>')
 
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></span></a></li>')
-print('<li class="active">Sync Zone</li>')
+print('<li class="active">Check Process</li>')
 print('</ol>')
 
 print('<div class="panel panel-default">')
