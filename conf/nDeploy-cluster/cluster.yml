@@ -13,8 +13,6 @@
     - mysqlaccess_master
     - clusterdirs_master
     - new_dns_master
-    - stunnel_master
-    - haproxy_master
 
 - name: Setup XtendWeb cluster on slaves
   hosts: ndeployslaves
@@ -26,9 +24,19 @@
     - domlog_rotate_slave
     - copyrepos_slave
     - mkaccesshash_slave
+
+- name: Setup Stunnel and HAProxy
+  hosts: ndeploymaster
+  connection: local
+  roles:
+    - stunnel_master
+    - haproxy_master
+
+- name: Setup Stunnel and HAProxy
+  hosts: ndeployslaves
+  roles:
     - stunnel_slave
     - haproxy_slave
-
 
 - name: Setup DNS cluster config on slaves
   hosts: ndeployslaves
