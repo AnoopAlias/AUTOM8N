@@ -131,10 +131,20 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         the_subdir_dict['backend_path'] = mybackendpath
         the_subdir_dict['backend_version'] = mybackendversion
         the_subdir_dict['apptemplate_code'] = myapptemplate
-        subdir_apps_dict[thesubdir] = the_subdir_dict
         print('<div class="panel panel-default">')
         print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'/'+thesubdir+'</strong></h3></div>'))
         print(('<div class="panel-body">'))
+        # Lets deal with settings that are mutually exclusive
+        if 'redis' in myapptemplate:
+            the_subdir_dict['pagespeed'] = 'disabled'
+            the_subdir_dict['mod_security'] = 'disabled'
+            print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Turned off pagespeed and mod_security options as they are incompatible with Full Page cache. The cache will not work if you turn on these options</div>')
+        if 'noextra' in myapptemplate:
+            the_subdir_dict['set_expire_static'] = 'disabled'
+            the_subdir_dict['gzip'] = 'disabled'
+            the_subdir_dict['brotli'] = 'disabled'
+            print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Turned off gzip, brotli and set_expire_static options as they are incompatible with the template generated nginx.conf. The config will not work if you turn on these options</div>')
+        subdir_apps_dict[thesubdir] = the_subdir_dict
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
         print('<div class="icon-box">')

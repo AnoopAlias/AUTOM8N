@@ -1,0 +1,59 @@
+#NextCloud in subdir
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+add_header X-Robots-Tag none;
+add_header X-Download-Options noopen;
+add_header X-Permitted-Cross-Domain-Policies none;
+
+location = /{{ SUBDIR }}/.well-known/carddav {
+return 301 $scheme://$host/{{ SUBDIR }}/remote.php/dav;
+}
+location = /{{ SUBDIR }}/.well-known/caldav {
+return 301 $scheme://$host/{{ SUBDIR }}/remote.php/dav;
+}
+
+location /{{ SUBDIR }}/ {
+rewrite ^ /{{ SUBDIR }}/index.php$request_uri;
+}
+
+location ~ ^/{{ SUBDIR }}/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+deny all;
+}
+
+location ~ ^/{{ SUBDIR }}/(?:\.|autotest|occ|issue|indie|db_|console) {
+deny all;
+}
+
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+fastcgi_param modHeadersAvailable true;
+fastcgi_param front_controller_active true;
+include /etc/nginx/fastcgi_params*;
+fastcgi_request_buffering off;
+}
+
+location ~ ^/{{ SUBDIR }}/(?:updater|ocs-provider)(?:$|/) {
+try_files $uri/ =404;
+index index.php;
+}
+
+location ~ \.(?:css|js|woff|svg|gif)$ {
+try_files $uri /{{ SUBDIR }}/index.php$request_uri;
+add_header Cache-Control "public, max-age=15778463";
+add_header X-Content-Type-Options nosniff;
+add_header X-XSS-Protection "1; mode=block";
+add_header X-Robots-Tag none;
+add_header X-Download-Options noopen;
+add_header X-Permitted-Cross-Domain-Policies none;
+}
+
+location ~ \.(?:png|html|ttf|ico|jpg|jpeg)$ {
+try_files $uri /{{ SUBDIR }}/index.php$request_uri;
+}

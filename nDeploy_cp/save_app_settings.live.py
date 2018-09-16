@@ -138,6 +138,11 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
             yaml_parsed_profileyaml['gzip'] = 'disabled'
             yaml_parsed_profileyaml['brotli'] = 'disabled'
             print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Turned off gzip, brotli and set_expire_static options as they are incompatible with Wordpress Total Cache generated nginx.conf. The config will not work if you turn on these options</div>')
+        if 'noextra' in myapptemplate:
+            yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
+            yaml_parsed_profileyaml['gzip'] = 'disabled'
+            yaml_parsed_profileyaml['brotli'] = 'disabled'
+            print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Turned off gzip, brotli and set_expire_static options as they are incompatible with the template generated nginx.conf. The config will not work if you turn on these options</div>')
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
         print('<div class="icon-box">')
