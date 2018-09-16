@@ -31,8 +31,6 @@ rewrite ^/c/([a-zA-Z_-]+)(-[0-9]+)?/.+.jpg$ /img/c/$1$2.jpg last;
 }
 
 
-error_page 404 /index.php?controller=404;
-
 # Deny access to .htaccess .DS_Store .htpasswd etc
 location ~ /\. {
 deny all;
@@ -63,7 +61,10 @@ fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
 location ~ [^/]\.php(/|$) {
-try_files $uri =404;
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;

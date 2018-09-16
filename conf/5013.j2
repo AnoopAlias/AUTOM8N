@@ -7,9 +7,6 @@ location / {
 try_files $uri /framework/main.php?url=$uri&$query_string;
 }
 
-error_page 404 /assets/error-404.html;
-error_page 500 /assets/error-500.html;
-
 location ^~ /assets/ {
 try_files $uri =404;
 }
@@ -64,8 +61,11 @@ include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
-location ~ \.php$ {
-try_files $uri =404;
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;

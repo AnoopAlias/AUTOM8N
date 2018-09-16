@@ -7,6 +7,24 @@ location / {
 try_files $uri $uri/ /index.php?$args;
 }
 
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location = /wp-login.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location = /xmlrpc.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+
 location /redis-fetch {
 internal  ;
 sendfile off;
@@ -25,13 +43,16 @@ redis2_query expire $key 14400;
 redis2_pass  127.0.0.1:6379;
 }
 
-location ~ \.php$ {
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
 
 sendfile off;
 aio off;
 
 set $key "$scheme$request_method$host$request_uri";
-try_files $uri =404;
 
 srcache_fetch_skip "$query_string$wpcookienocache$wpurinocache";
 srcache_store_skip "$query_string$wpcookienocache$wpurinocache";
@@ -48,34 +69,5 @@ more_set_headers 'X-Cache $srcache_fetch_status';
 more_set_headers 'X-Cache-2 $srcache_store_status';
 
 include /etc/nginx/fastcgi_params*;
-fastcgi_pass unix:{{ SOCKETFILE }};
-}
-
-location ~ ^/pingphpfpm$ {
-include /etc/nginx/fastcgi_params*;
-fastcgi_pass unix:{{ SOCKETFILE }};
-}
-
-location = /wp-login.php {
-limit_req   zone=one  burst=1 nodelay;
-include /etc/nginx/fastcgi_params*;
-fastcgi_pass unix:{{ SOCKETFILE }};
-
-# No caching
-more_clear_headers "Cache-Control";
-add_header Cache-Control "private, max-age=0, no-cache, no-store";
-more_clear_headers "Expires";
-
-}
-
-location = /xmlrpc.php {
-limit_req   zone=one  burst=1 nodelay;
-include /etc/nginx/fastcgi_params*;
-
-# No caching
-more_clear_headers "Cache-Control";
-add_header Cache-Control "private, max-age=0, no-cache, no-store";
-more_clear_headers "Expires";
-
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
