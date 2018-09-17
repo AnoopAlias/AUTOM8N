@@ -115,7 +115,7 @@ for myprocess in psutil.process_iter():
         mystatus = myprocess.status()
         mypid = myprocess.pid
     if myusername in user_list and mystatus != 'zombie':
-        if myexe.startswith(("/usr/bin/perl", "/home")):
+        if myexe.startswith(("/usr/bin/perl", "/home")) or myexe == '/':
             malware = True
             print('<div class="icon-box">')
             print('<br>')
