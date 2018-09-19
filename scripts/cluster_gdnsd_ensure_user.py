@@ -72,7 +72,6 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
             elif rr['type'] == 'CNAME':
                 if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == domainname:
                     gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
-                    gdnsdzone.append('ha-'+rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
                 else:
                     gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
             elif rr['type'] == "MX" and not mx_loop_skip:
