@@ -400,7 +400,7 @@ proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 {% if PASSENGERAPPS[KEY] == 'enabled' %}
 location ~ ^/{{ KEY }}(/.*|$) {
 {% else %}
-location ^~ /{{ KEY }}/ {
+location ^~ /{{ KEY }} {
 {% endif %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subconf;
