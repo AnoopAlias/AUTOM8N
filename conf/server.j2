@@ -19,35 +19,47 @@ server_name www.{{ MAINDOMAINNAME }};
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 
 location / {
@@ -79,35 +91,47 @@ server_name {{ MAINDOMAINNAME }};
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 
 location / {
@@ -140,35 +164,47 @@ server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %}
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 
 location / {
@@ -217,49 +253,65 @@ access_log  off;
 # Proxy cPanel/WHM URLs
 location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)($|/) {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 
 # Include any applications in subdirectory
@@ -350,49 +402,65 @@ access_log  off;
 # Proxy cPanel/WHM URLs
 location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)($|/) {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_connect_timeout 30s;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
 proxy_set_header   Host   $host;
 proxy_set_header   X-Real-IP  $remote_addr;
 proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 
 # Include any applications in subdirectory
@@ -466,14 +534,18 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 {% endif %}
 server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
 location / {
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-   proxy_connect_timeout 30s;
-   proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
+proxy_http_version 1.1;
+proxy_hide_header      Upgrade;
+proxy_set_header Connection "";
+proxy_set_header   Host   $host;
+proxy_set_header   X-Real-IP  $remote_addr;
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header   X-Forwarded-Proto $scheme;
+proxy_set_header   X-Scheme $scheme;
+proxy_set_header   Proxy "";
+proxy_redirect     off;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
 }
 {% endif %}
 ################### Proxy Subdomains ###################
