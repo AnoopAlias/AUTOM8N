@@ -78,6 +78,11 @@ limit_req   zone=one  burst=2 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
+location = /customer/account/create {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
 location @cphttpd {
 access_log  off;
 {% if SSL_OFFLOAD == 'enabled' %}
