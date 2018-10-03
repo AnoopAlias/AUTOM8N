@@ -40,8 +40,14 @@ server {
         include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
         {% if DEFAULT_VHOST_DDOS == 'enabled' %}
-           include /etc/nginx/conf.d/dos_mitigate.conf;
-           limit_req   zone=one  burst=3 nodelay;
+        client_body_timeout 5s;
+        send_timeout 5s;
+        keepalive_timeout 0;
+        limit_rate 256k;
+        lingering_close off;
+        reset_timedout_connection on;
+        limit_req zone=FLOODPROTECT burst=100;
+        limit_conn PERIP 60;
         {% endif %}
            proxy_send_timeout   90;
            proxy_read_timeout   90;
@@ -75,8 +81,14 @@ server {
         include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
         {% if DEFAULT_VHOST_DDOS == 'enabled' %}
-           include /etc/nginx/conf.d/dos_mitigate.conf;
-           limit_req   zone=one  burst=3 nodelay;
+        client_body_timeout 5s;
+        send_timeout 5s;
+        keepalive_timeout 0;
+        limit_rate 256k;
+        lingering_close off;
+        reset_timedout_connection on;
+        limit_req zone=FLOODPROTECT burst=100;
+        limit_conn PERIP 60;
         {% endif %}
            proxy_send_timeout   90;
            proxy_read_timeout   90;
