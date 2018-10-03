@@ -28,14 +28,6 @@ fi
 echo -e '\e[93m Attempting to regenerate  nginx default conf  \e[0m'
 /opt/nDeploy/scripts/generate_default_vhost_config.py
 
-if [ -f /etc/cpanel/ea4/is_ea4 ];then
-	sed -i 's/logformat_combined: "%h/logformat_combined: "%a/' /var/cpanel/conf/apache/local
-	sed -i 's/logformat_common: "%h/logformat_common: "%a/' /var/cpanel/conf/apache/local
-	rm -f /var/cpanel/conf/apache/local.cache
-  /scripts/rebuildhttpdconf
-  /scripts/restartsrv httpd
-fi
-
 # Reloading nginx
 service nginx reload
 
