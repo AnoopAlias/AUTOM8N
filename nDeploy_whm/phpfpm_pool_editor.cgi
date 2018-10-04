@@ -108,7 +108,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
             print('<div class="row">')
             print(('<div class="col-sm-6 col-radio text-left">'+mykey+'</div>'))
             print('<div class="col-sm-6 col-radio">')
-            print('<div class="input-group">')
+            print('<div class="input-group mb-3">')
             print('<div class="form-control">')
             print(myconfig.get(mykey))
             print('</div>')
