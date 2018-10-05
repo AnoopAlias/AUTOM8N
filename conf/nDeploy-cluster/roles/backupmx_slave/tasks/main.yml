@@ -22,7 +22,6 @@
 - name: Setup Postfix configuration
   shell: "{{ item }}"
   with_items:
-    - postconf -e "smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination"
     - postconf -e "smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination"
     - postconf -e "relay_recipient_maps ="
     - postconf -e "relay_domains = hash:/etc/postfix/transportmaps"
