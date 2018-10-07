@@ -352,7 +352,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
     user_config = False
     is_unsafe = False
-    phpmaxchildren = yaml_parsed_domain_data.get('phpmaxchildren', '16')
+    phpmaxchildren = yaml_parsed_domain_data.get('phpmaxchildren', '8')
     # initialize the fastcgi_socket variable
     fastcgi_socket = None
     # Following are features that the UI can change . Can be expanded in future
