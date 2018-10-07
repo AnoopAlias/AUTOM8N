@@ -116,6 +116,7 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
         print(('<input style="display:none" name="poolfile" value="'+form.getvalue('poolfile')+'">'))
         print(('<input style="display:none" name="thekey" value="'+form.getvalue('thekey')+'">'))
         print(('<input style="display:none" name="section" value="'+form.getvalue('section')+'">'))
+        print(('<input class="hidden" name="action" value="edit">'))
         print('<br>')
         print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</ul>')

@@ -91,29 +91,54 @@ print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></spa
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
-if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('thevalue') and form.getvalue('section'):
+if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('section') and form.getvalue('action'):
     myphpini = form.getvalue('poolfile')
     mysection = int(form.getvalue('section'))
-    if os.path.isfile(myphpini):
-        config = configparser.ConfigParser()
-        config.readfp(codecs.open(myphpini, 'r', 'utf8'))
-        # Next section start here
-        print('<div class="panel panel-default">')  # marker6
-        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[mysection]+'</h3></div>')
-        print('<div class="panel-body">')  # marker7
-        # myconfig = dict(config.items(config.sections()[0]))
-        config.set(config.sections()[mysection], form.getvalue('thekey'), form.getvalue('thevalue'))
-        with codecs.open(myphpini, 'w', encoding='utf8') as f:
-            config.write(f)
-        if os.path.isfile('/opt/nDeploy/conf/secure-php-enabled'):
-            subprocess.call("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
+    if form.getvalue('action') == 'edit':
+        if form.getvalue('thevalue'):
+            if os.path.isfile(myphpini):
+                config = configparser.ConfigParser()
+                config.readfp(codecs.open(myphpini, 'r', 'utf8'))
+                # Next section start here
+                print('<div class="panel panel-default">')  # marker6
+                print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[mysection]+'</h3></div>')
+                print('<div class="panel-body">')  # marker7
+                # myconfig = dict(config.items(config.sections()[0]))
+                config.set(config.sections()[mysection], form.getvalue('thekey'), form.getvalue('thevalue'))
+                with codecs.open(myphpini, 'w', encoding='utf8') as f:
+                    config.write(f)
+                if os.path.isfile('/opt/nDeploy/conf/secure-php-enabled'):
+                    subprocess.call("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
+                else:
+                    subprocess.call('service ndeploy_backends restart', shell=True)
+                print('<div class="icon-box">')
+                print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> PHP-FPM pool settings updated')
+                print('</div>')
+                print('</div>')  # div8
+                print('</div>')  # div7
         else:
-            subprocess.call('service ndeploy_backends restart', shell=True)
-        print('<div class="icon-box">')
-        print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> PHP-FPM pool settings updated')
-        print('</div>')
-        print('</div>')  # div8
-        print('</div>')  # div7
+            print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
+    elif form.getvalue('action') == 'delete':
+        if os.path.isfile(myphpini):
+            config = configparser.ConfigParser()
+            config.readfp(codecs.open(myphpini, 'r', 'utf8'))
+            # Next section start here
+            print('<div class="panel panel-default">')  # marker6
+            print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[mysection]+'</h3></div>')
+            print('<div class="panel-body">')  # marker7
+            # myconfig = dict(config.items(config.sections()[0]))
+            config.remove_option(config.sections()[mysection], form.getvalue('thekey'))
+            with codecs.open(myphpini, 'w', encoding='utf8') as f:
+                config.write(f)
+            if os.path.isfile('/opt/nDeploy/conf/secure-php-enabled'):
+                subprocess.call("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
+            else:
+                subprocess.call('service ndeploy_backends restart', shell=True)
+            print('<div class="icon-box">')
+            print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> PHP-FPM pool settings updated')
+            print('</div>')
+            print('</div>')  # div8
+            print('</div>')  # div7
 else:
         print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 
