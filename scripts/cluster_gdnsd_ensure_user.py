@@ -13,6 +13,7 @@ import grp
 import yaml
 import socket
 import codecs
+import tldextract
 
 
 __author__ = "Anoop P Alias"
@@ -145,7 +146,12 @@ if __name__ == "__main__":
         with open("/var/cpanel/userdata/"+cpaneluser+"/"+main_domain+".cache") as maindomain_data_stream:
             maindomain_data_stream_parsed = json.load(maindomain_data_stream)
         maindomain_ip = maindomain_data_stream_parsed.get('ip')
-        generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
+        ext = tldextract.extract(main_domain)
+        if not ext.subdomain:
+            generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
+        else:
+            # Generate subzone map if this is a subzone
+
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
             with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict.get(the_addon_domain)+".cache") as addondomain_data_stream:
@@ -155,4 +161,8 @@ if __name__ == "__main__":
         # We dont check sub-domains as they are handled in the other zones
         # iterate over parked domains and add DNS RR for it . IP being that of main domain
         for the_parked_domain in parked_domains:
-            generate_zone(cpaneluser, the_parked_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
+            extpark = tldextract.extract(the_parked_domain)
+            if not extpark.subdomain:
+                generate_zone(cpaneluser, the_parked_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
+            else:
+                # Generate subzone map if this is a subzone
