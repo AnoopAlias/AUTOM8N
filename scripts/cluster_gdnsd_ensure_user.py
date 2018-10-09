@@ -152,7 +152,6 @@ if __name__ == "__main__":
         else:
             # Generate subzone map if this is a subzone
             reg_domain = ext.registered_domain
-            print(reg_domain)
             with open("/etc/userdatadomains.json", "r") as userdatadomains:
                 json_parsed_userdata = json.load(userdatadomains)
                 if reg_domain in json_parsed_userdata.keys():
@@ -167,7 +166,10 @@ if __name__ == "__main__":
                             newreg_domain = newext.registered_domain
                             if newreg_domain == reg_domain:
                                 subzone_list.append(mydomain)
-                                print(subzone_list)
+                    subzone_dict = {reg_domain: subzone_list}
+                    with open('/etc/gdnsd/'+reg_domain+'_subzone', 'w') as subzone:
+                        json.dump(subzone_dict, subzone)
+                    generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
                 else:
                     generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
                 # cpaneluserdata = json_parsed_userdata.get(domainname)
