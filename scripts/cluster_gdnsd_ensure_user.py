@@ -157,6 +157,8 @@ if __name__ == "__main__":
                 if reg_domain in json_parsed_userdata.keys():
                     # Ok this is indeed a subzone
                     # Iterate over all domains and record subzone map
+                    cpaneluserdata = json_parsed_userdata.get(reg_domain)
+                    origcpaneluser = cpaneluserdata[0]
                     subzone_list = []
                     for mydomain in json_parsed_userdata.keys():
                         newext = tldextract.extract(mydomain)
@@ -169,11 +171,9 @@ if __name__ == "__main__":
                     subzone_dict = {reg_domain: subzone_list}
                     with open('/etc/gdnsd/'+reg_domain+'_subzone', 'w') as subzone:
                         json.dump(subzone_dict, subzone)
-                    generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
+                    subprocess.call('/opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py '+origcpaneluser, shell=True)
                 else:
                     generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
-                # cpaneluserdata = json_parsed_userdata.get(domainname)
-                # cpaneluser = cpaneluserdata[0]
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
             with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict.get(the_addon_domain)+".cache") as addondomain_data_stream:
