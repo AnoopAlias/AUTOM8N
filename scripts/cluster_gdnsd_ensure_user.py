@@ -157,7 +157,17 @@ if __name__ == "__main__":
                 json_parsed_userdata = json.load(userdatadomains)
                 if reg_domain in json_parsed_userdata.keys():
                     # Ok this is indeed a subzone
-                    pass
+                    # Iterate over all domains and record subzone map
+                    subzone_list = []
+                    for mydomain in json_parsed_userdata.keys():
+                        newext = tldextract.extract(mydomain)
+                        if not newext.subdomain:
+                            pass
+                        else:
+                            newreg_domain = newext.registered_domain
+                            if newreg_domain == reg_domain:
+                                subzone_list.append(newreg_domain)
+                                print(subzone_list)
                 else:
                     generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
                 # cpaneluserdata = json_parsed_userdata.get(domainname)
