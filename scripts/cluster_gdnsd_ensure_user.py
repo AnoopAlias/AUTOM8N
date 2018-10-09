@@ -151,7 +151,17 @@ if __name__ == "__main__":
             generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
         else:
             # Generate subzone map if this is a subzone
-            pass
+            reg_domain = ext.registered_domain
+            print(reg_domain)
+            with open("/etc/userdatadomains.json", "r") as userdatadomains:
+                json_parsed_userdata = json.load(userdatadomains)
+                if reg_domain in json_parsed_userdata.keys():
+                    # Ok this is indeed a subzone
+                    pass
+                else:
+                    generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
+                # cpaneluserdata = json_parsed_userdata.get(domainname)
+                # cpaneluser = cpaneluserdata[0]
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
             with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict.get(the_addon_domain)+".cache") as addondomain_data_stream:
