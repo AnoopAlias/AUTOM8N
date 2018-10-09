@@ -188,4 +188,26 @@ if __name__ == "__main__":
                 generate_zone(cpaneluser, the_parked_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
             else:
                 # Generate subzone map if this is a subzone
-                pass
+                reg_domain = extpark.registered_domain
+                with open("/etc/userdatadomains.json", "r") as userdatadomains:
+                    json_parsed_userdata = json.load(userdatadomains)
+                    if reg_domain in json_parsed_userdata.keys():
+                        # Ok this is indeed a subzone
+                        # Iterate over all domains and record subzone map
+                        cpaneluserdata = json_parsed_userdata.get(reg_domain)
+                        origcpaneluser = cpaneluserdata[0]
+                        subzone_list = []
+                        for mydomain in json_parsed_userdata.keys():
+                            newext = tldextract.extract(mydomain)
+                            if not newext.subdomain:
+                                pass
+                            else:
+                                newreg_domain = newext.registered_domain
+                                if newreg_domain == reg_domain:
+                                    subzone_list.append(mydomain)
+                        subzone_dict = {reg_domain: subzone_list}
+                        with open('/etc/gdnsd/'+reg_domain+'_subzone', 'w') as subzone:
+                            json.dump(subzone_dict, subzone)
+                        subprocess.call('/opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py '+origcpaneluser, shell=True)
+                    else:
+                        generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
