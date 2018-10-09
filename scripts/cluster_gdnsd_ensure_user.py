@@ -120,11 +120,7 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                     mx_loop_skip = False
                     for rr in resource_record:
                         if rr['type'] != ':RAW' or rr['type'] != '$TTL':
-                            if rr['type'] == 'SOA':
-                                pass
-                            elif rr['type'] == 'NS':
-                                gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
-                            elif rr['type'] == "A":
+                            if rr['type'] == "A":
                                 if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
                                     gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                                 else:
@@ -132,29 +128,6 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                                         gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
                                     else:
                                         gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
-                            elif rr['type'] == 'CNAME':
-                                if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == subzonedom:
-                                    gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
-                                else:
-                                    gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
-                            elif rr['type'] == "MX" and not mx_loop_skip:
-                                with open('/etc/remotedomains') as mx_excludes:
-                                    for line in mx_excludes:
-                                        if str(line).rstrip() == subzonedom:
-                                            mx_skip_flag = True
-                                            break
-                                if not mx_skip_flag:
-                                    myhostname = socket.gethostname()
-                                    gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
-                                    for server in slavelist:
-                                        gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
-                                    mx_loop_skip = True
-                                else:
-                                    gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
-                            elif rr['type'] == "TXT":
-                                gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
-                            elif rr['type'] == 'SRV':
-                                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
                             elif rr['type'] == 'AAAA':
                                 gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                             else:
@@ -178,11 +151,7 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                     mx_loop_skip = False
                     for rr in resource_record:
                         if rr['type'] != ':RAW' or rr['type'] != '$TTL':
-                            if rr['type'] == 'SOA':
-                                pass
-                            elif rr['type'] == 'NS':
-                                gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
-                            elif rr['type'] == "A":
+                            if rr['type'] == "A":
                                 if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != subzoneip:
                                     gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                                 else:
@@ -190,29 +159,6 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                                         gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+subzoneresource+'\n')
                                     else:
                                         gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
-                            elif rr['type'] == 'CNAME':
-                                if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == subzonedom:
-                                    gdnsdzone.append(rr['name']+' A '+subzoneip+'\n')
-                                else:
-                                    gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
-                            elif rr['type'] == "MX" and not mx_loop_skip:
-                                with open('/etc/remotedomains') as mx_excludes:
-                                    for line in mx_excludes:
-                                        if str(line).rstrip() == subzonedom:
-                                            mx_skip_flag = True
-                                            break
-                                if not mx_skip_flag:
-                                    myhostname = socket.gethostname()
-                                    gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
-                                    for server in slavelist:
-                                        gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
-                                    mx_loop_skip = True
-                                else:
-                                    gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
-                            elif rr['type'] == "TXT":
-                                gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
-                            elif rr['type'] == 'SRV':
-                                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
                             elif rr['type'] == 'AAAA':
                                 gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                             else:
