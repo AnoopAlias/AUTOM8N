@@ -166,7 +166,7 @@ if __name__ == "__main__":
                         else:
                             newreg_domain = newext.registered_domain
                             if newreg_domain == reg_domain:
-                                subzone_list.append(newreg_domain)
+                                subzone_list.append(mydomain)
                                 print(subzone_list)
                 else:
                     generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
