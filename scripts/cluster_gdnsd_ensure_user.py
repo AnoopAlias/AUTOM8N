@@ -97,6 +97,126 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                 gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
             else:
                 pass
+    # Append subzone RR's
+    if os.path.isfile('/etc/gdnsd/'+domainname+'_subzone'):
+        with open('/etc/gdnsd/'+domainname+'_subzone', "r") as mysubzone:
+            json_parsed_subzone = json.load(mysubzone)
+            mysubzonelist = json_parsed_subzone.get(domainname)
+        for subzonedom in mysubzonelist:
+            # Check if its a main domain or parked and parse userdata for main dom
+            with open("/etc/userdatadomains.json", "r") as userdatadomains:
+                json_parsed_userdata = json.load(userdatadomains)
+            if subzonedom in json_parsed_userdata.keys():
+                subzonedomdata = json_parsed_userdata.get(subzonedom)
+                domaintype = subzonedomdata[2]
+                domainuser = subzonedomdata[0]
+                if domaintype == 'parked':
+                    subzonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+subzonedom, shell=True, stdout=subprocess.PIPE)
+                    subzone_datafeed = subzonedump.stdout.read()
+                    subzonedump_parsed = json.loads(subzone_datafeed)
+                    thezone = subzonedump_parsed['data']['zone'][0]
+                    resource_record = thezone['record']
+                    mx_skip_flag = False
+                    mx_loop_skip = False
+                    for rr in resource_record:
+                        if rr['type'] != ':RAW' or rr['type'] != '$TTL':
+                            if rr['type'] == 'SOA':
+                                pass
+                            elif rr['type'] == 'NS':
+                                gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
+                            elif rr['type'] == "A":
+                                if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
+                                    gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                                else:
+                                    if rr["name"].rstrip('.') in sub_domains or rr["name"].rstrip('.') == subzonedom:
+                                        gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
+                                    else:
+                                        gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                            elif rr['type'] == 'CNAME':
+                                if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == subzonedom:
+                                    gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
+                                else:
+                                    gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
+                            elif rr['type'] == "MX" and not mx_loop_skip:
+                                with open('/etc/remotedomains') as mx_excludes:
+                                    for line in mx_excludes:
+                                        if str(line).rstrip() == subzonedom:
+                                            mx_skip_flag = True
+                                            break
+                                if not mx_skip_flag:
+                                    myhostname = socket.gethostname()
+                                    gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
+                                    for server in slavelist:
+                                        gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
+                                    mx_loop_skip = True
+                                else:
+                                    gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
+                            elif rr['type'] == "TXT":
+                                gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
+                            elif rr['type'] == 'SRV':
+                                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
+                            elif rr['type'] == 'AAAA':
+                                gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                            else:
+                                pass
+                else:
+                    subzonedatajson = "/var/cpanel/userdata/" + domainuser + "/main.cache"
+                    with open(subzonedatajson) as subzone_data_stream:
+                        json_parsed_subzone = json.load(subzone_data_stream)
+                    subzone_domains = json_parsed_subzone.get('sub_domains')
+                    with open("/var/cpanel/userdata/"+domainuser+"/"+subzonedom+".cache") as subzonedomain_data_stream:
+                        subzonedomain_data_stream_parsed = json.load(subzonedomain_data_stream)
+                    subzonedomain_ip = subzonedomain_data_stream_parsed.get('ip')
+                    subzoneip = get_dns_ip(subzonedomain_ip)
+                    subzoneresource = resourcemap[subzonedomain_ip]
+                    subzonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+subzonedom, shell=True, stdout=subprocess.PIPE)
+                    subzone_datafeed = subzonedump.stdout.read()
+                    subzonedump_parsed = json.loads(subzone_datafeed)
+                    thezone = subzonedump_parsed['data']['zone'][0]
+                    resource_record = thezone['record']
+                    mx_skip_flag = False
+                    mx_loop_skip = False
+                    for rr in resource_record:
+                        if rr['type'] != ':RAW' or rr['type'] != '$TTL':
+                            if rr['type'] == 'SOA':
+                                pass
+                            elif rr['type'] == 'NS':
+                                gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
+                            elif rr['type'] == "A":
+                                if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != subzoneip:
+                                    gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                                else:
+                                    if rr["name"].rstrip('.') in subzone_domains or rr["name"].rstrip('.') == subzonedom:
+                                        gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+subzoneresource+'\n')
+                                    else:
+                                        gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                            elif rr['type'] == 'CNAME':
+                                if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == subzonedom:
+                                    gdnsdzone.append(rr['name']+' A '+subzoneip+'\n')
+                                else:
+                                    gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
+                            elif rr['type'] == "MX" and not mx_loop_skip:
+                                with open('/etc/remotedomains') as mx_excludes:
+                                    for line in mx_excludes:
+                                        if str(line).rstrip() == subzonedom:
+                                            mx_skip_flag = True
+                                            break
+                                if not mx_skip_flag:
+                                    myhostname = socket.gethostname()
+                                    gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
+                                    for server in slavelist:
+                                        gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
+                                    mx_loop_skip = True
+                                else:
+                                    gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
+                            elif rr['type'] == "TXT":
+                                gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
+                            elif rr['type'] == 'SRV':
+                                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
+                            elif rr['type'] == 'AAAA':
+                                gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                            else:
+                                pass
     with codecs.open('/etc/gdnsd/zones/'+domainname, "w", 'utf-8') as confout:
         confout.writelines(gdnsdzone)
     gdnsd_uid = pwd.getpwnam('gdnsd').pw_uid
@@ -217,5 +337,23 @@ if __name__ == "__main__":
                                     with open('/etc/gdnsd/'+reg_domain+'_subzone', 'w') as subzone:
                                         json.dump(subzone_dict, subzone)
                                     subprocess.call('/opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py '+origcpaneluser, shell=True)
+                        else:
+                            # Ok this is indeed a subzone
+                            # Iterate over all domains and record subzone map
+                            cpaneluserdata = json_parsed_userdata.get(reg_domain)
+                            origcpaneluser = cpaneluserdata[0]
+                            subzone_list = []
+                            for mydomain in json_parsed_userdata.keys():
+                                newext = tldextract.extract(mydomain)
+                                if not newext.subdomain:
+                                    pass
+                                else:
+                                    newreg_domain = newext.registered_domain
+                                    if newreg_domain == reg_domain:
+                                        subzone_list.append(mydomain)
+                            subzone_dict = {reg_domain: subzone_list}
+                            with open('/etc/gdnsd/'+reg_domain+'_subzone', 'w') as subzone:
+                                json.dump(subzone_dict, subzone)
+                            subprocess.call('/opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py '+origcpaneluser, shell=True)
                     else:
                         generate_zone(cpaneluser, the_parked_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
