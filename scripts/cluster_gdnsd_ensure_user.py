@@ -151,7 +151,7 @@ if __name__ == "__main__":
             generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
         else:
             # Generate subzone map if this is a subzone
-
+            pass
         # iterate over the addon-domain and add DNS RR for it
         for the_addon_domain in addon_domains_dict.keys():
             with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict.get(the_addon_domain)+".cache") as addondomain_data_stream:
@@ -166,3 +166,4 @@ if __name__ == "__main__":
                 generate_zone(cpaneluser, the_parked_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
             else:
                 # Generate subzone map if this is a subzone
+                pass
