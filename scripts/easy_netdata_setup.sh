@@ -35,6 +35,10 @@ sed -i 's/\/server-status/\/whm-server-status/' /opt/netdata/etc/netdata/python.
 sed -i 's/\/access_log/\/access_log_disabled/' /opt/netdata/etc/netdata/python.d/web_log.conf
 sed -i 's/# bind to = \*/bind to = 127.0.0.1:19999/' /opt/netdata/etc/netdata/netdata.conf
 
+sed -i 's/stub_status/nginx_status/' /opt/netdata/usr/lib/netdata/conf.d/python.d/nginx.conf
+sed -i 's/\/server-status/\/whm-server-status/' /opt/netdata/usr/lib/netdata/conf.d/python.d/apache.conf
+sed -i 's/\/access_log/\/access_log_disabled/' /opt/netdata/usr/lib/netdata/conf.d/python.d/web_log.conf
+
 service netdata restart
 
 if [ -d /opt/nDeploy/conf/nDeploy-cluster ];then
