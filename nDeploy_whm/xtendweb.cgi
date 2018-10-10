@@ -7,6 +7,7 @@ import subprocess
 import yaml
 import psutil
 import platform
+import socket
 try:
     import simplejson as json
 except ImportError:
@@ -401,6 +402,18 @@ print('<div id="collapseNine" class="panel-collapse collapse" role="tabpanel" ar
 print('<div class="panel-body">')  # body
 print('<form class="form-group" action="abnormal_process_detector.cgi">')
 print('<input class="btn btn-primary" type="submit" value="CHECK PROCESS">')
+print('</form>')
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
+# Next section start here
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingTen"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false" aria-controls="collapseTen">NETDATA</a></h3></div>')  # heading
+print('<div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">')  # collapse
+myhostname = socket.gethostname()
+print('<div class="panel-body">')  # body
+print('<form class="form-group">')
+print(('<input class="btn btn-primary" type="button" value="NETDATA" onclick="window.location.href=https://'+myhostname+'/netdata" />'))
 print('</form>')
 print('</div>')  # body
 print('</div>')  # collapse
