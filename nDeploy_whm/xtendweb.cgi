@@ -412,8 +412,8 @@ print('<div class="panel-heading" role="tab" id="headingTen"><h3 class="panel-ti
 print('<div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">')  # collapse
 myhostname = socket.gethostname()
 print('<div class="panel-body">')  # body
-print('<form class="form-group">')
-print(('<input class="btn btn-primary" type="button" value="NETDATA" onclick="window.location.href=https://'+myhostname+'/netdata" />'))
+print('<form class="form-group" action="https://'+myhostname+'/netdata/" target="_blank">')
+print('<input class="btn btn-primary" type="submit" value="NETDATA">')
 print('</form>')
 print('</div>')  # body
 print('</div>')  # collapse
