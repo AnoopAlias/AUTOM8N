@@ -307,9 +307,16 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
         sslcombinedcert = '/var/cpanel/ssl/apache_tls/'+kwargs.get('configdomain')+'/combined'
     if os.path.isfile(sslcombinedcert):
             hasssl = True
+            tlsfile = open(sslcombinedcert, 'r').read()
+            certcount = tlsfile.count("BEGIN CERTIFICATE")
+            if certcount > 1:
+                ocspstaple = True
+            else:
+                ocspstaple = False
     else:
         hasssl = False
         sslcombinedcert = None
+        ocspstaple = False
     # Get all data from nDeploy domain-data file
     if is_suspended:
         if os.path.isfile(installation_path + "/conf/domain_data_suspended_local.yaml"):
@@ -436,6 +443,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
         TEMPLATE_FILE = "server.j2"
     server_template = templateEnv.get_template(TEMPLATE_FILE)
     templateVars = {"SSL": hasssl,
+                    "OCSPSTAPLE": ocspstaple,
                     "IPVSIX": hasipv6,
                     "WWWREDIRECT": wwwredirect,
                     "REDIRECTALIASES": redirect_aliases,
