@@ -37,18 +37,11 @@ server {
         listen {{ MYIP }}:80 default_server backlog=16384 reuseport deferred;
         server_name _;
         access_log off;
+        {% if DEFAULT_VHOST_DDOS == 'enabled' %}
+        include /etc/nginx/conf.d/dos_mitigate.conf;
+        {% endif %}
         include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
-        {% if DEFAULT_VHOST_DDOS == 'enabled' %}
-        client_body_timeout 5s;
-        send_timeout 5s;
-        keepalive_timeout 0;
-        limit_rate 256k;
-        lingering_close off;
-        reset_timedout_connection on;
-        limit_req zone=FLOODPROTECT burst=100;
-        limit_conn PERIP 60;
-        {% endif %}
            proxy_send_timeout   90;
            proxy_read_timeout   90;
 
@@ -78,18 +71,11 @@ server {
         ssl_certificate_key {{ CPSRVDSSL }};
         server_name _;
         access_log off;
+        {% if DEFAULT_VHOST_DDOS == 'enabled' %}
+        include /etc/nginx/conf.d/dos_mitigate.conf;
+        {% endif %}        
         include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
-        {% if DEFAULT_VHOST_DDOS == 'enabled' %}
-        client_body_timeout 5s;
-        send_timeout 5s;
-        keepalive_timeout 0;
-        limit_rate 256k;
-        lingering_close off;
-        reset_timedout_connection on;
-        limit_req zone=FLOODPROTECT burst=100;
-        limit_conn PERIP 60;
-        {% endif %}
            proxy_send_timeout   90;
            proxy_read_timeout   90;
            proxy_connect_timeout 30s;

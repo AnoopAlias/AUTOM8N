@@ -33,10 +33,10 @@ if os.path.isfile('/var/cpanel/ssl/cpanel/mycpanel.pem'):
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/mycpanel.pem'
 else:
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/cpanel.pem'
-if os.path.isfile('/opt/nDeploy/conf/enable_default_vhost_ddos_protection'):
-    default_ddos = 'enabled'
-else:
+if os.path.isfile('/opt/nDeploy/conf/disable_default_vhost_ddos_protection'):
     default_ddos = 'disabled'
+else:
+    default_ddos = 'enabled'
 slaveiplist = []
 if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cluster ipmap
     cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
