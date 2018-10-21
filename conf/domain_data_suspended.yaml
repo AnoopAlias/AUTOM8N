@@ -1,7 +1,7 @@
 backend_category: PROXY
 backend_path: '9999'
 backend_version: httpd
-apptemplate_code: blackhole.j2
+apptemplate_code: suspended.j2
 autoindex: disabled
 ssl_offload: disabled
 pagespeed: disabled
