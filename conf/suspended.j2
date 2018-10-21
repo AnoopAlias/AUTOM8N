@@ -2,9 +2,10 @@
 
 root {{ DOCUMENTROOT }};
 
+limit_req   zone=one  burst=1 nodelay;
+
 location / {
 access_log  off;
-limit_req   zone=one  burst=1 nodelay;
 {% if SSL_OFFLOAD == 'enabled' %}
 proxy_pass   http://{{ APPSERVERIP }}:9999;
 {% else %}
