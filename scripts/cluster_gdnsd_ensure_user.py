@@ -94,7 +94,9 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
             elif rr['type'] == 'SRV':
                 gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
             elif rr['type'] == 'AAAA':
-                gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+            elif rr['type'] == 'TYPE257':
+                gdnsdzone.append(rr['name']+' TYPE257 '+rr['value_legacy']+'\n')
             else:
                 pass
     # Append subzone RR's
