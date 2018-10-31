@@ -1,4 +1,7 @@
 
+options => {
+  username => nobody
+  }
 service_types => {
   xtendweb => { plugin => http_status, vhost => xtendweb.status, url_path => "/nginx_status", down_thresh => 3, interval => 5, ok_thresh => 3,up_thresh => 6 }
 }
@@ -17,6 +20,7 @@ plugins => {
         # only fail through the nearest 2 before giving up:
         auto_dc_limit => {{ groups['ndeployslaves'] | length + 1 }},
       }
+      $include{geoip_maps}
     },
     resources => {
       ip0 => {

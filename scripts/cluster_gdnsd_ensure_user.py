@@ -167,8 +167,8 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                                 pass
     with codecs.open('/etc/gdnsd/zones/'+domainname, "w", 'utf-8') as confout:
         confout.writelines(gdnsdzone)
-    gdnsd_uid = pwd.getpwnam('gdnsd').pw_uid
-    gdnsd_gid = grp.getgrnam('gdnsd').gr_gid
+    gdnsd_uid = pwd.getpwnam('nobody').pw_uid
+    gdnsd_gid = grp.getgrnam('nobody').gr_gid
     os.chown('/etc/gdnsd/zones/'+domainname, gdnsd_uid, gdnsd_gid)
     os.chmod('/etc/gdnsd/zones/'+domainname, 0o660)
 
