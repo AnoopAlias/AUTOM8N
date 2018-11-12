@@ -1,6 +1,6 @@
 # Unison preferences file
-root = /{{ homedir }}
-root = ssh://root@{{ item }}:{{ hostvars[item]['ansible_port'] }}//{{ homedir }}
+root = /{{ item[0] }}
+root = ssh://root@{{ item[0] }}:{{ hostvars[item][1]['ansible_port'] }}//{{ item[0] }}
 ignore = Path virtfs
 ignore = Path cpanelsolr
 ignore = Path clamav
@@ -53,7 +53,7 @@ silent=true
 times=false
 dumbtty=true
 maxerrors=1024
-prefer = /{{ homedir }}
+prefer = /{{ item[0] }}
 servercmd = /usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison
 log=false
-logfile = /var/log/unison-{{ item }}-{{ homedir }}.log
+logfile = /var/log/unison-{{ item[0] }}-{{ item[1] }}.log

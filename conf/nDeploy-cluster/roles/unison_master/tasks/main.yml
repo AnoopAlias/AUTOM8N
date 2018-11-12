@@ -8,8 +8,8 @@
 - name: create the unison preference file
   template:
     src: default.prf.j2
-    dest: /root/.unison/{{ item }}.prf
+    dest: /root/.unison/{{ item[0] }}{{ item[1] }}.prf
     # force: no
-  with_items:
-    - homedir
+  with_nested:
+    - "{{ homedir }}"
     - "{{ groups['ndeployslaves'] }}"
