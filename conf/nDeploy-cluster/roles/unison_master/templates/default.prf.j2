@@ -1,6 +1,6 @@
 # Unison preferences file
 root = /{{ item[0] }}
-root = ssh://root@{{ item[0] }}:{{ hostvars[item][1]['ansible_port'] }}//{{ item[0] }}
+root = ssh://root@{{ item[0] }}:{{ hostvars[item.1]['ansible_port'] }}//{{ item[0] }}
 ignore = Path virtfs
 ignore = Path cpanelsolr
 ignore = Path clamav
