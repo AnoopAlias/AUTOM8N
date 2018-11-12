@@ -24,7 +24,7 @@ def control_unison(trigger):
             with open(cluster_config_file, 'r') as cluster_data_yaml:
                 cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             for server in cluster_data_yaml_parsed.keys():
-                proc = subprocess.Popen("/usr/bin/unison "+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+                proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison "+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
         elif trigger == "stop":
             subprocess.call("killall unison", shell=True)
         elif trigger == "reload":
@@ -32,7 +32,7 @@ def control_unison(trigger):
             with open(cluster_config_file, 'r') as cluster_data_yaml:
                 cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             for server in cluster_data_yaml_parsed.keys():
-                proc = subprocess.Popen("/usr/bin/unison "+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+                proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison "+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
         else:
             return
 

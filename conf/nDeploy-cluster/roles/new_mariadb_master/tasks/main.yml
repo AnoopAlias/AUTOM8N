@@ -119,8 +119,6 @@
     name: all
     target: /root/xtendweb_mysql_all.sql
     single_transaction: True
-  when:
-    - mysqlsetup.stat.exists == false
 
 - set_fact:
     masterlog: "{{ masterrepl.File }}"

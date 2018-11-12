@@ -10,4 +10,6 @@
     src: default.prf.j2
     dest: /root/.unison/{{ item }}.prf
     # force: no
-  with_items: "{{ groups['ndeployslaves'] }}"
+  with_items:
+    - homedir
+    - "{{ groups['ndeployslaves'] }}"

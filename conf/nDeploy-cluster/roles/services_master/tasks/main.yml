@@ -43,7 +43,3 @@
 
 - name: Start redis on master
   service: name=redis enabled=yes state=started
-
-- name: Start gdnsd on master
-  service: name=gdnsd enabled=yes state=started
-  when: dns == "geodns"
