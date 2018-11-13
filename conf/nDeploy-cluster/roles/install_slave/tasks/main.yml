@@ -31,6 +31,12 @@
 - name: ensure default UMASK is in place
   lineinfile: dest=/etc/login.defs state=absent regexp="^UMASK"
 
+- name: ensure additional homedir are present
+  file:
+    path: /"{{ item }}"
+    state: directory
+  with_items: "{{ homedir }}"
+  
 - name: create default vhost config in slave
   shell: /opt/nDeploy/scripts/generate_default_vhost_config_slave.py
 
