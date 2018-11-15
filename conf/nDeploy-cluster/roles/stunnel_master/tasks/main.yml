@@ -15,7 +15,7 @@
   when:
     - ansible_lsb.major_release|int >= 7
 
-- name: start stunnel on centos7/rhel7
-  service: "name=stunnel@phpredis enabled=yes state=restarted"
-  when:
-    - ansible_lsb.major_release|int >= 7
+#- name: start stunnel on centos7/rhel7
+#  service: "name=stunnel@phpredis enabled=yes state=restarted"
+#  when:
+#    - ansible_lsb.major_release|int >= 7

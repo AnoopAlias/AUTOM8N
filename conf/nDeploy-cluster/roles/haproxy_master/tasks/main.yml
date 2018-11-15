@@ -5,5 +5,5 @@
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
 
-- name: Start HAPROXY on master
-  service: name=haproxy enabled=yes state=started
+#- name: Start HAPROXY on master
+#  service: name=haproxy enabled=yes state=started
