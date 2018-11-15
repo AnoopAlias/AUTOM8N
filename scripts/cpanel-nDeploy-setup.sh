@@ -10,6 +10,7 @@ echo -e '\e[93m Generating nginx vhosts \e[0m'
 echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_port value=0.0.0.0:9999
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:4430
+/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=disable_cphttpd value=1
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
 service tailwatchd restart
 if [ -f /etc/cpanel/ea4/is_ea4 ];then

@@ -31,6 +31,9 @@
 - name: ensure default UMASK is in place
   lineinfile: dest=/etc/login.defs state=absent regexp="^UMASK"
 
+- name: enable disable_cphttpd
+  shell: /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=disable_cphttpd value=1
+
 - name: ensure additional homedir are present
   file:
     path: /{{ item }}

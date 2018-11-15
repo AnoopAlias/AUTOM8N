@@ -26,6 +26,9 @@
 - name: Fix /root/.my.cnf quotes
   shell: /opt/nDeploy/scripts/fix_mysql_cnf_quotes.py
 
+- name: enable disable_cphttpd
+  shell: /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=disable_cphttpd value=1
+
 - lineinfile:
     path: /etc/sysconfig/crond
     regexp: '^CRONDARGS='
