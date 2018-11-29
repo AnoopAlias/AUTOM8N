@@ -5,6 +5,11 @@
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
   register: mysqlsetup
 
+- name: check if Mysql dump is required
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_DUMP_LOCK_DO_NOT_REMOVE
+  register: mysqldumplock
+
 - name: disable MySQL monitoring
   shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=mysql enabled=1 monitored=0"
   ignore_errors: yes
@@ -119,6 +124,8 @@
     name: all
     target: /root/xtendweb_mysql_all.sql
     single_transaction: True
+  when:
+    - mysqldumplock.stat.exists == false
 
 - set_fact:
     masterlog: "{{ masterrepl.File }}"
@@ -126,4 +133,8 @@
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_DUMP_LOCK_DO_NOT_REMOVE
     state: touch
