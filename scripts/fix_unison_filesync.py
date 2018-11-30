@@ -17,6 +17,7 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
 
 def fix_unison(trigger):
@@ -26,21 +27,25 @@ def fix_unison(trigger):
             status = []
             with open(cluster_config_file, 'r') as cluster_data_yaml:
                 cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+            with open(homedir_config_file, 'r') as homedir_data_yaml:
+                homedir_data_yaml_parsed = yaml.safe_load(homedir_data_yaml)
+            homedir_list = homedir_data_yaml_parsed.get('homedir')
             for servername in cluster_data_yaml_parsed.keys():
-                filesync_ok = False
-                for myprocess in psutil.process_iter():
-                    # Workaround for Python 2.6
-                    if platform.python_version().startswith('2.6'):
-                        mycmdline = myprocess.cmdline
-                    else:
-                        mycmdline = myprocess.cmdline()
-                    if '/usr/bin/unison' in mycmdline and servername in mycmdline:
-                        filesync_ok = True
-                    else:
-                        pass
-                if not filesync_ok:
-                    filesync_fail_count = filesync_fail_count+1
-                    status.append(servername+":FAIL")
+                for myhome in homedir_list:
+                    filesync_ok = False
+                    for myprocess in psutil.process_iter():
+                        # Workaround for Python 2.6
+                        if platform.python_version().startswith('2.6'):
+                            mycmdline = myprocess.cmdline
+                        else:
+                            mycmdline = myprocess.cmdline()
+                        if '/usr/bin/unison' in mycmdline and myhome+'_'+servername in mycmdline:
+                            filesync_ok = True
+                        else:
+                            pass
+                    if not filesync_ok:
+                        filesync_fail_count = filesync_fail_count+1
+                        status.append(myhome+'_'+servername+":FAIL")
             if filesync_fail_count > 0:
                 print("Unison filesync not running for - "+str(status)+" . Trying autofix:")
                 print("Trying an autorepair")

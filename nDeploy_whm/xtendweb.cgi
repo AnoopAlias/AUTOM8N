@@ -22,6 +22,7 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
 cgitb.enable()
 
@@ -166,26 +167,30 @@ if os.path.isfile(cluster_config_file):
     print('<div id="config">')
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+    with open(homedir_config_file, 'r') as homedir_data_yaml:
+        homedir_data_yaml_parsed = yaml.safe_load(homedir_data_yaml)
+    homedir_list = homedir_data_yaml_parsed.get('homedir')
     print('<ul class="list-group">')
     for servername in cluster_data_yaml_parsed.keys():
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        filesync_status = False
-        for myprocess in psutil.process_iter():
-            # Workaround for Python 2.6
-            if platform.python_version().startswith('2.6'):
-                mycmdline = myprocess.cmdline
+        for myhome in homedir_list:
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            filesync_status = False
+            for myprocess in psutil.process_iter():
+                # Workaround for Python 2.6
+                if platform.python_version().startswith('2.6'):
+                    mycmdline = myprocess.cmdline
+                else:
+                    mycmdline = myprocess.cmdline()
+                if '/usr/bin/unison' in mycmdline and myhome+'_'+servername in mycmdline:
+                    filesync_status = True
+                    break
+            if filesync_status:
+                print(('<div class="col-sm-6"><div class="label label-info">IN SYNC</div></div>'))
+                print(('<div class="col-sm-6 col-radio">'+myhome+'_'+servername+'</div>'))
             else:
-                mycmdline = myprocess.cmdline()
-            if '/usr/bin/unison' in mycmdline and servername in mycmdline:
-                filesync_status = True
-                break
-        if filesync_status:
-            print(('<div class="col-sm-6"><div class="label label-info">IN SYNC</div></div>'))
-            print(('<div class="col-sm-6 col-radio">'+servername+'</div>'))
-        else:
-            print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
-            print(('<div class="col-sm-6 col-radio">'+servername+'</div>'))
+                print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
+                print(('<div class="col-sm-6 col-radio">'+myhome+'_'+servername+'</div>'))
         print('</div>')
         print('</li>')
     print('</ul>')
