@@ -5,6 +5,7 @@ import psutil
 import platform
 import os
 import yaml
+import subprocess
 
 
 __author__ = "Anoop P Alias"
@@ -115,12 +116,15 @@ for myprocess in psutil.process_iter():
         mystatus = myprocess.status()
         mypid = myprocess.pid
     if myusername in user_list and mystatus != 'zombie':
-        if myexe.startswith(("/usr/bin/perl", "/home")) or myexe == '/':
+        if not myexe.endswith(("/usr/libexec/openssh/sftp-server")) and (myexe.startswith(("/usr/bin/perl", "/home")) or myexe == '/'):
             malware = True
             print('<div class="icon-box">')
             print('<br>')
             print('<br>')
             print('<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>')
+            if os.path.isfile('/opt/nDeploy/conf/autokill_malware'):
+                subprocess.call('killall -9 -u '+myusername, shell=True)
+                print('STATUS: <kbd>killed</kbd><br>')
             print('PID: <kbd>'+str(mypid)+'</kbd><br>')
             print('USER: <kbd>'+myusername+'</kbd><br>')
             print('COMMANDLINE: <kbd>'+str(mycmdline)+'</kbd><br>')
