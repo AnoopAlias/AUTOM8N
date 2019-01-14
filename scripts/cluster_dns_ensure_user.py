@@ -49,6 +49,17 @@ def cluster_ensure_arecord(zone_name, hostname, domain_ip, *serverlist, **cluste
                         subprocess.call("/usr/local/cpanel/bin/whmapi1 removezonerecord zone="+zone_name+" line="+str(rr['Line']), shell=True)
             if not os.path.isfile(installation_path+"/conf/DECLUSTER_DNSZONE"):
                 subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=A class=IN name="+hostname+". address="+remote_domain_ipv4, shell=True)
+            zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+zone_name, shell=True, stdout=subprocess.PIPE)
+            zone_datafeed = zonedump.stdout.read()
+            zonedump_parsed = json.loads(zone_datafeed)
+            thezone = zonedump_parsed['data']['zone'][0]
+            resource_record = thezone['record']
+            for rr in resource_record:
+                if rr['type'] == 'CNAME':
+                    if rr['name'] == 'mail.'+hostname+"." and rr['cname'] == hostname:
+                        subprocess.call("/usr/local/cpanel/bin/whmapi1 removezonerecord zone="+zone_name+" line="+str(rr['Line']), shell=True)
+                        subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=A class=IN name=mail."+hostname+". address="+domain_ip, shell=True)
+
     return
 
 
