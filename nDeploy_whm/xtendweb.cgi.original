@@ -423,28 +423,7 @@ print('</form>')
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
-# Next section start here
-print('<div class="panel panel-default">')  # default
-print('<div class="panel-heading" role="tab" id="headingEleven"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">DDOS</a></h3></div>')  # heading
-print('<div id="collapseEleven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEleven">')  # collapse
-print('<div class="panel-body">')  # body
-if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
-    print('<form class="form-group" action="ddos_mitigate.cgi">')
-    print('<input class="btn btn-info" type="submit" value="ENABLED - CLICK TO DISABLE">')
-    print(('<input class="hidden" name="ddos" value="disable">'))
-    print('</form>')
-else:
-    print('<form class="form-group" action="ddos_mitigate.cgi">')
-    print('<input class="btn btn" type="submit" value="DISABLED - CLICK TO ENABLE">')
-    print(('<input class="hidden" name="ddos" value="enable">'))
-    print('</form>')
-print('</div>')  # body
-print('</div>')  # collapse
-print('</div>')  # default
-
 print('</div>')  # accordion
-
-
 
 print('<div class="panel-footer"><small>')
 print(branding_print_footer())

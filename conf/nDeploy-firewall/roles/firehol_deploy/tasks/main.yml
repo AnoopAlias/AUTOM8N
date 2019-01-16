@@ -1,0 +1,48 @@
+---
+
+- name: Install redhat-lsb-core
+  yum: name=redhat-lsb-core state=present
+
+- name: Gather facts from new server
+  setup:
+
+- name: check if custom Firehol config template is active
+  stat:
+    path: /opt/nDeploy/conf/nDeploy-firewall/roles/firehol_deploy/templates/custom_firehol.conf.j2
+  register: firehol_customconf
+
+- name: Install FireHol
+  yum:
+    name: https://github.com/firehol/packages/releases/download/2018-08-19-1732/firehol-3.1.6-1.el7.noarch.rpm
+    state: present
+    validate_certs: no
+  when:
+    - ansible_lsb.major_release|int >= 7
+
+- name: Setup FireHol Config
+  template:
+    src: firehol.conf.j2
+    dest: /etc/firehol/firehol.conf
+  when:
+    - ansible_lsb.major_release|int >= 7
+    - firehol_customconf.stat.exists == false
+
+- name: Setup FireHol Config
+  template:
+    src: custom_firehol.conf.j2
+    dest: /etc/firehol/firehol.conf
+  when:
+    - ansible_lsb.major_release|int >= 7
+    - firehol_customconf.stat.exists == true
+
+#- name: Start FireHol
+#  service:
+#    name: firehol
+#    enabled: yes
+#    state: started
+#  when:
+#    - ansible_lsb.major_release|int >= 7
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_FIREHOL_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch

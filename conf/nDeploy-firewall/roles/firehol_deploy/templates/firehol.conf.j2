@@ -1,0 +1,61 @@
+server_cpan_ports="tcp/1"
+client_cpan_ports="default"
+server_smtpalt_ports="tcp/26"
+client_smtpalt_ports="default"
+server_webdav_ports="tcp/2077"
+client_webdav_ports="default"
+server_webdavs_ports="tcp/2078"
+client_webdavs_ports="default"
+server_caldav_ports="tcp/2079"
+client_caldav_ports="default"
+server_caldavs_ports="tcp/2080"
+client_caldavs_ports="default"
+server_cpanel_ports="tcp/2082"
+client_cpanel_ports="default"
+server_cpanels_ports="tcp/2083"
+client_cpanels_ports="default"
+server_whm_ports="tcp/2086"
+client_whm_ports="default"
+server_whms_ports="tcp/2087"
+client_whms_ports="default"
+server_webmail_ports="tcp/2095"
+client_webmail_ports="default"
+server_webmails_ports="tcp/2096"
+client_webmails_ports="default"
+server_razor_ports="tcp/2703"
+client_razor_ports="default"
+server_cplicense_ports="tcp/2089"
+client_cplicense_ports="default"
+server_apns_ports="tcp/2195"
+client_apns_ports="default"
+server_dcc_ports="tcp/6277 udp/6277"
+client_dcc_ports="default"
+server_pyzor_ports="tcp/24441 udp/24441"
+client_pyzor_ports="default"
+server_xtendhttp_ports="tcp/9999"
+client_xtendhttp_ports="default"
+server_xtendhttps_ports="tcp/4430"
+client_xtendhttps_ports="default"
+
+
+cpanel_services_in="ftp ssh smtp smtpalt smtps submission dns http https xtendhttp xtendhttps pop3 pop3s imap imaps mysql webdav webdavs caldav caldavs cpanel cpanels whm whms webmail webmails"
+cpanel_services_out="cpan ftp smtp smtps time submission dhcp dns whois http https xtendhttp xtendhttps ident rsync razor webdav webdavs caldav caldavs cplicense apns dcc pyzor whm whms"
+
+{% for myip in ansible_all_ipv4_addresses %}
+ipv4 synproxy input inface {{ ansible_default_ipv4.interface }} dst {{ myip }} dport 80 accept
+ipv4 synproxy input inface  {{ ansible_default_ipv4.interface }} dst {{ myip }} dport 443 accept
+{% endfor %}
+
+interface lo loopback
+    client all accept
+    server all accept
+
+interface {{ ansible_default_ipv4.interface }} internet
+    client ICMP accept
+    client ICMPV6 accept
+    server ICMP accept
+    server ICMPV6 accept
+    server custom ftprange "tcp/49152:65534" default accept
+    server custom altssh "tcp/{{ ansible_port }}" default accept
+    client "${cpanel_services_out}" accept
+    server "${cpanel_services_in}" accept

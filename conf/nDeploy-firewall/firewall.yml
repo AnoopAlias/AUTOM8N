@@ -1,0 +1,5 @@
+- name: Setup FireHol firewall
+  hosts: localhost
+  connection: local
+  roles:
+    - firehol_deploy
