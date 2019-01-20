@@ -285,7 +285,7 @@ if not osrelease == 'CloudLinux':
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
             userlist = os.listdir("/var/cpanel/users")
             print('<div class="panel panel-default">')  # default
-            print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Resource Limit</a></h3></div>')  # heading
+            print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">System Resource Limit</a></h3></div>')  # heading
             print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
             print('<div class="panel-body">')  # body
             print('<div class="row">')  # markerr1
@@ -331,7 +331,7 @@ if not osrelease == 'CloudLinux':
         else:
             # Next sub-section start here
             print('<div class="panel panel-default">')  # default
-            print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Resource Limit</a></h3></div>')  # heading
+            print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">System Resource Limit</a></h3></div>')  # heading
             print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
             print('<div class="panel-body">')  # body
             print(('<div class="alert alert-info">'))
@@ -425,26 +425,42 @@ print('</div>')  # collapse
 print('</div>')  # default
 # Next section start here
 print('<div class="panel panel-default">')  # default
-print('<div class="panel-heading" role="tab" id="headingEleven"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">DDOS</a></h3></div>')  # heading
+print('<div class="panel-heading" role="tab" id="headingEleven"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">DDOS PROTECTION</a></h3></div>')  # heading
 print('<div id="collapseEleven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEleven">')  # collapse
 print('<div class="panel-body">')  # body
 if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('<form class="form-group" action="ddos_mitigate.cgi">')
-    print('<input class="btn btn-info" type="submit" value="ENABLED - CLICK TO DISABLE">')
+    print('<input class="btn btn-info" type="submit" value="NGINX[ACTIVE] CLICK TO DISABLE">')
     print(('<input class="hidden" name="ddos" value="disable">'))
     print('</form>')
 else:
     print('<form class="form-group" action="ddos_mitigate.cgi">')
-    print('<input class="btn btn" type="submit" value="DISABLED - CLICK TO ENABLE">')
+    print('<input class="btn btn" type="submit" value="NGINX[INACTIVE] - CLICK TO ENABLE">')
     print(('<input class="hidden" name="ddos" value="enable">'))
     print('</form>')
+try:
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
+except OSError:
+    pass
+else:
+    with open(os.devnull, 'w') as FNULL:
+        firehol_enabled = subprocess.call("systemctl is-active firehol.service", stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
+    if firehol_enabled == 0:
+        print('<form class="form-group" action="firehol_control.cgi">')
+        print('<input class="btn btn-info" type="submit" value="SYNPROXY[ACTIVE]- CLICK TO DISABLE">')
+        print(('<input class="hidden" name="ddos" value="disable">'))
+        print('</form>')
+    else:
+        print('<form class="form-group" action="firehol_control.cgi">')
+        print('<input class="btn btn" type="submit" value="SYNPROXY[INACTIVE] - CLICK TO ENABLE">')
+        print(('<input class="hidden" name="ddos" value="enable">'))
+        print('</form>')
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
 
 print('</div>')  # accordion
-
-
 
 print('<div class="panel-footer"><small>')
 print(branding_print_footer())

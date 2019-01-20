@@ -42,13 +42,18 @@ events=master_down,master_up
 
 [XtendWeb]
 type=service
+{% if dbmode == 'rwsplit' %}
 router=readwritesplit
+master_failure_mode=fail_on_write
+{% else %}
+router=readconnroute
+router_options=master
+{% endif %}
 servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 connection_timeout=60
 max_connections=500
-master_failure_mode=fail_on_write
 
 [MaxAdmin-Service]
 type=service

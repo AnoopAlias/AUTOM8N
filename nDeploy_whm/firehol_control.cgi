@@ -125,28 +125,38 @@ print('<li class="active">Server Config</li>')
 print('</ol>')
 
 if form.getvalue('ddos'):
-    if form.getvalue('ddos') == 'enable':
-        os.rename("/etc/nginx/conf.d/dos_mitigate_systemwide.disabled", "/etc/nginx/conf.d/dos_mitigate_systemwide.enabled")
-        sighupnginx()
-        print('<div class="panel panel-default">')
-        print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
-        print('<div class="panel-body">')  # marker6
-        print('<div class="icon-box">')
-        print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Nginx DDOS Mitigation is now enabled')
-        print('</div>')
-        print('</div>')  # marker6
-        print('</div>')
-    elif form.getvalue('ddos') == 'disable':
-        os.rename("/etc/nginx/conf.d/dos_mitigate_systemwide.enabled", "/etc/nginx/conf.d/dos_mitigate_systemwide.disabled")
-        sighupnginx()
-        print('<div class="panel panel-default">')
-        print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
-        print('<div class="panel-body">')  # marker6
-        print('<div class="icon-box">')
-        print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Nginx DDOS Mitigation is now disabled')
-        print('</div>')
-        print('</div>')  # marker6
-        print('</div>')
+    try:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
+    except OSError:
+        print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> iptables not compatible </div>')
+    else:
+        if form.getvalue('ddos') == 'enable':
+            if os.path.isfile('/opt/nDeploy/conf/XTENDWEB_FIREHOL_SETUP_LOCK_DO_NOT_REMOVE'):
+                subprocess.call(['systemctl', 'restart', 'firehol.service'])
+                print('<div class="panel panel-default">')
+                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
+                print('<div class="panel-body">')  # marker6
+                print('<div class="icon-box">')
+                print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> SYNPROXY DDOS Mitigation is now enabled')
+                print('</div>')
+                print('</div>')  # marker6
+                print('</div>')
+            else:
+                print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> FireHol firewall not installed </div>')
+        elif form.getvalue('ddos') == 'disable':
+            if os.path.isfile('/opt/nDeploy/conf/XTENDWEB_FIREHOL_SETUP_LOCK_DO_NOT_REMOVE'):
+                subprocess.call(['systemctl', 'stop', 'firehol.service'])
+                print('<div class="panel panel-default">')
+                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
+                print('<div class="panel-body">')  # marker6
+                print('<div class="icon-box">')
+                print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> SYNPROXY DDOS Mitigation is now disabled')
+                print('</div>')
+                print('</div>')  # marker6
+                print('</div>')
+            else:
+                print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> FireHol firewall not installed </div>')
 else:
         print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
 
