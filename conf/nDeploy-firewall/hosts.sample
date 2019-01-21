@@ -1,2 +1,0 @@
-[localhost]
-localhost.localdomain ansible_port=22 ansible_connection=local
