@@ -133,6 +133,11 @@ if form.getvalue('ddos'):
     else:
         if form.getvalue('ddos') == 'enable':
             if os.path.isfile('/opt/nDeploy/conf/XTENDWEB_FIREHOL_SETUP_LOCK_DO_NOT_REMOVE'):
+                subprocess.call('sysctl -w net/ipv4/tcp_syncookies=1', shell=True)
+                subprocess.call('sysctl -w net/ipv4/tcp_timestamps=1', shell=True)
+                subprocess.call('sysctl -w net/netfilter/nf_conntrack_tcp_loose=0', shell=True)
+                subprocess.call('sysctl -w net/netfilter/nf_conntrack_max=2000000', shell=True)
+                subprocess.call('echo 2000000 > /sys/module/nf_conntrack/parameters/hashsize', shell=True)
                 subprocess.call(['systemctl', 'restart', 'firehol.service'])
                 print('<div class="panel panel-default">')
                 print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
