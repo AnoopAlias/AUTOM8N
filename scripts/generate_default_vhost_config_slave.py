@@ -82,3 +82,8 @@ proxy_subdomain_template = templateEnv.get_template('proxy_subdomain.conf.j2')
 proxy_subdomain_config = proxy_subdomain_template.render(templateVars)
 with codecs.open('/etc/nginx/conf.d/proxy_subdomain.conf', 'w', 'utf-8') as proxy_subdomain_config_file:
     proxy_subdomain_config_file.write(proxy_subdomain_config)
+# Generate httpd_mod_remoteip.include
+httpd_mod_remoteip_template = templateEnv.get_template('httpd_mod_remoteip_slave.include.j2')
+httpd_mod_remoteip_config = httpd_mod_remoteip_template.render(templateVars)
+with codecs.open('/etc/nginx/conf.d/httpd_mod_remoteip.include', 'w', 'utf-8') as httpd_mod_remoteip_config_file:
+    httpd_mod_remoteip_config_file.write(httpd_mod_remoteip_config)
