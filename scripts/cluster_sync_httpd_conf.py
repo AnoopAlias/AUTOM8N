@@ -33,4 +33,6 @@ if __name__ == "__main__":
     cluster_dict_ipmap = cluster_dict.get('ipmap')
     with open('/etc/apache2/conf/httpd.conf', 'rw') as apache_conf:
         theconf = apache_conf.read()
-        apache_conf.write(multiple_replace(cluster_dict_ipmap, theconf))
+    new_conf = multiple_replace(cluster_dict_ipmap, theconf)
+    with open('/etc/apache2/conf/httpd.conf', 'rw') as apache_conf:
+        apache_conf.write(new_conf)
