@@ -66,11 +66,11 @@ group nDeployCluster
         action
         {
                 pattern /opt/cpanel/ea-php54/root/etc/php-fpm.d/*;
-                pattern /opt/cpanel/ea-php54/root/etc/php-fpm.d/*;
-                pattern /opt/cpanel/ea-php54/root/etc/php-fpm.d/*;
-                pattern /opt/cpanel/ea-php54/root/etc/php-fpm.d/*;
-                pattern /opt/cpanel/ea-php54/root/etc/php-fpm.d/*;
-                pattern /opt/cpanel/ea-php54/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php55/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php56/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php70/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php71/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php72/root/etc/php-fpm.d/*;
                 exec "/scripts/restartsrv_apache_php_fpm";
                 logfile "/var/log/csync2_action.log";
         }
