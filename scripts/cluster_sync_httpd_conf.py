@@ -4,6 +4,8 @@ import re
 import os
 import yaml
 import socket
+import subprocess
+
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -36,3 +38,4 @@ if __name__ == "__main__":
     new_conf = multiple_replace(cluster_dict_ipmap, theconf)
     with open('/etc/apache2/conf/httpd.conf', 'w') as apache_conf:
         apache_conf.write(new_conf)
+    subprocess.call(['/usr/sbin/apachectl', 'graceful'])

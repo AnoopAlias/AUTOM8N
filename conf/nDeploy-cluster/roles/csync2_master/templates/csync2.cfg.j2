@@ -30,6 +30,7 @@ group nDeployCluster
         include /opt/nDeploy/conf/ndeploy_cluster.yaml;
         include /etc/nginx/conf.d/nginx_status_allow.conf;
         include /etc/apache2/conf.d;
+        include /etc/apache2/conf/httpd.conf;
         include /opt/cpanel/ea-php54/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php55/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php56/root/etc/php-fpm.d;
@@ -43,6 +44,12 @@ group nDeployCluster
         include /opt/cpanel/ea-php71/root/etc/php.ini;
         include /opt/cpanel/ea-php72/root/etc/php.ini;
         exclude /var/spool/cron/root;
+        action
+        {
+                pattern /etc/apache2/conf/httpd.conf;
+                exec "/opt/nDeploy/scripts/cluster_sync_httpd_conf.py";
+                logfile "/var/log/csync2_action.log";
+        }
         action
         {
                 pattern /etc/localdomains;
