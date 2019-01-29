@@ -181,6 +181,7 @@ if form.getvalue('domain'):
         access_log = yaml_parsed_profileyaml.get('access_log', 'enabled')
         open_file_cache = yaml_parsed_profileyaml.get('open_file_cache', 'disabled')
         ssl_offload = yaml_parsed_profileyaml.get('ssl_offload', 'disabled')
+        proxy_to_master = yaml_parsed_profileyaml.get('proxy_to_master', 'disabled')
         wwwredirect = yaml_parsed_profileyaml.get('wwwredirect', 'none')
         redirect_to_ssl = yaml_parsed_profileyaml.get('redirect_to_ssl', 'disabled')
         redirect_aliases = yaml_parsed_profileyaml.get('redirect_aliases', 'disabled')
@@ -735,6 +736,24 @@ if form.getvalue('domain'):
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="redirect_to_ssl" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="redirect_to_ssl" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+        print('</div>')
+        print('</li>')
+        # proxy_to_master
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        proxy_to_master_hint = "in cluster proxy to master instead of local server "
+        if proxy_to_master == 'enabled':
+            print_green("proxy_to_master", proxy_to_master_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red("proxy_to_master", proxy_to_master_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
         print('</div>')
         print('</li>')

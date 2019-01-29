@@ -131,6 +131,7 @@ if form.getvalue('cpanelpkg'):
     ssl_offload = yaml_parsed_profileyaml.get('ssl_offload', 'disabled')
     wwwredirect = yaml_parsed_profileyaml.get('wwwredirect', 'none')
     redirect_to_ssl = yaml_parsed_profileyaml.get('redirect_to_ssl', 'disabled')
+    proxy_to_master = yaml_parsed_profileyaml.get('proxy_to_master', 'disabled')
     redirect_aliases = yaml_parsed_profileyaml.get('redirect_aliases', 'disabled')
     clickjacking_protect = yaml_parsed_profileyaml.get('clickjacking_protect', 'disabled')
     disable_contenttype_sniffing = yaml_parsed_profileyaml.get('disable_contenttype_sniffing', 'disabled')
@@ -239,6 +240,24 @@ if form.getvalue('cpanelpkg'):
         print('<div class="col-sm-6 col-radio">')
         print('<div class="radio"><label><input type="radio" name="ssl_offload" value="enabled" /> Enabled</label></div>')
         print('<div class="radio"><label><input type="radio" name="ssl_offload" value="disabled" checked/> Disabled</label></div>')
+        print('</div>')
+    print('</div>')
+    print('</li>')
+    # proxy_to_master
+    print('<li class="list-group-item">')
+    print('<div class="row">')
+    proxy_to_master_hint = "in cluster proxy to master instead of local server "
+    if proxy_to_master == 'enabled':
+        print_green("proxy_to_master", proxy_to_master_hint)
+        print('<div class="col-sm-6 col-radio">')
+        print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="enabled" checked/> Enabled</label></div>')
+        print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="disabled" /> Disabled</label></div>')
+        print('</div>')
+    else:
+        print_red("proxy_to_master", proxy_to_master_hint)
+        print('<div class="col-sm-6 col-radio">')
+        print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="enabled" /> Enabled</label></div>')
+        print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="disabled" checked/> Disabled</label></div>')
         print('</div>')
     print('</div>')
     print('</li>')

@@ -373,6 +373,19 @@ if form.getvalue('cpanelpkg'):
         print('</body>')
         print('</html>')
         sys.exit(0)
+    # proxy_to_master
+    if 'proxy_to_master' in form.keys():
+        proxy_to_master = form.getvalue('proxy_to_master')
+        yaml_parsed_profileyaml['proxy_to_master'] = proxy_to_master
+    else:
+        print('ERROR: Forbidden::proxy_to_master')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('</div>')
+        print('</div>')
+        print('</div>')
+        print('</body>')
+        print('</html>')
+        sys.exit(0)
     # redirect_aliases
     if 'redirect_aliases' in form.keys():
         redirect_aliases = form.getvalue('redirect_aliases')
