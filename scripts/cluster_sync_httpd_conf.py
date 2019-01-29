@@ -31,8 +31,8 @@ if __name__ == "__main__":
     myhostname = socket.gethostname()
     cluster_dict = cluster_data_yaml_parsed.get(myhostname)
     cluster_dict_ipmap = cluster_dict.get('ipmap')
-    with open('/etc/apache2/conf/httpd.conf', 'rw') as apache_conf:
+    with open('/etc/apache2/conf/httpd.conf', 'r') as apache_conf:
         theconf = apache_conf.read()
     new_conf = multiple_replace(cluster_dict_ipmap, theconf)
-    with open('/etc/apache2/conf/httpd.conf', 'rw') as apache_conf:
+    with open('/etc/apache2/conf/httpd.conf', 'w') as apache_conf:
         apache_conf.write(new_conf)
