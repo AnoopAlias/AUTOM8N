@@ -32,5 +32,5 @@ if __name__ == "__main__":
     cluster_dict = cluster_data_yaml_parsed.get(myhostname)
     cluster_dict_ipmap = cluster_dict.get('ipmap')
     with open('/etc/apache2/conf/httpd.conf', 'rw') as apache_conf:
-        theconf = apache_conf.readlines()
+        theconf = apache_conf.read()
     print(multiple_replace(cluster_dict_ipmap, apache_conf))
