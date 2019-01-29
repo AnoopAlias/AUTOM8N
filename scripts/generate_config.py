@@ -395,6 +395,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     gzip = yaml_parsed_domain_data.get('gzip', 'disabled')
     http2 = yaml_parsed_domain_data.get('http2', 'disabled')
     ssl_offload = yaml_parsed_domain_data.get('ssl_offload', 'disabled')
+    proxy_to_master = yaml_parsed_domain_data.get('proxy_to_master', 'disabled')
     access_log = yaml_parsed_domain_data.get('access_log', 'disabled')
     redirect_url = yaml_parsed_domain_data.get('redirecturl', 'none')
     redirectstatus = yaml_parsed_domain_data.get('redirectstatus', 'none')
@@ -562,6 +563,22 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     generated_app_config = app_template.render(apptemplateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
         confout.write(generated_app_config)
+    # if cluster is enabled generate .include for the clustered servers as well
+    if clusterenabled:
+        for server in cluster_serverlist:
+            connect_server_dict = cluster_data_yaml_parsed.get(server)
+            ipmap_dict = connect_server_dict.get("ipmap")
+            remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4, "127.0.0.1")
+            if ipv6_addr:
+                remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
+            else:
+                remote_domain_ipv6 = None
+            cluster_app_config_out = "/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".include"
+            if proxy_to_master == 'disabled':
+                apptemplateVars["APPSERVERIP"] = remote_domain_ipv4
+            cluster_generated_app_config = app_template.render(apptemplateVars)
+            with codecs.open(cluster_app_config_out, "w", 'utf-8') as confout:
+                confout.write(cluster_generated_app_config)
     # Copy the user config for testing if present
     if os.path.isfile(document_root+"/nginx.conf"):
         # SecFilter
@@ -696,6 +713,22 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
                 confout.write(generated_subdir_app_config)
+            # if cluster is enabled generate .subinclude for the clustered servers as well
+            if clusterenabled:
+                for server in cluster_serverlist:
+                    connect_server_dict = cluster_data_yaml_parsed.get(server)
+                    ipmap_dict = connect_server_dict.get("ipmap")
+                    remote_domain_ipv4 = ipmap_dict.get(cpanel_ipv4, "127.0.0.1")
+                    if ipv6_addr:
+                        remote_domain_ipv6 = ipmap_dict.get(ipv6_addr, "::1")
+                    else:
+                        remote_domain_ipv6 = None
+                    cluster_subdir_app_config_out = "/etc/nginx/"+server+"/" + kwargs.get('configdomain') + "_" + subdir_apps_uniq.get(subdir) + ".subinclude"
+                    if proxy_to_master == 'disabled':
+                        subdirApptemplateVars["APPSERVERIP"] = remote_domain_ipv4
+                    cluster_generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
+                    with codecs.open(cluster_subdir_app_config_out, "w", 'utf-8') as confout:
+                        confout.write(cluster_generated_subdir_app_config)
     # If we have a user_config.Lets generate the test confg
     if user_config is True and is_unsafe is not True:
         # generate a temp nginx config
@@ -798,4 +831,4 @@ if __name__ == "__main__":
         if clusterenabled:
             for server in cluster_serverlist:
                 target_dir = "/etc/nginx/"+server+"/"
-                subprocess.Popen(['/usr/bin/rsync', '-a', '--exclude=*.conf', '/etc/nginx/sites-enabled/', target_dir])
+                subprocess.Popen(['/usr/bin/rsync', '-a', '--exclude=*.conf', '--exclude=*.include', '--exclude=*.subinclude', '/etc/nginx/sites-enabled/', target_dir])
