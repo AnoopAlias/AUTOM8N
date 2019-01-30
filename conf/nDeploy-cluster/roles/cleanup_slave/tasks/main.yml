@@ -21,3 +21,6 @@
 
 - name: Restart cpanel on slave
   service: name=cpanel enabled=yes state=restarted
+
+- name: Start httpd on slave
+  service: name=httpd enabled=yes state=started

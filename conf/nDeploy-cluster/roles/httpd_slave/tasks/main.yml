@@ -1,0 +1,10 @@
+---
+
+- name: Setup httpd systemd service file
+  template:
+    src: httpd.service.j2
+    dest: /etc/systemd/system/httpd.service
+
+- name: just force systemd to reread configs
+  systemd:
+    daemon_reload: yes

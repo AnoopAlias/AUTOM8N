@@ -136,11 +136,13 @@
   hosts: ndeploymaster
   roles:
     - php_master
+    - httpd_master
 
 - name: Setup PHP-FPM app server on slaves
   hosts: ndeployslaves
   roles:
     - php_slave
+    - httpd_slave
 
 - name: Setup HHVM extras for master
   hosts: ndeploymaster
