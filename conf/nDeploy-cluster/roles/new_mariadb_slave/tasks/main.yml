@@ -17,23 +17,25 @@
 
 - name: Remove MySQL rpm
   yum:
-    name: '{{ item }}'
+    name: '{{ packages }}'
     state: absent
-  with_items:
-    - compat-MySQL51-shared
-    - compat-MySQL50-shared
-    - mysql-community-common
+  vars:
+    packages:
+      - compat-MySQL51-shared
+      - compat-MySQL50-shared
+      - mysql-community-common
 
 - name: Install MariaDB rpm
   yum:
-    name: '{{ item }}'
+    name: "{{ packages }}"
     state: present
-  with_items:
-    - MariaDB-devel
-    - MariaDB-common
-    - MariaDB-shared
-    - MariaDB-server
-    - MariaDB-client
+  vars:
+    packages:
+      - MariaDB-devel
+      - MariaDB-common
+      - MariaDB-shared
+      - MariaDB-server
+      - MariaDB-client
 
 - name: Restart MariaDB server
   service: name=mysql enabled=yes state=started

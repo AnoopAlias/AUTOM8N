@@ -1,32 +1,36 @@
 ---
 
 - name: Ensure EPEL repo is present
-  yum: name={{ item }} state=present
-  with_items:
-    - epel-release
-    - redhat-lsb-core
+  yum: name={{ packages }} state=present
+  vars:
+    packages:
+      - epel-release
+      - redhat-lsb-core
 
 - name: Install XtendWeb repo
-  yum: name={{ item }} state=present disable_gpg_check=yes validate_certs=False
-  with_items:
-    - https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-7.noarch.rpm
+  yum: name={{ packages }} state=present disable_gpg_check=yes validate_certs=False
+  vars:
+    packages:
+      - https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-7.noarch.rpm
 
 - name: Install XtendWeb cluster rpm packages
-  yum: name={{ item }} enablerepo={{ repo }},epel state=present
-  with_items:
-   - csync2-nDeploy
-   - unison-nDeploy
-   - "{{ webserver }}-nDeploy"
-   - python-pip
-   - stunnel
-   - redis
-   - haproxy
-   - gdnsd-nDeploy
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+     - csync2-nDeploy
+     - unison-nDeploy
+     - "{{ webserver }}-nDeploy"
+     - python-pip
+     - stunnel
+     - redis
+     - haproxy
+     - gdnsd-nDeploy
 
 - name: Install XtendWeb cluster slave rpm package
-  yum: name={{ item }} enablerepo={{ repo }},epel state=present
-  with_items:
-   - nDeploy-cluster-slave
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+      - nDeploy-cluster-slave
 
 - name: ensure default UMASK is in place
   lineinfile: dest=/etc/login.defs state=absent regexp="^UMASK"

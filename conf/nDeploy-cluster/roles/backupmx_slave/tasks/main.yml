@@ -12,9 +12,10 @@
   yum: name=exim state=absent
 
 - name: Ensure  redhat-lsb-core is present
-  yum: name={{ item }} state=present
-  with_items:
-    - redhat-lsb-core
+  yum: name={{ packages }} state=present
+  vars:
+    packages:
+      - redhat-lsb-core
 
 - name: install PostFix server
   yum: name=postfix state=present
