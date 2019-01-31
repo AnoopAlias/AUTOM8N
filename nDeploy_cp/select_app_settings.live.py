@@ -50,7 +50,7 @@ def branding_print_banner():
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
         brand_name = yaml_parsed_brand.get("brand", "XtendWeb")
     else:
-        brand_name = "XtendWeb"
+        brand_name = "AUTOM8N"
     return brand_name
 
 
