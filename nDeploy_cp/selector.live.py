@@ -55,9 +55,9 @@ def branding_print_footer():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">A U T O M 8 N</a>')
+        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
     else:
-        brand_footer = '<a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">A U T O M 8 N</a>'
+        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
     return brand_footer
 
 

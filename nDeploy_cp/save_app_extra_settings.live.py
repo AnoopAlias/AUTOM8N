@@ -56,9 +56,9 @@ def branding_print_footer():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">A U T O M 8 N</a>')
+        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
     else:
-        brand_footer = '<a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">A U T O M 8 N</a>'
+        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
     return brand_footer
 
 
@@ -102,7 +102,7 @@ if 'domain' in form.keys():
     mydomain = form.getvalue('domain')
 else:
     print('ERROR: Forbidden::domain')
-    print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+    print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -117,7 +117,7 @@ if os.path.isfile(profileyaml):
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
 else:
     print('ERROR: Domain data file i/o error')
-    print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+    print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
     print('</div>')
     print('</div>')
     print('</div>')
@@ -137,7 +137,7 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['auth_basic'] = auth_basic
             else:
                 print('ERROR: Forbidden::auth_basic')
-                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -150,7 +150,7 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['mod_security'] = mod_security
             else:
                 print('ERROR: Forbidden::mod_security')
-                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -163,7 +163,7 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['set_expire_static'] = set_expire_static
             else:
                 print('ERROR: Forbidden::set_expire_static')
-                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -176,7 +176,7 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['redirectstatus'] = redirectstatus
             else:
                 print('ERROR: Forbidden::redirectstatus')
-                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -198,7 +198,7 @@ if form.getvalue('thesubdir'):
                         it_matches = regex.match(redirecturl)
                         if not it_matches:
                             print('ERROR: Invalid Redirect URL. The URL must be something like https://google.com ')
-                            print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+                            print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
                             print('</div>')
                             print('</div>')
                             print('</div>')
@@ -215,7 +215,7 @@ if form.getvalue('thesubdir'):
                 the_subdir_dict['append_requesturi'] = append_requesturi
             else:
                 print('ERROR: Forbidden::append_requesturi')
-                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+                print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
                 print('</div>')
                 print('</div>')
                 print('</div>')
@@ -236,7 +236,7 @@ else:
         yaml_parsed_profileyaml['auth_basic'] = auth_basic
     else:
         print('ERROR: Forbidden::auth_basic')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -249,7 +249,7 @@ else:
         yaml_parsed_profileyaml['set_expire_static'] = set_expire_static
     else:
         print('ERROR: Forbidden::set_expire_static')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -262,7 +262,7 @@ else:
         yaml_parsed_profileyaml['mod_security'] = mod_security
     else:
         print('ERROR: Forbidden::mod_security')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -275,7 +275,7 @@ else:
         yaml_parsed_profileyaml['autoindex'] = autoindex
     else:
         print('ERROR: Forbidden::autoindex')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -288,7 +288,7 @@ else:
         yaml_parsed_profileyaml['ssl_offload'] = ssl_offload
     else:
         print('ERROR: Forbidden::ssl_offload')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -301,7 +301,7 @@ else:
         yaml_parsed_profileyaml['pagespeed'] = pagespeed
     else:
         print('ERROR: Forbidden::pagespeed')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -314,7 +314,7 @@ else:
         yaml_parsed_profileyaml['pagespeed_filter'] = pagespeed_filter
     else:
         print('ERROR: Forbidden::pagespeed_filter')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -327,7 +327,7 @@ else:
         yaml_parsed_profileyaml['brotli'] = brotli
     else:
         print('ERROR: Forbidden::brotli')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -340,7 +340,7 @@ else:
         yaml_parsed_profileyaml['gzip'] = gzip
     else:
         print('ERROR: Forbidden::gzip')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -353,7 +353,7 @@ else:
         yaml_parsed_profileyaml['http2'] = http2
     else:
         print('ERROR: Forbidden::http2')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -366,7 +366,7 @@ else:
         yaml_parsed_profileyaml['access_log'] = access_log
     else:
         print('ERROR: Forbidden::access_log')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -379,7 +379,7 @@ else:
         yaml_parsed_profileyaml['open_file_cache'] = open_file_cache
     else:
         print('ERROR: Forbidden::open_file_cache')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -392,7 +392,7 @@ else:
         yaml_parsed_profileyaml['clickjacking_protect'] = clickjacking_protect
     else:
         print('ERROR: Forbidden::clickjacking_protect')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -405,7 +405,7 @@ else:
         yaml_parsed_profileyaml['disable_contenttype_sniffing'] = disable_contenttype_sniffing
     else:
         print('ERROR: Forbidden::disable_contenttype_sniffing')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -418,7 +418,7 @@ else:
         yaml_parsed_profileyaml['xss_filter'] = xss_filter
     else:
         print('ERROR: Forbidden::xss_filter')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -431,7 +431,7 @@ else:
         yaml_parsed_profileyaml['hsts'] = hsts
     else:
         print('ERROR: Forbidden::hsts')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -444,7 +444,7 @@ else:
         yaml_parsed_profileyaml['dos_mitigate'] = dos_mitigate
     else:
         print('ERROR: Forbidden::dos_mitigate')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -457,7 +457,7 @@ else:
         yaml_parsed_profileyaml['test_cookie'] = test_cookie
     else:
         print('ERROR: Forbidden::test_cookie')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -470,7 +470,7 @@ else:
         yaml_parsed_profileyaml['symlink_protection'] = symlink_protection
     else:
         print('ERROR: Forbidden::symlink_protection')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -483,7 +483,7 @@ else:
         yaml_parsed_profileyaml['redirect_to_ssl'] = redirect_to_ssl
     else:
         print('ERROR: Forbidden::redirect_to_ssl')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -496,7 +496,7 @@ else:
         yaml_parsed_profileyaml['proxy_to_master'] = proxy_to_master
     else:
         print('ERROR: Forbidden::proxy_to_master')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -509,7 +509,7 @@ else:
         yaml_parsed_profileyaml['redirect_aliases'] = redirect_aliases
     else:
         print('ERROR: Forbidden::redirect_aliases')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -522,7 +522,7 @@ else:
         yaml_parsed_profileyaml['wwwredirect'] = wwwredirect
     else:
         print('ERROR: Forbidden::wwwredirect')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -535,7 +535,7 @@ else:
         yaml_parsed_profileyaml['redirectstatus'] = redirectstatus
     else:
         print('ERROR: Forbidden::redirectstatus')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
@@ -557,7 +557,7 @@ else:
                 it_matches = regex.match(redirecturl)
                 if not it_matches:
                     print('ERROR: Invalid Redirect URL. The URL must be something like https://google.com ')
-                    print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+                    print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
                     print('</div>')
                     print('</div>')
                     print('</div>')
@@ -574,7 +574,7 @@ else:
         yaml_parsed_profileyaml['append_requesturi'] = append_requesturi
     else:
         print('ERROR: Forbidden::append_requesturi')
-        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">&#8734; A U T O M 8 N</a></small></div>')
+        print('<div class="panel-footer"><small><a target="_blank" href="https://autom8n.com">&#8734; A U T O M 8 N</a></small></div>')
         print('</div>')
         print('</div>')
         print('</div>')
