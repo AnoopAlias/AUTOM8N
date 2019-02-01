@@ -77,7 +77,8 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                         gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                     else:
                         if rr["name"].rstrip('.') in sub_domains or rr["name"].rstrip('.') == domainname:
-                            gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
+                            pass
+                            # gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
                         else:
                             gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
             elif rr['type'] == 'CNAME':
@@ -145,7 +146,8 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                                         gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                                     else:
                                         if rr["name"].rstrip('.') in sub_domains or rr["name"].rstrip('.') == domainname:
-                                            gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
+                                            pass
+                                            # gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
                                         else:
                                             gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                             else:
@@ -184,7 +186,8 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                                         gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                                     else:
                                         if rr["name"].rstrip('.') in sub_domains or rr["name"].rstrip('.') == domainname:
-                                            gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
+                                            pass
+                                            # gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
                                         else:
                                             gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                             else:
