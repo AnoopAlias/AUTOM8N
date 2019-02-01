@@ -14,8 +14,8 @@ echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
 service tailwatchd restart
 if [ -f /etc/cpanel/ea4/is_ea4 ];then
-	echo -e '\e[93m !!! Removing conflicting ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
-	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2
+	echo -e '\e[93m !!! Removing conflicting mod_evasive ea-apache24-mod_evasive ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
+	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2 ea-apache24-mod_evasive mod_evasive
 	yum -y install ea-apache24-mod_remoteip
 	REMOTEIPINCLUDE=$'\nInclude "/etc/nginx/conf.d/httpd_mod_remoteip.include"'
 	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || (echo "" >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf && echo ${REMOTEIPINCLUDE} >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf)
