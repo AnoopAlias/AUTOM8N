@@ -1,12 +1,101 @@
-#Proxy to cPanel Apache httpd service
+#Proxy to cPanel Apache httpd service with Brute Force mitigation and proxy caching
 
 root {{ DOCUMENTROOT }};
 
+log_not_found off;
+
 location / {
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /admin {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /administrator {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /login {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /wp-admin {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /search {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /admin/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /administrator/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /login/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /wp-admin/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /search/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /admin.php {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /wp-login.php {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /xmlrpc.php {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /customer/account/create/ {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location = /customer/account/create {
+limit_req   zone=one  burst=2 nodelay;
+try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
+}
+
+location @cphttpd {
 access_log  off;
 {% if SSL_OFFLOAD == 'enabled' %}
 proxy_pass   http://{{ APPSERVERIP }}:9999;
 {% else %}
 proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
 {% endif %}
+proxy_cache            PROXYCACHE;
+proxy_cache_valid      10m;
+proxy_cache_use_stale  error timeout invalid_header updating http_500 http_502 http_503 http_504;
+proxy_cache_revalidate on;
+proxy_cache_min_uses 3;
+proxy_cache_background_update on;
+proxy_cache_lock on;
+add_header X-Cache-Status $upstream_cache_status;
 }
