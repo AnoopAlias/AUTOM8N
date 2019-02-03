@@ -5,7 +5,7 @@
     src: /etc/stunnel
     dest: /etc/
 
-- name: Setup stunnel config on master
+- name: Setup stunnel config on slave
   template:
     src: phpredis.conf.j2
     dest: /etc/stunnel/phpredis.conf
