@@ -7,13 +7,13 @@
       - epel-release
       - redhat-lsb-core
 
-- name: Install XtendWeb repo
+- name: Install AUTOM8N repo
   yum: name={{ packages }} state=present disable_gpg_check=yes validate_certs=False
   vars:
     packages:
-      - https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-7.noarch.rpm
+      - https://github.com/AnoopAlias/AUTOM8N/raw/ndeploy4/nDeploy-release-centos-1.0-7.noarch.rpm
 
-- name: Install XtendWeb cluster rpm packages
+- name: Install AUTOM8N cluster rpm packages
   yum: name={{ packages }} enablerepo={{ repo }},epel state=present
   vars:
     packages:
@@ -26,7 +26,7 @@
      - haproxy
      - gdnsd-nDeploy
 
-- name: Install XtendWeb cluster slave rpm package
+- name: Install AUTOM8N cluster slave rpm package
   yum: name={{ packages }} enablerepo={{ repo }},epel state=present
   vars:
     packages:

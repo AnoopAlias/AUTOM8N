@@ -1,13 +1,13 @@
 ---
 
-- name: Ensure EPEL and XtendWeb repo is present
+- name: Ensure EPEL and AUTOM8N repo is present
   yum: name={{ packages }} state=present
   vars:
     packages:
       - nDeploy-release-centos
       - epel-release
 
-- name: Install XtendWeb rpm's on master
+- name: Install AUTOM8N rpm's on master
   yum: name={{ packages }} enablerepo={{ repo }},epel state=present
   vars:
     packages:
