@@ -3,7 +3,7 @@
   hosts: ndeployslaves
   tasks: []
 
-- name: Setup XtendWeb cluster on master cPanel server
+- name: Setup AUTOM8N cluster on master cPanel server
   hosts: ndeploymaster
   connection: local
   roles:
@@ -14,7 +14,7 @@
     - clusterdirs_master
     - new_dns_master
 
-- name: Setup XtendWeb cluster on slaves
+- name: Setup AUTOM8N cluster on slaves
   hosts: ndeployslaves
   roles:
     - install_slave
