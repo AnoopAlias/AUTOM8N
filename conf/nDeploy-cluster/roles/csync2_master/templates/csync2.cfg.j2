@@ -49,7 +49,7 @@ group nDeployCluster
         action
         {
                 pattern /etc/container/ve.cfg;
-                exec "/opt/nDeploy/scripts/cluster_sync_lve.sh"
+                exec "/opt/nDeploy/scripts/cluster_sync_lve.sh";
                 logfile "/var/log/csync2_action.log";
         }
         action
