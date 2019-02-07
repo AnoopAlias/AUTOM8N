@@ -2,6 +2,7 @@ group nDeployCluster
  {
         host {{ ansible_nodename }} ({% for host in groups['ndeployslaves'] %} {{ hostvars[host]['ansible_nodename'] }} {% endfor %});
         key /etc/csync2/csync2.key;
+        include /etc/container/ve.cfg;
         include /etc/nginx/ssl;
         include /var/spool/cron;
         include /var/cpanel/ssl/installed;
@@ -45,6 +46,12 @@ group nDeployCluster
         include /opt/cpanel/ea-php71/root/etc/php.ini;
         include /opt/cpanel/ea-php72/root/etc/php.ini;
         exclude /var/spool/cron/root;
+        action
+        {
+                pattern /etc/container/ve.cfg;
+                exec "/opt/nDeploy/scripts/cluster_sync_lve.sh"
+                logfile "/var/log/csync2_action.log";
+        }
         action
         {
                 pattern /etc/apache2/conf/httpd.conf;
