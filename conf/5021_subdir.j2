@@ -1,0 +1,28 @@
+#WHMCS on Subdirectory
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+# Announcements
+rewrite ^/{{ SUBDIR }}/announcements/([0-9]+)/[a-zA-Z0-9-]+\.html$ /{{ SUBDIR }}/announcements.php?id=$1 last;
+rewrite ^/{{ SUBDIR }}/announcements$ /{{ SUBDIR }}/announcements.php last;
+# Downloads
+rewrite ^/{{ SUBDIR }}/downloads/([0-9]+)/([^/]*)$ /{{ SUBDIR }}/downloads.php?action=displaycat&catid=$1 last;
+rewrite ^/{{ SUBDIR }}/downloads$ /{{ SUBDIR }}/downloads.php last;
+#Knowledgebase
+rewrite ^/{{ SUBDIR }}/knowledgebase/([0-9]+)/[a-zA-Z0-9-]+\.html$ /{{ SUBDIR }}/knowledgebase.php?action=displayarticle&id=$1 last;
+rewrite ^/{{ SUBDIR }}/knowledgebase/([0-9]+)/([^/]*)$ /{{ SUBDIR }}/knowledgebase.php?action=displaycat&catid=$1 last;
+rewrite ^/{{ SUBDIR }}/knowledgebase$ /{{ SUBDIR }}/knowledgebase.php last;
+
+
+try_files $uri $uri/ /{{ SUBDIR }}/index.php;
+
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+}
