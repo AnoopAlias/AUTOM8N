@@ -4,10 +4,6 @@ root {{ DOCUMENTROOT }};
 
 #Proxy Pass to a tomcat app server listening on port 8080
 location / {
-try_files $uri $uri/ @tomcat;
-}
-
-location @tomcat {
 proxy_pass http://{{ APPSERVERIP }}:{{ UPSTREAM_PORT }};
 }
 
