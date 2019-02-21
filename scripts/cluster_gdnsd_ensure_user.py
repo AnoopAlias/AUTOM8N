@@ -150,6 +150,16 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                                             # gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
                                         else:
                                             gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+                            elif rr['type'] == 'CNAME':
+                                gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
+                            elif rr['type'] == "MX":
+                                gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
+                            elif rr['type'] == "TXT":
+                                gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
+                            elif rr['type'] == 'SRV':
+                                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
+                            elif rr['type'] == 'TYPE257':
+                                gdnsdzone.append(rr['name']+' TYPE257 '+rr['value_legacy']+'\n')
                             else:
                                 pass
                 else:
@@ -190,6 +200,16 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                                             # gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
                                         else:
                                             gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+                            elif rr['type'] == 'CNAME':
+                                gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
+                            elif rr['type'] == "MX":
+                                gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
+                            elif rr['type'] == "TXT":
+                                gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
+                            elif rr['type'] == 'SRV':
+                                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
+                            elif rr['type'] == 'TYPE257':
+                                gdnsdzone.append(rr['name']+' TYPE257 '+rr['value_legacy']+'\n')
                             else:
                                 pass
     with codecs.open('/etc/gdnsd/zones/'+domainname, "w", 'utf-8') as confout:
