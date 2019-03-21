@@ -2,8 +2,7 @@
 #Author: Anoop P Alias
 
 
-yum -y install iproute autoconf automake curl gcc git libmnl-devel libuuid-devel lm-sensors make nc nmap-ncat pkgconfig python python-psycopg2 PyYAML zlib-devel python-pip
-pip install MySQL-python
+yum -y install MySQL-python iproute autoconf automake curl gcc git libmnl-devel libuuid-devel lm-sensors make nc nmap-ncat pkgconfig python python-psycopg2 PyYAML zlib-devel python-pip
 
 ### netdata compile from source ###
 # curl -Ss 'https://raw.githubusercontent.com/firehol/netdata-demo-site/master/install-required-packages.sh' >/tmp/kickstart.sh && bash /tmp/kickstart.sh -i netdata-all
@@ -23,21 +22,21 @@ printf "netdata:$(openssl passwd -apr1)" > /etc/nginx/conf.d/netdata.password
 chmod 400 /etc/nginx/conf.d/netdata.password
 chown nobody /etc/nginx/conf.d/netdata.password
 
+if [! -f /opt/netdata/etc/netdata/netdata.conf ];then
+  wget -O /opt/netdata/etc/netdata/netdata.conf http://127.0.0.1:19999/netdata.conf
+  sed -i '/\[health\]/aenabled = no' /opt/netdata/etc/netdata/netdata.conf
+  sed -i 's/#enable by default cgroups matching =/enable by default cgroups matching = !lve*/' /opt/netdata/etc/netdata/netdata.conf
+  sed -i 's/# bind to = \*/bind to = 127.0.0.1:19999/' /opt/netdata/etc/netdata/netdata.conf
+fi
 
-wget -O /opt/netdata/etc/netdata/netdata.conf http://127.0.0.1:19999/netdata.conf
 echo -e '\e[93m setting up nginx httpd and mysql monitoring \e[0m'
 mysql -e "create user 'netdata'@'localhost';"
 mysql -e "grant usage on *.* to 'netdata'@'localhost' with grant option;"
 mysql -e "flush privileges;"
 
-sed -i 's/stub_status/nginx_status/' /opt/netdata/etc/netdata/python.d/nginx.conf
-sed -i 's/\/server-status/\/whm-server-status/' /opt/netdata/etc/netdata/python.d/apache.conf
-sed -i 's/\/access_log/\/access_log_disabled/' /opt/netdata/etc/netdata/python.d/web_log.conf
-sed -i 's/# bind to = \*/bind to = 127.0.0.1:19999/' /opt/netdata/etc/netdata/netdata.conf
-
-sed -i 's/stub_status/nginx_status/' /opt/netdata/usr/lib/netdata/conf.d/python.d/nginx.conf
-sed -i 's/\/server-status/\/whm-server-status/' /opt/netdata/usr/lib/netdata/conf.d/python.d/apache.conf
-sed -i 's/\/access_log/\/access_log_disabled/' /opt/netdata/usr/lib/netdata/conf.d/python.d/web_log.conf
+sed 's/stub_status/nginx_status/' /opt/netdata/usr/lib/netdata/conf.d/python.d/nginx.conf > /opt/netdata/etc/netdata/python.d/nginx.conf
+sed 's/\/server-status/\/whm-server-status/' /opt/netdata/usr/lib/netdata/conf.d/python.d/apache.conf > /opt/netdata/etc/netdata/python.d/apache.conf
+sed 's/\/access_log/\/access_log_disabled/' /opt/netdata/usr/lib/netdata/conf.d/python.d/web_log.conf > /opt/netdata/etc/netdata/python.d/web_log.conf
 
 service netdata restart
 
