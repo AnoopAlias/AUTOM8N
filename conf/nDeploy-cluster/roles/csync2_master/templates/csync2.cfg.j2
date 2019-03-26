@@ -46,7 +46,8 @@ group nDeployCluster
         include /opt/cpanel/ea-php71/root/etc/php.ini;
         include /opt/cpanel/ea-php72/root/etc/php.ini;
         exclude /var/spool/cron/root;
-        action{
+        action
+        {
               pattern /var/cpanel/ssl/apache_tls/*;
               exec "/usr/sbin/nginx -s reload";
               logfile "/var/log/csync2_action.log";
