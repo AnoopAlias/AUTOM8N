@@ -1,19 +1,15 @@
 #!/bin/bash
 
-# Remove all .conf files if force argument is supplied
-if [ "$#" -eq 1 ] && [ "$1" == "force" ] ; then
-  /bin/rm -f /etc/nginx/sites-enabled/*.conf
-fi
-
 ##Attempt to re-generate all nginx config
 /bin/touch /opt/nDeploy/conf/skip_nginx_reload
 /bin/touch /opt/nDeploy/conf/skip_php-fpm_reload
 /bin/touch /opt/nDeploy/conf/skip_tomcat_reload
 
 # Try removing any stale config
-for vhost in $(find /etc/nginx/sites-enabled/ -iname "*.conf" -not -iname "_wildcard_.*" -exec basename {} .conf \;)
+for vhost in $(find /etc/nginx/sites-enabled/ -iname "*.conf" -exec basename {} .conf \;)
 do
-  grep -w ${vhost} /etc/userdatadomains > /dev/null
+  cpvhost=$(echo ${vhost}|sed 's/_wildcard_/\*/')
+  grep -w "^${cpvhost}:" /etc/userdatadomains > /dev/null
   if [ $? -ne 0 ] ; then
     rm -f /etc/nginx/sites-enabled/${vhost}.*
   fi
