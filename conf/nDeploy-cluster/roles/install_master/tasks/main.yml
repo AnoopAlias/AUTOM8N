@@ -46,6 +46,13 @@
     user: root
     job: "/usr/bin/touch /var/spool/cron/.cron.hostname"
 
+- name: Add purge mysql binlog job in /etc/crontab
+  cron:
+    name: XtendWeb binlog purge
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/opt/nDeploy/scripts/purgemysqllogs_master.sh"
+
 - name: Allow server status check from all cluster nodes
   template:
     src: nginx_status_allow.conf.j2

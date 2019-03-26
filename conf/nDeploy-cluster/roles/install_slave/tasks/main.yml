@@ -71,6 +71,15 @@
   when:
     - inventory_hostname == groups['ndeploydbslave'][0]
 
+- name: Add purge mysql binlog job in /etc/crontab
+  cron:
+    name: XtendWeb binlog purge
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/opt/nDeploy/scripts/purgemysqllogs_dbslave.sh"
+  when:
+    - inventory_hostname == groups['ndeploydbslave'][0]
+
 - name: Add cron job for recipient_bcc
   cron:
     name: XtendWeb postmap recipient_bcc
