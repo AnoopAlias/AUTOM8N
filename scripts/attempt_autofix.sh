@@ -10,6 +10,15 @@ fi
 /bin/touch /opt/nDeploy/conf/skip_php-fpm_reload
 /bin/touch /opt/nDeploy/conf/skip_tomcat_reload
 
+# Try removing any stale config
+for vhost in $(find /etc/nginx/sites-enabled/ -iname "*.conf" -not -iname "_wildcard_.*" -exec basename {} .conf \;)
+do
+  grep -w ${vhost} /etc/userdatadomains > /dev/null
+  if [ $? -ne 0 ] ; then
+    rm -f /etc/nginx/sites-enabled/${vhost}.*
+  fi
+done
+
 echo -e '\e[93m Attempting to regenerate all nginx conf  \e[0m'
 for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1);
 do
