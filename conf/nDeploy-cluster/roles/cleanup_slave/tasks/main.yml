@@ -24,3 +24,9 @@
 
 - name: Start httpd on slave
   service: name=httpd enabled=yes state=started
+
+- name: Disable universal-hooks yum plugin on slaves
+  lineinfile:
+    path: /etc/yum/pluginconf.d/universal-hooks.conf
+    regexp: '^enabled='
+    line: 'enabled=0'
