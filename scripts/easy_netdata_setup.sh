@@ -22,7 +22,9 @@ printf "netdata:$(openssl passwd -apr1)" > /etc/nginx/conf.d/netdata.password
 chmod 400 /etc/nginx/conf.d/netdata.password
 chown nobody /etc/nginx/conf.d/netdata.password
 
-if [! -f /opt/netdata/etc/netdata/netdata.conf ];then
+conflineno=$(wc -l /opt/netdata/etc/netdata/netdata.conf|awk '{print $1}')
+
+if [ conflineno -lt 10 ];then
   wget -O /opt/netdata/etc/netdata/netdata.conf http://127.0.0.1:19999/netdata.conf
   sed -i '/\[health\]/aenabled = no' /opt/netdata/etc/netdata/netdata.conf
   sed -i 's/#enable by default cgroups matching =/enable by default cgroups matching = !lve*/' /opt/netdata/etc/netdata/netdata.conf
