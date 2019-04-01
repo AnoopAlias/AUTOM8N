@@ -14,7 +14,7 @@
   shell: bash /root/xtendweb_ipmap
 
 - name: Do a DNS Sync
-  shell: "for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do /opt/nDeploy/scripts/cluster_geodns_ensure_user.py $CPANELUSER; done"
+  shell: "for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do /opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py $CPANELUSER; done"
   when:
     - dnssync.stat.exists == false
     - dns == 'geodns'
