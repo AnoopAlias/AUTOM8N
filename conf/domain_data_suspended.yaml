@@ -6,7 +6,7 @@ autoindex: disabled
 ssl_offload: disabled
 pagespeed: disabled
 pagespeed_filter: CoreFilters
-brotli: disabled
+brotli: enabled
 gzip: enabled
 http2: enabled
 access_log: enabled
@@ -26,7 +26,7 @@ auth_basic: disabled
 redirecturl: none
 redirectstatus: none
 append_requesturi: disabled
-set_expire_static: disabled
+set_expire_static: enabled
 mod_security: disabled
 phpfpm_selector: CPANELPHP56
 phpfpm_path: /opt/cpanel/ea-php56/root
