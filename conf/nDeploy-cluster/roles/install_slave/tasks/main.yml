@@ -77,6 +77,7 @@
     cron_file: "/etc/crontab"
     user: root
     job: "/opt/nDeploy/scripts/purgemysqllogs_dbslave.sh"
+    minute: "0"
   when:
     - inventory_hostname == groups['ndeploydbslave'][0]
 

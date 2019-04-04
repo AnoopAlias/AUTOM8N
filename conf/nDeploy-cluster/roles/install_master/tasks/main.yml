@@ -52,6 +52,7 @@
     cron_file: "/etc/crontab"
     user: root
     job: "/opt/nDeploy/scripts/purgemysqllogs_master.sh"
+    minute: "0"
 
 - name: Allow server status check from all cluster nodes
   template:
