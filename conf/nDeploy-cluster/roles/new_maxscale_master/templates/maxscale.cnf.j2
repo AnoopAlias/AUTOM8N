@@ -44,6 +44,7 @@ type=service
 router=readwritesplit
 master_accept_reads=true
 master_failure_mode=fail_on_write
+connection_keepalive=10
 {% else %}
 router=readconnroute
 router_options=master

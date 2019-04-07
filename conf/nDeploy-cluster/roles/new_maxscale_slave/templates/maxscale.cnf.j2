@@ -59,6 +59,7 @@ type=service
 {% if dbmode == 'rwsplit' %}
 router=readwritesplit
 master_failure_mode=fail_on_write
+connection_keepalive=10
 {% else %}
 router=readconnroute
 router_options=master
