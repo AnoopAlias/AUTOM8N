@@ -1,0 +1,29 @@
+location:
+  source_directories:
+      - /home
+  one_file_system: true
+  files_cache: ctime,size,inode
+  repositories:
+        - user@backupserver:sourcehostname.borg
+  exclude_from:
+    - /etc/borgmatic/excludes
+  exclude_caches: true
+  exclude_if_present: .nobackup
+storage:
+    compression: lz4
+    remote_rate_limit: 5000
+    ssh_command: ssh -i /path/to/private/key
+    umask: 0077
+    lock_wait: 5
+retention:
+    keep_daily: 7
+consistency:
+    checks:
+        - disabled
+hooks:
+    before_backup:
+        - echo "`date` - Starting a backup job."
+    after_backup:
+        - echo "`date` - Backup created."
+    on_error:
+        - echo "`date` - Error while creating a backup."
