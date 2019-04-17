@@ -49,7 +49,7 @@ persistmaxtime=3600
 [MySQL-Monitor]
 type=monitor
 module=mmmon
-servers=server1,server2,server3
+servers=server3,server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 monitor_interval=10000
@@ -59,12 +59,14 @@ type=service
 {% if dbmode == 'rwsplit' %}
 router=readwritesplit
 master_failure_mode=fail_on_write
-connection_keepalive=10
+use_sql_variables_in=master
+connection_keepalive=60
+slave_selection_criteria=ADAPTIVE_ROUTING
 {% else %}
 router=readconnroute
 router_options=master
 {% endif %}
-servers=server1,server2,server3
+servers=server3,server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 connection_timeout=60

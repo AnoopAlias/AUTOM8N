@@ -45,12 +45,13 @@ type=service
 {% if dbmode == 'rwsplit' %}
 router=readwritesplit
 master_failure_mode=fail_on_write
-connection_keepalive=10
+connection_keepalive=60
+use_sql_variables_in=master
 {% else %}
 router=readconnroute
 router_options=master
 {% endif %}
-servers=server1,server2
+servers=server2,server1
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 connection_timeout=60
