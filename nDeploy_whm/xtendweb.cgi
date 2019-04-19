@@ -459,6 +459,17 @@ else:
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
+# Next section start here
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingTwelve"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">BORG BACKUP</a></h3></div>')  # heading
+print('<div id="collapseTwelve" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwelve">')  # collapse
+print('<div class="panel-body">')  # body
+print('<form class="form-group" action="setup_borg_backup.cgi">')
+print('<input class="btn btn-primary" type="submit" value="SETUP DEDUPLICATING BACKUP">')
+print('</form>')
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
 
 print('</div>')  # accordion
 
