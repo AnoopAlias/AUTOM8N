@@ -215,8 +215,12 @@ else:
     print('</div>')
     print('</li>')
 
+print('<li class="list-group-item">')
+print('<div class="row">')
 print('<div class="alert alert-info">The path where you want pkgacct,MySQL and system backups stored: </div>')
 print('<input class="form-control" placeholder="'+backup_path+'" type="text" name="thesubdir">')
+print('</div>')
+print('</li>')
 
 print('<input class="btn btn-primary" type="submit" value="Submit">')
 
