@@ -214,13 +214,17 @@ else:
     print('</div>')
     print('</div>')
     print('</li>')
-
+# backup_path
 print('<li class="list-group-item">')
 print('<div class="row">')
-print('<div class="alert alert-info">The path where you want pkgacct,MySQL and system backups stored: </div>')
+backup_path_hint = "The directory where the cPanel pkgacct,MySQL backup and system files are stored"
+print_green("Backup Target Dir", backup_path_hint)
+print('<div class="col-sm-6 col-radio">')
+# print('<div class="alert alert-info">The path where you want pkgacct,MySQL and system backups stored: </div>')
 print('<input class="form-control" placeholder="'+backup_path+'" type="text" name="thesubdir">')
 print('</div>')
 print('</li>')
+print('</ul>')
 
 print('<input class="btn btn-primary" type="submit" value="Submit">')
 
