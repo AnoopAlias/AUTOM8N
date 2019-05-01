@@ -148,7 +148,7 @@ else:
     system_files = "enabled"
     mysql_backup = "enabled"
     backup_path = "/backup"
-    backup_config_dict = {"pkgacct_backup": "enabled", "system_files": "enabled", "mysql_backup": "enabled", "backend_path": "/backup"}
+    backup_config_dict = {"pkgacct_backup": "enabled", "system_files": "enabled", "mysql_backup": "enabled", "backup_path": "/backup"}
     with open(backup_config_file, 'w') as backup_config_file_stream:
         yaml.dump(backup_config_dict, backup_config_file_stream, default_flow_style=False)
 # Next section start here
