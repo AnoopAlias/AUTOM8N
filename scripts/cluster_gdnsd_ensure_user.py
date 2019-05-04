@@ -29,6 +29,7 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 
 def get_dns_ip(ipaddress):
+    dnsip = ipaddress
     if os.path.isfile('/var/cpanel/cpnat'):
         with open('/var/cpanel/cpnat') as f:
             content = f.readlines()
@@ -39,10 +40,6 @@ def get_dns_ip(ipaddress):
                 if internalip == ipaddress:
                     dnsip = externalip
                     break
-        else:
-            dnsip = ipaddress
-    else:
-        dnsip = ipaddress
     return dnsip
 
 
