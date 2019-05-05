@@ -29,7 +29,10 @@ then
 fi
 for file in $(cat /opt/nDeploy/conf/cpanel_systembackup.include)
 do
-  rsync -a ${file} ${BACKUPDIR}/SYSTEM_FILES/
+  if [ -e ${file} ]
+  then
+    rsync -a ${file} ${BACKUPDIR}/SYSTEM_FILES/
+  fi
 done
 {% endif %}
 
@@ -43,7 +46,5 @@ fi
 if [ -f /usr/bin/mariabackup ]
 then
   mariabackup --backup --target-dir ${BACKUPDIR}/MYSQL_BACKUP
-else
-  rsync -a /var/lib/mysql ${BACKUPDIR}/MYSQL_BACKUP/
 fi
 {% endif %}
