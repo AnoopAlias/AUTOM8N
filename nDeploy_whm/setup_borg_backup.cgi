@@ -215,7 +215,7 @@ else:
 # mysql_backup
 print('<li class="list-group-item">')
 print('<div class="row">')
-mysql_backup_hint = "Use MariaBackup or rsync to backup full MySQL datadir"
+mysql_backup_hint = "Use MariaBackup to backup full MySQL datadir"
 if mysql_backup == 'enabled':
     print_green("mysql_backup", mysql_backup_hint)
     print('<div class="col-sm-6 col-radio">')
