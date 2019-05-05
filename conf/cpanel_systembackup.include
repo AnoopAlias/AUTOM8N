@@ -39,6 +39,6 @@
 /var/cpanel/bandwidth
 /var/cpanel/ssl
 /var/lib/mysql
-/etc/pki/tls/certs/
-/opt/nDeploy/conf/
-/opt/nDeploy/domain-data/
+/etc/pki/tls/certs
+/opt/nDeploy/conf
+/opt/nDeploy/domain-data

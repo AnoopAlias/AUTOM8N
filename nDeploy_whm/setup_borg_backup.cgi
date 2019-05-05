@@ -135,10 +135,10 @@ print('</ol>')
 
 # Check if backup config file is present or initilize otherwise
 if os.path.isfile(backup_config_file):
-    # Get all config settings from the domains domain-data config file
+    # Get all config settings from the backup config file
     with open(backup_config_file, 'r') as backup_config_file_stream:
         yaml_parsed_backupyaml = yaml.safe_load(backup_config_file_stream)
-    # App settings
+    # Backup settings
     pkgacct_backup = yaml_parsed_backupyaml.get('pkgacct_backup')
     system_files = yaml_parsed_backupyaml.get('system_files')
     mysql_backup = yaml_parsed_backupyaml.get('mysql_backup')

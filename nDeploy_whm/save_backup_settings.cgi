@@ -98,3 +98,68 @@ def print_red(theoption, hint):
 
 
 form = cgi.FieldStorage()
+
+print('Content-Type: text/html')
+print('')
+print('<html>')
+print('<head>')
+
+print('<title>')
+print(branding_print_banner())
+print('</title>')
+
+print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
+print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
+print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
+print(('<script src="js.js"></script>'))
+print(('<link rel="stylesheet" href="styles.css">'))
+print('</head>')
+print('<body>')
+print('<div id="main-container" class="container text-center">')  # marker1
+print('<div class="row">')  # marker2
+print('<div class="col-md-6 col-md-offset-3">')  # marker3
+
+print('<div class="logo">')
+print('<a href="xtendweb.cgi"><img border="0" src="')
+print(branding_print_logo_name())
+print('" width="48" height="48"></a>')
+print('<h4>')
+print(branding_print_banner())
+print('</h4>')
+print('</div>')
+
+print('<ol class="breadcrumb">')
+print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></span></a></li>')
+print('<li class="active">Server Config</li>')
+print('</ol>')
+
+if form.getvalue('pkgacct_backup') and form.getvalue('system_files') and form.getvalue('mysql_backup'):
+    pkgacct_backup = form.getvalue('pkgacct_backup')
+    system_files = form.getvalue('system_files')
+    mysql_backup = form.getvalue('mysql_backup')
+    # Check if backup config file is present or initilize otherwise
+    if os.path.isfile(backup_config_file):
+        # Get all config settings from the backup config file
+        with open(backup_config_file, 'r') as backup_config_file_stream:
+            yaml_parsed_backupyaml = yaml.safe_load(backup_config_file_stream)
+        yaml_parsed_backupyaml['pkgacct_backup'] = pkgacct_backup
+        yaml_parsed_backupyaml['system_files'] = system_files
+        yaml_parsed_backupyaml['mysql_backup'] = mysql_backup
+        if form.getvalue('backup_path'):
+            backup_path = form.getvalue('backup_path')
+            yaml_parsed_backupyaml['backup_path'] = backup_path
+        with open(backup_config_file, 'w') as new_backup_config_file:
+            yaml.dump(yaml_parsed_backupyaml, new_backup_config_file, default_flow_style=False)
+    else:
+        print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Backup config error </div>')
+else:
+        print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
+
+print('<div class="panel-footer"><small>')
+print(branding_print_footer())
+print('</small></div>')
+
+print('</div>')  # marker3
+print('</div>')  # marker2
+print('</body>')
+print('</html>')
