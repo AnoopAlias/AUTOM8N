@@ -7,6 +7,8 @@ import yaml
 import platform
 import psutil
 import signal
+import jinja2
+import codecs
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -151,6 +153,21 @@ else:
     backup_config_dict = {"pkgacct_backup": "enabled", "system_files": "enabled", "mysql_backup": "enabled", "backup_path": "/backup"}
     with open(backup_config_file, 'w') as backup_config_file_stream:
         yaml.dump(backup_config_dict, backup_config_file_stream, default_flow_style=False)
+if not os.path.isfile('/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh'):
+    # We create the borgmatic hook now
+    # Initiate Jinja2 templateEnv
+    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    templateVars = {"BACKUP_PATH": backup_path,
+                    "PKGACCT_BACKUP": pkgacct_backup,
+                    "SYSTEM_FILES": system_files,
+                    "MYSQL_BACKUP": mysql_backup
+                    }
+    borgmatic_hook_template = templateEnv.get_template("borgmatic_cpanel_backup_hook.sh.j2")
+    borgmatic_hook_script = borgmatic_hook_template.render(templateVars)
+    with codecs.open('/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh', 'w', 'utf-8') as borgmatic_hook_myscript:
+        borgmatic_hook_myscript.write(borgmatic_hook_script)
+    os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
 # Next section start here
 print('<div class="panel panel-default">')  # default
 print(('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">BACKUP SETTINGS</a></h3></div>'))  # heading

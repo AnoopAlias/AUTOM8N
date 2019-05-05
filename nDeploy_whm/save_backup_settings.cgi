@@ -7,6 +7,8 @@ import yaml
 import platform
 import psutil
 import signal
+import jinja2
+import codecs
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -148,8 +150,32 @@ if form.getvalue('pkgacct_backup') and form.getvalue('system_files') and form.ge
         if form.getvalue('backup_path'):
             backup_path = form.getvalue('backup_path')
             yaml_parsed_backupyaml['backup_path'] = backup_path
+        else:
+            backup_path = yaml_parsed_backupyaml.get('backup_path')
         with open(backup_config_file, 'w') as new_backup_config_file:
             yaml.dump(yaml_parsed_backupyaml, new_backup_config_file, default_flow_style=False)
+        # We create the borgmatic hook now
+        # Initiate Jinja2 templateEnv
+        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+        templateEnv = jinja2.Environment(loader=templateLoader)
+        templateVars = {"BACKUP_PATH": backup_path,
+                        "PKGACCT_BACKUP": pkgacct_backup,
+                        "SYSTEM_FILES": system_files,
+                        "MYSQL_BACKUP": mysql_backup
+                        }
+        borgmatic_hook_template = templateEnv.get_template("borgmatic_cpanel_backup_hook.sh.j2")
+        borgmatic_hook_script = borgmatic_hook_template.render(templateVars)
+        with codecs.open('/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh', 'w', 'utf-8') as borgmatic_hook_myscript:
+            borgmatic_hook_myscript.write(borgmatic_hook_script)
+        os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
+        print('<div class="panel panel-default">')
+        print(('<div class="panel-heading"><h3 class="panel-title">BACKUP SETTINGS:</h3></div>'))
+        print('<div class="panel-body">')
+        print('<div class="icon-box">')
+        print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Backup Settings updated')
+        print('</div>')
+        print('</div>')
+        print('</div>')
     else:
         print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Backup config error </div>')
 else:
