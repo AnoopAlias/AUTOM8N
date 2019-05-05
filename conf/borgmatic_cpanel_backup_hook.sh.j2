@@ -40,7 +40,7 @@ if [ ! -f ${BACKUPDIR}/MYSQL_BACKUP ]
 then
   mkdir -p ${BACKUPDIR}/MYSQL_BACKUP
 fi
-if [ ! -f /usr/bin/mariabackup ]
+if [ -f /usr/bin/mariabackup ]
 then
   mariabackup --backup --target-dir ${BACKUPDIR}/MYSQL_BACKUP
 else
