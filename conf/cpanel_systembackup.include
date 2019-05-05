@@ -38,7 +38,6 @@
 /var/spool/cron
 /var/cpanel/bandwidth
 /var/cpanel/ssl
-/var/lib/mysql
 /etc/pki/tls/certs
 /opt/nDeploy/conf
 /opt/nDeploy/domain-data
