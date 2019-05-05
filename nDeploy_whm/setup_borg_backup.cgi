@@ -237,7 +237,7 @@ backup_path_hint = "The directory where the cPanel pkgacct,MySQL backup and syst
 print_green("Backup Target Dir", backup_path_hint)
 print('<div class="col-sm-6 col-radio">')
 # print('<div class="alert alert-info">The path where you want pkgacct,MySQL and system backups stored: </div>')
-print('<input class="form-control" placeholder="'+backup_path+'" type="text" name="thesubdir">')
+print('<input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
 print('</div>')
 print('</li>')
 print('</ul>')
