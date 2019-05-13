@@ -1,5 +1,6 @@
 location:
   source_directories:
+      - {{ BACKUPDIR }}
       - /home
   one_file_system: true
   files_cache: ctime,size,inode
@@ -22,7 +23,7 @@ consistency:
         - disabled
 hooks:
     before_backup:
-        - echo "`date` - Starting a backup job."
+        - /opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh
     after_backup:
         - echo "`date` - Backup created."
     on_error:
