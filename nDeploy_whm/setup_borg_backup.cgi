@@ -18,6 +18,7 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backup_config_file = "/opt/nDeploy/conf/backup_config.yaml"
+borgmatic_config_file = "/etc/borgmatic/config.yaml"
 
 cgitb.enable()
 
@@ -248,6 +249,20 @@ print('</form>')
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
+
+# Check if borgmatic config file is present or initilize otherwise
+if os.path.isfile(borgmatic_config_file):
+    pass
+else:
+    # We create the borgmatic config now
+    # Initiate Jinja2 templateEnv
+    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    templateVars = {"BACKUP_PATH": backup_path}
+    borgmatic_conf_template = templateEnv.get_template("borgmatic_sample_config.yaml.j2")
+    borgmatic_conf = borgmatic_conf_template.render(templateVars)
+    with codecs.open(borgmatic_config_file, 'w', 'utf-8') as borgmatic_conf_file:
+        borgmatic_conf_file.write(borgmatic_conf)
 
 print('<div class="panel-footer"><small>')
 print(branding_print_footer())
