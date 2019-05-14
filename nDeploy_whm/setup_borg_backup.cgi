@@ -284,7 +284,7 @@ print('<div class="row">')
 remote_rate_limit_hint = "network upload rate limit in kiBytes/second"
 print_green("network rate limit", remote_rate_limit_hint)
 print('<div class="col-sm-6 col-radio">')
-print('<input class="form-control" placeholder="'+remote_rate_limit+'" type="text" name="remote_rate_limit">')
+print('<input class="form-control" placeholder="'+str(remote_rate_limit)+'" type="text" name="remote_rate_limit">')
 print('</div>')
 print('</li>')
 
