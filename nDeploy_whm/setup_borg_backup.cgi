@@ -256,7 +256,7 @@ if os.path.isfile(borgmatic_config_file):
     borgmatic_storage = yaml_parsed_borgmaticyaml.get('storage')
     borgmatic_retention = yaml_parsed_borgmaticyaml.get('retention')
     repositories = borgmatic_location['repositories'][0]
-    remote_rate_limit = borgmatic_storage['storage']['remote_rate_limit']
+    remote_rate_limit = borgmatic_storage['remote_rate_limit']
 
 # Lets present the borgmatic config to the user
 # Next section start here
