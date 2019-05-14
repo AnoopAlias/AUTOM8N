@@ -251,13 +251,6 @@ if os.path.isfile(borgmatic_config_file):
     # Get all config settings from the borgmatic config file
     with open(borgmatic_config_file, 'r') as borgmatic_config_file_stream:
         yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_config_file_stream)
-    # borgmatic sections
-    borgmatic_location = yaml_parsed_borgmaticyaml.get('location')
-    borgmatic_storage = yaml_parsed_borgmaticyaml.get('storage')
-    borgmatic_retention = yaml_parsed_borgmaticyaml.get('retention')
-    repositories = borgmatic_location['repositories'][0]
-    remote_rate_limit = borgmatic_storage['remote_rate_limit']
-    ssh_command = borgmatic_storage['ssh_command']
 
 # Lets present the borgmatic config to the user
 # Next section start here
@@ -275,7 +268,7 @@ print('<div class="row">')
 repositories_hint = "eg: user@backupserver:sourcehostname.borg"
 print_green("repositories", repositories_hint)
 print('<div class="col-sm-6 col-radio">')
-print('<input class="form-control" placeholder="'+repositories+'" type="text" name="repositories">')
+print('<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
 print('</div>')
 print('</li>')
 
@@ -285,7 +278,7 @@ print('<div class="row">')
 remote_rate_limit_hint = "network upload rate limit in kiBytes/second"
 print_green("network rate limit", remote_rate_limit_hint)
 print('<div class="col-sm-6 col-radio">')
-print('<input class="form-control" placeholder="'+str(remote_rate_limit)+'" type="text" name="remote_rate_limit">')
+print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
 print('</div>')
 print('</li>')
 
@@ -295,7 +288,7 @@ print('<div class="row">')
 ssh_command_hint = "options for ssh"
 print_green("ssh_command", ssh_command_hint)
 print('<div class="col-sm-6 col-radio">')
-print('<input class="form-control" placeholder="'+ssh_command+'" type="text" name="ssh_command">')
+print('<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
 print('</div>')
 print('</li>')
 
