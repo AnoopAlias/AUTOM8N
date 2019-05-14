@@ -135,7 +135,7 @@ print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></spa
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
-with open(borgmatic_config_file, 'w') as borgmatic_conf:
+with open(borgmatic_config_file, 'r') as borgmatic_conf:
     yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_conf)
 
 if form.getvalue('repositories'):
