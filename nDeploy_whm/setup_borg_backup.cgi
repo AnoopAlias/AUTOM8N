@@ -256,6 +256,7 @@ if os.path.isfile(borgmatic_config_file):
     borgmatic_storage = yaml_parsed_borgmaticyaml.get('storage')
     borgmatic_retention = yaml_parsed_borgmaticyaml.get('retention')
     repositories = borgmatic_location['repositories'][0]
+    remote_rate_limit = borgmatic_storage['storage']['remote_rate_limit']
 
 # Lets present the borgmatic config to the user
 # Next section start here
@@ -274,6 +275,16 @@ repositories_hint = "eg: user@backupserver:sourcehostname.borg"
 print_green("repositories", repositories_hint)
 print('<div class="col-sm-6 col-radio">')
 print('<input class="form-control" placeholder="'+repositories+'" type="text" name="repositories">')
+print('</div>')
+print('</li>')
+
+# remote_rate_limit
+print('<li class="list-group-item">')
+print('<div class="row">')
+remote_rate_limit_hint = "network upload rate limit in kiBytes/second"
+print_green("network rate limit", remote_rate_limit_hint)
+print('<div class="col-sm-6 col-radio">')
+print('<input class="form-control" placeholder="'+remote_rate_limit+'" type="text" name="remote_rate_limit">')
 print('</div>')
 print('</li>')
 
