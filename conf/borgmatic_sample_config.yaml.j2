@@ -3,7 +3,6 @@ location:
       - {{ BACKUP_PATH }}
       - /home
   one_file_system: true
-  files_cache: ctime,size,inode
   repositories:
         - user@backupserver:sourcehostname.borg
   exclude_from:
@@ -12,7 +11,7 @@ location:
   exclude_if_present: .nobackup
 storage:
     compression: lz4
-    remote_rate_limit: 5000
+    remote_rate_limit: 10000
     ssh_command: ssh -i /root/.ssh/id_rsa
     lock_wait: 5
 retention:
