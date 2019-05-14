@@ -257,6 +257,7 @@ if os.path.isfile(borgmatic_config_file):
     borgmatic_retention = yaml_parsed_borgmaticyaml.get('retention')
     repositories = borgmatic_location['repositories'][0]
     remote_rate_limit = borgmatic_storage['remote_rate_limit']
+    ssh_command = borgmatic_storage['ssh_command']
 
 # Lets present the borgmatic config to the user
 # Next section start here
@@ -285,6 +286,16 @@ remote_rate_limit_hint = "network upload rate limit in kiBytes/second"
 print_green("network rate limit", remote_rate_limit_hint)
 print('<div class="col-sm-6 col-radio">')
 print('<input class="form-control" placeholder="'+str(remote_rate_limit)+'" type="text" name="remote_rate_limit">')
+print('</div>')
+print('</li>')
+
+# ssh_command
+print('<li class="list-group-item">')
+print('<div class="row">')
+ssh_command_hint = "options for ssh"
+print_green("ssh_command", ssh_command_hint)
+print('<div class="col-sm-6 col-radio">')
+print('<input class="form-control" placeholder="'+ssh_command+'" type="text" name="ssh_command">')
 print('</div>')
 print('</li>')
 
