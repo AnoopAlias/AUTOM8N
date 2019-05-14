@@ -143,7 +143,6 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
         # Get all config settings from the backup config file
         with open(backup_config_file, 'r') as backup_config_file_stream:
             yaml_parsed_backupyaml = yaml.safe_load(backup_config_file_stream)
-        yaml_parsed_backupyaml['pkgacct_backup'] = pkgacct_backup
         yaml_parsed_backupyaml['system_files'] = system_files
         yaml_parsed_backupyaml['mysql_backup'] = mysql_backup
         if form.getvalue('backup_path'):
@@ -158,7 +157,6 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
         templateVars = {"BACKUP_PATH": backup_path,
-                        "PKGACCT_BACKUP": pkgacct_backup,
                         "SYSTEM_FILES": system_files,
                         "MYSQL_BACKUP": mysql_backup
                         }

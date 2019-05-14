@@ -8,7 +8,6 @@ then
 fi
 
 # pkgacct_backup
-{% if PKGACCT_BACKUP == "enabled" %}
 rm -rf ${BACKUPDIR}/PKGACCT_BACKUP
 if [ ! -f ${BACKUPDIR}/PKGACCT_BACKUP ]
 then
@@ -18,7 +17,6 @@ for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1)
 do
   nice --adjustment=18 /scripts/pkgacct --skiphomedir --skipbwdata --skiplogs ${CPANELUSER} ${BACKUPDIR}/PKGACCT_BACKUP/
 done
-{% endif %}
 
 # system_files
 {% if SYSTEM_FILES == "enabled" %}
