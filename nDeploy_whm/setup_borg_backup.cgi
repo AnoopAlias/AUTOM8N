@@ -270,7 +270,7 @@ print('<ul class="list-group">')
 # repositories
 print('<li class="list-group-item">')
 print('<div class="row">')
-repositories_hint = "backup repository eg: user@backupserver:sourcehostname.borg"
+repositories_hint = "eg: user@backupserver:sourcehostname.borg"
 print_green("repositories", repositories_hint)
 print('<div class="col-sm-6 col-radio">')
 print('<input class="form-control" placeholder="'+repositories+'" type="text" name="repositories">')
