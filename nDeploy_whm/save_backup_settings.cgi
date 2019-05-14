@@ -135,8 +135,7 @@ print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></spa
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
-if form.getvalue('pkgacct_backup') and form.getvalue('system_files') and form.getvalue('mysql_backup'):
-    pkgacct_backup = form.getvalue('pkgacct_backup')
+if form.getvalue('system_files') and form.getvalue('mysql_backup'):
     system_files = form.getvalue('system_files')
     mysql_backup = form.getvalue('mysql_backup')
     # Check if backup config file is present or initilize otherwise

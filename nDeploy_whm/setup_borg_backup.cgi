@@ -177,24 +177,7 @@ print('<div class="panel-body">')  # body
 print('<form id="config" class="form-inline" action="save_backup_settings.cgi" method="post">')
 
 print('<ul class="list-group">')
-# pkgacct_backup
-print('<li class="list-group-item">')
-pkgacct_backup_hint = "Enable pkgaccount backup with skip homedir"
-print('<div class="row">')
-if pkgacct_backup == 'enabled':
-    print_green("pkgacct_backup", pkgacct_backup_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<div class="radio"><label><input type="radio" name="pkgacct_backup" value="enabled" checked/> Enabled</label></div>')
-    print('<div class="radio"><label><input type="radio" name="pkgacct_backup" value="disabled"/> Disabled</label></div>')
-    print('</div>')
-else:
-    print_red("pkgacct_backup", pkgacct_backup_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<div class="radio"><label><input type="radio" name="pkgacct_backup" value="enabled" /> Enabled</label></div>')
-    print('<div class="radio"><label><input type="radio" name="pkgacct_backup" value="disabled" checked/> Disabled</label></div>')
-    print('</div>')
-    print('</div>')
-    print('</li>')
+
 # system_files
 print('<li class="list-group-item">')
 system_files_hint = "Backup cPanel system files"
@@ -241,6 +224,7 @@ print('<div class="col-sm-6 col-radio">')
 print('<input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
 print('</div>')
 print('</li>')
+
 print('</ul>')
 
 print('<input class="btn btn-primary" type="submit" value="Submit">')
@@ -251,9 +235,7 @@ print('</div>')  # collapse
 print('</div>')  # default
 
 # Check if borgmatic config file is present or initilize otherwise
-if os.path.isfile(borgmatic_config_file):
-    pass
-else:
+if not os.path.isfile(borgmatic_config_file):
     # We create the borgmatic config now
     # Initiate Jinja2 templateEnv
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
@@ -263,6 +245,46 @@ else:
     borgmatic_conf = borgmatic_conf_template.render(templateVars)
     with codecs.open(borgmatic_config_file, 'w', 'utf-8') as borgmatic_conf_file:
         borgmatic_conf_file.write(borgmatic_conf)
+
+# Since we have a borgmatic config now.Lets load it up and present to the user
+if os.path.isfile(borgmatic_config_file):
+    # Get all config settings from the borgmatic config file
+    with open(borgmatic_config_file, 'r') as borgmatic_config_file_stream:
+        yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_config_file_stream)
+    # borgmatic sections
+    borgmatic_location = yaml_parsed_borgmaticyaml.get('location')
+    borgmatic_storage = yaml_parsed_borgmaticyaml.get('storage')
+    borgmatic_retention = yaml_parsed_borgmaticyaml.get('retention')
+    repositories = borgmatic_location['repositories'][0]
+
+# Lets present the borgmatic config to the user
+# Next section start here
+print('<div class="panel panel-default">')  # default
+print(('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">BORG SETTINGS</a></h3></div>'))  # heading
+print('<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">')  # collapse
+print('<div class="panel-body">')  # body
+print('<form id="config" class="form-inline" action="save_borgmatic_settings.cgi" method="post">')
+
+print('<ul class="list-group">')
+
+# repositories
+print('<li class="list-group-item">')
+print('<div class="row">')
+repositories_hint = "backup repository eg: user@backupserver:sourcehostname.borg"
+print_green("repositories", repositories_hint)
+print('<div class="col-sm-6 col-radio">')
+print('<input class="form-control" placeholder="'+repositories+'" type="text" name="repositories">')
+print('</div>')
+print('</li>')
+
+print('</ul>')
+
+print('<input class="btn btn-primary" type="submit" value="Submit">')
+
+print('</form>')
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
 
 print('<div class="panel-footer"><small>')
 print(branding_print_footer())
