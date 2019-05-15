@@ -333,7 +333,7 @@ if backup_dir_list:
         print('<div class="form-group"><kbd>')
         print(path)
         print('</kbd></div>')
-        if path != "/home" or path != backup_path:
+        if path != "/home":
             print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
             print('<form class="form-group" action="subdir_delete.live.py">')
             print('<input class="btn btn-xs btn-danger" type="submit" value="Delete">')
