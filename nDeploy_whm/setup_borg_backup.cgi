@@ -309,7 +309,7 @@ print(('<div class="panel-heading" role="tab" id="headingThree"><h3 class="panel
 print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">')  # collapse
 print('<div class="panel-body">')  # body
 print(('<p>Add new home directory to backup:</p>'))
-print('<form class="form-inline" action="subdir_app_settings.live.py">')
+print('<form class="form-inline" action="save_borgmatic_settings.cgi">')
 print('<div class="form-group">')  # marker5
 print('<div class="input-group">')  # marker6
 print('<span class="input-group-addon">')
@@ -335,9 +335,10 @@ if backup_dir_list:
         print('</kbd></div>')
         if path not in ['/home', backup_path]:
             print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
-            print('<form class="form-group" action="subdir_delete.live.py">')
+            print('<form class="form-group" action="save_borgmatic_settings.cgi">')
             print('<input class="btn btn-xs btn-danger" type="submit" value="Delete">')
             print(('<input class="hidden" name="thehomedir" value="'+path+'">'))
+            print(('<input class="hidden" name="action" value="add">'))
             print('</form>')
         print('</div>')
         print('</li>')
