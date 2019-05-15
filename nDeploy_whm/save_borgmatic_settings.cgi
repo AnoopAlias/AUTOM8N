@@ -137,6 +137,7 @@ print('</ol>')
 
 with open(borgmatic_config_file, 'r') as borgmatic_conf:
     yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_conf)
+backup_dir_list = yaml_parsed_borgmaticyaml['location']['source_directories']
 
 if form.getvalue('repositories'):
     yaml_parsed_borgmaticyaml['location']['repositories'][0] = form.getvalue('repositories')
@@ -144,6 +145,14 @@ if form.getvalue('remote_rate_limit'):
     yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'] = int(form.getvalue('remote_rate_limit'))
 if form.getvalue('ssh_command'):
     yaml_parsed_borgmaticyaml['storage']['ssh_command'] = form.getvalue('ssh_command')
+if form.getvalue('thehomedir'):
+    if form.getvalue('action'):
+        if form.getvalue('action') == "add":
+            backup_dir_list.append(form.getvalue('thehomedir'))
+            yaml_parsed_borgmaticyaml['location']['source_directories'] = backup_dir_list
+        elif form.getvalue('action') == "delete":
+            backup_dir_list.remove(form.getvalue('thehomedir'))
+            yaml_parsed_borgmaticyaml['location']['source_directories'] = backup_dir_list
 
 with open(borgmatic_config_file, 'w') as borgmatic_conf:
     yaml.dump(yaml_parsed_borgmaticyaml, borgmatic_conf, default_flow_style=False)

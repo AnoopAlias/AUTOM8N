@@ -338,7 +338,7 @@ if backup_dir_list:
             print('<form class="form-group" action="save_borgmatic_settings.cgi">')
             print('<input class="btn btn-xs btn-danger" type="submit" value="Delete">')
             print(('<input class="hidden" name="thehomedir" value="'+path+'">'))
-            print(('<input class="hidden" name="action" value="add">'))
+            print(('<input class="hidden" name="action" value="delete">'))
             print('</form>')
         print('</div>')
         print('</li>')
