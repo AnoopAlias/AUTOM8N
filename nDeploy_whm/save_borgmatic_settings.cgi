@@ -148,7 +148,8 @@ if form.getvalue('ssh_command'):
 if form.getvalue('thehomedir'):
     if form.getvalue('action'):
         if form.getvalue('action') == "add":
-            backup_dir_list.append(form.getvalue('thehomedir'))
+            if form.getvalue('thehomedir') not in backup_dir_list:
+                backup_dir_list.append(form.getvalue('thehomedir'))
             yaml_parsed_borgmaticyaml['location']['source_directories'] = backup_dir_list
         elif form.getvalue('action') == "delete":
             backup_dir_list.remove(form.getvalue('thehomedir'))
