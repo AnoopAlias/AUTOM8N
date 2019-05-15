@@ -308,7 +308,6 @@ print('<div class="panel panel-default">')  # default
 print(('<div class="panel-heading" role="tab" id="headingThree"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">ADDITIONAL HOMEDIR TO BACKUP</a></h3></div>'))  # heading
 print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">')  # collapse
 print('<div class="panel-body">')  # body
-print('<div class="alert alert-info">The path entered below must follow the format <br> <kbd>/home2</kbd> <kbd>/home3</kbd> etc.</div>')  # marker3
 print(('<p>Add new home directory to backup:</p>'))
 print('<form class="form-inline" action="subdir_app_settings.live.py">')
 print('<div class="form-group">')  # marker5
@@ -334,7 +333,7 @@ if backup_dir_list:
         print('<div class="form-group"><kbd>')
         print(path)
         print('</kbd></div>')
-        if path is not "/home" or backup_path:
+        if path != "/home" or path != backup_path:
             print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
             print('<form class="form-group" action="subdir_delete.live.py">')
             print('<input class="btn btn-xs btn-danger" type="submit" value="Delete">')
