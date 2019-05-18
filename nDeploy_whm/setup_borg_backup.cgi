@@ -330,7 +330,7 @@ print('</li>')
 print('<li class="list-group-item">')
 print('<div class="row">')
 keep_weekly_hint = "number of weekly backups to keep"
-print_green("keep_hourly", keep_hourly_hint)
+print_green("keep_weekly", keep_weekly_hint)
 print('<div class="col-sm-6 col-radio">')
 print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
 print('</div>')

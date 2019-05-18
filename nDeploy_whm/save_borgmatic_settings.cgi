@@ -147,6 +147,14 @@ if form.getvalue('ssh_command'):
     yaml_parsed_borgmaticyaml['storage']['ssh_command'] = form.getvalue('ssh_command')
 if form.getvalue('encryption_passphrase'):
     yaml_parsed_borgmaticyaml['storage']['encryption_passphrase'] = form.getvalue('encryption_passphrase')
+if form.getvalue('keep_hourly'):
+    yaml_parsed_borgmaticyaml['retention']['keep_hourly'] = form.getvalue('keep_hourly')
+if form.getvalue('keep_daily'):
+    yaml_parsed_borgmaticyaml['retention']['keep_daily'] = form.getvalue('keep_daily')
+if form.getvalue('keep_weekly'):
+    yaml_parsed_borgmaticyaml['retention']['keep_weekly'] = form.getvalue('keep_weekly')
+if form.getvalue('keep_monthly'):
+    yaml_parsed_borgmaticyaml['retention']['keep_monthly'] = form.getvalue('keep_monthly')
 if form.getvalue('thehomedir'):
     if form.getvalue('action'):
         if form.getvalue('action') == "add":
