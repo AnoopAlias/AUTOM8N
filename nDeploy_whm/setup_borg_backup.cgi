@@ -272,16 +272,6 @@ print('<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['loc
 print('</div>')
 print('</li>')
 
-# remote_rate_limit
-print('<li class="list-group-item">')
-print('<div class="row">')
-remote_rate_limit_hint = "network upload rate limit in kiBytes/second"
-print_green("network rate limit", remote_rate_limit_hint)
-print('<div class="col-sm-6 col-radio">')
-print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
-print('</div>')
-print('</li>')
-
 # ssh_command
 print('<li class="list-group-item">')
 print('<div class="row">')
@@ -289,6 +279,26 @@ ssh_command_hint = "options for ssh"
 print_green("ssh_command", ssh_command_hint)
 print('<div class="col-sm-6 col-radio">')
 print('<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
+print('</div>')
+print('</li>')
+
+# encryption_passphrase
+print('<li class="list-group-item">')
+print('<div class="row">')
+encryption_passphrase_hint = "passphrase used to encrypt the backup"
+print_green("encryption_passphrase", encryption_passphrase_hint)
+print('<div class="col-sm-6 col-radio">')
+print('<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']+'" type="text" name="encryption_passphrase">')
+print('</div>')
+print('</li>')
+
+# remote_rate_limit
+print('<li class="list-group-item">')
+print('<div class="row">')
+remote_rate_limit_hint = "network upload rate limit in kiBytes/second"
+print_green("network rate limit", remote_rate_limit_hint)
+print('<div class="col-sm-6 col-radio">')
+print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
 print('</div>')
 print('</li>')
 

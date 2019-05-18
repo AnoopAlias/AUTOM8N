@@ -145,6 +145,8 @@ if form.getvalue('remote_rate_limit'):
     yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'] = int(form.getvalue('remote_rate_limit'))
 if form.getvalue('ssh_command'):
     yaml_parsed_borgmaticyaml['storage']['ssh_command'] = form.getvalue('ssh_command')
+if form.getvalue('encryption_passphrase'):
+    yaml_parsed_borgmaticyaml['storage']['encryption_passphrase'] = form.getvalue('encryption_passphrase')
 if form.getvalue('thehomedir'):
     if form.getvalue('action'):
         if form.getvalue('action') == "add":
