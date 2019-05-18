@@ -343,26 +343,7 @@ print('</span>')
 print('</div>')
 print('</div>')
 print('</form>')
-# get the currently configured homedir
-if backup_dir_list:
-    print(('<p>Currently backing up:</p>'))
-    print('<ul class="list-group">')
-    for path in backup_dir_list:
-        print('<li class="list-group-item">')
-        print('<div class="form-inline">')
-        print('<div class="form-group"><kbd>')
-        print(path)
-        print('</kbd></div>')
-        if path not in ['/home', backup_path]:
-            print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
-            print('<form class="form-group" action="save_borgmatic_settings.cgi">')
-            print('<input class="btn btn-xs btn-danger" type="submit" value="Delete">')
-            print(('<input class="hidden" name="thehomedir" value="'+path+'">'))
-            print(('<input class="hidden" name="action" value="delete">'))
-            print('</form>')
-        print('</div>')
-        print('</li>')
-    print('</ul>')
+
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
