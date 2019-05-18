@@ -308,6 +308,26 @@ print('<div class="panel panel-default">')  # default
 print(('<div class="panel-heading" role="tab" id="headingThree"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">ADDITIONAL HOMEDIR TO BACKUP</a></h3></div>'))  # heading
 print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">')  # collapse
 print('<div class="panel-body">')  # body
+# get the currently configured homedir
+if backup_dir_list:
+    print(('<p>Currently backing up:</p>'))
+    print('<ul class="list-group">')
+    for path in backup_dir_list:
+        print('<li class="list-group-item">')
+        print('<div class="form-inline">')
+        print('<div class="form-group"><kbd>')
+        print(path)
+        print('</kbd></div>')
+        if path not in ['/home', backup_path]:
+            print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
+            print('<form class="form-group" action="save_borgmatic_settings.cgi">')
+            print('<input class="btn btn-xs btn-danger" type="submit" value="Delete">')
+            print(('<input class="hidden" name="thehomedir" value="'+path+'">'))
+            print(('<input class="hidden" name="action" value="delete">'))
+            print('</form>')
+        print('</div>')
+        print('</li>')
+    print('</ul>')
 print(('<p>Add new home directory to backup:</p>'))
 print('<form class="form-inline" action="save_borgmatic_settings.cgi">')
 print('<div class="form-group">')  # marker5
@@ -323,7 +343,7 @@ print('</span>')
 print('</div>')
 print('</div>')
 print('</form>')
-# get the currently configured subdir
+# get the currently configured homedir
 if backup_dir_list:
     print(('<p>Currently backing up:</p>'))
     print('<ul class="list-group">')
