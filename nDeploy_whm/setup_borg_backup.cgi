@@ -304,6 +304,50 @@ print('</li>')
 
 print('</ul>')
 
+print('<ul class="list-group">')
+print(('<h6 class="list-group-item-heading">Backup retention</h6>'))
+# keep_hourly
+print('<li class="list-group-item">')
+print('<div class="row">')
+keep_hourly_hint = "number of hourly backups to keep"
+print_green("keep_hourly", keep_hourly_hint)
+print('<div class="col-sm-6 col-radio">')
+print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_hourly'])+'" type="text" name="keep_hourly">')
+print('</div>')
+print('</li>')
+
+# keep_daily
+print('<li class="list-group-item">')
+print('<div class="row">')
+keep_daily_hint = "number of daily backups to keep"
+print_green("keep_daily", keep_hourly_hint)
+print('<div class="col-sm-6 col-radio">')
+print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_daily'])+'" type="text" name="keep_daily">')
+print('</div>')
+print('</li>')
+
+# keep_weekly
+print('<li class="list-group-item">')
+print('<div class="row">')
+keep_weekly_hint = "number of weekly backups to keep"
+print_green("keep_hourly", keep_hourly_hint)
+print('<div class="col-sm-6 col-radio">')
+print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
+print('</div>')
+print('</li>')
+
+# keep_monthly
+print('<li class="list-group-item">')
+print('<div class="row">')
+keep_monthly_hint = "number of monthly backups to keep"
+print_green("keep_monthly", keep_monthly_hint)
+print('<div class="col-sm-6 col-radio">')
+print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
+print('</div>')
+print('</li>')
+
+print('</ul>')
+
 print('<input class="btn btn-primary" type="submit" value="Submit">')
 
 print('</form>')
