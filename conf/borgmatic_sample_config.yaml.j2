@@ -7,6 +7,7 @@ location:
         - user@backupserver:sourcehostname.borg
   exclude_from:
     - /etc/borgmatic/excludes
+    - /opt/nDeploy/conf/borg_excludes
   exclude_caches: true
   exclude_if_present: .nobackup
 storage:
