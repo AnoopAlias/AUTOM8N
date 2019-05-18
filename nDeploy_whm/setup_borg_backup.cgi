@@ -201,13 +201,13 @@ print('<li class="list-group-item">')
 print('<div class="row">')
 mysql_backup_hint = "Use MariaBackup to backup full MySQL datadir"
 if mysql_backup == 'enabled':
-    print_green("mysql_backup", mysql_backup_hint)
+    print_green("mariabackup", mysql_backup_hint)
     print('<div class="col-sm-6 col-radio">')
     print('<div class="radio"><label><input type="radio" name="mysql_backup" value="enabled" checked/> Enabled</label></div>')
     print('<div class="radio"><label><input type="radio" name="mysql_backup" value="disabled" /> Disabled</label></div>')
     print('</div>')
 else:
-    print_red("mysql_backup", mysql_backup_hint)
+    print_red("mariabackup", mysql_backup_hint)
     print('<div class="col-sm-6 col-radio">')
     print('<div class="radio"><label><input type="radio" name="mysql_backup" value="enabled" /> Enabled</label></div>')
     print('<div class="radio"><label><input type="radio" name="mysql_backup" value="disabled" checked/> Disabled</label></div>')
@@ -218,7 +218,7 @@ else:
 print('<li class="list-group-item">')
 print('<div class="row">')
 backup_path_hint = "The directory where the cPanel pkgacct,MySQL backup and system files are stored"
-print_green("Backup Target Dir", backup_path_hint)
+print_green("pkgacct backup path", backup_path_hint)
 print('<div class="col-sm-6 col-radio">')
 # print('<div class="alert alert-info">The path where you want pkgacct,MySQL and system backups stored: </div>')
 print('<input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
