@@ -137,7 +137,7 @@ print('<li class="active">Borgmatic setup</li>')
 print('</ol>')
 
 
-if os.path.isfile('/etc/borgmatic'):
+if os.path.isdir('/etc/borgmatic'):
     # Check if backup config file is present or initilize otherwise
     if os.path.isfile(backup_config_file):
         # Get all config settings from the backup config file
