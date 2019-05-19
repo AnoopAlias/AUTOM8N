@@ -261,6 +261,7 @@ print('<div class="panel-body">')  # body
 print('<form id="config" class="form-inline" action="save_borgmatic_settings.cgi" method="post">')
 
 print('<ul class="list-group">')
+print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Keep encryption_passphrase copied safely. Losing it would make data recovery impossible on a server crash </div>')
 
 # repositories
 print('<li class="list-group-item">')
@@ -305,7 +306,7 @@ print('</li>')
 print('</ul>')
 
 print('<ul class="list-group">')
-print(('<h6 class="list-group-item-heading">Backup retention</h6>'))
+print(('<h6 class="list-group-item-heading">BACKUP RETENTION</h6>'))
 # keep_hourly
 print('<li class="list-group-item">')
 print('<div class="row">')
