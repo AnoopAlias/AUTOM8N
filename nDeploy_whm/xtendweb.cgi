@@ -465,8 +465,9 @@ print('<div class="panel-heading" role="tab" id="headingTwelve"><h3 class="panel
 print('<div id="collapseTwelve" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwelve">')  # collapse
 print('<div class="panel-body">')  # body
 print('<form class="form-group" action="setup_borg_backup.cgi">')
-print('<input class="btn btn-primary" type="submit" value="SETUP DEDUPLICATING BACKUP">')
+print('<input class="btn btn-primary" type="submit" value="SETUP ENCRYPTED DEDUPLICATING BACKUP">')
 print('</form>')
+print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Keep encryption_passphrase copied safely. Losing it would make data recovery impossible on a server crash </div>')
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
