@@ -46,6 +46,12 @@ deny all;
 location ~ /\.git {
 deny all;
 }
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
+}
 
 
 location / {
@@ -104,6 +110,12 @@ deny all;
 location ~ /\.git {
 deny all;
 }
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
+}
 
 location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
@@ -160,6 +172,12 @@ location ~* \.htaccess$ {
 deny all;
 }
 location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
 deny all;
 }
 
@@ -239,6 +257,12 @@ location ~* \.htaccess$ {
 deny all;
 }
 location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
 deny all;
 }
 
@@ -363,6 +387,12 @@ location ~* \.htaccess$ {
 deny all;
 }
 location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
 deny all;
 }
 
