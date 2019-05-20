@@ -34,6 +34,19 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* \.php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+
 
 location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
@@ -78,6 +91,18 @@ proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* \.php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
 }
 
 location / {
@@ -124,6 +149,18 @@ proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* \.php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
 }
 
 location / {
@@ -191,6 +228,18 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* \.php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
 }
 
 # Include any applications in subdirectory
@@ -303,6 +352,18 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* \.php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
 }
 
 # Include any applications in subdirectory
