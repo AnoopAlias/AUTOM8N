@@ -167,6 +167,7 @@ if form.getvalue('thehomedir'):
 
 with open(borgmatic_config_file, 'w') as borgmatic_conf:
     yaml.dump(yaml_parsed_borgmaticyaml, borgmatic_conf, default_flow_style=False)
+os.chmod(borgmatic_config_file, 0o640)
 
 print('<div class="panel panel-default">')
 print(('<div class="panel-heading"><h3 class="panel-title">BORGMATIC SETTINGS:</h3></div>'))

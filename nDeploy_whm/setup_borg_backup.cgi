@@ -247,6 +247,8 @@ if os.path.isdir('/etc/borgmatic'):
         borgmatic_conf = borgmatic_conf_template.render(templateVars)
         with codecs.open(borgmatic_config_file, 'w', 'utf-8') as borgmatic_conf_file:
             borgmatic_conf_file.write(borgmatic_conf)
+        os.chmod(borgmatic_config_file, 0o640)
+
 
     # Since we have a borgmatic config now.Lets load it up and present to the user
     if os.path.isfile(borgmatic_config_file):
