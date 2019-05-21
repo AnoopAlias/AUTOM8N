@@ -830,7 +830,7 @@ if form.getvalue('domain'):
         # Append request_uri to redirect
         print('<li class="list-group-item">')
         print('<div class="row">')
-        append_requesturi_hint = 'append $$request_uri to the redirect URL'
+        append_requesturi_hint = 'append $request_uri to the redirect URL'
         if append_requesturi == 'enabled' and redirectstatus != 'none':
             print_green("append $request_uri to redirecturl", append_requesturi_hint)
             print('<div class="col-sm-6 col-radio">')
