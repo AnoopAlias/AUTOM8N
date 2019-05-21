@@ -152,9 +152,7 @@ print('</div>')
 print('</li>')
 print('</ul>')
 print('</div>')
-print(('<div class="alert alert-info alert-top alert-btm">'))
-print(('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/process_control.html">PROCESS CONTROL</a>'))
-print(('</div>'))
+print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Do NOT restart Nginx for activating config changes. Always reload the process using nginx -s reload </div>')
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
