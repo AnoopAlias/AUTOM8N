@@ -134,9 +134,10 @@ print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"><
 print('<li class="active">Select domain</li>')
 print('</ol>')
 # Next section start here
-print('<div class="panel panel-default single">')  # marker6
-print('<div class="panel-heading"><h3 class="panel-title">Switch domains automatically</h3></div>')
-print('<div class="panel-body">')  # marker7
+print('<div class="panel panel-default">')  # default
+print(('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">AUTO SWITCH TO NGINX</a></h3></div>'))  # heading
+print('<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">')  # collapse
+print('<div class="panel-body">')  # body
 if settings_lock == 'enabled':
     print(('<div class="alert alert-info alert-top">Application Server settings are locked by the administrator</div>'))
 else:
@@ -147,9 +148,10 @@ else:
 print('</div>')  # marker7
 print('</div>')  # marker6
 # Next section start here
-print('<div class="panel panel-default">')  # marker4
-print('<div class="panel-heading"><h3 class="panel-title">Select domain to configure manually</h3></div>')
-print('<div class="panel-body">')  # marker5
+print('<div class="panel panel-default">')  # default
+print(('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">MANUALLY CONFIGURE NGINX STACK</a></h3></div>'))  # heading
+print('<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">')  # collapse
+print('<div class="panel-body">')  # body
 print('<form class="form-inline" action="app_settings.live.py" method="post">')
 print('<select name="domain">')
 print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
