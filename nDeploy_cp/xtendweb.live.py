@@ -145,8 +145,9 @@ else:
     print('<input class="btn btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
     print(('<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
     print('</form>')
-print('</div>')  # marker7
-print('</div>')  # marker6
+print('</div>')  # body
+print('</div>')  # panel-collapse
+print('</div>')  # panel
 # Next section start here
 print('<div class="panel panel-default">')  # default
 print(('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">MANUALLY CONFIGURE NGINX STACK</a></h3></div>'))  # heading
@@ -167,8 +168,9 @@ for the_addon_domain in addon_domains_dict.keys():
 print('</select>')
 print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
 print('</form>')
-print('</div>')  # marker5
-print('</div>')  # marker4
+print('</div>')  # body
+print('</div>')  # panel-collapse
+print('</div>')  # panel
 
 print('<div class="panel-footer"><small>')
 print(branding_print_footer())
