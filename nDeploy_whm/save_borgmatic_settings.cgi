@@ -155,7 +155,7 @@ if form.getvalue('ssh_command'):
 if form.getvalue('encryption_passphrase'):
     # Input sanitation
     if not re.match("^[0-9a-zA-Z]+$", form.getvalue('encryption_passphrase')):
-        print("Error: Do not use any symbols, use only numbers,small letters and capital letter in encryption passphrase")
+        print("Error: Do not use any symbols, use only numbers,small letters and capital letters in encryption passphrase")
         sys.exit(0)
     else:
         yaml_parsed_borgmaticyaml['storage']['encryption_passphrase'] = form.getvalue('encryption_passphrase')
