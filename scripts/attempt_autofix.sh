@@ -39,6 +39,13 @@ fi
 echo -e '\e[93m Attempting to regenerate  nginx default conf  \e[0m'
 /opt/nDeploy/scripts/generate_default_vhost_config.py
 
+# Fixing RPM state
+if [ -f /etc/cpanel/ea4/is_ea4 ];then
+	echo -e '\e[93m !!! Removing conflicting mod_evasive ea-apache24-mod_evasive ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
+	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2 ea-apache24-mod_evasive mod_evasive
+	yum -y install ea-apache24-mod_remoteip
+fi
+
 # Reloading nginx
 service nginx reload
 
