@@ -131,7 +131,7 @@ print('</div>')
 
 print('<ol class="breadcrumb">')
 print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
-print('<li class="active">Select domain</li>')
+print('<li class="active">Configure Nginx</li>')
 print('</ol>')
 # Next section start here
 print('<div class="panel panel-default">')  # default
