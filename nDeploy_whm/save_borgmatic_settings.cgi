@@ -7,6 +7,8 @@ import yaml
 import platform
 import psutil
 import signal
+import sys
+import re
 
 
 __author__ = "Anoop P Alias"
@@ -156,10 +158,24 @@ if form.getvalue('keep_weekly'):
 if form.getvalue('keep_monthly'):
     yaml_parsed_borgmaticyaml['retention']['keep_monthly'] = int(form.getvalue('keep_monthly'))
 if form.getvalue('thehomedir'):
+    if not form.getvalue('thehomedir').startswith('/'):
+        myhomedir_pass1 = '/'+form.getvalue('thehomedir')
+    else:
+        myhomedir_pass1 = form.getvalue('thehomedir')
+    if myhomedir_pass1.endswith('/'):
+        myhomedir = myhomedir_pass1[:-1]
+    else:
+        myhomedir = myhomedir_pass1
+    if not myhomedir:
+        print('ERROR: Invalid Homedir name')
+        sys.exit(0)
+    if not re.match("^[\.0-9a-zA-Z/_-]*$", myhomedir):
+        print("Error: Invalid char in Homedir name")
+        sys.exit(0)
     if form.getvalue('action'):
         if form.getvalue('action') == "add":
-            if form.getvalue('thehomedir') not in backup_dir_list:
-                backup_dir_list.append(form.getvalue('thehomedir'))
+            if myhomedir not in backup_dir_list:
+                backup_dir_list.append(myhomedir)
             yaml_parsed_borgmaticyaml['location']['source_directories'] = backup_dir_list
         elif form.getvalue('action') == "delete":
             backup_dir_list.remove(form.getvalue('thehomedir'))

@@ -9,6 +9,8 @@ import psutil
 import signal
 import jinja2
 import codecs
+import sys
+import re
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -146,7 +148,20 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
         yaml_parsed_backupyaml['system_files'] = system_files
         yaml_parsed_backupyaml['mysql_backup'] = mysql_backup
         if form.getvalue('backup_path'):
-            backup_path = form.getvalue('backup_path')
+            if not form.getvalue('backup_path').startswith('/'):
+                backup_path_pass1 = '/'+form.getvalue('backup_path')
+            else:
+                backup_path_pass1 = form.getvalue('backup_path')
+            if backup_path_pass1.endswith('/'):
+                backup_path = backup_path_pass1[:-1]
+            else:
+                backup_path = backup_path_pass1
+            if not backup_path:
+                print('ERROR: Invalid backup_path')
+                sys.exit(0)
+            if not re.match("^[\.0-9a-zA-Z/_-]*$", backup_path):
+                print("Error: Invalid char in backup_path")
+                sys.exit(0)
             yaml_parsed_backupyaml['backup_path'] = backup_path
         else:
             backup_path = yaml_parsed_backupyaml.get('backup_path')
