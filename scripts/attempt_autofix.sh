@@ -12,6 +12,12 @@ do
   grep -w "^${cpvhost}:" /etc/userdatadomains > /dev/null
   if [ $? -ne 0 ] ; then
     rm -f /etc/nginx/sites-enabled/${vhost}.*
+    if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]
+      for slavehost in $(cat /opt/nDeploy/conf/ndeploy_cluster.yaml |grep -v "^ "|cut -d: -f1)
+      do
+        rm -f /etc/nginx/${slavehost}/${vhost}.*
+      done
+    fi
   fi
 done
 
