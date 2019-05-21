@@ -20,6 +20,7 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backup_config_file = "/opt/nDeploy/conf/backup_config.yaml"
+borgmatic_config_file = "/etc/borgmatic/config.yaml"
 
 cgitb.enable()
 
@@ -167,6 +168,16 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
             backup_path = yaml_parsed_backupyaml.get('backup_path')
         with open(backup_config_file, 'w') as new_backup_config_file:
             yaml.dump(yaml_parsed_backupyaml, new_backup_config_file, default_flow_style=False)
+        # Adjust backup path in borgmatic config file
+        if os.path.isfile(borgmatic_config_file):
+            with open(borgmatic_config_file, 'r') as borgmatic_conf:
+                yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_conf)
+            backup_dir_list = yaml_parsed_borgmaticyaml['location']['source_directories']
+            backup_dir_list[0] = backup_path
+            yaml_parsed_borgmaticyaml['location']['source_directories'] = backup_dir_list
+            with open(borgmatic_config_file, 'w') as borgmatic_conf:
+                yaml.dump(yaml_parsed_borgmaticyaml, borgmatic_conf, default_flow_style=False)
+            os.chmod(borgmatic_config_file, 0o640)
         # We create the borgmatic hook now
         # Initiate Jinja2 templateEnv
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
