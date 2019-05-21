@@ -144,19 +144,44 @@ backup_dir_list = yaml_parsed_borgmaticyaml['location']['source_directories']
 if form.getvalue('repositories'):
     yaml_parsed_borgmaticyaml['location']['repositories'][0] = form.getvalue('repositories')
 if form.getvalue('remote_rate_limit'):
-    yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'] = int(form.getvalue('remote_rate_limit'))
+    # Input sanitation
+    if not re.match("^[0-9]+$", form.getvalue('remote_rate_limit')):
+        print("Error: Positive integer value expected for remote_rate_limit")
+        sys.exit(0)
+    else:
+        yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'] = int(form.getvalue('remote_rate_limit'))
 if form.getvalue('ssh_command'):
     yaml_parsed_borgmaticyaml['storage']['ssh_command'] = form.getvalue('ssh_command')
 if form.getvalue('encryption_passphrase'):
     yaml_parsed_borgmaticyaml['storage']['encryption_passphrase'] = form.getvalue('encryption_passphrase')
 if form.getvalue('keep_hourly'):
-    yaml_parsed_borgmaticyaml['retention']['keep_hourly'] = int(form.getvalue('keep_hourly'))
+    # Input sanitation
+    if not re.match("^[0-9]+$", form.getvalue('keep_hourly')):
+        print("Error: Positive integer value expected for keep_hourly")
+        sys.exit(0)
+    else:
+        yaml_parsed_borgmaticyaml['retention']['keep_hourly'] = int(form.getvalue('keep_hourly'))
 if form.getvalue('keep_daily'):
-    yaml_parsed_borgmaticyaml['retention']['keep_daily'] = int(form.getvalue('keep_daily'))
+    # Input sanitation
+    if not re.match("^[0-9]+$", form.getvalue('keep_daily')):
+        print("Error: Positive integer value expected for keep_daily")
+        sys.exit(0)
+    else:
+        yaml_parsed_borgmaticyaml['retention']['keep_daily'] = int(form.getvalue('keep_daily'))
 if form.getvalue('keep_weekly'):
-    yaml_parsed_borgmaticyaml['retention']['keep_weekly'] = int(form.getvalue('keep_weekly'))
+    # Input sanitation
+    if not re.match("^[0-9]+$", form.getvalue('keep_weekly')):
+        print("Error: Positive integer value expected for keep_weekly")
+        sys.exit(0)
+    else:
+        yaml_parsed_borgmaticyaml['retention']['keep_weekly'] = int(form.getvalue('keep_weekly'))
 if form.getvalue('keep_monthly'):
-    yaml_parsed_borgmaticyaml['retention']['keep_monthly'] = int(form.getvalue('keep_monthly'))
+    # Input sanitation
+    if not re.match("^[0-9]+$", form.getvalue('keep_monthly')):
+        print("Error: Positive integer value expected for keep_monthly")
+        sys.exit(0)
+    else:
+        yaml_parsed_borgmaticyaml['retention']['keep_monthly'] = int(form.getvalue('keep_monthly'))
 if form.getvalue('thehomedir'):
     if not form.getvalue('thehomedir').startswith('/'):
         myhomedir_pass1 = '/'+form.getvalue('thehomedir')
