@@ -97,7 +97,7 @@ add_header X-Rocket-Nginx-Reason $rocket_reason;
 add_header X-Rocket-Nginx-File $rocket_file;
 
 location / {
-try_files $uri $uri/ /index.php;
+try_files $uri $uri/ /index.php$is_args$args;
 }
 
 location ~ ^/pingphpfpm$ {
