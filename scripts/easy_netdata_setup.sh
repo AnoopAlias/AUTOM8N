@@ -48,8 +48,6 @@ else
   /opt/nDeploy/scripts/generate_default_vhost_config_slave.py
 fi
 
-ln -s /opt/nDeploy/scripts/netdata_upgrade.sh /etc/cron.weekly/
-
 nginx -s reload
 
 echo -e "\e[93m You can access netdata at https://$(hostname)/netdata with user: netdata and password you set \e[0m"
