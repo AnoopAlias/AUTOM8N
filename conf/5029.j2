@@ -24,7 +24,7 @@ set $cache_uri 'null cache';
 }
 
 location / {
-try_files /wp-content/w3tc/pgcache/$cache_uri/_index.html $uri $uri/ /index.php;
+try_files /wp-content/w3tc/pgcache/$cache_uri/_index.html $uri $uri/ /index.php$is_args$args;
 }
 
 location ~ ^/pingphpfpm$ {

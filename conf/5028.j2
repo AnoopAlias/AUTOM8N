@@ -28,7 +28,7 @@ set $cache_uri 'null cache';
 
 
 location / {
-try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;
+try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php$is_args$args;
 }
 
 location ~ ^/pingphpfpm$ {
