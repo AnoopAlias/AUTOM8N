@@ -16,14 +16,17 @@ storage:
     ssh_command: ssh -i /root/.ssh/id_rsa
     encryption_passphrase: "changeme"
     lock_wait: 5
+    archive_name_format: '{fqdn}-{now:%Y-%m-%dT%H:%M:%S.%f}-borg-{borgminor}'
 retention:
     keep_hourly: 0
     keep_daily: 7
     keep_weekly: 0
     keep_monthly: 0
+    prefix: "{fqdn}-"
 consistency:
     checks:
         - disabled
+    prefix: "{fqdn}-"
 hooks:
     before_backup:
         - /opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh
