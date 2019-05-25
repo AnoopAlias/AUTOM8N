@@ -133,12 +133,18 @@ if form.getvalue('ddos'):
         # Do this clusterwide if we are on a cluster
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.disabled /etc/nginx/conf.d/dos_mitigate_systemwide.enabled && nginx -s reload\"'
-            subprocess.call(the_raw_cmd_slave, shell=True)
+            run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
         print('<div class="panel panel-default">')
         print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
         print('<div class="panel-body">')  # marker6
         print('<div class="icon-box">')
         print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Nginx DDOS Mitigation is now enabled')
+        if os.path.isfile(cluster_config_file):
+            while True:
+                line = run_cmd.stdout.readline()
+                if not line:
+                        break
+                print('<br>'+line)
         print('</div>')
         print('</div>')  # marker6
         print('</div>')
@@ -148,12 +154,19 @@ if form.getvalue('ddos'):
         # Do this clusterwide if we are on a cluster
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.enabled /etc/nginx/conf.d/dos_mitigate_systemwide.disabled && nginx -s reload\"'
-            subprocess.call(the_raw_cmd_slave, shell=True)
+            run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
         print('<div class="panel panel-default">')
         print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
         print('<div class="panel-body">')  # marker6
         print('<div class="icon-box">')
         print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Nginx DDOS Mitigation is now disabled')
+        print('<br>')
+        if os.path.isfile(cluster_config_file):
+            while True:
+                line = run_cmd.stdout.readline()
+                if not line:
+                        break
+                print('<br>'+line)
         print('</div>')
         print('</div>')  # marker6
         print('</div>')
