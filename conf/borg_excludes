@@ -13,6 +13,6 @@
 */error_log
 */.MirrorSearch
 */.trash
-.*quota
-*.log
-*_log
+*/.*quota
+*/*.log
+*/*_log
