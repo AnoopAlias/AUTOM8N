@@ -134,6 +134,8 @@ print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"><
 print('<li class="active">Configure Nginx</li>')
 print('</ol>')
 # Next section start here
+print('<a id="toggle-accordion" href="javascript:;">expand +</a>')
+print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
 print('<div class="panel panel-default">')  # default
 print(('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">AUTO SWITCH TO NGINX</a></h3></div>'))  # heading
 print('<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">')  # collapse
@@ -171,6 +173,9 @@ print('</form>')
 print('</div>')  # body
 print('</div>')  # panel-collapse
 print('</div>')  # panel
+
+print('</div>')  # accordion
+
 
 print('<div class="panel-footer"><small>')
 print(branding_print_footer())

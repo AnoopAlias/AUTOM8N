@@ -167,6 +167,7 @@ if form.getvalue('cpanelpkg'):
     # Ok we are done with getting the settings,now lets present it to the user
     # Next section start here
     print('<div class="alert alert-warning alert-domain"><strong>'+form.getvalue('cpanelpkg')+'</strong></div>')
+    print('<a id="toggle-accordion" href="javascript:;">expand +</a>')
     print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
     print('<div class="panel panel-default">')  # default
     print(('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Application Server</a></h3></div>'))  # heading
