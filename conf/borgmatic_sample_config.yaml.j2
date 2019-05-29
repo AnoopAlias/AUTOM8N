@@ -11,7 +11,7 @@ location:
   exclude_caches: true
   exclude_if_present: .nobackup
 storage:
-    compression: lz4
+    compression: "auto,zstd,8"
     remote_rate_limit: 10000
     ssh_command: ssh -i /root/.ssh/id_rsa
     encryption_passphrase: "changeme"
