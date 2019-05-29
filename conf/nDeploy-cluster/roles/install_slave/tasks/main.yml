@@ -1,40 +1,48 @@
 ---
 
 - name: Ensure EPEL repo is present
-  yum: name={{ item }} state=present
-  with_items:
-    - epel-release
-    - redhat-lsb-core
+  yum: name={{ packages }} state=present
+  vars:
+    packages:
+      - epel-release
+      - redhat-lsb-core
 
-- name: Install XtendWeb repo
-  yum: name={{ item }} state=present disable_gpg_check=yes validate_certs=False
-  with_items:
-    - https://github.com/AnoopAlias/XtendWeb/raw/ndeploy4/nDeploy-release-centos-1.0-6.noarch.rpm
+- name: Install AUTOM8N repo
+  yum: name={{ packages }} state=present disable_gpg_check=yes validate_certs=False
+  vars:
+    packages:
+      - https://github.com/AnoopAlias/AUTOM8N/raw/ndeploy4/nDeploy-release-centos-1.0-7.noarch.rpm
 
-- name: Install XtendWeb cluster rpm packages
-  yum: name={{ item }} enablerepo=ndeploy,epel state=present
-  with_items:
-   - csync2-nDeploy
-   - unison-nDeploy
-   - "{{ webserver }}-nDeploy"
-   - python-pip
-   - stunnel
-   - redis
-   - haproxy
+- name: Install AUTOM8N cluster rpm packages
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+     - csync2-nDeploy
+     - unison-nDeploy
+     - "{{ webserver }}-nDeploy"
+     - python-pip
+     - stunnel
+     - redis
+     - haproxy
+     - gdnsd-nDeploy
 
-- name: Install XtendWeb cluster slave rpm package
-  yum: name={{ item }} enablerepo=ndeploy,epel state=present
-  with_items:
-   - nDeploy-cluster-slave
-
-- name: Install MySQL-python
-  pip:
-    name: MySQL-python
-    state: present
-
+- name: Install AUTOM8N cluster slave rpm package
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+      - nDeploy-cluster-slave
 
 - name: ensure default UMASK is in place
   lineinfile: dest=/etc/login.defs state=absent regexp="^UMASK"
+
+- name: enable disable_cphttpd
+  shell: /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=disable_cphttpd value=1
+
+- name: ensure additional homedir are present
+  file:
+    path: /{{ item }}
+    state: directory
+  with_items: "{{ homedir }}"
 
 - name: create default vhost config in slave
   shell: /opt/nDeploy/scripts/generate_default_vhost_config_slave.py
@@ -48,3 +56,66 @@
   file:
     path: /etc/cpanel/ea4/is_ea4
     state: touch
+
+- lineinfile:
+    path: /etc/sysconfig/crond
+    regexp: '^CRONDARGS='
+    line: 'CRONDARGS="-c"'
+
+- name: Add cluster cron failover job in /etc/crontab
+  cron:
+    name: XtendWeb crond failover
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/opt/nDeploy/scripts/cluster_cron_server_status_check.py"
+  when:
+    - inventory_hostname == groups['ndeploydbslave'][0]
+
+- name: Add purge mysql binlog job in /etc/crontab
+  cron:
+    name: XtendWeb binlog purge
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/opt/nDeploy/scripts/purgemysqllogs_dbslave.sh"
+    minute: "0"
+  when:
+    - inventory_hostname == groups['ndeploydbslave'][0]
+
+- name: Add cron job for recipient_bcc
+  cron:
+    name: XtendWeb postmap recipient_bcc
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/usr/sbin/postmap /etc/postfix/recipient_bcc && /usr/sbin/postfix reload"
+    minute: "*/15"
+
+- name: check if CageFS is active
+  stat:
+    path: /etc/cagefs/cagefs.mp
+  register: cagefs
+
+- name: Add /var/lib/maxscale to CageFS map
+  lineinfile:
+    path: /etc/cagefs/cagefs.mp
+    insertbefore: '/var/lib/mysql'
+    line: '/var/lib/maxscale'
+  when:
+    - cagefs.stat.exists == true
+
+- name: check if CSF is active
+  stat:
+    path: /usr/sbin/csf
+  register: csf
+
+- name: Setup CSF Whitelist
+  template:
+    src: csf.j2
+    dest: /root/xtendweb_csf
+  when:
+    - csf.stat.exists == true
+
+- name: Add CSF whitelist
+  shell: bash /root/xtendweb_csf
+  when:
+  - csf.stat.exists == true
+  ignore_errors: yes

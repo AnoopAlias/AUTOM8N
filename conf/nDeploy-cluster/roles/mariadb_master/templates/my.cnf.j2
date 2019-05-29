@@ -1,3 +1,6 @@
+
+!include /etc/my.cnf.extra
+
 [mysqld]
 log-error=/var/lib/mysql/{{ ansible_nodename}}.err
 innodb_file_per_table=1

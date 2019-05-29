@@ -5,7 +5,7 @@
     src: /etc/stunnel
     dest: /etc/
 
-- name: Setup stunnel config on master
+- name: Setup stunnel config on slave
   template:
     src: phpredis.conf.j2
     dest: /etc/stunnel/phpredis.conf
@@ -17,7 +17,7 @@
   when:
     - ansible_lsb.major_release|int >= 7
 
-- name: start stunnel on centos7/rhel7
-  service: "name=stunnel@phpredis enabled=yes state=restarted"
-  when:
-    - ansible_lsb.major_release|int >= 7
+#- name: start stunnel on centos7/rhel7
+#  service: "name=stunnel@phpredis enabled=yes state=restarted"
+#  when:
+#    - ansible_lsb.major_release|int >= 7

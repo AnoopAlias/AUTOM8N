@@ -8,6 +8,9 @@ import pwd
 import grp
 import shutil
 import yaml
+import platform
+import psutil
+import signal
 try:
     import simplejson as json
 except ImportError:
@@ -26,6 +29,39 @@ def silentremove(filename):
         os.remove(filename)
     except OSError:
         pass
+
+
+def nginxreload():
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def safenginxreload():
+    nginx_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
+            nginx_status = True
+            break
+    if not nginx_status:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def sighupnginx():
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+            nginxpid = myprocess.pid
+            os.kill(nginxpid, signal.SIGHUP)
 
 
 # This hook script is supposed to be called after account creation by cPanel
@@ -50,11 +86,14 @@ if new_pkg != cur_pkg:
             if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
                 TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
             else:
-                TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+                if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+                    TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+                else:
+                    TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
         if os.path.isfile(cpuserdatajson) and os.path.isfile(TEMPLATE_FILE):
             with open(TEMPLATE_FILE, 'r') as profileyaml_data_stream:
                 yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-            phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '16')
+            phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '8')
             with open(cpuserdatajson) as cpaneluser_data_stream:
                 json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
             main_domain = json_parsed_cpaneluser.get('main_domain')
@@ -76,10 +115,9 @@ if new_pkg != cur_pkg:
                 os.chown(sub_domain_data_file, cpuser_uid, cpuser_gid)
                 os.chmod(sub_domain_data_file, 0o660)
         if os.path.isfile(installation_path+'/php-fpm.d/'+cpaneluser+'.conf'):
-            setphpmaxchildren = 'sed -i "s/^pm.max_children.*/pm.max_children = '+phpmaxchildren+'" '+installation_path+'/php-fpm.d/'+cpaneluser+'.conf'
-            subprocess.call(setphpmaxchildren, shell=True)
+            silentremove(installation_path+'/php-fpm.d/'+cpaneluser+'.conf')
         if os.path.isfile(installation_path+'/secure-php-fpm.d/'+cpaneluser+'.conf'):
-            setsecurephpmaxchildren = 'sed -i "s/^pm.max_children.*/pm.max_children = '+phpmaxchildren+'" '+installation_path+'/secure-php-fpm.d/'+cpaneluser+'.conf'
-            subprocess.call(setsecurephpmaxchildren, shell=True)
+            silentremove(installation_path+'/secure-php-fpm.d/'+cpaneluser+'.conf')
         subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
+        sighupnginx()
         print("1 nDeploy:account_change_package:"+cpaneluser)

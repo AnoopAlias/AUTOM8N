@@ -27,6 +27,39 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 cgitb.enable()
 
 
+def branding_print_logo_name():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
+    else:
+        brand_logo = "xtendweb.png"
+    return brand_logo
+
+
+def branding_print_banner():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
+    else:
+        brand_name = "AUTOM8N"
+    return brand_name
+
+
+def branding_print_footer():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
+    else:
+        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
+    return brand_footer
+
+
 def print_green(theoption, hint):
     print(('<div class="col-sm-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
@@ -56,7 +89,12 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-print('<title>XtendWeb</title>')
+
+
+print('<title>')
+print(branding_print_banner())
+print('</title>')
+
 print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
 print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
 print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
@@ -67,12 +105,18 @@ print('<body>')
 print('<div id="main-container" class="container text-center">')  # main
 print('<div class="row">')  # row
 print('<div class="col-md-6 col-md-offset-3">')  # offset-col
-print('<div class="logo">')  # div4
-print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
-print('<h4>XtendWeb</h4>')
-print('</div>')  # div4
+
+print('<div class="logo">')
+print('<a href="xtendweb.live.py"><img border="0" src="')
+print(branding_print_logo_name())
+print('" width="48" height="48"></a>')
+print('<h4>')
+print(branding_print_banner())
+print('</h4>')
+print('</div>')
+
 print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
+print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Settings</li>')
 print('</ol>')
 
@@ -89,6 +133,29 @@ if form.getvalue('domain'):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     cpaneluser = os.environ["USER"]
+    # Settings Lock
+    if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
+        with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
+            json_parsed_cpusersfile = json.load(users_file)
+        hostingplan_filename = json_parsed_cpusersfile.get('PLAN', 'default').encode('utf-8').replace(' ', '_')
+    else:
+        hostingplan_filename = 'default'
+    if hostingplan_filename == 'undefined' or hostingplan_filename == 'default':
+        if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+        else:
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+    else:
+        if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
+            TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
+        else:
+            if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+            else:
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+    with open(TEMPLATE_FILE, 'r') as templatefile_data_stream:
+        yaml_parsed_templatefile = yaml.safe_load(templatefile_data_stream)
+    settings_lock = yaml_parsed_templatefile.get('settings_lock', 'disabled')
     cpdomainjson = "/var/cpanel/userdata/" + cpaneluser + "/" + cpmydomain + ".cache"
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
@@ -114,6 +181,7 @@ if form.getvalue('domain'):
         access_log = yaml_parsed_profileyaml.get('access_log', 'enabled')
         open_file_cache = yaml_parsed_profileyaml.get('open_file_cache', 'disabled')
         ssl_offload = yaml_parsed_profileyaml.get('ssl_offload', 'disabled')
+        proxy_to_master = yaml_parsed_profileyaml.get('proxy_to_master', 'disabled')
         wwwredirect = yaml_parsed_profileyaml.get('wwwredirect', 'none')
         redirect_to_ssl = yaml_parsed_profileyaml.get('redirect_to_ssl', 'disabled')
         redirect_aliases = yaml_parsed_profileyaml.get('redirect_aliases', 'disabled')
@@ -128,7 +196,6 @@ if form.getvalue('domain'):
         append_requesturi = yaml_parsed_profileyaml.get('append_requesturi', 'disabled')
         test_cookie = yaml_parsed_profileyaml.get('test_cookie', 'disabled')
         symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
-        user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
         subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
         # get the human friendly name of the app template
         if os.path.isfile(app_template_file):
@@ -161,23 +228,26 @@ if form.getvalue('domain'):
         print('<div class="app-status">')
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
-                print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
+                print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span> <br> <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
             else:
-                print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
+                print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span> <br> <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
         else:
-            print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
+            print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <br> <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
         print('</div>')
-        print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
-        print('<select name="backend">')
-        for backends_defined in backend_data_yaml_parsed.keys():
-            if backends_defined == backend_category:
-                print(('<option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
-            else:
-                print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
-        print('</select>')
-        # Pass on the domain name to the next stage
-        print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-        print('<input class="btn btn-primary" type="submit" value="Submit">')
+        if settings_lock == 'enabled':
+            print(('<div class="alert alert-info alert-top">Application Server settings are locked by the administrator</div>'))
+        else:
+            print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
+            print('<select name="backend">')
+            for backends_defined in backend_data_yaml_parsed.keys():
+                if backends_defined == backend_category:
+                    print(('<option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
+                else:
+                    print(('<option value="'+backends_defined+'">'+backends_defined+'</option>'))
+            print('</select>')
+            # Pass on the domain name to the next stage
+            print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+            print('<input class="btn btn-primary" type="submit" value="Submit">')
         print('</form>')
         print('</div>')  # body
         print('</div>')  # collapse
@@ -231,47 +301,34 @@ if form.getvalue('domain'):
         print('<div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">')  # collapse
         print('<div class="panel-body">')  # body
         # User config reload
-        if user_config == 'enabled' and os.path.isfile(document_root+"/nginx.conf"):
-            print('<ul class="list-group">')
-            print('<li class="list-group-item">')
-            print('<div class="form-inline">')  # markerx1
-            print('<div class="form-group"><kbd>')
-            print(document_root+"/nginx.conf")
-            print('</kbd></div>')
-            print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
+        print('<ul class="list-group">')
+        print('<li class="list-group-item">')
+        print('<div class="form-inline">')  # markerx1
+        if os.path.isfile(document_root+"/nginx.conf"):
+            print(('<div class="alert alert-info alert-top">'))
+            print('<kbd>'+document_root+'/nginx.conf</kbd>')
+            print('<br>')
+            print('<br>')
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
                 print((' <span class="label label-success">VALID</span><br>'))
             else:
-                print((' <span class="label label-danger">INVALID</span><br>'))
-            print('<form class="form-group" action="reload_config.live.py">')
-            print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
-            print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-            print('</form>')
-            print('</div>')  # markerx1
-            print('</li>')
-            print('</ul>')
-        # User config reload
-        print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
-        print('<ul class="list-group">')
-        # user_config
-        print('<li class="list-group-item">')
-        user_config_hint = "Load custom nginx config from file nginx.conf in docroot: eg: "+document_root+"/nginx.conf"
-        print('<div class="row">')
-        if user_config == 'enabled':
-            print_green("user_config", user_config_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="user_config" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="user_config" value="disabled"/> Disabled</label></div>')
+                print((' <span class="label label-danger">INVALID/REQUIRE RELOAD</span><br>'))
             print('</div>')
         else:
-            print_red("user_config", user_config_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="user_config" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="user_config" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
+            print(('<div class="alert alert-info alert-top">upload custom nginx config to be placed inside server context in <kbd>'+document_root+'/nginx.conf</kbd> and hit RELOAD</div>'))
+        print(('<br>'))
+        print('<form class="form-group" action="reload_config.live.py">')
+        print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
+        print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+        print('</form>')
+        print('<form class="form-group" action="view_nginx_log.live.py">')
+        print('<input class="btn btn-xs btn-primary" type="submit" value="NGINX LOG">')
+        print('</form>')
+        print('</div>')  # markerx1
         print('</li>')
         print('</ul>')
+
+        print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
         print('<ul class="list-group">')
         print(('<h6 class="list-group-item-heading">General Settings</h6>'))
         # auth_basic
@@ -412,7 +469,7 @@ if form.getvalue('domain'):
         # pagespeed filter level
         print('<li class="list-group-item">')
         print('<div class="row">')
-        pagespeed_filter_hint = "PassThrough breaks some pages.CoreFilters is mostly safe"
+        pagespeed_filter_hint = "CoreFilters load the Core filters , PassThrough allows you to enable individual filters via custom nginx conf"
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
             if pagespeed_filter == 'CoreFilters':
                 print_red("pagespeed level", pagespeed_filter_hint)
@@ -495,161 +552,172 @@ if form.getvalue('domain'):
 
         print('<ul class="list-group">')
         print(('<h6 class="list-group-item-heading">Security Settings</h6>'))
-        # clickjacking_protect
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        clickjacking_protect_hint = "X-Frame-Options SAMEORIGIN"
-        if clickjacking_protect == 'enabled':
-            print_green("clickjacking_protect", clickjacking_protect_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="disabled" /> Disabled</label></div>')
-            print('</div>')
+        if settings_lock == 'enabled':
+            print(('<div class="alert alert-info alert-top">Security settings are locked by the administrator</div>'))
+            print(('<input style="display:none" name="clickjacking_protect" value="'+clickjacking_protect+'">'))
+            print(('<input style="display:none" name="disable_contenttype_sniffing" value="'+disable_contenttype_sniffing+'">'))
+            print(('<input style="display:none" name="xss_filter" value="'+xss_filter+'">'))
+            print(('<input style="display:none" name="hsts" value="'+hsts+'">'))
+            print(('<input style="display:none" name="dos_mitigate" value="'+dos_mitigate+'">'))
+            print(('<input style="display:none" name="test_cookie" value="'+test_cookie+'">'))
+            print(('<input style="display:none" name="symlink_protection" value="'+symlink_protection+'">'))
+            print(('<input style="display:none" name="mod_security" value="'+mod_security+'">'))
         else:
-            print_red("clickjacking_protect", clickjacking_protect_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # disable_contenttype_sniffing
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        disable_contenttype_sniffing_hint = "X-Content-Type-Options nosniff"
-        if disable_contenttype_sniffing == 'enabled':
-            print_green("disable_contenttype_sniffing", disable_contenttype_sniffing_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("disable_contenttype_sniffing", disable_contenttype_sniffing_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # xss_filter
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        xss_filter_hint = 'X-XSS-Protection'
-        if xss_filter == 'enabled':
-            print_green("xss_filter", xss_filter_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("xss_filter", xss_filter_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # hsts
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        hsts_hint = 'Strict-Transport-Security'
-        if hsts == 'enabled':
-            print_green("hsts", hsts_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="hsts" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="hsts" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("hsts", hsts_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="hsts" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="hsts" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # dos_mitigate
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        dos_mitigate_hint = "Enable only when under a dos attack"
-        if dos_mitigate == 'enabled':
-            print_green("dos_mitigate", dos_mitigate_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" /> Disabled</label></div>')
-            print('</div>')
-        else:
-            print_red("dos_mitigate", dos_mitigate_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # test_cookie
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        test_cookie_hint = "Disable most bots except good ones like google/yahoo etc with a cookie challenge"
-        if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
-            if test_cookie == 'enabled':
-                print_green("test_cookie", test_cookie_hint)
+            # clickjacking_protect
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            clickjacking_protect_hint = "X-Frame-Options SAMEORIGIN"
+            if clickjacking_protect == 'enabled':
+                print_green("clickjacking_protect", clickjacking_protect_hint)
                 print('<div class="col-sm-6 col-radio">')
-                print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" checked/> Enabled</label></div>')
-                print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" /> Disabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="disabled" /> Disabled</label></div>')
                 print('</div>')
+            else:
+                print_red("clickjacking_protect", clickjacking_protect_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="clickjacking_protect" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # disable_contenttype_sniffing
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            disable_contenttype_sniffing_hint = "X-Content-Type-Options nosniff"
+            if disable_contenttype_sniffing == 'enabled':
+                print_green("disable_contenttype_sniffing", disable_contenttype_sniffing_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("disable_contenttype_sniffing", disable_contenttype_sniffing_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="disable_contenttype_sniffing" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # xss_filter
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            xss_filter_hint = 'X-XSS-Protection'
+            if xss_filter == 'enabled':
+                print_green("xss_filter", xss_filter_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("xss_filter", xss_filter_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="xss_filter" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="xss_filter" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # hsts
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            hsts_hint = 'Strict-Transport-Security'
+            if hsts == 'enabled':
+                print_green("hsts", hsts_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="hsts" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="hsts" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("hsts", hsts_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="hsts" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="hsts" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # dos_mitigate
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            dos_mitigate_hint = "Enable only when under a dos attack"
+            if dos_mitigate == 'enabled':
+                print_green("dos_mitigate", dos_mitigate_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" /> Disabled</label></div>')
+                print('</div>')
+            else:
+                print_red("dos_mitigate", dos_mitigate_hint)
+                print('<div class="col-sm-6 col-radio">')
+                print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="dos_mitigate" value="disabled" checked/> Disabled</label></div>')
+                print('</div>')
+            print('</div>')
+            print('</li>')
+            # test_cookie
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            test_cookie_hint = "Disable most bots except good ones like google/yahoo etc with a cookie challenge"
+            if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
+                if test_cookie == 'enabled':
+                    print_green("test_cookie", test_cookie_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" checked/> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" /> Disabled</label></div>')
+                    print('</div>')
+                else:
+                    print_red("test_cookie", test_cookie_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" /> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" checked/> Disabled</label></div>')
+                    print('</div>')
             else:
                 print_red("test_cookie", test_cookie_hint)
-                print('<div class="col-sm-6 col-radio">')
-                print('<div class="radio"><label><input type="radio" name="test_cookie" value="enabled" /> Enabled</label></div>')
-                print('<div class="radio"><label><input type="radio" name="test_cookie" value="disabled" checked/> Disabled</label></div>')
-                print('</div>')
-        else:
-            print_red("test_cookie", test_cookie_hint)
-            print_disabled()
-            print(('<input style="display:none" name="test_cookie" value="'+test_cookie+'">'))
-        print('</div>')
-        print('</li>')
-        # symlink_protection
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        symlink_protection_hint = "Access to a file is denied if any component of the pathname is a symbolic link, and the link and object that the link points to have different owners"
-        if symlink_protection == 'enabled':
-            print_green("symlink_protection", symlink_protection_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" checked/> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" /> Disabled</label></div>')
+                print_disabled()
+                print(('<input style="display:none" name="test_cookie" value="'+test_cookie+'">'))
             print('</div>')
-        else:
-            print_red("symlink_protection", symlink_protection_hint)
-            print('<div class="col-sm-6 col-radio">')
-            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" /> Enabled</label></div>')
-            print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" checked/> Disabled</label></div>')
-            print('</div>')
-        print('</div>')
-        print('</li>')
-        # mod_security
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        mod_security_hint = "mod_security v3 WAF"
-        if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
-            if mod_security == 'enabled':
-                print_green('mod_security', mod_security_hint)
+            print('</li>')
+            # symlink_protection
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            symlink_protection_hint = "Access to a file is denied if any component of the pathname is a symbolic link, and the link and object that the link points to have different owners"
+            if symlink_protection == 'enabled':
+                print_green("symlink_protection", symlink_protection_hint)
                 print('<div class="col-sm-6 col-radio">')
-                print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
-                print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" checked/> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" /> Disabled</label></div>')
                 print('</div>')
             else:
-                print_red('mod_security', mod_security_hint)
+                print_red("symlink_protection", symlink_protection_hint)
                 print('<div class="col-sm-6 col-radio">')
-                print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
-                print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="symlink_protection" value="enabled" /> Enabled</label></div>')
+                print('<div class="radio"><label><input type="radio" name="symlink_protection" value="disabled" checked/> Disabled</label></div>')
                 print('</div>')
-        else:
-            print_red('mod_security', mod_security_hint)
-            print_disabled()
-            print(('<input style="display:none" name="mod_security" value="'+mod_security+'">'))
-        print('</div>')
-        print('</li>')
-        print('</ul>')
+            print('</div>')
+            print('</li>')
+            # mod_security
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            mod_security_hint = "mod_security v3 WAF"
+            if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+                if mod_security == 'enabled':
+                    print_green('mod_security', mod_security_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" checked/> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" /> Disabled</label></div>')
+                    print('</div>')
+                else:
+                    print_red('mod_security', mod_security_hint)
+                    print('<div class="col-sm-6 col-radio">')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="enabled" /> Enabled</label></div>')
+                    print('<div class="radio"><label><input type="radio" name="mod_security" value="disabled" checked/> Disabled</label></div>')
+                    print('</div>')
+            else:
+                print_red('mod_security', mod_security_hint)
+                print_disabled()
+                print(('<input style="display:none" name="mod_security" value="'+mod_security+'">'))
+            print('</div>')
+            print('</li>')
+            print('</ul>')
 
         print('<ul class="list-group">')
         print(('<h6 class="list-group-item-heading">Redirections</h6>'))
@@ -668,6 +736,24 @@ if form.getvalue('domain'):
             print('<div class="col-sm-6 col-radio">')
             print('<div class="radio"><label><input type="radio" name="redirect_to_ssl" value="enabled" /> Enabled</label></div>')
             print('<div class="radio"><label><input type="radio" name="redirect_to_ssl" value="disabled" checked/> Disabled</label></div>')
+            print('</div>')
+        print('</div>')
+        print('</li>')
+        # proxy_to_master
+        print('<li class="list-group-item">')
+        print('<div class="row">')
+        proxy_to_master_hint = "in cluster proxy to master instead of local server "
+        if proxy_to_master == 'enabled':
+            print_green("proxy_to_master", proxy_to_master_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="enabled" checked/> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="disabled" /> Disabled</label></div>')
+            print('</div>')
+        else:
+            print_red("proxy_to_master", proxy_to_master_hint)
+            print('<div class="col-sm-6 col-radio">')
+            print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="enabled" /> Enabled</label></div>')
+            print('<div class="radio"><label><input type="radio" name="proxy_to_master" value="disabled" checked/> Disabled</label></div>')
             print('</div>')
         print('</div>')
         print('</li>')
@@ -744,7 +830,7 @@ if form.getvalue('domain'):
         # Append request_uri to redirect
         print('<li class="list-group-item">')
         print('<div class="row">')
-        append_requesturi_hint = 'append $$request_uri to the redirect URL'
+        append_requesturi_hint = 'append $request_uri to the redirect URL'
         if append_requesturi == 'enabled' and redirectstatus != 'none':
             print_green("append $request_uri to redirecturl", append_requesturi_hint)
             print('<div class="col-sm-6 col-radio">')
@@ -784,7 +870,7 @@ if form.getvalue('domain'):
         print('</div>')  # default
 
         print('<div class="panel panel-default">')  # default
-        print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Subdirectory Apps For</a></h3></div>')  # heading
+        print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Subdirectory Applications</a></h3></div>')  # heading
         print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
         print('<div class="panel-body">')  # body
         print('<div class="alert alert-info">The path entered below must follow the format <br> <kbd>/blog</kbd> <kbd>/us/forum</kbd> etc.</div>')  # marker3
@@ -836,7 +922,10 @@ if form.getvalue('domain'):
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+
+print('<div class="panel-footer"><small>')
+print(branding_print_footer())
+print('</small></div>')
 
 print('</div>')  # offset-col
 print('</div>')  # row

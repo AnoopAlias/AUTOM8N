@@ -1,0 +1,6 @@
+<IfModule remoteip_module>
+  RemoteIPHeader X-Forwarded-For
+  {% for MYIP in CPIPLIST %}
+  RemoteIPTrustedProxy {{ MYIP }}
+  {% endfor %}
+</IfModule>

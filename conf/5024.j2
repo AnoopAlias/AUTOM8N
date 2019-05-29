@@ -3,8 +3,14 @@
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
-location / {
+rewrite ^/minify/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
+rewrite ^/skin/m/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
 
+location ^~ /lib/minify/ {
+allow all;
+}
+
+location / {
 try_files $uri $uri/ /index.php;
 }
 
@@ -20,24 +26,17 @@ location ~ .php/ { ## Forward paths like /js/index.php/x.js to relevant handler
 rewrite ^(.*.php)/ $1 last;
 }
 
-rewrite ^/minify/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
-rewrite ^/skin/m/([0-9]+)(/.*.(js|css))$ /lib/minify/m.php?f=$2&d=$1 last;
-location /lib/minify/ {
-allow all;
-}
-
 location ~ ^/pingphpfpm$ {
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
-location ~ \.php$ {
-
-try_files $uri =404;
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-
 }
-
-include /etc/nginx/conf.d/cpanel_services.conf;

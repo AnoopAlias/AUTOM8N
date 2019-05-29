@@ -1,0 +1,31 @@
+# phpfox
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+location ~ ^/index.php/.*$ {
+try_files $uri $uri/ /index.php?$args;
+}
+
+location / {
+rewrite ^/file/(.*) /PF.Base/file/$1 last;
+rewrite ^/static/ajax.php /index.php last;
+rewrite ^/themes/default/(.*) /PF.Base/theme/default/$1 last;
+rewrite ^/(static|theme|module)/(.*) /PF.Base/$1/$2 last;
+rewrite ^/(Apps|themes)/(.*) /PF.Site/$1/$2 last;
+try_files $uri $uri/ /index.php?$query_string;
+}
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+}

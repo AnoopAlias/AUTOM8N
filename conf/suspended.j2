@@ -1,0 +1,14 @@
+#Proxy to cPanel Apache httpd service with rate limit
+
+root {{ DOCUMENTROOT }};
+
+limit_req   zone=one  burst=1 nodelay;
+
+location / {
+access_log  off;
+{% if SSL_OFFLOAD == 'enabled' %}
+proxy_pass   http://{{ APPSERVERIP }}:9999;
+{% else %}
+proxy_pass   $scheme://{{ APPSERVERIP }}:$cpport;
+{% endif %}
+}

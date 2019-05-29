@@ -1,0 +1,3 @@
+if (($globlogs{CUSTOM8_LOG}{$lgfile}) and ($line =~ /.*\[error\].*limiting requests, excess:.*, client: (\d+\.\d+\.\d+\.\d+),.*/)) {
+        return ("xtendweb blocked brute force attack from",$1,"xtendweb","3","80,443,9999,4430","300");
+}

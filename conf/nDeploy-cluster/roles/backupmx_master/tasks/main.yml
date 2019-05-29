@@ -4,3 +4,14 @@
   template:
     src: backupmxhosts.j2
     dest: /etc/backupmxhosts
+
+- name: Create /etc/postfix on master
+  file:
+    path: /etc/postfix
+    state: directory
+
+
+- name: Create recipient_bcc
+  file:
+    path: /etc/postfix/recipient_bcc
+    state: touch

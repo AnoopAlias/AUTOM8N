@@ -1,0 +1,16 @@
+{% for host in groups['ndeploymaster'] %}
+{% if hostvars[host]['mainip'] == hostvars[host]['dbip'] %}
+allow {{ hostvars[host]['mainip'] }};
+{% else %}
+allow {{ hostvars[host]['mainip'] }};
+allow {{ hostvars[host]['dbip'] }};
+{% endif %}
+{% endfor %}
+{% for host in groups['ndeployslaves'] %}
+{% if hostvars[host]['mainip'] == hostvars[host]['dbip'] %}
+allow {{ hostvars[host]['mainip'] }};
+{% else %}
+allow {{ hostvars[host]['mainip'] }};
+allow {{ hostvars[host]['dbip'] }};
+{% endif %}
+{% endfor %}

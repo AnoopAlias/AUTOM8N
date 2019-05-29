@@ -1,0 +1,81 @@
+[maxscale]
+threads=2
+auth_read_timeout=5
+
+#master
+[server1]
+type=server
+address={{ hostvars[groups['ndeploymaster'][0]]['dbip'] }}
+port=13306
+protocol=MariaDBBackend
+ssl=required
+ssl_version=MAX
+ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
+ssl_cert=/etc/mysql-ssl/client-cert.pem
+ssl_key=/etc/mysql-ssl/client-key.pem
+persistpoolmax=100
+persistmaxtime=3600
+
+#dbslave
+[server2]
+type=server
+address=127.0.0.1
+port=13306
+protocol=MariaDBBackend
+ssl=required
+ssl_version=MAX
+ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
+ssl_cert=/etc/mysql-ssl/client-cert.pem
+ssl_key=/etc/mysql-ssl/client-key.pem
+persistpoolmax=100
+persistmaxtime=3600
+
+[MySQL-Monitor]
+type=monitor
+module=mmmon
+servers=server1,server2
+user=maxscale
+passwd={{ MAXSCALEPASS }}
+monitor_interval=10000
+script=/var/lib/maxscale/failover.sh $EVENT
+events=master_down,master_up
+
+[XtendWeb]
+type=service
+{% if dbmode == 'rwsplit' %}
+router=readwritesplit
+master_failure_mode=fail_on_write
+connection_keepalive=60
+use_sql_variables_in=master
+{% else %}
+router=readconnroute
+router_options=master
+{% endif %}
+servers=server2,server1
+user=maxscale
+passwd={{ MAXSCALEPASS }}
+connection_timeout=60
+max_connections=500
+
+[MaxAdmin-Service]
+type=service
+router=cli
+
+[Read-Write-ListenerPort]
+type=listener
+service=XtendWeb
+protocol=MariaDBClient
+address=127.0.0.1
+port=3306
+
+[Read-Write-ListenerSocket]
+type=listener
+service=XtendWeb
+protocol=MariaDBClient
+socket=/var/lib/maxscale/maxscale_mysql.sock
+
+[MaxAdmin-Listener]
+type=listener
+service=MaxAdmin-Service
+protocol=maxscaled
+socket=default

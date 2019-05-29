@@ -13,8 +13,6 @@ deny all;
 }
 
 location / {
-
-
 # The following 2 rules are only needed with webfinger
 rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
 rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json last;
@@ -29,11 +27,12 @@ include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
 
-location ~ \.php(?:$|/) {
-
-fastcgi_split_path_info ^(.+\.php)(/.+)$;
-include /etc/nginx/fastcgi_params*;
-fastcgi_pass unix:{{ SOCKETFILE }};
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
 }
-
-include /etc/nginx/conf.d/cpanel_services.conf;
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+}

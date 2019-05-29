@@ -1,26 +1,24 @@
 ---
 
-- name: Ensure EPEL and XtendWeb repo is present
-  yum: name={{ item }} state=present
-  with_items:
-    - nDeploy-release-centos
-    - epel-release
+- name: Ensure EPEL and AUTOM8N repo is present
+  yum: name={{ packages }} state=present
+  vars:
+    packages:
+      - nDeploy-release-centos
+      - epel-release
 
-- name: Install XtendWeb rpm's on master
-  yum: name={{ item }} enablerepo=ndeploy,epel state=present
-  with_items:
-   - csync2-nDeploy
-   - unison-nDeploy
-   - python-pip
-   - redhat-lsb-core
-   - stunnel
-   - redis
-   - haproxy
-
-- name: Install MySQL-python
-  pip:
-    name: MySQL-python
-    state: present
+- name: Install AUTOM8N rpm's on master
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+     - csync2-nDeploy
+     - unison-nDeploy
+     - python-pip
+     - redhat-lsb-core
+     - stunnel
+     - redis
+     - haproxy
+     - gdnsd-nDeploy
 
 - name: Setup nginx config directories on master
   file: path=/etc/nginx/{{ item }} state=directory
@@ -29,3 +27,66 @@
 
 - name: Fix /root/.my.cnf quotes
   shell: /opt/nDeploy/scripts/fix_mysql_cnf_quotes.py
+
+- name: enable disable_cphttpd
+  shell: /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=disable_cphttpd value=1
+
+- lineinfile:
+    path: /etc/sysconfig/crond
+    regexp: '^CRONDARGS='
+    line: 'CRONDARGS="-c"'
+
+- name: Set cluster cron master
+  shell: "echo $HOSTNAME > /var/spool/cron/.cron.hostname"
+
+- name: Add cluster cron failover job in /etc/crontab
+  cron:
+    name: XtendWeb crond failover
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/usr/bin/touch /var/spool/cron/.cron.hostname"
+
+- name: Add purge mysql binlog job in /etc/crontab
+  cron:
+    name: XtendWeb binlog purge
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/opt/nDeploy/scripts/purgemysqllogs_master.sh"
+    minute: "0"
+
+- name: Allow server status check from all cluster nodes
+  template:
+    src: nginx_status_allow.conf.j2
+    dest: /etc/nginx/conf.d/nginx_status_allow.conf
+
+- name: check if CSF is active
+  stat:
+    path: /usr/sbin/csf
+  register: csf
+
+- name: Setup CSF Whitelist
+  template:
+    src: csf.j2
+    dest: /root/xtendweb_csf
+  when:
+    - csf.stat.exists == true
+
+
+- name: Add CSF whitelist
+  shell: bash /root/xtendweb_csf
+  when:
+  - csf.stat.exists == true
+  ignore_errors: yes
+
+- name: check if CageFS is active
+  stat:
+    path: /etc/cagefs/cagefs.mp
+  register: cagefs
+
+- name: Add /var/lib/maxscale to CageFS map
+  lineinfile:
+    path: /etc/cagefs/cagefs.mp
+    insertbefore: '/var/lib/mysql'
+    line: '/var/lib/maxscale'
+  when:
+    - cagefs.stat.exists == true

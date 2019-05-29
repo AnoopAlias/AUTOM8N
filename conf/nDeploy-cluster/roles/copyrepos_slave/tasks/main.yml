@@ -5,4 +5,4 @@
   with_fileglob:
     - /etc/yum.repos.d/EA4.repo
     - /etc/yum.repos.d/MariaDB*
-    
+    - /etc/yum.repos.d/cloudlinux-ea4*

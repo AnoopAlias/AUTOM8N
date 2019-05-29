@@ -33,6 +33,10 @@ if os.path.isfile('/var/cpanel/ssl/cpanel/mycpanel.pem'):
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/mycpanel.pem'
 else:
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/cpanel.pem'
+if os.path.isfile('/opt/nDeploy/conf/disable_default_vhost_ddos_protection'):
+    default_ddos = 'disabled'
+else:
+    default_ddos = 'enabled'
 slaveiplist = []
 if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cluster ipmap
     cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
@@ -52,7 +56,10 @@ templateVars = {"CPIPLIST": cpanel_ip_list,
                 "MAINIP": mainip,
                 "CPSRVDSSL": cpsrvdsslfile,
                 "SLAVEIPLIST": slaveiplist,
-                "MYHOSTNAME": myhostname
+                "MYHOSTNAME": myhostname,
+                "DEFAULT_VHOST_DDOS": default_ddos,
+                "PROXY_TO_MASTER": False,
+                "MASTER_MAINIP": '127.0.0.1'
                 }
 # Generate default_server.conf
 if os.path.isfile(installation_path+'/conf/default_server_local.conf.j2'):
@@ -68,11 +75,6 @@ proxy_subdomain_template = templateEnv.get_template('proxy_subdomain.conf.j2')
 proxy_subdomain_config = proxy_subdomain_template.render(templateVars)
 with codecs.open('/etc/nginx/conf.d/proxy_subdomain.conf', 'w', 'utf-8') as proxy_subdomain_config_file:
     proxy_subdomain_config_file.write(proxy_subdomain_config)
-# Generate cpanel_services.conf
-cpanel_services_template = templateEnv.get_template('cpanel_services.conf.j2')
-cpanel_services_config = cpanel_services_template.render(templateVars)
-with codecs.open('/etc/nginx/conf.d/cpanel_services.conf', 'w', 'utf-8') as cpanel_services_config_file:
-    cpanel_services_config_file.write(cpanel_services_config)
 # Generate httpd_mod_remoteip.include
 httpd_mod_remoteip_template = templateEnv.get_template('httpd_mod_remoteip.include.j2')
 httpd_mod_remoteip_config = httpd_mod_remoteip_template.render(templateVars)

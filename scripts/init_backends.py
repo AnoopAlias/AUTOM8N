@@ -39,16 +39,19 @@ def control_php_fpm(trigger):
     if "PHP" in backend_data_yaml_parsed:
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         if trigger == "autofix":
-            conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
-            for filename in conf_list:
-                user, extension = filename.split('.')
+            conf_list = os.listdir("/var/cpanel/users")
+            for user in conf_list:
                 try:
                     pwd.getpwnam(user)
                 except KeyError:
-                    os.remove("/opt/nDeploy/php-fpm.d/"+filename)
-                if os.path.isfile('/var/cpanel/feature_toggles/apachefpmjail'):
-                    if user != 'nobody':
-                        user_home = pwd.getpwnam(user).pw_dir
+                    silentremove("/opt/nDeploy/php-fpm.d/"+user+".conf")
+                    silentremove("/opt/nDeploy/secure-php-fpm.d/"+user+".conf")
+                if user != 'nobody' and user != 'system':
+                    user_home = pwd.getpwnam(user).pw_dir
+                    user_shell = pwd.getpwnam(user).pw_shell
+                    if user_shell == '/usr/local/cpanel/bin/noshell':
+                        print('Please set Jailed shell for user: '+user)
+                    else:
                         print('VirtfsJailFix:: '+user)
                         subprocess.call('su - '+user+' -c "touch '+user_home+'/public_html"', shell=True)
         elif trigger == "start":

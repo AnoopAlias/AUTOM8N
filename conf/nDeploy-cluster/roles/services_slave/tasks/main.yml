@@ -16,15 +16,27 @@
 - name: Start redis on slave
   service: name=redis enabled=yes state=started
 
-- name: Stop dovecot on slave
-  service: name=dovecot enabled=no state=stopped
+- name: Ensure Dovecot service is running
+  service: name=dovecot enabled=yes state=started
 
-- name: restart tailwatchd
-  shell: "/usr/local/cpanel/libexec/tailwatchd --stop"
+- name: disable spamd
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=spamd enabled=0 monitored=0"
   ignore_errors: yes
 
-- name: kill any tailwatchd process
-  shell: "killall -9 tailwatchd"
+- name: disable cpanellogd
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=cpanellogd enabled=0 monitored=0"
+  ignore_errors: yes
+
+- name: disable cpdavd
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=cpdavd enabled=0 monitored=0"
+  ignore_errors: yes
+
+- name: disable cphulkd
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=cphulkd enabled=0 monitored=0"
+  ignore_errors: yes
+
+- name: disable cpanellogd
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=cpanellogd enabled=0 monitored=0"
   ignore_errors: yes
 
 - name: Ensure cPanel updates are set to manual

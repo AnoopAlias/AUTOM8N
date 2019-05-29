@@ -17,6 +17,8 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 
+master_available = False
+master_mainip = "127.0.0.1"
 iplist_json = json.loads(subprocess.Popen(['/usr/local/cpanel/bin/whmapi1', 'listips', '--output=json'], stdout=subprocess.PIPE).communicate()[0])
 data_dict = iplist_json.get('data')
 ip_list = data_dict.get('ip')
@@ -31,6 +33,10 @@ if os.path.isfile('/var/cpanel/ssl/cpanel/mycpanel.pem'):
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/mycpanel.pem'
 else:
     cpsrvdsslfile = '/var/cpanel/ssl/cpanel/cpanel.pem'
+if os.path.isfile('/opt/nDeploy/conf/disable_default_vhost_ddos_protection'):
+    default_ddos = 'disabled'
+else:
+    default_ddos = 'enabled'
 slaveiplist = []
 if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cluster ipmap
     cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
@@ -43,13 +49,24 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cl
         ipmap_dict = server_dict.get('dnsmap')
         theiplist = ipmap_dict.values()
         slaveiplist = list(set(slaveiplist + theiplist))
+if os.path.isfile(installation_path+"/conf/ndeploy_master.yaml"):  # get the cluster ipmap
+    master_config_file = installation_path+"/conf/ndeploy_master.yaml"
+    master_data_yaml = open(master_config_file, 'r')
+    master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
+    master_data_yaml.close()
+    master_data = master_data_yaml_parsed.get(master_data_yaml_parsed.keys()[0])
+    master_mainip = master_data.get('mainip')
+    master_available = True
 # Initiate Jinja2 templateEnv
 templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
 templateEnv = jinja2.Environment(loader=templateLoader)
 templateVars = {"CPIPLIST": cpanel_ip_list,
                 "MAINIP": mainip,
                 "CPSRVDSSL": cpsrvdsslfile,
-                "SLAVEIPLIST": slaveiplist
+                "SLAVEIPLIST": slaveiplist,
+                "DEFAULT_VHOST_DDOS": default_ddos,
+                "PROXY_TO_MASTER": master_available,
+                "MASTER_MAINIP": master_mainip
                 }
 # Generate default_server.conf
 if os.path.isfile(installation_path+'/conf/default_server_local.conf.j2'):
@@ -65,3 +82,8 @@ proxy_subdomain_template = templateEnv.get_template('proxy_subdomain.conf.j2')
 proxy_subdomain_config = proxy_subdomain_template.render(templateVars)
 with codecs.open('/etc/nginx/conf.d/proxy_subdomain.conf', 'w', 'utf-8') as proxy_subdomain_config_file:
     proxy_subdomain_config_file.write(proxy_subdomain_config)
+# Generate httpd_mod_remoteip.include
+httpd_mod_remoteip_template = templateEnv.get_template('httpd_mod_remoteip_slave.include.j2')
+httpd_mod_remoteip_config = httpd_mod_remoteip_template.render(templateVars)
+with codecs.open('/etc/nginx/conf.d/httpd_mod_remoteip.include', 'w', 'utf-8') as httpd_mod_remoteip_config_file:
+    httpd_mod_remoteip_config_file.write(httpd_mod_remoteip_config)

@@ -1,0 +1,140 @@
+---
+
+- name: check if Mysql is setup
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
+  register: mysqlsetup
+
+- name: check if Mysql dump is required
+  stat:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_DUMP_LOCK_DO_NOT_REMOVE
+  register: mysqldumplock
+
+- name: disable MySQL monitoring
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=mysql enabled=1 monitored=0"
+  ignore_errors: yes
+
+- name: create the mysql-ssl directory
+  file:
+    path: /etc/mysql-ssl
+    state: directory
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Secure mysql
+  template:
+    src: genssl.j2
+    dest: /root/xtendweb_mysql_secure.sh
+    mode: 755
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Generate certs
+  shell: /root/xtendweb_mysql_secure.sh
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Setup my.cnf
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Update socket path in /root/.my.cnf
+  ini_file:
+    path: /root/.my.cnf
+    section: client
+    option: socket
+    value: /var/lib/mysql/mysql.sock
+    backup: yes
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Restart MariaDB server
+  service: name=mysql enabled=yes state=restarted
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Generate mysql grants for master
+  template:
+    src: mysqlgrants.j2
+    dest: /root/xtendweb_mysql_grants.sql
+
+- name: Generate mysql grants for master
+  template:
+    src: mysqlgrants_ip.j2
+    dest: /root/xtendweb_mysql_grants_ip.sql
+
+- name: Setup mysql grants for master
+  shell: mysql < /root/xtendweb_mysql_grants.sql
+  ignore_errors: yes
+
+- name: Setup mysql grants for master
+  shell: mysql < /root/xtendweb_mysql_grants_ip.sql
+  ignore_errors: yes
+
+- name: Generate mysql grants for slaves
+  template:
+    src: mysqlgrants_slave.j2
+    dest: "/root/xtendweb_mysql_grants_{{ item }}.sql"
+  with_items: "{{ groups.ndeployslaves }}"
+
+- name: Generate mysql grants for slaves
+  template:
+    src: mysqlgrants_slave_ip.j2
+    dest: "/root/xtendweb_mysql_grants_ip_{{ item }}.sql"
+  with_items: "{{ groups.ndeployslaves }}"
+
+- name: Setup mysql grants for slaves
+  shell: "mysql < /root/xtendweb_mysql_grants_{{ item }}.sql"
+  ignore_errors: yes
+  with_items: "{{ groups.ndeployslaves }}"
+
+- name: Setup mysql grants for slaves
+  shell: "mysql < /root/xtendweb_mysql_grants_ip_{{ item }}.sql"
+  ignore_errors: yes
+  with_items: "{{ groups.ndeployslaves }}"
+
+- name: Workaround for MySQL-python compile in MariaDB10.2
+  lineinfile:
+    path: /usr/include/mysql/mysql.h
+    insertbefore: 'struct st_mysql_options options;'
+    line: 'unsigned int reconnect;'
+  when:
+    - mariadb == 10.2 or mariadb == 10.3
+
+- name: Install MySQL-python
+  pip:
+    name: MySQL-python
+    state: present
+
+- name: Drop the sys schema
+  mysql_db:
+    name: sys
+    state: absent
+
+- name: get the master log and pos
+  mysql_replication: mode=getmaster
+  register: masterrepl
+
+- name: Dump all databases
+  mysql_db:
+    state: dump
+    name: all
+    target: /root/xtendweb_mysql_all.sql
+    single_transaction: True
+  when:
+    - mysqldumplock.stat.exists == false
+
+- set_fact:
+    masterlog: "{{ masterrepl.File }}"
+    masterpos: "{{ masterrepl.Position }}"
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
+    state: touch
+
+- file:
+    path: /opt/nDeploy/conf/XTENDWEB_MYSQL_DUMP_LOCK_DO_NOT_REMOVE
+    state: touch

@@ -2,23 +2,76 @@ group nDeployCluster
  {
         host {{ ansible_nodename }} ({% for host in groups['ndeployslaves'] %} {{ hostvars[host]['ansible_nodename'] }} {% endfor %});
         key /etc/csync2/csync2.key;
+        include /etc/container/ve.cfg;
         include /etc/nginx/ssl;
-        include /etc/nginx/conf.d/cpanel_services.conf;
+        include /var/spool/cron;
         include /var/cpanel/ssl/installed;
         include /var/cpanel/ssl/apache_tls;
-	      include /opt/nDeploy/php-fpm.d;
+        include /var/cpanel/ssl/cpanel;
+        include /var/cpanel/ssl/dovecot;
+        include /var/cpanel/users;
+        include /opt/nDeploy/php-fpm.d;
         include /opt/nDeploy/secure-php-fpm.d;
         include /opt/nDeploy/hhvm.d;
         include /etc/localdomains;
+        include /etc/demodomains;
+        include /etc/remotedomains;
+        include /etc/ssldomains;
+        include /etc/trueuserdomains;
+        include /etc/userdatadomains;
+        include /etc/userdatadomains.json;
+        include /etc/userdomains;
+        include /etc/userplans;
+        include /var/cpanel/resellers;
+        include /etc/postfix/recipient_bcc;
+        include /etc/gdnsd/config;
+        include /etc/gdnsd/geoip_maps;
+        include /etc/gdnsd/geoip_resources;
+        include /etc/gdnsd/metafo_resources;
+        include /etc/gdnsd/zones;
+        include /etc/dovecot;
+        include /opt/nDeploy/conf/ndeploy_master.yaml;
+        include /opt/nDeploy/conf/ndeploy_cluster.yaml;
+        include /etc/nginx/conf.d/nginx_status_allow.conf;
+        include /etc/apache2/conf.d;
+        include /etc/apache2/conf/httpd.conf;
+        include /opt/cpanel/ea-php54/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php55/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php56/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php70/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php71/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php72/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php73/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php54/root/etc/php.ini;
         include /opt/cpanel/ea-php55/root/etc/php.ini;
         include /opt/cpanel/ea-php56/root/etc/php.ini;
         include /opt/cpanel/ea-php70/root/etc/php.ini;
         include /opt/cpanel/ea-php71/root/etc/php.ini;
         include /opt/cpanel/ea-php72/root/etc/php.ini;
+        include /opt/cpanel/ea-php73/root/etc/php.ini;
+        exclude /var/spool/cron/root;
+        action
+        {
+              pattern /var/cpanel/ssl/apache_tls/*;
+              exec "/usr/sbin/nginx -s reload";
+              logfile "/var/log/csync2_action.log";
+        }
+        action
+        {
+                pattern /etc/container/ve.cfg;
+                exec "/opt/nDeploy/scripts/cluster_sync_lve.sh";
+                logfile "/var/log/csync2_action.log";
+        }
+        action
+        {
+                pattern /etc/apache2/conf/httpd.conf;
+                exec "/opt/nDeploy/scripts/cluster_sync_httpd_conf.py";
+                logfile "/var/log/csync2_action.log";
+        }
         action
         {
                 pattern /etc/localdomains;
+                pattern /etc/postfix/recipient_bcc;
                 exec "/opt/nDeploy/scripts/postfix_backupmx_update.sh";
                 logfile "/var/log/csync2_action.log";
         }
@@ -30,15 +83,28 @@ group nDeployCluster
         }
         action
         {
+                pattern /opt/cpanel/ea-php54/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php55/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php56/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php70/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php71/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php72/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php73/root/etc/php-fpm.d/*;
+                exec "/scripts/restartsrv_apache_php_fpm";
+                logfile "/var/log/csync2_action.log";
+        }
+        action
+        {
                 pattern /opt/cpanel/ea-php54/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php55/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php56/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php70/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php71/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php72/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php73/root/etc/php.ini;
                 exec "/opt/nDeploy/scripts/init_backends.py reload";
                 logfile "/var/log/csync2_action.log";
-                do-local;      
+                do-local;
         }
         backup-directory /var/backups/csync2;
         backup-generations 3;

@@ -1,0 +1,51 @@
+---
+
+- name: disable named service
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=named enabled=0 monitored=0"
+  ignore_errors: yes
+  when: dns == "geodns"
+
+- name: Stop named
+  service:
+    name: named
+    state: stopped
+  when: dns == "geodns"
+
+- name: Initialize MaxMind GeoLite database
+  shell: /etc/gdnsd/geoip/geoip_update.sh
+  when: dns == "geodns"
+
+- name: Remove old server status check cron job
+  cron:
+    name: nDeploy status check
+    state: absent
+
+- name: Create gdnsd config
+  template:
+    src: gdnsd.config.j2
+    dest: /etc/gdnsd/config
+  when: dns == "geodns"
+
+- name: Create /etc/gdnsd/geoip_resources
+  file:
+    path: /etc/gdnsd/geoip_resources
+    state: touch
+  when: dns == "geodns"
+
+- name: Create /etc/gdnsd/metafo_resources
+  file:
+    path: /etc/gdnsd/metafo_resources
+    state: touch
+  when: dns == "geodns"
+
+- name: Create /etc/gdnsd/geoip_maps
+  file:
+    path: /etc/gdnsd/geoip_maps
+    state: touch
+  when: dns == "geodns"
+
+- name: Disable geodns
+  file:
+    path: /opt/nDeploy/conf/skip_geodns
+    state: touch
+  when: dns == "named"

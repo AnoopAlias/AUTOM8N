@@ -4,11 +4,10 @@
 import os
 import cgitb
 import subprocess
-import codecs
-import jinja2
 import yaml
 import psutil
 import platform
+import socket
 try:
     import simplejson as json
 except ImportError:
@@ -23,8 +22,42 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
 cgitb.enable()
+
+
+def branding_print_logo_name():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
+    else:
+        brand_logo = "xtendweb.png"
+    return brand_logo
+
+
+def branding_print_banner():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
+    else:
+        brand_name = "AUTOM8N"
+    return brand_name
+
+
+def branding_print_footer():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
+    else:
+        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
+    return brand_footer
 
 
 def print_green(theoption, hint):
@@ -39,7 +72,11 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-print('<title>XtendWeb</title>')
+
+print('<title>')
+print(branding_print_banner())
+print('</title>')
+
 print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
 print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
 print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
@@ -50,12 +87,18 @@ print('<body>')
 print('<div id="main-container" class="container text-center">')  # marker1
 print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')  # marker3
+
 print('<div class="logo">')
-print('<a href="xtendweb.cgi" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
-print('<h4>XtendWeb</h4>')
+print('<a href="xtendweb.cgi"><img border="0" src="')
+print(branding_print_logo_name())
+print('" width="48" height="48"></a>')
+print('<h4>')
+print(branding_print_banner())
+print('</h4>')
 print('</div>')
+
 print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-refresh"></span></a></li>')
+print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></span></a></li>')
 print('<li class="active">Server Config</li>')
 print('</ol>')
 
@@ -80,11 +123,11 @@ for myprocess in psutil.process_iter():
         nginx_status = True
         break
 if nginx_status:
-    print(('<div class="col-sm-6"><div class="label label-success">ACTIVE</div></div>'))
-    print(('<div class="col-sm-6 col-radio">nginx</div>'))
+    print(('<div class="col-sm-6"><div class="label label-info">ACTIVE</div></div>'))
+    print(('<div class="col-sm-6 col-radio">NGINX</div>'))
 else:
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
-    print(('<div class="col-sm-6 col-radio">nginx</div>'))
+    print(('<div class="col-sm-6 col-radio">NGINX</div>'))
 print('</div>')
 print('</li>')
 print('<li class="list-group-item">')
@@ -100,18 +143,16 @@ for myprocess in psutil.process_iter():
         watcher_status = True
         break
 if watcher_status:
-    print(('<div class="col-sm-6"><div class="label label-success">ACTIVE</div></div>'))
-    print(('<div class="col-sm-6 col-radio">ndeploy_watcher</div>'))
+    print(('<div class="col-sm-6"><div class="label label-info">ACTIVE</div></div>'))
+    print(('<div class="col-sm-6 col-radio">NDEPLOY_WATCHER</div>'))
 else:
     print(('<div class="col-sm-6"><div class="label label-danger">INACTIVE</div></div>'))
-    print(('<div class="col-sm-6 col-radio">ndeploy_watcher</div>'))
+    print(('<div class="col-sm-6 col-radio">NDEPLOY_WATCHER</div>'))
 print('</div>')
 print('</li>')
 print('</ul>')
 print('</div>')
-print(('<div class="alert alert-info alert-top alert-btm">'))
-print(('Nginx support uninterrupted working with graceful config reload and in-place upgrade. Do not restart nginx, instead use:<br> <kbd>nginx -s reload</kbd> on config changes <br> <kbd>/opt/nDeploy/scripts/nginx_upgrade_inplace.sh</kbd> on binary upgrade'))
-print(('</div>'))
+print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Do NOT restart Nginx for activating config changes. Always reload the process using nginx -s reload </div>')
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
@@ -121,28 +162,33 @@ if os.path.isfile(cluster_config_file):
     print('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Cluster Status</a></h3></div>')  # heading
     print('<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">')  # collapse
     print('<div class="panel-body">')  # body
+    print('<div id="config">')
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+    with open(homedir_config_file, 'r') as homedir_data_yaml:
+        homedir_data_yaml_parsed = yaml.safe_load(homedir_data_yaml)
+    homedir_list = homedir_data_yaml_parsed.get('homedir')
     print('<ul class="list-group">')
     for servername in cluster_data_yaml_parsed.keys():
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        filesync_status = False
-        for myprocess in psutil.process_iter():
-            # Workaround for Python 2.6
-            if platform.python_version().startswith('2.6'):
-                mycmdline = myprocess.cmdline
+        for myhome in homedir_list:
+            print('<li class="list-group-item">')
+            print('<div class="row">')
+            filesync_status = False
+            for myprocess in psutil.process_iter():
+                # Workaround for Python 2.6
+                if platform.python_version().startswith('2.6'):
+                    mycmdline = myprocess.cmdline
+                else:
+                    mycmdline = myprocess.cmdline()
+                if '/usr/bin/unison' in mycmdline and myhome+'_'+servername in mycmdline:
+                    filesync_status = True
+                    break
+            if filesync_status:
+                print(('<div class="col-sm-6"><div class="label label-info">IN SYNC</div></div>'))
+                print(('<div class="col-sm-6 col-radio">'+myhome+'_'+servername+'</div>'))
             else:
-                mycmdline = myprocess.cmdline()
-            if '/usr/bin/unison' in mycmdline and servername in mycmdline:
-                filesync_status = True
-                break
-        if filesync_status:
-            print(('<div class="col-sm-6"><div class="label label-primary">IN SYNC</div></div>'))
-            print(('<div class="col-sm-6 col-radio">'+servername+'</div>'))
-        else:
-            print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
-            print(('<div class="col-sm-6 col-radio">'+servername+'</div>'))
+                print(('<div class="col-sm-6"><div class="label label-danger">OUT OF SYNC</div></div>'))
+                print(('<div class="col-sm-6 col-radio">'+myhome+'_'+servername+'</div>'))
         print('</div>')
         print('</li>')
     print('</ul>')
@@ -157,6 +203,7 @@ if os.path.isfile(cluster_config_file):
     print('</form>')
     print(('<div class="alert alert-info alert-top">'))
     print(('Only perform a hard reset if the unison archive is corrupt.Unison archive rebuild is time consuming'))
+    print(('</div>'))
     print(('</div>'))
     print('</div>')  # body
     print('</div>')  # collapse
@@ -174,7 +221,7 @@ print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" a
 print('<div class="panel-body">')  # body
 print('<form class="form-inline" action="pkg_profile.cgi" method="post">')
 print('<select name="cpanelpkg">')
-for thepkg in mypkgs.get('package'):
+for thepkg in sorted(mypkgs.get('package')):
     pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
     print(('<option value="'+pkgname+'">'+pkgname+'</option>'))
 print('</select>')
@@ -206,13 +253,13 @@ print('<form class="form-inline" action="phpfpm_pool_editor.cgi" method="post">'
 print('<select name="poolfile">')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     conf_list = os.listdir("/opt/nDeploy/secure-php-fpm.d")
-    for filename in conf_list:
+    for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
             print(('<option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
 else:
     conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
-    for filename in conf_list:
+    for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
             print(('<option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
@@ -234,75 +281,56 @@ if not osrelease == 'CloudLinux':
     if os.path.isfile('/usr/bin/systemctl'):
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
-            # The API call and ensuring slices are present
-            listresellers = subprocess.check_output('/usr/local/cpanel/bin/whmapi1 listresellers --output=json', shell=True)
-            myresellers = json.loads(listresellers)
-            resellerdata = myresellers.get('data')
-            resellerlist = resellerdata.get('reseller')
-            resellerlist.append('root')
-            # Ensure the reseller slice is present in the system
-            for owner in resellerlist:
-                ownerslice = "/etc/systemd/system/"+owner+".slice"
-                if not os.path.isfile(ownerslice):
-                    # create the slice from a template
-                    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
-                    templateEnv = jinja2.Environment(loader=templateLoader)
-                    if os.path.isfile(installation_path+"/conf/simpler_resources_local.j2"):
-                        TEMPLATE_FILE = "simpler_resources_local.j2"
-                    else:
-                        TEMPLATE_FILE = "simpler_resources.j2"
-                    template = templateEnv.get_template(TEMPLATE_FILE)
-                    templateVars = {"OWNER": owner
-                                    }
-                    generated_config = template.render(templateVars)
-                    with codecs.open(ownerslice, 'w', 'utf-8') as confout:
-                        confout.write(generated_config)
-            print('<div class="panel panel-default">')  # general
-            print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Resource Limit</a></h3></div>')  # heading
+            userlist = os.listdir("/var/cpanel/users")
+            print('<div class="panel panel-default">')  # default
+            print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">System Resource Limit</a></h3></div>')  # heading
             print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
             print('<div class="panel-body">')  # body
-            print('<div class="row">')  # markerb1
+            print('<div class="row">')  # markerr1
             print('<div class="col-sm-6">')  # markerc1
-            print('<div class="panel panel-default">')  # markerc2
-            print('<div class="panel-heading"><h3 class="panel-title">Reseller</h3></div>')
-            print('<div class="panel-body">')  # markerc3
+            print('<div class="panel panel-default">')  # markerp1
+            print('<div class="panel-heading"><h3 class="panel-title">User</h3></div>')
+            print('<div class="panel-body">')  # markerb1
             print('<form class="form-inline" action="resource_limit.cgi" method="post">')
             print('<select name="unit">')
-            for reseller in resellerlist:
-                print(('<option value="'+reseller+'">'+reseller+'</option>'))
+            for cpuser in sorted(userlist):
+                if cpuser != 'nobody' and cpuser != 'system':
+                    print(('<option value="'+cpuser+'">'+cpuser+'</option>'))
             print('</select>')
             print(('<input style="display:none" name="mode" value="user">'))
+            print(('<br>'))
+            print(('<br>'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
-            print('</div>')  # markerc3
-            print('</div>')  # markerc2
+            print('</div>')  # markerb1
+            print('</div>')  # markerp1
             print('</div>')  # markerc1
-            print('<div class="col-sm-6">')  # markerc1
-            print('<div class="panel panel-default">')  # markerc2
+            print('<div class="col-sm-6">')  # markerc2
+            print('<div class="panel panel-default">')  # markerp2
             print('<div class="panel-heading"><h3 class="panel-title">Service</h3></div>')
-            print('<div class="panel-body">')  # markerc3
-            print(('<div class="alert alert-info alert-top">'))
-            print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
-            print(('</div>'))
+            print('<div class="panel-body">')  # markerb2
             print('<form class="form-inline" action="resource_limit.cgi" method="post">')
             print('<select name="unit">')
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm":
                 print(('<option value="'+service+'">'+service+'</option>'))
             print('</select>')
             print(('<input style="display:none" name="mode" value="service">'))
+            print(('<br>'))
+            print(('<br>'))
             print('<input class="btn btn-primary" type="submit" value="SET LIMIT">')
             print('</form>')
-            print('</div>')  # markerc3
+            print('</div>')  # markerb2
+            print('</div>')  # markerp2
             print('</div>')  # markerc2
-            print('</div>')  # markerc1
+            print('</div>')  # markerr1
             print('</div>')  # body
             print('</div>')  # collapse
             print('</div>')  # default
         else:
             # Next sub-section start here
             print('<div class="panel panel-default">')  # default
-            print('<div class="panel-heading" role="tab" id="headingSix"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">Service resource limit</a></h3></div>')  # heading
-            print('<div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">')  # collapse
+            print('<div class="panel-heading" role="tab" id="headingFive"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">System Resource Limit</a></h3></div>')  # heading
+            print('<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">')  # collapse
             print('<div class="panel-body">')  # body
             print(('<div class="alert alert-info">'))
             print(('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory'))
@@ -350,8 +378,104 @@ print('</form>')
 print('</div>')  # body
 print('</div>')  # collapse
 print('</div>')  # default
+# Next section start here
+if os.path.isfile(cluster_config_file):
+    print('<div class="panel panel-default">')  # default
+    print('<div class="panel-heading" role="tab" id="headingEight"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">Sync GeoDNS zone</a></h3></div>')  # heading
+    print('<div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">')  # collapse
+    print('<div class="panel-body">')  # body
+    print('<form class="form-inline" action="sync_gdnsd_zone.cgi" method="post">')
+    print('<select name="user">')
+    user_list = os.listdir("/var/cpanel/users")
+    for cpuser in sorted(user_list):
+        if cpuser != 'nobody' and cpuser != 'system':
+            print(('<option value="'+cpuser+'">'+cpuser+'</option>'))
+    print('</select>')
+    print(('<br>'))
+    print(('<br>'))
+    print('<input class="btn btn-primary" type="submit" value="SYNC DNS ZONE">')
+    print('</form>')
+    print('</div>')  # body
+    print('</div>')  # collapse
+    print('</div>')  # default
+# Next section start here
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingNine"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false" aria-controls="collapseNine">ABNORMAL PROCESS TRACKER</a></h3></div>')  # heading
+print('<div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">')  # collapse
+print('<div class="panel-body">')  # body
+print('<form class="form-group" action="abnormal_process_detector.cgi">')
+print('<input class="btn btn-primary" type="submit" value="CHECK PROCESS">')
+print('</form>')
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
+# Next section start here
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingTen"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false" aria-controls="collapseTen">NETDATA</a></h3></div>')  # heading
+print('<div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">')  # collapse
+myhostname = socket.gethostname()
+print('<div class="panel-body">')  # body
+print('<form class="form-group" action="https://'+myhostname+'/netdata/" target="_blank">')
+print('<input class="btn btn-primary" type="submit" value="NETDATA">')
+print('</form>')
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
+# Next section start here
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingEleven"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">DDOS PROTECTION</a></h3></div>')  # heading
+print('<div id="collapseEleven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEleven">')  # collapse
+print('<div class="panel-body">')  # body
+if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
+    print('<form class="form-group" action="ddos_mitigate.cgi">')
+    print('<input class="btn btn-info" type="submit" value="NGINX[ACTIVE] CLICK TO DISABLE">')
+    print(('<input class="hidden" name="ddos" value="disable">'))
+    print('</form>')
+else:
+    print('<form class="form-group" action="ddos_mitigate.cgi">')
+    print('<input class="btn btn" type="submit" value="NGINX[INACTIVE] - CLICK TO ENABLE">')
+    print(('<input class="hidden" name="ddos" value="enable">'))
+    print('</form>')
+try:
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
+except OSError:
+    pass
+else:
+    with open(os.devnull, 'w') as FNULL:
+        firehol_enabled = subprocess.call("systemctl is-active firehol.service", stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
+    if firehol_enabled == 0:
+        print('<form class="form-group" action="firehol_control.cgi">')
+        print('<input class="btn btn-info" type="submit" value="SYNPROXY[ACTIVE]- CLICK TO DISABLE">')
+        print(('<input class="hidden" name="ddos" value="disable">'))
+        print('</form>')
+    else:
+        print('<form class="form-group" action="firehol_control.cgi">')
+        print('<input class="btn btn" type="submit" value="SYNPROXY[INACTIVE] - CLICK TO ENABLE">')
+        print(('<input class="hidden" name="ddos" value="enable">'))
+        print('</form>')
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
+# Next section start here
+print('<div class="panel panel-default">')  # default
+print('<div class="panel-heading" role="tab" id="headingTwelve"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">BORG ENCRYPTED DEDUPLICATING BACKUP</a></h3></div>')  # heading
+print('<div id="collapseTwelve" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwelve">')  # collapse
+print('<div class="panel-body">')  # body
+print('<form class="form-group" action="setup_borg_backup.cgi">')
+print('<input class="btn btn-primary" type="submit" value="SETUP ENCRYPTED DEDUPLICATING BACKUP">')
+print('</form>')
+print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Keep encryption_passphrase copied safely. Losing it would make data recovery impossible on a server crash </div>')
+print('</div>')  # body
+print('</div>')  # collapse
+print('</div>')  # default
+
 print('</div>')  # accordion
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+
+print('<div class="panel-footer"><small>')
+print(branding_print_footer())
+print('</small></div>')
+
 print('</div>')  # marker3
 print('</div>')  # marker2
 print('</div>')  # marker1

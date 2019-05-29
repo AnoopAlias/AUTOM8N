@@ -1,5 +1,9 @@
 ---
 
+- name: disable Exim
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=exim enabled=0 monitored=0"
+  ignore_errors: yes
+
 - name: Stop Exim service
   service: name=exim state=stopped
   ignore_errors: yes
@@ -8,9 +12,10 @@
   yum: name=exim state=absent
 
 - name: Ensure  redhat-lsb-core is present
-  yum: name={{ item }} state=present
-  with_items:
-    - redhat-lsb-core
+  yum: name={{ packages }} state=present
+  vars:
+    packages:
+      - redhat-lsb-core
 
 - name: install PostFix server
   yum: name=postfix state=present
@@ -18,10 +23,11 @@
 - name: Setup Postfix configuration
   shell: "{{ item }}"
   with_items:
-    - postconf -e "smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination"
+    - postconf -e "smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination"
+    - postconf -e "smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination"
     - postconf -e "relay_recipient_maps ="
-    - postconf -e "relay_domains = hash:/etc/postfix/relaydomains"
     - postconf -e "relay_domains = hash:/etc/postfix/transportmaps"
+    - postconf -e "recipient_bcc_maps = hash:/etc/postfix/recipient_bcc"
     - postconf -e "inet_interfaces = all"
     - postconf -e "inet_protocols = ipv4"
     - postconf -e "smtp_tls_security_level = may"
@@ -31,6 +37,9 @@
     - postconf -e "smtpd_tls_loglevel = 1"
     - postconf -e "smtpd_tls_session_cache_timeout = 3600s"
     - postconf -e "tls_random_source = dev:/dev/urandom"
+    - postconf -e "smtpd_sasl_type = dovecot"
+    - postconf -e "smtpd_sasl_path = /var/run/dovecot/auth-client"
+    - postconf -e "smtpd_sasl_auth_enable = yes"
 
 - name: Setup backupMX update script
   template:
@@ -38,6 +47,14 @@
     dest: /opt/nDeploy/scripts/postfix_backupmx_update.sh
     mode: 0755
 
+- name: Ensure submission port is enabled in postfix
+  lineinfile:
+    path: /etc/postfix/master.cf
+    regexp: '^#submission'
+    line: 'submission inet n       -       n       -       -       smtpd'
+
+- name: remove ssmtp from slave
+  yum: name=ssmtp state=absent
 
 - name: Restart Postfix server
   service: name=postfix enabled=yes state=restarted

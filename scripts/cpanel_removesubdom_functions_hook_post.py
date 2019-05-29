@@ -5,6 +5,9 @@ import sys
 import json
 import subprocess
 import os
+import platform
+import psutil
+import signal
 import shutil
 import yaml
 
@@ -25,6 +28,39 @@ def silentremove(filename):
         os.remove(filename)
     except OSError:
         pass
+
+
+def nginxreload():
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def safenginxreload():
+    nginx_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
+            nginx_status = True
+            break
+    if not nginx_status:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def sighupnginx():
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+            nginxpid = myprocess.pid
+            os.kill(nginxpid, signal.SIGHUP)
 
 
 cpjson = json.load(sys.stdin)
@@ -50,7 +86,7 @@ if status == 1:
             silentremove("/etc/nginx/"+server+"/"+conf_sub_domain+".include")
     if os.path.exists('/var/resin/hosts/'+conf_sub_domain):
         shutil.rmtree('/var/resin/hosts/'+conf_sub_domain)
-    subprocess.Popen("/usr/sbin/nginx -s reload", shell=True)
+    sighupnginx()
     print(("1 nDeploy:cPaneltrigger:RemoveSubdom:"+conf_sub_domain))
 else:
     print(("0 nDeploy:cPaneltrigger:SkipHook"))

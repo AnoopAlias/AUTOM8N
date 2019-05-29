@@ -6,7 +6,6 @@ root $MAGE_ROOT/pub;
 
 index index.php;
 charset UTF-8;
-error_page 404 403 = /errors/404.php;
 
 #add_header "X-UA-Compatible" "IE=Edge";
 
@@ -127,12 +126,10 @@ deny all;
 
 # PHP entry point for main application
 location ~ (index|get|static|report|404|503)\.php$ {
-
 try_files $uri =404;
 fastcgi_pass unix:{{ SOCKETFILE }};
 fastcgi_index index.php;
 include /etc/nginx/fastcgi_params*;
-
 }
 
 # Banned locations (only reached if the earlier PHP entry point regexes don't match)

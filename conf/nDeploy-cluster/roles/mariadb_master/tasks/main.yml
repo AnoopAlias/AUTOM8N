@@ -5,18 +5,8 @@
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
   register: mysqlsetup
 
-- name: Disable chkservd monitoring of mysql-ssl
-  lineinfile:
-    path: /etc/chkserv.d/chkservd.conf
-    state: absent
-    line: 'mysql:1'
-
-- name: kill any tailwatchd process
-  shell: "killall -9 tailwatchd"
-  ignore_errors: yes
-
-- name: restart tailwatchd
-  shell: "/usr/local/cpanel/libexec/tailwatchd --start"
+- name: disable MySQL monitoring
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=mysql enabled=1 monitored=0"
   ignore_errors: yes
 
 - name: create the mysql-ssl directory
@@ -82,6 +72,10 @@
   ignore_errors: yes
   with_items: "{{ groups.ndeployslaves }}"
 
+- name: Install MySQL-python
+  pip:
+    name: MySQL-python
+    state: present
 
 - name: get the master log and pos
   mysql_replication: mode=getmaster

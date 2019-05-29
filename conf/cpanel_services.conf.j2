@@ -1,7 +1,0 @@
-#Include all cpanel services called via port 80  or 443 here
-location ~* ^/(controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|mailman/archives|pipermail|sys_cpanel|cgi-sys|mailman)/ {
-        proxy_pass   http://{{ MYHOSTNAME }}:9999;
-        proxy_set_header   Host   $host;
-        proxy_set_header   X-Real-IP  $remote_addr;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-}

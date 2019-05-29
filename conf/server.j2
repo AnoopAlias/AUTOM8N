@@ -13,62 +13,46 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
+{% if OCSPSTAPLE %}
 ssl_stapling on;
-ssl_stapling_verify on;
+{% endif %}
 {% endif %}
 server_name www.{{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
+}
+
 
 location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
@@ -93,61 +77,44 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
+{% if OCSPSTAPLE %}
 ssl_stapling on;
-ssl_stapling_verify on;
+{% endif %}
 {% endif %}
 server_name {{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
 }
 
 location / {
@@ -174,61 +141,44 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
+{% if OCSPSTAPLE %}
 ssl_stapling on;
-ssl_stapling_verify on;
+{% endif %}
 {% endif %}
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
 }
 
 location / {
@@ -251,74 +201,69 @@ listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
-access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+{% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
 {% else %}
-access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=32k flush=5m;
-access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
+{% else %}
+access_log  off;
+{% endif %}
+{% else %}
+{% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }} combined buffer=4k flush=5m;
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=4k flush=5m;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
+{% else %}
+access_log  off;
+{% endif %}
 {% endif %}
 
-# Proxy /cgi-bin/ ScriptAlias
-location ~* ^/cgi-bin/ {
+# Proxy cPanel/WHM URLs
+location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)($|/) {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
 }
 
 # Include any applications in subdirectory
@@ -340,7 +285,9 @@ return 301 https://$host$request_uri;
 }
 {% else %}
 {% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+location / {
 return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+}
 {% else %}
 {% if PAGESPEED == 'enabled' %}
 {% if PAGESPEED_FILTER == 'CoreFilters' %}
@@ -364,6 +311,7 @@ auth_basic "Restricted Content";
 auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% endif %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
+include /etc/nginx/conf.d/ErrorPages.conf;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
@@ -378,84 +326,74 @@ listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
+{% if OCSPSTAPLE %}
 ssl_stapling on;
-ssl_stapling_verify on;
+{% endif %}
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if ENABLEACCESSLOG == 'disabled' %}
-access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+{% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
 {% else %}
-access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=32k flush=5m;
-access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=32k flush=5m;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
+{% else %}
+access_log  off;
+{% endif %}
+{% else %}
+{% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=4k flush=5m;
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=4k flush=5m;
+access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
+{% else %}
+access_log  off;
+{% endif %}
 {% endif %}
 
-# Proxy /cgi-bin/ ScriptAlias
-location ~* ^/cgi-bin/ {
+# Proxy cPanel/WHM URLs
+location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)($|/) {
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Allow "Well-Known URIs" as per RFC 5785
 location ~* ^/.well-known/ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
-proxy_send_timeout   90;
-proxy_read_timeout   90;
-proxy_buffer_size    4k;
-proxy_buffers     16 32k;
-proxy_busy_buffers_size 64k;
-proxy_temp_file_write_size 64k;
-proxy_connect_timeout 30s;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-proxy_set_header   Host   $host;
-proxy_set_header   X-Real-IP  $remote_addr;
-proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
 }
 
 # Include any applications in subdirectory
@@ -463,7 +401,7 @@ proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 {% if PASSENGERAPPS[KEY] == 'enabled' %}
 location ~ ^/{{ KEY }}(/.*|$) {
 {% else %}
-location ^~ /{{ KEY }}/ {
+location ^~ /{{ KEY }} {
 {% endif %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subconf;
@@ -472,7 +410,9 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subconf;
 # End Include any applications in subdirectory
 
 {% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+location / {
 return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+}
 {% else %}
 {% if PAGESPEED == 'enabled' %}
 {% if PAGESPEED_FILTER == 'CoreFilters' %}
@@ -502,6 +442,7 @@ auth_basic "Restricted Content";
 auth_basic_user_file {{ HOMEDIR }}/.htpasswds{{ DIFFDIR }}/passwd;
 {% endif %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
+include /etc/nginx/conf.d/ErrorPages.conf;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 {% endif %}
@@ -523,29 +464,14 @@ listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
-ssl_protocols TLSv1.1 TLSv1.2;
-ssl_prefer_server_ciphers on;
-ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-ssl_session_cache shared:SSL:10m;
-ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-ssl_session_timeout  5m;
+{% if OCSPSTAPLE %}
 ssl_stapling on;
-ssl_stapling_verify on;
+{% endif %}
 {% endif %}
 server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
 location / {
-   proxy_send_timeout   90;
-   proxy_read_timeout   90;
-   proxy_buffer_size    4k;
-   proxy_buffers     16 32k;
-   proxy_busy_buffers_size 64k;
-   proxy_temp_file_write_size 64k;
-   proxy_connect_timeout 30s;
-   proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-   proxy_set_header   Host   $host;
-   proxy_set_header   X-Real-IP  $remote_addr;
-   proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
 }
 {% endif %}
 ################### Proxy Subdomains ###################

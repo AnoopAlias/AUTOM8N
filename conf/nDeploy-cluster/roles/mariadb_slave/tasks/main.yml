@@ -5,24 +5,23 @@
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
   register: mysqlsetup
 
-- name: Disable chkservd monitoring of mysql
-  lineinfile:
-    path: /etc/chkserv.d/chkservd.conf
-    state: absent
-    line: 'mysql:1'
 
-- name: restart tailwatchd
-  shell: "/usr/local/cpanel/libexec/tailwatchd --stop"
-  ignore_errors: yes
-
-- name: kill any tailwatchd process
-  shell: "killall -9 tailwatchd"
+- name: disable MySQL monitoring
+  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=mysql enabled=1 monitored=0"
   ignore_errors: yes
 
 - name: Remove MySQL rpm
   yum:
     name: MySQL*
     state: absent
+
+- name: Remove MySQL rpm
+  yum:
+    name: '{{ item }}'
+    state: absent
+  with_items:
+    - compat-MySQL51-shared
+    - compat-MySQL50-shared
 
 - name: Install MariaDB rpm
   yum:
@@ -34,6 +33,7 @@
     - MariaDB-shared
     - MariaDB-server
     - MariaDB-client
+    - MariaDB-compat
 
 - name: Restart MariaDB server
   service: name=mysql enabled=yes state=started
@@ -75,6 +75,11 @@
     backup: yes
   when:
     - mysqlsetup.stat.exists == false
+
+- name: Install MySQL-python
+  pip:
+    name: MySQL-python
+    state: present
 
 - name: Import mysqldump from master
   mysql_db:

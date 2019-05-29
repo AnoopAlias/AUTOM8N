@@ -1,0 +1,64 @@
+# phpMELODY
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+rewrite ^/index.html$ /index.php;
+rewrite ^/browse.html$ /category.php;
+rewrite ^/browse-(.*)-videos.html$ /category.php?cat=$1;
+rewrite ^/browse-(.*)-videos-([0-9]+)-(.*).html$ /category.php?cat=$1&page=$2&sortby=$3;
+rewrite ^/videos.flv(.*)$ /videos.php$1;
+rewrite ^/register.html$ /register.php;
+rewrite ^/contact_us.html$ /contact_us.php;
+rewrite ^/edit_profile.html$ /edit_profile.php;
+rewrite ^/suggest.html$ /suggest.php;
+rewrite ^/upload.html$ /upload.php;
+rewrite ^/upload_avatar.html$ /upload_avatar.php;
+rewrite ^/suggest.html$ /suggest.php;
+rewrite ^/favorites.html(.*)$ /favorites.php$1;
+rewrite ^/playlists.html(.*)$ /playlists.php$1;
+rewrite ^/login.html(.*)$ /login.php$1;
+rewrite ^/newvideos.html(.*)$ /newvideos.php$1;
+rewrite ^/topvideos.html(.*)$ /topvideos.php$1;
+rewrite ^/profile.html(.*)$ /profile.php$1;
+rewrite ^/favorites.html(.*)$ /favorites.php$1;
+rewrite ^/playlist/(.*)/([^/]+)(/)?$ /watch.php?playlist=$1&vid=$2;
+rewrite ^/playlist/(.*)$ /playlists.php?playlist=$1;
+rewrite ^/memberlist.html(.*)$ /memberlist.php$1;
+rewrite ^/articles/index-([0-9]+).html$ /article.php?page=$1;
+rewrite ^/articles/browse-(.*)-([0-9]+).html$ /article.php?c=$1&page=$2;
+rewrite ^/articles/tag/([^/]+)/page-([0-9]+)(/)?$ /article.php?tag=$1&page=$2;
+rewrite ^/articles/tag/([^/]+)(/)?$ /article.php?tag=$1&page=1;
+rewrite ^/articles/popular-([0-9]+).html$ /article.php?show=popular&page=$1;
+rewrite ^/articles/(.*)_([0-9]+).html$ /article_read.php?a=$2;
+rewrite ^/articles(/|.html)?$ /article.php;
+rewrite ^/article(/|.html)?$ /article.php;
+rewrite ^/pages/(.*).html$ /page.php?name=$1;
+rewrite ^/tags/([^/]+)/$ /tag.php?t=$1&page=1;
+rewrite ^/tags/([^/]+)/page-([0-9]+)(/)?$ /tag.php?t=$1&page=$2;
+rewrite ^/embed/([^/]+)$ /embed.php?vid=$1;
+rewrite "^/([^/]*)_([a-zA-Z0-9]{9}).html$" /watch.php?vid=$2;
+rewrite ^/fpembed-(.*).swf$ /fpembed.php?vid=$1;
+rewrite ^/rss.xml$ /rss.php last;
+rewrite ^/user/([^/]+)/?$ /user.php?u=$1;
+rewrite ^/user/([^/]+)/(.*)/?$ /user.php?u=$1&view=$2;
+
+
+
+location / {
+try_files $uri $uri/ /index.php$is_args$args;
+}
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+}

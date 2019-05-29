@@ -32,6 +32,39 @@ def close_cpanel_liveapisock():
     sock.close()
 
 
+def branding_print_logo_name():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
+    else:
+        brand_logo = "xtendweb.png"
+    return brand_logo
+
+
+def branding_print_banner():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
+    else:
+        brand_name = "AUTOM8N"
+    return brand_name
+
+
+def branding_print_footer():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
+    else:
+        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
+    return brand_footer
+
+
 close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
@@ -40,7 +73,11 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-print('<title>XtendWeb</title>')
+
+print('<title>')
+print(branding_print_banner())
+print('</title>')
+
 print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
 print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
 print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
@@ -51,12 +88,18 @@ print('<body>')
 print('<div id="main-container" class="container text-center">')  # marker1
 print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')
+
 print('<div class="logo">')
-print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
-print('<h4>XtendWeb</h4>')
+print('<a href="xtendweb.live.py"><img border="0" src="')
+print(branding_print_logo_name())
+print('" width="48" height="48"></a>')
+print('<h4>')
+print(branding_print_banner())
+print('</h4>')
 print('</div>')
+
 print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
+print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Application Settings</li>')
 print('</ol>')
 if form.getvalue('domain') and form.getvalue('backend'):
@@ -134,13 +177,13 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('<div class="panel-heading"><h3 class="panel-title">Application template</h3></div>')
             print('<div class="panel-body">')
             print('<select name="apptemplate">')
-            for myapptemplate in new_apptemplate_dict.keys():
+            for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 if myapptemplate == apptemplate_code:
                     print(('<option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
                 else:
                     print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
             if user_new_apptemplate_dict:
-                for user_myapptemplate in user_new_apptemplate_dict.keys():
+                for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
                     if user_myapptemplate == apptemplate_code:
                         print(('<option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
                     else:
@@ -166,10 +209,10 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Application template</h3></div>')
             print('<div class="panel-body">')
             print('<select name="apptemplate">')
-            for myapptemplate in new_apptemplate_dict.keys():
+            for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 print(('<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
             if user_new_apptemplate_dict:
-                for user_myapptemplate in user_new_apptemplate_dict.keys():
+                for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
                     print(('<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
             print('</select>')
             print('</div>')
@@ -187,7 +230,11 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+
+print('<div class="panel-footer"><small>')
+print(branding_print_footer())
+print('</small></div>')
+
 print('</div>')  # marker2
 print('</div>')  # marker1
 print('</body>')

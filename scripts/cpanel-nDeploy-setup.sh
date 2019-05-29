@@ -2,20 +2,26 @@
 # Author: Anoop P Alias
 
 function enable {
-echo -e '\e[93m Generating the default nginx vhosts \e[0m'
-python /opt/nDeploy/scripts/generate_default_vhost_config.py
+/usr/local/cpanel/cpkeyclt
+# Generate all nginx vhost first
+echo -e '\e[93m Generating nginx vhosts \e[0m'
+/opt/nDeploy/scripts/attempt_autofix.sh
+# Lets switch apache port so nginx can bind to port 80 and 443
 echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_port value=0.0.0.0:9999
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:4430
+/usr/local/cpanel/bin/whmapi1 set_tweaksetting key=disable_cphttpd value=1
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
-/opt/nDeploy/scripts/attempt_autofix.sh
 service tailwatchd restart
 if [ -f /etc/cpanel/ea4/is_ea4 ];then
-	echo -e '\e[93m !!! Removing conflicting ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
-	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2
+	echo -e '\e[93m !!! Removing conflicting mod_evasive ea-apache24-mod_evasive ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
+	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2 ea-apache24-mod_evasive mod_evasive
 	yum -y install ea-apache24-mod_remoteip
 	REMOTEIPINCLUDE=$'\nInclude "/etc/nginx/conf.d/httpd_mod_remoteip.include"'
-	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || echo ${REMOTEIPINCLUDE} >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf
+	grep "httpd_mod_remoteip.include" /etc/apache2/conf.d/includes/pre_virtualhost_global.conf || (echo "" >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf && echo ${REMOTEIPINCLUDE} >> /etc/apache2/conf.d/includes/pre_virtualhost_global.conf)
+	sed -i 's/logformat_combined: "%h/logformat_combined: "%a/' /var/cpanel/conf/apache/local
+	sed -i 's/logformat_common: "%h/logformat_common: "%a/' /var/cpanel/conf/apache/local
+	rm -f /var/cpanel/conf/apache/local.cache
 fi
 echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
 /scripts/rebuildhttpdconf
@@ -32,7 +38,12 @@ else
 	# test for OpenVZ/Virtuozzo platform
 	/usr/sbin/sysctl -w net.core.somaxconn=16384
 	if [ $? -ne 0 ];then
-		sed -i 's/ExecStartPre=\/usr\/sbin\/sysctl -w net.core.netdev_max_backlog/#ExecStartPre=\/usr\/sbin\/sysctl -w net.core.netdev_max_backlog/' /etc/systemd/system/nginx.service
+		sed 's/^ExecStartPre=\/usr\/sbin\/sysctl/#ExecStartPre=\/usr\/sbin\/sysctl/' /usr/lib/systemd/system/nginx.service > /etc/systemd/system/nginx.service
+		systemctl daemon-reload
+	fi
+	/usr/sbin/sysctl -w net.core.netdev_max_backlog=16384
+	if [ $? -ne 0 ];then
+		sed 's/^ExecStartPre=\/usr\/sbin\/sysctl/#ExecStartPre=\/usr\/sbin\/sysctl/' /usr/lib/systemd/system/nginx.service > /etc/systemd/system/nginx.service
 		systemctl daemon-reload
 	fi
 	systemctl restart nginx

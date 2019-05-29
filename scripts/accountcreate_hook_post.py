@@ -7,6 +7,9 @@ import os
 import pwd
 import grp
 import shutil
+import platform
+import psutil
+import signal
 try:
     import simplejson as json
 except ImportError:
@@ -17,6 +20,39 @@ __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
 __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
+
+
+def nginxreload():
+    with open(os.devnull, 'w') as FNULL:
+        subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def safenginxreload():
+    nginx_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
+            nginx_status = True
+            break
+    if not nginx_status:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def sighupnginx():
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+            nginxpid = myprocess.pid
+            os.kill(nginxpid, signal.SIGHUP)
 
 
 # This hook script is supposed to be called after account creation by cPanel
@@ -40,7 +76,10 @@ if not os.path.isfile(domain_data_file):
         if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
             TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
         else:
-            TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
+            if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
+            else:
+                TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
     if os.path.isfile(TEMPLATE_FILE):
         shutil.copyfile(TEMPLATE_FILE, domain_data_file)
         cpuser_uid = pwd.getpwnam(cpaneluser).pw_uid
@@ -54,10 +93,15 @@ if os.path.exists(cluster_config_file):
     # Calling ansible ad-hoc command to create users across the cluster
     # Using subprocess.call here as we are not in a hurry and no async call is required
     subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m user -a "name='+cpaneluser+' home='+cpaneluserhome+' shell='+user_shell+'"', shell=True)
-    subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
+    if os.path.isfile(installation_path+"/conf/skip_geodns"):
+        subprocess.call(installation_path + "/scripts/cluster_dns_ensure_user.py "+cpaneluser, shell=True)
+    else:
+        subprocess.call(installation_path + "/scripts/cluster_gdnsd_ensure_user.py "+cpaneluser, shell=True)
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
+    sighupnginx()
     print("1 nDeploy:clusteraccountcreate:"+cpaneluser)
 else:
     # We just need to generate config for the local machine
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
+    sighupnginx()
     print("1 nDeploy:accountcreate:"+cpaneluser)

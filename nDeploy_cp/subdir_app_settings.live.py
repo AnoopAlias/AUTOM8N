@@ -29,6 +29,39 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 cgitb.enable()
 
 
+def branding_print_logo_name():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
+    else:
+        brand_logo = "xtendweb.png"
+    return brand_logo
+
+
+def branding_print_banner():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
+    else:
+        brand_name = "AUTOM8N"
+    return brand_name
+
+
+def branding_print_footer():
+    "Branding support"
+    if os.path.isfile(installation_path+"/conf/branding.yaml"):
+        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+            yaml_parsed_brand = yaml.safe_load(brand_data_file)
+        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
+    else:
+        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
+    return brand_footer
+
+
 def print_green(theoption, hint):
     print(('<div class="col-sm-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
@@ -58,7 +91,11 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-print('<title>XtendWeb</title>')
+
+print('<title>')
+print(branding_print_banner())
+print('</title>')
+
 print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
 print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
 print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
@@ -69,12 +106,18 @@ print('<body>')
 print('<div id="main-container" class="container text-center">')  # marker1
 print('<div class="row">')  # marker2
 print('<div class="col-md-6 col-md-offset-3">')  # marker3
+
 print('<div class="logo">')
-print('<a href="xtendweb.live.py" data-toggle="tooltip" data-placement="bottom" title="Start Over"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>')
-print('<h4>XtendWeb</h4>')
+print('<a href="xtendweb.live.py"><img border="0" src="')
+print(branding_print_logo_name())
+print('" width="48" height="48"></a>')
+print('<h4>')
+print(branding_print_banner())
+print('</h4>')
 print('</div>')
+
 print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-refresh"></span></a></li>')
+print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
 print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Sub-directory App Settings</li>')
 print('</ol>')
 if form.getvalue('domain') and form.getvalue('thesubdir'):
@@ -97,7 +140,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
     if not thesubdir:
         print('ERROR: Invalid sub-directory name')
         sys.exit(0)
-    if not re.match("^[0-9a-zA-Z/_-]*$", thesubdir):
+    if not re.match("^[\.0-9a-zA-Z/_-]*$", thesubdir):
         print("Error: Invalid char in sub-directory name")
         sys.exit(0)
     profileyaml = installation_path + "/domain-data/" + mydomain
@@ -115,8 +158,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         # We do a fresh config
         if subdir_apps_dict:
             if not subdir_apps_dict.get(thesubdir):
-            	print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'/'+thesubdir+'</strong></div>'))
-            	print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
+                print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'/'+thesubdir+'</strong></div>'))
+                print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
                 print('<div class="panel panel-default">')  # default
                 print('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Application Server</a></h3></div>')  # heading
                 print('<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">')  # collapse
@@ -175,15 +218,15 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('<div class="panel panel-default">')  # default
                 print('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Application Server</a></h3></div>')  # heading
                 print('<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">')  # collapse
-                print('<div class="panel-body">') # body
+                print('<div class="panel-body">')  # body
                 print('<form id="config" class="form-inline config-save" action="subdir_select_app_settings.live.py" method="post">')
                 if backend_category == 'PROXY':
                     if backend_version == 'httpd':
-                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
+                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-warning">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span> <br> <span class="label label-success">.htaccess</span><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>'))
                     else:
-                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
+                        print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span> <br> <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
                 else:
-                    print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span>  <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
+                    print(('<span class="label label-primary">NGINX</span> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> <span class="label label-primary">'+backend_version+'</span> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="label label-default">'+apptemplate_description+'</span> <br> <span class="label label-danger">.htaccess</span><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>'))
                 print(('<div class="alert alert-info alert-top">To change the application server select a new category below and hit submit</div>'))
                 print('<select name="backend">')
                 for backends_defined in backend_data_yaml_parsed.keys():
@@ -234,25 +277,32 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">')  # collapse
                 print(('<div class="panel-body">'))  # body
                 # User config reload
-                if user_config == 'enabled' and os.path.isfile(document_root+"/"+thesubdir+"/nginx.conf"):
-                    print('<ul class="list-group">')
-                    print('<li class="list-group-item">')
-                    print('<div class="form-inline">')  # markerx1
-                    print('<div class="form-group"><kbd>')
-                    print(document_root+"/"+thesubdir+"/nginx.conf")
-                    print('</kbd></div>')
-                    print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
+                print('<ul class="list-group">')
+                print('<li class="list-group-item">')
+                print('<div class="form-inline">')  # markerx1
+                if os.path.isfile(document_root+"/"+thesubdir+"/nginx.conf"):
+                    print(('<div class="alert alert-info alert-top">'))
+                    print('<kbd>'+document_root+'/'+thesubdir+'/nginx.conf</kbd>')
+                    print('<br>')
+                    print('<br>')
                     if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
                         print((' <span class="label label-success">VALID</span><br>'))
                     else:
-                        print((' <span class="label label-danger">INVALID</span><br>'))
-                    print('<form class="form-group" action="reload_config.live.py">')
-                    print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
-                    print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
-                    print('</form>')
-                    print('</div>')  # markerx1
-                    print('</li>')
-                    print('</ul>')
+                        print((' <span class="label label-danger">INVALID/REQUIRE RELOAD</span><br>'))
+                    print('</div>')
+                else:
+                    print(('<div class="alert alert-info alert-top">upload custom nginx config to be placed inside the ^~ /'+thesubdir+'/ location context in <kbd>'+document_root+'/'+thesubdir+'/nginx.conf</kbd> and hit RELOAD</div>'))
+                print(('<br>'))
+                print('<form class="form-group" action="reload_config.live.py">')
+                print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
+                print(('<input class="hidden" name="domain" value="'+mydomain+'">'))
+                print('</form>')
+                print('<form class="form-group" action="view_nginx_log.live.py">')
+                print('<input class="btn btn-xs btn-primary" type="submit" value="NGINX LOG">')
+                print('</form>')
+                print('</div>')  # markerx1
+                print('</li>')
+                print('</ul>')
                 print('<form id="config" class="form-inline" action="save_app_extra_settings.live.py" method="post">')
                 # auth_basic
                 print('<ul class="list-group">')
@@ -343,7 +393,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # Append request_uri to redirect
                 print('<li class="list-group-item">')
                 print('<div class="row">')
-                append_requesturi_hint = 'append $$request_uri to the redirect URL'
+                append_requesturi_hint = 'append $request_uri to the redirect URL'
                 if append_requesturi == 'enabled' and redirectstatus != 'none':
                     print_green("append $request_uri to redirecturl", append_requesturi_hint)
                     print('<div class="col-sm-6 col-radio">')
@@ -403,7 +453,11 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
 else:
     print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
-print('<div class="panel-footer"><small>Need Help <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> <a target="_blank" href="https://autom8n.com/xtendweb/UserDocs.html">XtendWeb Docs</a></small></div>')
+
+print('<div class="panel-footer"><small>')
+print(branding_print_footer())
+print('</small></div>')
+
 print('</div>')
 print('</div>')
 print('</div>')

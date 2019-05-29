@@ -3,30 +3,27 @@
 root {{ DOCUMENTROOT }};
 index index.php index.html index.htm;
 
-##########Yoast###############
-#Yoast SEO Sitemaps
-location ~ ([^/]*)sitemap(.*).x(m|s)l$ {
-## this redirects sitemap.xml to /sitemap_index.xml
-rewrite ^/sitemap.xml$ /sitemap_index.xml permanent;
-## this makes the XML sitemaps work
-rewrite ^/([a-z]+)?-?sitemap.xsl$ /index.php?xsl=$1 last;
-rewrite ^/sitemap_index.xml$ /index.php?sitemap=1 last;
-rewrite ^/([^/]+?)-sitemap([0-9]+)?.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
-## The following lines are optional for the premium extensions
-## News SEO
-rewrite ^/news-sitemap.xml$ /index.php?sitemap=wpseo_news last;
-## Local SEO
-rewrite ^/locations.kml$ /index.php?sitemap=wpseo_local_kml last;
-rewrite ^/geo-sitemap.xml$ /index.php?sitemap=wpseo_local last;
-## Video SEO
-rewrite ^/video-sitemap.xsl$ /index.php?xsl=video last;
-}
-##########Yoast###############
-
-
 location / {
-try_files $uri $uri/ /index.php?$args;
+try_files $uri $uri/ /index.php$is_args$args;
 }
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location = /wp-login.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location = /xmlrpc.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
 
 location /redis-fetch {
 internal  ;
@@ -46,13 +43,16 @@ redis2_query expire $key 600;
 redis2_pass  127.0.0.1:6379;
 }
 
-location ~ \.php$ {
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
 
 sendfile off;
 aio off;
 
 set $key "$ua_device$scheme$request_method$host$request_uri";
-try_files $uri =404;
 
 srcache_fetch_skip "$query_string$wpcookienocache$wpurinocache";
 srcache_store_skip "$query_string$wpcookienocache$wpurinocache";
@@ -71,34 +71,3 @@ more_set_headers 'X-Cache-2 $srcache_store_status';
 include /etc/nginx/fastcgi_params*;
 fastcgi_pass unix:{{ SOCKETFILE }};
 }
-
-location ~ ^/pingphpfpm$ {
-include /etc/nginx/fastcgi_params*;
-fastcgi_pass unix:{{ SOCKETFILE }};
-}
-
-location = /wp-login.php {
-limit_req   zone=one  burst=1 nodelay;
-include /etc/nginx/fastcgi_params*;
-
-# No caching
-more_clear_headers "Cache-Control";
-add_header Cache-Control "private, max-age=0, no-cache, no-store";
-more_clear_headers "Expires";
-
-fastcgi_pass unix:{{ SOCKETFILE }};
-}
-
-location = /xmlrpc.php {
-limit_req   zone=one  burst=1 nodelay;
-include /etc/nginx/fastcgi_params*;
-
-# No caching
-more_clear_headers "Cache-Control";
-add_header Cache-Control "private, max-age=0, no-cache, no-store";
-more_clear_headers "Expires";
-
-fastcgi_pass unix:{{ SOCKETFILE }};
-}
-
-include /etc/nginx/conf.d/cpanel_services.conf;

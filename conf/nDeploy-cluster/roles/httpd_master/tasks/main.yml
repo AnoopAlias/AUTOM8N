@@ -1,0 +1,4 @@
+---
+
+- name: Sync the webstack rpm's to slave
+  shell: /opt/nDeploy/scripts/cluster_sync_rpms.sh
