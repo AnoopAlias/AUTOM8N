@@ -103,6 +103,7 @@ print('<li class="active">Server Config</li>')
 print('</ol>')
 
 # Next section start here
+print('<a id="toggle-accordion" href="javascript:;">expand +</a>')
 print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
 print('<div class="panel panel-default">')  # default
 print('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">System Status</a></h3></div>')  # heading
@@ -428,12 +429,12 @@ print('<div id="collapseEleven" class="panel-collapse collapse" role="tabpanel" 
 print('<div class="panel-body">')  # body
 if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('<form class="form-group" action="ddos_mitigate.cgi">')
-    print('<input class="btn btn-info" type="submit" value="NGINX[ACTIVE] CLICK TO DISABLE">')
+    print('<input class="btn btn-info" type="submit" value="NGINX [ACTIVE] - CLICK TO DISABLE">')
     print(('<input class="hidden" name="ddos" value="disable">'))
     print('</form>')
 else:
     print('<form class="form-group" action="ddos_mitigate.cgi">')
-    print('<input class="btn btn" type="submit" value="NGINX[INACTIVE] - CLICK TO ENABLE">')
+    print('<input class="btn btn-default" type="submit" value="NGINX [INACTIVE] - CLICK TO ENABLE">')
     print(('<input class="hidden" name="ddos" value="enable">'))
     print('</form>')
 try:
@@ -446,12 +447,12 @@ else:
         firehol_enabled = subprocess.call("systemctl is-active firehol.service", stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
     if firehol_enabled == 0:
         print('<form class="form-group" action="firehol_control.cgi">')
-        print('<input class="btn btn-info" type="submit" value="SYNPROXY[ACTIVE]- CLICK TO DISABLE">')
+        print('<input class="btn btn-info" type="submit" value="SYNPROXY [ACTIVE] - CLICK TO DISABLE">')
         print(('<input class="hidden" name="ddos" value="disable">'))
         print('</form>')
     else:
         print('<form class="form-group" action="firehol_control.cgi">')
-        print('<input class="btn btn" type="submit" value="SYNPROXY[INACTIVE] - CLICK TO ENABLE">')
+        print('<input class="btn btn-default" type="submit" value="SYNPROXY [INACTIVE] - CLICK TO ENABLE">')
         print(('<input class="hidden" name="ddos" value="enable">'))
         print('</form>')
 print('</div>')  # body

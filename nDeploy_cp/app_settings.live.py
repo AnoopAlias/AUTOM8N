@@ -219,6 +219,7 @@ if form.getvalue('domain'):
 
         # Ok we are done with getting the settings,now lets present it to the user
         print('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'</strong></div>')
+        print('<a id="toggle-accordion" href="javascript:;">expand +</a>')
         print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
         print('<div class="panel panel-default">')  # default
         print('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Application Server</a></h3></div>')  # heading
@@ -316,7 +317,6 @@ if form.getvalue('domain'):
             print('</div>')
         else:
             print(('<div class="alert alert-info alert-top">upload custom nginx config to be placed inside server context in <kbd>'+document_root+'/nginx.conf</kbd> and hit RELOAD</div>'))
-        print(('<br>'))
         print('<form class="form-group" action="reload_config.live.py">')
         print('<input class="btn btn-xs btn-primary" type="submit" value="RELOAD">')
         print(('<input class="hidden" name="domain" value="'+mydomain+'">'))

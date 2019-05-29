@@ -73,6 +73,13 @@ kbd {
 	margin: 0 7px;
 }
 
+#toggle-accordion {
+	display: block;
+	text-align: right;
+	margin-bottom: 5px;
+	text-transform: lowercase;
+}
+
 #accordion .panel-heading {
 	text-transform: uppercase;
 }
@@ -121,7 +128,8 @@ kbd {
 	width: 100%;
 }
 
-.single .panel-body .form-group {
+.panel-body .form-group:nth-child(1):last-child,
+.panel-body .form-group:last-child {
 	margin-bottom: 0;
 }
 
@@ -148,6 +156,11 @@ kbd {
 
 .app-status {
 	font-size: 18px;
+}
+
+.app-status .label {
+	display: inline-block;
+	margin-bottom: 10px;
 }
 
 #config .col-sm-6 .btn-primary {
