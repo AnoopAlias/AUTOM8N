@@ -172,6 +172,8 @@ if os.path.isdir('/etc/borgmatic'):
             borgmatic_hook_myscript.write(borgmatic_hook_script)
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
     # Next section start here
+    print('<a id="toggle-accordion" href="javascript:;">expand +</a>')
+    print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
     print('<div class="panel panel-default">')  # default
     print(('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">BACKUP SETTINGS</a></h3></div>'))  # heading
     print('<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">')  # collapse
