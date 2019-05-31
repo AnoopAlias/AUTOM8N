@@ -199,6 +199,14 @@ kbd {
 	padding: 10px !important;
 }
 
+#config .list-group-item > .row-input [class*='col-'] > .label {
+	padding: 20px;
+}
+
+#config .list-group-item > .row-input [class*='col-'] > .form-control {
+	width: 100%;
+}
+
 .config-save .list-group-item .col-sm-6:first-child {
 	text-align: right;
 	line-height: 24px;
