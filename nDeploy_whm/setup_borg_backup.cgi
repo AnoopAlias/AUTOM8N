@@ -172,6 +172,8 @@ if os.path.isdir('/etc/borgmatic'):
             borgmatic_hook_myscript.write(borgmatic_hook_script)
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
     # Next section start here
+    print('<a id="toggle-accordion" href="javascript:;">expand +</a>')
+    print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
     print('<div class="panel panel-default">')  # default
     print(('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">BACKUP SETTINGS</a></h3></div>'))  # heading
     print('<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">')  # collapse
@@ -186,7 +188,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('<div class="row">')
     if system_files == 'enabled':
         print_green("system_files", system_files_hint)
-        print('<div class="col-sm-6 col-radio">')
+        print('<div class="col-sm-6">')
         print('<div class="radio"><label><input type="radio" name="system_files" value="enabled" checked/> Enabled</label></div>')
         print('<div class="radio"><label><input type="radio" name="system_files" value="disabled" /> Disabled</label></div>')
         print('</div>')
@@ -218,8 +220,8 @@ if os.path.isdir('/etc/borgmatic'):
         print('</li>')
     # backup_path
     print('<li class="list-group-item">')
-    print('<div class="row">')
-    backup_path_hint = "The directory where the cPanel pkgacct,MySQL backup and system files are stored"
+    print('<div class="row row-input">')
+    backup_path_hint = "The directory where the cPanel pkgacct, MySQL backup and system files are stored"
     print_green("pkgacct backup path", backup_path_hint)
     print('<div class="col-sm-6 col-radio">')
     # print('<div class="alert alert-info">The path where you want pkgacct,MySQL and system backups stored: </div>')
@@ -269,7 +271,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # repositories
     print('<li class="list-group-item">')
-    print('<div class="row">')
+    print('<div class="row row-input">')
     repositories_hint = "eg: user@backupserver:sourcehostname.borg"
     print_green("repositories", repositories_hint)
     print('<div class="col-sm-6 col-radio">')
@@ -279,7 +281,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # ssh_command
     print('<li class="list-group-item">')
-    print('<div class="row">')
+    print('<div class="row row-input">')
     ssh_command_hint = "options for ssh"
     print_green("ssh_command", ssh_command_hint)
     print('<div class="col-sm-6 col-radio">')
@@ -289,7 +291,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # encryption_passphrase
     print('<li class="list-group-item">')
-    print('<div class="row">')
+    print('<div class="row row-input">')
     encryption_passphrase_hint = "passphrase used to encrypt the backup"
     print_green("encryption_passphrase", encryption_passphrase_hint)
     print('<div class="col-sm-6 col-radio">')
@@ -299,7 +301,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # remote_rate_limit
     print('<li class="list-group-item">')
-    print('<div class="row">')
+    print('<div class="row row-input">')
     remote_rate_limit_hint = "network upload rate limit in kiBytes/second"
     print_green("network rate limit", remote_rate_limit_hint)
     print('<div class="col-sm-6 col-radio">')
@@ -313,7 +315,7 @@ if os.path.isdir('/etc/borgmatic'):
     print(('<h6 class="list-group-item-heading">BACKUP RETENTION</h6>'))
     # keep_hourly
     print('<li class="list-group-item">')
-    print('<div class="row">')
+    print('<div class="row row-input">')
     keep_hourly_hint = "number of hourly backups to keep"
     print_green("keep_hourly", keep_hourly_hint)
     print('<div class="col-sm-6 col-radio">')
@@ -323,7 +325,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # keep_daily
     print('<li class="list-group-item">')
-    print('<div class="row">')
+    print('<div class="row row-input">')
     keep_daily_hint = "number of daily backups to keep"
     print_green("keep_daily", keep_daily_hint)
     print('<div class="col-sm-6 col-radio">')
@@ -333,7 +335,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # keep_weekly
     print('<li class="list-group-item">')
-    print('<div class="row">')
+    print('<div class="row row-input">')
     keep_weekly_hint = "number of weekly backups to keep"
     print_green("keep_weekly", keep_weekly_hint)
     print('<div class="col-sm-6 col-radio">')
@@ -343,7 +345,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # keep_monthly
     print('<li class="list-group-item">')
-    print('<div class="row">')
+    print('<div class="row row-input">')
     keep_monthly_hint = "number of monthly backups to keep"
     print_green("keep_monthly", keep_monthly_hint)
     print('<div class="col-sm-6 col-radio">')
