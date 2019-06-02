@@ -25,6 +25,7 @@
      - redis
      - haproxy
      - gdnsd-nDeploy
+     - MySQL-python
 
 - name: Install AUTOM8N cluster slave rpm package
   yum: name={{ packages }} enablerepo={{ repo }},epel state=present

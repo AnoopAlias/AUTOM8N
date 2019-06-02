@@ -19,6 +19,7 @@
      - redis
      - haproxy
      - gdnsd-nDeploy
+     - MySQL-python
 
 - name: Setup nginx config directories on master
   file: path=/etc/nginx/{{ item }} state=directory
