@@ -78,6 +78,12 @@
   when:
     - mysqlsetup.stat.exists == false
 
+- name: Install required AUTOM8N rpm's on master
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+     - MySQL-python
+
 - name: Import mysqldump from master
   mysql_db:
     state: import
