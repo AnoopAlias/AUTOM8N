@@ -1,4 +1,5 @@
 #!/usr/bin/python
+
 import cgi
 import cgitb
 import os
@@ -17,6 +18,10 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 default_domain_data_file = installation_path+'/conf/domain_data_default.yaml'
 app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
+
+cgitb.enable()
+
+form = cgi.FieldStorage()
 
 
 def branding_print_logo_name():
@@ -41,54 +46,73 @@ def branding_print_banner():
     return brand_name
 
 
-def branding_print_footer():
+def branding_print_support():
     "Branding support"
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
-    return brand_footer
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+    return brand_support
 
 
-cgitb.enable()
+def print_green(theoption, hint):
+    print(('<div class="col-sm-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
-form = cgi.FieldStorage()
+
+def print_red(theoption, hint):
+    print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+
 
 print('Content-Type: text/html')
 print('')
 print('<html>')
+
 print('<head>')
 
 print('<title>')
 print(branding_print_banner())
 print('</title>')
 
-print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
-print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
-print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
+print(('<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
+print(('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
+print(('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">'))
+print(('<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
+print(('<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">'))
+print(('<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">'))
 print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
+
 print('</head>')
+
 print('<body>')
-print('<div id="main-container" class="container text-center">')  # marker1
-print('<div class="row">')  # marker2
-print('<div class="col-md-8 col-md-offset-2">')  # marker3
 
-print('<div class="logo">')
-print('<a href="xtendweb.cgi"><img border="0" src="')
-print(branding_print_logo_name())
-print('" width="48" height="48"></a>')
-print('<h4>')
-print(branding_print_banner())
-print('</h4>')
-print('</div>')
+print('<header id="main-header">')
 
-print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></span></a></li>')
-print('<li class="active">Server Config</li>')
-print('</ol>')
+print(branding_print_support())
+print('		<div class="logo">')
+print('			<h3>')
+print('				<a href="xtendweb.cgi"><img border="0" src="')
+print(					branding_print_logo_name())
+print('					" width="48" height="48"></a>')
+print(					branding_print_banner())
+print('			</h4>')
+print('		</div>')
+
+print('</header>')
+
+print('<div id="main-container" class="container">')  # main container
+
+print('		<nav aria-label="breadcrumb">')
+print('			<ol class="breadcrumb">')
+print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')
+print('				<li class="breadcrumb-item active">PHP-FPM pool edit</li>')
+print('			</ol>')
+print('		</nav>')
+
+print('		<div class="row justify-content-lg-center">')
+print('			<div class="col-lg-8">')
 
 if form.getvalue('poolfile') and form.getvalue('section'):
     myphpini = form.getvalue('poolfile')
@@ -96,82 +120,99 @@ if form.getvalue('poolfile') and form.getvalue('section'):
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
-        # Next section start here
-        print('<div class="alert alert-warning alert-domain"><strong>'+config.sections()[mysection]+'</strong></div>')
-        print('<div class="panel panel-default">')  # marker6
-        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool</h3></div>')
-        print('<div id="config" class="panel-body">')  # marker7
-        print('<ul class="list-group">')
+        print('		<div class="card">')  # card
+        print('			<div class="card-header">')
+        print('				<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> '+config.sections()[mysection]+'</h5>')
+        print('			</div>')
+        print('			<div class="card-body">')  # card-body
+
         myconfig = dict(config.items(config.sections()[mysection]))
+        mykeypos=1
         for mykey in myconfig.keys():
-            print('<li class="list-group-item">')
-            print('<div class="row">')
-            print(('<div class="col-sm-6 col-radio text-left">'))
-            print('<form class="form-group" action="save_phpfpm_pool_file.cgi">')
-            print('<div class="input-group">')
-            print('<div class="form-control">')
+            print('			<label for="'+mykey+'">')
             print(mykey)
-            print('</div>')
-            print('<span class="input-group-btn"><input class="btn btn-danger" type="submit" value="DEL"></span>')
-            print(('<input class="hidden" name="poolfile" value="'+myphpini+'">'))
-            print(('<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
-            print(('<input class="hidden" name="thekey" value="'+mykey+'">'))
-            print(('<input class="hidden" name="action" value="delete">'))
-            print('</form>')
-            print('</div>')
-            print('</div>')
-            print('<div class="col-sm-6 col-radio">')
-            print('<form class="form-group" action="save_phpfpm_pool.cgi">')
-            print('<div class="input-group">')
-            print('<div class="form-control">')
-            print(myconfig.get(mykey))
-            print('</div>')
-            print('<span class="input-group-btn"><input class="btn btn-primary" type="submit" value="Edit"></span>')
-            print(('<input class="hidden" name="poolfile" value="'+myphpini+'">'))
-            print(('<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
-            print(('<input class="hidden" name="thekey" value="'+mykey+'">'))
-            print('</form>')
-            print('</div>')
-            print('</div>')
-            print('</li>')
-        print('</ul>')
-        print('</div>')  # div8
-        print('</div>')  # div7
-        # Next section start here
-        print('<div class="panel panel-default">')  # marker6
-        print('<div class="panel-heading"><h3 class="panel-title">Add new pool setting</h3></div>')
-        print('<div class="panel-body">')  # marker7
-        print(('<div class="alert alert-warning">'))
-        print(('WARNING: Editing pool config with invalid settings can bring down your PHP application server. Edit at your own risk'))
-        print(('</div>'))
-        print('<form class="form-group" action="save_phpfpm_pool_file.cgi">')
-        print('<ul class="list-group">')
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        print('<div class="col-sm-6 col-radio">')
-        print('<input class="form-control" placeholder="KEY" type="text" name="thekey">')
-        print('</div>')
-        print('<div class="col-sm-6 col-radio">')
-        print('<input class="form-control" placeholder="VALUE" type="text" name="thevalue">')
-        print('</div>')
-        print('</div>')
-        print('</li>')
-        print(('<input style="display:none" name="section" value="'+form.getvalue('section')+'">'))
-        print(('<input class="hidden" name="poolfile" value="'+myphpini+'">'))
-        print(('<input class="hidden" name="action" value="edit">'))
-        print('</ul>')
-        print('<input class="btn btn-primary" type="submit" value="Submit">')
-        print('</form>')
-        print('</div>')  # div8
-        print('</div>')  # div7
+            print('			</label>')
+            print('			<form class="m-0 modalForm10-wrap" id="modalForm10'+'-'+str(mykeypos)+'" onsubmit="return false;" method="post">')
+            print('			<div class="input-group btn-2 mb-4">')
+            print('				<input class="form-control" value='+myconfig.get(mykey)+' type="text" name="thevalue">')
+            print('				<div class="input-group-append">')
+            print('						<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Save</span><i class="fas fa-pen"></i></button>')
+            print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))
+            print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
+            print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
+            print(('					<input class="hidden" name="action" value="edit">'))
+            print('					</form>')
+            print('					<form class="m-0 modalForm9-wrap" id="modalForm9'+'-'+str(mykeypos)+'" onsubmit="return false;" method="post">')
+            print('						<button class="btn btn-outline-danger btn-ajax-sm" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+            print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))
+            print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
+            print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
+            print(('					<input class="hidden" name="action" value="delete">'))
+            print('					</form>')
+            print('				</div>')
+            print('			</div>')
+            mykeypos = mykeypos + 1
+
+        print('			</div>')  # card-body end
+        print('		</div>')  # card end
+
+        # New PHP Param
+        print('		<div class="card">')  # card
+        print('			<div class="card-header">')
+        print('				<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> Add new pool setting</h5>')
+        print('			</div>')
+        print('			<div class="card-body">')  # card-body
+
+        print('				<form class="m-0" id="modalForm8" onsubmit="return false;">')
+        print('					<div class="input-group">')
+        print('						<div class="input-group-prepend">')
+        print('							<span class="input-group-text">Key & Value</span>')
+        print('				     	</div>')
+        print('						<input type="text" aria-label="Key" placeholder="Key" name="thekey" class="form-control">')
+        print('						<input type="text" aria-label="Value" placeholder="Value" name="thevalue" class="form-control">')
+        print('						<div class="input-group-append">')
+        print(('						<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
+        print(('						<input class="hidden" name="poolfile" value="'+myphpini+'">'))
+        print(('						<input class="hidden" name="action" value="edit">'))
+        print('							<button class="btn btn-outline-primary btn-ajax" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
+        print('						</div>')
+        print('					</div>')
+        print('				</form>')
+
+        print('			</div>')  # card-body end
+        print('			<div class="card-footer footer-warning">')
+        print('				<small>WARNING: Editing pool config with invalid settings can bring down your PHP application server. Edit at your own risk</small>')
+        print('			</div>')
 else:
-        print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
+        print('			<i class="fas fa-exclamation"></i>')
+        print('			<p>Forbidden</p>')
 
-print('<div class="panel-footer"><small>')
-print(branding_print_footer())
-print('</small></div>')
+print('				</div>')  # card end
 
-print('</div>')  # marker3
-print('</div>')  # marker2
+print('			</div>')  # col end
+print('		</div>')  # row end
+
+print('</div>')  # main-container end
+
+# Modal
+print('		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"> ')
+print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('                     <p> </p>')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
+
 print('</body>')
 print('</html>')
