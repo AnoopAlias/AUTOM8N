@@ -19,11 +19,14 @@ Multi Data Center clustering with DNS Load Balancing and automatic failover
 
 
 # Licensing Model
-GPLv3 
+GPLv3
 
 
 # COMMERCIAL SUPPORT and SOFTWARE DOWNLOAD
-Packaged Software and 24x7 Product support installation support is provided via a Paid Subscription 
+Packaged Software and 24x7 Product support installation support is provided via a Paid Subscription
+
+# UI,UX designed by
+https://www.stirstudiosdesign.com/
 
 
 A U T O M 8 N
