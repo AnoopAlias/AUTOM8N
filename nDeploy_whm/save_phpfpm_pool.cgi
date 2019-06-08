@@ -1,4 +1,5 @@
 #!/usr/bin/python
+
 import cgi
 import cgitb
 import os
@@ -41,15 +42,15 @@ def branding_print_banner():
     return brand_name
 
 
-def branding_print_footer():
+def branding_print_support():
     "Branding support"
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
-    return brand_footer
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+    return brand_support
 
 
 cgitb.enable()
@@ -65,30 +66,43 @@ print('<title>')
 print(branding_print_banner())
 print('</title>')
 
-print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
-print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
-print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
+print(('<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
+print(('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
+print(('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">'))
+print(('<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
+print(('<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">'))
+print(('<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">'))
 print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
+
 print('<body>')
-print('<div id="main-container" class="container text-center">')  # marker1
-print('<div class="row">')  # marker2
-print('<div class="col-md-6 col-md-offset-3">')  # marker3
 
-print('<div class="logo">')
-print('<a href="xtendweb.cgi"><img border="0" src="')
-print(branding_print_logo_name())
-print('" width="48" height="48"></a>')
-print('<h4>')
-print(branding_print_banner())
-print('</h4>')
-print('</div>')
+print('<header id="main-header">')
 
-print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></span></a></li>')
-print('<li class="active">Server Config</li>')
-print('</ol>')
+print(branding_print_support())
+print('		<div class="logo">')
+print('			<h3>')
+print('				<a href="xtendweb.cgi"><img border="0" src="')
+print(					branding_print_logo_name())
+print('					" width="48" height="48"></a>')
+print(					branding_print_banner())
+print('			</h4>')
+print('		</div>')
+
+print('</header>')
+
+print('<div id="main-container" class="container">')  # main container
+
+print('		<nav aria-label="breadcrumb">')
+print('			<ol class="breadcrumb">')
+print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')
+print('				<li class="breadcrumb-item active">PHP-FPM pool edit</li>')
+print('			</ol>')
+print('		</nav>')
+
+print('		<div class="row justify-content-lg-center">')
+print('			<div class="col-lg-10">')
 
 if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('section'):
     myphpini = form.getvalue('poolfile')
@@ -96,41 +110,60 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
-        # Next section start here
-        print('<div class="panel panel-default">')  # marker6
-        print('<div class="panel-heading"><h3 class="panel-title">Edit PHP-FPM pool: '+config.sections()[mysection]+'</h3></div>')
-        print('<div class="panel-body">')  # marker7
+
+        print('		<div class="card">')  # card
+        print('			<div class="card-header">')
+        print('				<h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Edit PHP-FPM pool: '+config.sections()[mysection]+'</h5>')
+        print('			</div>')
+        print('			<div class="card-body text-center">')  # card-body
+
         myconfig = dict(config.items(config.sections()[mysection]))
-        print('<form class="form-group" action="save_phpfpm_pool_file.cgi">')
-        print('<ul class="list-group">')
-        print('<li class="list-group-item">')
-        print('<div class="row">')
-        print('<div class="col-sm-6 col-radio">')
+        print('				<form class="form" id="modalForm10" onsubmit="return false;">')
+        print('					<div class="input-group mb-0">')
+        print('						<div class="input-group-prepend">')
+        print('							<span class="input-group-text">')
         print(form.getvalue('thekey'))
-        print('</div>')
-        print('<div class="col-sm-6 col-radio">')
-        print('<input class="form-control" placeholder='+myconfig.get(form.getvalue('thekey', ''))+' type="text" name="thevalue">')
-        print('</div>')
-        print('</div>')
-        print('</li>')
-        print(('<input style="display:none" name="poolfile" value="'+form.getvalue('poolfile')+'">'))
-        print(('<input style="display:none" name="thekey" value="'+form.getvalue('thekey')+'">'))
-        print(('<input style="display:none" name="section" value="'+form.getvalue('section')+'">'))
-        print(('<input class="hidden" name="action" value="edit">'))
-        print('<br>')
-        print('<input class="btn btn-primary" type="submit" value="Submit">')
-        print('</ul>')
-        print('</form>')
-        print('</div>')  # div8
-        print('</div>')  # div7
+        print('							</span>')
+        print('						</div>')
+        print('						<input class="form-control" value='+myconfig.get(form.getvalue('thekey', ''))+' type="text" name="thevalue">')
+        print(('					<input class="hidden" name="poolfile" value="'+form.getvalue('poolfile')+'">'))
+        print(('					<input class="hidden" name="thekey" value="'+form.getvalue('thekey')+'">'))
+        print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
+        print(('					<input class="hidden" name="action" value="edit">'))
+        print('						<button class="btn btn-outline-primary btn-ajax btn-block mt-4" type="submit">Update Pool</button>')
+        print('					</div>')
+        print('				</form>')
 else:
-        print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden </div>')
+        print('				<i class="fas fa-exclamation"></i>')
+        print('				<p>Forbidden</p>')
 
-print('<div class="panel-footer"><small>')
-print(branding_print_footer())
-print('</small></div>')
+print('					</div>')  # card-body end
+print('				</div>')  # card end
 
-print('</div>')  # marker3
-print('</div>')  # marker2
+print('			</div>')  # col end
+print('		</div>')  # row end
+
+print('</div>')  # main-container end
+
+# Modal
+print('		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"> ')
+print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('                     <p> </p>')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
+
 print('</body>')
 print('</html>')

@@ -1,4 +1,5 @@
 #!/usr/bin/python
+
 import cgi
 import cgitb
 import subprocess
@@ -81,23 +82,27 @@ def branding_print_banner():
     return brand_name
 
 
-def branding_print_footer():
+def branding_print_support():
     "Branding support"
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
-    return brand_footer
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+    return brand_support
 
 
 def print_green(theoption, hint):
-    print(('<div class="col-sm-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 align-self-center"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
 
 def print_red(theoption, hint):
-    print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 align-self-center"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+
+
+def print_multi_input(theoption, hint):
+    print(('<div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 form = cgi.FieldStorage()
@@ -111,31 +116,50 @@ print('<title>')
 print(branding_print_banner())
 print('</title>')
 
-print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
-print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
-print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
+print(('<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
+print(('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
+print(('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">'))
+print(('<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
+print(('<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">'))
+print(('<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">'))
 print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
+
 print('<body>')
-print('<div id="main-container" class="container text-center">')  # marker1
-print('<div class="row">')  # marker2
-print('<div class="col-md-6 col-md-offset-3">')  # marker3
 
-print('<div class="logo">')
-print('<a href="xtendweb.cgi"><img border="0" src="')
-print(branding_print_logo_name())
-print('" width="48" height="48"></a>')
-print('<h4>')
-print(branding_print_banner())
-print('</h4>')
-print('</div>')
+print('<header id="main-header">')
 
-print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.cgi"><span class="glyphicon glyphicon-repeat"></span></a></li>')
-print('<li class="active">Borgmatic setup</li>')
-print('</ol>')
+print(branding_print_support())
+print('		<div class="logo">')
+print('			<h3>')
+print('				<a href="xtendweb.cgi"><img border="0" src="')
+print(					branding_print_logo_name())
+print('					" width="48" height="48"></a>')
+print(					branding_print_banner())
+print('			</h4>')
+print('		</div>')
 
+print('</header>')
+
+print('<div id="main-container" class="container">')  # main container
+
+print('		<nav aria-label="breadcrumb">')
+print('			<ol class="breadcrumb">')
+print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')
+print('				<li class="breadcrumb-item active">Backup Config</li>')
+print('			</ol>')
+print('		</nav>')
+
+print('		<div class="row">')
+
+print('			<div class="col-lg-6">')  # col left
+
+print('				<div class="card">')  # card
+print('					<div class="card-header">')
+print('						<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i> Backup Settings</h5>')
+print('					</div>')
+print('					<div class="card-body">')  # card-body
 
 if os.path.isdir('/etc/borgmatic'):
     # Check if backup config file is present or initilize otherwise
@@ -171,72 +195,83 @@ if os.path.isdir('/etc/borgmatic'):
         with codecs.open('/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh', 'w', 'utf-8') as borgmatic_hook_myscript:
             borgmatic_hook_myscript.write(borgmatic_hook_script)
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
-    # Next section start here
-    print('<a id="toggle-accordion" href="javascript:;">expand +</a>')
-    print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
-    print('<div class="panel panel-default">')  # default
-    print(('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">BACKUP SETTINGS</a></h3></div>'))  # heading
-    print('<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">')  # collapse
-    print('<div class="panel-body">')  # body
-    print('<form id="config" class="form-inline" action="save_backup_settings.cgi" method="post">')
 
-    print('<ul class="list-group">')
+    print('					<form class="form" method="post" id="modalForm11" onsubmit="return false;">')
 
     # system_files
-    print('<li class="list-group-item">')
     system_files_hint = "Backup cPanel system files"
-    print('<div class="row">')
+    print('						<div class="row text-right">')
     if system_files == 'enabled':
         print_green("system_files", system_files_hint)
-        print('<div class="col-sm-6">')
-        print('<div class="radio"><label><input type="radio" name="system_files" value="enabled" checked/> Enabled</label></div>')
-        print('<div class="radio"><label><input type="radio" name="system_files" value="disabled" /> Disabled</label></div>')
-        print('</div>')
+        print('						<div class="col-md-6">')
+        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('								<label class="btn btn-light active">')
+        print('									<input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off" checked> Enabled')
+        print('								</label>')
+        print('								<label class="btn btn-light">')
+        print('									<input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off"> Disabled')
+        print('								</label>')
+        print('							</div>')
+        print('						</div>')
     else:
         print_red("system_files", system_files_hint)
-        print('<div class="col-sm-6 col-radio">')
-        print('<div class="radio"><label><input type="radio" name="system_files" value="enabled" /> Enabled</label></div>')
-        print('<div class="radio"><label><input type="radio" name="system_files" value="disabled" checked/> Disabled</label></div>')
-        print('</div>')
-        print('</div>')
-        print('</li>')
+        print('						<div class="col-md-6">')
+        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('								<label class="btn btn-light">')
+        print('									<input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off"> Enabled')
+        print('								</label>')
+        print('								<label class="btn btn-light active">')
+        print('									<input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off" checked> Disabled')
+        print('								</label>')
+        print('							</div>')
+        print('						</div>')
+
     # mysql_backup
-    print('<li class="list-group-item">')
-    print('<div class="row">')
     mysql_backup_hint = "Use MariaBackup to backup full MySQL datadir"
     if mysql_backup == 'enabled':
         print_green("mariabackup", mysql_backup_hint)
-        print('<div class="col-sm-6 col-radio">')
-        print('<div class="radio"><label><input type="radio" name="mysql_backup" value="enabled" checked/> Enabled</label></div>')
-        print('<div class="radio"><label><input type="radio" name="mysql_backup" value="disabled" /> Disabled</label></div>')
-        print('</div>')
+        print('						<div class="col-md-6">')
+        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('								<label class="btn btn-light active">')
+        print('									<input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off" checked> Enabled')
+        print('								</label>')
+        print('								<label class="btn btn-light">')
+        print('									<input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off"> Disabled')
+        print('								</label>')
+        print('							</div>')
+        print('						</div>')
     else:
         print_red("mariabackup", mysql_backup_hint)
-        print('<div class="col-sm-6 col-radio">')
-        print('<div class="radio"><label><input type="radio" name="mysql_backup" value="enabled" /> Enabled</label></div>')
-        print('<div class="radio"><label><input type="radio" name="mysql_backup" value="disabled" checked/> Disabled</label></div>')
-        print('</div>')
-        print('</div>')
-        print('</li>')
+        print('						<div class="col-md-6">')
+        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('								<label class="btn btn-light">')
+        print('									<input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off"> Enabled')
+        print('								</label>')
+        print('								<label class="btn btn-light active">')
+        print('									<input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off checked"> Disabled')
+        print('								</label>')
+        print('							</div>')
+        print('						</div>')
+
     # backup_path
-    print('<li class="list-group-item">')
-    print('<div class="row row-input">')
     backup_path_hint = "The directory where the cPanel pkgacct, MySQL backup and system files are stored"
-    print_green("pkgacct backup path", backup_path_hint)
-    print('<div class="col-sm-6 col-radio">')
-    # print('<div class="alert alert-info">The path where you want pkgacct,MySQL and system backups stored: </div>')
-    print('<input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
-    print('</div>')
-    print('</li>')
+    print('							<div class="col-md-12">')
+    print('								<div class="input-group mt-2">')
+    print('									<div class="input-group-prepend">')
+    print('										<span class="input-group-text">')
+    print_multi_input("pkgacct backup path", backup_path_hint)
+    print('										</span>')
+    print('									</div>')
+    print('									<input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
+    print('								</div>')
+    print('							</div>')
 
-    print('</ul>')
+    print('							<div class="col-md-12">')
+    print('								<button class="btn btn-outline-primary btn-block btn-ajax mt-2" type="submit">Save Backup Settings</button>')
+    print('							</div>')
+    print('						</div>')
 
-    print('<input class="btn btn-primary" type="submit" value="Submit">')
-
-    print('</form>')
-    print('</div>')  # body
-    print('</div>')  # collapse
-    print('</div>')  # default
+    print('					</form>')
 
     # Check if borgmatic config file is present or initilize otherwise
     if not os.path.isfile(borgmatic_config_file):
@@ -251,171 +286,200 @@ if os.path.isdir('/etc/borgmatic'):
             borgmatic_conf_file.write(borgmatic_conf)
         os.chmod(borgmatic_config_file, 0o640)
 
-
     # Since we have a borgmatic config now.Lets load it up and present to the user
     if os.path.isfile(borgmatic_config_file):
         # Get all config settings from the borgmatic config file
         with open(borgmatic_config_file, 'r') as borgmatic_config_file_stream:
             yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_config_file_stream)
 
-    # Lets present the borgmatic config to the user
-    # Next section start here
-    print('<div class="panel panel-default">')  # default
-    print(('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">BORG SETTINGS</a></h3></div>'))  # heading
-    print('<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">')  # collapse
-    print('<div class="panel-body">')  # body
-    print('<form id="config" class="form-inline" action="save_borgmatic_settings.cgi" method="post">')
+    print('				</div>')  # card-body end
+    print('			</div>')  # card end
 
-    print('<ul class="list-group">')
-    print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Keep encryption_passphrase copied safely. Losing it would make data recovery impossible on a server crash </div>')
+    print('		</div>')  # end col left
+
+    print('		<div class="col-lg-6">')  # col right
+
+    print('			<div class="card">')  # card
+    print('				<div class="card-header">')
+    print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i> Borg Settings</h5>')
+    print('				</div>')
+    print('				<div class="card-body">')  # card-body
+
+    print('					<form class="form input-group-prepend-min" method="post" id="modalForm12" onsubmit="return false;"> ')
 
     # repositories
-    print('<li class="list-group-item">')
-    print('<div class="row row-input">')
     repositories_hint = "eg: user@backupserver:sourcehostname.borg"
-    print_green("repositories", repositories_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
-    print('</div>')
-    print('</li>')
+    print('						<div class="input-group">')
+    print('							<div class="input-group-prepend">')
+    print('								<span class="input-group-text">')
+    print_multi_input("repositories", repositories_hint)
+    print('								</span>')
+    print('							</div>')
+    print('							<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
+    print('						</div>')
 
     # ssh_command
-    print('<li class="list-group-item">')
-    print('<div class="row row-input">')
     ssh_command_hint = "options for ssh"
-    print_green("ssh_command", ssh_command_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
-    print('</div>')
-    print('</li>')
+    print('						<div class="input-group">')
+    print('							<div class="input-group-prepend">')
+    print('								<span class="input-group-text">')
+    print_multi_input("ssh_command", ssh_command_hint)
+    print('								</span>')
+    print('							</div>')
+    print('								<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
+    print('						</div>')
 
     # encryption_passphrase
-    print('<li class="list-group-item">')
-    print('<div class="row row-input">')
     encryption_passphrase_hint = "passphrase used to encrypt the backup"
-    print_green("encryption_passphrase", encryption_passphrase_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']+'" type="text" name="encryption_passphrase">')
-    print('</div>')
-    print('</li>')
+    print('						<div class="input-group">')
+    print('							<div class="input-group-prepend">')
+    print('								<span class="input-group-text">')
+    print_multi_input("passphrase", encryption_passphrase_hint)
+    print('								</span>')
+    print('							</div>')
+    print('							<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']+'" type="text" name="encryption_passphrase">')
+    print('						</div>')
 
     # remote_rate_limit
-    print('<li class="list-group-item">')
-    print('<div class="row row-input">')
     remote_rate_limit_hint = "network upload rate limit in kiBytes/second"
-    print_green("network rate limit", remote_rate_limit_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
-    print('</div>')
-    print('</li>')
+    print('						<div class="input-group">')
+    print('							<div class="input-group-prepend">')
+    print('								<span class="input-group-text">')
+    print_multi_input("remote_rate_limit", remote_rate_limit_hint)
+    print('								</span>')
+    print('							</div>')
+    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
+    print('						</div>')
 
-    print('</ul>')
-
-    print('<ul class="list-group">')
-    print(('<h6 class="list-group-item-heading">BACKUP RETENTION</h6>'))
+    # retention
+    print('<label class="label label-default mt-2 mb-2">Backup Retention</label>')
     # keep_hourly
-    print('<li class="list-group-item">')
-    print('<div class="row row-input">')
     keep_hourly_hint = "number of hourly backups to keep"
-    print_green("keep_hourly", keep_hourly_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_hourly'])+'" type="text" name="keep_hourly">')
-    print('</div>')
-    print('</li>')
+    print('						<div class="input-group">')
+    print('							<div class="input-group-prepend">')
+    print('								<span class="input-group-text">')
+    print_multi_input("keep_hourly", keep_hourly_hint)
+    print('								</span>')
+    print('							</div>')
+    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_hourly'])+'" type="text" name="keep_hourly">')
+    print('						</div>')
 
     # keep_daily
-    print('<li class="list-group-item">')
-    print('<div class="row row-input">')
     keep_daily_hint = "number of daily backups to keep"
-    print_green("keep_daily", keep_daily_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_daily'])+'" type="text" name="keep_daily">')
-    print('</div>')
-    print('</li>')
+    print('						<div class="input-group">')
+    print('							<div class="input-group-prepend">')
+    print('								<span class="input-group-text">')
+    print_multi_input("keep_daily", keep_daily_hint)
+    print('								</span>')
+    print('							</div>')
+    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_daily'])+'" type="text" name="keep_daily">')
+    print('						</div>')
 
     # keep_weekly
-    print('<li class="list-group-item">')
-    print('<div class="row row-input">')
     keep_weekly_hint = "number of weekly backups to keep"
-    print_green("keep_weekly", keep_weekly_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
-    print('</div>')
-    print('</li>')
+    print('						<div class="input-group">')
+    print('							<div class="input-group-prepend">')
+    print('								<span class="input-group-text">')
+    print_multi_input("keep_weekly", keep_weekly_hint)
+    print('								</span>')
+    print('							</div>')
+    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
+    print('						</div>')
 
     # keep_monthly
-    print('<li class="list-group-item">')
-    print('<div class="row row-input">')
     keep_monthly_hint = "number of monthly backups to keep"
-    print_green("keep_monthly", keep_monthly_hint)
-    print('<div class="col-sm-6 col-radio">')
-    print('<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
-    print('</div>')
-    print('</li>')
+    print('						<div class="input-group">')
+    print('							<div class="input-group-prepend">')
+    print('								<span class="input-group-text">')
+    print_multi_input("keep_monthly", keep_monthly_hint)
+    print('								</span>')
+    print('							</div>')
+    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
+    print('						</div>')
 
-    print('</ul>')
+    print('						<button class="btn btn-outline-primary btn-block btn-ajax mt-4" type="submit">Save Borg Settings</button>')
 
-    print('<input class="btn btn-primary" type="submit" value="Submit">')
+    print('					</form>')
 
-    print('</form>')
-    print('</div>')  # body
-    print('</div>')  # collapse
-    print('</div>')  # default
+    print('				</div>')  # card-body end
+    print('				<div class="card-footer">')
+    print('					<small>Keep encryption_passphrase copied safely. Losing it would make data recovery impossible on a server crash</small>')
+    print('				</div>')
+    print('			</div>')  # card end
 
+    print('			<div class="card">')  # card
+    print('				<div class="card-header">')
+    print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i> Additional Home directory to backup</h5>')
+    print('				</div>')
+    print('			<div class="card-body">')  # card-body
 
+    # backup directories
     backup_dir_list = yaml_parsed_borgmaticyaml['location']['source_directories']
 
-    print('<div class="panel panel-default">')  # default
-    print(('<div class="panel-heading" role="tab" id="headingThree"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">ADDITIONAL HOMEDIR TO BACKUP</a></h3></div>'))  # heading
-    print('<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">')  # collapse
-    print('<div class="panel-body">')  # body
-    # get the currently configured homedir
     if backup_dir_list:
-        print(('<p>Currently backing up:</p>'))
-        print('<ul class="list-group">')
+        print('		<div class="label label-default mb-2">Currently backing up:</div>')
+        print('			<div class="clearfix">')
         for path in backup_dir_list:
-            print('<li class="list-group-item">')
-            print('<div class="form-inline">')
-            print('<div class="form-group"><kbd>')
+            print('			<div class="input-group input-group-inline input-group-sm">')
+            print('				<div class="input-group-prepend"><span class="input-group-text">')
             print(path)
-            print('</kbd></div>')
+            print('				</span></div>')
+            mykeypos=1
             if path not in ['/home', backup_path]:
-                print('<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>')
-                print('<form class="form-group" action="save_borgmatic_settings.cgi">')
-                print('<input class="btn btn-xs btn-danger" type="submit" value="Delete">')
-                print(('<input class="hidden" name="thehomedir" value="'+path+'">'))
-                print(('<input class="hidden" name="action" value="delete">'))
-                print('</form>')
-            print('</div>')
-            print('</li>')
-        print('</ul>')
-    print(('<p>Add new home directory to backup:</p>'))
-    print('<form class="form-inline" action="save_borgmatic_settings.cgi">')
-    print('<div class="form-group">')  # marker5
-    print('<div class="input-group">')  # marker6
-    print('<span class="input-group-addon">')
-    print("ENTER PATH:")
-    print('</span>')
-    print('<input class="form-control" placeholder="/home2" type="text" name="thehomedir">')
-    print(('<input class="hidden" name="action" value="add">'))
-    print('<span class="input-group-btn">')
-    print('<input class="btn btn-primary" type="submit" value="Add">')
-    print('</span>')
-    print('</div>')
-    print('</div>')
-    print('</form>')
+                print('			<form class="form modalForm13-wrap" method="post" id="modalForm13'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                print('				<button class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+                print(('			<input class="hidden" name="thehomedir" value="'+path+'">'))
+                print(('			<input class="hidden" name="action" value="delete">'))
+                print('			</form>')
+                mykeypos = mykeypos + 1
+            print('			</div>')
+    print('				</div>')
+    print('				<div class="label label-default mt-2 mb-2">Add new home directory to backup:</div>')
+    print('					<form class="form" method="post" id="modalForm14" onsubmit="return false;">')
 
-    print('</div>')  # body
-    print('</div>')  # collapse
-    print('</div>')  # default
+    print('						<div class="input-group mb-0">')
+    print('							<div class="input-group-prepend">')
+    print('								<span class="input-group-text">Enter Path</span>')
+    print('							</div>')
+    print('							<input class="form-control" placeholder="/home2" type="text" name="thehomedir">')
+    print('							<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
+    print(('						<input class="hidden" name="action" value="add">'))
+    print('						</div>')
+
+    print('					</form>')
 else:
-    print('<div class="alert alert-info"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Borg/Borgmatic not installed. Please run /opt/nDeploy/scripts/easy_borg_setup.sh to install borg </div>')
+    print('					<i class="fas fa-exclamation"></i>')
+    print('					<p>Borg/Borgmatic not installed.</p>')
+    print('					<small class="mb-1">To install run the following command run</small>')
+    print('					<kbd>/opt/nDeploy/scripts/easy_borg_setup.sh to install borg</kbd>')
 
-print('<div class="panel-footer"><small>')
-print(branding_print_footer())
-print('</small></div>')
+print('					</div>')  # card-body end
+print('				</div>')  # card end
 
-print('</div>')  # marker3
-print('</div>')  # marker2
+print('			</div>')  # col right end
+print('		</div>')  # row end
+
+print('</div>')  # main-container end
+
+# Modal
+print('		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"> ')
+print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('                     <p> </p>')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
+
 print('</body>')
 print('</html>')
