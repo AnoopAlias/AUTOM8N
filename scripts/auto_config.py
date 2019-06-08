@@ -127,11 +127,11 @@ def nginx_conf_switch(user_name, domain_name):
                                 yaml.dump(yaml_parsed_domaindata, yaml_file, default_flow_style=False)
                             yaml_file.close()
                             print('switched '+domain_name+' to native Nginx mode using '+default_phpversion)
-                print('Automatic config switch for '+domain_name+' under '+user_name+' completed')            
+                print('Automatic config switch for '+domain_name+' under '+user_name+' completed')
             else:
                 print("Error loading userdata file for domain: "+domain_name)
         else:
-            print('domain '+domain_name+' is not using PROXY.')
+            print(domain_name+' is not using PROXY upstream')
     else:
         print("Error loading domain-data file for domain: "+domain_name)
 
