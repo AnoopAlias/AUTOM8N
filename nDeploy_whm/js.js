@@ -31,8 +31,8 @@ jQuery(document).ready(function($){
         var $f = $('#modalForm3');
         var $url = "abnormal_process_detector.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myModal-nl").find('.modal-body').html(result)
+            $("#myModal-nl").modal('show');
         }});
     });
 

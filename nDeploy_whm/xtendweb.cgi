@@ -473,8 +473,8 @@ else:
     print('							</div>')
     print('						</div>')
 
-print('						</div>') # row end
-print('					</div>') # card-body end
+print('						</div>')  # row end
+print('					</div>')  # card-body end
 
 print('					<div class="card-body">')  # card-body
 # Workaround for python 2.6
@@ -575,6 +575,44 @@ print('</div>')  # main-container end
 # Modal
 print('		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"> ')
 print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
+
+# Modal with no reload
+print('		<div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog">')
+print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
+
+# Modal Large Width
+print('		<div class="modal fade" id="myModal-xl" tabindex="-1" role="dialog">')
+print('    		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
 print('      		<div class="modal-content">')
 print('        			<div class="modal-header">')
 print('          			<h4 class="modal-title">Command Output</h4>')
