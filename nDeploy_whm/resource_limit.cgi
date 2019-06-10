@@ -114,7 +114,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
         myservice = form.getvalue('unit')+".service"
 
         print('			<div class="card-header">')
-        print('				<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> Resource Usage '+myservice+'</h5>')
+        print('				<h5 class="card-title mb-0"><i class="fas fa-compress float-right"></i> Resource Usage '+myservice+'</h5>')
         print('			</div>')
         print('			<div class="card-body text-center">')  # card-body
 

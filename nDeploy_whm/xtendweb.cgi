@@ -508,7 +508,7 @@ print('				</div>')  # card end
 # System Resource Limit
 print('				<div class="card">')  # card
 print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-battery-three-quarters float-right"></i> System Resource Limit</h5>')
+print('						<h5 class="card-title mb-0"><i class="fas fa-compress float-right"></i> System Resource Limit</h5>')
 print('					</div>')
 print('					<div class="card-body">')  # card-body
 
