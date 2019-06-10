@@ -182,6 +182,11 @@ jQuery(document).ready(function($){
        //location.replace("xtendweb.live.py");
     });
 
+		$('#myModal-xl').on('hidden.bs.modal', function () {
+			location.reload()
+			 //location.replace("xtendweb.live.py");
+		});
+
     // btn animation for ajax updates
     $('.btn-ajax-sm').on('click', function() {
     	var $this = $(this);
