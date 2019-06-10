@@ -101,6 +101,9 @@ if form.getvalue('ddos'):
                 print_success('SYNPROXY DDOS Mitigation is now disabled')
             else:
                 print_error('FireHol firewall not installed')
+                print('					<small class="mb-1">To install run the following command with ansible_port set to sshd port</small>')
+                print('					<kbd>cd /opt/nDeploy/conf/nDeploy-firewall/</kbd><br>')
+                print('					<kbd>ansible-playbook -i ./hosts firewall.yml --extra-vars "ansible_port=22"</kbd><br>')
 else:
     print_forbidden()
 
