@@ -25,6 +25,18 @@ def silentremove(filename):
         pass
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+
+
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -45,14 +57,11 @@ if form.getvalue('phpversion'):
         userdata_dict = {'PHP': {form.getvalue('phpversion'): required_version_path}}
         with open(installation_path+"/conf/preferred_php.yaml", 'w') as yaml_file:
             yaml.dump(userdata_dict, yaml_file, default_flow_style=False)
-        print('<i class="fas fa-thumbs-up"></i>')
-        print('<p>Default PHP for Autoswitch set</p>')
+        print_success('Default PHP for Autoswitch Set')
     else:
-        print('<i class="fas fa-exclamation"></i>')
-        print('<p>Forbidden</p>')
+        print_forbidden()
 else:
-        print('<i class="fas fa-exclamation"></i>')
-        print('<p>Forbidden</p>')
+        print_forbidden()
 
 print('</body>')
 print('</html>')

@@ -62,6 +62,18 @@ def sighupnginx():
             os.kill(nginxpid, signal.SIGHUP)
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+
+
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -91,12 +103,10 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
             else:
                 backup_path = backup_path_pass1
             if not backup_path:
-            	print('<i class="fas fa-exclamation"></i>')
-                print('<p>ERROR: Invalid backup_path</p>')
+                print_error('Error: Invalid backup_path')
                 sys.exit(0)
             if not re.match("^[\.0-9a-zA-Z/_-]*$", backup_path):
-            	print('<i class="fas fa-exclamation"></i>')
-                print("<p>Error: Invalid char in backup_path</p>")
+                print_error("Error: Invalid char in backup_path")
                 sys.exit(0)
             yaml_parsed_backupyaml['backup_path'] = backup_path
         else:
@@ -126,14 +136,11 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
         with codecs.open('/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh', 'w', 'utf-8') as borgmatic_hook_myscript:
             borgmatic_hook_myscript.write(borgmatic_hook_script)
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
-        print('<i class="fas fa-thumbs-up"></i>')
-        print('<p>Backup Settings Updated</p>')
+        print_success('Backup Settings Updated')
     else:
-    	print('<i class="fas fa-exclamation"></i>')
-    	print('<p>Backup Config Error</p>')
+    	print_error('Backup Config Error')
 else:
-	print('<i class="fas fa-exclamation"></i>')
-	print('<p>Forbidden</p>')
+	print_forbidden()
 
 print('</body>')
 print('</html>')

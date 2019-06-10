@@ -18,6 +18,18 @@ xtendweb_installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+
+
 cgitb.enable()
 form = cgi.FieldStorage()
 
@@ -263,11 +275,9 @@ if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and 
                     subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl set-property '+myservice+' MemoryAccounting=yes"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
                     subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl daemon-reload"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
 
-    print('<i class="fas fa-thumbs-up"></i>')
-    print('<p>Resource Limits Updated</p>')
+    print_success('Resource Limits Updated')
 else:
-    print('<i class="fas fa-exclamation"></i>')
-    print('<p>Forbidden</p>')
+    print_forbidden()
 
 print('</body>')
 print('</html>')

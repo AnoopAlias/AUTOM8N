@@ -53,6 +53,10 @@ def branding_print_support():
     return brand_support
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
 cgitb.enable()
 
 form = cgi.FieldStorage()
@@ -134,8 +138,7 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
         print('					</div>')
         print('				</form>')
 else:
-        print('				<i class="fas fa-exclamation"></i>')
-        print('				<p>Forbidden</p>')
+        print_forbidden()
 
 print('					</div>')  # card-body end
 print('				</div>')  # card end
@@ -156,7 +159,6 @@ print('          				<span aria-hidden="true">&times;</span>')
 print('        				</button>')
 print('        			</div>')
 print('        			<div class="modal-body">')
-print('                     <p> </p>')
 print('        			</div>')
 print('					<div class="modal-footer">')
 print('        				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
