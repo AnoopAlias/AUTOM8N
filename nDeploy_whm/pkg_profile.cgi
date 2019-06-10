@@ -1053,33 +1053,6 @@ if form.getvalue('cpanelpkg'):
     print('								</div>')
     print('							</div>')
 
-    # settings_lock
-    settings_lock_hint = "Lock application server and security settings"
-    if settings_lock == 'enabled':
-        print_green("settings_lock", settings_lock_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
-    else:
-        print_red("settings_lock", settings_lock_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
-
     print('					</div>')  # row end
 
     print('				</div>')  # card end
