@@ -55,6 +55,18 @@ def sighupnginx():
             os.kill(nginxpid, signal.SIGHUP)
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+
+
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -69,8 +81,7 @@ if form.getvalue('ddos'):
         with open(os.devnull, 'w') as FNULL:
             subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
     except OSError:
-        print('<i class="fas fa-exclamation"></i>')
-        print('<p>iptables not compatible</p>')
+        print_error('iptables not compatible')
     else:
         if form.getvalue('ddos') == 'enable':
             if os.path.isfile('/opt/nDeploy/conf/XTENDWEB_FIREHOL_SETUP_LOCK_DO_NOT_REMOVE'):
@@ -83,19 +94,15 @@ if form.getvalue('ddos'):
                 print('<i class="fas fa-thumbs-up"></i> SYNPROXY DDOS Mitigation is now enabled')
                 print('<p>SYNPROXY DDOS Mitigation is now enabled</p>')
             else:
-                print('<i class="fas fa-exclamation"></i>')
-                print('<p>FireHol firewall not installed</p>')
+                print_error('FireHol firewall not installed')
         elif form.getvalue('ddos') == 'disable':
             if os.path.isfile('/opt/nDeploy/conf/XTENDWEB_FIREHOL_SETUP_LOCK_DO_NOT_REMOVE'):
                 subprocess.call(['systemctl', 'stop', 'firehol.service'])
-                print('<i class="fas fa-thumbs-up"></i>')
-                print('<p>SYNPROXY DDOS Mitigation is now disabled</p>')
+                print_success('SYNPROXY DDOS Mitigation is now disabled')
             else:
-                print('<i class="fas fa-exclamation"></i>')
-                print('<p>FireHol firewall not installed</p>')
+                print_error('FireHol firewall not installed')
 else:
-    print('<i class="fas fa-exclamation"></i>')
-    print('<p>Forbidden</p>')
+    print_forbidden()
 
 print('</body>')
 print('</html>')

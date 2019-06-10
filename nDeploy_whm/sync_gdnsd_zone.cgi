@@ -25,6 +25,10 @@ def silentremove(filename):
         pass
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -39,8 +43,7 @@ if form.getvalue('user'):
     print('<i class="fas fa-thumbs-up"></i>')
     print('<p>DNS zone synced</p>')
 else:
-    print('<i class="fas fa-exclamation"></i>')
-    print('<p>Forbidden</p>')
+    print_forbidden()
 
 print('</body>')
 print('</html>')

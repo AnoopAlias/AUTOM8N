@@ -30,37 +30,20 @@ def close_cpanel_liveapisock():
     sock.close()
 
 
-def branding_print_logo_name():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
-    else:
-        brand_logo = "xtendweb.png"
-    return brand_logo
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
 
 
-def branding_print_banner():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
-    else:
-        brand_name = "AUTOM8N"
-    return brand_name
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
 
 
-def branding_print_footer():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
-    else:
-        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
-    return brand_footer
+def print_error_alert(themessage):
+    print(('<div class="alert alert-danger text-left">'+themessage+'</div>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
 
 
 close_cpanel_liveapisock()
@@ -71,81 +54,38 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-
-print('<title>')
-print(branding_print_banner())
-print('</title>')
-
-print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
-print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
-print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
-print(('<script src="js.js"></script>'))
-print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')  # marker1
-print('<div class="row">')  # marker2
-print('<div class="col-md-6 col-md-offset-3">')
 
-print('<div class="logo">')
-print('<a href="xtendweb.live.py"><img border="0" src="')
-print(branding_print_logo_name())
-print('" width="48" height="48"></a>')
-print('<h4>')
-print(branding_print_banner())
-print('</h4>')
-print('</div>')
-
-print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
-print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Passenger Module Installer</li>')
-print('</ol>')
 if form.getvalue('domain') and form.getvalue('backend_category') and form.getvalue('backend_version') and form.getvalue('document_root'):
     mydomain = form.getvalue('domain')
     mybackend = form.getvalue('backend_category')
     mybackendversion = form.getvalue('backend_version')
     mydocroot = form.getvalue('document_root')
-    print(('<div class="alert alert-warning alert-domain"><strong>'+mydomain+'</strong></div>'))
-    print('<div class="panel panel-default">')  # marker3
-    print(('<div class="panel-heading"><h3 class="panel-title">Project</h3></div>'))
-    print('<div class="panel-body">')  # marker4
-    print('<div class="alert alert-success alert-btm">')  # marker5
-    print(('<span class="label label-success">'+mybackend+'</span> <span class="label label-success">'+mybackendversion+'</span>'))
-    print(('<br><br><span class="label label-success">Project root: '+mydocroot+'</span>'))
-    print('</div>')  # marker5
-    print('</div>')  # marker4
-    print('</div>')  # marker3
+    print(('<p class="text-left">Project root: <kbd>'+mydocroot+'</<kbd></p>'))
     if mybackend == 'RUBY':
         if os.path.isfile(mydocroot+'/Gemfile'):
             if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
                 install_cmd = '/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'
                 myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
-                print('<div class="panel panel-default">')
-                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
-                print('<div class="panel-body">')  # marker6
-                print(('<div class="alert alert-info alert-btm">'))
+                print('<ul class="list-unstyled text-left">')
                 while True:
                     line = myinstaller.stdout.readline()
                     if not line:
                         break
-                    print('<br>'+line)
-                print(('</div>'))
-                print(('<div class="alert alert-info alert-btm">'))  # marker8
-                print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
-                print(('cd '+mydocroot+'<br>'))
-                print(('/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'))
-                print('</div>')  # marker8
-                print('</div>')  # marker6
+                    print('<li class="mb-1">'+line+'</li>')
+                print('</ul>')
+                print('<div class="alert alert-info">')
+                print('<p>If the install failed run the following command in your shell to proceed with manual installation:<p>')
+                print('<ul class="list-unstyled text-left">')
+                print(('<li class="mb-1">cd '+mydocroot+'</li>'))
+                print(('<li class="mb-1">/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle</li>'))
+                print('</ul>')
                 print('</div>')
             else:
-                print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> bundler command not found</div>')
+                print_error('bundler command not found')
         else:
-            print('<div class="panel panel-default">')
-            print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
-            print('<div class="panel-body">')  # marker4
-            print(('<div class="alert alert-warning alert-btm">Gemfile not found for <span class="label label-warning">RUBY</span> project, specify project dependencies in <br><kbd>' + mydocroot + '/Gemfile</kbd></div>'))
-            print('</div>')  # marker4
-            print('</div>')
+            print_error_alert(('<p>Gemfile not found for <span class="badge badge-warning">RUBY</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>' + mydocroot + '/Gemfile</kbd></li></ul>'))
     elif mybackend == 'NODEJS':
         if os.path.isfile(mydocroot+'/package.json'):
             if os.path.isfile('/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm'):
@@ -153,105 +93,75 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 my_env = os.environ.copy()
                 my_env["PATH"] = "/usr/local/nvm/versions/node/"+mybackendversion+"/bin:"+my_env["PATH"]
                 myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=my_env, shell=True, universal_newlines=True)
-                print('<div class="panel panel-default">')
-                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
-                print('<div class="panel-body">')  # marker6
-                print(('<div class="alert alert-info alert-btm">'))
+                print('<ul class="list-unstyled text-left">')
                 while True:
                     line = myinstaller.stdout.readline()
                     if not line:
                         break
-                    print('<br>'+line)
-                print(('</div>'))
-                print(('<div class="alert alert-info alert-btm">'))  # marker8
-                print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
-                print(('export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"<br>'))
-                print(('cd '+mydocroot))
-                print(('<br>npm install --production'))
-                print('</div>')  # marker8
-                print('</div>')  # marker6
+                    print('<li class="mb-1">'+line+'</li>')
+                print('</ul>')
+                print('<div class="alert alert-info">')
+                print('<p>If the install failed run the following command in your shell to proceed with manual installation:<p>')
+                print('<ul class="list list-unstyled mb-0">')
+                print(('<li>export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"</li>'))
+                print(('<li>cd '+mydocroot+'<li>'))
+                print(('<li>npm install --production</li>'))
+                print('</ul>')
                 print('</div>')
             else:
-                print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> npm command not found</div>')
+                print_error('npm command not found')
         else:
-            print('<div class="panel panel-default">')
-            print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
-            print('<div class="panel-body">')  # marker4
-            print(('<div class="alert alert-warning alert-btm">package.json not found for <span class="label label-warning">NODEJS</span> project, specify project dependencies in <br><kbd>'+mydocroot+'/package.json</kbd></div>'))
-            print('</div>')  # marker4
-            print('</div>')
+            print_error_alert(('<p>package.json not found for <span class="badge badge-warning">NODEJS</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:<li></li><kbd>'+mydocroot+'/package.json</kbd></li></ul>'))
     elif mybackend == 'PYTHON':
         if os.path.isfile(mydocroot+'/requirements.txt'):
             if os.path.isfile('/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip'):
                 install_cmd = '/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip install --user -r requirements.txt'
                 myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
-                print('<div class="panel panel-default">')
-                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
-                print('<div class="panel-body">')  # marker6
-                print(('<div class="alert alert-info alert-btm">'))
+                print('<ul class="list-unstyled text-left">')
                 while True:
                     line = myinstaller.stdout.readline()
                     if not line:
                         break
-                    print('<br>'+line)
-                print(('</div>'))
-                print(('<div class="alert alert-info alert-btm">'))  # marker8
-                print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
-                print(('export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"<br>'))
-                print(('cd '+mydocroot))
-                print(('<br>pip install --user -r requirements.txt'))
-                print('</div>')  # marker8
-                print('</div>')  # marker6
+                    print('<li class="mb-1">'+line+'</li>')
+                print('</ul>')
+                print('<div class="alert alert-info">')
+                print('<p>If the install failed run the following command in your shell to proceed with manual installation:</p>')
+                print('<ul class="list list-unstyled mb-0">')
+                print(('<li>export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"</li>'))
+                print(('<li>cd '+mydocroot+'</li>'))
+                print('<li>pip install --user -r requirements.txt</li>')
+                print('</ul>')
                 print('</div>')
             else:
-                print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> pip command not found</div>')
+                print_error('pip command not found')
         else:
-            print('<div class="panel panel-default">')
-            print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
-            print('<div class="panel-body">')  # marker4
-            print(('<div class="alert alert-warning alert-btm">requirements.txt not found for <span class="label label-warning">PYTHON</span> project, specify project dependencies in <br><kbd>'+mydocroot+'/requirements.txt</kbd></div>'))
-            print('</div>')  # marker4
-            print('</div>')
+            print_error_alert(('<p>requirements.txt not found for <span class="badge badge-warning">PYTHON</span> project</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/requirements.txt</kbd><li></ul>'))
     elif mybackend == 'PHP':
         if os.path.isfile(mydocroot+'/composer.json'):
             if os.path.isfile('/opt/cpanel/composer/bin/composer'):
                 install_cmd = '/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install'
                 myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
-                print('<div class="panel panel-default">')
-                print(('<div class="panel-heading"><h3 class="panel-title">Command Output:</h3></div>'))
-                print('<div class="panel-body">')  # marker6
-                print(('<div class="alert alert-info alert-btm">'))
+                print('<ul class="list-unstyled text-left">')
                 while True:
                     line = myinstaller.stdout.readline()
                     if not line:
                         break
                     print('<br>'+line)
-                print(('</div>'))
-                print(('<div class="alert alert-info alert-btm">'))  # marker8
-                print(('If the install failed run the following command in your shell to proceed with manual installation:<br>'))
-                print(('export PATH="$PATH:/opt/cpanel/composer/bin"<br>'))
-                print(('cd '+mydocroot))
-                print(('<br>/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install'))
-                print('</div>')  # marker8
-                print('</div>')  # marker6
+                print('</ul>')
+                print('<div class="alert alert-info">')
+                print('<p>If the install failed run the following command in your shell to proceed with manual installation:</p>')
+                print('<ul class="list list-unstyled mb-0">')
+                print(('<li>export PATH="$PATH:/opt/cpanel/composer/bin"</li>'))
+                print(('<li>cd '+mydocroot+'</li>'))
+                print(('<li>/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install</li>'))
+                print('</ul>')
                 print('</div>')
             else:
-                print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> composer command not found</div>')
+                print_error('composer command not found')
         else:
-            print('<div class="panel panel-default">')
-            print(('<div class="panel-heading"><h3 class="panel-title">Installer Error</h3></div>'))
-            print('<div class="panel-body">')  # marker4
-            print(('<div class="alert alert-warning alert-btm">composer.json not found for <span class="label label-warning">PHP</span> project, specify project dependencies in <br><kbd>'+mydocroot+'/composer.json</kbd></div>'))
-            print('</div>')  # marker4
-            print('</div>')
+            print_error_alert(('<p>composer.json not found for <span class="badge badge-warning">PHP</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/composer.json</kbd></li></ul>'))
 else:
-    print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
+    print_forbidden()
 
-print('<div class="panel-footer"><small>')
-print(branding_print_footer())
-print('</small></div>')
-
-print('</div>')  # marker3
-print('</div>')  # marker2
 print('</body>')
 print('</html>')

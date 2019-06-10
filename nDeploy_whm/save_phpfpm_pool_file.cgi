@@ -19,6 +19,18 @@ app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+
+
 cgitb.enable()
 
 form = cgi.FieldStorage()
@@ -47,11 +59,9 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
                     subprocess.call("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
                 else:
                     subprocess.call('service ndeploy_backends restart', shell=True)
-                print('<i class="fas fa-thumbs-up"></i>')
-                print('<p>PHP-FPM pool settings updated</p>')
+                print_success('PHP-FPM pool settings updated')
         else:
-        	print('<i class="fas fa-exclamation"></i>')
-        	print('<p>Forbidden</p>')
+        	print_forbidden()
     elif form.getvalue('action') == 'delete':
         if os.path.isfile(myphpini):
             config = configparser.ConfigParser()
@@ -65,11 +75,9 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
                 subprocess.call("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
             else:
                 subprocess.call('service ndeploy_backends restart', shell=True)
-            print('<i class="fas fa-thumbs-up"></i>')
-            print('<p>PHP-FPM pool settings updated</p>')
+            print_success('PHP-FPM pool settings updated')
 else:
-	print('<i class="fas fa-exclamation"></i>')
-	print('<p>Forbidden</p>')
+	print_forbidden()
 
 print('</body>')
 print('</html>')

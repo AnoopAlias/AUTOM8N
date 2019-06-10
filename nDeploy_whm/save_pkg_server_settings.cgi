@@ -21,7 +21,15 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 
 
 def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i>'))
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
 
 
 cgitb.enable()
@@ -50,88 +58,77 @@ if form.getvalue('cpanelpkg'):
         set_expire_static = form.getvalue('set_expire_static')
         yaml_parsed_profileyaml['set_expire_static'] = set_expire_static
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::set_expire_static')
+        print_error('Error: Forbidden::set_expire_static')
         sys.exit(0)
     # settings_lock
     if 'settings_lock' in form.keys():
         settings_lock = form.getvalue('settings_lock')
         yaml_parsed_profileyaml['settings_lock'] = settings_lock
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::settings_lock')
+        print_error('Error: Forbidden::settings_lock')
         sys.exit(0)
     # phpmaxchildren
     if 'phpmaxchildren' in form.keys():
         phpmaxchildren = form.getvalue('phpmaxchildren')
         yaml_parsed_profileyaml['phpmaxchildren'] = phpmaxchildren
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::phpmaxchildren')
+        print_error('Error: Forbidden::phpmaxchildren')
         sys.exit(0)
     # mod_security
     if 'mod_security' in form.keys():
         mod_security = form.getvalue('mod_security')
         yaml_parsed_profileyaml['mod_security'] = mod_security
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::mod_security')
+        print_error('Error: Forbidden::mod_security')
         sys.exit(0)
     # autoindex
     if 'autoindex' in form.keys():
         autoindex = form.getvalue('autoindex')
         yaml_parsed_profileyaml['autoindex'] = autoindex
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::autoindex')
+        print_error('Error: Forbidden::autoindex')
         sys.exit(0)
     # ssl_offload
     if 'ssl_offload' in form.keys():
         ssl_offload = form.getvalue('ssl_offload')
         yaml_parsed_profileyaml['ssl_offload'] = ssl_offload
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::ssl_offload')
+        print_error('Error: Forbidden::ssl_offload')
         sys.exit(0)
     # pagespeed
     if 'pagespeed' in form.keys():
         pagespeed = form.getvalue('pagespeed')
         yaml_parsed_profileyaml['pagespeed'] = pagespeed
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::pagespeed')
+        print_error('Error: Forbidden::pagespeed')
         sys.exit(0)
     # pagespeed_filter
     if 'pagespeed_filter' in form.keys():
         pagespeed_filter = form.getvalue('pagespeed_filter')
         yaml_parsed_profileyaml['pagespeed_filter'] = pagespeed_filter
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::pagespeed_filter')
+        print_error('Error: Forbidden::pagespeed_filter')
         sys.exit(0)
     # brotli
     if 'brotli' in form.keys():
         brotli = form.getvalue('brotli')
         yaml_parsed_profileyaml['brotli'] = brotli
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::brotli')
+        print_error('Error: Forbidden::brotli')
         sys.exit(0)
     # gzip
     if 'gzip' in form.keys():
         gzip = form.getvalue('gzip')
         yaml_parsed_profileyaml['gzip'] = gzip
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::gzip')
+        print_error('Error: Forbidden::gzip')
         sys.exit(0)
     # http2
     if 'http2' in form.keys():
         http2 = form.getvalue('http2')
         yaml_parsed_profileyaml['http2'] = http2
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::http2')
+        print_error('Error: Forbidden::http2')
 
         sys.exit(0)
     # access_log
@@ -139,111 +136,98 @@ if form.getvalue('cpanelpkg'):
         access_log = form.getvalue('access_log')
         yaml_parsed_profileyaml['access_log'] = access_log
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::access_log')
+        print_error('Error: Forbidden::access_log')
         sys.exit(0)
     # open_file_cache
     if 'open_file_cache' in form.keys():
         open_file_cache = form.getvalue('open_file_cache')
         yaml_parsed_profileyaml['open_file_cache'] = open_file_cache
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::open_file_cache')
+        print_error('Error: Forbidden::open_file_cache')
         sys.exit(0)
     # clickjacking_protect
     if 'clickjacking_protect' in form.keys():
         clickjacking_protect = form.getvalue('clickjacking_protect')
         yaml_parsed_profileyaml['clickjacking_protect'] = clickjacking_protect
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::clickjacking_protect')
+        print_error('Error: Forbidden::clickjacking_protect')
         sys.exit(0)
     # disable_contenttype_sniffing
     if 'disable_contenttype_sniffing' in form.keys():
         disable_contenttype_sniffing = form.getvalue('disable_contenttype_sniffing')
         yaml_parsed_profileyaml['disable_contenttype_sniffing'] = disable_contenttype_sniffing
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::disable_contenttype_sniffing')
+        print_error('Error: Forbidden::disable_contenttype_sniffing')
         sys.exit(0)
     # xss_filter
     if 'xss_filter' in form.keys():
         xss_filter = form.getvalue('xss_filter')
         yaml_parsed_profileyaml['xss_filter'] = xss_filter
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::xss_filter')
+        print_error('Error: Forbidden::xss_filter')
         sys.exit(0)
     # hsts
     if 'hsts' in form.keys():
         hsts = form.getvalue('hsts')
         yaml_parsed_profileyaml['hsts'] = hsts
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::hsts')
+        print_error('Error: Forbidden::hsts')
         sys.exit(0)
     # dos_mitigate
     if 'dos_mitigate' in form.keys():
         dos_mitigate = form.getvalue('dos_mitigate')
         yaml_parsed_profileyaml['dos_mitigate'] = dos_mitigate
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::dos_mitigate')
+        print_error('Error: Forbidden::dos_mitigate')
         sys.exit(0)
     # test_cookie
     if 'test_cookie' in form.keys():
         test_cookie = form.getvalue('test_cookie')
         yaml_parsed_profileyaml['test_cookie'] = test_cookie
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::test_cookie')
+        print_error('Error: Forbidden::test_cookie')
         sys.exit(0)
     # symlink_protection
     if 'symlink_protection' in form.keys():
         symlink_protection = form.getvalue('symlink_protection')
         yaml_parsed_profileyaml['symlink_protection'] = symlink_protection
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::symlink_protection')
+        print_error('Error: Forbidden::symlink_protection')
         sys.exit(0)
     # redirect_to_ssl
     if 'redirect_to_ssl' in form.keys():
         redirect_to_ssl = form.getvalue('redirect_to_ssl')
         yaml_parsed_profileyaml['redirect_to_ssl'] = redirect_to_ssl
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::redirect_to_ssl')
+        print_error('Error: Forbidden::redirect_to_ssl')
         sys.exit(0)
     # proxy_to_master
     if 'proxy_to_master' in form.keys():
         proxy_to_master = form.getvalue('proxy_to_master')
         yaml_parsed_profileyaml['proxy_to_master'] = proxy_to_master
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::proxy_to_master')
+        print_error('Error: Forbidden::proxy_to_master')
         sys.exit(0)
     # redirect_aliases
     if 'redirect_aliases' in form.keys():
         redirect_aliases = form.getvalue('redirect_aliases')
         yaml_parsed_profileyaml['redirect_aliases'] = redirect_aliases
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::redirect_aliases')
+        print_error('Error: Forbidden::redirect_aliases')
         sys.exit(0)
     # wwwredirect
     if 'wwwredirect' in form.keys():
         wwwredirect = form.getvalue('wwwredirect')
         yaml_parsed_profileyaml['wwwredirect'] = wwwredirect
     else:
-        print('ERROR: Forbidden::wwwredirect')
+        print_error('Error: Forbidden::wwwredirect')
         sys.exit(0)
     # redirectstatus
     if 'redirectstatus' in form.keys():
         redirectstatus = form.getvalue('redirectstatus')
         yaml_parsed_profileyaml['redirectstatus'] = redirectstatus
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::redirectstatus')
+        print_error('Error: Forbidden::redirectstatus')
         sys.exit(0)
     # redirecturl
     if redirectstatus != "none":
@@ -258,9 +242,8 @@ if form.getvalue('cpanelpkg'):
                     r'(?::\d+)?'
                     r'(?:/?|[/?]\S+)$', re.IGNORECASE)
                 it_matches = regex.match(redirecturl)
-                print_forbidden()
                 if not it_matches:
-                    print('ERROR: Invalid Redirect URL. The URL must be something like https://google.com ')
+                    print_error('Error: Invalid Redirect URL. The URL must be something like https://google.com')
                     sys.exit(0)
                 else:
                     yaml_parsed_profileyaml['redirecturl'] = redirecturl
@@ -271,16 +254,13 @@ if form.getvalue('cpanelpkg'):
         append_requesturi = form.getvalue('append_requesturi')
         yaml_parsed_profileyaml['append_requesturi'] = append_requesturi
     else:
-        print_forbidden()
-        print('ERROR: Forbidden::append_requesturi')
+        print_error('Error: Forbidden::append_requesturi')
         sys.exit(0)
     with open(pkgdomaindata, 'w') as yaml_file:
         yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-    print('<i class="fas fa-thumbs-up"></i>')
-    print('<p>Server Package Settings Saved</p>')
+    print_success('Server Package Settings Saved')
 else:
-    print('<i class="fas fa-exclamation"></i>')
-    print('<p>Forbidden</p>')
+    print_forbidden()
 
 print('</body>')
 print('</html>')

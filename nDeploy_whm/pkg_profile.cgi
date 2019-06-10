@@ -69,6 +69,10 @@ def print_forbidden():
     print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>Forbidden</p></div></div>'))
 
 
+def print_error(themessage):
+    print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>'+themessage+'</p></div></div>'))
+
+
 cgitb.enable()
 
 form = cgi.FieldStorage()
@@ -174,15 +178,13 @@ if form.getvalue('cpanelpkg'):
         apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
         apptemplate_description = apptemplate_dict.get(apptemplate_code)
     else:
-        print('<i class="fas fa-exclamation"></i>')
-        print('<p>ERROR: app template data file error</p>')
+        print_error('Error: app template data file error')
         sys.exit(0)
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     else:
-        print('<i class="fas fa-exclamation"></i>')
-        print('<p>ERROR: backend config file error</p>')
+        print_error('Error: backend config file error')
         sys.exit(0)
 
     # Ok we are done with getting the settings, now lets present it to the user
@@ -1085,7 +1087,6 @@ print('          				<span aria-hidden="true">&times;</span>')
 print('        				</button>')
 print('        			</div>')
 print('        			<div class="modal-body">')
-print('                     <p> </p>')
 print('        			</div>')
 print('					<div class="modal-footer">')
 print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')

@@ -28,6 +28,18 @@ def silentremove(filename):
         pass
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+
+
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -65,8 +77,7 @@ for myprocess in psutil.process_iter():
             print('EXE: <kbd>'+myexe+'</kbd>')
             print('<hr>')
 if not malware:
-	print('<i class="fas fa-exclamation"></i>')
-	print('<p class="mb-0">No suspicious process found</p>')
+	print_success('No suspicious process found')
 
 print('</body>')
 print('</html>')

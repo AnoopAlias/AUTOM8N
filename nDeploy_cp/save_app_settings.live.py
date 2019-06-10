@@ -1,4 +1,5 @@
 #!/usr/bin/python
+
 import os
 import socket
 import yaml
@@ -30,37 +31,16 @@ def close_cpanel_liveapisock():
     sock.close()
 
 
-def branding_print_logo_name():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
-    else:
-        brand_logo = "xtendweb.png"
-    return brand_logo
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
 
 
-def branding_print_banner():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
-    else:
-        brand_name = "AUTOM8N"
-    return brand_name
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
 
 
-def branding_print_footer():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
-    else:
-        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
-    return brand_footer
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
 
 
 close_cpanel_liveapisock()
@@ -71,35 +51,9 @@ print('Content-Type: text/html')
 print('')
 print('<html>')
 print('<head>')
-
-print('<title>')
-print(branding_print_banner())
-print('</title>')
-
-print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
-print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
-print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
-print(('<script src="js.js"></script>'))
-print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
 print('<body>')
-print('<div id="main-container" class="container text-center">')  # marker1
-print('<div class="row">')  # marker2
-print('<div class="col-md-6 col-md-offset-3">')  # marker3
 
-print('<div class="logo">')
-print('<a href="xtendweb.live.py"><img border="0" src="')
-print(branding_print_logo_name())
-print('" width="48" height="48"></a>')
-print('<h4>')
-print(branding_print_banner())
-print('</h4>')
-print('</div>')
-
-print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
-print('<li><a href="xtendweb.live.py">Select Domain</a></li><li class="active">Application Settings</li>')
-print('</ol>')
 if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backendversion') and form.getvalue('apptemplate'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
@@ -114,7 +68,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         mybackend_dict = backend_data_yaml_parsed.get(mybackend)
         mybackendpath = mybackend_dict.get(mybackendversion)
     else:
-        print('ERROR : backend data file i/o error')
+    	print_error('Error: backend data file i/o error')
         sys.exit(0)
     if os.path.isfile(profileyaml):
         # Get all config settings from the domains domain-data config file
@@ -125,42 +79,29 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         yaml_parsed_profileyaml['backend_path'] = mybackendpath
         yaml_parsed_profileyaml['backend_version'] = mybackendversion
         yaml_parsed_profileyaml['apptemplate_code'] = myapptemplate
-        print('<div class="panel panel-default">')
-        print(('<div class="panel-heading"><h3 class="panel-title">Domain: <strong>'+mydomain+'</strong></h3></div>'))
-        print('<div class="panel-body">')
+
         # Lets deal with settings that are mutually exclusive
         if 'redis' in myapptemplate:
             yaml_parsed_profileyaml['pagespeed'] = 'disabled'
             yaml_parsed_profileyaml['mod_security'] = 'disabled'
-            print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Turned off pagespeed and mod_security options as they are incompatible with Full Page cache. The cache will not work if you turn on these options</div>')
+            print('<div class="alert alert-danger">Turned off pagespeed and mod_security options as they are incompatible with Full Page cache. The cache will not work if you turn on these options</div>')
         if '5029' in myapptemplate:
             yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
             yaml_parsed_profileyaml['gzip'] = 'disabled'
             yaml_parsed_profileyaml['brotli'] = 'disabled'
-            print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Turned off gzip, brotli and set_expire_static options as they are incompatible with Wordpress Total Cache generated nginx.conf. The config will not work if you turn on these options</div>')
+            print('<div class="alert alert-danger">Turned off gzip, brotli and set_expire_static options as they are incompatible with Wordpress Total Cache generated nginx.conf. The config will not work if you turn on these options</div>')
         if 'noextra' in myapptemplate:
             yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
             yaml_parsed_profileyaml['gzip'] = 'disabled'
             yaml_parsed_profileyaml['brotli'] = 'disabled'
-            print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>Turned off gzip, brotli and set_expire_static options as they are incompatible with the template generated nginx.conf. The config will not work if you turn on these options</div>')
+            print('<div class="alert alert-danger">Turned off gzip, brotli and set_expire_static options as they are incompatible with the template generated nginx.conf. The config will not work if you turn on these options</div>')
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        print('<div class="icon-box">')
-        print('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Application Settings saved')
-        print('</div>')
-        print('</div>')
-        print('</div>')
+        print_success('Application Settings Saved')
     else:
-        print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> domain-data file i/o error</div>')
+    	print_error('domain-data file i/o error')
 else:
-    print('<div class="alert alert-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Forbidden</div>')
+    print_forbidden()
 
-print('<div class="panel-footer"><small>')
-print(branding_print_footer())
-print('</small></div>')
-
-print('</div>')
-print('</div>')
-print('</div>')
 print('</body>')
 print('</html>')

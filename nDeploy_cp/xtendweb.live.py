@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 import os
 import socket
 import yaml
@@ -55,15 +54,15 @@ def branding_print_banner():
     return brand_name
 
 
-def branding_print_footer():
+def branding_print_support():
     "Branding support"
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_footer = '<a target="_blank" href="https://autom8n.com">A U T O M 8 N</a>'
-    return brand_footer
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+    return brand_support
 
 
 close_cpanel_liveapisock()
@@ -100,89 +99,153 @@ with open(TEMPLATE_FILE, 'r') as templatefile_data_stream:
     yaml_parsed_templatefile = yaml.safe_load(templatefile_data_stream)
 settings_lock = yaml_parsed_templatefile.get('settings_lock', 'disabled')
 
-print('Content-Type: text/html')
+
+# HTML start here
+print(('Content-Type: text/html'))
 print('')
-print('<html>')
-print('<head>')
+print(('<html>'))
+print(('<head>'))
 
-print('<title>')
+print(('<title>'))
 print(branding_print_banner())
-print('</title>')
+print(('</title>'))
 
-print(('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'))
-print(('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" crossorigin="anonymous"></script>'))
-print(('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'))
+print(('<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
+print(('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
+print(('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">'))
+print(('<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
+print(('<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">'))
+print(('<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">'))
 print(('<script src="js.js"></script>'))
 print(('<link rel="stylesheet" href="styles.css">'))
 print('</head>')
+
 print('<body>')
-print('<div id="main-container" class="container text-center">')  # marker1
-print('<div class="row">')  # marker2
-print('<div class="col-md-6 col-md-offset-3">')  # marker3
 
-print('<div class="logo">')
-print('<a href="xtendweb.live.py"><img border="0" src="')
-print(branding_print_logo_name())
-print('" width="48" height="48"></a>')
-print('<h4>')
-print(branding_print_banner())
-print('</h4>')
-print('</div>')
+print('<header id="main-header">')
 
-print('<ol class="breadcrumb">')
-print('<li><a href="xtendweb.live.py"><span class="glyphicon glyphicon-repeat"></span></a></li>')
-print('<li class="active">Configure Nginx</li>')
-print('</ol>')
-# Next section start here
-print('<a id="toggle-accordion" href="javascript:;">expand +</a>')
-print('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')  # accordion
-print('<div class="panel panel-default">')  # default
-print(('<div class="panel-heading" role="tab" id="headingOne"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">AUTO SWITCH TO NGINX</a></h3></div>'))  # heading
-print('<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">')  # collapse
-print('<div class="panel-body">')  # body
+print(branding_print_support())
+print('		<div class="logo">')
+print('			<h3>')
+print('				<a href="xtendweb.live.py"><img border="0" src="')
+print(					branding_print_logo_name())
+print('					" width="48" height="48"></a>')
+print(					branding_print_banner())
+print('			</h4>')
+print('		</div>')
+
+print('</header>')
+
+print('<div id="main-container" class="container">')    # main container
+
+print('		<nav aria-label="breadcrumb">')
+print('			<ol class="breadcrumb">')
+print('				<li class="breadcrumb-item"><a href="xtendweb.live.py"><i class="fas fa-redo"></i></a></li>')
+print('				<li class="breadcrumb-item active">Config</li>')
+print('			</ol>')
+print('		</nav>')
+
+print('		<div class="row justify-content-lg-center">')
+print('			<div class="col-lg-6">')
+
+# Auto Switch To Nginx
+print('				<div class="card">')  # card
+print('					<div class="card-header">')
+print('						<h5 class="card-title mb-0"><i class="fas fa-cogs float-right"></i> Auto/Manual Configuration</h5>')
+print('					</div>')
+print('					<div class="card-body">')  # card-body
+
 if settings_lock == 'enabled':
-    print(('<div class="alert alert-info alert-top">Application Server settings are locked by the administrator</div>'))
+    print(('				<div class="alert alert-info">Application Server settings are locked by the administrator</div>'))
 else:
-    print('<form class="form-group" action="autoswitch.live.py">')
-    print('<input class="btn btn-primary" type="submit" value="AUTO SWITCH TO NGINX">')
-    print(('<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
-    print('</form>')
-print('</div>')  # body
-print('</div>')  # panel-collapse
-print('</div>')  # panel
-# Next section start here
-print('<div class="panel panel-default">')  # default
-print(('<div class="panel-heading" role="tab" id="headingTwo"><h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">MANUALLY CONFIGURE NGINX STACK</a></h3></div>'))  # heading
-print('<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">')  # collapse
-print('<div class="panel-body">')  # body
-print('<form class="form-inline" action="app_settings.live.py" method="post">')
-print('<select name="domain">')
-print(('<option value="'+main_domain+'">'+main_domain+'</option>'))
+    print('					<form class="form mb-4" method="post" id="modalForm9" onsubmit="return false;">')
+    print('						<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Auto Switch To Nginx</button>')
+    print(('					<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
+    print('					</form>')
+
+print('						<form class="form" action="app_settings.live.py" method="get">')
+print('							<div class="input-group mb-0">')
+print('								<select name="domain" class="custom-select">')
+print(('								<option value="'+main_domain+'">'+main_domain+'</option>'))
 for domain_in_subdomains in sub_domains:
     if domain_in_subdomains not in addon_domains_dict.values():
         if domain_in_subdomains.startswith("*"):
             wildcard_domain = "_wildcard_."+domain_in_subdomains.replace('*.', '')
-            print(('<option value="'+wildcard_domain+'">'+domain_in_subdomains+'</option>'))
+            print(('					<option value="'+wildcard_domain+'">'+domain_in_subdomains+'</option>'))
         else:
-            print(('<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
+            print(('					<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
 for the_addon_domain in addon_domains_dict.keys():
-    print(('<option value="'+addon_domains_dict.get(the_addon_domain)+'">'+the_addon_domain+'</option>'))
-print('</select>')
-print('<input class="btn btn-primary" type="submit" value="CONFIGURE">')
-print('</form>')
-print('</div>')  # body
-print('</div>')  # panel-collapse
-print('</div>')  # panel
+    print(('							<option value="'+addon_domains_dict.get(the_addon_domain)+'">'+the_addon_domain+'</option>'))
+print('								</select>')
+print('								<div class="input-group-append">')
+print('									<button class="btn btn-outline-primary" type="submit">Configure</button>')
+print('								</div>')
+print('							</div>')
+print('						</form>')
 
-print('</div>')  # accordion
+print('					</div>')  # card-body end
+print('				</div>')  # card end
+print('			</div>')  # col end
+print('		</div>')  # row end
 
+print('</div>')  # main-container end
 
-print('<div class="panel-footer"><small>')
-print(branding_print_footer())
-print('</small></div>')
+# Modal
+print('		<div class="modal fade" id="myModal" tabindex="-1" role="dialog">')
+print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
 
-print('</div>')  # marker3
-print('</div>')  # marker2
-print('</div>')  # # marker1
+# Modal with no reload
+print('		<div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog">')
+print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
+
+# Modal Large Width
+print('		<div class="modal fade" id="myModal-xl" tabindex="-1" role="dialog">')
+print('    		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
+
 print('</body>')
 print('</html>')

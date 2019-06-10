@@ -57,6 +57,18 @@ def sighupnginx():
             os.kill(nginxpid, signal.SIGHUP)
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+
+
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -74,16 +86,15 @@ if form.getvalue('ddos'):
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.disabled /etc/nginx/conf.d/dos_mitigate_systemwide.enabled && nginx -s reload\"'
             run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print('<i class="fas fa-thumbs-up"></i>')
-        print('<p>Nginx DDOS Mitigation is now enabled</p>')
+        print_success('Nginx DDOS Mitigation is now enabled')
         if os.path.isfile(cluster_config_file):
-            print('<kbd>')
+            print('<ul class="list-unstyled text-left">')
             while True:
                 line = run_cmd.stdout.readline()
                 if not line:
                         break
-                print(line)
-            print('</kbd>')
+                print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
+            print('</ul>')
     elif form.getvalue('ddos') == 'disable':
         os.rename("/etc/nginx/conf.d/dos_mitigate_systemwide.enabled", "/etc/nginx/conf.d/dos_mitigate_systemwide.disabled")
         sighupnginx()
@@ -91,19 +102,17 @@ if form.getvalue('ddos'):
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.enabled /etc/nginx/conf.d/dos_mitigate_systemwide.disabled && nginx -s reload\"'
             run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print('<i class="fas fa-thumbs-up"></i>')
-        print('<p>Nginx DDOS Mitigation is now disabled</p>')
+        print_success('Nginx DDOS Mitigation is now disabled')
         if os.path.isfile(cluster_config_file):
-            print('<kbd>')
+            print('<ul class="list-unstyled text-left">')
             while True:
                 line = run_cmd.stdout.readline()
                 if not line:
                         break
-                print(line)
-            print('</kbd>')
+                print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
+            print('</ul>')
 else:
-		print('<i class="fas fa-exclamation"></i>')
-		print('<p>Forbidden</p>')
+		print_forbidden()
 
 print('</body>')
 print('</html>')

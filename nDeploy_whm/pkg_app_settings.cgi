@@ -52,6 +52,14 @@ def branding_print_support():
     return brand_support
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
 cgitb.enable()
 
 form = cgi.FieldStorage()
@@ -136,7 +144,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             if apptemplate_code in apptemplate_dict.keys():
                 apptemplate_description = apptemplate_dict.get(apptemplate_code)
         else:
-            print('			<div class="alert alert-danger">ERROR: app template data file error</div>')
+            print_error('ERROR: app template data file error')
             sys.exit(0)
 
         # Ok we are done with getting the settings,now lets present it to the user
@@ -200,8 +208,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         print('					<button class="btn btn-outline-primary btn-block" type="submit">Update Package</button>')
         print('				</form>')
 else:
-    print('					<i class="fas fa-exclamation"></i>')
-    print('					<p>Forbidden</p>')
+    print_forbidden()
 
 print('					</div>')  # card-body end
 print('				</div>')  # card end
@@ -222,7 +229,6 @@ print('          				<span aria-hidden="true">&times;</span>')
 print('        				</button>')
 print('        			</div>')
 print('        			<div class="modal-body">')
-print('                     <p> </p>')
 print('        			</div>')
 print('					<div class="modal-footer">')
 print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')

@@ -19,6 +19,18 @@ app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+
+
 cgitb.enable()
 
 form = cgi.FieldStorage()
@@ -46,8 +58,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend') and form.getvalue('ba
         mybackend_dict = backend_data_yaml_parsed.get(mybackend)
         mybackendpath = mybackend_dict.get(mybackendversion)
     else:
-        print('<i class="fas fa-exclamation"></i>')
-        print('<p>ERROR: backend data file i/o error</p>')
+        print_error('Error: backend data file i/o error')
         sys.exit(0)
     if os.path.isfile(pkgdomaindata):
         # Get all config settings from the domains domain-data config file
@@ -70,11 +81,9 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend') and form.getvalue('ba
             print('<div class="alert alert-danger"><i class="fas fa-exclamation"></i> Turned off gzip, brotli and set_expire_static options as they are incompatible with Wordpress Total Cache generated nginx.conf. The config will not work if you turn on these options</div>')
         with open(pkgdomaindata, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        print('<i class="fas fa-thumbs-up"></i>')
-        print('<p>Upstream settings Saved</p>')
+        print_success('Upstream settings Saved')
 else:
-    print('<i class="fas fa-exclamation"></i>')
-    print('<p>Forbidden</p>')
+    print_forbidden()
 
 print('</body>')
 print('</html>')

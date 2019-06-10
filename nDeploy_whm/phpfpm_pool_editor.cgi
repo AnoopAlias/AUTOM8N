@@ -65,6 +65,10 @@ def print_red(theoption, hint):
     print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
 print('Content-Type: text/html')
 print('')
 print('<html>')
@@ -184,8 +188,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('				<small>WARNING: Editing pool config with invalid settings can bring down your PHP application server. Edit at your own risk</small>')
         print('			</div>')
 else:
-        print('			<i class="fas fa-exclamation"></i>')
-        print('			<p>Forbidden</p>')
+        print_forbidden()
 
 print('				</div>')  # card end
 
@@ -205,7 +208,6 @@ print('          				<span aria-hidden="true">&times;</span>')
 print('        				</button>')
 print('        			</div>')
 print('        			<div class="modal-body">')
-print('                     <p> </p>')
 print('        			</div>')
 print('					<div class="modal-footer">')
 print('        				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')

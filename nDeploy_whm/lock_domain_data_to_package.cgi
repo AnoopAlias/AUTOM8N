@@ -25,6 +25,18 @@ def silentremove(filename):
         pass
 
 
+def print_forbidden():
+    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+
+
+def print_error(themessage):
+    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+
+
+def print_success(themessage):
+    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+
+
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -37,15 +49,12 @@ print('<body>')
 if form.getvalue('package_lock'):
     if form.getvalue('package_lock') == 'enabled':
         subprocess.call('touch '+installation_path+'/conf/lock_domaindata_to_package', shell=True)
-        print('<i class="fas fa-thumbs-up"></i>')
-        print('<p>Nginx config will change with package upgrade/downgrade</p>')
+        print_success('Nginx config will change with package upgrade/downgrade')
     elif form.getvalue('package_lock') == 'disabled':
         silentremove(installation_path+'/conf/lock_domaindata_to_package')
-        print('<i class="fas fa-thumbs-up"></i>')
-        print('<p>cPanel set Nginx setting will be preserved in package changes</p>')
+        print_success('cPanel set Nginx setting will be preserved in package changes')
 else:
-        print('<i class="fas fa-exclamation"></i>')
-        print('<p>Forbidden</p>')
+        print_forbidden()
 
 print('</body>')
 print('</html>')
