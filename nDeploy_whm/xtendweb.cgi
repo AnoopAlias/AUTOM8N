@@ -190,7 +190,7 @@ print('								</form>')
 print('							</div>')
 
 # Process Tracker
-print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-bug"></i> Abnormal Process</div></div>')
+print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-bug"></i> Detect Abnormal Process</div></div>')
 print('							<div class="col-sm-6">')
 
 print('								<form class="form" id="modalForm3" onsubmit="return false;">')
