@@ -205,15 +205,15 @@ if form.getvalue('cpanelpkg'):
             print('					<div class="col-md-6"><div class="alert alert-success">Nginx</div></div>')
 
             # Backend
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-align-center"></i> Upstream</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-server"></i> Upstream</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success">'+backend_version+'</div></div>')
 
             # Description
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-stamp"></i> Config template</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-cog"></i> Config template</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success">'+apptemplate_description+'</div></div>')
 
             # .hitaccess
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-medical-alt"></i> .htaccess</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> &nbsp;</div></div>')
         else:
             # Running
@@ -221,15 +221,15 @@ if form.getvalue('cpanelpkg'):
             print('					<div class="col-md-6"><div class="alert alert-success">Nginx</div></div>')
 
             # Backend
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-align-center"></i> Upstream</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-server"></i> Upstream</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success">'+backend_version+'</div></div>')
 
             # Description
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-stamp"></i>Config template</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-cog"></i>Config template</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success">'+apptemplate_description+'</div></div>')
 
             # .hitaccess
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-medical-alt"></i> .htaccess</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Ignored</div></div>')
     else:
         # Running
@@ -237,15 +237,15 @@ if form.getvalue('cpanelpkg'):
         print('						<div class="col-md-6"><div class="alert alert-success">Nginx</div></div>')
 
         # Backend
-        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-align-center"></i> Upstream</div></div>')
+        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-server"></i> Upstream</div></div>')
         print('						<div class="col-md-6"><div class="alert alert-success">'+backend_version+'</div></div>')
 
         # Description
-        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-stamp"></i>Config template</div></div>')
+        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-cog"></i>Config template</div></div>')
         print('						<div class="col-md-6"><div class="alert alert-success">'+apptemplate_description+'</div></div>')
 
         # .hitaccess
-        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-medical-alt"></i> .htaccess</div></div>')
+        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div></div>')
         print('						<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Ignored</div></div>')
 
     print('						</div>')  # row end
