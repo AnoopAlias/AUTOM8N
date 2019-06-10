@@ -299,33 +299,6 @@ if form.getvalue('cpanelpkg'):
     print('								</div>')
     print('							</div>')
 
-    # settings_lock
-    settings_lock_hint = "Lock application server and security settings"
-    if settings_lock == 'enabled':
-        print_green("settings_lock", settings_lock_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
-    else:
-        print_red("settings_lock", settings_lock_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
-
     # autoindex
     autoindex_hint = "enable for directory listing"
     if autoindex == 'enabled':
@@ -507,7 +480,7 @@ if form.getvalue('cpanelpkg'):
     if clickjacking_protect == 'enabled':
         print_green("clickjacking_protect", clickjacking_protect_hint)
         print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('							<label class="btn btn-light active">')
         print('								<input type="radio" name="clickjacking_protect" value="enabled" id="ClickjackingProtectOn" autocomplete="off" checked> Enabled')
         print('							</label>')
@@ -519,7 +492,7 @@ if form.getvalue('cpanelpkg'):
     else:
         print_red("clickjacking_protect", clickjacking_protect_hint)
         print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('							<label class="btn btn-light">')
         print('								<input type="radio" name="clickjacking_protect" value="enabled" id="ClickjackingProtectOn" autocomplete="off"> Enabled')
         print('							</label>')
