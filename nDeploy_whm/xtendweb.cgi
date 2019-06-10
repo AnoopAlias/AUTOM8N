@@ -203,7 +203,7 @@ print('						</div>')  # row end
 print('					</div>')  # card-body
 
 print('					<div class="card-footer">')
-print('						<small><strong>Do NOT</strong> restart Nginx when activating config changes.<br>Always reload the process using <kbd>nginx -s reload</kbd></small>')
+print('						<small><strong>Do NOT</strong> restart Nginx, but reload <kbd>nginx -t && nginx -s reload</kbd></small>')
 print('					</div>')
 print('				</div>')  # card end
 
