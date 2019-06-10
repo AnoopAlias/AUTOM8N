@@ -450,8 +450,8 @@ if os.path.isdir('/etc/borgmatic'):
 else:
     print('					<i class="fas fa-exclamation"></i>')
     print('					<p>Borg/Borgmatic not installed.</p>')
-    print('					<small class="mb-1">To install run the following command run</small>')
-    print('					<kbd>/opt/nDeploy/scripts/easy_borg_setup.sh to install borg</kbd>')
+    print('					<small class="mb-1">To install run the following command</small>')
+    print('					<kbd>/opt/nDeploy/scripts/easy_borg_setup.sh</kbd>')
 
 print('					</div>')  # card-body end
 print('				</div>')  # card end
