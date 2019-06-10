@@ -442,7 +442,7 @@ print('				</div>')  # card end
 # Map cPanel pkg to nginx setting
 print('				<div class="card">')  # card
 print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-map-signs float-right"></i> Map cPanel pkg to nginx setting</h5>')
+print('						<h5 class="card-title mb-0"><i class="fas fa-box-open float-right"></i> Map cPanel pkg to nginx setting</h5>')
 print('					</div>')
 print('					<div class="card-body p-0">')  # card-body
 print('						<div class="row no-gutters">')
