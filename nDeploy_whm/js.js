@@ -22,8 +22,8 @@ jQuery(document).ready(function($){
         var $f = $('#modalForm2');
         var $url = "firehol_control.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myModal-xl").find('.modal-body').html(result)
+            $("#myModal-xl").modal('show');
         }});
     });
 
