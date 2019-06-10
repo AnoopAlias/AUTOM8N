@@ -191,7 +191,7 @@ if form.getvalue('cpanelpkg'):
 
     print('			<div class="card">')  # card
     print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> cPanel "'+form.getvalue('cpanelpkg')+'" upstream settings</h5>')
+    print('					<h5 class="card-title mb-0"><i class="fas fa-users-cog float-right"></i> cPanel "'+form.getvalue('cpanelpkg')+'" upstream settings</h5>')
     print('				</div>')
 
     # Current Profile Status
