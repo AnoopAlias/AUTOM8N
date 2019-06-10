@@ -390,7 +390,8 @@ else:
 print('						</div>') # row end
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
-print('						<small>Turn these settings on when you are under a DDOS Attack</small>')
+print('						<small>Turn these settings on when you are under a DDOS Attack</small><br>')
+print('						<small>Disable CSF or any other firewall before turning on SYNPROXY(FireHol)</small><br>')
 print('					</div>')
 print('				</div>')  # card end
 
