@@ -484,7 +484,7 @@ if platform.python_version().startswith('2.6'):
 else:
     listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
 mypkgs = json.loads(listpkgs)
-print('						<form class="form" action="pkg_profile.cgi" method="post">')
+print('						<form class="form" action="pkg_profile.cgi" method="get">')
 print('							<div class="input-group">')
 print('								<div class="input-group-prepend">')
 print('    								<label class="input-group-text" for="inputGroupSelect07">PKG</label>')
