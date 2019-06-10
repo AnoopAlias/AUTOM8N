@@ -195,7 +195,7 @@ if form.getvalue('cpanelpkg'):
     print('				</div>')
 
     # Current Profile Status
-    print('				<form class="form mb-0" action="pkg_app_settings.cgi" method="post">')
+    print('				<form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
     print('					<div class="card-body p-0">')  # card-body
     print('						<div class="row no-gutters">')  # row
     if backend_category == 'PROXY':
