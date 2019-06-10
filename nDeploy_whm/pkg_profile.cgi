@@ -474,6 +474,7 @@ if form.getvalue('cpanelpkg'):
     print('				<div class="card-body text-right">')  # card-body
 
     print('					<div class="row">')
+    print('					<div class="row">')
 
     # settings_lock
     settings_lock_hint = "Lock application server and security settings"
