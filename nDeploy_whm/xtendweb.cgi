@@ -519,7 +519,7 @@ if not osrelease == 'CloudLinux':
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
             userlist = os.listdir("/var/cpanel/users")
-            print('			<form class="form" action="resource_limit.cgi" method="post">')
+            print('			<form class="form" action="resource_limit.cgi" method="get">')
             print('				<div class="input-group">')
             print('					<div class="input-group-prepend">')
             print('    					<label class="input-group-text">User</label>')
@@ -534,7 +534,7 @@ if not osrelease == 'CloudLinux':
             print('				<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
             print('			</form>')
 
-            print('			<form class="form mt-4" action="resource_limit.cgi" method="post">')
+            print('			<form class="form mt-4" action="resource_limit.cgi" method="get">')
             print('				<div class="input-group">')
             print('					<div class="input-group-prepend">')
             print('    					<label class="input-group-text">Service</label>')
@@ -548,7 +548,7 @@ if not osrelease == 'CloudLinux':
             print('				<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
             print('			</form>')
         else:
-            print('			<form class="form" action="resource_limit.cgi" method="post">')
+            print('			<form class="form" action="resource_limit.cgi" method="get">')
             print('				<div class="input-group">')
             print('					<div class="input-group-prepend">')
             print('    					<label class="input-group-text">Resource</label>')
