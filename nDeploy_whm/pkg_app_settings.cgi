@@ -113,7 +113,7 @@ print('			<div class="col-lg-6">')
 
 print('				<div class="card">')  # card
 print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> "'+form.getvalue('cpanelpkg')+'" cPanel Package</h5>')
+print('						<h5 class="card-title mb-0"><i class="fas fa-box-open float-right"></i> "'+form.getvalue('cpanelpkg')+'" cPanel Package</h5>')
 print('					</div>')
 print('					<div class="card-body">')  # card-body
 
