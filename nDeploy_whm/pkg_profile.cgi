@@ -446,6 +446,8 @@ if form.getvalue('cpanelpkg'):
     print('				</div>')
     print('				<div class="card-body text-right">')  # card-body
 
+    print('					<div class="row">')
+
     # settings_lock
     settings_lock_hint = "Lock application server and security settings"
     if settings_lock == 'enabled':
@@ -474,7 +476,6 @@ if form.getvalue('cpanelpkg'):
         print('						</div>')
 
     # clickjacking_protect
-    print('					<div class="row">')
     clickjacking_protect_hint = "X-Frame-Options SAMEORIGIN"
     if clickjacking_protect == 'enabled':
         print_green("clickjacking_protect", clickjacking_protect_hint)
