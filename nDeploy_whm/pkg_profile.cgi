@@ -474,14 +474,13 @@ if form.getvalue('cpanelpkg'):
     print('				<div class="card-body text-right">')  # card-body
 
     print('					<div class="row">')
-    print('					<div class="row">')
 
     # settings_lock
     settings_lock_hint = "Lock application server and security settings"
     if settings_lock == 'enabled':
         print_green("settings_lock", settings_lock_hint)
         print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
         print('								<label class="btn btn-light active">')
         print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off" checked> Enabled')
         print('								</label>')
@@ -493,7 +492,7 @@ if form.getvalue('cpanelpkg'):
     else:
         print_red("settings_lock", settings_lock_hint)
         print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
         print('								<label class="btn btn-light">')
         print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off"> Enabled')
         print('								</label>')
