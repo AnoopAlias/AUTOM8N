@@ -419,12 +419,12 @@ if os.path.isdir('/etc/borgmatic'):
     if backup_dir_list:
         print('		<div class="label label-default mb-2">Currently backing up:</div>')
         print('			<div class="clearfix">')
+        mykeypos=1
         for path in backup_dir_list:
             print('			<div class="input-group input-group-inline input-group-sm">')
             print('				<div class="input-group-prepend"><span class="input-group-text">')
             print(path)
             print('				</span></div>')
-            mykeypos=1
             if path not in ['/home', backup_path]:
                 print('			<form class="form modalForm13-wrap" method="post" id="modalForm13'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('				<button class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
