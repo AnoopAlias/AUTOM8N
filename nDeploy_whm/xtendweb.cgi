@@ -387,7 +387,7 @@ else:
         print('						</div>')
         print('					</div>')
 
-print('						</div>') # row end
+print('						</div>')  # row end
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
 print('						<small>Turn these settings on when you are under a DDOS Attack</small><br>')
