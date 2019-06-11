@@ -179,6 +179,16 @@ print('								</form>')
 
 print('							</div>')
 
+# Glances
+print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-thermometer-half"></i> Glances</div></div>')
+print('							<div class="col-sm-6">')
+
+print('								<form class="form" action="https://'+myhostname+'/glances/" target="_blank">')
+print('									<input class="alert alert-info btn btn-info" type="submit" value="System Status">')
+print('								</form>')
+
+print('							</div>')
+
 # Borg Backup
 print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-database"></i> Borg Backup</div></div>')
 print('							<div class="col-sm-6">')
