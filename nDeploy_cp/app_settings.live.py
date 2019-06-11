@@ -365,7 +365,7 @@ if form.getvalue('domain'):
         if settings_lock == 'enabled':
             print(('<div class="alert alert-info mb-0">Application Server settings are locked by the administrator</div>'))
         else:
-            print('			<form class="mb-0" action="select_app_settings.live.py" method="post">')
+            print('			<form class="mb-0" action="select_app_settings.live.py" method="get">')
             print('				<div class="input-group">')
             print('					<select name="backend" class="custom-select">')
             for backends_defined in backend_data_yaml_parsed.keys():
