@@ -278,10 +278,10 @@ if os.path.isfile(cluster_config_file):
     for cpuser in sorted(user_list):
         if cpuser != 'nobody' and cpuser != 'system':
             print(('					<option value="'+cpuser+'">'+cpuser+'</option>'))
-            print('					</select>')
-            print('				</div>')
-            print('				<button type="submit" class="btn btn-outline-primary btn-block btn-ajax">Sync Dns Zone</button>')
-            print('			</form>')
+    print('					</select>')
+    print('				</div>')
+    print('				<button type="submit" class="btn btn-outline-primary btn-block btn-ajax">Sync Dns Zone</button>')
+    print('			</form>')
     print('				</div>')  # card-body end
     print('			</div>')  # card end
 
