@@ -501,7 +501,7 @@ print('						</form>')
 
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
-print('						<small>sync Nginx conf <-> plan when enabled will reset all nginx config/settings on plan upgrade/downgrade</small>')
+print('						<small>sync nginx to pkg when enabled will reset all nginx config/settings on plan upgrade/downgrade</small>')
 print('					</div>')
 print('				</div>')  # card end
 
