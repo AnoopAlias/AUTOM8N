@@ -323,7 +323,7 @@ if form.getvalue('domain'):
         print('					</div>')
 
         # Nginx Log
-        print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-clipboard-list"></i>nginx log</div></div>')
+        print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div></div>')
         print('					<div class="col-md-6">')
         print('						<form class="form" method="post" id="modalForm5" onsubmit="return false;">')
         print('							<button class="alert alert-info btn btn-info btn-ajax" type="submit">View Log</button>')
