@@ -448,7 +448,7 @@ print('					<div class="card-body p-0">')  # card-body
 print('						<div class="row no-gutters">')
 
 if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
-    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>sync Nginx conf<->Plan</div></div>')
+    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>change nginx conf with pkg</div></div>')
     print('						<div class="col-sm-6">')
     print('							<div class="row no-gutters">')
     print('								<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
