@@ -199,7 +199,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> '+mydomain+'/'+thesubdir+'</h5>')
                 print('		</div>')
                 print('		<div class="card-body">')  # card-body
-                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="post">')
+                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
                 print(('			<div class="alert alert-info">Select an upstream for this subdirectory</div>'))
                 print('				<div class="input-group mb-3">')
                 print('					<div class="input-group-prepend input-group-prepend-min">')
@@ -367,7 +367,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 print('		<div class="card-body mb-0">')  # card-body
 
-                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="post">')
+                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
                 print('				<div class="input-group mb-0">')
                 print('					<select name="backend" class="custom-select">')
                 for backends_defined in backend_data_yaml_parsed.keys():
@@ -579,7 +579,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('					<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> Upstream settings</h5>')
             print('				</div>')
             print('				<div class="card-body text-center">')  # card-body
-            print('					<form class="form" action="subdir_select_app_settings.live.py" method="post">')
+            print('					<form class="form" action="subdir_select_app_settings.live.py" method="get">')
             print('						<div class="input-group mb-0">')
             print('							<select name="backend" class="custom-select">')
             for backends_defined in backend_data_yaml_parsed.keys():
