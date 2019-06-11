@@ -86,8 +86,8 @@ jQuery(document).ready(function($){
         var $f = $('#modalForm9');
         var $url = "autoswitch.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myModal-nl").find('.modal-body').html(result)
+            $("#myModal-nl").modal('show');
         }});
     });
 
