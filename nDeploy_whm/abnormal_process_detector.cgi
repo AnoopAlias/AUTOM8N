@@ -5,7 +5,6 @@ import cgitb
 import psutil
 import platform
 import os
-import yaml
 import subprocess
 
 
