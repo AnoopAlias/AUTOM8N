@@ -131,7 +131,7 @@ print('				<a href="xtendweb.cgi"><img border="0" src="')
 print(					branding_print_logo_name())
 print('					" width="48" height="48"></a>')
 print(					branding_print_banner())
-print('			</h4>')
+print('			</h3>')
 print('		</div>')
 
 print('</header>')
