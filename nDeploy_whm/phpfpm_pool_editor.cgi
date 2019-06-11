@@ -140,7 +140,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
             print('			<div class="input-group btn-2 mb-4">')
             print('				<input class="form-control" value='+myconfig.get(mykey)+' type="text" name="thevalue">')
             print('				<div class="input-group-append">')
-            print('						<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Save</span><i class="fas fa-pen"></i></button>')
+            print('						<button class="btn btn-outline-primary btn-ajax-slow" type="submit"><span class="sr-only">Save</span><i class="fas fa-pen"></i></button>')
             print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))
             print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
             print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
