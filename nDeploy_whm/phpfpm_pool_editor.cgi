@@ -147,7 +147,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
             print(('					<input class="hidden" name="action" value="edit">'))
             print('					</form>')
             print('					<form class="m-0 modalForm9-wrap" id="modalForm9'+'-'+str(mykeypos)+'" onsubmit="return false;" method="post">')
-            print('						<button class="btn btn-outline-danger btn-ajax-sm" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+            print('						<button class="btn btn-outline-danger btn-ajax-slow" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
             print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))
             print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
             print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
