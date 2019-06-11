@@ -145,7 +145,7 @@ print('				<li class="breadcrumb-item active">Manual Config</li>')
 print('			</ol>')
 print('		</nav>')
 
-print('		<div class="row justify-content-lg-center"">')
+print('		<div class="row justify-content-lg-center">')
 
 print('			<div class="col-lg-6">')  # col left
 
@@ -1235,7 +1235,6 @@ if form.getvalue('domain'):
 else:
     print_forbidden()
 
-print('		</div>')
 print('			</div>')  # col end
 print('		</div>')  # row end
 
