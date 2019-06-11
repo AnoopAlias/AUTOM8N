@@ -152,7 +152,7 @@ print('				<li class="breadcrumb-item active">Subdir Config</li>')
 print('			</ol>')
 print('		</nav>')
 
-print('		<div class="row justify-content-lg-center"">')
+print('		<div class="row justify-content-lg-center">')
 
 print('			<div class="col-lg-6">')  # col left
 
