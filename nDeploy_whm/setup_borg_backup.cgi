@@ -431,7 +431,7 @@ if os.path.isdir('/etc/borgmatic'):
                 print(('			<input class="hidden" name="thehomedir" value="'+path+'">'))
                 print(('			<input class="hidden" name="action" value="delete">'))
                 print('			</form>')
-                mykeypos = mykeypos + 1
+            mykeypos = mykeypos + 1
             print('			</div>')
     print('				</div>')
     print('				<div class="label label-default mt-2 mb-2">Add new home directory to backup:</div>')
