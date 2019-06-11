@@ -1,7 +1,7 @@
 #/bin/bash
 #Author: Anoop P Alias
 
-
+which systemctl || exit 1
 yum -y remove glances
 yum --enablerepo=epel install python36 python36-pip python36-devel
 pip3 install glances bottle
