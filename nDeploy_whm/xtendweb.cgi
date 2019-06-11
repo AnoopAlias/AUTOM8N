@@ -183,7 +183,7 @@ print('							</div>')
 print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-database"></i> Borg Backup</div></div>')
 print('							<div class="col-sm-6">')
 
-print('								<form class="form" method="post" action="setup_borg_backup.cgi">')
+print('								<form class="form" method="get" action="setup_borg_backup.cgi">')
 print('									<button class="alert alert-info btn btn-info" type="submit">Setup Borg</button>')
 print('								</form>')
 
