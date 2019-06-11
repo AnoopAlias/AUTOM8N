@@ -1235,6 +1235,7 @@ if form.getvalue('domain'):
 else:
     print_forbidden()
 
+print('		</div>')
 print('			</div>')  # col end
 print('		</div>')  # row end
 
