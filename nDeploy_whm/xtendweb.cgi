@@ -406,7 +406,7 @@ print('						<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"><
 print('					</div>')
 print('					<div class="card-body">')  # card-body
 
-print('						<form class="form" action="phpfpm_pool_editor.cgi" method="post">')
+print('						<form class="form" action="phpfpm_pool_editor.cgi" method="get">')
 print('							<div class="input-group">')
 print('								<div class="input-group-prepend">')
 print('    								<label class="input-group-text" for="inputGroupSelect01">Account</label>')
