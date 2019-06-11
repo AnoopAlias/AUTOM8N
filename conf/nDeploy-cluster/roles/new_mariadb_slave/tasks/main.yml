@@ -38,7 +38,7 @@
       - MariaDB-client
 
 - name: Restart MariaDB server
-  service: name=mysql enabled=yes state=started
+  service: name=mariadb enabled=yes state=started
 
 - name: Copy database dump
   copy:
@@ -66,7 +66,7 @@
     - mysqlsetup.stat.exists == false
 
 - name: Restart MariaDB server
-  service: name=mysql enabled=yes state=restarted
+  service: name=mariadb enabled=yes state=restarted
 
 - name: Update socket path in /root/.my.cnf
   ini_file:
@@ -98,7 +98,7 @@
   when:  mysqlsetup.stat.exists == false
 
 - name: Restart MariaDB server
-  service: name=mysql enabled=yes state=restarted
+  service: name=mariadb enabled=yes state=restarted
 
 - name: get the master log and pos
   mysql_replication: mode=getmaster

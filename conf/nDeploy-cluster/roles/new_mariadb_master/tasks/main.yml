@@ -52,7 +52,7 @@
     - mysqlsetup.stat.exists == false
 
 - name: Restart MariaDB server
-  service: name=mysql enabled=yes state=restarted
+  service: name=mariadb enabled=yes state=restarted
   when:
     - mysqlsetup.stat.exists == false
 
