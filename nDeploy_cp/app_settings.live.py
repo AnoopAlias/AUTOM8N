@@ -314,7 +314,7 @@ if form.getvalue('domain'):
         print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')
         print('					<div class="col-md-6">')
         print('						<form class="form" method="post" id="modalForm4" onsubmit="return false;">')
-        print('							<button class="alert alert-info btn btn-info btn-ajax" type="submit">Reload</button>')
+        print('							<button class="alert alert-info btn btn-info " type="submit">Reload</button>')
         print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('						</form>')
         print('					</div>')
@@ -323,7 +323,7 @@ if form.getvalue('domain'):
         print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div></div>')
         print('					<div class="col-md-6">')
         print('						<form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-        print('							<button class="alert alert-info btn btn-info btn-ajax" type="submit">View Log</button>')
+        print('							<button class="alert alert-info btn btn-info " type="submit">View Log</button>')
         print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('						</form>')
         print('					</div>')
@@ -347,12 +347,12 @@ if form.getvalue('domain'):
             print(('			<input class="hidden" name="document_root" value="'+document_root+'">'))
             print(('			<input class="hidden" name="backend_category" value="'+backend_category+'">'))
             print(('			<input class="hidden" name="backend_version" value="'+backend_version+'">'))
-            print('				<button class="btn btn-outline-warning btn-block btn-ajax" data-toggle="tooltip" title="'+dep_file+'" type="submit">Install '+backend_category+' project deps</button>')
+            print('				<button class="btn btn-outline-warning btn-block " data-toggle="tooltip" title="'+dep_file+'" type="submit">Install '+backend_category+' project deps</button>')
             print('			</form>')
 
             if backend_category == 'PHP':
                 print('			<form class="mb-0 mt-3" id="modalForm1" onsubmit="return false;">')
-                print('				<button class="btn btn-outline-warning btn-block btn-ajax" type="submit">View PHP Log</button>')
+                print('				<button class="btn btn-outline-warning btn-block " type="submit">View PHP Log</button>')
                 print('			</form>')
 
             print('		</div>')  # card-body end
@@ -1086,7 +1086,7 @@ if form.getvalue('domain'):
         print('			<div class="card">')  # card
         print('				<div class="card-body text-center">')  # card-body
         print(('				<input class="hidden" name="domain" value="'+mydomain+'">'))
-        print('					<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Save Settings</button>')
+        print('					<button class="btn btn-outline-primary btn-block " type="submit">Save Settings</button>')
         print('				</form>')
         print('				</div>')  # card-body end
         print('			</div>')  # card end
@@ -1103,7 +1103,7 @@ if form.getvalue('domain'):
             print('				<div class="label label-default mt-2 mb-2">Current subdirectory apps:</div>')
             mykeypos=1
             for thesubdir in subdir_apps.keys():
-                print('			<div class="input-group input-group-inline input-group-sm">')
+                print('			<div class="input-group input-group-inline input-group">')
                 print('				<div class="input-group-prepend"><span class="input-group-text">')
                 print(mydomain + '/' + thesubdir)
                 print('				</span></div>')
@@ -1115,7 +1115,7 @@ if form.getvalue('domain'):
                 print('					</form>')
 
                 print('					<form class="form modalForm7-wrap" method="post" id="modalForm7'+'-'+str(mykeypos)+'" onsubmit="return false;">')
-                print('						<button class="btn btn-outline-danger btn-ajax-sm" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+                print('						<button class="btn btn-outline-danger " type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
                 print(('					<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('					<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('					</form>')
@@ -1209,6 +1209,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')

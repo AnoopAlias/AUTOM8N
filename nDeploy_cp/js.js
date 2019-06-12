@@ -1,5 +1,16 @@
 jQuery(document).ready(function($){
 
+	$(document).ajaxStart(function () {
+			$('#wait').show();
+	});
+	$(document).ajaxStop(function () {
+			$('#wait').hide();
+	});
+	$(document).ajaxError(function () {
+			$('#wait').hide();
+	});
+
+
 	$.ajaxSetup({
     	cache: false
 	})

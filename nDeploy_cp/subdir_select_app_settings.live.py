@@ -195,7 +195,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print(('			<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('			<input class="hidden" name="backend" value="'+mybackend+'">'))
                 print(('			<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('				<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Update settings</button>')
+                print('				<button class="btn btn-outline-primary btn-block " type="submit">Update settings</button>')
                 print('			</form>')
                 print('		</div>')  # card-body end
                 print('</div>')  # card end
@@ -339,7 +339,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print(('				<input class="hidden" name="domain" value="'+mydomain+'">'))
             print(('				<input class="hidden" name="backend" value="'+mybackend+'">'))
             print(('				<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-            print('					<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Update settings</button>')
+            print('					<button class="btn btn-outline-primary btn-block " type="submit">Update settings</button>')
             print('				</form>')
             print('			</div>')  # card-body end
             print('		</div>')  # card end
@@ -408,6 +408,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')

@@ -159,7 +159,7 @@ if settings_lock == 'enabled':
     print(('				<div class="alert alert-info">Application Server settings are locked by the administrator</div>'))
 else:
     print('					<form class="form mb-4" method="post" id="modalForm9" onsubmit="return false;">')
-    print('						<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Auto Switch To Nginx</button>')
+    print('						<button class="btn btn-outline-primary btn-block " type="submit">Auto Switch To Nginx</button>')
     print(('					<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
     print('					</form>')
 
@@ -246,6 +246,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')
