@@ -204,7 +204,7 @@ print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas
 print('							<div class="col-sm-6">')
 
 print('								<form class="form" id="modalForm3" onsubmit="return false;">')
-print('									<button type="submit" class="alert alert-info btn btn-info btn-ajax">Check Process</button>')
+print('									<button type="submit" class="alert alert-info btn btn-info ">Check Process</button>')
 print('								</form>')
 
 print('							</div>')
@@ -255,12 +255,12 @@ if os.path.isfile(cluster_config_file):
 
     print('					<form class="form mb-3" id="modalForm4" onsubmit="return false;">')
     print(('					<input class="hidden" name="mode" value="restart">'))
-    print('						<button type="submit" class="btn btn-outline-primary btn-block btn-ajax">Soft Restart Unison Sync</button>')
+    print('						<button type="submit" class="btn btn-outline-primary btn-block ">Soft Restart Unison Sync</button>')
     print('					</form>')
 
     print('					<form class="form mb-0" id="modalForm5" onsubmit="return false;">')
     print(('					<input class="hidden" name="mode" value="reset">'))
-    print('						<button type="submit" class="btn btn-outline-primary btn-block btn-ajax-slow">Hard Reset Unison Sync</button>')
+    print('						<button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
     print('					</form>')
 
     print('				</div>')  # card-body
@@ -290,7 +290,7 @@ if os.path.isfile(cluster_config_file):
             print(('					<option value="'+cpuser+'">'+cpuser+'</option>'))
     print('					</select>')
     print('				</div>')
-    print('				<button type="submit" class="btn btn-outline-primary btn-block btn-ajax">Sync Dns Zone</button>')
+    print('				<button type="submit" class="btn btn-outline-primary btn-block ">Sync Dns Zone</button>')
     print('			</form>')
     print('				</div>')  # card-body end
     print('			</div>')  # card end
@@ -319,7 +319,7 @@ if "PHP" in backend_data_yaml_parsed:
         print(('						<option value="'+versions_defined+'">'+versions_defined+'</option>'))
 print('								</select>')
 print('							</div>')
-print('							<button type="submit" class="btn btn-outline-primary btn-block btn-ajax">Set Default PHP</button>')
+print('							<button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
 print('						</form>')
 
 print('					</div>')  # card-body end
@@ -343,7 +343,7 @@ if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('								<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
     print('								<div class="col-sm-6">')
     print('									<form id="modalForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info btn-ajax">Disable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
     print(('									<input class="hidden" name="ddos" value="disable">'))
     print('									</form>')
     print('								</div>')
@@ -356,7 +356,7 @@ else:
     print('								<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
     print('								<div class="col-sm-6">')
     print('									<form id="modalForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info btn-ajax">Enable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
     print(('									<input class="hidden" name="ddos" value="enable">'))
     print('									</form>')
     print('								</div>')
@@ -377,7 +377,7 @@ else:
         print('							<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
         print('								<div class="col-sm-6">')
         print('								<form id="modalForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info btn-ajax">Disable</button>')
+        print('									<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
         print(('								<input class="hidden" name="ddos" value="disable">'))
         print('								</form>')
         print('							</div>')
@@ -390,7 +390,7 @@ else:
         print('							<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
         print('							<div class="col-sm-6">')
         print('								<form id="modalForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info btn-ajax">Enable</button>')
+        print('									<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
         print(('								<input class="hidden" name="ddos" value="enable">'))
         print('								</form>')
         print('							</div>')
@@ -464,7 +464,7 @@ if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
     print('								<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
     print('								<div class="col-sm-6">')
     print('									<form class="form" method="post" id="modalForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info btn-ajax">Disable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
     print(('									<input class="hidden" name="package_lock" value="disabled">'))
     print('									</form>')
     print('								</div>')
@@ -477,7 +477,7 @@ else:
     print('								<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
     print('								<div class="col-sm-6">')
     print('									<form class="form" method="post" id="modalForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info btn-ajax">Enable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
     print(('									<input class="hidden" name="package_lock" value="enabled">'))
     print('									</form>')
     print('								</div>')
