@@ -145,9 +145,9 @@ if form.getvalue('poolfile') and form.getvalue('section'):
             print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
             print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
             print(('					<input class="hidden" name="action" value="edit">'))
-            print('			</form>')
             print('				</div>')
             print('			</div>')
+            print('			</form>')
             mykeypos = mykeypos + 1
 
         print('			</div>')  # card-body end
