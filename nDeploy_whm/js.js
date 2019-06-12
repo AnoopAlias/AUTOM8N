@@ -93,6 +93,7 @@ jQuery(document).ready(function($){
     });
 
     $('.modalForm9-wrap').submit(function(e) {
+				e.preventDefault();
         var $id = e.target.id;
         var $f = $('#' + $id);
         console.log($f.serialize());
@@ -104,6 +105,7 @@ jQuery(document).ready(function($){
     });
 
     $('.modalForm10-wrap').submit(function(e) {
+				e.preventDefault();
         var $id = e.target.id;
         var $f = $('#' + $id);
         console.log($f.serialize());
