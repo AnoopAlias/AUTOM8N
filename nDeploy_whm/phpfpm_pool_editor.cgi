@@ -167,7 +167,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('			</div>')
         print('			<div class="card-body">')  # card-body
 
-        print('				<form class="m-0" id="modalForm8" onsubmit="return false;">')
+        print('				<form class="m-0" method="post" id="modalForm20" onsubmit="return false;">')
         print('					<div class="input-group">')
         print('						<div class="input-group-prepend">')
         print('							<span class="input-group-text">Key & Value</span>')
@@ -178,7 +178,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print(('						<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
         print(('						<input class="hidden" name="poolfile" value="'+myphpini+'">'))
         print(('						<input class="hidden" name="action" value="edit">'))
-        print('							<button class="btn btn-outline-primary btn-ajax" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
+        print('							<button class="btn btn-outline-primary btn-ajax-sm" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
         print('						</div>')
         print('					</div>')
         print('				</form>')

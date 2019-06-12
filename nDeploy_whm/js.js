@@ -72,6 +72,17 @@ jQuery(document).ready(function($){
         }});
     });
 
+		$('#modalForm20').submit(function() {
+        console.trace();
+        var $f = $('#modalForm20');
+        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
+        $.ajax({url: $url, success: function(result){
+            $("#myModal").find('.modal-body').html(result)
+            $("#myModal").modal('show');
+        }});
+    });
+
+
     $('#modalForm8').submit(function() {
         var $f = $('#modalForm8');
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
