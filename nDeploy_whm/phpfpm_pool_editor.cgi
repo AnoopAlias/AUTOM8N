@@ -178,7 +178,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print(('						<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
         print(('						<input class="hidden" name="poolfile" value="'+myphpini+'">'))
         print(('						<input class="hidden" name="action" value="edit">'))
-        print('							<button class="btn btn-outline-primary btn-ajax-sm" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
+        print('							<button class="btn btn-outline-primary btn-ajax" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
         print('						</div>')
         print('					</div>')
         print('				</form>')
