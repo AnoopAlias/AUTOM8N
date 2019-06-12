@@ -197,7 +197,7 @@ jQuery(document).ready(function($){
     	}
 		setTimeout(function() {
 			$this.html($this.data('original-text'));
-    	}, 5000);
+		}, 20000);
     });
 
     // btn-ajax animation for ajax updates
