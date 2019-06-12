@@ -214,10 +214,7 @@ if form.getvalue('domain'):
         wwwredirect = yaml_parsed_profileyaml.get('wwwredirect', 'none')
         redirect_to_ssl = yaml_parsed_profileyaml.get('redirect_to_ssl', 'disabled')
         redirect_aliases = yaml_parsed_profileyaml.get('redirect_aliases', 'disabled')
-        clickjacking_protect = yaml_parsed_profileyaml.get('clickjacking_protect', 'disabled')
-        disable_contenttype_sniffing = yaml_parsed_profileyaml.get('disable_contenttype_sniffing', 'disabled')
-        xss_filter = yaml_parsed_profileyaml.get('xss_filter', 'disabled')
-        hsts = yaml_parsed_profileyaml.get('hsts', 'disabled')
+        security_headers = yaml_parsed_profileyaml.get('security_headers', 'disabled')
         dos_mitigate = yaml_parsed_profileyaml.get('dos_mitigate', 'disabled')
         pagespeed_filter = yaml_parsed_profileyaml.get('pagespeed_filter', 'CoreFilters')
         redirecturl = yaml_parsed_profileyaml.get('redirecturl', 'none')
@@ -546,10 +543,7 @@ if form.getvalue('domain'):
 
         if settings_lock == 'enabled':
             print(('		<div class="alert alert-info alert-top">Security settings are locked by the administrator</div>'))
-            print(('		<input class="hidden" name="clickjacking_protect" value="'+clickjacking_protect+'">'))
-            print(('		<input class="hidden" name="disable_contenttype_sniffing" value="'+disable_contenttype_sniffing+'">'))
-            print(('		<input class="hidden" name="xss_filter" value="'+xss_filter+'">'))
-            print(('		<input class="hidden" name="hsts" value="'+hsts+'">'))
+            print(('		<input class="hidden" name="security_headers" value="'+security_headers+'">'))
             print(('		<input class="hidden" name="dos_mitigate" value="'+dos_mitigate+'">'))
             print(('		<input class="hidden" name="test_cookie" value="'+test_cookie+'">'))
             print(('		<input class="hidden" name="symlink_protection" value="'+symlink_protection+'">'))
@@ -558,110 +552,29 @@ if form.getvalue('domain'):
 
             print('			<div class="row">')
 
-            # clickjacking_protect
-            clickjacking_protect_hint = "X-Frame-Options SAMEORIGIN"
-            if clickjacking_protect == 'enabled':
-                print_green("clickjacking_protect", clickjacking_protect_hint)
+            # security_headers
+            security_headers_hint = "X-Frame-Options,X-Content-Type-Options,X-XSS-Protection,HSTS"
+            if security_headers == 'enabled':
+                print_green("security_headers", security_headers_hint)
                 print('			<div class="col-md-6">')
                 print('				<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
                 print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="clickjacking_protect" value="enabled" id="ClickjackingProtectOn" autocomplete="off" checked> Enabled')
+                print('						<input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off" checked> Enabled')
                 print('					</label>')
                 print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="clickjacking_protect" value="disabled" id="ClickjackingProtectOff" autocomplete="off"> Disabled')
+                print('						<input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off"> Disabled')
                 print('					</label>')
                 print('				</div>')
                 print('			</div>')
             else:
-                print_red("clickjacking_protect", clickjacking_protect_hint)
+                print_red("security_headers", security_headers_hint)
                 print('			<div class="col-md-6">')
                 print('				<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
                 print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="clickjacking_protect" value="enabled" id="ClickjackingProtectOn" autocomplete="off"> Enabled')
+                print('						<input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off"> Enabled')
                 print('					</label>')
                 print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="clickjacking_protect" value="disabled" id="ClickjackingProtectOff" autocomplete="off" checked> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-
-            # disable_contenttype_sniffing
-            disable_contenttype_sniffing_hint = "X-Content-Type-Options nosniff"
-            if disable_contenttype_sniffing == 'enabled':
-                print_green("contenttype_sniffing", disable_contenttype_sniffing_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="disable_contenttype_sniffing" value="enabled" id="DisableContenttypeSniffingOn" autocomplete="off" checked> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="disable_contenttype_sniffing" value="disabled" id="DisableContenttypeSniffingOff" autocomplete="off"> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-            else:
-                print_red("contenttype_sniffing", disable_contenttype_sniffing_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="disable_contenttype_sniffing" value="enabled" id="DisableContenttypeSniffingOn" autocomplete="off"> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="disable_contenttype_sniffing" value="disabled" id="DisableContenttypeSniffingOff" autocomplete="off" checked> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-
-            # xss_filter
-            xss_filter_hint = 'X-XSS-Protection'
-            if xss_filter == 'enabled':
-                print_green("xss_filter", xss_filter_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="xss_filter" value="enabled" id="XssFilterOn" autocomplete="off" checked> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="xss_filter" value="disabled" id="XssFilterOff" autocomplete="off"> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-            else:
-                print_red("xss_filter", xss_filter_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="xss_filter" value="enabled" id="XssFilterOn" autocomplete="off"> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="xss_filter" value="disabled" id="XssFilterOff" autocomplete="off" checked> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-
-            # hsts
-            hsts_hint = 'Strict-Transport-Security'
-            if hsts == 'enabled':
-                print_green("hsts", hsts_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="hsts" value="enabled" id="HstsOn" autocomplete="off" checked> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="hsts" value="disabled" id="HstsOff" autocomplete="off"> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-            else:
-                print_red("hsts", hsts_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="hsts" value="enabled" id="HstsOn" autocomplete="off"> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="hsts" value="disabled" id="HstsOff" autocomplete="off" checked> Disabled')
+                print('						<input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off" checked> Disabled')
                 print('					</label>')
                 print('				</div>')
                 print('			</div>')

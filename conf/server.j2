@@ -298,9 +298,11 @@ include /etc/nginx/conf.d/pagespeed_passthrough.conf;
 {% endif %}
 {% if not OPEN_FILE_CACHE == 'enabled' %}open_file_cache off;{% endif %}
 {% if AUTOINDEX == 'enabled' %}autoindex on;{% endif %}
-{% if CLICKJACKING_PROTECT == 'enabled' %}add_header X-Frame-Options SAMEORIGIN;{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}add_header X-Content-Type-Options nosniff;{% endif %}
-{% if XSS_FILTER == 'enabled' %}add_header X-XSS-Protection "1; mode=block";{% endif %}
+{% if SECURITY_HEADERS == 'enabled' %}
+add_header X-Frame-Options SAMEORIGIN;
+add_header X-Content-Type-Options nosniff;
+add_header X-XSS-Protection "1; mode=block";
+{% endif %}
 {% if GZIP == 'enabled' %}include /etc/nginx/conf.d/gzip.conf;{% endif %}
 {% if DOSMITIGATE == 'enabled' %}include /etc/nginx/conf.d/dos_mitigate.conf;{% endif %}
 {% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
@@ -428,10 +430,12 @@ include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
 {% if not OPEN_FILE_CACHE == 'enabled' %}open_file_cache off;{% endif %}
 {% if AUTOINDEX == 'enabled' %}autoindex on;{% endif %}
-{% if HSTS == 'enabled' %}add_header Strict-Transport-Security "max-age=31536000" always;{% endif %}
-{% if CLICKJACKING_PROTECT == 'enabled' %}add_header X-Frame-Options SAMEORIGIN;{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}add_header X-Content-Type-Options nosniff;{% endif %}
-{% if XSS_FILTER == 'enabled' %}add_header X-XSS-Protection "1; mode=block";{% endif %}
+{% if SECURITY_HEADERS == 'enabled' %}
+add_header X-Frame-Options SAMEORIGIN;
+add_header X-Content-Type-Options nosniff;
+add_header X-XSS-Protection "1; mode=block";
+add_header Strict-Transport-Security "max-age=31536000" always;
+{% endif %}
 {% if DOSMITIGATE == 'enabled' %}include /etc/nginx/conf.d/dos_mitigate.conf;{% endif %}
 {% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
