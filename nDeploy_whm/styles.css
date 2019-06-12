@@ -1,34 +1,3 @@
-html {
-    -webkit-transition: background-color 1s;
-    transition: background-color 1s;
-}
-html, body {
-    /* For the loading indicator to be vertically centered ensure */
-    /* the html and body elements take up the full viewport */
-    min-height: 100%;
-}
-html.loading {
-    /* Replace #333 with the background-color of your choice */
-    /* Replace loading.gif with the loading image of your choice */
-    background: #333 url('ajax-loader.gif') no-repeat 50% 50%;
-
-    /* Ensures that the transition only runs in one direction */
-    -webkit-transition: background-color 0;
-    transition: background-color 0;
-}
-body {
-    -webkit-transition: opacity 1s ease-in;
-    transition: opacity 1s ease-in;
-}
-html.loading body {
-    /* Make the contents of the body opaque during loading */
-    opacity: 0;
-
-    /* Ensures that the transition only runs in one direction */
-    -webkit-transition: opacity 0;
-    transition: opacity 0;
-}
-
 body {
   background-color: #F1F1F8;
   color: #3D4366;

@@ -254,5 +254,9 @@ print('      		</div>')
 print('    		</div>')
 print('     </div>')
 
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
+
 print('</body>')
 print('</html>')

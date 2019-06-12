@@ -1,15 +1,15 @@
 
 jQuery(document).ready(function($){
 
-	   $(document).ajaxStart(function () {
-       $("html").addClass("loading");
+		$(document).ajaxStart(function () {
+        $('#wait').show();
     });
     $(document).ajaxStop(function () {
-        $("html").removeClass("loading");
+        $('#wait').hide();
     });
     $(document).ajaxError(function () {
-        $("html").removeClass("loading");
-    }); 
+        $('#wait').hide();
+    });
 
 	$.ajaxSetup({
 	    cache: false
