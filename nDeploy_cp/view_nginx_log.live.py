@@ -59,7 +59,7 @@ if os.path.isfile(nginx_log):
         print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
     print('</ul>')
 else:
-	print_error('NGINX log file is not present')
+    print_error('NGINX log file is not present')
 
 print('</body>')
 print('</html>')
