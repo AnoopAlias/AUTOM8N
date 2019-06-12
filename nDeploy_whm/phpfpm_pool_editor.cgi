@@ -145,15 +145,53 @@ if form.getvalue('poolfile') and form.getvalue('section'):
             print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
             print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
             print(('					<input class="hidden" name="action" value="edit">'))
+            print('			</form>')
+            print('			<form class="m-0 modalForm9-wrap" id="modalForm9'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+            print('						<button class="btn btn-outline-danger btn-ajax-sm" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+            print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))
+            print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
+            print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
+            print(('					<input class="hidden" name="action" value="delete">'))
+            print('			</form>')
             print('				</div>')
             print('			</div>')
-            print('			</form>')
             mykeypos = mykeypos + 1
 
         print('			</div>')  # card-body end
         print('		</div>')  # card end
+
+        # New PHP Param
+        print('		<div class="card">')  # card
+        print('			<div class="card-header">')
+        print('				<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> Add new pool setting</h5>')
+        print('			</div>')
+        print('			<div class="card-body">')  # card-body
+
+        print('				<form class="m-0" method="post" id="modalForm20" onsubmit="return false;">')
+        print('					<div class="input-group">')
+        print('						<div class="input-group-prepend">')
+        print('							<span class="input-group-text">Key & Value</span>')
+        print('				     	</div>')
+        print('						<input type="text" aria-label="Key" placeholder="Key" name="thekey" class="form-control">')
+        print('						<input type="text" aria-label="Value" placeholder="Value" name="thevalue" class="form-control">')
+        print('						<div class="input-group-append">')
+        print(('						<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
+        print(('						<input class="hidden" name="poolfile" value="'+myphpini+'">'))
+        print(('						<input class="hidden" name="action" value="edit">'))
+        print('							<button class="btn btn-outline-primary btn-ajax-sm" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
+        print('						</div>')
+        print('					</div>')
+        print('				</form>')
+
+        print('			</div>')  # card-body end
+        print('			<div class="card-footer footer-warning">')
+        print('				<small>WARNING: Editing pool config with invalid settings can bring down your PHP application server. Edit at your own risk</small>')
+        print('			</div>')
 else:
         print_forbidden()
+
+print('				</div>')  # card end
+
 print('			</div>')  # col end
 print('		</div>')  # row end
 
