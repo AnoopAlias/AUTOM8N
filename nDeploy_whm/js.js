@@ -1,6 +1,16 @@
 
 jQuery(document).ready(function($){
 
+	   $(document).ajaxStart(function () {
+       $("html").addClass("loading");
+    });
+    $(document).ajaxStop(function () {
+        $("html").removeClass("loading");
+    });
+    $(document).ajaxError(function () {
+        $("html").removeClass("loading");
+    }); 
+
 	$.ajaxSetup({
 	    cache: false
 	})
