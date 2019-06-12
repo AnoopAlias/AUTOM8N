@@ -208,7 +208,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
 
     print(('					<input class="hidden" name="mode" value="'+form.getvalue('mode')+'">'))
     print(('					<input class="hidden" name="unit" value="'+form.getvalue('unit')+'">'))
-    print('						<button class="btn btn-outline-primary btn-block btn-ajax-slow" type="submit">Set Limit</button>')
+    print('						<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
     print('					</form>')
 else:
     print_forbidden()
@@ -239,6 +239,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')

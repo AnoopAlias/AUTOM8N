@@ -267,7 +267,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('							</div>')
 
     print('							<div class="col-md-12">')
-    print('								<button class="btn btn-outline-primary btn-block btn-ajax mt-2" type="submit">Save Backup Settings</button>')
+    print('								<button class="btn btn-outline-primary btn-block  mt-2" type="submit">Save Backup Settings</button>')
     print('							</div>')
     print('						</div>')
 
@@ -397,7 +397,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
     print('						</div>')
 
-    print('						<button class="btn btn-outline-primary btn-block btn-ajax mt-4" type="submit">Save Borg Settings</button>')
+    print('						<button class="btn btn-outline-primary btn-block  mt-4" type="submit">Save Borg Settings</button>')
 
     print('					</form>')
 
@@ -479,6 +479,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')
