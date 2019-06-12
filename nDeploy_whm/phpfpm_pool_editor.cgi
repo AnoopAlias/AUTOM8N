@@ -154,9 +154,6 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('		</div>')  # card end
 else:
         print_forbidden()
-
-print('				</div>')  # card end
-
 print('			</div>')  # col end
 print('		</div>')  # row end
 
