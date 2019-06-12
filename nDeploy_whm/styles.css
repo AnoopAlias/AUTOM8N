@@ -10,7 +10,7 @@ html, body {
 html.loading {
     /* Replace #333 with the background-color of your choice */
     /* Replace loading.gif with the loading image of your choice */
-    background: #333 url('/Images/loading.gif') no-repeat 50% 50%;
+    background: #333 url('ajax-loader.gif') no-repeat 50% 50%;
 
     /* Ensures that the transition only runs in one direction */
     -webkit-transition: background-color 0;
