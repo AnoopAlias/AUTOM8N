@@ -45,9 +45,9 @@ def branding_print_support():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
     return brand_support
 
 
