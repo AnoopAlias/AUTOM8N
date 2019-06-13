@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import cgi
 import cgitb
 import subprocess
@@ -61,18 +62,6 @@ def sighupnginx():
             os.kill(nginxpid, signal.SIGHUP)
 
 
-def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
-
-
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
-def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
-
-
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -91,7 +80,7 @@ if form.getvalue('repositories'):
 if form.getvalue('remote_rate_limit'):
     # Input sanitation
     if not re.match("^[0-9]+$", form.getvalue('remote_rate_limit')):
-        print_error("Error: Positive integer value expected for remote_rate_limit")
+        commoninclude.print_error("Error: Positive integer value expected for remote_rate_limit")
         sys.exit(0)
     else:
         yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'] = int(form.getvalue('remote_rate_limit'))
@@ -100,35 +89,35 @@ if form.getvalue('ssh_command'):
 if form.getvalue('encryption_passphrase'):
     # Input sanitation
     if not re.match("^[0-9a-zA-Z]+$", form.getvalue('encryption_passphrase')):
-        print_error("Error: Do not use any symbols, use only numbers,small letters and capital letters in encryption passphrase")
+        commoninclude.print_error("Error: Do not use any symbols, use only numbers,small letters and capital letters in encryption passphrase")
         sys.exit(0)
     else:
         yaml_parsed_borgmaticyaml['storage']['encryption_passphrase'] = form.getvalue('encryption_passphrase')
 if form.getvalue('keep_hourly'):
     # Input sanitation
     if not re.match("^[0-9]+$", form.getvalue('keep_hourly')):
-        print_error("Error: Positive integer value expected for keep_hourly")
+        commoninclude.print_error("Error: Positive integer value expected for keep_hourly")
         sys.exit(0)
     else:
         yaml_parsed_borgmaticyaml['retention']['keep_hourly'] = int(form.getvalue('keep_hourly'))
 if form.getvalue('keep_daily'):
     # Input sanitation
     if not re.match("^[0-9]+$", form.getvalue('keep_daily')):
-        print_error("Error: Positive integer value expected for keep_daily")
+        commoninclude.print_error("Error: Positive integer value expected for keep_daily")
         sys.exit(0)
     else:
         yaml_parsed_borgmaticyaml['retention']['keep_daily'] = int(form.getvalue('keep_daily'))
 if form.getvalue('keep_weekly'):
     # Input sanitation
     if not re.match("^[0-9]+$", form.getvalue('keep_weekly')):
-        print_error("Error: Positive integer value expected for keep_weekly")
+        commoninclude.print_error("Error: Positive integer value expected for keep_weekly")
         sys.exit(0)
     else:
         yaml_parsed_borgmaticyaml['retention']['keep_weekly'] = int(form.getvalue('keep_weekly'))
 if form.getvalue('keep_monthly'):
     # Input sanitation
     if not re.match("^[0-9]+$", form.getvalue('keep_monthly')):
-        print_error("Error: Positive integer value expected for keep_monthly")
+        commoninclude.print_error("Error: Positive integer value expected for keep_monthly")
         sys.exit(0)
     else:
         yaml_parsed_borgmaticyaml['retention']['keep_monthly'] = int(form.getvalue('keep_monthly'))
@@ -142,10 +131,10 @@ if form.getvalue('thehomedir'):
     else:
         myhomedir = myhomedir_pass1
     if not myhomedir:
-        print_error('Error: Invalid Homedir name')
+        commoninclude.print_error('Error: Invalid Homedir name')
         sys.exit(0)
     if not re.match("^[\.0-9a-zA-Z/_-]*$", myhomedir):
-        print_error("Error: Invalid char in Homedir name")
+        commoninclude.print_error("Error: Invalid char in Homedir name")
         sys.exit(0)
     if form.getvalue('action'):
         if form.getvalue('action') == "add":
@@ -160,7 +149,7 @@ with open(borgmatic_config_file, 'w') as borgmatic_conf:
     yaml.dump(yaml_parsed_borgmaticyaml, borgmatic_conf, default_flow_style=False)
 os.chmod(borgmatic_config_file, 0o640)
 
-print_success('Borgmatic Settings updated')
+commoninclude.print_success('Borgmatic Settings updated')
 
 print('</body>')
 print('</html>')

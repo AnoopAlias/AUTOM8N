@@ -1,4 +1,6 @@
 #!/usr/bin/python
+
+import commoninclude
 import os
 import socket
 import cgi
@@ -27,22 +29,6 @@ def close_cpanel_liveapisock():
     sock.connect(cp_socket)
     sock.sendall('<cpanelxml shutdown="1" />')
     sock.close()
-
-
-def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
-
-
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
-def print_error_alert(themessage):
-    print(('<div class="alert alert-danger text-left">'+themessage+'</div>'))
-
-
-def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
 
 
 close_cpanel_liveapisock()
@@ -82,9 +68,9 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('</ul>')
                 print('</div>')
             else:
-                print_error('bundler command not found')
+                commoninclude.print_error('bundler command not found')
         else:
-            print_error_alert(('<p>Gemfile not found for <span class="badge badge-warning">RUBY</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>' + mydocroot + '/Gemfile</kbd></li></ul>'))
+            commoninclude.print_error_alert(('<p>Gemfile not found for <span class="badge badge-warning">RUBY</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>' + mydocroot + '/Gemfile</kbd></li></ul>'))
     elif mybackend == 'NODEJS':
         if os.path.isfile(mydocroot+'/package.json'):
             if os.path.isfile('/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm'):
@@ -108,9 +94,9 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('</ul>')
                 print('</div>')
             else:
-                print_error('npm command not found')
+                commoninclude.print_error('npm command not found')
         else:
-            print_error_alert(('<p>package.json not found for <span class="badge badge-warning">NODEJS</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:<li></li><kbd>'+mydocroot+'/package.json</kbd></li></ul>'))
+            commoninclude.print_error_alert(('<p>package.json not found for <span class="badge badge-warning">NODEJS</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:<li></li><kbd>'+mydocroot+'/package.json</kbd></li></ul>'))
     elif mybackend == 'PYTHON':
         if os.path.isfile(mydocroot+'/requirements.txt'):
             if os.path.isfile('/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip'):
@@ -132,9 +118,9 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('</ul>')
                 print('</div>')
             else:
-                print_error('pip command not found')
+                commoninclude.print_error('pip command not found')
         else:
-            print_error_alert(('<p>requirements.txt not found for <span class="badge badge-warning">PYTHON</span> project</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/requirements.txt</kbd><li></ul>'))
+            commoninclude.print_error_alert(('<p>requirements.txt not found for <span class="badge badge-warning">PYTHON</span> project</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/requirements.txt</kbd><li></ul>'))
     elif mybackend == 'PHP':
         if os.path.isfile(mydocroot+'/composer.json'):
             if os.path.isfile('/opt/cpanel/composer/bin/composer'):
@@ -156,11 +142,11 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('</ul>')
                 print('</div>')
             else:
-                print_error('composer command not found')
+                commoninclude.print_error('composer command not found')
         else:
-            print_error_alert(('<p>composer.json not found for <span class="badge badge-warning">PHP</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/composer.json</kbd></li></ul>'))
+            commoninclude.print_error_alert(('<p>composer.json not found for <span class="badge badge-warning">PHP</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/composer.json</kbd></li></ul>'))
 else:
-    print_forbidden()
+    commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')

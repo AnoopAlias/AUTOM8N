@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import os
 import socket
 import cgi

@@ -50,7 +50,7 @@ body {
       display: block;
       margin-top: 0;
       width: 100%; }
-    .card .card-body .form > .input-group {
+    .card .card-body .form .input-group {
       margin-bottom: 1rem; }
   .card .card-body samp {
     display: block;
@@ -157,17 +157,36 @@ h6.label-default {
   h6.label-default:first-child {
     margin-top: 1rem; }
 
-.fa-thumbs-up,
-.fa-exclamation {
-  font-size: 6rem;
-  display: block;
-  text-align: center;
-  margin: 0.6rem 0 2rem 0; }
-
 .hidden {
   display: none; }
+
+#loader {
+  vertical-align: middle;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  position: fixed;
+  z-index: 10000;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5); }
+  #loader > .fas {
+    font-size: 5rem;
+    color: #FFFFFF;
+    position: relative;
+    top: 50%;
+    transform: perspective(1px) translateY(-50%); }
 
 .modal .modal-body {
   text-align: center; }
   .modal .modal-body p:last-child {
     margin-bottom: 0; }
+  .modal .modal-body .fa-thumbs-up,
+  .modal .modal-body .fa-exclamation {
+    font-size: 6rem;
+    display: block;
+    text-align: center;
+    margin: 0.6rem 0 2rem 0; }

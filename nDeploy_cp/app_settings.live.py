@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import os
 import socket
 import yaml
@@ -28,67 +29,6 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 cgitb.enable()
 
 
-def branding_print_logo_name():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
-    else:
-        brand_logo = "xtendweb.png"
-    return brand_logo
-
-
-def branding_print_banner():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
-    else:
-        brand_name = "AUTOM8N"
-    return brand_name
-
-
-def branding_print_support():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
-    else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
-    return brand_support
-
-
-def print_green(theoption, hint):
-    print(('<div class="col-md-6 align-self-center"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
-
-
-def print_red(theoption, hint):
-    print(('<div class="col-md-6 align-self-center"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
-
-
-def print_sys_tip(theoption, hint):
-    print(('<div class="col-md-6"><div class="alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
-
-
-def print_disabled():
-    print(('<div class="col-md-6 align-self-center"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title="An additional nginx module is required for this functionality">Not Installed</div></div>'))
-
-
-def print_success(themessage):
-    print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>'))
-
-
-def print_error(themessage):
-    print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-exclamation"></i><p>'+themessage+'</p></div></div>'))
-
-
-def print_forbidden():
-    print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-exclamation"></i><p>Forbidden</p></div></div>'))
-
-
 def close_cpanel_liveapisock():
     """We close the cpanel LiveAPI socket here as we dont need those"""
     cp_socket = os.environ["CPANEL_CONNECT_SOCKET"]
@@ -101,40 +41,11 @@ def close_cpanel_liveapisock():
 close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-
-print('<title>')
-print(branding_print_banner())
-print('</title>')
-
-print(('<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
-print(('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
-print(('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">'))
-print(('<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
-print(('<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">'))
-print(('<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">'))
-print(('<script src="js.js"></script>'))
-print(('<link rel="stylesheet" href="styles.css">'))
-print('</head>')
+commoninclude.print_header()
 
 print('<body>')
 
-print('<header id="main-header">')
-
-print(branding_print_support())
-print('		<div class="logo">')
-print('			<h4>')
-print('				<a href="xtendweb.cgi"><img border="0" src="')
-print(					branding_print_logo_name())
-print('					" width="48" height="48"></a>')
-print(					branding_print_banner())
-print('			</h4>')
-print('		</div>')
-
-print('</header>')
+commoninclude.print_branding()
 
 print('<div id="main-container" class="container">')  # main container
 
@@ -240,7 +151,7 @@ if form.getvalue('domain'):
                 if apptemplate_code in user_apptemplate_dict.keys():
                     apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
         else:
-            print_error()
+            commoninclude.print_error_wrapper()
             sys.exit(0)
 
         # Ok we are done with getting the settings,now lets present it to the user
@@ -304,7 +215,7 @@ if form.getvalue('domain'):
 
         # User config reload
         nginx_log_hint = document_root + '/nginx.conf'
-        print_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
+        commoninclude.print_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
         if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
             print('			<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> Valid</div></div>')
         else:
@@ -398,7 +309,7 @@ if form.getvalue('domain'):
         # auth_basic
         auth_basic_hint = "Setup password for "+document_root+" in cPanel -> Files -> Directory Privacy"
         if auth_basic == 'enabled':
-            print_green('password protect app url', auth_basic_hint)
+            commoninclude.print_green('password protect app url', auth_basic_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
             print('						<label class="btn btn-light active">')
@@ -410,7 +321,7 @@ if form.getvalue('domain'):
             print('					</div>')
             print('				</div>')
         else:
-            print_red('password protect app url', auth_basic_hint)
+            commoninclude.print_red('password protect app url', auth_basic_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
             print('						<label class="btn btn-light">')
@@ -425,7 +336,7 @@ if form.getvalue('domain'):
         # autoindex
         autoindex_hint = "enable for directory listing"
         if autoindex == 'enabled':
-            print_green("autoindex", autoindex_hint)
+            commoninclude.print_green("autoindex", autoindex_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('						<label class="btn btn-light active">')
@@ -437,7 +348,7 @@ if form.getvalue('domain'):
             print('					</div>')
             print('				</div>')
         else:
-            print_red("autoindex", autoindex_hint)
+            commoninclude.print_red("autoindex", autoindex_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('						<label class="btn btn-light">')
@@ -452,7 +363,7 @@ if form.getvalue('domain'):
         # ssl_offload
         ssl_offload_hint = "enable for performance, disable if redirect loop error"
         if ssl_offload == 'enabled':
-            print_green("ssl_offload", ssl_offload_hint)
+            commoninclude.print_green("ssl_offload", ssl_offload_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('						<label class="btn btn-light active">')
@@ -464,7 +375,7 @@ if form.getvalue('domain'):
             print('					</div>')
             print('				</div>')
         else:
-            print_red("ssl_offload", ssl_offload_hint)
+            commoninclude.print_red("ssl_offload", ssl_offload_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('						<label class="btn btn-light">')
@@ -479,7 +390,7 @@ if form.getvalue('domain'):
         # access_log
         access_log_hint = "disabling access_log increase performance but stats wont work"
         if access_log == 'enabled':
-            print_green("access_log", access_log_hint)
+            commoninclude.print_green("access_log", access_log_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('						<label class="btn btn-light active">')
@@ -491,7 +402,7 @@ if form.getvalue('domain'):
             print('					</div>')
             print('				</div>')
         else:
-            print_red("access_log", access_log_hint)
+            commoninclude.print_red("access_log", access_log_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('						<label class="btn btn-light">')
@@ -506,7 +417,7 @@ if form.getvalue('domain'):
         # open_file_cache
         open_file_cache_hint = "increase performance, disable on dev environment for no caching"
         if open_file_cache == 'enabled':
-            print_green("open_file_cache", open_file_cache_hint)
+            commoninclude.print_green("open_file_cache", open_file_cache_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('						<label class="btn btn-light active">')
@@ -518,7 +429,7 @@ if form.getvalue('domain'):
             print('					</div>')
             print('				</div>')
         else:
-            print_red("open_file_cache", open_file_cache_hint)
+            commoninclude.print_red("open_file_cache", open_file_cache_hint)
             print('				<div class="col-md-6">')
             print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('						<label class="btn btn-light">')
@@ -555,7 +466,7 @@ if form.getvalue('domain'):
             # security_headers
             security_headers_hint = "X-Frame-Options,X-Content-Type-Options,X-XSS-Protection,HSTS"
             if security_headers == 'enabled':
-                print_green("security_headers", security_headers_hint)
+                commoninclude.print_green("security_headers", security_headers_hint)
                 print('			<div class="col-md-6">')
                 print('				<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
                 print('					<label class="btn btn-light active">')
@@ -567,7 +478,7 @@ if form.getvalue('domain'):
                 print('				</div>')
                 print('			</div>')
             else:
-                print_red("security_headers", security_headers_hint)
+                commoninclude.print_red("security_headers", security_headers_hint)
                 print('			<div class="col-md-6">')
                 print('				<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
                 print('					<label class="btn btn-light">')
@@ -582,7 +493,7 @@ if form.getvalue('domain'):
             # dos_mitigate
             dos_mitigate_hint = "Enable only when under a dos attack"
             if dos_mitigate == 'enabled':
-                print_green("dos_mitigate", dos_mitigate_hint)
+                commoninclude.print_green("dos_mitigate", dos_mitigate_hint)
                 print('			<div class="col-md-6">')
                 print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('					<label class="btn btn-light active">')
@@ -594,7 +505,7 @@ if form.getvalue('domain'):
                 print('				</div>')
                 print('			</div>')
             else:
-                print_red("dos_mitigate", dos_mitigate_hint)
+                commoninclude.print_red("dos_mitigate", dos_mitigate_hint)
                 print('			<div class="col-md-6">')
                 print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('					<label class="btn btn-light">')
@@ -610,7 +521,7 @@ if form.getvalue('domain'):
             test_cookie_hint = "Disable most bots except good ones like google/yahoo etc with a cookie challenge"
             if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
                 if test_cookie == 'enabled':
-                    print_green("bot_mitigate", test_cookie_hint)
+                    commoninclude.print_green("bot_mitigate", test_cookie_hint)
                     print('			<div class="col-md-6">')
                     print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('					<label class="btn btn-light active">')
@@ -622,7 +533,7 @@ if form.getvalue('domain'):
                     print('				</div>')
                     print('			</div>')
                 else:
-                    print_red("bot_mitigate", test_cookie_hint)
+                    commoninclude.print_red("bot_mitigate", test_cookie_hint)
                     print('			<div class="col-md-6">')
                     print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('					<label class="btn btn-light">')
@@ -634,14 +545,14 @@ if form.getvalue('domain'):
                     print('				</div>')
                     print('			</div>')
             else:
-                print_red("bot_mitigate", test_cookie_hint)
-                print_disabled()
+                commoninclude.print_red("bot_mitigate", test_cookie_hint)
+                commoninclude.print_disabled()
                 print(('<input class="hidden" name="test_cookie" value="'+test_cookie+'">'))
 
             # symlink_protection
             symlink_protection_hint = "Access to a file is denied if any component of the pathname is a symbolic link, and the link and object that the link points to have different owners"
             if symlink_protection == 'enabled':
-                print_green("symlink_protection", symlink_protection_hint)
+                commoninclude.print_green("symlink_protection", symlink_protection_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light active">')
@@ -653,7 +564,7 @@ if form.getvalue('domain'):
                 print('					</div>')
                 print('				</div>')
             else:
-                print_red("symlink_protection", symlink_protection_hint)
+                commoninclude.print_red("symlink_protection", symlink_protection_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light">')
@@ -669,7 +580,7 @@ if form.getvalue('domain'):
             mod_security_hint = "mod_security v3 WAF"
             if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
                 if mod_security == 'enabled':
-                    print_green('mod_security', mod_security_hint)
+                    commoninclude.print_green('mod_security', mod_security_hint)
                     print('			<div class="col-md-6">')
                     print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('					<label class="btn btn-light active">')
@@ -681,7 +592,7 @@ if form.getvalue('domain'):
                     print('				</div>')
                     print('			</div>')
                 else:
-                    print_red('mod_security', mod_security_hint)
+                    commoninclude.print_red('mod_security', mod_security_hint)
                     print('			<div class="col-md-6">')
                     print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('					<label class="btn btn-light">')
@@ -693,8 +604,8 @@ if form.getvalue('domain'):
                     print('				</div>')
                     print('			</div>')
             else:
-                print_red('mod_security', mod_security_hint)
-                print_disabled()
+                commoninclude.print_red('mod_security', mod_security_hint)
+                commoninclude.print_disabled()
                 print(('<input class="hidden" name="mod_security" value="'+mod_security+'">'))
 
         print('					</div>')  # row end
@@ -717,7 +628,7 @@ if form.getvalue('domain'):
         # set_expire_static
         set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
         if set_expire_static == 'enabled':
-            print_green('set expires header', set_expire_static_hint)
+            commoninclude.print_green('set expires header', set_expire_static_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
@@ -729,7 +640,7 @@ if form.getvalue('domain'):
             print('						</div>')
             print('					</div>')
         else:
-            print_red('set expires header', set_expire_static_hint)
+            commoninclude.print_red('set expires header', set_expire_static_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
@@ -745,7 +656,7 @@ if form.getvalue('domain'):
         pagespeed_hint = "delivers pagespeed optimized webpage, resource intensive"
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
             if pagespeed == 'enabled':
-                print_green("pagespeed", pagespeed_hint)
+                commoninclude.print_green("pagespeed", pagespeed_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light active">')
@@ -757,7 +668,7 @@ if form.getvalue('domain'):
                 print('					</div>')
                 print('				</div>')
             else:
-                print_red("pagespeed", pagespeed_hint)
+                commoninclude.print_red("pagespeed", pagespeed_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light">')
@@ -769,15 +680,15 @@ if form.getvalue('domain'):
                 print('					</div>')
                 print('				</div>')
         else:
-            print_red("pagespeed", pagespeed_hint)
-            print_disabled()
+            commoninclude.print_red("pagespeed", pagespeed_hint)
+            commoninclude.print_disabled()
             print(('<input class="hidden" name="pagespeed" value="'+pagespeed+'">'))
 
         # pagespeed filter level
         pagespeed_filter_hint = "CoreFilters load the Core filters , PassThrough allows you to enable individual filters via custom nginx conf"
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
             if pagespeed_filter == 'CoreFilters':
-                print_red("pagespeed level", pagespeed_filter_hint)
+                commoninclude.print_red("pagespeed level", pagespeed_filter_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light active">')
@@ -789,7 +700,7 @@ if form.getvalue('domain'):
                 print('					</div>')
                 print('				</div>')
             else:
-                print_green("pagespeed_filter", pagespeed_filter_hint)
+                commoninclude.print_green("pagespeed_filter", pagespeed_filter_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light">')
@@ -801,15 +712,15 @@ if form.getvalue('domain'):
                 print('					</div>')
                 print('				</div>')
         else:
-            print_red("pagespeed level", pagespeed_filter_hint)
-            print_disabled()
+            commoninclude.print_red("pagespeed level", pagespeed_filter_hint)
+            commoninclude.print_disabled()
             print(('<input class="hidden" name="pagespeed_filter" value="'+pagespeed_filter+'">'))
 
         # brotli
         brotli_hint = "bandwidth optimization, resource intensive, tls only"
         if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
             if brotli == 'enabled':
-                print_green("brotli", brotli_hint)
+                commoninclude.print_green("brotli", brotli_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light active">')
@@ -821,7 +732,7 @@ if form.getvalue('domain'):
                 print('					</div>')
                 print('				</div>')
             else:
-                print_red("brotli", brotli_hint)
+                commoninclude.print_red("brotli", brotli_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light">')
@@ -833,14 +744,14 @@ if form.getvalue('domain'):
                 print('					</div>')
                 print('				</div>')
         else:
-            print_red("brotli", brotli_hint)
-            print_disabled()
+            commoninclude.print_red("brotli", brotli_hint)
+            commoninclude.print_disabled()
             print(('<input class="hidden" name="brotli" value="'+brotli+'">'))
 
         # gzip
         gzip_hint = "bandwidth optimization, resource intensive"
         if gzip == 'enabled':
-            print_green("gzip", gzip_hint)
+            commoninclude.print_green("gzip", gzip_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
@@ -852,7 +763,7 @@ if form.getvalue('domain'):
             print('						</div>')
             print('					</div>')
         else:
-            print_red("gzip", gzip_hint)
+            commoninclude.print_red("gzip", gzip_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
@@ -867,7 +778,7 @@ if form.getvalue('domain'):
         # http2
         http2_hint = "works only with TLS"
         if http2 == 'enabled':
-            print_green("http2", http2_hint)
+            commoninclude.print_green("http2", http2_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
@@ -879,7 +790,7 @@ if form.getvalue('domain'):
             print('						</div>')
             print('					</div>')
         else:
-            print_red("http2", http2_hint)
+            commoninclude.print_red("http2", http2_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
@@ -907,7 +818,7 @@ if form.getvalue('domain'):
         # redirect_to_ssl
         redirect_to_ssl_hint = "redirect http:// to https:// "
         if redirect_to_ssl == 'enabled':
-            print_green("redirect_to_ssl", redirect_to_ssl_hint)
+            commoninclude.print_green("redirect_to_ssl", redirect_to_ssl_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
@@ -919,7 +830,7 @@ if form.getvalue('domain'):
             print('						</div>')
             print('					</div>')
         else:
-            print_red("redirect_to_ssl", redirect_to_ssl_hint)
+            commoninclude.print_red("redirect_to_ssl", redirect_to_ssl_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
@@ -934,7 +845,7 @@ if form.getvalue('domain'):
         # proxy_to_master
         proxy_to_master_hint = "in cluster proxy to master instead of local server "
         if proxy_to_master == 'enabled':
-            print_green("proxy_to_master", proxy_to_master_hint)
+            commoninclude.print_green("proxy_to_master", proxy_to_master_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
@@ -946,7 +857,7 @@ if form.getvalue('domain'):
             print('						</div>')
             print('					</div>')
         else:
-            print_red("proxy_to_master", proxy_to_master_hint)
+            commoninclude.print_red("proxy_to_master", proxy_to_master_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
@@ -961,7 +872,7 @@ if form.getvalue('domain'):
         # redirect_aliases
         redirect_aliases_hint = "redirect all alias domains to the main domain"
         if redirect_aliases == 'enabled':
-            print_green("redirect_aliases", redirect_aliases_hint)
+            commoninclude.print_green("redirect_aliases", redirect_aliases_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
@@ -973,7 +884,7 @@ if form.getvalue('domain'):
             print('						</div>')
             print('					</div>')
         else:
-            print_red("redirect_aliases", redirect_aliases_hint)
+            commoninclude.print_red("redirect_aliases", redirect_aliases_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
@@ -988,9 +899,9 @@ if form.getvalue('domain'):
         # wwwredirect
         www_redirect_hint = "select redirection mode"
         if wwwredirect == 'none':
-            print_red("www redirect", www_redirect_hint)
+            commoninclude.print_red("www redirect", www_redirect_hint)
         else:
-            print_green("www redirect", www_redirect_hint)
+            commoninclude.print_green("www redirect", www_redirect_hint)
         print('						<div class="col-md-6">')
         print('							<div class="input-group btn-group">')
         print('								<select name="wwwredirect" class="custom-select">')
@@ -1013,9 +924,9 @@ if form.getvalue('domain'):
         # URL Redirect
         url_redirect_hint = "select redirection status 301 or 307"
         if redirectstatus == 'none':
-            print_red("URL Redirect", url_redirect_hint)
+            commoninclude.print_red("URL Redirect", url_redirect_hint)
         else:
-            print_green("URL Redirect", url_redirect_hint)
+            commoninclude.print_green("URL Redirect", url_redirect_hint)
         print('						<div class="col-md-6">')
         print('							<div class="input-group btn-group">')
         print('								<select name="redirectstatus" class="custom-select">')
@@ -1038,7 +949,7 @@ if form.getvalue('domain'):
         # Append request_uri to redirect
         append_requesturi_hint = 'append $request_uri to the redirect URL'
         if append_requesturi == 'enabled' and redirectstatus != 'none':
-            print_green("append $request_uri to redirecturl", append_requesturi_hint)
+            commoninclude.print_green("append $request_uri to redirecturl", append_requesturi_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
@@ -1050,7 +961,7 @@ if form.getvalue('domain'):
             print('						</div>')
             print('					</div>')
         else:
-            print_red("append $request_uri to redirecturl", append_requesturi_hint)
+            commoninclude.print_red("append $request_uri to redirecturl", append_requesturi_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
@@ -1069,9 +980,9 @@ if form.getvalue('domain'):
         print('								<div class="input-group-prepend">')
         print('									<span class="input-group-text">')
         if redirecturl == "none" or redirectstatus == 'none':
-            print_red("Redirect to URL", redirecturl_hint)
+            commoninclude.print_red("Redirect to URL", redirecturl_hint)
         else:
-            print_green("Redirect to URL", redirecturl_hint)
+            commoninclude.print_green("Redirect to URL", redirecturl_hint)
         print('									</span>')
         print('								</div>')
         print(('							<input class="form-control" placeholder='+redirecturl+' type="text" name="redirecturl">'))
@@ -1144,75 +1055,17 @@ if form.getvalue('domain'):
         print('				</div>')
         print('			</div>')  # card end
     else:
-        print_error('domain-data file i/o error')
+        commoninclude.print_error_wrapper('domain-data file i/o error')
 else:
-    print_forbidden()
+    commoninclude.print_forbidden_wrapper()
 
 print('			</div>')  # col end
 print('		</div>')  # row end
 
 print('</div>')  # main-container end
 
-# Modal
-print('		<div class="modal fade" id="myModal" tabindex="-1" role="dialog">')
-print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
-print('      		<div class="modal-content">')
-print('        			<div class="modal-header">')
-print('          			<h4 class="modal-title">Command Output</h4>')
-print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-print('          				<span aria-hidden="true">&times;</span>')
-print('        				</button>')
-print('        			</div>')
-print('        			<div class="modal-body">')
-print('        			</div>')
-print('					<div class="modal-footer">')
-print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
-print('      			</div>')
-print('      		</div>')
-print('    		</div>')
-print('     </div>')
-
-# Modal with no reload
-print('		<div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog">')
-print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
-print('      		<div class="modal-content">')
-print('        			<div class="modal-header">')
-print('          			<h4 class="modal-title">Command Output</h4>')
-print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-print('          				<span aria-hidden="true">&times;</span>')
-print('        				</button>')
-print('        			</div>')
-print('        			<div class="modal-body">')
-print('        			</div>')
-print('					<div class="modal-footer">')
-print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
-print('      			</div>')
-print('      		</div>')
-print('    		</div>')
-print('     </div>')
-
-# Modal Large Width
-print('		<div class="modal fade" id="myModal-xl" tabindex="-1" role="dialog">')
-print('    		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
-print('      		<div class="modal-content">')
-print('        			<div class="modal-header">')
-print('          			<h4 class="modal-title">Command Output</h4>')
-print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-print('          				<span aria-hidden="true">&times;</span>')
-print('        				</button>')
-print('        			</div>')
-print('        			<div class="modal-body">')
-print('        			</div>')
-print('					<div class="modal-footer">')
-print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
-print('      			</div>')
-print('      		</div>')
-print('    		</div>')
-print('     </div>')
-
-print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
-print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
-print(('</div>'))
+commoninclude.print_modals()
+commoninclude.print_loader()
 
 print('</body>')
 print('</html>')

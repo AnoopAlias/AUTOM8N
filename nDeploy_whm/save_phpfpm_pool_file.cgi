@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import cgi
 import cgitb
 import os
@@ -17,18 +18,6 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 default_domain_data_file = installation_path+'/conf/domain_data_default.yaml'
 app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
-
-
-def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
-
-
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
-def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
 
 
 cgitb.enable()
@@ -59,9 +48,9 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
                     p = subprocess.Popen("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
                 else:
                     p = subprocess.Popen('service ndeploy_backends restart', shell=True)
-                print_success('PHP-FPM pool settings updated')
+                commoninclude.print_success('PHP-FPM pool settings updated')
         else:
-            print_forbidden()
+            commoninclude.print_forbidden()
     elif form.getvalue('action') == 'delete':
         if os.path.isfile(myphpini):
             config = configparser.ConfigParser()
@@ -75,9 +64,9 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
                 q = subprocess.Popen("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
             else:
                 q = subprocess.Popen('service ndeploy_backends restart', shell=True)
-            print_success('PHP-FPM pool settings updated')
+            commoninclude.print_success('PHP-FPM pool settings updated')
 else:
-    print_forbidden()
+    commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')

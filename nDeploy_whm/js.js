@@ -1,15 +1,15 @@
 
 jQuery(document).ready(function($){
 
-		$(document).ajaxStart(function () {
-        $('#wait').show();
-    });
-    $(document).ajaxStop(function () {
-        $('#wait').hide();
-    });
-    $(document).ajaxError(function () {
-        $('#wait').hide();
-    });
+	$(document).ajaxStart(function () {
+		$('#loader').show();
+	});
+	$(document).ajaxStop(function () {
+		$('#loader').hide();
+	});
+	$(document).ajaxError(function () {
+		$('#loader').hide();
+	});
 
 	$.ajaxSetup({
 	    cache: false

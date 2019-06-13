@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import cgi
 import cgitb
 import os
@@ -25,18 +26,6 @@ def silentremove(filename):
         pass
 
 
-def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
-
-
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
-def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
-
-
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -57,11 +46,11 @@ if form.getvalue('phpversion'):
         userdata_dict = {'PHP': {form.getvalue('phpversion'): required_version_path}}
         with open(installation_path+"/conf/preferred_php.yaml", 'w') as yaml_file:
             yaml.dump(userdata_dict, yaml_file, default_flow_style=False)
-        print_success('Default PHP for Autoswitch Set')
+        commoninclude.print_success('Default PHP for Autoswitch Set')
     else:
-        print_forbidden()
+        commoninclude.print_forbidden()
 else:
-        print_forbidden()
+        commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')
