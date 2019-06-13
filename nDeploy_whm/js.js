@@ -23,8 +23,8 @@ jQuery(document).ready(function($){
         var $f = $('#modalForm1');
         var $url = "ddos_mitigate.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myModal-xl").find('.modal-body').html(result)
+            $("#myModal-xl").modal('show');
         }});
     });
 
