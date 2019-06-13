@@ -221,33 +221,12 @@ else:
     else:
         print_error('Error: Forbidden::open_file_cache')
         sys.exit(0)
-    # clickjacking_protect
-    if 'clickjacking_protect' in form.keys():
-        clickjacking_protect = form.getvalue('clickjacking_protect')
-        yaml_parsed_profileyaml['clickjacking_protect'] = clickjacking_protect
+    # security_headers
+    if 'security_headers' in form.keys():
+        security_headers = form.getvalue('security_headers')
+        yaml_parsed_profileyaml['security_headers'] = security_headers
     else:
-        print_error('Error: Forbidden::clickjacking_protect')
-        sys.exit(0)
-    # disable_contenttype_sniffing
-    if 'disable_contenttype_sniffing' in form.keys():
-        disable_contenttype_sniffing = form.getvalue('disable_contenttype_sniffing')
-        yaml_parsed_profileyaml['disable_contenttype_sniffing'] = disable_contenttype_sniffing
-    else:
-        print_error('Error: Forbidden::disable_contenttype_sniffing')
-        sys.exit(0)
-    # xss_filter
-    if 'xss_filter' in form.keys():
-        xss_filter = form.getvalue('xss_filter')
-        yaml_parsed_profileyaml['xss_filter'] = xss_filter
-    else:
-        print_error('Error: Forbidden::xss_filter')
-        sys.exit(0)
-    # hsts
-    if 'hsts' in form.keys():
-        hsts = form.getvalue('hsts')
-        yaml_parsed_profileyaml['hsts'] = hsts
-    else:
-        print_error('Error: Forbidden::hsts')
+        print_error('Error: Forbidden::security_headers')
         sys.exit(0)
     # dos_mitigate
     if 'dos_mitigate' in form.keys():

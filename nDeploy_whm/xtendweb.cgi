@@ -53,9 +53,9 @@ def branding_print_support():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
     return brand_support
 
 
@@ -92,7 +92,7 @@ print('<header id="main-header">')
 
 print(branding_print_support())
 print('		<div class="logo">')
-print('			<h3>')
+print('			<h4>')
 print('				<a href="xtendweb.cgi"><img border="0" src="')
 print(					branding_print_logo_name())
 print('					" width="48" height="48"></a>')
@@ -179,22 +179,32 @@ print('								</form>')
 
 print('							</div>')
 
+# Glances
+print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-thermometer-half"></i> Glances</div></div>')
+print('							<div class="col-sm-6">')
+
+print('								<form class="form" action="https://'+myhostname+'/glances/" target="_blank">')
+print('									<input class="alert alert-info btn btn-info" type="submit" value="System Status">')
+print('								</form>')
+
+print('							</div>')
+
 # Borg Backup
 print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-database"></i> Borg Backup</div></div>')
 print('							<div class="col-sm-6">')
 
-print('								<form class="form" method="post" action="setup_borg_backup.cgi">')
+print('								<form class="form" method="get" action="setup_borg_backup.cgi">')
 print('									<button class="alert alert-info btn btn-info" type="submit">Setup Borg</button>')
 print('								</form>')
 
 print('							</div>')
 
 # Process Tracker
-print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-bug"></i> Abnormal Process</div></div>')
+print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-bug"></i> Detect Abnormal Process</div></div>')
 print('							<div class="col-sm-6">')
 
 print('								<form class="form" id="modalForm3" onsubmit="return false;">')
-print('									<button type="submit" class="alert alert-info btn btn-info btn-ajax">Check Process</button>')
+print('									<button type="submit" class="alert alert-info btn btn-info ">Check Process</button>')
 print('								</form>')
 
 print('							</div>')
@@ -203,7 +213,7 @@ print('						</div>')  # row end
 print('					</div>')  # card-body
 
 print('					<div class="card-footer">')
-print('						<small><strong>Do NOT</strong> restart Nginx when activating config changes.<br>Always reload the process using <kbd>nginx -s reload</kbd></small>')
+print('						<small><strong>Do NOT</strong> restart Nginx, but reload <kbd>nginx -t && nginx -s reload</kbd></small>')
 print('					</div>')
 print('				</div>')  # card end
 
@@ -245,12 +255,12 @@ if os.path.isfile(cluster_config_file):
 
     print('					<form class="form mb-3" id="modalForm4" onsubmit="return false;">')
     print(('					<input class="hidden" name="mode" value="restart">'))
-    print('						<button type="submit" class="btn btn-outline-primary btn-block btn-ajax">Soft Restart Unison Sync</button>')
+    print('						<button type="submit" class="btn btn-outline-primary btn-block ">Soft Restart Unison Sync</button>')
     print('					</form>')
 
     print('					<form class="form mb-0" id="modalForm5" onsubmit="return false;">')
     print(('					<input class="hidden" name="mode" value="reset">'))
-    print('						<button type="submit" class="btn btn-outline-primary btn-block btn-ajax-slow">Hard Reset Unison Sync</button>')
+    print('						<button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
     print('					</form>')
 
     print('				</div>')  # card-body
@@ -278,10 +288,10 @@ if os.path.isfile(cluster_config_file):
     for cpuser in sorted(user_list):
         if cpuser != 'nobody' and cpuser != 'system':
             print(('					<option value="'+cpuser+'">'+cpuser+'</option>'))
-            print('					</select>')
-            print('				</div>')
-            print('				<button type="submit" class="btn btn-outline-primary btn-block btn-ajax">Sync Dns Zone</button>')
-            print('			</form>')
+    print('					</select>')
+    print('				</div>')
+    print('				<button type="submit" class="btn btn-outline-primary btn-block ">Sync Dns Zone</button>')
+    print('			</form>')
     print('				</div>')  # card-body end
     print('			</div>')  # card end
 
@@ -309,7 +319,7 @@ if "PHP" in backend_data_yaml_parsed:
         print(('						<option value="'+versions_defined+'">'+versions_defined+'</option>'))
 print('								</select>')
 print('							</div>')
-print('							<button type="submit" class="btn btn-outline-primary btn-block btn-ajax">Set Default PHP</button>')
+print('							<button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
 print('						</form>')
 
 print('					</div>')  # card-body end
@@ -333,7 +343,7 @@ if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('								<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
     print('								<div class="col-sm-6">')
     print('									<form id="modalForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info btn-ajax">Disable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
     print(('									<input class="hidden" name="ddos" value="disable">'))
     print('									</form>')
     print('								</div>')
@@ -346,7 +356,7 @@ else:
     print('								<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
     print('								<div class="col-sm-6">')
     print('									<form id="modalForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info btn-ajax">Enable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
     print(('									<input class="hidden" name="ddos" value="enable">'))
     print('									</form>')
     print('								</div>')
@@ -367,7 +377,7 @@ else:
         print('							<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
         print('								<div class="col-sm-6">')
         print('								<form id="modalForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info btn-ajax">Disable</button>')
+        print('									<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
         print(('								<input class="hidden" name="ddos" value="disable">'))
         print('								</form>')
         print('							</div>')
@@ -380,17 +390,18 @@ else:
         print('							<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
         print('							<div class="col-sm-6">')
         print('								<form id="modalForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info btn-ajax">Enable</button>')
+        print('									<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
         print(('								<input class="hidden" name="ddos" value="enable">'))
         print('								</form>')
         print('							</div>')
         print('						</div>')
         print('					</div>')
 
-print('						</div>') # row end
+print('						</div>')  # row end
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
-print('						<small>Turn these settings on when you are under a DDOS Attack</small>')
+print('						<small>Turn these settings on when you are under a DDOS Attack</small><br>')
+print('						<small>Disable CSF or any other firewall before turning on SYNPROXY(FireHol)</small><br>')
 print('					</div>')
 print('				</div>')  # card end
 
@@ -405,7 +416,7 @@ print('						<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"><
 print('					</div>')
 print('					<div class="card-body">')  # card-body
 
-print('						<form class="form" action="phpfpm_pool_editor.cgi" method="post">')
+print('						<form class="form" action="phpfpm_pool_editor.cgi" method="get">')
 print('							<div class="input-group">')
 print('								<div class="input-group-prepend">')
 print('    								<label class="input-group-text" for="inputGroupSelect01">Account</label>')
@@ -441,40 +452,40 @@ print('				</div>')  # card end
 # Map cPanel pkg to nginx setting
 print('				<div class="card">')  # card
 print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-map-signs float-right"></i> Map cPanel pkg to nginx setting</h5>')
+print('						<h5 class="card-title mb-0"><i class="fas fa-box-open float-right"></i> Map cPanel pkg to nginx setting</h5>')
 print('					</div>')
 print('					<div class="card-body p-0">')  # card-body
 print('						<div class="row no-gutters">')
 
 if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
-    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>sync Nginx conf<->Plan</div></div>')
+    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div></div>')
     print('						<div class="col-sm-6">')
     print('							<div class="row no-gutters">')
     print('								<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
     print('								<div class="col-sm-6">')
     print('									<form class="form" method="post" id="modalForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info btn-ajax">Disable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
     print(('									<input class="hidden" name="package_lock" value="disabled">'))
     print('									</form>')
     print('								</div>')
     print('							</div>')
     print('						</div>')
 else:
-    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>sync Nginx conf<->Plan</div></div>')
+    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div></div>')
     print('						<div class="col-sm-6">')
     print('							<div class="row no-gutters">')
     print('								<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
     print('								<div class="col-sm-6">')
     print('									<form class="form" method="post" id="modalForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info btn-ajax">Enable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
     print(('									<input class="hidden" name="package_lock" value="enabled">'))
     print('									</form>')
     print('								</div>')
     print('							</div>')
     print('						</div>')
 
-print('						</div>') # row end
-print('					</div>') # card-body end
+print('						</div>')  # row end
+print('					</div>')  # card-body end
 
 print('					<div class="card-body">')  # card-body
 # Workaround for python 2.6
@@ -483,7 +494,7 @@ if platform.python_version().startswith('2.6'):
 else:
     listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
 mypkgs = json.loads(listpkgs)
-print('						<form class="form" action="pkg_profile.cgi" method="post">')
+print('						<form class="form" action="pkg_profile.cgi" method="get">')
 print('							<div class="input-group">')
 print('								<div class="input-group-prepend">')
 print('    								<label class="input-group-text" for="inputGroupSelect07">PKG</label>')
@@ -500,14 +511,14 @@ print('						</form>')
 
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
-print('						<small>sync Nginx conf <-> plan when enabled will reset all nginx config/settings on plan upgrade/downgrade</small>')
+print('						<small>sync nginx to pkg when enabled will reset all nginx config/settings on plan upgrade/downgrade</small>')
 print('					</div>')
 print('				</div>')  # card end
 
 # System Resource Limit
 print('				<div class="card">')  # card
 print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-battery-three-quarters float-right"></i> System Resource Limit</h5>')
+print('						<h5 class="card-title mb-0"><i class="fas fa-compress float-right"></i> System Resource Limit</h5>')
 print('					</div>')
 print('					<div class="card-body">')  # card-body
 
@@ -518,7 +529,7 @@ if not osrelease == 'CloudLinux':
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
             userlist = os.listdir("/var/cpanel/users")
-            print('			<form class="form" action="resource_limit.cgi" method="post">')
+            print('			<form class="form" action="resource_limit.cgi" method="get">')
             print('				<div class="input-group">')
             print('					<div class="input-group-prepend">')
             print('    					<label class="input-group-text">User</label>')
@@ -533,7 +544,7 @@ if not osrelease == 'CloudLinux':
             print('				<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
             print('			</form>')
 
-            print('			<form class="form mt-4" action="resource_limit.cgi" method="post">')
+            print('			<form class="form mt-4" action="resource_limit.cgi" method="get">')
             print('				<div class="input-group">')
             print('					<div class="input-group-prepend">')
             print('    					<label class="input-group-text">Service</label>')
@@ -547,7 +558,7 @@ if not osrelease == 'CloudLinux':
             print('				<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
             print('			</form>')
         else:
-            print('			<form class="form" action="resource_limit.cgi" method="post">')
+            print('			<form class="form" action="resource_limit.cgi" method="get">')
             print('				<div class="input-group">')
             print('					<div class="input-group-prepend">')
             print('    					<label class="input-group-text">Resource</label>')
@@ -590,6 +601,49 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+# Modal with no reload
+print('		<div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog">')
+print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
+
+# Modal Large Width
+print('		<div class="modal fade" id="myModal-xl" tabindex="-1" role="dialog">')
+print('    		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
+print('      		<div class="modal-content">')
+print('        			<div class="modal-header">')
+print('          			<h4 class="modal-title">Command Output</h4>')
+print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+print('          				<span aria-hidden="true">&times;</span>')
+print('        				</button>')
+print('        			</div>')
+print('        			<div class="modal-body">')
+print('        			</div>')
+print('					<div class="modal-footer">')
+print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+print('      			</div>')
+print('      		</div>')
+print('    		</div>')
+print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
+
 
 print('</body>')
 print('</html>')

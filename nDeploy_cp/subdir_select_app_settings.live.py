@@ -59,9 +59,9 @@ def branding_print_support():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
     return brand_support
 
 
@@ -102,7 +102,7 @@ print('<header id="main-header">')
 
 print(branding_print_support())
 print('		<div class="logo">')
-print('			<h3>')
+print('			<h4>')
 print('				<a href="xtendweb.cgi"><img border="0" src="')
 print(					branding_print_logo_name())
 print('					" width="48" height="48"></a>')
@@ -195,7 +195,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print(('			<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('			<input class="hidden" name="backend" value="'+mybackend+'">'))
                 print(('			<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('				<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Update settings</button>')
+                print('				<button class="btn btn-outline-primary btn-block " type="submit">Update settings</button>')
                 print('			</form>')
                 print('		</div>')  # card-body end
                 print('</div>')  # card end
@@ -339,7 +339,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print(('				<input class="hidden" name="domain" value="'+mydomain+'">'))
             print(('				<input class="hidden" name="backend" value="'+mybackend+'">'))
             print(('				<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-            print('					<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Update settings</button>')
+            print('					<button class="btn btn-outline-primary btn-block " type="submit">Update settings</button>')
             print('				</form>')
             print('			</div>')  # card-body end
             print('		</div>')  # card end
@@ -408,6 +408,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')

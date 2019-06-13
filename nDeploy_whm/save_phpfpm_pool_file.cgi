@@ -56,12 +56,12 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
                 with codecs.open(myphpini, 'w', encoding='utf8') as f:
                     config.write(f)
                 if os.path.isfile('/opt/nDeploy/conf/secure-php-enabled'):
-                    subprocess.call("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
+                    p = subprocess.Popen("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
                 else:
-                    subprocess.call('service ndeploy_backends restart', shell=True)
+                    p = subprocess.Popen('service ndeploy_backends restart', shell=True)
                 print_success('PHP-FPM pool settings updated')
         else:
-        	print_forbidden()
+            print_forbidden()
     elif form.getvalue('action') == 'delete':
         if os.path.isfile(myphpini):
             config = configparser.ConfigParser()
@@ -72,12 +72,12 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
             with codecs.open(myphpini, 'w', encoding='utf8') as f:
                 config.write(f)
             if os.path.isfile('/opt/nDeploy/conf/secure-php-enabled'):
-                subprocess.call("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
+                q = subprocess.Popen("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
             else:
-                subprocess.call('service ndeploy_backends restart', shell=True)
+                q = subprocess.Popen('service ndeploy_backends restart', shell=True)
             print_success('PHP-FPM pool settings updated')
 else:
-	print_forbidden()
+    print_forbidden()
 
 print('</body>')
 print('</html>')

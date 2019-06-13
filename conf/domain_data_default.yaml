@@ -11,10 +11,7 @@ gzip: enabled
 http2: enabled
 access_log: enabled
 open_file_cache: enabled
-clickjacking_protect: disabled
-disable_contenttype_sniffing: disabled
-xss_filter: disabled
-hsts: disabled
+security_headers: disabled
 dos_mitigate: disabled
 symlink_protection: disabled
 test_cookie: disabled

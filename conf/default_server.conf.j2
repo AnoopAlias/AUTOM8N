@@ -33,6 +33,17 @@ server {
         location / {
            proxy_pass   http://{% if PROXY_TO_MASTER %}{{ MASTER_MAINIP }}{% else %}{{ MYIP }}{% endif %}:9999;
           }
+        location /glances/ {
+          auth_basic "Glances";
+          auth_basic_user_file /etc/nginx/conf.d/glances.password;
+          port_in_redirect off;
+          rewrite /glances/(.*) /$1 break;
+          proxy_pass http://127.0.0.1:61208/;
+          proxy_set_header Host $http_host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          }
           location /netdata {
             return 301 https://$host$request_uri;
           }
@@ -64,6 +75,17 @@ server {
         location / {
            proxy_pass   https://{% if PROXY_TO_MASTER %}{{ MASTER_MAINIP }}{% else %}{{ MYIP }}{% endif %}:4430;
           }
+          location /glances/ {
+            auth_basic "Glances";
+            auth_basic_user_file /etc/nginx/conf.d/glances.password;          
+            port_in_redirect off;
+            rewrite /glances/(.*) /$1 break;
+            proxy_pass http://127.0.0.1:61208/;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            }
           location /nginx_status {
               stub_status on;
               access_log off;

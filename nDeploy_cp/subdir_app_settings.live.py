@@ -57,9 +57,9 @@ def branding_print_support():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
     return brand_support
 
 
@@ -133,7 +133,7 @@ print('<header id="main-header">')
 
 print(branding_print_support())
 print('		<div class="logo">')
-print('			<h3>')
+print('			<h4>')
 print('				<a href="xtendweb.cgi"><img border="0" src="')
 print(					branding_print_logo_name())
 print('					" width="48" height="48"></a>')
@@ -152,7 +152,7 @@ print('				<li class="breadcrumb-item active">Subdir Config</li>')
 print('			</ol>')
 print('		</nav>')
 
-print('		<div class="row justify-content-lg-center"">')
+print('		<div class="row justify-content-lg-center">')
 
 print('			<div class="col-lg-6">')  # col left
 
@@ -199,7 +199,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> '+mydomain+'/'+thesubdir+'</h5>')
                 print('		</div>')
                 print('		<div class="card-body">')  # card-body
-                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="post">')
+                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
                 print(('			<div class="alert alert-info">Select an upstream for this subdirectory</div>'))
                 print('				<div class="input-group mb-3">')
                 print('					<div class="input-group-prepend input-group-prepend-min">')
@@ -214,7 +214,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # Pass on the domain name to the next stage
                 print(('			<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('			<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('				<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Select</button>')
+                print('				<button class="btn btn-outline-primary btn-block " type="submit">Select</button>')
                 print('			</form>')
                 print('		</div>')  # card-body end
                 print('</div>')  # card end
@@ -322,16 +322,16 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')
                 print('					<div class="col-md-6">')
                 print('						<form class="form" method="post" id="modalForm4" onsubmit="return false;">')
-                print('							<button class="alert alert-info btn btn-info btn-ajax" type="submit">Reload</button>')
+                print('							<button class="alert alert-info btn btn-info " type="submit">Reload</button>')
                 print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print('						</form>')
                 print('					</div>')
 
                 # Nginx Log
-                print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-clipboard-list"></i>nginx reload log</div></div>')
+                print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div></div>')
                 print('					<div class="col-md-6">')
                 print('						<form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-                print('							<button class="alert alert-info btn btn-info btn-ajax" type="submit">View Log</button>')
+                print('							<button class="alert alert-info btn btn-info " type="submit">View Log</button>')
                 print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print('						</form>')
                 print('					</div>')
@@ -355,19 +355,19 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print(('		<input class="hidden" name="document_root" value="'+document_root+'/'+thesubdir+'">'))
                     print(('		<input class="hidden" name="backend_category" value="'+backend_category+'">'))
                     print(('		<input class="hidden" name="backend_version" value="'+backend_version+'">'))
-                    print('			<button class="btn btn-outline-warning btn-block btn-ajax" data-toggle="tooltip" data-placement="top" title="'+dep_file+'" type="submit">Install '+backend_category+' project deps</button>')
+                    print('			<button class="btn btn-outline-warning btn-block " data-toggle="tooltip" data-placement="top" title="'+dep_file+'" type="submit">Install '+backend_category+' project deps</button>')
                     print('		</form>')
 
                     if backend_category == 'PHP':
                         print('			<form class="mb-0 mt-3" method="post" id="modalForm1" onsubmit="return false;">')
-                        print('				<button class="btn btn-outline-warning btn-block btn-ajax" type="submit">View PHP Log</button>')
+                        print('				<button class="btn btn-outline-warning btn-block " type="submit">View PHP Log</button>')
                         print('			</form>')
 
                     print('</div>')  # card-body end
 
                 print('		<div class="card-body mb-0">')  # card-body
 
-                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="post">')
+                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
                 print('				<div class="input-group mb-0">')
                 print('					<select name="backend" class="custom-select">')
                 for backends_defined in backend_data_yaml_parsed.keys():
@@ -568,7 +568,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			<div class="card-body text-center">')  # card-body
                 print(('			<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('			<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('				<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Save Settings</button>')
+                print('				<button class="btn btn-outline-primary btn-block " type="submit">Save Settings</button>')
                 print('			</div>')  # card-body end
                 print('		</div>')  # card end
                 print('			</form>')
@@ -579,7 +579,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('					<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> Upstream settings</h5>')
             print('				</div>')
             print('				<div class="card-body text-center">')  # card-body
-            print('					<form class="form" action="subdir_select_app_settings.live.py" method="post">')
+            print('					<form class="form" action="subdir_select_app_settings.live.py" method="get">')
             print('						<div class="input-group mb-0">')
             print('							<select name="backend" class="custom-select">')
             for backends_defined in backend_data_yaml_parsed.keys():
@@ -662,6 +662,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')

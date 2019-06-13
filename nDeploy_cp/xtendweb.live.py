@@ -59,9 +59,9 @@ def branding_print_support():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
     return brand_support
 
 
@@ -126,7 +126,7 @@ print('<header id="main-header">')
 
 print(branding_print_support())
 print('		<div class="logo">')
-print('			<h3>')
+print('			<h4>')
 print('				<a href="xtendweb.live.py"><img border="0" src="')
 print(					branding_print_logo_name())
 print('					" width="48" height="48"></a>')
@@ -159,7 +159,7 @@ if settings_lock == 'enabled':
     print(('				<div class="alert alert-info">Application Server settings are locked by the administrator</div>'))
 else:
     print('					<form class="form mb-4" method="post" id="modalForm9" onsubmit="return false;">')
-    print('						<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Auto Switch To Nginx</button>')
+    print('						<button class="btn btn-outline-primary btn-block " type="submit">Auto Switch To Nginx</button>')
     print(('					<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
     print('					</form>')
 
@@ -246,6 +246,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')

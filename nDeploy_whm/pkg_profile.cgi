@@ -47,9 +47,9 @@ def branding_print_support():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
     return brand_support
 
 
@@ -102,7 +102,7 @@ print('<header id="main-header">')
 
 print(branding_print_support())
 print('		<div class="logo">')
-print('			<h3>')
+print('			<h4>')
 print('				<a href="xtendweb.cgi"><img border="0" src="')
 print(					branding_print_logo_name())
 print('					" width="48" height="48"></a>')
@@ -156,10 +156,7 @@ if form.getvalue('cpanelpkg'):
     redirect_to_ssl = yaml_parsed_profileyaml.get('redirect_to_ssl', 'disabled')
     proxy_to_master = yaml_parsed_profileyaml.get('proxy_to_master', 'disabled')
     redirect_aliases = yaml_parsed_profileyaml.get('redirect_aliases', 'disabled')
-    clickjacking_protect = yaml_parsed_profileyaml.get('clickjacking_protect', 'disabled')
-    disable_contenttype_sniffing = yaml_parsed_profileyaml.get('disable_contenttype_sniffing', 'disabled')
-    xss_filter = yaml_parsed_profileyaml.get('xss_filter', 'disabled')
-    hsts = yaml_parsed_profileyaml.get('hsts', 'disabled')
+    security_headers = yaml_parsed_profileyaml.get('security_headers', 'disabled')
     dos_mitigate = yaml_parsed_profileyaml.get('dos_mitigate', 'disabled')
     pagespeed_filter = yaml_parsed_profileyaml.get('pagespeed_filter', 'CoreFilters')
     redirecturl = yaml_parsed_profileyaml.get('redirecturl', 'none')
@@ -191,11 +188,11 @@ if form.getvalue('cpanelpkg'):
 
     print('			<div class="card">')  # card
     print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> cPanel "'+form.getvalue('cpanelpkg')+'" upstream settings</h5>')
+    print('					<h5 class="card-title mb-0"><i class="fas fa-users-cog float-right"></i> '+form.getvalue('cpanelpkg')+'</h5>')
     print('				</div>')
 
     # Current Profile Status
-    print('				<form class="form mb-0" action="pkg_app_settings.cgi" method="post">')
+    print('				<form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
     print('					<div class="card-body p-0">')  # card-body
     print('						<div class="row no-gutters">')  # row
     if backend_category == 'PROXY':
@@ -205,15 +202,15 @@ if form.getvalue('cpanelpkg'):
             print('					<div class="col-md-6"><div class="alert alert-success">Nginx</div></div>')
 
             # Backend
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-align-center"></i> Upstream</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-server"></i> Upstream</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success">'+backend_version+'</div></div>')
 
             # Description
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-stamp"></i> Config template</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-cog"></i> Config template</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success">'+apptemplate_description+'</div></div>')
 
             # .hitaccess
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-medical-alt"></i> .htaccess</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> &nbsp;</div></div>')
         else:
             # Running
@@ -221,15 +218,15 @@ if form.getvalue('cpanelpkg'):
             print('					<div class="col-md-6"><div class="alert alert-success">Nginx</div></div>')
 
             # Backend
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-align-center"></i> Upstream</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-server"></i> Upstream</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success">'+backend_version+'</div></div>')
 
             # Description
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-stamp"></i>Config template</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-cog"></i>Config template</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-success">'+apptemplate_description+'</div></div>')
 
             # .hitaccess
-            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-medical-alt"></i> .htaccess</div></div>')
+            print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div></div>')
             print('					<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Ignored</div></div>')
     else:
         # Running
@@ -237,15 +234,15 @@ if form.getvalue('cpanelpkg'):
         print('						<div class="col-md-6"><div class="alert alert-success">Nginx</div></div>')
 
         # Backend
-        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-align-center"></i> Upstream</div></div>')
+        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-server"></i> Upstream</div></div>')
         print('						<div class="col-md-6"><div class="alert alert-success">'+backend_version+'</div></div>')
 
         # Description
-        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-stamp"></i>Config template</div></div>')
+        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-cog"></i>Config template</div></div>')
         print('						<div class="col-md-6"><div class="alert alert-success">'+apptemplate_description+'</div></div>')
 
         # .hitaccess
-        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-medical-alt"></i> .htaccess</div></div>')
+        print('						<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div></div>')
         print('						<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Ignored</div></div>')
 
     print('						</div>')  # row end
@@ -446,111 +443,58 @@ if form.getvalue('cpanelpkg'):
     print('				</div>')
     print('				<div class="card-body text-right">')  # card-body
 
-    # clickjacking_protect
     print('					<div class="row">')
-    clickjacking_protect_hint = "X-Frame-Options SAMEORIGIN"
-    if clickjacking_protect == 'enabled':
-        print_green("clickjacking_protect", clickjacking_protect_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="clickjacking_protect" value="enabled" id="ClickjackingProtectOn" autocomplete="off" checked> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="clickjacking_protect" value="disabled" id="ClickjackingProtectOff" autocomplete="off"> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
-    else:
-        print_red("clickjacking_protect", clickjacking_protect_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="clickjacking_protect" value="enabled" id="ClickjackingProtectOn" autocomplete="off"> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="clickjacking_protect" value="disabled" id="ClickjackingProtectOff" autocomplete="off" checked> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
 
-    # disable_contenttype_sniffing
-    disable_contenttype_sniffing_hint = "X-Content-Type-Options nosniff"
-    if disable_contenttype_sniffing == 'enabled':
-        print_green("contenttype_sniffing", disable_contenttype_sniffing_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="disable_contenttype_sniffing" value="enabled" id="DisableContenttypeSniffingOn" autocomplete="off" checked> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="disable_contenttype_sniffing" value="disabled" id="DisableContenttypeSniffingOff" autocomplete="off"> Disabled')
-        print('							</label>')
+    # settings_lock
+    settings_lock_hint = "Lock application server and security settings"
+    if settings_lock == 'enabled':
+        print_green("settings_lock", settings_lock_hint)
+        print('						<div class="col-md-6">')
+        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('								<label class="btn btn-light active">')
+        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off" checked> Enabled')
+        print('								</label>')
+        print('								<label class="btn btn-light">')
+        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off"> Disabled')
+        print('								</label>')
+        print('							</div>')
         print('						</div>')
-        print('					</div>')
     else:
-        print_red("contenttype_sniffing", disable_contenttype_sniffing_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="disable_contenttype_sniffing" value="enabled" id="DisableContenttypeSniffingOn" autocomplete="off"> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="disable_contenttype_sniffing" value="disabled" id="DisableContenttypeSniffingOff" autocomplete="off" checked> Disabled')
-        print('							</label>')
+        print_red("settings_lock", settings_lock_hint)
+        print('						<div class="col-md-6">')
+        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('								<label class="btn btn-light">')
+        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off"> Enabled')
+        print('								</label>')
+        print('								<label class="btn btn-light active">')
+        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off" checked> Disabled')
+        print('								</label>')
+        print('							</div>')
         print('						</div>')
-        print('					</div>')
 
-    # xss_filter
-    xss_filter_hint = 'X-XSS-Protection'
-    if xss_filter == 'enabled':
-        print_green("xss_filter", xss_filter_hint)
+    # security_headers
+    security_headers_hint = "X-Frame-Options,X-Content-Type-Options,X-XSS-Protection,HSTS"
+    if security_headers == 'enabled':
+        print_green("security_headers", security_headers_hint)
         print('					<div class="col-md-6">')
         print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="xss_filter" value="enabled" id="XssFilterOn" autocomplete="off" checked> Enabled')
+        print('								<input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off" checked> Enabled')
         print('							</label>')
         print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="xss_filter" value="disabled" id="XssFilterOff" autocomplete="off"> Disabled')
+        print('								<input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off"> Disabled')
         print('							</label>')
         print('						</div>')
         print('					</div>')
     else:
-        print_red("xss_filter", xss_filter_hint)
+        print_red("security_headers", security_headers_hint)
         print('					<div class="col-md-6">')
         print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="xss_filter" value="enabled" id="XssFilterOn" autocomplete="off"> Enabled')
+        print('								<input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off"> Enabled')
         print('							</label>')
         print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="xss_filter" value="disabled" id="XssFilterOff" autocomplete="off" checked> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
-
-    # hsts
-    hsts_hint = 'Strict-Transport-Security'
-    if hsts == 'enabled':
-        print_green("hsts", hsts_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="hsts" value="enabled" id="HstsOn" autocomplete="off" checked> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="hsts" value="disabled" id="HstsOff" autocomplete="off"> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
-    else:
-        print_red("hsts", hsts_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="hsts" value="enabled" id="HstsOn" autocomplete="off"> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="hsts" value="disabled" id="HstsOff" autocomplete="off" checked> Disabled')
+        print('								<input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off" checked> Disabled')
         print('							</label>')
         print('						</div>')
         print('					</div>')
@@ -1025,44 +969,17 @@ if form.getvalue('cpanelpkg'):
     print('								</div>')
     print('							</div>')
 
-    # settings_lock
-    settings_lock_hint = "Lock application server and security settings"
-    if settings_lock == 'enabled':
-        print_green("settings_lock", settings_lock_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
-    else:
-        print_red("settings_lock", settings_lock_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+    print('					</div>')  # row end
 
-        print('					</div>')  # row end
+    print('				</div>')  # card end
+    print('			</div>')  # card end
 
-        print('				</div>')  # card end
-        print('			</div>')  # card end
-
-        print('			<div class="card">')  # card
-        print('				<div class="card-body text-center">')  # card-body
+    print('			<div class="card">')  # card
+    print('				<div class="card-body text-center">')  # card-body
 
     # Pass on the package name to the next stage
     print(('					<input class="hidden" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
-    print('						<button class="btn btn-outline-primary btn-ajax btn-block" type="submit">Save Settings</button>')
+    print('						<button class="btn btn-outline-primary  btn-block" type="submit">Save Settings</button>')
 
     print('					</div>')  # card-body end
     print('				</div>')  # card end
@@ -1094,6 +1011,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')

@@ -87,9 +87,9 @@ def branding_print_support():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
     return brand_support
 
 
@@ -132,7 +132,7 @@ print('<header id="main-header">')
 
 print(branding_print_support())
 print('		<div class="logo">')
-print('			<h3>')
+print('			<h4>')
 print('				<a href="xtendweb.cgi"><img border="0" src="')
 print(					branding_print_logo_name())
 print('					" width="48" height="48"></a>')
@@ -267,7 +267,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('							</div>')
 
     print('							<div class="col-md-12">')
-    print('								<button class="btn btn-outline-primary btn-block btn-ajax mt-2" type="submit">Save Backup Settings</button>')
+    print('								<button class="btn btn-outline-primary btn-block  mt-2" type="submit">Save Backup Settings</button>')
     print('							</div>')
     print('						</div>')
 
@@ -397,7 +397,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
     print('						</div>')
 
-    print('						<button class="btn btn-outline-primary btn-block btn-ajax mt-4" type="submit">Save Borg Settings</button>')
+    print('						<button class="btn btn-outline-primary btn-block  mt-4" type="submit">Save Borg Settings</button>')
 
     print('					</form>')
 
@@ -419,19 +419,19 @@ if os.path.isdir('/etc/borgmatic'):
     if backup_dir_list:
         print('		<div class="label label-default mb-2">Currently backing up:</div>')
         print('			<div class="clearfix">')
+        mykeypos=1
         for path in backup_dir_list:
             print('			<div class="input-group input-group-inline input-group-sm">')
             print('				<div class="input-group-prepend"><span class="input-group-text">')
             print(path)
             print('				</span></div>')
-            mykeypos=1
             if path not in ['/home', backup_path]:
                 print('			<form class="form modalForm13-wrap" method="post" id="modalForm13'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('				<button class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
                 print(('			<input class="hidden" name="thehomedir" value="'+path+'">'))
                 print(('			<input class="hidden" name="action" value="delete">'))
                 print('			</form>')
-                mykeypos = mykeypos + 1
+            mykeypos = mykeypos + 1
             print('			</div>')
     print('				</div>')
     print('				<div class="label label-default mt-2 mb-2">Add new home directory to backup:</div>')
@@ -450,8 +450,8 @@ if os.path.isdir('/etc/borgmatic'):
 else:
     print('					<i class="fas fa-exclamation"></i>')
     print('					<p>Borg/Borgmatic not installed.</p>')
-    print('					<small class="mb-1">To install run the following command run</small>')
-    print('					<kbd>/opt/nDeploy/scripts/easy_borg_setup.sh to install borg</kbd>')
+    print('					<small class="mb-1">To install run the following command</small>')
+    print('					<kbd>/opt/nDeploy/scripts/easy_borg_setup.sh</kbd>')
 
 print('					</div>')  # card-body end
 print('				</div>')  # card end
@@ -479,6 +479,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')

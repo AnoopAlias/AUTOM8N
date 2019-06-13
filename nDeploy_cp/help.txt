@@ -1,0 +1,67 @@
+###############################################################################
+# Adding custom nginx.conf
+###############################################################################
+NOTE that Nginx does not automatically reload nginx.conf, you will need to click
+"nginx.conf reload" each time the file is updated!
+
+You can customize your vhost with nginx directives added to your custom nginx.conf
+
+This is set to /path/to/document_root/nginx.conf
+for Main Domains, Sub-Domains and Addon Domains
+
+And /path/to/document_root/subdirectory/nginx.conf for Subdirectory apps
+
+What directives are allowed?
+===================================
+
+All Nginx directives with Context: server, location  are allowed
+except :  alias , include
+
+If you add a disallowed directive, the nginx.conf file will be ignored in full
+
+The application template you selected will have locations like / and ~ \.php$
+etc already defined. In such cases adding such location blocks in the nginx.conf
+will lead to an invalid nginx.conf and prevent the configuration file from being
+loaded
+
+How to check the Context for an Nginx directive?
+====================================================
+https://nginx.org/r/xyz_abc
+
+replace xyz_abc with the actual directive
+The documentation will show
+Context:	http, server, location etc and you will be able to use only directives
+that have server , location shown in the Context
+
+The control panel will show the syntax validity and errors in
+"nginx.conf" and "nginx.conf reload log"
+
+
+###############################################################################
+# Adding rewrite rules
+###############################################################################
+
+Apache .htaccess rewrite rules must be converted to Nginx format and placed
+in nginx.conf . Following website will aid in the rule conversion
+
+https://winginx.com/en/htaccess
+
+
+###############################################################################
+# Adding headers
+###############################################################################
+Following directive add headers, it will NOT clear headers already set by upstream
+But add the header additionally
+
+add_header name value;
+https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header
+
+
+Or
+If you wish to clear upstream header and add a new header you can use
+
+more_set_headers    "Name: value";
+
+https://github.com/openresty/headers-more-nginx-module#more_set_headers
+
+###############################################################################

@@ -5,7 +5,6 @@ import socket
 import cgi
 import cgitb
 import subprocess
-import yaml
 
 
 __author__ = "Anoop P Alias"

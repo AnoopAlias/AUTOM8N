@@ -55,9 +55,9 @@ def branding_print_support():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
     return brand_support
 
 
@@ -126,7 +126,7 @@ print('<header id="main-header">')
 
 print(branding_print_support())
 print('		<div class="logo">')
-print('			<h3>')
+print('			<h4>')
 print('				<a href="xtendweb.cgi"><img border="0" src="')
 print(					branding_print_logo_name())
 print('					" width="48" height="48"></a>')
@@ -145,7 +145,7 @@ print('				<li class="breadcrumb-item active">Manual Config</li>')
 print('			</ol>')
 print('		</nav>')
 
-print('		<div class="row justify-content-lg-center"">')
+print('		<div class="row justify-content-lg-center">')
 
 print('			<div class="col-lg-6">')  # col left
 
@@ -214,10 +214,7 @@ if form.getvalue('domain'):
         wwwredirect = yaml_parsed_profileyaml.get('wwwredirect', 'none')
         redirect_to_ssl = yaml_parsed_profileyaml.get('redirect_to_ssl', 'disabled')
         redirect_aliases = yaml_parsed_profileyaml.get('redirect_aliases', 'disabled')
-        clickjacking_protect = yaml_parsed_profileyaml.get('clickjacking_protect', 'disabled')
-        disable_contenttype_sniffing = yaml_parsed_profileyaml.get('disable_contenttype_sniffing', 'disabled')
-        xss_filter = yaml_parsed_profileyaml.get('xss_filter', 'disabled')
-        hsts = yaml_parsed_profileyaml.get('hsts', 'disabled')
+        security_headers = yaml_parsed_profileyaml.get('security_headers', 'disabled')
         dos_mitigate = yaml_parsed_profileyaml.get('dos_mitigate', 'disabled')
         pagespeed_filter = yaml_parsed_profileyaml.get('pagespeed_filter', 'CoreFilters')
         redirecturl = yaml_parsed_profileyaml.get('redirecturl', 'none')
@@ -317,16 +314,16 @@ if form.getvalue('domain'):
         print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')
         print('					<div class="col-md-6">')
         print('						<form class="form" method="post" id="modalForm4" onsubmit="return false;">')
-        print('							<button class="alert alert-info btn btn-info btn-ajax" type="submit">Reload</button>')
+        print('							<button class="alert alert-info btn btn-info " type="submit">Reload</button>')
         print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('						</form>')
         print('					</div>')
 
         # Nginx Log
-        print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-clipboard-list"></i>nginx log</div></div>')
+        print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div></div>')
         print('					<div class="col-md-6">')
         print('						<form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-        print('							<button class="alert alert-info btn btn-info btn-ajax" type="submit">View Log</button>')
+        print('							<button class="alert alert-info btn btn-info " type="submit">View Log</button>')
         print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('						</form>')
         print('					</div>')
@@ -350,12 +347,12 @@ if form.getvalue('domain'):
             print(('			<input class="hidden" name="document_root" value="'+document_root+'">'))
             print(('			<input class="hidden" name="backend_category" value="'+backend_category+'">'))
             print(('			<input class="hidden" name="backend_version" value="'+backend_version+'">'))
-            print('				<button class="btn btn-outline-warning btn-block btn-ajax" data-toggle="tooltip" title="'+dep_file+'" type="submit">Install '+backend_category+' project deps</button>')
+            print('				<button class="btn btn-outline-warning btn-block " data-toggle="tooltip" title="'+dep_file+'" type="submit">Install '+backend_category+' project deps</button>')
             print('			</form>')
 
             if backend_category == 'PHP':
                 print('			<form class="mb-0 mt-3" id="modalForm1" onsubmit="return false;">')
-                print('				<button class="btn btn-outline-warning btn-block btn-ajax" type="submit">View PHP Log</button>')
+                print('				<button class="btn btn-outline-warning btn-block " type="submit">View PHP Log</button>')
                 print('			</form>')
 
             print('		</div>')  # card-body end
@@ -365,7 +362,7 @@ if form.getvalue('domain'):
         if settings_lock == 'enabled':
             print(('<div class="alert alert-info mb-0">Application Server settings are locked by the administrator</div>'))
         else:
-            print('			<form class="mb-0" action="select_app_settings.live.py" method="post">')
+            print('			<form class="mb-0" action="select_app_settings.live.py" method="get">')
             print('				<div class="input-group">')
             print('					<select name="backend" class="custom-select">')
             for backends_defined in backend_data_yaml_parsed.keys():
@@ -546,10 +543,7 @@ if form.getvalue('domain'):
 
         if settings_lock == 'enabled':
             print(('		<div class="alert alert-info alert-top">Security settings are locked by the administrator</div>'))
-            print(('		<input class="hidden" name="clickjacking_protect" value="'+clickjacking_protect+'">'))
-            print(('		<input class="hidden" name="disable_contenttype_sniffing" value="'+disable_contenttype_sniffing+'">'))
-            print(('		<input class="hidden" name="xss_filter" value="'+xss_filter+'">'))
-            print(('		<input class="hidden" name="hsts" value="'+hsts+'">'))
+            print(('		<input class="hidden" name="security_headers" value="'+security_headers+'">'))
             print(('		<input class="hidden" name="dos_mitigate" value="'+dos_mitigate+'">'))
             print(('		<input class="hidden" name="test_cookie" value="'+test_cookie+'">'))
             print(('		<input class="hidden" name="symlink_protection" value="'+symlink_protection+'">'))
@@ -558,110 +552,29 @@ if form.getvalue('domain'):
 
             print('			<div class="row">')
 
-            # clickjacking_protect
-            clickjacking_protect_hint = "X-Frame-Options SAMEORIGIN"
-            if clickjacking_protect == 'enabled':
-                print_green("clickjacking_protect", clickjacking_protect_hint)
+            # security_headers
+            security_headers_hint = "X-Frame-Options,X-Content-Type-Options,X-XSS-Protection,HSTS"
+            if security_headers == 'enabled':
+                print_green("security_headers", security_headers_hint)
                 print('			<div class="col-md-6">')
                 print('				<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
                 print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="clickjacking_protect" value="enabled" id="ClickjackingProtectOn" autocomplete="off" checked> Enabled')
+                print('						<input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off" checked> Enabled')
                 print('					</label>')
                 print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="clickjacking_protect" value="disabled" id="ClickjackingProtectOff" autocomplete="off"> Disabled')
+                print('						<input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off"> Disabled')
                 print('					</label>')
                 print('				</div>')
                 print('			</div>')
             else:
-                print_red("clickjacking_protect", clickjacking_protect_hint)
+                print_red("security_headers", security_headers_hint)
                 print('			<div class="col-md-6">')
                 print('				<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
                 print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="clickjacking_protect" value="enabled" id="ClickjackingProtectOn" autocomplete="off"> Enabled')
+                print('						<input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off"> Enabled')
                 print('					</label>')
                 print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="clickjacking_protect" value="disabled" id="ClickjackingProtectOff" autocomplete="off" checked> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-
-            # disable_contenttype_sniffing
-            disable_contenttype_sniffing_hint = "X-Content-Type-Options nosniff"
-            if disable_contenttype_sniffing == 'enabled':
-                print_green("contenttype_sniffing", disable_contenttype_sniffing_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="disable_contenttype_sniffing" value="enabled" id="DisableContenttypeSniffingOn" autocomplete="off" checked> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="disable_contenttype_sniffing" value="disabled" id="DisableContenttypeSniffingOff" autocomplete="off"> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-            else:
-                print_red("contenttype_sniffing", disable_contenttype_sniffing_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="disable_contenttype_sniffing" value="enabled" id="DisableContenttypeSniffingOn" autocomplete="off"> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="disable_contenttype_sniffing" value="disabled" id="DisableContenttypeSniffingOff" autocomplete="off" checked> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-
-            # xss_filter
-            xss_filter_hint = 'X-XSS-Protection'
-            if xss_filter == 'enabled':
-                print_green("xss_filter", xss_filter_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="xss_filter" value="enabled" id="XssFilterOn" autocomplete="off" checked> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="xss_filter" value="disabled" id="XssFilterOff" autocomplete="off"> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-            else:
-                print_red("xss_filter", xss_filter_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="xss_filter" value="enabled" id="XssFilterOn" autocomplete="off"> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="xss_filter" value="disabled" id="XssFilterOff" autocomplete="off" checked> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-
-            # hsts
-            hsts_hint = 'Strict-Transport-Security'
-            if hsts == 'enabled':
-                print_green("hsts", hsts_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="hsts" value="enabled" id="HstsOn" autocomplete="off" checked> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="hsts" value="disabled" id="HstsOff" autocomplete="off"> Disabled')
-                print('					</label>')
-                print('				</div>')
-                print('			</div>')
-            else:
-                print_red("hsts", hsts_hint)
-                print('			<div class="col-md-6">')
-                print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('					<label class="btn btn-light">')
-                print('						<input type="radio" name="hsts" value="enabled" id="HstsOn" autocomplete="off"> Enabled')
-                print('					</label>')
-                print('					<label class="btn btn-light active">')
-                print('						<input type="radio" name="hsts" value="disabled" id="HstsOff" autocomplete="off" checked> Disabled')
+                print('						<input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off" checked> Disabled')
                 print('					</label>')
                 print('				</div>')
                 print('			</div>')
@@ -1173,7 +1086,7 @@ if form.getvalue('domain'):
         print('			<div class="card">')  # card
         print('				<div class="card-body text-center">')  # card-body
         print(('				<input class="hidden" name="domain" value="'+mydomain+'">'))
-        print('					<button class="btn btn-outline-primary btn-block btn-ajax" type="submit">Save Settings</button>')
+        print('					<button class="btn btn-outline-primary btn-block " type="submit">Save Settings</button>')
         print('				</form>')
         print('				</div>')  # card-body end
         print('			</div>')  # card end
@@ -1190,7 +1103,7 @@ if form.getvalue('domain'):
             print('				<div class="label label-default mt-2 mb-2">Current subdirectory apps:</div>')
             mykeypos=1
             for thesubdir in subdir_apps.keys():
-                print('			<div class="input-group input-group-inline input-group-sm">')
+                print('			<div class="input-group input-group-inline input-group">')
                 print('				<div class="input-group-prepend"><span class="input-group-text">')
                 print(mydomain + '/' + thesubdir)
                 print('				</span></div>')
@@ -1202,7 +1115,7 @@ if form.getvalue('domain'):
                 print('					</form>')
 
                 print('					<form class="form modalForm7-wrap" method="post" id="modalForm7'+'-'+str(mykeypos)+'" onsubmit="return false;">')
-                print('						<button class="btn btn-outline-danger btn-ajax-sm" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+                print('						<button class="btn btn-outline-danger " type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
                 print(('					<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('					<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('					</form>')
@@ -1296,6 +1209,10 @@ print('      			</div>')
 print('      		</div>')
 print('    		</div>')
 print('     </div>')
+
+print(('<div id="wait" style="display: none; width: 100%; height: 100%; top: 100px; left: 0px; position: fixed; z-index: 10000; text-align: center;">'))
+print(('            <img src="ajax-loader.gif" width="45" height="45" alt="Loading..." style="position: fixed; top: 50%; left: 50%;" />'))
+print(('</div>'))
 
 print('</body>')
 print('</html>')

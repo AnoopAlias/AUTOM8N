@@ -92,15 +92,20 @@ if form.getvalue('ddos'):
                 subprocess.call('echo 2000000 > /sys/module/nf_conntrack/parameters/hashsize', shell=True)
                 subprocess.call(['systemctl', 'restart', 'firehol.service'])
                 print('<i class="fas fa-thumbs-up"></i> SYNPROXY DDOS Mitigation is now enabled')
-                print('<p>SYNPROXY DDOS Mitigation is now enabled</p>')
             else:
                 print_error('FireHol firewall not installed')
+                print('					<small class="mb-1">To install run the following command with ansible_port set to sshd port</small><br>')
+                print('					<kbd>cd /opt/nDeploy/conf/nDeploy-firewall/</kbd><br>')
+                print('					<kbd>ansible-playbook -i ./hosts firewall.yml --extra-vars "ansible_port=22"</kbd><br>')
         elif form.getvalue('ddos') == 'disable':
             if os.path.isfile('/opt/nDeploy/conf/XTENDWEB_FIREHOL_SETUP_LOCK_DO_NOT_REMOVE'):
                 subprocess.call(['systemctl', 'stop', 'firehol.service'])
                 print_success('SYNPROXY DDOS Mitigation is now disabled')
             else:
                 print_error('FireHol firewall not installed')
+                print('					<small class="mb-1">To install run the following command with ansible_port set to sshd port</small><br>')
+                print('					<kbd>cd /opt/nDeploy/conf/nDeploy-firewall/</kbd><br>')
+                print('					<kbd>ansible-playbook -i ./hosts firewall.yml --extra-vars "ansible_port=22"</kbd><br>')
 else:
     print_forbidden()
 

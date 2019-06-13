@@ -1,0 +1,73 @@
+###############################################################################
+# QUICK TROUBLESHOOTING AND COMMANDLINE REFERENCE
+###############################################################################
+
+# Attempt to fix all errors
+/opt/nDeploy/scripts/attempt_autofix.sh
+
+# Fix stale php-fpm pool file and initialize virtfs for chrooted php-fpm
+/opt/nDeploy/scripts/init_backends.py autofix
+
+# Restart PHP-FPM master process
+/scripts/restartsrv apache_php_fpm   # Apache+PHP-FPM
+systemctl restart ndeploy_backends   # Nginx+PHP-FPM
+
+# Fix domain-data file ownership/permission
+/opt/nDeploy/scripts/fix_domain_data_permission.sh
+
+In case above steps did not resolve the issue, Disable the plugin and contact
+your service provider or email product support at ops@gnusys.net
+
+# Disable the plugin
+/opt/nDeploy/scripts/cpanel-nDeploy-setup.sh disable
+
+
+###############################################################################
+# CLUSTER COMMANDLINE REFERENCE
+###############################################################################
+
+# Regenerate all Cluster DNS zones
+/opt/nDeploy/scripts/cluster_dns_ensure_all.sh
+
+# Ensure cPanel users and homedir are setup correctly
+/opt/nDeploy/scripts/cluster_home_ensure_all.py
+
+# Sync webstack rpm's across cluster (Apache,Nginx,PHP)
+/opt/nDeploy/scripts/cluster_sync_rpms.sh
+
+###############################################################################
+# SETUP BRANDING
+###############################################################################
+# Place a 48px*48px icon of your brand in /opt/nDeploy/nDeploy_cp/
+and /opt/nDeploy/nDeploy_whm/
+
+cp -p /opt/nDeploy/conf/branding.yaml.sample /opt/nDeploy/conf/branding.yaml
+# Edit /opt/nDeploy/conf/branding.yaml as required, Note that brand: should not
+contain space
+
+# setup the brand
+/opt/nDeploy/scripts/setup_brand.sh
+
+###############################################################################
+# SETUP NETDATA
+###############################################################################
+/opt/nDeploy/scripts/easy_netdata_setup.sh
+
+###############################################################################
+# SETUP GLANCES
+###############################################################################
+/opt/nDeploy/scripts/easy_glances_setup.sh
+
+###############################################################################
+# SETUP SYNPROXY FIREWALL (FireHol)
+###############################################################################
+
+# Ensure CSF or other firewalls are disabled
+csf -x
+
+cd /opt/nDeploy/conf/nDeploy-firewall/
+ansible-playbook -i ./hosts firewall.yml --extra-vars "ansible_port=22"
+# ansible_port is the SSH port on the server , if you give it wrong
+# you will be locked out!
+
+###############################################################################

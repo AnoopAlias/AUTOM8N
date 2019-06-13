@@ -52,7 +52,7 @@
     - mysqlsetup.stat.exists == false
 
 - name: Restart MariaDB server
-  service: name=mysql enabled=yes state=restarted
+  service: name=mariadb enabled=yes state=restarted
   when:
     - mysqlsetup.stat.exists == false
 
@@ -96,18 +96,11 @@
   ignore_errors: yes
   with_items: "{{ groups.ndeployslaves }}"
 
-- name: Workaround for MySQL-python compile in MariaDB10.2
-  lineinfile:
-    path: /usr/include/mysql/mysql.h
-    insertbefore: 'struct st_mysql_options options;'
-    line: 'unsigned int reconnect;'
-  when:
-    - mariadb == 10.2 or mariadb == 10.3
-
-- name: Install MySQL-python
-  pip:
-    name: MySQL-python
-    state: present
+- name: Install required AUTOM8N rpm's on master
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+     - MySQL-python
 
 - name: Drop the sys schema
   mysql_db:

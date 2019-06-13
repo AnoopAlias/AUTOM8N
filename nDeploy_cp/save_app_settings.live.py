@@ -68,7 +68,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         mybackend_dict = backend_data_yaml_parsed.get(mybackend)
         mybackendpath = mybackend_dict.get(mybackendversion)
     else:
-    	print_error('Error: backend data file i/o error')
+        print_error('Error: backend data file i/o error')
         sys.exit(0)
     if os.path.isfile(profileyaml):
         # Get all config settings from the domains domain-data config file
@@ -99,7 +99,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
         print_success('Application Settings Saved')
     else:
-    	print_error('domain-data file i/o error')
+        print_error('domain-data file i/o error')
 else:
     print_forbidden()
 

@@ -384,10 +384,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
         wwwredirect = yaml_parsed_domain_data.get('wwwredirect', None)
     autoindex = yaml_parsed_domain_data.get('autoindex', 'disabled')
     redirect_to_ssl = yaml_parsed_domain_data.get('redirect_to_ssl', 'disabled')
-    clickjacking_protect = yaml_parsed_domain_data.get('clickjacking_protect', 'disabled')
-    disable_contenttype_sniffing = yaml_parsed_domain_data.get('disable_contenttype_sniffing', 'disabled')
-    xss_filter = yaml_parsed_domain_data.get('xss_filter', 'disabled')
-    hsts = yaml_parsed_domain_data.get('hsts', 'disabled')
+    security_headers = yaml_parsed_domain_data.get('security_headers', 'disabled')
     if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
         brotli = yaml_parsed_domain_data.get('brotli', 'disabled')
     else:
@@ -460,12 +457,9 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
                     "PAGESPEED": pagespeed,
                     "TEST_COOKIE": test_cookie,
                     "SYMLINK_PROTECTION": symlink_protection,
-                    "CLICKJACKING_PROTECT": clickjacking_protect,
-                    "DISABLE_CONTENTTYPE_SNIFFING": disable_contenttype_sniffing,
-                    "XSS_FILTER": xss_filter,
+                    "SECURITY_HEADERS": security_headers,
                     "GZIP": gzip,
                     "BROTLI": brotli,
-                    "HSTS": hsts,
                     "MODSECURITY": mod_security,
                     "DOMAINLIST": domain_list,
                     "DOMAINLIST_PROXY_SUBDOMAIN": domain_list_proxy_subdomain,

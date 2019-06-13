@@ -46,9 +46,9 @@ def branding_print_support():
     if os.path.isfile(installation_path+"/conf/branding.yaml"):
         with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
             yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>')
+        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="https://autom8n.com"> docs <i class="fas fa-book-open"></i></a></div>'
+        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
     return brand_support
 
 
@@ -89,7 +89,7 @@ print('<header id="main-header">')
 
 print(branding_print_support())
 print('		<div class="logo">')
-print('			<h3>')
+print('			<h4>')
 print('				<a href="xtendweb.cgi"><img border="0" src="')
 print(					branding_print_logo_name())
 print('					" width="48" height="48"></a>')
@@ -113,7 +113,7 @@ print('			<div class="col-lg-6">')
 
 print('				<div class="card">')  # card
 print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> "'+form.getvalue('cpanelpkg')+'" cPanel Package</h5>')
+print('						<h5 class="card-title mb-0"><i class="fas fa-box-open float-right"></i> "'+form.getvalue('cpanelpkg')+'" cPanel Package</h5>')
 print('					</div>')
 print('					<div class="card-body">')  # card-body
 
