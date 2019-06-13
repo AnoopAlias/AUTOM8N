@@ -92,7 +92,6 @@ jQuery(document).ready(function($){
     });
 
     $('.modalForm9-wrap').submit(function(e) {
-				e.preventDefault();
         var $id = e.target.id;
         var $f = $('#' + $id);
         console.log($id);
@@ -104,10 +103,8 @@ jQuery(document).ready(function($){
     });
 
     $('.modalForm10-wrap').submit(function(e) {
-				e.preventDefault();
         var $id = e.target.id;
         var $f = $('#' + $id);
-        console.log($id);
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
             $("#myModal").find('.modal-body').html(result)
@@ -136,7 +133,6 @@ jQuery(document).ready(function($){
     $('.modalForm13-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
-        console.log($f.serialize());
         var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
             $("#myModal").find('.modal-body').html(result)
@@ -190,7 +186,6 @@ jQuery(document).ready(function($){
     });
 
 		$('#modalForm20').submit(function() {
-        console.trace();
         var $f = $('#modalForm20');
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
@@ -202,51 +197,10 @@ jQuery(document).ready(function($){
 
     $('#myModal').on('hidden.bs.modal', function () {
     	location.reload()
-       //location.replace("xtendweb.live.py");
     });
 
 		$('#myModal-xl').on('hidden.bs.modal', function () {
 			location.reload()
-			 //location.replace("xtendweb.live.py");
 		});
-
-    // btn animation for ajax updates
-    $('.btn-ajax-sm').on('click', function() {
-    	var $this = $(this);
-		var loadingText = '<i class="spinner-grow spinner-grow-sm"><span class="sr-only">Loading</span></i>';
-		if ($(this).html() !== loadingText) {
-			$this.data('original-text', $(this).html());
-			$this.html(loadingText);
-    	}
-		setTimeout(function() {
-			$this.html($this.data('original-text'));
-		}, 5000);
-    });
-
-    // btn-ajax animation for ajax updates
-    $('.btn-ajax').on('click', function() {
-    	var $this = $(this);
-		var loadingText = '<i class="spinner-grow spinner-grow-sm"></i> loading...';
-		if ($(this).html() !== loadingText) {
-			$this.data('original-text', $(this).html());
-			$this.html(loadingText);
-    	}
-		setTimeout(function() {
-			$this.html($this.data('original-text'));
-    	}, 5000);
-    });
-
-    // btn-ajax-slow animation for ajax updates
-    $('.btn-ajax-slow').on('click', function() {
-    	var $this = $(this);
-		var loadingText = '<i class="spinner-grow spinner-grow-sm"></i> loading...';
-		if ($(this).html() !== loadingText) {
-			$this.data('original-text', $(this).html());
-			$this.html(loadingText);
-    	}
-		setTimeout(function() {
-			$this.html($this.data('original-text'));
-    }, 20000);
-    });
 
 });
