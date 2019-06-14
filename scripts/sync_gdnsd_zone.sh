@@ -10,6 +10,7 @@ if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]; then
       /opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py ${USER}
     else
       rsync -a /var/named/${DOMAIN}.db /etc/gdnsd/zones/${DOMAIN}
+      chown nobody:nobody /etc/gdnsd/zones/${DOMAIN}
     fi
   fi
 fi
