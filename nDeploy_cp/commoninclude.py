@@ -2,10 +2,20 @@
 
 import os
 import yaml
+import socket
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
+
+
+def close_cpanel_liveapisock():
+    """We close the cpanel LiveAPI socket here as we dont need those"""
+    cp_socket = os.environ["CPANEL_CONNECT_SOCKET"]
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    sock.connect(cp_socket)
+    sock.sendall('<cpanelxml shutdown="1" />')
+    sock.close()
 
 
 def branding_print_logo_name():
@@ -42,17 +52,17 @@ def branding_print_support():
 
 
 def print_branding():
-	print('<header id="main-header">')
-	print(		branding_print_support())
-	print('		<div class="logo">')
-	print('			<h4>')
-	print('				<a href="xtendweb.cgi"><img border="0" src="')
-	print(					branding_print_logo_name())
-	print('					" width="48" height="48"></a>')
-	print(					branding_print_banner())
-	print('			</h4>')
-	print('		</div>')
-	print('</header>')
+    print('<header id="main-header">')
+    print(		branding_print_support())
+    print('		<div class="logo">')
+    print('			<h4>')
+    print('				<a href="xtendweb.cgi"><img border="0" src="')
+    print(					branding_print_logo_name())
+    print('					" width="48" height="48"></a>')
+    print(					branding_print_banner())
+    print('			</h4>')
+    print('		</div>')
+    print('</header>')
 
 
 def print_green(theoption, hint):

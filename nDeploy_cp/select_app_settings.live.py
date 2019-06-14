@@ -2,7 +2,6 @@
 
 import commoninclude
 import os
-import socket
 import yaml
 import cgi
 import cgitb
@@ -24,7 +23,7 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 
 cgitb.enable()
 
-close_cpanel_liveapisock()
+commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
 
