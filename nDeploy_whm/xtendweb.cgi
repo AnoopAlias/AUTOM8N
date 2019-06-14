@@ -28,12 +28,6 @@ cgitb.enable()
 
 commoninclude.print_header()
 
-print('<body>')
-
-commoninclude.print_branding()
-
-print('<div id="main-container" class="container">')    # main container
-
 print('		<nav aria-label="breadcrumb">')
 print('			<ol class="breadcrumb">')
 print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')

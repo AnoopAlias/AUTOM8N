@@ -122,6 +122,9 @@ def print_header():
     print(('<script src="js.js"></script>'))
     print(('<link rel="stylesheet" href="styles.css">'))
     print('</head>')
+    print('<body>')
+    print_branding()
+    print('<div id="main-container" class="container">') #Main Container
 
 
 def print_modals():
