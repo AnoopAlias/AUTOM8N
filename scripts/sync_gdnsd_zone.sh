@@ -9,7 +9,7 @@ if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]; then
       USER=$(/scripts/whoowns ${DOMAIN})
       /opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py ${USER}
     else
-      rsync -a $1 /etc/gdnsd/zones/
+      rsync -a $1 /etc/gdnsd/zones/${DOMAIN}
     fi
   fi
 fi
