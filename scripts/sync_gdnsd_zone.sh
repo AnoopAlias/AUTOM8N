@@ -5,7 +5,11 @@ if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]; then
   echo $1 | egrep ".db$" > /dev/null 2>&1
   if [ $? -eq 0 ]; then
     DOMAIN=$(echo $1| awk -F"/" '{print $5}'|sed 's/.db$//')
-    USER=$(/scripts/whoowns ${DOMAIN})
-    /opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py ${USER}
+    if (/scripts/whoowns ${DOMAIN} > /dev/null); then
+      USER=$(/scripts/whoowns ${DOMAIN})
+      /opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py ${USER}
+    else
+      rsync -a $1 /etc/gdnsd/zones/
+    fi
   fi
 fi
