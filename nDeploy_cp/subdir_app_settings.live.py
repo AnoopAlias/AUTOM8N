@@ -208,10 +208,13 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # User config reload
                 nginx_log_hint = document_root+"/"+thesubdir+"/nginx.conf"
                 commoninclude.print_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
-                if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
-                    print('		<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> Valid</div></div>')
+                if os.path.isfile(nginx_log_hint):
+                    if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
+                        print('		<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> Valid</div></div>')
+                    else:
+                        print('		<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Invalid or require reload</div></div>')
                 else:
-                    print('		<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Invalid or require reload</div></div>')
+                    print('			<div class="col-md-6"><div class="alert alert-secondary"><i class="fas fa-file-upload"></i> No File uploaded</div></div>')
 
                 # Reload Nginx
                 print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')

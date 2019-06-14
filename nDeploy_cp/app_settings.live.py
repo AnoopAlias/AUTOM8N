@@ -205,7 +205,7 @@ if form.getvalue('domain'):
         # User config reload
         nginx_log_hint = document_root + '/nginx.conf'
         commoninclude.print_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
-        if os.path.isfile(document_root + '/nginx.conf'):
+        if os.path.isfile(nginx_log_hint):
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
                 print('			<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> Valid</div></div>')
             else:
