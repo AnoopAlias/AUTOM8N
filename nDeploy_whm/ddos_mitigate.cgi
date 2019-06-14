@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import cgi
 import cgitb
 import subprocess
@@ -57,18 +58,6 @@ def sighupnginx():
             os.kill(nginxpid, signal.SIGHUP)
 
 
-def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
-
-
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
-def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
-
-
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -86,7 +75,7 @@ if form.getvalue('ddos'):
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.disabled /etc/nginx/conf.d/dos_mitigate_systemwide.enabled && nginx -s reload\"'
             run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print_success('Nginx DDOS Mitigation is now enabled')
+        commoninclude.print_success('Nginx DDOS Mitigation is now enabled')
         if os.path.isfile(cluster_config_file):
             print('<ul class="list-unstyled text-left">')
             while True:
@@ -102,7 +91,7 @@ if form.getvalue('ddos'):
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.enabled /etc/nginx/conf.d/dos_mitigate_systemwide.disabled && nginx -s reload\"'
             run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print_success('Nginx DDOS Mitigation is now disabled')
+        commoninclude.print_success('Nginx DDOS Mitigation is now disabled')
         if os.path.isfile(cluster_config_file):
             print('<ul class="list-unstyled text-left">')
             while True:
@@ -112,7 +101,7 @@ if form.getvalue('ddos'):
                 print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
             print('</ul>')
 else:
-		print_forbidden()
+		commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import commoninclude
 import cgitb
 import subprocess
 import cgi
@@ -16,18 +17,6 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 xtendweb_installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
-
-
-def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
-
-
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
-def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
 
 
 cgitb.enable()
@@ -275,9 +264,9 @@ if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and 
                     subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl set-property '+myservice+' MemoryAccounting=yes"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
                     subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl daemon-reload"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
 
-    print_success('Resource Limits Updated')
+    commoninclude.print_success('Resource Limits Updated')
 else:
-    print_forbidden()
+    commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')

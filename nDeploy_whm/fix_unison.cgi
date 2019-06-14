@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import cgi
 import cgitb
 import subprocess
@@ -13,6 +14,7 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
+
 cgitb.enable()
 
 form = cgi.FieldStorage()
@@ -25,30 +27,30 @@ print('</head>')
 print('<body>')
 
 if form.getvalue('mode'):
+	print('<ul class="list-unstyled text-left">')
         if form.getvalue('mode') == 'restart':
                 run_cmd = subprocess.Popen(installation_path+'/scripts/fix_unison_filesync.py restart', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-                print('<i class="fas fa-thumbs-up"></i>')
-                print('<p>Soft Restart Complete</p>')
+                commoninclude.print_success('Soft Restart Complete')
                 print('<samp>')
                 while True:
                     line = run_cmd.stdout.readline()
                     if not line:
                         break
-                    print(line+'<br>')
+                    print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
                 print('</samp>')
         elif form.getvalue('mode') == 'reset':
                 run_cmd = subprocess.Popen(installation_path+'/scripts/fix_unison_filesync.py reset', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-                print('<p>Hard Restart Complete</p>')
+                commoninclude.print_success('Hard Restart Complete')
                 print('<samp>')
                 while True:
                     line = run_cmd.stdout.readline()
                     if not line:
                         break
-                    print(line+'<br>')
+                    print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
                 print('</samp>')
+        print('</ul>')
 else:
-	print('<i class="fas fa-exclamation"></i>')
-	print('<p>Forbidden</p>')
+	commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')

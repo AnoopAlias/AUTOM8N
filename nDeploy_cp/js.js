@@ -1,13 +1,13 @@
 jQuery(document).ready(function($){
 
 	$(document).ajaxStart(function () {
-			$('#wait').show();
+		$('#loader').show();
 	});
 	$(document).ajaxStop(function () {
-			$('#wait').hide();
+		$('#loader').hide();
 	});
 	$(document).ajaxError(function () {
-			$('#wait').hide();
+		$('#loader').hide();
 	});
 
 	$.ajaxSetup({

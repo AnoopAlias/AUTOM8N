@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import cgi
 import cgitb
 import psutil
@@ -25,18 +26,6 @@ def silentremove(filename):
         os.remove(filename)
     except OSError:
         pass
-
-
-def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
-
-
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
-def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
 
 
 form = cgi.FieldStorage()
@@ -76,7 +65,7 @@ for myprocess in psutil.process_iter():
             print('EXE: <kbd>'+myexe+'</kbd>')
             print('<hr>')
 if not malware:
-	print_success('No suspicious process found')
+	commoninclude.print_success('No suspicious process found')
 
 print('</body>')
 print('</html>')

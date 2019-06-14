@@ -1,4 +1,6 @@
 #!/usr/bin/python
+
+import commoninclude
 import os
 import socket
 import yaml
@@ -26,19 +28,6 @@ def close_cpanel_liveapisock():
     sock.sendall('<cpanelxml shutdown="1" />')
     sock.close()
 
-
-def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
-
-
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
-def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
-
-
 close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
@@ -63,15 +52,15 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         if thesubdir in subdir_apps_dict.keys():
             del subdir_apps_dict[thesubdir]
         else:
-            print_error('The SubDir is not configured')
+            commoninclude.print_error('The SubDir is not configured')
         yaml_parsed_profileyaml['subdir_apps'] = subdir_apps_dict
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        print_success('Successfully Removed SubDir')
+        commoninclude.print_success('Successfully Removed SubDir')
     else:
-        print_error('domain-data file i/o error')
+        commoninclude.print_error('domain-data file i/o error')
 else:
-    print_forbidden()
+    commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')

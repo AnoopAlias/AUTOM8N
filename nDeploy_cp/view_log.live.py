@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import os
 import socket
 import cgi
@@ -30,10 +31,6 @@ def close_cpanel_liveapisock():
     sock.close()
 
 
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
 cpaneluser = os.environ["USER"]
 cpanelhome = os.environ["HOME"]
 close_cpanel_liveapisock()
@@ -59,7 +56,7 @@ if os.path.isfile(php_log):
         print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
     print('</ul>')
 else:
-    print_error('PHP log file is not present')
+    commoninclude.print_error('PHP log file is not present')
 
 print('</body>')
 print('</html>')

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import commoninclude
 import os
 import socket
 import yaml
@@ -31,18 +32,6 @@ def close_cpanel_liveapisock():
     sock.close()
 
 
-def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
-
-
-def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
-
-
-def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
-
-
 close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
@@ -68,7 +57,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         mybackend_dict = backend_data_yaml_parsed.get(mybackend)
         mybackendpath = mybackend_dict.get(mybackendversion)
     else:
-        print_error('Error: backend data file i/o error')
+        commoninclude.print_error('Error: backend data file i/o error')
         sys.exit(0)
     if os.path.isfile(profileyaml):
         # Get all config settings from the domains domain-data config file
@@ -97,11 +86,11 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
             print('<div class="alert alert-danger">Turned off gzip, brotli and set_expire_static options as they are incompatible with the template generated nginx.conf. The config will not work if you turn on these options</div>')
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        print_success('Application Settings Saved')
+        commoninclude.print_success('Application Settings Saved')
     else:
-        print_error('domain-data file i/o error')
+        commoninclude.print_error('domain-data file i/o error')
 else:
-    print_forbidden()
+    commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')
