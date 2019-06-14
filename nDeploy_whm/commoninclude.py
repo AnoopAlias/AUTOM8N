@@ -42,17 +42,17 @@ def branding_print_support():
 
 
 def print_branding():
-	print('<header id="main-header">')
-	print(		branding_print_support())
-	print('		<div class="logo">')
-	print('			<h4>')
-	print('				<a href="xtendweb.cgi"><img border="0" src="')
-	print(					branding_print_logo_name())
-	print('					" width="48" height="48"></a>')
-	print(					branding_print_banner())
-	print('			</h4>')
-	print('		</div>')
-	print('</header>')
+    print('<header id="main-header">')
+    print(		branding_print_support())
+    print('		<div class="logo">')
+    print('			<h4>')
+    print('				<a href="xtendweb.cgi"><img border="0" src="')
+    print(					branding_print_logo_name())
+    print('					" width="48" height="48"></a>')
+    print(					branding_print_banner())
+    print('			</h4>')
+    print('		</div>')
+    print('</header>')
 
 
 def print_green(theoption, hint):

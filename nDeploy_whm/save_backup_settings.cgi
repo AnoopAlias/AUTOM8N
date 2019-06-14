@@ -127,9 +127,9 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
         commoninclude.print_success('Backup Settings Updated')
     else:
-    	commoninclude.print_error('Backup Config Error')
+        commoninclude.print_error('Backup Config Error')
 else:
-	commoninclude.print_forbidden()
+    commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')

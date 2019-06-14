@@ -65,7 +65,7 @@ for myprocess in psutil.process_iter():
             print('EXE: <kbd>'+myexe+'</kbd>')
             print('<hr>')
 if not malware:
-	commoninclude.print_success('No suspicious process found')
+    commoninclude.print_success('No suspicious process found')
 
 print('</body>')
 print('</html>')
