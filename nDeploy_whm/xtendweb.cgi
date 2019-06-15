@@ -26,8 +26,8 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
 cgitb.enable()
-print_header()
-bcrumb('')
+print_header('HA Nginx Control - Home')
+bcrumb('Home')
 
 print('		<div class="row">')
 print('			<div class="col-lg-6">')  # col left

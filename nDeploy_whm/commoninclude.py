@@ -131,7 +131,7 @@ def print_header(title=''):
 def bcrumb(title):
     print('<nav aria-label="breadcrumb">')
     print('<center><ol class="breadcrumb">')
-    if title != 'none':
+    if title != 'Home':
         print('<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
         print('<li class="breadcrumb-item active" aria-current="page">'+title+'</li>')
     else:
