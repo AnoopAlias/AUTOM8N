@@ -128,10 +128,10 @@ def print_header(title=''):
 
 
 #CardStart
-def cardheader(title='Untitled Card',faicon='fa-cogs'):
+def cardheader(title='Untitled Card',faicon='fas fa-cogs'):
     print('<div class="card">')
     print('<div class="card-header">')
-    print('<h5 class="card-title mb-0"><i class="fas '+faicon+' float-right"></i>'+title+'</h5>')
+    print('<h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+title+'</h5>')
     print('</div>')
     
 
@@ -148,7 +148,7 @@ def cardfooter(text='Unmodified Footer Text'):
 #Breadcrumbs
 def bcrumb(title):
     print('<nav aria-label="breadcrumb">')
-    print('<center><ol class="breadcrumb">')
+    print('<ol class="breadcrumb">')
     if title != 'Home':
         print('<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
         print('<li class="breadcrumb-item active" aria-current="page">'+title+'</li>')

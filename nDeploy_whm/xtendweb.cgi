@@ -129,7 +129,7 @@ cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kb
 
 # Cluster Status
 if os.path.isfile(cluster_config_file):
-    cardheader('Cluster Status','fa-align-justify')
+    cardheader('Cluster Status','fas fa-align-justify')
     print('<div class="card-body p-0">') #Card Body Start
     print('<div class="row no-gutters">') #Row Start
     with open(cluster_config_file, 'r') as cluster_data_yaml:
@@ -174,7 +174,7 @@ if os.path.isfile(cluster_config_file):
     
 # Sync GeoDNS zone
 if os.path.isfile(cluster_config_file):
-    cardheader('Sync GDNSD Zone','fa-sync')
+    cardheader('Sync GDNSD Zone','fas fa-sync')
     print('				<div class="card-body">') #Card Body
 
     print('					<form class="form" id="modalForm7" onsubmit="return false;">')
@@ -191,18 +191,13 @@ if os.path.isfile(cluster_config_file):
     print('				</div>')
     print('				<button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
     print('			</form>')
-    #print('				</div>')  # card-body end
-    #print('			</div>')  # card end
-    cardfooter()
+    cardfooter('Choose a user to sync Zones for.')
 
 # Set Default PHP for AutoConfig
-print('				<div class="card">')  # card
-print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fab fa-php float-right"></i> Default PHP for Autoswitch</h5>')
-print('					</div>')
-print('					<div class="card-body">')  # card-body
+cardheader('Default PHP for Autoswitch','fab fa-php')
+print('<div class="card-body">') #Card Body
 
-print('						<form class="form" id=modalForm6 onsubmit="return false;">')
+print('						<form class="form" id="modalForm6" onsubmit="return false;">')
 print('							<div class="input-group">')
 print('								<div class="input-group-prepend">')
 print('    								<label class="input-group-text">PHP</label>')
@@ -222,22 +217,15 @@ print('							</div>')
 print('							<button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
 print('						</form>')
 
-print('					</div>')  # card-body end
-print('					<div class="card-footer">')
-print('						<small>If MultiPHP is enabled, the PHP version selected by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results</small>')
-print('					</div>')
-print('				</div>')  # card end
+cardfooter('If MultiPHP is enabled, the PHP version selected by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
 
 # DDOS Protection
-print('				<div class="card">')  # card
-print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-user-shield float-right"></i> DDOS Protection</h5>')
-print('					</div>')
-print('					<div class="card-body p-0">')  # card-body
+cardheader('DDOS Protection','fas fa-user-shield')
+print('					<div class="card-body p-0">') #Card Body
 print('						<div class="row no-gutters">')
 
 if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
-    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-shield-alt"></i> Nginx</div></div>')
+    print('						<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;Nginx</div></div>')
     print('						<div class="col-sm-6">')
     print('							<div class="row no-gutters">')
     print('								<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
@@ -250,7 +238,7 @@ if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('							</div>')
     print('						</div>')
 else:
-    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-shield-alt"></i> Nginx</div></div>')
+    print('						<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;Nginx</div></div>')
     print('						<div class="col-sm-6">')
     print('							<div class="row no-gutters">')
     print('								<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
@@ -271,7 +259,7 @@ else:
     with open(os.devnull, 'w') as FNULL:
         firehol_enabled = subprocess.call("systemctl is-active firehol.service", stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
     if firehol_enabled == 0:
-        print('					<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-shield-alt"></i> SYNPROXY</div></div>')
+        print('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;SYNPROXY</div></div>')
         print('					<div class="col-sm-6">')
         print('						<div class="row no-gutters">')
         print('							<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
@@ -284,7 +272,7 @@ else:
         print('						</div>')
         print('					</div>')
     else:
-        print('					<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-shield-alt"></i> SYNPROXY</div></div>')
+        print('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;SYNPROXY</div></div>')
         print('					<div class="col-sm-6">')
         print('						<div class="row no-gutters">')
         print('							<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
@@ -416,11 +404,8 @@ print('					</div>')
 print('				</div>')  # card end
 
 # System Resource Limit
-print('				<div class="card">')  # card
-print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-compress float-right"></i> System Resource Limit</h5>')
-print('					</div>')
-print('					<div class="card-body">')  # card-body
+cardheader('System Resource Limit','fas fa-compress')
+print('<div class="card-body">')  #Card Body
 
 with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
@@ -472,11 +457,7 @@ if not osrelease == 'CloudLinux':
             print('				<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
             print('			</form>')
 
-print('					</div>')  # card-body end
-print('					<div class="card-footer">')
-print('						<small>BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory</small>')
-print('					</div>')
-print('				</div>')  # card end
+cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
 
 print('			</div>')  # col right end
 print('		</div>')  # row end
