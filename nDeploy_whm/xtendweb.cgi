@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import commoninclude
 import os
 import cgitb
 import subprocess
@@ -12,6 +11,8 @@ try:
     import simplejson as json
 except ImportError:
     import json
+from commoninclude import bcrumb, print_header, print_modals, print_loader
+
 
 
 __author__ = "Anoop P Alias"
@@ -25,18 +26,10 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
 cgitb.enable()
-
-commoninclude.print_header()
-
-print('		<nav aria-label="breadcrumb">')
-print('			<ol class="breadcrumb">')
-print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')
-print('				<li class="breadcrumb-item active">Server Config</li>')
-print('			</ol>')
-print('		</nav>')
+print_header()
+bcrumb('')
 
 print('		<div class="row">')
-
 print('			<div class="col-lg-6">')  # col left
 
 # System Status
@@ -507,8 +500,8 @@ print('		</div>')  # row end
 
 print('</div>')  # main-container end
 
-commoninclude.print_modals()
-commoninclude.print_loader()
+print_modals()
+print_loader()
 
 print('</body>')
 print('</html>')

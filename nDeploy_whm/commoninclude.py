@@ -107,12 +107,12 @@ def print_loader():
     print(('<div id="loader"><i class="fas fa-infinity fa-spin"></i></div>'))
 
 
-def print_header():
+def print_header(title=''):
     print(('Content-Type: text/html'))
     print((''))
     print(('<html>'))
     print(('<head>'))
-    print(('<title>AUTOM8N</title>'))
+    print(('<title>'+title+'</title>'))
     print(('<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
     print(('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
     print(('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">'))
@@ -125,6 +125,19 @@ def print_header():
     print('<body>')
     print_branding()
     print('<div id="main-container" class="container">') #Main Container
+
+
+#Breadcrumbs
+def bcrumb(title):
+    print('<nav aria-label="breadcrumb">')
+    print('<center><ol class="breadcrumb">')
+    if title != 'none':
+        print('<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
+        print('<li class="breadcrumb-item active" aria-current="page">'+title+'</li>')
+    else:
+        print('<li class="breadcrumb-item active" aria-current="page"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
+    print('</ol>')
+    print('</nav>')
 
 
 def print_modals():
