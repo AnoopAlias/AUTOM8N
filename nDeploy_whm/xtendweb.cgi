@@ -150,10 +150,10 @@ if os.path.isfile(cluster_config_file):
                     filesync_status = True
                     break
             if filesync_status:
-                print(('		<div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
+                print(('		<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-server"></i>&nbsp;'+myhome+'_'+servername.split('.')[0]+'</div></div>'))
                 print(('		<div class="col-sm-6"><div class="alert alert-success">In Sync</div></div>'))
             else:
-                print(('		<div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
+                print(('		<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-server"></i>&nbsp;'+myhome+'_'+servername.split('.')[0]+'</div></div>'))
                 print(('		<div class="col-sm-6"><div class="alert alert-danger">Out of Sync</div></div>'))
     print('					</div>') #Row End
     print('				</div>') #Card Body End
@@ -285,16 +285,9 @@ else:
         print('						</div>')
         print('					</div>')
 
-print('						</div>')  # row end
-print('					</div>')  # card-body end
-print('					<div class="card-footer">')
-print('						<small>Turn these settings on when you are under a DDOS Attack</small><br>')
-print('						<small>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)</small>')
-print('					</div>')
-print('				</div>')  # card end
-
+print('                     </div>') #Row End
+cardfooter('Turn these settings on when you are under a DDOS Attack.<br>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)')
 print('			</div>')  # col left end
-
 print('			<div class="col-lg-6">')  # col right
 
 # PHP-FPM Pool Editor
