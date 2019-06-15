@@ -308,7 +308,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			<div class="card-body text-right">')  # card-body
 
                 print('			<form class="form" id="modalForm6" onsubmit="return false;">')
-                print('				<div class="row">')
+                print('				<div class="row align-items-center">')
 
                 # auth_basic
                 auth_basic_hint = "Setup password for "+document_root+"/"+thesubdir+" in cPanel -> Files -> Directory Privacy"

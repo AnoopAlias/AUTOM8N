@@ -127,7 +127,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # system_files
     system_files_hint = "Backup cPanel system files"
-    print('						<div class="row text-right">')
+    print('						<div class="row align-items-center text-right">')
     if system_files == 'enabled':
         commoninclude.print_green("system_files", system_files_hint)
         print('						<div class="col-md-6">')
@@ -242,7 +242,7 @@ if os.path.isdir('/etc/borgmatic'):
     commoninclude.print_multi_input("repositories", repositories_hint)
     print('								</span>')
     print('							</div>')
-    print('							<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
+    print('							<input class="form-control" value="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
     print('						</div>')
 
     # ssh_command
@@ -253,7 +253,7 @@ if os.path.isdir('/etc/borgmatic'):
     commoninclude.print_multi_input("ssh_command", ssh_command_hint)
     print('								</span>')
     print('							</div>')
-    print('								<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
+    print('								<input class="form-control" value="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
     print('						</div>')
 
     # encryption_passphrase
@@ -264,7 +264,7 @@ if os.path.isdir('/etc/borgmatic'):
     commoninclude.print_multi_input("passphrase", encryption_passphrase_hint)
     print('								</span>')
     print('							</div>')
-    print('							<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']+'" type="text" name="encryption_passphrase">')
+    print('							<input class="form-control" value="'+yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']+'" type="text" name="encryption_passphrase">')
     print('						</div>')
 
     # remote_rate_limit
@@ -275,7 +275,7 @@ if os.path.isdir('/etc/borgmatic'):
     commoninclude.print_multi_input("remote_rate_limit", remote_rate_limit_hint)
     print('								</span>')
     print('							</div>')
-    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
+    print('							<input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
     print('						</div>')
 
     # retention
@@ -288,7 +288,7 @@ if os.path.isdir('/etc/borgmatic'):
     commoninclude.print_multi_input("keep_hourly", keep_hourly_hint)
     print('								</span>')
     print('							</div>')
-    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_hourly'])+'" type="text" name="keep_hourly">')
+    print('							<input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_hourly'])+'" type="text" name="keep_hourly">')
     print('						</div>')
 
     # keep_daily
@@ -299,7 +299,7 @@ if os.path.isdir('/etc/borgmatic'):
     commoninclude.print_multi_input("keep_daily", keep_daily_hint)
     print('								</span>')
     print('							</div>')
-    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_daily'])+'" type="text" name="keep_daily">')
+    print('							<input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_daily'])+'" type="text" name="keep_daily">')
     print('						</div>')
 
     # keep_weekly
@@ -310,7 +310,7 @@ if os.path.isdir('/etc/borgmatic'):
     commoninclude.print_multi_input("keep_weekly", keep_weekly_hint)
     print('								</span>')
     print('							</div>')
-    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
+    print('							<input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
     print('						</div>')
 
     # keep_monthly
@@ -321,7 +321,7 @@ if os.path.isdir('/etc/borgmatic'):
     commoninclude.print_multi_input("keep_monthly", keep_monthly_hint)
     print('								</span>')
     print('							</div>')
-    print('							<input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
+    print('							<input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
     print('						</div>')
 
     print('						<button class="btn btn-outline-primary btn-block  mt-4" type="submit">Save Borg Settings</button>')
