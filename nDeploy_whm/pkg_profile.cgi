@@ -204,7 +204,7 @@ if form.getvalue('cpanelpkg'):
 
     # PHPMAXCHILDREN
     print('							<div class="col-md-12">')
-    print('								<div class="input-group btn-group">')
+    print('								<div class="input-group btn-group mt-0">')
     print('									<div class="input-group-prepend">')
     print('										<span class="input-group-text">')
     phpmaxchildren_hint = "The maximum PHP process that can be spawned"
@@ -220,7 +220,7 @@ if form.getvalue('cpanelpkg'):
     if autoindex == 'enabled':
         commoninclude.print_green("autoindex", autoindex_hint)
         print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('								<label class="btn btn-light active">')
         print('									<input type="radio" name="autoindex" value="enabled" id="AutoIndexOn" autocomplete="off" checked> Enabled')
         print('								</label>')
@@ -340,7 +340,7 @@ if form.getvalue('cpanelpkg'):
     else:
         commoninclude.print_red("open_file_cache", open_file_cache_hint)
         print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
         print('								<label class="btn btn-light">')
         print('									<input type="radio" name="open_file_cache" value="enabled" id="OpenFileCacheOn" autocomplete="off"> Enabled')
         print('								</label>')
@@ -875,7 +875,7 @@ if form.getvalue('cpanelpkg'):
     # Redirect URL
     redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
     print('							<div class="col-md-12">')
-    print('								<div class="input-group btn-group">')
+    print('								<div class="input-group btn-group mb-0">')
     print('									<div class="input-group-prepend">')
     print('										<span class="input-group-text">')
     if redirecturl == "none" or redirectstatus == 'none':

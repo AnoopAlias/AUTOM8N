@@ -431,7 +431,7 @@ if form.getvalue('domain'):
         else:
             commoninclude.print_red("open_file_cache", open_file_cache_hint)
             print('				<div class="col-md-6">')
-            print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('					<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
             print('						<label class="btn btn-light">')
             print('							<input type="radio" name="open_file_cache" value="enabled" id="OpenFileCacheOn" autocomplete="off"> Enabled')
             print('						</label>')
@@ -594,7 +594,7 @@ if form.getvalue('domain'):
                 else:
                     commoninclude.print_red('mod_security', mod_security_hint)
                     print('			<div class="col-md-6">')
-                    print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+                    print('				<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
                     print('					<label class="btn btn-light">')
                     print('						<input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
                     print('					</label>')
@@ -792,7 +792,7 @@ if form.getvalue('domain'):
         else:
             commoninclude.print_red("http2", http2_hint)
             print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('						<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
             print('								<input type="radio" name="http2" value="enabled" id="Http2On" autocomplete="off"> Enabled')
             print('							</label>')
@@ -820,7 +820,7 @@ if form.getvalue('domain'):
         if redirect_to_ssl == 'enabled':
             commoninclude.print_green("redirect_to_ssl", redirect_to_ssl_hint)
             print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
             print('								<input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectToSslOn" autocomplete="off" checked> Enabled')
             print('							</label>')
@@ -976,7 +976,7 @@ if form.getvalue('domain'):
         # Redirect URL
         redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
         print('						<div class="col-md-12">')
-        print('							<div class="input-group btn-group">')
+        print('							<div class="input-group btn-group mb-0">')
         print('								<div class="input-group-prepend">')
         print('									<span class="input-group-text">')
         if redirecturl == "none" or redirectstatus == 'none':
