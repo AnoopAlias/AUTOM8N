@@ -200,7 +200,7 @@ if form.getvalue('cpanelpkg'):
     print('				</div>')
     print('				<div class="card-body text-right">')  # card-body
 
-    print('						<div class="row">')
+    print('						<div class="row align-items-center">')
 
     # PHPMAXCHILDREN
     print('							<div class="col-md-12">')
@@ -362,7 +362,7 @@ if form.getvalue('cpanelpkg'):
     print('				</div>')
     print('				<div class="card-body text-right">')  # card-body
 
-    print('					<div class="row">')
+    print('					<div class="row align-items-center">')
 
     # settings_lock
     settings_lock_hint = "Lock application server and security settings"
@@ -553,7 +553,7 @@ if form.getvalue('cpanelpkg'):
 
     # set_expire_static
     set_expire_static_hint = "Set Expires/Cache-Control headers for static content"
-    print('						<div class="row">')
+    print('						<div class="row align-items-center">')
     if set_expire_static == 'enabled':
         commoninclude.print_green('set expires header', set_expire_static_hint)
         print('						<div class="col-md-6">')
@@ -742,7 +742,7 @@ if form.getvalue('cpanelpkg'):
 
     # redirect_to_ssl
     redirect_to_ssl_hint = "redirect http:// to https:// "
-    print('						<div class="row">')
+    print('						<div class="row align-items-center">')
     if redirect_to_ssl == 'enabled':
         commoninclude.print_green("redirect_to_ssl", redirect_to_ssl_hint)
         print('						<div class="col-md-6">')
