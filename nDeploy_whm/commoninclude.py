@@ -127,6 +127,24 @@ def print_header(title=''):
     print('<div id="main-container" class="container">') #Main Container
 
 
+#CardStart
+def cardheader(title='Untitled Card',faicon='fa-cogs'):
+    print('<div class="card">')
+    print('<div class="card-header">')
+    print('<h5 class="card-title mb-0"><i class="fas '+faicon+' float-right"></i>'+title+'</h5>')
+    print('</div>')
+    
+
+
+#CardFooter
+def cardfooter(text='Unmodified Footer Text'):
+    print('</div>')
+    print('<div class="card-footer">')
+    print('<small>'+text+'</small>')
+    print('</div>')
+    print('</div>')
+
+
 #Breadcrumbs
 def bcrumb(title):
     print('<nav aria-label="breadcrumb">')

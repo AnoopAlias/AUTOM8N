@@ -11,7 +11,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, print_header, print_modals, print_loader
+from commoninclude import bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 
 
@@ -33,12 +33,9 @@ print('		<div class="row">')
 print('			<div class="col-lg-6">')  # col left
 
 # System Status
-print('				<div class="card">')  # card
-print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-cogs float-right"></i> System Setup</h5>')
-print('					</div>')
-print('					<div class="card-body p-0">')  # card-body
-print('						<div class="row no-gutters">')
+cardheader('System Setup')
+print('<div class="card-body p-0">') #Card Body Start
+print('<div class="row no-gutters">') #Remove Padding for System Panel
 
 nginx_status = False
 for myprocess in psutil.process_iter():
@@ -52,10 +49,10 @@ for myprocess in psutil.process_iter():
         break
 
 if nginx_status:
-    print(('					<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-play"></i> Nginx</div></div>'))
+    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-play"></i>&nbsp;Nginx</div></div>'))
     print(('					<div class="col-sm-6"><div class="alert alert-success">Active</div></div>'))
 else:
-    print(('					<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-play"></i> Nginx</div></div>'))
+    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-play"></i>&nbsp;Nginx</div></div>'))
     print(('					<div class="col-sm-6"><div class="alert alert-danger">Inactive</div></div>'))
 
 watcher_status = False
@@ -70,10 +67,10 @@ for myprocess in psutil.process_iter():
         break
 
 if watcher_status:
-    print(('					<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-eye"></i> NDEPLOY_WATCHER</div></div>'))
+    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-eye"></i>&nbsp;NDEPLOY_WATCHER</div></div>'))
     print(('					<div class="col-sm-6"><div class="alert alert-success">Active</div></div>'))
 else:
-    print(('					<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-eye"></i> NDEPLOY_WATCHER</div></div>'))
+    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-eye"></i>&nbsp;NDEPLOY_WATCHER</div></div>'))
     print(('					<div class="col-sm-6"><div class="alert alert-danger">Inactive</div></div>'))
 
 # Default PHP
@@ -82,66 +79,59 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
     preferred_php_yaml.close()
     phpversion = preferred_php_yaml_parsed.get('PHP')
-    print(('					<div class="col-sm-6"><div class="alert alert-light"><i class="fab fa-php"></i> Default PHP</div></div>'))
+    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fab fa-php"></i>&nbsp;Default&nbsp;PHP</div></div>'))
     print(('					<div class="col-sm-6"><div class="alert alert-success">'+phpversion.keys()[0])+'</div></div>')
 
 # Net Data
 myhostname = socket.gethostname()
-print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-heartbeat"></i> Netdata</div></div>')
+print('							<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div></div>')
 print('							<div class="col-sm-6">')
 
 print('								<form class="form" action="https://'+myhostname+'/netdata/" target="_blank">')
-print('									<input class="alert alert-info btn btn-info" type="submit" value="View Graph">')
+print('									<input class="alert alert-info btn btn-info" type="submit" value="View&nbsp;Graph">')
 print('								</form>')
 
 print('							</div>')
 
 # Glances
-print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-thermometer-half"></i> Glances</div></div>')
+print('							<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-thermometer-half"></i>&nbsp;Glances</div></div>')
 print('							<div class="col-sm-6">')
 
 print('								<form class="form" action="https://'+myhostname+'/glances/" target="_blank">')
-print('									<input class="alert alert-info btn btn-info" type="submit" value="System Status">')
+print('									<input class="alert alert-info btn btn-info" type="submit" value="System&nbsp;Status">')
 print('								</form>')
 
 print('							</div>')
 
 # Borg Backup
-print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-database"></i> Borg Backup</div></div>')
+print('							<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-database"></i>&nbsp;Borg&nbsp;Backup</div></div>')
 print('							<div class="col-sm-6">')
 
 print('								<form class="form" method="get" action="setup_borg_backup.cgi">')
-print('									<button class="alert alert-info btn btn-info" type="submit">Setup Borg</button>')
+print('									<button class="alert alert-info btn btn-info" type="submit">Setup&nbsp;Borg</button>')
 print('								</form>')
 
 print('							</div>')
 
 # Process Tracker
-print('							<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-bug"></i> Detect Abnormal Process</div></div>')
+print('							<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-bug"></i>&nbsp;Detect&nbsp;Abnormal&nbsp;Process</div></div>')
 print('							<div class="col-sm-6">')
 
 print('								<form class="form" id="modalForm3" onsubmit="return false;">')
-print('									<button type="submit" class="alert alert-info btn btn-info ">Check Process</button>')
+print('									<button type="submit" class="alert alert-info btn btn-info ">Check&nbsp;Process</button>')
 print('								</form>')
 
 print('							</div>')
 
 print('						</div>')  # row end
-print('					</div>')  # card-body
 
-print('					<div class="card-footer">')
-print('						<small><strong>Do NOT</strong> restart Nginx, but reload <kbd>nginx -t && nginx -s reload</kbd></small>')
-print('					</div>')
-print('				</div>')  # card end
+cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kbd>nginx -t && nginx -s reload</kbd>')
 
 # Cluster Status
 if os.path.isfile(cluster_config_file):
-    print('			<div class="card">')  # card
-    print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-align-justify float-right"></i> Cluster Status</h5>')
-    print('				</div>')
-    print('				<div class="card-body p-0">')  # card-body
-    print('					<div class="row no-gutters">')
+    cardheader('Cluster Status','fa-align-justify')
+    print('<div class="card-body p-0">') #Card Body Start
+    print('<div class="row no-gutters">') #Row Start
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     with open(homedir_config_file, 'r') as homedir_data_yaml:
@@ -160,15 +150,15 @@ if os.path.isfile(cluster_config_file):
                     filesync_status = True
                     break
             if filesync_status:
-                print(('		<div class="col-sm-6"><div class="alert alert-light">'+myhome+'_'+servername+'</div></div>'))
+                print(('		<div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
                 print(('		<div class="col-sm-6"><div class="alert alert-success">In Sync</div></div>'))
             else:
-                print(('		<div class="col-sm-6"><div class="alert alert-light">'+myhome+'_'+servername+'</div></div>'))
+                print(('		<div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
                 print(('		<div class="col-sm-6"><div class="alert alert-danger">Out of Sync</div></div>'))
-    print('					</div>')  # row end
-    print('				</div>')  # card-body
+    print('					</div>') #Row End
+    print('				</div>') #Card Body End
 
-    print('				<div class="card-body">')  # card-body
+    print('				<div class="card-body">') #Card Body
 
     print('					<form class="form mb-3" id="modalForm4" onsubmit="return false;">')
     print(('					<input class="hidden" name="mode" value="restart">'))
@@ -180,20 +170,12 @@ if os.path.isfile(cluster_config_file):
     print('						<button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
     print('					</form>')
 
-    print('				</div>')  # card-body
-
-    print('				<div class="card-footer">')
-    print('					<small>Only perform a hard reset if the unison archive is corrupt.Unison archive rebuild is time consuming</small>')
-    print('				</div>')
-    print('			</div>')  # card end
-
+    cardfooter('Only perform a hard reset if the unison archive is corrupt. The unison archive rebuild can be time consuming.')
+    
 # Sync GeoDNS zone
 if os.path.isfile(cluster_config_file):
-    print('			<div class="card">')  # card
-    print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-sync float-right"></i>Sync gdnsd zone</h5>')
-    print('				</div>')
-    print('				<div class="card-body">')  # card-body
+    cardheader('Sync GDNSD Zone','fa-sync')
+    print('				<div class="card-body">') #Card Body
 
     print('					<form class="form" id="modalForm7" onsubmit="return false;">')
     print('						<div class="input-group">')
@@ -207,10 +189,11 @@ if os.path.isfile(cluster_config_file):
             print(('					<option value="'+cpuser+'">'+cpuser+'</option>'))
     print('					</select>')
     print('				</div>')
-    print('				<button type="submit" class="btn btn-outline-primary btn-block ">Sync Dns Zone</button>')
+    print('				<button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
     print('			</form>')
-    print('				</div>')  # card-body end
-    print('			</div>')  # card end
+    #print('				</div>')  # card-body end
+    #print('			</div>')  # card end
+    cardfooter()
 
 # Set Default PHP for AutoConfig
 print('				<div class="card">')  # card
