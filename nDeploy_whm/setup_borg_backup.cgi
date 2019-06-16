@@ -194,7 +194,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('							</div>')
 
     print('							<div class="col-md-12">')
-    print('								<button class="btn btn-outline-primary btn-block  mt-2" type="submit">Save Backup Settings</button>')
+    print('								<button class="btn btn-outline-primary btn-block mt-2 mb-2" type="submit">Save Backup Settings</button>')
     print('							</div>')
     print('						</div>')
 
@@ -324,7 +324,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('							<input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
     print('						</div>')
 
-    print('						<button class="btn btn-outline-primary btn-block  mt-4" type="submit">Save Borg Settings</button>')
+    print('						<button class="btn btn-outline-primary btn-block mt-3" type="submit">Save Borg Settings</button>')
 
     print('					</form>')
 
