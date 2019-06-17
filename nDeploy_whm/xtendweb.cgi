@@ -128,7 +128,7 @@ print('						</div>')  # row end
 cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kbd>nginx -t && nginx -s reload</kbd>')
 
 # Cluster Status
-if False:    #Bypass Cluster Reqs os.path.isfile(cluster_config_file):
+if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Cluster Status','fas fa-align-justify')
     print('<div class="card-body p-0">') #Card Body Start
     print('<div class="row no-gutters">') #Row Start
@@ -173,7 +173,7 @@ if False:    #Bypass Cluster Reqs os.path.isfile(cluster_config_file):
     cardfooter('Only perform a hard reset if the unison archive is corrupt. The unison archive rebuild can be time consuming.')
     
 # Sync GeoDNS zone
-if os.path.isfile(cluster_config_file):
+if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Sync GDNSD Zone','fas fa-sync')
     print('				<div class="card-body">') #Card Body
 
