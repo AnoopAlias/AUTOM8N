@@ -228,6 +228,10 @@ print('						</form>')
 
 cardfooter('If MultiPHP is enabled, the PHP version selected by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
 
+#Column Change
+print('            </div>')  # col left end
+print('            <div class="col-lg-6">')  # col right
+
 # DDOS Protection
 cardheader('DDOS Protection','fas fa-user-shield')
 print('					<div class="card-body p-0">') #Card Body
@@ -302,9 +306,9 @@ print('						<small>Disable CSF or any other firewall before turning on SYNPROXY
 print('					</div>')
 print('				</div>')  # card end
 
-print('			</div>')  # col left end
+#print('			</div>')  # col left end
 
-print('			<div class="col-lg-6">')  # col right
+#print('			<div class="col-lg-6">')  # col right
 
 # PHP-FPM Pool Editor
 print('				<div class="card">')  # card
