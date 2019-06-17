@@ -34,6 +34,7 @@ log_bin=/var/lib/mysql/binlog-{{ ansible_nodename }}
 max_binlog_size=52428800
 expire_logs_days=3
 #binlog-format=row  #More secure
+#binlog_row_event_max_size=32768
 binlog-format=MIXED
 
 relay-log=/var/lib/mysql/relaylog-{{ ansible_nodename }}
