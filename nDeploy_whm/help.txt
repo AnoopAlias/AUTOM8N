@@ -71,3 +71,50 @@ ansible-playbook -i ./hosts firewall.yml --extra-vars "ansible_port=22"
 # you will be locked out!
 
 ###############################################################################
+# SETUP BORG BACKUP
+###############################################################################
+
+# Install borg+borgmatic
+/opt/nDeploy/scripts/easy_borg_setup.sh
+
+# You will need to fill in atleast 2 fields in the Borg setup in WHM > AUTOM8N
+1. repositories  - eg : /media/backup , root@my-backup-server:/path/to/backupdir/
+
+2. passphrase - this is your secret encryption passphrase
+
+Setup Backup Retention as required
+
+# initialize the repo
+borgmatic --init --encryption repokey-blake2
+
+# Do the first backup
+borgmatic --stats
+
+# Decide the backup frequency and add it to /etc/crontab
+eg:
+# Backup every hour
+1 * * * * root /usr/local/bin/borgmatic
+# Backup every 6 hours
+1 */6 * * * root /usr/local/bin/borgmatic
+# Backup every day
+1 1 * * * root /usr/local/bin/borgmatic
+
+# Restore backup
+# List current backups and select a backup point
+borgmatic --list
+
+# Mount the repository to a mountpoint
+mkdir /borgrestore
+borg mount /path/to/repo /borgrestore
+eg:
+# to mount tao.taoserver.com-2019-05-27T23:01:14.549623-borg-1.1 retention point
+~]# borg mount /media/borgbackup::tao.taoserver.com-2019-05-29T13:01:18.369072-borg-1.1 /borgrestore
+Enter passphrase for key /media/borgbackup:
+
+cd /borgrestore
+
+and you have all the backup files at this  point which you can rsync/copy etc
+
+# Once your restoration is complete, umount the restorepoint
+borg umount /borgrestore
+###############################################################################
