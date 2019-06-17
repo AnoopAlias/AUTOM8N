@@ -3,7 +3,7 @@
 
 which systemctl || exit 1
 yum -y remove glances
-yum -y install python36 python36-pip python36-devel
+yum -y --enablerepo=epel install python36 python36-pip python36-devel
 pip3 install glances bottle
 
 echo -e "\e[93m Input web user password for glances user below \e[0m"

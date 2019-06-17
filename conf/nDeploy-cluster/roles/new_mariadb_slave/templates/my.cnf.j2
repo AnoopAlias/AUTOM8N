@@ -5,6 +5,10 @@
 # Do not remove this flag
 read_only=1
 
+# Faster perf with less data reliability (slave can be reset from master anyways)
+innodb_flush_method=O_DIRECT
+innodb_flush_log_at_trx_commit=2
+
 log-error=/var/lib/mysql/{{ ansible_nodename}}.err
 innodb_file_per_table=1
 performance-schema=0
@@ -36,6 +40,7 @@ log_bin=/var/lib/mysql/binlog-{{ ansible_nodename }}
 max_binlog_size=52428800
 expire_logs_days=3
 #binlog-format=row  #More secure
+#binlog_row_event_max_size=32768
 binlog-format=MIXED
 
 relay-log=/var/lib/mysql/relaylog-{{ ansible_nodename }}
