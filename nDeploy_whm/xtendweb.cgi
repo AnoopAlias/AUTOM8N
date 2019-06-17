@@ -129,7 +129,7 @@ cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kb
 
 # Cluster Status
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
-    cardheader('Cluster Status','fas fa-align-justify')
+    cardheader('Cluster Unison Sync Status','fas fa-align-justify')
     print('<div class="card-body p-0">') #Card Body Start
     print('<div class="row no-gutters">') #Row Start
     with open(cluster_config_file, 'r') as cluster_data_yaml:
@@ -169,9 +169,14 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print(('					<input class="hidden" name="mode" value="reset">'))
     print('						<button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
     print('					</form>')
+    print('             </div>') #Card Body End
 
     cardfooter('Only perform a hard reset if the unison archive is corrupt. The unison archive rebuild can be time consuming.')
-    
+else:
+    cardheader('Cluster Unison Sync Status Disabled','fas fa-align-justify')
+    print('<div class="card-body p-0">') #Dummy Div
+    cardfooter('Cluster Unison Sync Status is disabled. We are running with a Single Point of Failure.')
+
 # Sync GeoDNS zone
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Sync GDNSD Zone','fas fa-sync')
@@ -192,6 +197,10 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('				<button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
     print('			</form>')
     cardfooter('Choose a user to sync Zones for.')
+else:
+    cardheader('GDNSD Zone Sync Disabled','fas fa-sync')
+    print('<div class="card-body p-0">') #Dummy Div
+    cardfooter('GDNSD Zone Sync Disabled. We are running with cPanel DNS.')
 
 # Set Default PHP for AutoConfig
 cardheader('Default PHP for Autoswitch','fab fa-php')
