@@ -311,9 +311,6 @@ print('						<small>Disable CSF or any other firewall before turning on SYNPROXY
 print('					</div>')
 print('				</div>')  # card end
 
-#print('			</div>')  # col left end
-
-#print('			<div class="col-lg-6">')  # col right
 
 # PHP-FPM Pool Editor
 print('				<div class="card">')  # card
