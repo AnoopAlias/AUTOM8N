@@ -128,7 +128,8 @@ print('						</div>')  # row end
 cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kbd>nginx -t && nginx -s reload</kbd>')
 
 # Cluster Status
-if os.path.isfile(cluster_config_file):
+if False:
+    #os.path.isfile(cluster_config_file):
     cardheader('Cluster Status','fas fa-align-justify')
     print('<div class="card-body p-0">') #Card Body Start
     print('<div class="row no-gutters">') #Row Start
