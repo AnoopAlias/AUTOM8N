@@ -82,6 +82,7 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fab fa-php"></i>&nbsp;Default&nbsp;PHP</div></div>'))
     print(('					<div class="col-sm-6"><div class="alert alert-success">'+phpversion.keys()[0])+'</div></div>')
 
+
 # Net Data
 myhostname = socket.gethostname()
 print('							<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div></div>')
@@ -203,7 +204,7 @@ else:
     cardfooter('GDNSD Zone Sync Disabled. We are running with cPanel DNS.')
 
 # Set Default PHP for AutoConfig
-cardheader('Default PHP for Autoswitch','fab fa-php')
+cardheader('Default PHP for Auto Configuration','fab fa-php')
 print('<div class="card-body">') #Card Body
 
 print('						<form class="form" id="modalForm6" onsubmit="return false;">')
@@ -217,16 +218,20 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
+phpversion = phpversion.keys()[0]
 if "PHP" in backend_data_yaml_parsed:
     php_backends_dict = backend_data_yaml_parsed["PHP"]
     for versions_defined in list(php_backends_dict.keys()):
-        print(('						<option value="'+versions_defined+'">'+versions_defined+'</option>'))
+        if versions_defined == phpversion:
+            print(('                        <option selected value="'+phpversion+'">'+phpversion+'</option>'))
+        else:
+            print(('						<option value="'+versions_defined+'">'+versions_defined+'</option>'))
 print('								</select>')
 print('							</div>')
 print('							<button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
 print('						</form>')
 
-cardfooter('If MultiPHP is enabled, the PHP version selected by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
+cardfooter('If MultiPHP is enabled, <kbd>'+phpversion+'</kbd> by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
 
 #Column Change
 print('            </div>')  # col left end
