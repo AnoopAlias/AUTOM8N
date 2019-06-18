@@ -29,13 +29,15 @@ cgitb.enable()
 print_header('HA Nginx Control - Home')
 bcrumb('Home')
 
-print('		<div class="row">')
-print('			<div class="col-lg-6">')  # col left
+print('            <!-- First column start -->')
+print('            <div class="row">')
+print('                <div class="col-lg-6">') #Left Column
+print('')
 
 # System Status
 cardheader('System Setup')
-print('<div class="card-body p-0">') #Card Body Start
-print('<div class="row no-gutters">') #Remove Padding for System Panel
+print('                        <div class="card-body p-0">') #Card Body Start
+print('                            <div class="row no-gutters">') #Remove Padding for System Panel
 
 nginx_status = False
 for myprocess in psutil.process_iter():
@@ -49,11 +51,11 @@ for myprocess in psutil.process_iter():
         break
 
 if nginx_status:
-    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-play"></i>&nbsp;Nginx</div></div>'))
-    print(('					<div class="col-sm-6"><div class="alert alert-success">Active</div></div>'))
+    print(('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-play"></i>&nbsp;Nginx</div></div>'))
+    print(('                                <div class="col-sm-6"><div class="alert alert-success">Active</div></div>'))
 else:
-    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-play"></i>&nbsp;Nginx</div></div>'))
-    print(('					<div class="col-sm-6"><div class="alert alert-danger">Inactive</div></div>'))
+    print(('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-play"></i>&nbsp;Nginx</div></div>'))
+    print(('                                <div class="col-sm-6"><div class="alert alert-danger">Inactive</div></div>'))
 
 watcher_status = False
 for myprocess in psutil.process_iter():
@@ -67,11 +69,11 @@ for myprocess in psutil.process_iter():
         break
 
 if watcher_status:
-    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-eye"></i>&nbsp;NDEPLOY_WATCHER</div></div>'))
-    print(('					<div class="col-sm-6"><div class="alert alert-success">Active</div></div>'))
+    print(('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-eye"></i>&nbsp;NDEPLOY_WATCHER</div></div>'))
+    print(('                                <div class="col-sm-6"><div class="alert alert-success">Active</div></div>'))
 else:
-    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-eye"></i>&nbsp;NDEPLOY_WATCHER</div></div>'))
-    print(('					<div class="col-sm-6"><div class="alert alert-danger">Inactive</div></div>'))
+    print(('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-eye"></i>&nbsp;NDEPLOY_WATCHER</div></div>'))
+    print(('                                <div class="col-sm-6"><div class="alert alert-danger">Inactive</div></div>'))
 
 # Default PHP
 if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
@@ -79,52 +81,52 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
     preferred_php_yaml.close()
     phpversion = preferred_php_yaml_parsed.get('PHP')
-    print(('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fab fa-php"></i>&nbsp;Default&nbsp;PHP</div></div>'))
-    print(('					<div class="col-sm-6"><div class="alert alert-success">'+phpversion.keys()[0])+'</div></div>')
+    print(('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fab fa-php"></i>&nbsp;Default&nbsp;PHP</div></div>'))
+    print(('                                <div class="col-sm-6"><div class="alert alert-success">'+phpversion.keys()[0])+'</div></div>')
 
 
 # Net Data
 myhostname = socket.gethostname()
-print('							<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div></div>')
-print('							<div class="col-sm-6">')
+print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div></div>')
+print('                                <div class="col-sm-6">')
 
-print('								<form class="form" action="https://'+myhostname+'/netdata/" target="_blank">')
-print('									<input class="alert alert-info btn btn-info" type="submit" value="View&nbsp;Graph">')
-print('								</form>')
+print('                                    <form class="form" action="https://'+myhostname+'/netdata/" target="_blank">')
+print('                                        <input class="alert alert-info btn btn-info" type="submit" value="View&nbsp;Graph">')
+print('                                    </form>')
 
-print('							</div>')
+print('                                </div>')
 
 # Glances
-print('							<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-thermometer-half"></i>&nbsp;Glances</div></div>')
-print('							<div class="col-sm-6">')
+print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-thermometer-half"></i>&nbsp;Glances</div></div>')
+print('                                <div class="col-sm-6">')
 
-print('								<form class="form" action="https://'+myhostname+'/glances/" target="_blank">')
-print('									<input class="alert alert-info btn btn-info" type="submit" value="System&nbsp;Status">')
-print('								</form>')
+print('                                    <form class="form" action="https://'+myhostname+'/glances/" target="_blank">')
+print('                                        <input class="alert alert-info btn btn-info" type="submit" value="System&nbsp;Status">')
+print('                                    </form>')
 
-print('							</div>')
+print('                                </div>')
 
 # Borg Backup
-print('							<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-database"></i>&nbsp;Borg&nbsp;Backup</div></div>')
-print('							<div class="col-sm-6">')
+print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-database"></i>&nbsp;Borg&nbsp;Backup</div></div>')
+print('                                <div class="col-sm-6">')
 
-print('								<form class="form" method="get" action="setup_borg_backup.cgi">')
-print('									<button class="alert alert-info btn btn-info" type="submit">Setup&nbsp;Borg</button>')
-print('								</form>')
+print('                                    <form class="form" method="get" action="setup_borg_backup.cgi">')
+print('                                        <button class="alert alert-info btn btn-info" type="submit">Setup&nbsp;Borg</button>')
+print('                                    </form>')
 
-print('							</div>')
+print('                                </div>')
 
 # Process Tracker
-print('							<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-bug"></i>&nbsp;Detect&nbsp;Abnormal&nbsp;Process</div></div>')
-print('							<div class="col-sm-6">')
+print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-bug"></i>&nbsp;Detect&nbsp;Abnormal&nbsp;Process</div></div>')
+print('                                <div class="col-sm-6">')
 
-print('								<form class="form" id="modalForm3" onsubmit="return false;">')
-print('									<button type="submit" class="alert alert-info btn btn-info ">Check&nbsp;Process</button>')
-print('								</form>')
+print('                                    <form class="form" id="modalForm3" onsubmit="return false;">')
+print('                                        <button type="submit" class="alert alert-info btn btn-info ">Check&nbsp;Process</button>')
+print('                                    </form>')
 
-print('							</div>')
+print('                                </div>')
 
-print('						</div>')  # row end
+print('                            </div>') #End Remove Padding for System Panel
 
 cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kbd>nginx -t && nginx -s reload</kbd>')
 
@@ -304,12 +306,13 @@ else:
         print('					</div>')
 
 print('						</div>')  # row end
-print('					</div>')  # card-body end
-print('					<div class="card-footer">')
-print('						<small>Turn these settings on when you are under a DDOS Attack</small><br>')
-print('						<small>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)</small>')
-print('					</div>')
-print('				</div>')  # card end
+#print('					</div>')  # card-body end
+cardfooter('Turn these settings on when you are under a DDOS Attack.<br>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)')
+#print('					<div class="card-footer">')
+#print('						<small>Turn these settings on when you are under a DDOS Attack</small><br>')
+#print('						<small>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)</small>')
+#print('					</div>')
+#print('				</div>')  # card end
 
 
 # PHP-FPM Pool Editor

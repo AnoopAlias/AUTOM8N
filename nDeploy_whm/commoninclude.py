@@ -42,17 +42,14 @@ def branding_print_support():
 
 
 def print_branding():
-    print('<header id="main-header">')
-    print(		branding_print_support())
-    print('		<div class="logo">')
-    print('			<h4>')
-    print('				<a href="xtendweb.cgi"><img border="0" src="')
-    print(					branding_print_logo_name())
-    print('					" width="48" height="48"></a>')
-    print(					branding_print_banner())
-    print('			</h4>')
-    print('		</div>')
-    print('</header>')
+    print('        <header id="main-header">')
+    print('            '+branding_print_support())
+    print('            <div class="logo">')
+    print('                <h4>')
+    print('                    <a href="xtendweb.cgi"><img border="0" src="'+branding_print_logo_name()+'" width="48" height="48"></a>'+branding_print_banner())
+    print('                </h4>')
+    print('            </div>')
+    print('        </header>')
 
 
 def print_green(theoption, hint):
@@ -111,50 +108,56 @@ def print_header(title=''):
     print(('Content-Type: text/html'))
     print((''))
     print(('<html>'))
-    print(('<head>'))
-    print(('<title>'+title+'</title>'))
-    print(('<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
-    print(('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
-    print(('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">'))
-    print(('<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
-    print(('<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">'))
-    print(('<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">'))
-    print(('<script src="js.js"></script>'))
-    print(('<link rel="stylesheet" href="styles.css">'))
-    print('</head>')
-    print('<body>')
+    print(('    <head>'))
+    print(('        <title>'+title+'</title>'))
+    print(('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
+    print(('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
+    print(('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
+    print(('        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">'))
+    print(('        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">'))
+    print(('        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">'))
+    print(('        <script src="js.js"></script>'))
+    print(('        <link rel="stylesheet" href="styles.css">'))
+    print('    </head>')
+    print('')
+    print('    <body>')
     print_branding()
-    print('<div id="main-container" class="container">') #Main Container
+    print('')
+    print('        <div id="main-container" class="container">') #Main Container
 
 
 #CardStart
 def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
-    print('<div class="card">')
-    print('<div class="card-header">')
-    print('<h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>')
-    print('</div>')
+    print('                    <!-- Bootstrap Card Start -->')
+    print('                    <div class="card">')
+    print('                        <div class="card-header">')
+    print('                            <h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>')
+    print('                        </div>')
 
 
 #CardFooter
 def cardfooter(text='Unmodified Footer Text'):
-    print('</div>')
-    print('<div class="card-footer">')
-    print('<small>'+text+'</small>')
-    print('</div>')
-    print('</div>')
+    print('                        </div>')
+    print('                        <div class="card-footer">')
+    print('                            <small>'+text+'</small>')
+    print('                        </div>')
+    print('                    </div>')
 
 
 #Breadcrumbs
 def bcrumb(pagename):
-    print('<nav aria-label="breadcrumb">')
-    print('<ol class="breadcrumb">')
+    print('')
+    print('            <!-- Navigation -->')
+    print('            <nav aria-label="breadcrumb">')
+    print('                <ol class="breadcrumb">')
     if pagename != 'Home':
-        print('<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
-        print('<li class="breadcrumb-item active" aria-current="page">'+pagename+'</li>')
+        print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
+        print('                    <li class="breadcrumb-item active" aria-current="page">'+pagename+'</li>')
     else:
-        print('<li class="breadcrumb-item active" aria-current="page"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
-    print('</ol>')
-    print('</nav>')
+        print('                    <li class="breadcrumb-item active" aria-current="page"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
+    print('                </ol>')
+    print('            </nav>')
+    print('')
 
 
 def print_modals():
