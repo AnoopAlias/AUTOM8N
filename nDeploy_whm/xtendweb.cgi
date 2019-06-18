@@ -132,7 +132,7 @@ print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kbd>nginx -t && nginx -s reload</kbd>')
 
 # Cluster Status
-if True:#os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
+if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Cluster Unison Sync Status','fas fa-align-justify')
     print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
     print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
@@ -154,26 +154,26 @@ if True:#os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_f
                     filesync_status = True
                     break
             if filesync_status:
-                print(('                                <div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
+                print(('                                <div class="col-sm-6"><div class="alert alert-light">'+myhome+'_'+servername.split('.')[0]+'</div></div>'))
                 print(('                                <div class="col-sm-6"><div class="alert alert-success">In Sync</div></div>'))
             else:
-                print(('                                <div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
+                print(('                                <div class="col-sm-6"><div class="alert alert-light">'+myhome+'_'+servername.split('.')[0]+'</div></div>'))
                 print(('                                <div class="col-sm-6"><div class="alert alert-danger">Out of Sync</div></div>'))
     print('                            </div> <!-- Row End -->') #Row End
     print('                        </div> <!-- Card Body End -->') #Card Body End
 
-    print('                            <div class="card-body">  <!-- Card Body Start -->') #Card Body
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body
 
-    print('					<form class="form mb-3" id="modalForm4" onsubmit="return false;">')
-    print(('					<input class="hidden" name="mode" value="restart">'))
-    print('						<button type="submit" class="btn btn-outline-primary btn-block ">Soft Restart Unison Sync</button>')
-    print('					</form>')
+    print('                            <form class="form mb-3" id="modalForm4" onsubmit="return false;">')
+    print(('                                <input class="hidden" name="mode" value="restart">'))
+    print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Soft Restart Unison Sync</button>')
+    print('                            </form>')
 
-    print('					<form class="form mb-0" id="modalForm5" onsubmit="return false;">')
-    print(('					<input class="hidden" name="mode" value="reset">'))
-    print('						<button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
-    print('					</form>')
-    print('             </div>') #Card Body End
+    print('                            <form class="form mb-0" id="modalForm5" onsubmit="return false;">')
+    print(('                                <input class="hidden" name="mode" value="reset">'))
+    print('                                <button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
+    print('                            </form>')
+    print('                        </div> <!-- Card Body End -->') #Card Body End
 
     cardfooter('Only perform a hard reset if the unison archive is corrupt. The unison archive rebuild can be time consuming.')
 else:
@@ -184,22 +184,23 @@ else:
 # Sync GeoDNS zone
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Sync GDNSD Zone','fas fa-sync')
-    print('				<div class="card-body">') #Card Body
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
-    print('					<form class="form" id="modalForm7" onsubmit="return false;">')
-    print('						<div class="input-group">')
-    print('							<div class="input-group-prepend">')
-    print('    							<label class="input-group-text">Zone</label>')
-    print('							</div>')
-    print('							<select name="user" class="custom-select">')
+    print('                            <form class="form" id="modalForm7" onsubmit="return false;">')
+    print('                                <div class="input-group">')
+    print('                                    <div class="input-group-prepend">')
+    print('                                        <label class="input-group-text">Zone</label>')
+    print('                                    </div>')
+    print('                                    <select name="user" class="custom-select">')
     user_list = os.listdir("/var/cpanel/users")
     for cpuser in sorted(user_list):
         if cpuser != 'nobody' and cpuser != 'system':
-            print(('					<option value="'+cpuser+'">'+cpuser+'</option>'))
-    print('					</select>')
-    print('				</div>')
-    print('				<button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
-    print('			</form>')
+            print(('                                        <option value="'+cpuser+'">'+cpuser+'</option>'))
+    print('                                    </select>')
+    print('                                </div>')
+    print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
+    print('                            </form>')
+    print('                        </div> <!-- Card Body End -->') #Card Body End
     cardfooter('Choose a user to sync Zones for.')
 else:
     cardheader('GDNSD Zone Sync Disabled','fas fa-sync')
