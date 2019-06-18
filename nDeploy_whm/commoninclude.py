@@ -128,20 +128,27 @@ def print_header(title=''):
 
 #CardStart
 def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
-    print('                    <!-- Bootstrap Card Start -->')
+    print('                    <!-- Bootstrap Card Start for '+header+' -->')
     print('                    <div class="card">')
     print('                        <div class="card-header">')
     print('                            <h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>')
     print('                        </div>')
+    print('')
 
 
 #CardFooter
 def cardfooter(text='Unmodified Footer Text'):
-    print('                        </div>')
+    #print('')
+    #print('                        </div> <!-- Card Body End -->')
+    print('')
+    print('                        <!-- Card Footer Start -->')
     print('                        <div class="card-footer">')
     print('                            <small>'+text+'</small>')
     print('                        </div>')
+    print('')
+    print('                    <!-- Bootstrap Card End -->')
     print('                    </div>')
+    print('')
 
 
 #Breadcrumbs

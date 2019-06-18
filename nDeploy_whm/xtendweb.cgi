@@ -29,15 +29,15 @@ cgitb.enable()
 print_header('HA Nginx Control - Home')
 bcrumb('Home')
 
-print('            <!-- First column start -->')
+print('            <!-- First Column Start -->')
 print('            <div class="row">')
 print('                <div class="col-lg-6">') #Left Column
 print('')
 
 # System Status
 cardheader('System Setup')
-print('                        <div class="card-body p-0">') #Card Body Start
-print('                            <div class="row no-gutters">') #Remove Padding for System Panel
+print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
 nginx_status = False
 for myprocess in psutil.process_iter():
@@ -126,15 +126,16 @@ print('                                    </form>')
 
 print('                                </div>')
 
-print('                            </div>') #End Remove Padding for System Panel
+print('                            </div> <!-- Row End -->') #End Row
+print('                        </div> <!-- Card Body End -->') #Card Body End
 
 cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kbd>nginx -t && nginx -s reload</kbd>')
 
 # Cluster Status
-if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
+if True:#os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Cluster Unison Sync Status','fas fa-align-justify')
-    print('<div class="card-body p-0">') #Card Body Start
-    print('<div class="row no-gutters">') #Row Start
+    print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     with open(homedir_config_file, 'r') as homedir_data_yaml:
@@ -153,15 +154,15 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
                     filesync_status = True
                     break
             if filesync_status:
-                print(('		<div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
-                print(('		<div class="col-sm-6"><div class="alert alert-success">In Sync</div></div>'))
+                print(('                                <div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
+                print(('                                <div class="col-sm-6"><div class="alert alert-success">In Sync</div></div>'))
             else:
-                print(('		<div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
-                print(('		<div class="col-sm-6"><div class="alert alert-danger">Out of Sync</div></div>'))
-    print('					</div>') #Row End
-    print('				</div>') #Card Body End
+                print(('                                <div class="col-sm-6"><div class="alert alert-light">'+servername+'</div></div>'))
+                print(('                                <div class="col-sm-6"><div class="alert alert-danger">Out of Sync</div></div>'))
+    print('                            </div> <!-- Row End -->') #Row End
+    print('                        </div> <!-- Card Body End -->') #Card Body End
 
-    print('				<div class="card-body">') #Card Body
+    print('                            <div class="card-body">  <!-- Card Body Start -->') #Card Body
 
     print('					<form class="form mb-3" id="modalForm4" onsubmit="return false;">')
     print(('					<input class="hidden" name="mode" value="restart">'))
@@ -177,7 +178,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardfooter('Only perform a hard reset if the unison archive is corrupt. The unison archive rebuild can be time consuming.')
 else:
     cardheader('Cluster Unison Sync Status Disabled','fas fa-align-justify')
-    print('<div class="card-body p-0">') #Dummy Div
+    print('                        <div class="card-body p-0">') #Dummy Div
     cardfooter('Cluster Unison Sync Status is disabled. We are running with a Single Point of Failure.')
 
 # Sync GeoDNS zone
