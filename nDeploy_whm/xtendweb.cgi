@@ -29,8 +29,9 @@ cgitb.enable()
 print_header('HA Nginx Control - Home')
 bcrumb('Home')
 
-print('            <!-- First Column Start -->')
+print('            <!-- WHM Starter Row -->')
 print('            <div class="row">')
+print('            <!-- First Column Start -->')
 print('                <div class="col-lg-6">') #Left Column
 print('')
 
@@ -315,119 +316,106 @@ else:
         print('                                    </div> <!-- Row End -->')
         print('                                </div>')
         print('                            </div> <!-- Row End -->')
-print('                        </div> <!-- Card Body End -->') #Card Body End        
+print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('Turn these settings on when you are under a DDOS Attack.<br>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)')
 
 
 # PHP-FPM Pool Editor
-print('				<div class="card">')  # card
-print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> PHP-FPM Pool Editor</h5>')
-print('					</div>')
-print('					<div class="card-body">')  # card-body
-
-print('						<form class="form" action="phpfpm_pool_editor.cgi" method="get">')
-print('							<div class="input-group">')
-print('								<div class="input-group-prepend">')
-print('    								<label class="input-group-text" for="inputGroupSelect01">Account</label>')
-print('								</div>')
-print('								<select name="poolfile" class="custom-select">')
+cardheader('PHP-FPM Pool Editor','fas fa-sitemap')
+print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+print('                            <form class="form" action="phpfpm_pool_editor.cgi" method="get">')
+print('                                <div class="input-group">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <label class="input-group-text" for="inputGroupSelect01">Account</label>')
+print('                                    </div>')
+print('                                    <select name="poolfile" class="custom-select">')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     conf_list = os.listdir("/opt/nDeploy/secure-php-fpm.d")
     for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
-            print(('					<option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
+            print(('                                        <option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
 else:
     conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
     for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
-            print(('					<option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
-print('								</select>')
-print('							</div>')
+            print(('                                        <option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
+print('                                    </select>')
+print('                                </div>')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-    print(('					<input class="hidden" name="section" value="1">'))
+    print(('                                <input class="hidden" name="section" value="1">'))
 else:
-    print(('					<input class="hidden" name="section" value="0">'))
-print('							<button class="btn btn-outline-primary btn-block" type="submit">Edit Settings</button>')
-print('						</form>')
+    print(('                                <input class="hidden" name="section" value="0">'))
+print('                                <button class="btn btn-outline-primary btn-block" type="submit">Edit Settings</button>')
+print('                            </form>')
+print('                        </div> <!-- Card Body End -->') #Card Body End
+cardfooter('Settings such as: pm.max_requests, pm.max_spare_servers, session.save_path, pm.max_children')
 
-print('					</div>')  # card-body end
-print('					<div class="card-footer">')
-print('						<small>Settings such as: pm.max_requests, pm.max_spare_servers, session.save_path, pm.max_children</small>')
-print('					</div>')
-print('				</div>')  # card end
 
-# Map cPanel pkg to nginx setting
-print('				<div class="card">')  # card
-print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-box-open float-right"></i> Map cPanel pkg to nginx setting</h5>')
-print('					</div>')
-print('					<div class="card-body p-0">')  # card-body
-print('						<div class="row no-gutters">')
+# Map cPanel Package to NGINX
+cardheader('Map cPanel Package to NGINX','fas fa-box-open')
+print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
 if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
-    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div></div>')
-    print('						<div class="col-sm-6">')
-    print('							<div class="row no-gutters">')
-    print('								<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
-    print('								<div class="col-sm-6">')
-    print('									<form class="form" method="post" id="modalForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
-    print(('									<input class="hidden" name="package_lock" value="disabled">'))
-    print('									</form>')
-    print('								</div>')
-    print('							</div>')
-    print('						</div>')
+    print('                                <div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>NGINX -> Package</div></div>')
+    print('                                <div class="col-sm-6">')
+    print('                                    <div class="row no-gutters"> <!-- Row Start -->')
+    print('                                        <div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
+    print('                                        <div class="col-sm-6">')
+    print('                                            <form class="form" method="post" id="modalForm16" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
+    print(('                                                <input class="hidden" name="package_lock" value="disabled">'))
+    print('                                            </form>')
+    print('                                        </div>')
+    print('                                    </div> <!-- Row End -->')
+    print('                                </div>')
+    print('                            </div> <!-- Row End -->')
 else:
-    print('						<div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div></div>')
-    print('						<div class="col-sm-6">')
-    print('							<div class="row no-gutters">')
-    print('								<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
-    print('								<div class="col-sm-6">')
-    print('									<form class="form" method="post" id="modalForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
-    print(('									<input class="hidden" name="package_lock" value="enabled">'))
-    print('									</form>')
-    print('								</div>')
-    print('							</div>')
-    print('						</div>')
+    print('                                <div class="col-sm-6"><div class="alert alert-light"><i class="fas fa-box"></i>NGINX -> Package</div></div>')
+    print('                                <div class="col-sm-6">')
+    print('                                    <div class="row no-gutters"> <!-- Row Start -->')
+    print('                                        <div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
+    print('                                        <div class="col-sm-6">')
+    print('                                            <form class="form" method="post" id="modalForm16" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
+    print(('                                                <input class="hidden" name="package_lock" value="enabled">'))
+    print('                                            </form>')
+    print('                                        </div>')
+    print('                                    </div> <!-- Row End -->')
+    print('                                </div>')
+    print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->') #Card Body End
+print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
-print('						</div>')  # row end
-print('					</div>')  # card-body end
-
-print('					<div class="card-body">')  # card-body
 # Workaround for python 2.6
 if platform.python_version().startswith('2.6'):
     listpkgs = subprocess.Popen('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', stdout=subprocess.PIPE, shell=True).communicate()[0]
 else:
     listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
 mypkgs = json.loads(listpkgs)
-print('						<form class="form" action="pkg_profile.cgi" method="get">')
-print('							<div class="input-group">')
-print('								<div class="input-group-prepend">')
-print('    								<label class="input-group-text" for="inputGroupSelect07">PKG</label>')
-print('								</div>')
+print('                            <form class="form" action="pkg_profile.cgi" method="get">')
+print('                                <div class="input-group">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <label class="input-group-text" for="inputGroupSelect07">PKG</label>')
+print('                                    </div>')
 
-print('								<select name="cpanelpkg" class="custom-select">')
+print('                                    <select name="cpanelpkg" class="custom-select">')
 for thepkg in sorted(mypkgs.get('package')):
     pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
-    print(('							<option value="'+pkgname+'">'+pkgname+'</option>'))
-print('								</select>')
-print('							</div>')
-print('							<input class="btn btn-outline-primary btn-block" type="submit" value="Edit Pkg">')
-print('						</form>')
+    print(('                                        <option value="'+pkgname+'">'+pkgname+'</option>'))
+print('                                    </select>')
+print('                                </div>')
+print('                                <input class="btn btn-outline-primary btn-block" type="submit" value="Edit Pkg">')
+print('                            </form>')
+print('                        </div> <!-- Card Body End -->') #Card Body End
+cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes a Upgrade/Downgrade process.')
 
-print('					</div>')  # card-body end
-print('					<div class="card-footer">')
-print('						<small>sync nginx to pkg when enabled will reset all nginx config/settings on plan upgrade/downgrade</small>')
-print('					</div>')
-print('				</div>')  # card end
 
 # System Resource Limit
 cardheader('System Resource Limit','fas fa-compress')
-print('<div class="card-body">')  #Card Body
+print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
 with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
@@ -436,58 +424,65 @@ if not osrelease == 'CloudLinux':
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
             userlist = os.listdir("/var/cpanel/users")
-            print('			<form class="form" action="resource_limit.cgi" method="get">')
-            print('				<div class="input-group">')
-            print('					<div class="input-group-prepend">')
-            print('    					<label class="input-group-text">User</label>')
-            print('					</div>')
-            print('					<select name="unit" class="custom-select">')
+            print('                            <form class="form" action="resource_limit.cgi" method="get">')
+            print('                                <div class="input-group">')
+            print('                                    <div class="input-group-prepend">')
+            print('                                        <label class="input-group-text">User</label>')
+            print('                                    </div>')
+            print('                                    <select name="unit" class="custom-select">')
             for cpuser in sorted(userlist):
                 if cpuser != 'nobody' and cpuser != 'system':
-                    print(('			<option value="'+cpuser+'">'+cpuser+'</option>'))
-            print('					</select>')
-            print(('				<input class="hidden" name="mode" value="user">'))
-            print('				</div>')
-            print('				<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
-            print('			</form>')
+                    print(('                                        <option value="'+cpuser+'">'+cpuser+'</option>'))
+            print('                                    </select>')
+            print(('                                    <input class="hidden" name="mode" value="user">'))
+            print('                                </div>')
+            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+            print('                            </form>')
 
-            print('			<form class="form mt-4" action="resource_limit.cgi" method="get">')
-            print('				<div class="input-group">')
-            print('					<div class="input-group-prepend">')
-            print('    					<label class="input-group-text">Service</label>')
-            print('					</div>')
-            print('					<select name="unit" class="custom-select">')
+            print('                            <form class="form mt-4" action="resource_limit.cgi" method="get">')
+            print('                                <div class="input-group">')
+            print('                                    <div class="input-group-prepend">')
+            print('                                        <label class="input-group-text">Service</label>')
+            print('                                    </div>')
+            print('                                    <select name="unit" class="custom-select">')
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print(('				<option value="'+service+'">'+service+'</option>'))
-            print('					</select>')
-            print(('				<input class="hidden" name="mode" value="service">'))
-            print('				</div>')
-            print('				<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
-            print('			</form>')
+                print(('                                        <option value="'+service+'">'+service+'</option>'))
+            print('                                    </select>')
+            print(('                                    <input class="hidden" name="mode" value="service">'))
+            print('                                </div>')
+            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+            print('                            </form>')
         else:
-            print('			<form class="form" action="resource_limit.cgi" method="get">')
-            print('				<div class="input-group">')
-            print('					<div class="input-group-prepend">')
-            print('    					<label class="input-group-text">Resource</label>')
-            print('					</div>')
-            print('					<select name="unit" class="custom-select">')
+            print('                            <form class="form" action="resource_limit.cgi" method="get">')
+            print('                                <div class="input-group">')
+            print('                                    <div class="input-group-prepend">')
+            print('                                        <label class="input-group-text">Resource</label>')
+            print('                                    </div>')
+            print('                                    <select name="unit" class="custom-select">')
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print(('				<option value="'+service+'">'+service+'</option>'))
-            print('					</select>')
-            print(('				<input class="hidden" name="mode" value="service">'))
-            print('				</div>')
-            print('				<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
-            print('			</form>')
-
+                print(('                                        <option value="'+service+'">'+service+'</option>'))
+            print('                                    </select>')
+            print(('                                    <input class="hidden" name="mode" value="service">'))
+            print('                                </div>')
+            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+            print('                            </form>')
+print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
 
-print('			</div>')  # col right end
-print('		</div>')  # row end
 
-print('</div>')  # main-container end
+#Second Column End
+print('                <!-- Second Column End -->')
+print('                </div>')
+print('')
+print('            <!-- WHM End Row -->')
+print('            </div>')
+print('')
+print('        </div> <!-- Main Container End -->')
+print('')
 
 print_modals()
 print_loader()
 
-print('</body>')
+print('    <!-- Body End -->')
+print('    </body>')
 print('</html>')
