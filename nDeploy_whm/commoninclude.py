@@ -138,8 +138,6 @@ def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
 
 #CardFooter
 def cardfooter(text='Unmodified Footer Text'):
-    #print('')
-    #print('                        </div> <!-- Card Body End -->')
     print('')
     print('                        <!-- Card Footer Start -->')
     print('                        <div class="card-footer">')

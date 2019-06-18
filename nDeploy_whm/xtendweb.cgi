@@ -34,6 +34,7 @@ print('            <div class="row">')
 print('                <div class="col-lg-6">') #Left Column
 print('')
 
+
 # System Status
 cardheader('System Setup')
 print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
@@ -59,6 +60,7 @@ else:
 
 watcher_status = False
 for myprocess in psutil.process_iter():
+
     # Workaround for Python 2.6
     if platform.python_version().startswith('2.6'):
         mycmdline = myprocess.cmdline
@@ -75,6 +77,7 @@ else:
     print(('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-eye"></i>&nbsp;NDEPLOY_WATCHER</div></div>'))
     print(('                                <div class="col-sm-6"><div class="alert alert-danger">Inactive</div></div>'))
 
+
 # Default PHP
 if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
@@ -89,47 +92,43 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
 myhostname = socket.gethostname()
 print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div></div>')
 print('                                <div class="col-sm-6">')
-
 print('                                    <form class="form" action="https://'+myhostname+'/netdata/" target="_blank">')
 print('                                        <input class="alert alert-info btn btn-info" type="submit" value="View&nbsp;Graph">')
 print('                                    </form>')
-
 print('                                </div>')
+
 
 # Glances
 print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-thermometer-half"></i>&nbsp;Glances</div></div>')
 print('                                <div class="col-sm-6">')
-
 print('                                    <form class="form" action="https://'+myhostname+'/glances/" target="_blank">')
 print('                                        <input class="alert alert-info btn btn-info" type="submit" value="System&nbsp;Status">')
 print('                                    </form>')
-
 print('                                </div>')
+
 
 # Borg Backup
 print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-database"></i>&nbsp;Borg&nbsp;Backup</div></div>')
 print('                                <div class="col-sm-6">')
-
 print('                                    <form class="form" method="get" action="setup_borg_backup.cgi">')
 print('                                        <button class="alert alert-info btn btn-info" type="submit">Setup&nbsp;Borg</button>')
 print('                                    </form>')
-
 print('                                </div>')
+
 
 # Process Tracker
 print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-bug"></i>&nbsp;Detect&nbsp;Abnormal&nbsp;Process</div></div>')
 print('                                <div class="col-sm-6">')
-
 print('                                    <form class="form" id="modalForm3" onsubmit="return false;">')
 print('                                        <button type="submit" class="alert alert-info btn btn-info ">Check&nbsp;Process</button>')
 print('                                    </form>')
-
 print('                                </div>')
 
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 
 cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kbd>nginx -t && nginx -s reload</kbd>')
+
 
 # Cluster Status
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
@@ -178,8 +177,8 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardfooter('Only perform a hard reset if the unison archive is corrupt. The unison archive rebuild can be time consuming.')
 else:
     cardheader('Cluster Unison Sync Status Disabled','fas fa-align-justify')
-    print('                        <div class="card-body p-0">') #Dummy Div
     cardfooter('Cluster Unison Sync Status is disabled. We are running with a Single Point of Failure.')
+
 
 # Sync GeoDNS zone
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
@@ -204,20 +203,19 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardfooter('Choose a user to sync Zones for.')
 else:
     cardheader('GDNSD Zone Sync Disabled','fas fa-sync')
-    print('<div class="card-body p-0">') #Dummy Div
     cardfooter('GDNSD Zone Sync Disabled. We are running with cPanel DNS.')
 
 # Set Default PHP for AutoConfig
 cardheader('Default PHP for Auto Configuration','fab fa-php')
-print('<div class="card-body">') #Card Body
+print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
-print('						<form class="form" id="modalForm6" onsubmit="return false;">')
-print('							<div class="input-group">')
-print('								<div class="input-group-prepend">')
-print('    								<label class="input-group-text">PHP</label>')
-print('								</div>')
+print('                            <form class="form" id="modalForm6" onsubmit="return false;">')
+print('                                <div class="input-group">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <label class="input-group-text">PHP</label>')
+print('                                    </div>')
 
-print('								<select name="phpversion" class="custom-select">')
+print('                                    <select name="phpversion" class="custom-select">')
 backend_config_file = installation_path+"/conf/backends.yaml"
 backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
@@ -227,19 +225,28 @@ if "PHP" in backend_data_yaml_parsed:
     php_backends_dict = backend_data_yaml_parsed["PHP"]
     for versions_defined in list(php_backends_dict.keys()):
         if versions_defined == phpversion:
-            print(('                        <option selected value="'+phpversion+'">'+phpversion+'</option>'))
+            print(('                                        <option selected value="'+phpversion+'">'+phpversion+'</option>'))
         else:
-            print(('						<option value="'+versions_defined+'">'+versions_defined+'</option>'))
-print('								</select>')
-print('							</div>')
-print('							<button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
-print('						</form>')
-
+            print(('                                        <option value="'+versions_defined+'">'+versions_defined+'</option>'))
+print('                                    </select>')
+print('                                </div>')
+print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
+print('                            </form>')
+print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('If MultiPHP is enabled, <kbd>'+phpversion+'</kbd> by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
 
-#Column Change
-print('            </div>')  # col left end
-print('            <div class="col-lg-6">')  # col right
+
+#First Column End
+print('                <!-- First Column End -->')
+print('                </div>')
+print('')
+
+
+#Second Column
+print('                <!-- Second Column Start -->')
+print('                <div class="col-lg-6">') #Right Column
+print('')
+
 
 # DDOS Protection
 cardheader('DDOS Protection','fas fa-user-shield')
