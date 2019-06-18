@@ -250,35 +250,35 @@ print('')
 
 # DDOS Protection
 cardheader('DDOS Protection','fas fa-user-shield')
-print('					<div class="card-body p-0">') #Card Body
-print('						<div class="row no-gutters">')
+print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
 if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
-    print('						<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;Nginx</div></div>')
-    print('						<div class="col-sm-6">')
-    print('							<div class="row no-gutters">')
-    print('								<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
-    print('								<div class="col-sm-6">')
-    print('									<form id="modalForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
-    print(('									<input class="hidden" name="ddos" value="disable">'))
-    print('									</form>')
-    print('								</div>')
-    print('							</div>')
-    print('						</div>')
+    print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;Nginx</div></div>')
+    print('                                <div class="col-sm-6">')
+    print('                                    <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+    print('                                        <div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
+    print('                                        <div class="col-sm-6">')
+    print('                                            <form id="modalForm1" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
+    print(('                                                <input class="hidden" name="ddos" value="disable">'))
+    print('                                            </form>')
+    print('                                        </div>')
+    print('                                    </div> <!-- Row End -->')
+    print('                                </div>')
 else:
-    print('						<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;Nginx</div></div>')
-    print('						<div class="col-sm-6">')
-    print('							<div class="row no-gutters">')
-    print('								<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
-    print('								<div class="col-sm-6">')
-    print('									<form id="modalForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
-    print(('									<input class="hidden" name="ddos" value="enable">'))
-    print('									</form>')
-    print('								</div>')
-    print('							</div>')
-    print('						</div>')
+    print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;Nginx</div></div>')
+    print('                                <div class="col-sm-6">')
+    print('                                    <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+    print('                                        <div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
+    print('                                        <div class="col-sm-6">')
+    print('                                            <form id="modalForm1" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
+    print(('                                                <input class="hidden" name="ddos" value="enable">'))
+    print('                                            </form>')
+    print('                                        </div>')
+    print('                                    </div> <!-- Row End -->')
+    print('                                </div>')
 try:
     with open(os.devnull, 'w') as FNULL:
         subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
@@ -288,40 +288,35 @@ else:
     with open(os.devnull, 'w') as FNULL:
         firehol_enabled = subprocess.call("systemctl is-active firehol.service", stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
     if firehol_enabled == 0:
-        print('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;SYNPROXY</div></div>')
-        print('					<div class="col-sm-6">')
-        print('						<div class="row no-gutters">')
-        print('							<div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
-        print('								<div class="col-sm-6">')
-        print('								<form id="modalForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
-        print(('								<input class="hidden" name="ddos" value="disable">'))
-        print('								</form>')
-        print('							</div>')
-        print('						</div>')
-        print('					</div>')
+        print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;SYNPROXY</div></div>')
+        print('                                <div class="col-sm-6">')
+        print('                                    <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+        print('                                        <div class="col-sm-6"><div class="alert alert-success">Enabled</div></div>')
+        print('                                        <div class="col-sm-6">')
+        print('                                            <form id="modalForm2" class="form" onsubmit="return false;">')
+        print('                                                <button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
+        print(('                                                <input class="hidden" name="ddos" value="disable">'))
+        print('                                            </form>')
+        print('                                        </div>')
+        print('                                    </div> <!-- Row End -->')       
+        print('                                </div>')
+        print('                            </div> <!-- Row End -->')
     else:
-        print('					<div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;SYNPROXY</div></div>')
-        print('					<div class="col-sm-6">')
-        print('						<div class="row no-gutters">')
-        print('							<div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
-        print('							<div class="col-sm-6">')
-        print('								<form id="modalForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
-        print(('								<input class="hidden" name="ddos" value="enable">'))
-        print('								</form>')
-        print('							</div>')
-        print('						</div>')
-        print('					</div>')
-
-print('						</div>')  # row end
-#print('					</div>')  # card-body end
+        print('                                <div class="col-sm-6"><div class="alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;SYNPROXY</div></div>')
+        print('                                <div class="col-sm-6">')
+        print('                                    <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+        print('                                        <div class="col-sm-6"><div class="alert alert-secondary">Disabled</div></div>')
+        print('                                        <div class="col-sm-6">')
+        print('                                            <form id="modalForm2" class="form" onsubmit="return false;">')
+        print('                                                <button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
+        print(('                                                <input class="hidden" name="ddos" value="enable">'))
+        print('                                            </form>')
+        print('                                        </div>')
+        print('                                    </div> <!-- Row End -->')
+        print('                                </div>')
+        print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->') #Card Body End        
 cardfooter('Turn these settings on when you are under a DDOS Attack.<br>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)')
-#print('					<div class="card-footer">')
-#print('						<small>Turn these settings on when you are under a DDOS Attack</small><br>')
-#print('						<small>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)</small>')
-#print('					</div>')
-#print('				</div>')  # card end
 
 
 # PHP-FPM Pool Editor
