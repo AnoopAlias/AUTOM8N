@@ -5,7 +5,7 @@ body {
 
 #main-header {
   background-color: #FFFFFF;
-  padding: 0.5rem 1rem 0.1rem; }
+  padding: .5rem 1rem .1rem; }
   #main-header h3 {
     margin: 0; }
   #main-header img {
@@ -55,6 +55,8 @@ body {
   .card .card-body samp {
     display: block;
     margin-top: 1.5rem; }
+  .card .card-body .row .col-md-6:last-child .btn-not-installed {
+    margin-top: 0; }
 
 a,
 .btn {
@@ -62,9 +64,7 @@ a,
 
 a {
   color: #25AAE1; }
-  a:hover,
-  a:active,
-  a:focus {
+  a:hover, a:active, a:focus {
     color: #1a8bb9;
     outline: none;
     text-decoration: none; }
@@ -73,9 +73,7 @@ a {
 .btn-default {
   background-color: #25AAE1;
   border-color: #25AAE1; }
-  .btn-primary:hover,
-  .btn-primary:active,
-  .btn-primary:focus,
+  .btn-primary:hover, .btn-primary:active, .btn-primary:focus,
   .btn-default:hover,
   .btn-default:active,
   .btn-default:focus {
@@ -89,9 +87,7 @@ a {
 .btn-outline-default {
   border-color: #25AAE1;
   color: #25AAE1; }
-  .btn-outline-primary:hover,
-  .btn-outline-primary:active,
-  .btn-outline-primary:focus,
+  .btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:focus,
   .btn-outline-default:hover,
   .btn-outline-default:active,
   .btn-outline-default:focus {
@@ -190,3 +186,7 @@ h6.label-default {
     display: block;
     text-align: center;
     margin: 0.6rem 0 2rem 0; }
+
+@media (min-width: 768px) {
+  .card .align-items-center .label {
+    text-align: right; } }

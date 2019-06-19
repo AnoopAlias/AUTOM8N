@@ -143,7 +143,7 @@ if os.path.isdir('/etc/borgmatic'):
     else:
         commoninclude.print_red("system_files", system_files_hint)
         print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
         print('								<label class="btn btn-light">')
         print('									<input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off"> Enabled')
         print('								</label>')
@@ -183,7 +183,7 @@ if os.path.isdir('/etc/borgmatic'):
     # backup_path
     backup_path_hint = "The directory where the cPanel pkgacct, MySQL backup and system files are stored"
     print('							<div class="col-md-12">')
-    print('								<div class="input-group mt-2">')
+    print('								<div class="input-group mt-2 mb-2">')
     print('									<div class="input-group-prepend">')
     print('										<span class="input-group-text">')
     commoninclude.print_multi_input("pkgacct backup path", backup_path_hint)
@@ -194,7 +194,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('							</div>')
 
     print('							<div class="col-md-12">')
-    print('								<button class="btn btn-outline-primary btn-block mt-2 mb-2" type="submit">Save Backup Settings</button>')
+    print('								<button class="btn btn-outline-primary btn-block mt-2" type="submit">Save Backup Settings</button>')
     print('							</div>')
     print('						</div>')
 

@@ -31,8 +31,8 @@ jQuery(document).ready(function($){
         var $f = $('#modalForm2');
         var $url = "save_app_settings.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myModalback").find('.modal-body').html(result)
+            $("#myModalback").modal('show');
         }});
     });
 
@@ -86,8 +86,8 @@ jQuery(document).ready(function($){
         var $f = $('#modalForm8');
         var $url = "subdir_save_app_settings.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myModalback").find('.modal-body').html(result)
+            $("#myModalback").modal('show');
         }});
     });
 
@@ -112,5 +112,9 @@ jQuery(document).ready(function($){
     $('#myModal').on('hidden.bs.modal', function () {
         location.reload()
     });
+  
+		$('#myModalback').on('hidden.bs.modal', function () {
+				window.history.go(-1);
+		});
 
 });
