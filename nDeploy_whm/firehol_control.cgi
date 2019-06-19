@@ -19,43 +19,6 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 cgitb.enable()
 
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
-
-def safenginxreload():
-    nginx_status = False
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
-            nginx_status = True
-            break
-    if not nginx_status:
-        with open(os.devnull, 'w') as FNULL:
-            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
-
-
-def sighupnginx():
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-            nginxpid = myprocess.pid
-            os.kill(nginxpid, signal.SIGHUP)
-
-
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -65,7 +28,7 @@ print('<head>')
 print('</head>')
 print('<body>')
 
-if form.getvalue('ddos'):
+if True:#form.getvalue('ddos'):
     try:
         with open(os.devnull, 'w') as FNULL:
             subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
