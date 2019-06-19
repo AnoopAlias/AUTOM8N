@@ -31,7 +31,7 @@ bcrumb('Home')
 
 print('            <!-- WHM Starter Row -->')
 print('            <div class="row">')
-print('            <!-- First Column Start -->')
+print('                <!-- First Column Start -->')
 print('                <div class="col-lg-6">') #Left Column
 print('')
 

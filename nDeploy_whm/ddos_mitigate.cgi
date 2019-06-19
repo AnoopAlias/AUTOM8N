@@ -22,30 +22,6 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 cgitb.enable()
 
 
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
-
-def safenginxreload():
-    nginx_status = False
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
-            nginx_status = True
-            break
-    if not nginx_status:
-        with open(os.devnull, 'w') as FNULL:
-            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
-
-
 def sighupnginx():
     for myprocess in psutil.process_iter():
         # Workaround for Python 2.6
