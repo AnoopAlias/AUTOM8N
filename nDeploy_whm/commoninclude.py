@@ -169,6 +169,14 @@ def bcrumb(pagename):
     print('')
 
 
+# Define a function to silently remove files
+def silentremove(filename):
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
+
+
 def print_modals():
 
     # Modal
