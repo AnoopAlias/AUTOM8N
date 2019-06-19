@@ -154,6 +154,25 @@ def print_modals():
     print('    		</div>')
     print('     </div>')
 
+    # Modalback
+    print('		<div class="modal fade" id="myModalback" tabindex="-1" role="dialog"> ')
+    print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+    print('      		<div class="modal-content">')
+    print('        			<div class="modal-header">')
+    print('          			<h4 class="modal-title">Command Output</h4>')
+    print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+    print('          				<span aria-hidden="true">&times;</span>')
+    print('        				</button>')
+    print('        			</div>')
+    print('        			<div class="modal-body">')
+    print('        			</div>')
+    print('					<div class="modal-footer">')
+    print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+    print('      			</div>')
+    print('      		</div>')
+    print('    		</div>')
+    print('     </div>')
+
     # Modal with no reload
     print('		<div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog">')
     print('    		<div class="modal-dialog modal-dialog-centered" role="document">')

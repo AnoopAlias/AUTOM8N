@@ -171,8 +171,8 @@ jQuery(document).ready(function($){
         var $f = $('#modalForm18');
         var $url = "save_pkg_app_settings.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myModalback").find('.modal-body').html(result)
+            $("#myModalback").modal('show');
         }});
     });
 
@@ -198,6 +198,10 @@ jQuery(document).ready(function($){
     $('#myModal').on('hidden.bs.modal', function () {
     	location.reload()
     });
+
+		$('#myModalback').on('hidden.bs.modal', function () {
+				window.history.go(-1);
+		});
 
 		$('#myModal-xl').on('hidden.bs.modal', function () {
 			location.reload()
