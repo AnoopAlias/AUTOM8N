@@ -11,6 +11,7 @@ import psutil
 import signal
 import jinja2
 import codecs
+from commoninclude import bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -24,69 +25,22 @@ borgmatic_config_file = "/etc/borgmatic/config.yaml"
 
 cgitb.enable()
 
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
-
-def safenginxreload():
-    nginx_status = False
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
-            nginx_status = True
-            break
-    if not nginx_status:
-        with open(os.devnull, 'w') as FNULL:
-            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
-
-
-def sighupnginx():
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-            nginxpid = myprocess.pid
-            os.kill(nginxpid, signal.SIGHUP)
-
-
 form = cgi.FieldStorage()
 
-commoninclude.print_header()
+print_header('nDeploy HA Control - Borg Backup Configuration')
+bcrumb('Borg Backup Configuration')
 
-print('<body>')
+print('            <!-- WHM Starter Row -->')
+print('            <div class="row justify-content-md-center">')
+print('                <!-- First Column Start -->')
+print('                <div class="col-lg-6">') #Column
+print('')
 
-commoninclude.print_branding()
 
-print('<div id="main-container" class="container">')  # main container
-
-print('		<nav aria-label="breadcrumb">')
-print('			<ol class="breadcrumb">')
-print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')
-print('				<li class="breadcrumb-item active">Backup Config</li>')
-print('			</ol>')
-print('		</nav>')
-
-print('		<div class="row">')
-
-print('			<div class="col-lg-6">')  # col left
-
-print('				<div class="card">')  # card
-print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i> Backup Settings</h5>')
-print('					</div>')
-print('					<div class="card-body">')  # card-body
+# System Status
+cardheader('Borg Backup Settings','fas fa-database')
+print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
 if os.path.isdir('/etc/borgmatic'):
     # Check if backup config file is present or initilize otherwise
@@ -123,75 +77,80 @@ if os.path.isdir('/etc/borgmatic'):
             borgmatic_hook_myscript.write(borgmatic_hook_script)
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
 
-    print('					<form class="form" method="post" id="modalForm11" onsubmit="return false;">')
+    print('                                <form class="form" method="post" id="modalForm11" onsubmit="return false;">')
 
+    
     # system_files
-    system_files_hint = "Backup cPanel system files"
-    print('						<div class="row text-right">')
+    system_files_hint = "Backup the cPanel System Files"
+    print('                                    <div class="row text-right"> <!-- Row Start -->')
     if system_files == 'enabled':
-        commoninclude.print_green("system_files", system_files_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                        '+commoninclude.return_green("system_files", system_files_hint))
+        print('                                        <div class="col-md-6">')
+        print('                                            <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                                <label class="btn btn-light active">')
+        print('                                                    <input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off" checked> Enabled')
+        print('                                                </label>')
+        print('                                                <label class="btn btn-light">')
+        print('                                                    <input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off"> Disabled')
+        print('                                                </label>')
+        print('                                            </div>')
+        print('                                        </div>')
     else:
-        commoninclude.print_red("system_files", system_files_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                        '+commoninclude.return_red("system_files", system_files_hint))
+        print('                                        <div class="col-md-6">')
+        print('                                            <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                                <label class="btn btn-light">')
+        print('                                                    <input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off"> Enabled')
+        print('                                                </label>')
+        print('                                                <label class="btn btn-light active">')
+        print('                                                    <input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off" checked> Disabled')
+        print('                                                </label>')
+        print('                                            </div>')
+        print('                                        </div>')
 
+    
     # mysql_backup
-    mysql_backup_hint = "Use MariaBackup to backup full MySQL datadir"
+    mysql_backup_hint = "Use MariaBackup to Backup the FULL MySQL Data Directory"
     if mysql_backup == 'enabled':
-        commoninclude.print_green("mariabackup", mysql_backup_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                        '+commoninclude.return_green("mariabackup", mysql_backup_hint))
+        print('                                        <div class="col-md-6">')
+        print('                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                                <label class="btn btn-light active">')
+        print('                                                    <input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off" checked> Enabled')
+        print('                                                </label>')
+        print('                                                <label class="btn btn-light">')
+        print('                                                    <input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off"> Disabled')
+        print('                                                </label>')
+        print('                                            </div>')
+        print('                                        </div>')
     else:
-        commoninclude.print_red("mariabackup", mysql_backup_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off checked"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                        '+commoninclude.return_red("mariabackup", mysql_backup_hint))
+        print('                                        <div class="col-md-6">')
+        print('                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                                <label class="btn btn-light">')
+        print('                                                    <input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off"> Enabled')
+        print('                                                </label>')
+        print('                                                <label class="btn btn-light active">')
+        print('                                                    <input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off checked"> Disabled')
+        print('                                                </label>')
+        print('                                            </div>')
+        print('                                        </div>')
 
+    
     # backup_path
     backup_path_hint = "The directory where the cPanel pkgacct, MySQL backup and system files are stored"
-    print('							<div class="col-md-12">')
-    print('								<div class="input-group mt-2 mb-2">')
-    print('									<div class="input-group-prepend">')
-    print('										<span class="input-group-text">')
-    commoninclude.print_multi_input("pkgacct backup path", backup_path_hint)
-    print('										</span>')
-    print('									</div>')
-    print('									<input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
-    print('								</div>')
-    print('							</div>')
+    print('                                        <div class="col-md-12">')
+    print('                                            <div class="input-group mt-2 mb-2">')
+    print('                                                <div class="input-group-prepend">')
+    print('                                                    <span class="input-group-text">')
+    print('                                                        '+commoninclude.return_multi_input("pkgacct backup path", backup_path_hint))
+    print('                                                    </span>')
+    print('                                                </div>')
+    print('                                                <input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
+    print('                                            </div>')
+    print('                                        </div>')
+#Stopped HERE ----------------
+
 
     print('							<div class="col-md-12">')
     print('								<button class="btn btn-outline-primary btn-block mt-2" type="submit">Save Backup Settings</button>')
@@ -222,9 +181,16 @@ if os.path.isdir('/etc/borgmatic'):
     print('				</div>')  # card-body end
     print('			</div>')  # card end
 
-    print('		</div>')  # end col left
+    #First Column End
+    print('                <!-- First Column End -->')
+    print('                </div>')
+    print('')
 
-    print('		<div class="col-lg-6">')  # col right
+
+    #Second Column
+    print('                <!-- Second Column Start -->')
+    print('                <div class="col-lg-6">') #Right Column
+    print('')
 
     print('			<div class="card">')  # card
     print('				<div class="card-header">')
@@ -375,21 +341,27 @@ if os.path.isdir('/etc/borgmatic'):
 
     print('					</form>')
 else:
-    print('					<i class="fas fa-exclamation"></i>')
-    print('					<p>Borg/Borgmatic not installed.</p>')
-    print('					<small class="mb-1">To install run the following command</small>')
-    print('					<kbd>/opt/nDeploy/scripts/easy_borg_setup.sh</kbd>')
+    print('                                <center><h1><i class="fas fa-exclamation"></i></h1>')
+    print('                                <p>Borg/Borgmatic is currently not installed. To install run the following command:')
+    print('                                <kbd>/opt/nDeploy/scripts/easy_borg_setup.sh</kbd></p></center>')
 
-print('					</div>')  # card-body end
-print('				</div>')  # card end
+print('                            </div>')  # card-body end
+print('                        </div>')  # card end
 
-print('			</div>')  # col right end
-print('		</div>')  # row end
 
-print('</div>')  # main-container end
+#Second Column End
+print('                <!-- Second Column End -->')
+print('                </div>')
+print('')
+print('            <!-- WHM End Row -->')
+print('            </div>')
+print('')
+print('        </div> <!-- Main Container End -->')
+print('')
 
-commoninclude.print_modals()
-commoninclude.print_loader()
+print_modals()
+print_loader()
 
-print('</body>')
+print('    <!-- Body End -->')
+print('    </body>')
 print('</html>')

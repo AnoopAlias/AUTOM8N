@@ -52,12 +52,22 @@ def print_branding():
     print('        </header>')
 
 
+def return_green(theoption, hint):
+    result = '<div class="col-md-6 d-flex align-items-center justify-content-end"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'
+    return result
+
+
 def print_green(theoption, hint):
     print(('<div class="col-md-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
 
 def print_red(theoption, hint):
     print(('<div class="col-md-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+
+
+def return_red(theoption, hint):
+    result = '<div class="col-md-6 d-flex align-items-center justify-content-end"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'
+    return result
 
 
 def print_forbidden():
@@ -98,6 +108,11 @@ def print_success_wrapper(themessage):
 
 def print_multi_input(theoption, hint):
     print(('<div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
+
+
+def return_multi_input(theoption, hint):
+    result = '<div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
+    return result
 
 
 def print_loader():
@@ -158,7 +173,7 @@ def bcrumb(pagename):
     print('')
     print('            <!-- Navigation -->')
     print('            <nav aria-label="breadcrumb">')
-    print('                <ol class="breadcrumb">')
+    print('                <ol class="breadcrumb justify-content-md-center">')
     if pagename != 'Home':
         print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
         print('                    <li class="breadcrumb-item active" aria-current="page">'+pagename+'</li>')
@@ -175,6 +190,33 @@ def silentremove(filename):
         os.remove(filename)
     except OSError:
         pass
+
+def safenginxreload():
+    nginx_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
+            nginx_status = True
+            break
+    if not nginx_status:
+        with open(os.devnull, 'w') as FNULL:
+            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+def sighupnginx():
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+            nginxpid = myprocess.pid
+            os.kill(nginxpid, signal.SIGHUP)        
 
 
 def print_modals():
