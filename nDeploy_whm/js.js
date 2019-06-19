@@ -198,12 +198,12 @@ jQuery(document).ready(function($){
     	location.reload()
     });
 
-	$('#myModalback').on('hidden.bs.modal', function () {
-		window.history.go(-1);
-    });
+		$('#myModalback').on('hidden.bs.modal', function () {
+				window.history.go(-1);
+		});
 
-	$('#myModal-xl').on('hidden.bs.modal', function () {
-		location.reload()
-	});
+		$('#myModal-xl').on('hidden.bs.modal', function () {
+			location.reload()
+		});
 
 });

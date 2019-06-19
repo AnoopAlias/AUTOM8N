@@ -2,7 +2,6 @@
 
 import commoninclude
 import os
-import socket
 import yaml
 import cgitb
 try:
@@ -23,17 +22,7 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 cgitb.enable()
 
-
-def close_cpanel_liveapisock():
-    """We close the cpanel LiveAPI socket here as we dont need those"""
-    cp_socket = os.environ["CPANEL_CONNECT_SOCKET"]
-    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    sock.connect(cp_socket)
-    sock.sendall('<cpanelxml shutdown="1" />')
-    sock.close()
-
-
-close_cpanel_liveapisock()
+commoninclude.close_cpanel_liveapisock()
 cpaneluser = os.environ["USER"]
 cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
 with open(cpuserdatajson, 'r') as cpaneluser_data_stream:

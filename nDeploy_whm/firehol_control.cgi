@@ -95,7 +95,7 @@ if form.getvalue('ddos'):
                 subprocess.call(['systemctl', 'stop', 'firehol.service'])
                 commoninclude.print_success('SYNPROXY DDOS Mitigation is now disabled')
             else:
-                print_error('FireHol firewall not installed')
+                commoninclude.print_error('FireHol firewall not installed')
                 print('<div class="alert alert-info">')
                 print('<ul class="list-unstyled text-left">')
                 print('<li class="mb-1">To install run the following command with ansible_port set to sshd port</li>')
@@ -105,6 +105,5 @@ if form.getvalue('ddos'):
                 print('</div>')
 else:
     commoninclude.print_forbidden()
-
 print('</body>')
 print('</html>')

@@ -6,7 +6,6 @@ import cgitb
 import os
 import configparser
 import codecs
-import yaml
 
 
 __author__ = "Anoop P Alias"
@@ -55,7 +54,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('			<div class="card-body">')  # card-body
 
         myconfig = dict(config.items(config.sections()[mysection]))
-        mykeypos=1
+        mykeypos = 1
         for mykey in myconfig.keys():
             print('			<label for="'+mykey+'">')
             print(mykey)

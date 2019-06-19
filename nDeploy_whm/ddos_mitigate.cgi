@@ -101,7 +101,7 @@ if form.getvalue('ddos'):
                 print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
             print('</ul>')
 else:
-		commoninclude.print_forbidden()
+    commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')

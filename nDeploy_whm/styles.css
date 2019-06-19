@@ -170,7 +170,7 @@ h6.label-default {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5); }
   #loader > .fas {
-    font-size: 5rem;
+    font-size: 3rem;
     color: #FFFFFF;
     position: relative;
     top: 50%;

@@ -5,7 +5,6 @@ import cgitb
 import cgi
 import subprocess
 import yaml
-import os
 
 
 __author__ = "Anoop P Alias"
