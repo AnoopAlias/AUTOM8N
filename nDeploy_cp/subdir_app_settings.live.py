@@ -298,7 +298,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			<div class="card-header">')
                 print('				<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> General Settings</h5>')
                 print('			</div>')
-                print('			<div class="card-body text-right">')  # card-body
+                print('			<div class="card-body">')  # card-body
 
                 print('			<form class="form" id="modalForm6" onsubmit="return false;">')
                 print('				<div class="row align-items-center">')

@@ -204,7 +204,7 @@ if form.getvalue('cpanelpkg'):
 
     # PHPMAXCHILDREN
     print('							<div class="col-md-12">')
-    print('								<div class="input-group btn-group mt-0">')
+    print('								<div class="input-group btn-group mt-0 mb-2">')
     print('									<div class="input-group-prepend">')
     print('										<span class="input-group-text">')
     phpmaxchildren_hint = "The maximum PHP process that can be spawned"
@@ -232,7 +232,7 @@ if form.getvalue('cpanelpkg'):
     else:
         commoninclude.print_red("autoindex", autoindex_hint)
         print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('								<label class="btn btn-light">')
         print('									<input type="radio" name="autoindex" value="enabled" id="AutoIndexOn" autocomplete="off"> Enabled')
         print('								</label>')
@@ -328,7 +328,7 @@ if form.getvalue('cpanelpkg'):
     if open_file_cache == 'enabled':
         commoninclude.print_green("open_file_cache", open_file_cache_hint)
         print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
         print('								<label class="btn btn-light active">')
         print('									<input type="radio" name="open_file_cache" value="enabled" id="OpenFileCacheOn" autocomplete="off" checked> Enabled')
         print('								</label>')

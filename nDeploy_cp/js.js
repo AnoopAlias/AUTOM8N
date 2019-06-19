@@ -112,7 +112,7 @@ jQuery(document).ready(function($){
     $('#myModal').on('hidden.bs.modal', function () {
         location.reload()
     });
-
+  
 		$('#myModalback').on('hidden.bs.modal', function () {
 				window.history.go(-1);
 		});

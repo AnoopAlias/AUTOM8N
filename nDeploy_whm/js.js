@@ -194,7 +194,6 @@ jQuery(document).ready(function($){
         }});
     });
 
-
     $('#myModal').on('hidden.bs.modal', function () {
     	location.reload()
     });
