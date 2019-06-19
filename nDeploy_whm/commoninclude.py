@@ -42,25 +42,25 @@ def branding_print_support():
 
 
 def print_branding():
-	print('<header id="main-header">')
-	print(		branding_print_support())
-	print('		<div class="logo">')
-	print('			<h4>')
-	print('				<a href="xtendweb.cgi"><img border="0" src="')
-	print(					branding_print_logo_name())
-	print('					" width="48" height="48"></a>')
-	print(					branding_print_banner())
-	print('			</h4>')
-	print('		</div>')
-	print('</header>')
+    print('<header id="main-header">')
+    print(		branding_print_support())
+    print('		<div class="logo">')
+    print('			<h4>')
+    print('				<a href="xtendweb.cgi"><img border="0" src="')
+    print(					branding_print_logo_name())
+    print('					" width="48" height="48"></a>')
+    print(					branding_print_banner())
+    print('			</h4>')
+    print('		</div>')
+    print('</header>')
 
 
 def print_green(theoption, hint):
-    print(('<div class="col-sm-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
 
 def print_red(theoption, hint):
-    print(('<div class="col-sm-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
 
 
 def print_forbidden():
@@ -127,6 +127,25 @@ def print_header():
 def print_modals():
     # Modal
     print('		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"> ')
+    print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+    print('      		<div class="modal-content">')
+    print('        			<div class="modal-header">')
+    print('          			<h4 class="modal-title">Command Output</h4>')
+    print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+    print('          				<span aria-hidden="true">&times;</span>')
+    print('        				</button>')
+    print('        			</div>')
+    print('        			<div class="modal-body">')
+    print('        			</div>')
+    print('					<div class="modal-footer">')
+    print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+    print('      			</div>')
+    print('      		</div>')
+    print('    		</div>')
+    print('     </div>')
+
+    # Modalback
+    print('		<div class="modal fade" id="myModalback" tabindex="-1" role="dialog"> ')
     print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
     print('      		<div class="modal-content">')
     print('        			<div class="modal-header">')

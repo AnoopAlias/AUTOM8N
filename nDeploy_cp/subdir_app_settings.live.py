@@ -2,7 +2,6 @@
 
 import commoninclude
 import os
-import socket
 import yaml
 import cgi
 import cgitb
@@ -29,16 +28,7 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 
 cgitb.enable()
 
-def close_cpanel_liveapisock():
-    """We close the cpanel LiveAPI socket here as we dont need those"""
-    cp_socket = os.environ["CPANEL_CONNECT_SOCKET"]
-    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    sock.connect(cp_socket)
-    sock.sendall('<cpanelxml shutdown="1" />')
-    sock.close()
-
-
-close_cpanel_liveapisock()
+commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
 
@@ -218,10 +208,13 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # User config reload
                 nginx_log_hint = document_root+"/"+thesubdir+"/nginx.conf"
                 commoninclude.print_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
-                if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
-                    print('		<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> Valid</div></div>')
+                if os.path.isfile(nginx_log_hint):
+                    if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
+                        print('		<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> Valid</div></div>')
+                    else:
+                        print('		<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Invalid or require reload</div></div>')
                 else:
-                    print('		<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Invalid or require reload</div></div>')
+                    print('			<div class="col-md-6"><div class="alert alert-secondary"><i class="fas fa-file-upload"></i> No File uploaded</div></div>')
 
                 # Reload Nginx
                 print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')
@@ -305,7 +298,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			<div class="card-header">')
                 print('				<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> General Settings</h5>')
                 print('			</div>')
-                print('			<div class="card-body text-right">')  # card-body
+                print('			<div class="card-body">')  # card-body
 
                 print('			<form class="form" id="modalForm6" onsubmit="return false;">')
                 print('				<div class="row align-items-center">')

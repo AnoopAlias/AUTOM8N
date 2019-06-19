@@ -2,7 +2,6 @@
 
 import commoninclude
 import os
-import socket
 import yaml
 import cgi
 import cgitb
@@ -28,17 +27,7 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 
 cgitb.enable()
 
-
-def close_cpanel_liveapisock():
-    """We close the cpanel LiveAPI socket here as we dont need those"""
-    cp_socket = os.environ["CPANEL_CONNECT_SOCKET"]
-    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    sock.connect(cp_socket)
-    sock.sendall('<cpanelxml shutdown="1" />')
-    sock.close()
-
-
-close_cpanel_liveapisock()
+commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
 commoninclude.print_header()
@@ -216,10 +205,13 @@ if form.getvalue('domain'):
         # User config reload
         nginx_log_hint = document_root + '/nginx.conf'
         commoninclude.print_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
-        if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
-            print('			<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> Valid</div></div>')
+        if os.path.isfile(nginx_log_hint):
+            if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
+                print('			<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> Valid</div></div>')
+            else:
+                print('			<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Invalid or require reload</div></div>')
         else:
-            print('			<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Invalid or require reload</div></div>')
+            print('			<div class="col-md-6"><div class="alert alert-secondary"><i class="fas fa-file-upload"></i> No File uploaded</div></div>')
 
         # Reload Nginx
         print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')
@@ -301,7 +293,7 @@ if form.getvalue('domain'):
         print('			<div class="card-header">')
         print('				<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> General Settings</h5>')
         print('			</div>')
-        print('			<div class="card-body text-right">')  # card-body
+        print('			<div class="card-body">')  # card-body
 
         print('				<form class="form" method="post" id="modalForm3" onsubmit="return false;">')
         print('					<div class="row align-items-center">')
@@ -450,10 +442,10 @@ if form.getvalue('domain'):
         print('			<div class="card-header">')
         print('				<h5 class="card-title mb-0"><i class="fas fa-shield-alt float-right"></i> Security Settings</h5>')
         print('			</div>')
-        print('			<div class="card-body text-right">')  # card-body
+        print('			<div class="card-body">')  # card-body
 
         if settings_lock == 'enabled':
-            print(('		<div class="alert alert-info alert-top">Security settings are locked by the administrator</div>'))
+            print(('		<div class="alert alert-info">Security settings are locked by the administrator</div>'))
             print(('		<input class="hidden" name="security_headers" value="'+security_headers+'">'))
             print(('		<input class="hidden" name="dos_mitigate" value="'+dos_mitigate+'">'))
             print(('		<input class="hidden" name="test_cookie" value="'+test_cookie+'">'))
@@ -607,8 +599,8 @@ if form.getvalue('domain'):
                 commoninclude.print_red('mod_security', mod_security_hint)
                 commoninclude.print_disabled()
                 print(('<input class="hidden" name="mod_security" value="'+mod_security+'">'))
+            print('					</div>')  # row end
 
-        print('					</div>')  # row end
         print('				</div>')  # card-body end
         print('			</div>')  # card end
 
@@ -621,7 +613,7 @@ if form.getvalue('domain'):
         print('				<div class="card-header">')
         print('					<h5 class="card-title mb-0"><i class="fas fa-dumbbell float-right"></i> Content Optimization</h5>')
         print('				</div>')
-        print('				<div class="card-body text-right">')  # card-body
+        print('				<div class="card-body">')  # card-body
 
         print('					<div class="row align-items-center">')
 
@@ -780,7 +772,7 @@ if form.getvalue('domain'):
         if http2 == 'enabled':
             commoninclude.print_green("http2", http2_hint)
             print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('						<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
             print('								<input type="radio" name="http2" value="enabled" id="Http2On" autocomplete="off" checked> Enabled')
             print('							</label>')
@@ -811,7 +803,7 @@ if form.getvalue('domain'):
         print('				<div class="card-header">')
         print('					<h5 class="card-title mb-0"><i class="fas fa-directions float-right"></i> Redirections</h5>')
         print('				</div>')
-        print('				<div class="card-body text-right">')  # card-body
+        print('				<div class="card-body">')  # card-body
 
         print('					<div class="row align-items-center">')
 
@@ -832,7 +824,7 @@ if form.getvalue('domain'):
         else:
             commoninclude.print_red("redirect_to_ssl", redirect_to_ssl_hint)
             print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
             print('								<input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectToSslOn" autocomplete="off"> Enabled')
             print('							</label>')
