@@ -95,9 +95,9 @@ if os.path.isdir('/etc/borgmatic'):
         with open(backup_config_file, 'r') as backup_config_file_stream:
             yaml_parsed_backupyaml = yaml.safe_load(backup_config_file_stream)
         # Backup settings
-        pkgacct_backup = yaml_parsed_backupyaml.get('pkgacct_backup')
-        system_files = yaml_parsed_backupyaml.get('system_files')
-        mysql_backup = yaml_parsed_backupyaml.get('mysql_backup')
+        pkgacct_backup = yaml_parsed_backupyaml.get('pkgacct_backup', 'enabled')
+        system_files = yaml_parsed_backupyaml.get('system_files', 'enabled')
+        mysql_backup = yaml_parsed_backupyaml.get('mysql_backup', 'enabled')
         backup_path = yaml_parsed_backupyaml.get('backup_path')
     else:
         pkgacct_backup = "enabled"
