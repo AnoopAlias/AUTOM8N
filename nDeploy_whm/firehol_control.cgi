@@ -85,9 +85,8 @@ if form.getvalue('ddos'):
                 commoninclude.print_error('FireHol firewall not installed')
                 print('<div class="alert alert-info">')
                 print('<ul class="list-unstyled text-left">')
+                print('<li class="mb-1">To install see <a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></li>')
                 print('<li class="mb-1">To install run the following command with ansible_port set to sshd port</li>')
-                print('<li class="mb-1"><kbd>cd /opt/nDeploy/conf/nDeploy-firewall/</kbd></li>')
-                print('<li class="mb-1"><kbd>ansible-playbook -i ./hosts firewall.yml --extra-vars "ansible_port=22"</kbd></li>')
                 print('</ul>')
                 print('</div>')
         elif form.getvalue('ddos') == 'disable':
