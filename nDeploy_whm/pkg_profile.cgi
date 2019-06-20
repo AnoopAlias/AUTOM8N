@@ -612,7 +612,7 @@ if form.getvalue('cpanelpkg'):
         print(('<input class="hidden" name="pagespeed" value="'+pagespeed+'">'))
 
     # pagespeed filter level
-    pagespeed_filter_hint = "PassThrough breaks some pages. CoreFilters is mostly safe"
+    pagespeed_filter_hint = "CoreFilters load the Core filters, PassThrough allows you to enable individual filters via custom nginx conf"
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
         if pagespeed_filter == 'CoreFilters':
             commoninclude.print_red("pagespeed filters", pagespeed_filter_hint)
