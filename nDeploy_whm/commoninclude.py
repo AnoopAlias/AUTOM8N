@@ -175,6 +175,18 @@ def print_modals():
     print('         </div>')
     print('     </div>')
 
+    # Toast with no autohide
+    print('     <div class="toast fade hide" id="myToastnohide" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">')
+    print('         <div class="toast-header">')
+    print('             <strong class="mr-auto">Command Output</strong>')
+    print('             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
+    print('                 <span aria-hidden="true">&times;</span>')
+    print('             </button>')
+    print('         </div>')
+    print('         <div class="toast-body">')
+    print('         </div>')
+    print('     </div>')
+
     # Toast with no reload
     print('     <div class="toast fade hide" id="myToast-nl" role="alert" aria-live="assertive" aria-atomic="true">')
     print('         <div class="toast-header">')
