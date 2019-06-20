@@ -175,7 +175,7 @@ if os.path.isdir('/etc/borgmatic'):
         print('									<input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off"> Enabled')
         print('								</label>')
         print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off checked"> Disabled')
+        print('									<input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off" checked> Disabled')
         print('								</label>')
         print('							</div>')
         print('						</div>')
