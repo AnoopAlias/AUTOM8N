@@ -275,7 +275,7 @@ if form.getvalue('domain'):
                     print(('			<option value="'+backends_defined+'">'+backends_defined+'</option>'))
             print('					</select>')
             # Pass on the domain name to the next stage
-            print('					<div class="input-group-apend">')
+            print('					<div class="input-group-append">')
             print(('					<input class="hidden" name="domain" value="'+mydomain+'">'))
             print('						<button type="submit" class="btn btn-outline-primary">Select</button>')
             print('					</div>')
@@ -411,7 +411,7 @@ if form.getvalue('domain'):
         if open_file_cache == 'enabled':
             commoninclude.print_green("open_file_cache", open_file_cache_hint)
             print('				<div class="col-md-6">')
-            print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('					<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
             print('						<label class="btn btn-light active">')
             print('							<input type="radio" name="open_file_cache" value="enabled" id="OpenFileCacheOn" autocomplete="off" checked> Enabled')
             print('						</label>')

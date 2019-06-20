@@ -60,8 +60,8 @@ body {
   .card .card-body samp {
     display: block;
     margin-top: 1.5rem; }
-  .card .card-body .row .col-md-6:last-child .btn-not-installed {
-    margin-top: 0; }
+  .card .card-body .row [class*='col-']:last-child .btn-not-installed {
+    margin-bottom: 0; }
   .card .card-body .last > .input-group:last-child {
     margin: 0 !important; }
 
@@ -129,26 +129,14 @@ a {
 .btn-not-installed {
   margin: .5rem 0; }
 
-.btn-2 .input-group-append form .btn-outline-primary {
-  border-radius: 0;
-  border-right: none; }
-
-.btn-2 .input-group-append form .btn-outline-danger {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0; }
-
-.btn-2 .input-group-prepend,
-.btn-2 .input-group-apend {
-  flex: 1 1 auto; }
-  .btn-2 .input-group-prepend .input-group-text,
-  .btn-2 .input-group-apend .input-group-text {
-    width: 100%; }
-
 .input-group-append > form {
   display: inherit; }
 
 .input-group-append .toastForm9-wrap {
   margin-left: -1px !important; }
+  .input-group-append .toastForm9-wrap .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0; }
 
 .input-group-inline .input-group-append {
   margin-left: 0; }
@@ -201,6 +189,7 @@ kbd {
     color: #FFFFFF;
     position: relative;
     top: 50%;
+    -webkit-transform: perspective(1px) translateY(-50%);
     transform: perspective(1px) translateY(-50%); }
 
 .modal .modal-body {

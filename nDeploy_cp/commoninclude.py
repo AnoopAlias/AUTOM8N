@@ -94,7 +94,7 @@ def print_sys_tip(theoption, hint):
 
 
 def print_disabled():
-    print(('<div class="col-md-6 align-self-center"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title="An additional nginx module is required for this functionality">Not Installed</div></div>'))
+    print(('<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title="An additional nginx module is required for this functionality">Not Installed</div></div>'))
 
 
 def print_forbidden_wrapper():
