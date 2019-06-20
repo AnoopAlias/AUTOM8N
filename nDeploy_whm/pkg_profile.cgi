@@ -177,7 +177,7 @@ if form.getvalue('cpanelpkg'):
             print(('					<option value="'+backends_defined+'">'+backends_defined+'</option>'))
     print('							</select>')
     # Pass on the domain name to the next stage
-    print('							<div class="input-group-apend">')
+    print('							<div class="input-group-append">')
     print('								<input class="btn btn-outline-primary" type="submit" value="Select">')
     print(('							<input class="hidden" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
     print('							</div>')
@@ -191,7 +191,7 @@ if form.getvalue('cpanelpkg'):
     print('					</div>')
     print('			</div>')  # card
 
-    print('			<form class="form" id="modalForm17" onsubmit="return false;" method="post" >')
+    print('			<form class="form" id="toastForm17" onsubmit="return false;" method="post" >')
 
     # General App Settings
     print('			<div class="card">')  # card
@@ -612,34 +612,34 @@ if form.getvalue('cpanelpkg'):
         print(('<input class="hidden" name="pagespeed" value="'+pagespeed+'">'))
 
     # pagespeed filter level
-    pagespeed_filter_hint = "PassThrough breaks some pages.CoreFilters is mostly safe"
+    pagespeed_filter_hint = "PassThrough breaks some pages. CoreFilters is mostly safe"
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
         if pagespeed_filter == 'CoreFilters':
-            commoninclude.print_red("pagespeed level", pagespeed_filter_hint)
+            commoninclude.print_red("pagespeed filters", pagespeed_filter_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
-            print('								<input type="radio" name="pagespeed_filter" value="enabled" id="PagespeedFilterOn" autocomplete="off" checked> Enabled')
+            print('								<input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off" checked> Core')
             print('							</label>')
             print('							<label class="btn btn-light">')
-            print('								<input type="radio" name="pagespeed_filter" value="disabled" id="PagespeedFilterOff" autocomplete="off"> Disabled')
+            print('								<input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off"> Pass')
             print('							</label>')
             print('						</div>')
             print('					</div>')
         else:
-            commoninclude.print_green("pagespeed_filter", pagespeed_filter_hint)
+            commoninclude.print_green("pagespeed filters", pagespeed_filter_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
-            print('								<input type="radio" name="pagespeed_filter" value="enabled" id="PagespeedFilterOn" autocomplete="off"> Enabled')
+            print('								<input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off"> Core')
             print('							</label>')
             print('							<label class="btn btn-light active">')
-            print('								<input type="radio" name="pagespeed_filter" value="disabled" id="PagespeedFilterOff" autocomplete="off" checked> Disabled')
+            print('								<input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off" checked> Pass')
             print('							</label>')
             print('						</div>')
             print('					</div>')
     else:
-        commoninclude.print_red("pagespeed level", pagespeed_filter_hint)
+        commoninclude.print_red("pagespeed filters", pagespeed_filter_hint)
         commoninclude.print_disabled()
         print(('<input class="hidden" name="pagespeed_filter" value="'+pagespeed_filter+'">'))
 

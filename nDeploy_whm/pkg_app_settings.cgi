@@ -79,7 +79,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             sys.exit(0)
 
         # Ok we are done with getting the settings,now lets present it to the user
-        print('				<form class="form" method="post" id="modalForm18" onsubmit="return false;">')
+        print('				<form class="form" method="post" id="toastForm18" onsubmit="return false;">')
         if backend_category == 'PROXY':
             print(('			<div class="alert alert-success">Your current setup is: <br>Nginx proxying to <span class="label label-success">'+backend_version+'</span> with template <span class="label label-success">'+apptemplate_description+'</span></div>'))
         else:

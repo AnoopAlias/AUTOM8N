@@ -15,70 +15,81 @@ jQuery(document).ready(function($){
 	    cache: false
 	})
 
+	$('.toast').toast({delay:3000})
+
     $('[data-toggle="tooltip"]').tooltip();
 
     $('[data-toggle="popover"]').popover();
 
-    $('#modalForm1').submit(function() {
-        var $f = $('#modalForm1');
+    $('#toastForm1').submit(function() {
+        var $f = $('#toastForm1');
         var $url = "ddos_mitigate.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal-xl").find('.modal-body').html(result)
-            $("#myModal-xl").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm2').submit(function() {
-        var $f = $('#modalForm2');
+	$('#toastForm2').submit(function() {
+        var $f = $('#toastForm2');
         var $url = "firehol_control.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal-xl").find('.modal-body').html(result)
-            $("#myModal-xl").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm3').submit(function() {
+	$('#toastForm3').submit(function() {
+        var $f = $('#toastForm3');
+        var $url = "abnormal_process_detector.cgi?" + $f.serialize();
+        $.ajax({url: $url, success: function(result){
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
+        }});
+    });
+
+	$('#modalForm3').submit(function() {
         var $f = $('#modalForm3');
         var $url = "abnormal_process_detector.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal-nl").find('.modal-body').html(result)
-            $("#myModal-nl").modal('show');
+            $("#myModal-xl").find('.modal-body').html(result)
+            $("#myModal-xl").modal('show');
         }});
     });
 
-    $('#modalForm4').submit(function() {
-        var $f = $('#modalForm4');
+	$('#toastForm4').submit(function() {
+        var $f = $('#toastForm4');
         var $url = "fix_unison.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm5').submit(function() {
-        var $f = $('#modalForm5');
+    $('#toastForm5').submit(function() {
+        var $f = $('#toastForm5');
         var $url = "fix_unison.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm6').submit(function() {
-        var $f = $('#modalForm6');
+	$('#toastForm6').submit(function() {
+        var $f = $('#toastForm6');
         var $url = "set_default_php.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm7').submit(function() {
-        var $f = $('#modalForm7');
+	$('#toastForm7').submit(function() {
+        var $f = $('#toastForm7');
         var $url = "sync_gdnsd_zone.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal-nl").find('.modal-body').html(result)
-            $("#myModal-nl").modal('show');
+            $("#myToast-nl").find('.toast-body').html(result)
+            $("#myToast-nl").toast('show');
         }});
     });
 
@@ -91,106 +102,106 @@ jQuery(document).ready(function($){
         }});
     });
 
-    $('.modalForm9-wrap').submit(function(e) {
+	$('.toastForm9-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
         console.log($id);
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('.modalForm10-wrap').submit(function(e) {
+	$('.toastForm10-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm11').submit(function() {
-        var $f = $('#modalForm11');
+	$('#toastForm11').submit(function() {
+        var $f = $('#toastForm11');
         var $url = "save_backup_settings.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm12').submit(function() {
-        var $f = $('#modalForm12');
+	$('#toastForm12').submit(function() {
+        var $f = $('#toastForm12');
         var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('.modalForm13-wrap').submit(function(e) {
+	$('.toastForm13-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm14').submit(function() {
-        var $f = $('#modalForm14');
+	$('#toastForm14').submit(function() {
+        var $f = $('#toastForm14');
         var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm16').submit(function() {
-        var $f = $('#modalForm16');
+	$('#toastForm16').submit(function() {
+        var $f = $('#toastForm16');
         var $url = "lock_domain_data_to_package.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm17').submit(function() {
-        var $f = $('#modalForm17');
+	$('#toastForm17').submit(function() {
+        var $f = $('#toastForm17');
         var $url = "save_pkg_server_settings.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm18').submit(function() {
-        var $f = $('#modalForm18');
+	$('#toastForm18').submit(function() {
+        var $f = $('#toastForm18');
         var $url = "save_pkg_app_settings.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModalback").find('.modal-body').html(result)
-            $("#myModalback").modal('show');
+            $("#myToastback").find('.toast-body').html(result)
+            $("#myToastback").toast('show');
         }});
     });
 
-    $('#modalForm19').submit(function() {
-        var $f = $('#modalForm19');
+	$('#toastForm19').submit(function() {
+        var $f = $('#toastForm19');
         var $url = "save_resource_limit.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-		$('#modalForm20').submit(function() {
-        var $f = $('#modalForm20');
+	$('#toastForm20').submit(function() {
+        var $f = $('#toastForm20');
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
@@ -198,12 +209,20 @@ jQuery(document).ready(function($){
     	location.reload()
     });
 
-		$('#myModalback').on('hidden.bs.modal', function () {
-				window.history.go(-1);
-		});
+	$('#myToast').on('hidden.bs.toast', function () {
+    	location.reload()
+    });
 
-		$('#myModal-xl').on('hidden.bs.modal', function () {
-			location.reload()
-		});
+	$('#myModalback').on('hidden.bs.modal', function () {
+		window.history.go(-1);
+	});
+
+	$('#myToastback').on('hidden.bs.toast', function () {
+		window.history.go(-1);
+	});
+
+	$('#myModal-xl').on('hidden.bs.modal', function () {
+		location.reload()
+	});
 
 });
