@@ -81,7 +81,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('			<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> Upstream & Template</h5>')
                 print('		</div>')
                 print('		<div class="card-body text-center">')  # card-body
-                print('			<form class="form" method="post" id="modalForm8" onsubmit="return false;">')
+                print('			<form class="form" method="post" id="toastForm8" onsubmit="return false;">')
                 print(('			<div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the upstream, select the version and template for this upstream</div>'))
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
@@ -116,7 +116,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print(('			<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('			<input class="hidden" name="backend" value="'+mybackend+'">'))
                 print(('			<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('				<button class="btn btn-outline-primary btn-block " type="submit">Update settings</button>')
+                print('				<button class="btn btn-outline-primary btn-block" type="submit">Update settings</button>')
                 print('			</form>')
                 print('		</div>')  # card-body end
                 print('</div>')  # card end
@@ -143,7 +143,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('			<h5 class="card-title mb-0"><i class="fas fa-user-cog float-right"></i> Upstream & Template</h5>')
                 print('		</div>')
                 print('		<div class="card-body text-center">')  # card-body
-                print('			<form class="form" method="post" id="modalForm8" onsubmit="return false;">')
+                print('			<form class="form" method="post" id="toastForm8" onsubmit="return false;">')
                 if backend_category == 'PROXY':
                     print(('		<div class="alert alert-info">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
                 else:
@@ -226,7 +226,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('				<h5 class="card-title mb-0"><i class="fas fa-user-cog float-right"></i> Upstream & Template</h5>')
             print('			</div>')
             print('			<div class="card-body text-center">')  # card-body
-            print('				<form class="form" id="modalForm8" onsubmit="return false;">')
+            print('				<form class="form" id="toastForm8" onsubmit="return false;">')
             print(('				<div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the upstream, select the version and template for this upstream</div>'))
             backends_dict = backend_data_yaml_parsed.get(mybackend)
             new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)

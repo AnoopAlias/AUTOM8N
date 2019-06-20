@@ -219,7 +219,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # Reload Nginx
                 print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')
                 print('					<div class="col-md-6">')
-                print('						<form class="form" method="post" id="modalForm4" onsubmit="return false;">')
+                print('						<form class="form" method="post" id="toastForm4" onsubmit="return false;">')
                 print('							<button class="alert alert-info btn btn-info " type="submit">Reload</button>')
                 print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print('						</form>')
@@ -275,7 +275,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         print(('			<option value="'+backends_defined+'">'+backends_defined+'</option>'))
                 print('					</select>')
                 # Pass on the domain name to the next stage
-                print('					<div class="input-group-apend">')
+                print('					<div class="input-group-append">')
                 print(('					<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('					<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('						<button class="btn btn-outline-primary" type="submit">Select</button>')
@@ -300,7 +300,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			</div>')
                 print('			<div class="card-body">')  # card-body
 
-                print('			<form class="form" id="modalForm6" onsubmit="return false;">')
+                print('			<form class="form" id="toastForm6" onsubmit="return false;">')
                 print('				<div class="row align-items-center">')
 
                 # auth_basic
@@ -331,7 +331,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('				</div>')
 
                 # set_expire_static
-                set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
+                set_expire_static_hint = "Set Expires/Cache-Control headers for static content"
                 if set_expire_static == 'enabled':
                     commoninclude.print_green('set expires header', set_expire_static_hint)
                     print('				<div class="col-md-6">')
@@ -483,7 +483,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             for backends_defined in backend_data_yaml_parsed.keys():
                 print(('						<option value="'+backends_defined+'">'+backends_defined+'</option>'))
             print('							</select>')
-            print('							<div class="input-group-apend">')
+            print('							<div class="input-group-append">')
             print(('							<input class="hidden" name="domain" value="'+mydomain+'">'))
             print(('							<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
             print('								<button class="btn btn-outline-primary" type="submit" value="Submit">Select</button>')

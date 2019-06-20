@@ -183,12 +183,12 @@ if os.path.isfile(cluster_config_file):
 
     print('				<div class="card-body">')  # card-body
 
-    print('					<form class="form mb-3" id="modalForm4" onsubmit="return false;">')
+    print('					<form class="form mb-3" id="toastForm4" onsubmit="return false;">')
     print(('					<input class="hidden" name="mode" value="restart">'))
     print('						<button type="submit" class="btn btn-outline-primary btn-block ">Soft Restart Unison Sync</button>')
     print('					</form>')
 
-    print('					<form class="form mb-0" id="modalForm5" onsubmit="return false;">')
+    print('					<form class="form mb-0" id="toastForm5" onsubmit="return false;">')
     print(('					<input class="hidden" name="mode" value="reset">'))
     print('						<button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
     print('					</form>')
@@ -208,7 +208,7 @@ if os.path.isfile(cluster_config_file):
     print('				</div>')
     print('				<div class="card-body">')  # card-body
 
-    print('					<form class="form" id="modalForm7" onsubmit="return false;">')
+    print('					<form class="form" id="toastForm7" onsubmit="return false;">')
     print('						<div class="input-group">')
     print('							<div class="input-group-prepend">')
     print('    							<label class="input-group-text">Zone</label>')
@@ -232,7 +232,7 @@ print('						<h5 class="card-title mb-0"><i class="fab fa-php float-right"></i> 
 print('					</div>')
 print('					<div class="card-body">')  # card-body
 
-print('						<form class="form" id=modalForm6 onsubmit="return false;">')
+print('						<form class="form" id="toastForm6" onsubmit="return false;">')
 print('							<div class="input-group">')
 print('								<div class="input-group-prepend">')
 print('    								<label class="input-group-text">PHP</label>')
@@ -272,7 +272,7 @@ if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('							<div class="row no-gutters">')
     print('								<div class="col-md-6"><div class="alert alert-success">Enabled</div></div>')
     print('								<div class="col-md-6">')
-    print('									<form id="modalForm1" class="form" onsubmit="return false;">')
+    print('									<form id="toastForm1" class="form" onsubmit="return false;">')
     print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
     print(('									<input class="hidden" name="ddos" value="disable">'))
     print('									</form>')
@@ -285,7 +285,7 @@ else:
     print('							<div class="row no-gutters">')
     print('								<div class="col-md-6"><div class="alert alert-secondary">Disabled</div></div>')
     print('								<div class="col-md-6">')
-    print('									<form id="modalForm1" class="form" onsubmit="return false;">')
+    print('									<form id="toastForm1" class="form" onsubmit="return false;">')
     print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
     print(('									<input class="hidden" name="ddos" value="enable">'))
     print('									</form>')
@@ -306,7 +306,7 @@ else:
         print('						<div class="row no-gutters">')
         print('							<div class="col-md-6"><div class="alert alert-success">Enabled</div></div>')
         print('								<div class="col-md-6">')
-        print('								<form id="modalForm2" class="form" onsubmit="return false;">')
+        print('								<form id="toastForm2" class="form" onsubmit="return false;">')
         print('									<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
         print(('								<input class="hidden" name="ddos" value="disable">'))
         print('								</form>')
@@ -319,7 +319,7 @@ else:
         print('						<div class="row no-gutters">')
         print('							<div class="col-md-6"><div class="alert alert-secondary">Disabled</div></div>')
         print('							<div class="col-md-6">')
-        print('								<form id="modalForm2" class="form" onsubmit="return false;">')
+        print('								<form id="toastForm2" class="form" onsubmit="return false;">')
         print('									<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
         print(('								<input class="hidden" name="ddos" value="enable">'))
         print('								</form>')
@@ -393,7 +393,7 @@ if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
     print('							<div class="row no-gutters">')
     print('								<div class="col-md-6"><div class="alert alert-success">Enabled</div></div>')
     print('								<div class="col-md-6">')
-    print('									<form class="form" method="post" id="modalForm16" onsubmit="return false;">')
+    print('									<form class="form" method="post" id="toastForm16" onsubmit="return false;">')
     print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
     print(('									<input class="hidden" name="package_lock" value="disabled">'))
     print('									</form>')
@@ -406,7 +406,7 @@ else:
     print('							<div class="row no-gutters">')
     print('								<div class="col-md-6"><div class="alert alert-secondary">Disabled</div></div>')
     print('								<div class="col-md-6">')
-    print('									<form class="form" method="post" id="modalForm16" onsubmit="return false;">')
+    print('									<form class="form" method="post" id="toastForm16" onsubmit="return false;">')
     print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
     print(('									<input class="hidden" name="package_lock" value="enabled">'))
     print('									</form>')

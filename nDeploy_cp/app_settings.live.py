@@ -216,7 +216,7 @@ if form.getvalue('domain'):
         # Reload Nginx
         print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')
         print('					<div class="col-md-6">')
-        print('						<form class="form" method="post" id="modalForm4" onsubmit="return false;">')
+        print('						<form class="form" method="post" id="toastForm4" onsubmit="return false;">')
         print('							<button class="alert alert-info btn btn-info " type="submit">Reload</button>')
         print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('						</form>')
@@ -295,7 +295,7 @@ if form.getvalue('domain'):
         print('			</div>')
         print('			<div class="card-body">')  # card-body
 
-        print('				<form class="form" method="post" id="modalForm3" onsubmit="return false;">')
+        print('				<form class="form" method="post" id="toastForm3" onsubmit="return false;">')
         print('					<div class="row align-items-center">')
 
         # auth_basic
@@ -445,7 +445,7 @@ if form.getvalue('domain'):
         print('			<div class="card-body">')  # card-body
 
         if settings_lock == 'enabled':
-            print(('		<div class="alert alert-info">Security settings are locked by the administrator</div>'))
+            print(('		<div class="alert alert-info mb-0">Security settings are locked by the administrator</div>'))
             print(('		<input class="hidden" name="security_headers" value="'+security_headers+'">'))
             print(('		<input class="hidden" name="dos_mitigate" value="'+dos_mitigate+'">'))
             print(('		<input class="hidden" name="test_cookie" value="'+test_cookie+'">'))
@@ -677,34 +677,34 @@ if form.getvalue('domain'):
             print(('<input class="hidden" name="pagespeed" value="'+pagespeed+'">'))
 
         # pagespeed filter level
-        pagespeed_filter_hint = "CoreFilters load the Core filters , PassThrough allows you to enable individual filters via custom nginx conf"
+        pagespeed_filter_hint = "CoreFilters load the Core filters, PassThrough allows you to enable individual filters via custom nginx conf"
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
             if pagespeed_filter == 'CoreFilters':
-                commoninclude.print_red("CoreFilters/PassThrough", pagespeed_filter_hint)
+                commoninclude.print_red("pagespeed filters", pagespeed_filter_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light active">')
-                print('							<input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off" checked> CoreFilters')
+                print('							<input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off" checked> Core')
                 print('						</label>')
                 print('						<label class="btn btn-light">')
-                print('							<input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off"> PassThrough')
+                print('							<input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off"> Pass')
                 print('						</label>')
                 print('					</div>')
                 print('				</div>')
             else:
-                commoninclude.print_green("CoreFilters/PassThrough", pagespeed_filter_hint)
+                commoninclude.print_green("pagespeed filters", pagespeed_filter_hint)
                 print('				<div class="col-md-6">')
                 print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                 print('						<label class="btn btn-light">')
-                print('							<input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off"> CoreFilters')
+                print('							<input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off"> Core')
                 print('						</label>')
                 print('						<label class="btn btn-light active">')
-                print('							<input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off" checked> PassThrough')
+                print('							<input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off" checked> Pass')
                 print('						</label>')
                 print('					</div>')
                 print('				</div>')
         else:
-            commoninclude.print_red("CoreFilters/PassThrough", pagespeed_filter_hint)
+            commoninclude.print_red("pagespeed filters", pagespeed_filter_hint)
             commoninclude.print_disabled()
             print(('<input class="hidden" name="pagespeed_filter" value="'+pagespeed_filter+'">'))
 
@@ -1017,7 +1017,7 @@ if form.getvalue('domain'):
                 print(('					<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
                 print('					</form>')
 
-                print('					<form class="form modalForm7-wrap" method="post" id="modalForm7'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                print('					<form class="form toastForm7-wrap" method="post" id="toastForm7'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('						<button class="btn btn-outline-danger " type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
                 print(('					<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print(('					<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
@@ -1038,7 +1038,7 @@ if form.getvalue('domain'):
         print('							<input class="form-control" placeholder="/blog" type="text" name="thesubdir">')
         print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
         print(('						<input class="hidden" name="action" value="add">'))
-        print('							<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
+        print('							<div class="input-group-append"><button class="btn btn-outline-primary" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button></div>')
         print('						</div>')
         print('					</form>')
         print('				</div>')  # card-body end

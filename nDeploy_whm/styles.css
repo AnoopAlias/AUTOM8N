@@ -6,15 +6,20 @@ body {
 #main-header {
   background-color: #FFFFFF;
   padding: .5rem 1rem .1rem; }
-  #main-header h3 {
+  #main-header h4 {
     margin: 0; }
   #main-header img {
     position: relative;
     top: -2px; }
-  #main-header .help .fas {
-    margin-left: .3rem;
+  #main-header .logo {
+    display: inline-block; }
+  #main-header .help {
     position: relative;
-    top: 1px; }
+    z-index: 1; }
+    #main-header .help .fas {
+      margin-left: .3rem;
+      position: relative;
+      top: 1px; }
 
 .breadcrumb {
   background-color: transparent;
@@ -57,6 +62,8 @@ body {
     margin-top: 1.5rem; }
   .card .card-body .row .col-md-6:last-child .btn-not-installed {
     margin-top: 0; }
+  .card .card-body .last > .input-group:last-child {
+    margin: 0 !important; }
 
 a,
 .btn {
@@ -140,6 +147,22 @@ a {
 .input-group-append > form {
   display: inherit; }
 
+.input-group-append .toastForm9-wrap {
+  margin-left: -1px !important; }
+
+.input-group-inline .input-group-append {
+  margin-left: 0; }
+  .input-group-inline .input-group-append .form:not(:only-child):first-child .btn {
+    border-radius: 0; }
+  .input-group-inline .input-group-append .form:not(:only-child):last-child .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px; }
+  .input-group-inline .input-group-append .form:only-child .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: 1px; }
+
 .btn-ajax .spinner-grow,
 .btn-ajax-slow .spinner-grow {
   position: relative;
@@ -152,6 +175,10 @@ h6.label-default {
   margin-top: 2rem; }
   h6.label-default:first-child {
     margin-top: 1rem; }
+
+kbd {
+  position: relative;
+  top: -1px; }
 
 .hidden {
   display: none; }
@@ -170,7 +197,7 @@ h6.label-default {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5); }
   #loader > .fas {
-    font-size: 3rem;
+    font-size: 5rem;
     color: #FFFFFF;
     position: relative;
     top: 50%;
@@ -186,6 +213,28 @@ h6.label-default {
     display: block;
     text-align: center;
     margin: 0.6rem 0 2rem 0; }
+
+.toast {
+  z-index: 100;
+  background-color: #343a40;
+  color: #FFFFFF;
+  position: fixed;
+  top: .9em;
+  right: .9em;
+  min-width: 20rem;
+  max-width: 20rem; }
+  .toast .toast-header {
+    background-color: #3f474e;
+    color: #FFFFFF; }
+  .toast .fas {
+    display: inline-block;
+    float: left;
+    margin-right: .5rem;
+    bottom: .5rem; }
+  .toast p:last-child {
+    margin-bottom: 0; }
+  .toast button > span {
+    color: #FFFFFF; }
 
 @media (min-width: 768px) {
   .card .align-items-center .label {
