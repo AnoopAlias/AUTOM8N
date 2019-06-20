@@ -14,6 +14,8 @@ jQuery(document).ready(function($){
     	cache: false
 	})
 
+	$('.toast').toast({delay:3000})
+
     $('[data-toggle="tooltip"]').tooltip();
 
     $('[data-toggle="popover"]').popover();
@@ -36,21 +38,21 @@ jQuery(document).ready(function($){
         }});
     });
 
-    $('#modalForm3').submit(function() {
-        var $f = $('#modalForm3');
+    $('#toastForm3').submit(function() {
+        var $f = $('#toastForm3');
         var $url = "save_app_extra_settings.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm4').submit(function() {
-        var $f = $('#modalForm4');
+    $('#toastForm4').submit(function() {
+        var $f = $('#toastForm4');
         var $url = "reload_config.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
@@ -63,31 +65,31 @@ jQuery(document).ready(function($){
         }});
     });
 
-    $('#modalForm6').submit(function() {
-        var $f = $('#modalForm6');
+    $('#toastForm6').submit(function() {
+        var $f = $('#toastForm6');
         var $url = "save_app_extra_settings.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('.modalForm7-wrap').submit(function(e) {
+    $('.toastForm7-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "subdir_delete.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
         }});
     });
 
-    $('#modalForm8').submit(function() {
-        var $f = $('#modalForm8');
+    $('#toastForm8').submit(function() {
+        var $f = $('#toastForm8');
         var $url = "subdir_save_app_settings.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModalback").find('.modal-body').html(result)
-            $("#myModalback").modal('show');
+            $("#myToastback").find('.toast-body').html(result)
+            $("#myToastback").toast('show');
         }});
     });
 
@@ -109,12 +111,20 @@ jQuery(document).ready(function($){
         }});
     });
 
-    $('#myModal').on('hidden.bs.modal', function () {
-        location.reload()
+	$('#myModal').on('hidden.bs.modal', function () {
+    	location.reload()
     });
-  
-		$('#myModalback').on('hidden.bs.modal', function () {
-				window.history.go(-1);
-		});
+
+	$('#myToast').on('hidden.bs.toast', function () {
+    	location.reload()
+    });
+
+	$('#myModalback').on('hidden.bs.modal', function () {
+		window.history.go(-1);
+	});
+
+	$('#myToastback').on('hidden.bs.toast', function () {
+		window.history.go(-1);
+	});
 
 });

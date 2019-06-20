@@ -51,7 +51,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('			<div class="card-header">')
         print('				<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> '+config.sections()[mysection]+'</h5>')
         print('			</div>')
-        print('			<div class="card-body">')  # card-body
+        print('			<div class="card-body last">')  # card-body
 
         myconfig = dict(config.items(config.sections()[mysection]))
         mykeypos = 1
@@ -59,24 +59,24 @@ if form.getvalue('poolfile') and form.getvalue('section'):
             print('			<label for="'+mykey+'">')
             print(mykey)
             print('			</label>')
-            print('			<form class="m-0 modalForm10-wrap" id="modalForm10'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-            print('			<div class="input-group btn-2 mb-4">')
-            print('				<input class="form-control" value='+myconfig.get(mykey)+' type="text" name="thevalue">')
-            print('				<div class="input-group-append">')
-            print('						<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Save</span><i class="fas fa-pen"></i></button>')
+            print('         <form class="m-0 toastForm10-wrap" id="toastForm10'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+            print('             <div class="input-group btn-2 mb-4">')
+            print('                 <input class="form-control" value='+myconfig.get(mykey)+' type="text" name="thevalue">')
+            print('                 <div class="input-group-append">')
             print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))
             print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
             print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
             print(('					<input class="hidden" name="action" value="edit">'))
-            print('			</form>')
-            print('			<form class="m-0 modalForm9-wrap" id="modalForm9'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-            print('						<button class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+            print('						<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Save</span><i class="fas fa-pen"></i></button>')
+            print('                 </form>')
+            print('                 <form class="m-0 toastForm9-wrap" id="toastForm9'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
             print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))
             print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
             print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
             print(('					<input class="hidden" name="action" value="delete">'))
-            print('			</form>')
-            print('				</div>')
+            print('						<button class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+            print('                 </form>')
+            print('             </div>')
             print('			</div>')
             mykeypos = mykeypos + 1
 
@@ -90,7 +90,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('			</div>')
         print('			<div class="card-body">')  # card-body
 
-        print('				<form class="m-0" method="post" id="modalForm20" onsubmit="return false;">')
+        print('				<form class="m-0" method="post" id="toastForm20" onsubmit="return false;">')
         print('					<div class="input-group">')
         print('						<div class="input-group-prepend">')
         print('							<span class="input-group-text">Key & Value</span>')

@@ -77,7 +77,7 @@ if os.path.isdir('/etc/borgmatic'):
             borgmatic_hook_myscript.write(borgmatic_hook_script)
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
 
-    print('                                <form class="form" method="post" id="modalForm11" onsubmit="return false;">')
+    print('                                <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
 
     
     # system_files
@@ -198,7 +198,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('				</div>')
     print('				<div class="card-body">')  # card-body
 
-    print('					<form class="form input-group-prepend-min" method="post" id="modalForm12" onsubmit="return false;"> ')
+    print('					<form class="form input-group-prepend-min" method="post" id="toastForm12" onsubmit="return false;"> ')
 
     # repositories
     repositories_hint = "eg: user@backupserver:sourcehostname.borg"
@@ -319,24 +319,24 @@ if os.path.isdir('/etc/borgmatic'):
             print(path)
             print('				</span></div>')
             if path not in ['/home', backup_path]:
-                print('			<form class="form modalForm13-wrap" method="post" id="modalForm13'+'-'+str(mykeypos)+'" onsubmit="return false;">')
-                print('				<button class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+                print('			<div class="input-group-append"><form class="form toastForm13-wrap" method="post" id="toastForm13'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                 print(('			<input class="hidden" name="thehomedir" value="'+path+'">'))
                 print(('			<input class="hidden" name="action" value="delete">'))
-                print('			</form>')
+                print('				<button class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+                print('			</form></div>')
             mykeypos = mykeypos + 1
             print('			</div>')
     print('				</div>')
     print('				<div class="label label-default mt-2 mb-2">Add new home directory to backup:</div>')
-    print('					<form class="form" method="post" id="modalForm14" onsubmit="return false;">')
+    print('					<form class="form" method="post" id="toastForm14" onsubmit="return false;">')
 
     print('						<div class="input-group mb-0">')
     print('							<div class="input-group-prepend">')
     print('								<span class="input-group-text">Enter Path</span>')
     print('							</div>')
     print('							<input class="form-control" placeholder="/home2" type="text" name="thehomedir">')
-    print('							<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
     print(('						<input class="hidden" name="action" value="add">'))
+    print('							<div class="input-group-append"><button class="btn btn-outline-primary" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button></div>')
     print('						</div>')
 
     print('					</form>')

@@ -106,7 +106,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
             print('			</div>')
 
     # Set Limits
-    print('					<form class="form" method="post" id="modalForm19" onsubmit="return false;">')
+    print('					<form class="form" method="post" id="toastForm19" onsubmit="return false;">')
 
     print('						<div class="input-group">')
     print('							<div class="input-group-prepend input-group-prepend-min">')
