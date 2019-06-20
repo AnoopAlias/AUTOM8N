@@ -86,7 +86,6 @@ if form.getvalue('ddos'):
                 print('<div class="alert alert-info">')
                 print('<ul class="list-unstyled text-left">')
                 print('<li class="mb-1">To install see <a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></li>')
-                print('<li class="mb-1">To install run the following command with ansible_port set to sshd port</li>')
                 print('</ul>')
                 print('</div>')
         elif form.getvalue('ddos') == 'disable':
