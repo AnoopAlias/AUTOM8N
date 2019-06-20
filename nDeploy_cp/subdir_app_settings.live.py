@@ -219,7 +219,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # Reload Nginx
                 print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')
                 print('					<div class="col-md-6">')
-                print('						<form class="form" method="post" id="modalForm4" onsubmit="return false;">')
+                print('						<form class="form" method="post" id="toastForm4" onsubmit="return false;">')
                 print('							<button class="alert alert-info btn btn-info " type="submit">Reload</button>')
                 print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print('						</form>')
