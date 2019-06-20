@@ -176,7 +176,7 @@ def print_modals():
     print('     </div>')
 
     # Toast with long autohide
-    print('     <div class="toast fade hide" id="myToastnohide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="8000">')
+    print('     <div class="toast fade hide" id="myToastnohide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">')
     print('         <div class="toast-header">')
     print('             <strong class="mr-auto">Command Output</strong>')
     print('             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
