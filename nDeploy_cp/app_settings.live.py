@@ -977,7 +977,7 @@ if form.getvalue('domain'):
             commoninclude.print_green("Redirect to URL", redirecturl_hint)
         print('									</span>')
         print('								</div>')
-        print(('							<input class="form-control" placeholder='+redirecturl+' type="text" name="redirecturl">'))
+        print(('							<input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
         print('							</div>')
         print('						</div>')
 
