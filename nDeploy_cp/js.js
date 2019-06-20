@@ -97,8 +97,8 @@ jQuery(document).ready(function($){
         var $f = $('#toastForm9');
         var $url = "autoswitch.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myToast-nl").find('.toast-body').html(result)
-            $("#myToast-nl").modal('show');
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").modal('show');
         }});
     });
 
