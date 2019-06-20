@@ -182,7 +182,6 @@ else:
 
 
 # Sync GeoDNS zone
-<<<<<<< HEAD
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Sync GDNSD Zone','fas fa-sync')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
