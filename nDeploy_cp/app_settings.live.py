@@ -155,78 +155,78 @@ if form.getvalue('domain'):
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
                 # Running
-                print('			<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-play"></i> Running</div></div>')
-                print('			<div class="col-md-6"><div class="alert alert-success">Nginx</div></div>')
+                print('			<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
+                print('			<div class="col-md-6 alert alert-success">Nginx</div>')
 
                 # Backend
-                print('			<div class="col-md-6"><div class="alert alert-light"><i class="fa fa-server"></i> Upstream</div></div>')
-                print('			<div class="col-md-6"><div class="alert alert-success">'+backend_version+'</div></div>')
+                print('			<div class="col-md-6 alert alert-light"><i class="fa fa-server"></i> Upstream</div>')
+                print('			<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
                 # Description
-                print('			<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-cog"></i> Template</div></div>')
-                print('			<div class="col-md-6"><div class="alert alert-success">'+apptemplate_description+'</div></div>')
+                print('			<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Template</div>')
+                print('			<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
                 # .hitaccess
-                print('			<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div></div>')
-                print('			<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> &nbsp;</div></div>')
+                print('			<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+                print('			<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> &nbsp;</div>')
             else:
                 # Running
-                print('			<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-play"></i> Running</div></div>')
-                print('			<div class="col-md-6"><div class="alert alert-success">Nginx</div></div>')
+                print('			<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
+                print('			<div class="col-md-6 alert alert-success">Nginx</div>')
 
                 # Backend
-                print('			<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-server"></i> Upstream</div></div>')
-                print('			<div class="col-md-6"><div class="alert alert-success">'+backend_version+'</div></div>')
+                print('			<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
+                print('			<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
                 # Description
-                print('			<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-cog"></i> Template</div></div>')
-                print('			<div class="col-md-6"><div class="alert alert-success">'+apptemplate_description+'</div></div>')
+                print('			<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Template</div>')
+                print('			<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
                 # .hitaccess
-                print('			<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div></div>')
-                print('			<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Ignored</div></div>')
+                print('			<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+                print('			<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
         else:
             # Running
-            print('				<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-play"></i> Running</div></div>')
-            print('				<div class="col-md-6"><div class="alert alert-success">Nginx</div></div>')
+            print('				<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
+            print('				<div class="col-md-6 alert alert-success">Nginx</div>')
 
             # Backend
-            print('				<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-server"></i> Upstream</div></div>')
-            print('				<div class="col-md-6"><div class="alert alert-success">'+backend_version+'</div></div>')
+            print('				<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
+            print('				<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
             # Description
-            print('				<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-cog"></i> Template</div></div>')
-            print('				<div class="col-md-6"><div class="alert alert-success">'+apptemplate_description+'</div></div>')
+            print('				<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Template</div>')
+            print('				<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
             # .hitaccess
-            print('				<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div></div>')
-            print('				<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Ignored</div></div>')
+            print('				<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+            print('				<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
 
         # User config reload
         nginx_log_hint = document_root + '/nginx.conf'
         commoninclude.print_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
         if os.path.isfile(nginx_log_hint):
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
-                print('			<div class="col-md-6"><div class="alert alert-success"><i class="fas fa-check"></i> Valid</div></div>')
+                print('			<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Valid</div>')
             else:
-                print('			<div class="col-md-6"><div class="alert alert-danger"><i class="fas fa-times"></i> Invalid or require reload</div></div>')
+                print('			<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Invalid or require reload</div>')
         else:
-            print('			<div class="col-md-6"><div class="alert alert-secondary"><i class="fas fa-file-upload"></i> No File uploaded</div></div>')
+            print('			<div class="col-md-6 alert alert-secondary"><i class="fas fa-file-upload"></i> No File uploaded</div>')
 
         # Reload Nginx
-        print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div></div>')
+        print('					<div class="col-md-6 alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
         print('					<div class="col-md-6">')
         print('						<form class="form" method="post" id="toastForm4" onsubmit="return false;">')
-        print('							<button class="alert alert-info btn btn-info " type="submit">Reload</button>')
+        print('							<button class="alert alert-info btn btn-info" type="submit">Reload</button>')
         print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('						</form>')
         print('					</div>')
 
         # Nginx Log
-        print('					<div class="col-md-6"><div class="alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div></div>')
+        print('					<div class="col-md-6 alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
         print('					<div class="col-md-6">')
         print('						<form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-        print('							<button class="alert alert-info btn btn-info " type="submit">View Log</button>')
+        print('							<button class="alert alert-info btn btn-info" type="submit">View Log</button>')
         print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
         print('						</form>')
         print('					</div>')
@@ -275,7 +275,7 @@ if form.getvalue('domain'):
                     print(('			<option value="'+backends_defined+'">'+backends_defined+'</option>'))
             print('					</select>')
             # Pass on the domain name to the next stage
-            print('					<div class="input-group-apend">')
+            print('					<div class="input-group-append">')
             print(('					<input class="hidden" name="domain" value="'+mydomain+'">'))
             print('						<button type="submit" class="btn btn-outline-primary">Select</button>')
             print('					</div>')
@@ -411,7 +411,7 @@ if form.getvalue('domain'):
         if open_file_cache == 'enabled':
             commoninclude.print_green("open_file_cache", open_file_cache_hint)
             print('				<div class="col-md-6">')
-            print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('					<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
             print('						<label class="btn btn-light active">')
             print('							<input type="radio" name="open_file_cache" value="enabled" id="OpenFileCacheOn" autocomplete="off" checked> Enabled')
             print('						</label>')
@@ -977,7 +977,7 @@ if form.getvalue('domain'):
             commoninclude.print_green("Redirect to URL", redirecturl_hint)
         print('									</span>')
         print('								</div>')
-        print(('							<input class="form-control" placeholder='+redirecturl+' type="text" name="redirecturl">'))
+        print(('							<input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
         print('							</div>')
         print('						</div>')
 

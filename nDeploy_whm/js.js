@@ -34,8 +34,8 @@ jQuery(document).ready(function($){
         var $f = $('#toastForm2');
         var $url = "firehol_control.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myToast").find('.toast-body').html(result)
-            $("#myToast").toast('show');
+            $("#myToastnohide").find('.toast-body').html(result)
+            $("#myToastnohide").toast('show');
         }});
     });
 
@@ -90,15 +90,6 @@ jQuery(document).ready(function($){
         $.ajax({url: $url, success: function(result){
             $("#myToast-nl").find('.toast-body').html(result)
             $("#myToast-nl").toast('show');
-        }});
-    });
-
-    $('#modalForm8').submit(function() {
-        var $f = $('#modalForm8');
-        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
         }});
     });
 
@@ -210,6 +201,10 @@ jQuery(document).ready(function($){
     });
 
 	$('#myToast').on('hidden.bs.toast', function () {
+    	location.reload()
+    });
+
+	$('#myToastnohide').on('hidden.bs.toast', function () {
     	location.reload()
     });
 

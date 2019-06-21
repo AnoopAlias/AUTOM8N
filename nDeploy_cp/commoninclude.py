@@ -66,11 +66,11 @@ def print_branding():
 
 
 def print_green(theoption, hint):
-    print(('<div class="col-md-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 label" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_red(theoption, hint):
-    print(('<div class="col-md-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 label" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_forbidden():
@@ -90,11 +90,11 @@ def print_error_alert(themessage):
 
 
 def print_sys_tip(theoption, hint):
-    print(('<div class="col-md-6"><div class="alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_disabled():
-    print(('<div class="col-md-6 align-self-center"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title="An additional nginx module is required for this functionality">Not Installed</div></div>'))
+    print(('<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title="An additional nginx module is required for this functionality">Not Installed</div></div>'))
 
 
 def print_forbidden_wrapper():
@@ -138,6 +138,25 @@ def print_modals():
     # Modal
     print('		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"> ')
     print('    		<div class="modal-dialog modal-dialog-centered" role="document">')
+    print('      		<div class="modal-content">')
+    print('        			<div class="modal-header">')
+    print('          			<h4 class="modal-title">Command Output</h4>')
+    print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+    print('          				<span aria-hidden="true">&times;</span>')
+    print('        				</button>')
+    print('        			</div>')
+    print('        			<div class="modal-body">')
+    print('        			</div>')
+    print('					<div class="modal-footer">')
+    print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+    print('      			</div>')
+    print('      		</div>')
+    print('    		</div>')
+    print('     </div>')
+
+    # Modal with no reload
+    print('		<div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog"> ')
+    print('    		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
     print('      		<div class="modal-content">')
     print('        			<div class="modal-header">')
     print('          			<h4 class="modal-title">Command Output</h4>')

@@ -34,7 +34,7 @@ body {
   .card .card-footer {
     color: #777777; }
   .card .card-body .no-gutters .alert {
-    padding: .8rem;
+    padding: .8rem .8rem .8rem 1.25rem;
     text-align: center;
     border-radius: 0;
     margin: 0;
@@ -47,7 +47,7 @@ body {
       min-width: 1.6rem; }
     .card .card-body .no-gutters .alert.btn {
       margin-top: 0; }
-  .card .card-body .no-gutters [class*='col-']:nth-child(odd) .alert-light {
+  .card .card-body .no-gutters [class*='col-']:nth-child(odd).alert-light {
     text-align: left; }
   .card .card-body .form {
     margin-bottom: 0; }
@@ -60,10 +60,12 @@ body {
   .card .card-body samp {
     display: block;
     margin-top: 1.5rem; }
-  .card .card-body .row .col-md-6:last-child .btn-not-installed {
-    margin-top: 0; }
-  .card .card-body .last > .input-group:last-child {
+  .card .card-body .row [class*='col-']:last-child .btn-not-installed {
+    margin-bottom: 0; }
+  .card .card-body.last > form:last-child > .input-group {
     margin: 0 !important; }
+  .card .card-body .alert-info.p-0 .btn {
+    display: block; }
 
 a,
 .btn {
@@ -129,26 +131,14 @@ a {
 .btn-not-installed {
   margin: .5rem 0; }
 
-.btn-2 .input-group-append form .btn-outline-primary {
-  border-radius: 0;
-  border-right: none; }
-
-.btn-2 .input-group-append form .btn-outline-danger {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0; }
-
-.btn-2 .input-group-prepend,
-.btn-2 .input-group-apend {
-  flex: 1 1 auto; }
-  .btn-2 .input-group-prepend .input-group-text,
-  .btn-2 .input-group-apend .input-group-text {
-    width: 100%; }
-
 .input-group-append > form {
   display: inherit; }
 
 .input-group-append .toastForm9-wrap {
   margin-left: -1px !important; }
+  .input-group-append .toastForm9-wrap .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0; }
 
 .input-group-inline .input-group-append {
   margin-left: 0; }
@@ -201,6 +191,7 @@ kbd {
     color: #FFFFFF;
     position: relative;
     top: 50%;
+    -webkit-transform: perspective(1px) translateY(-50%);
     transform: perspective(1px) translateY(-50%); }
 
 .modal .modal-body {
@@ -238,4 +229,6 @@ kbd {
 
 @media (min-width: 768px) {
   .card .align-items-center .label {
-    text-align: right; } }
+    text-align: right; }
+  .card .align-items-center [class*='col-']:nth-last-child(2).label {
+    margin-top: .6rem; } }

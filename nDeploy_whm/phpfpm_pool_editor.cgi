@@ -60,7 +60,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
             print(mykey)
             print('			</label>')
             print('         <form class="m-0 toastForm10-wrap" id="toastForm10'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-            print('             <div class="input-group btn-2 mb-4">')
+            print('             <div class="input-group mb-4">')
             print('                 <input class="form-control" value='+myconfig.get(mykey)+' type="text" name="thevalue">')
             print('                 <div class="input-group-append">')
             print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))

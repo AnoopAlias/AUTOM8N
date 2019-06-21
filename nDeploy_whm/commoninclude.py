@@ -58,11 +58,11 @@ def return_green(theoption, hint):
 
 
 def print_green(theoption, hint):
-    print(('<div class="col-md-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 label" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_red(theoption, hint):
-    print(('<div class="col-md-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 label" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def return_red(theoption, hint):
@@ -87,11 +87,11 @@ def print_error_alert(themessage):
 
 
 def print_sys_tip(theoption, hint):
-    print(('<div class="col-md-6"><div class="alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_disabled():
-    print(('<div class="col-md-6 align-self-center"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title="An additional nginx module is required for this functionality">Not Installed</div></div>'))
+    print(('<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title="An additional nginx module is required for this functionality">Not Installed</div></div>'))
 
 
 def print_forbidden_wrapper():
@@ -240,6 +240,25 @@ def print_modals():
     print('            </div>')
     print('        </div>')
 
+    # Modal with no reload
+    print('		<div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog"> ')
+    print('    		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
+    print('      		<div class="modal-content">')
+    print('        			<div class="modal-header">')
+    print('          			<h4 class="modal-title">Command Output</h4>')
+    print('						<button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+    print('          				<span aria-hidden="true">&times;</span>')
+    print('        				</button>')
+    print('        			</div>')
+    print('        			<div class="modal-body">')
+    print('        			</div>')
+    print('					<div class="modal-footer">')
+    print('        				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+    print('      			</div>')
+    print('      		</div>')
+    print('    		</div>')
+    print('     </div>')
+
     # Modal Large Width
     print('		<div class="modal fade" id="myModal-xl" tabindex="-1" role="dialog">')
     print('    		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
@@ -261,6 +280,18 @@ def print_modals():
 
     # Toast
     print('     <div class="toast fade hide" id="myToast" role="alert" aria-live="assertive" aria-atomic="true">')
+    print('         <div class="toast-header">')
+    print('             <strong class="mr-auto">Command Output</strong>')
+    print('             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
+    print('                 <span aria-hidden="true">&times;</span>')
+    print('             </button>')
+    print('         </div>')
+    print('         <div class="toast-body">')
+    print('         </div>')
+    print('     </div>')
+
+    # Toast with long autohide
+    print('     <div class="toast fade hide" id="myToastnohide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">')
     print('         <div class="toast-header">')
     print('             <strong class="mr-auto">Command Output</strong>')
     print('             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')

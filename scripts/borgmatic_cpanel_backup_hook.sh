@@ -20,6 +20,19 @@ done
 
 # system_files
 
+rm -rf ${BACKUPDIR}/SYSTEM_FILES
+if [ ! -f ${BACKUPDIR}/SYSTEM_FILES ]
+then
+  mkdir -p ${BACKUPDIR}/SYSTEM_FILES
+fi
+for file in $(cat /opt/nDeploy/conf/cpanel_systembackup.include)
+do
+  if [ -e ${file} ]
+  then
+    rsync -a ${file} ${BACKUPDIR}/SYSTEM_FILES/
+  fi
+done
+
 
 # mysql_backup
 

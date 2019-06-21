@@ -54,7 +54,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
     profileyaml = installation_path + "/domain-data/" + mydomain
 
     print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> '+mydomain+' Upstream settings</h5>')
+    print('					<h5 class="card-title mb-0"><i class="fas fa-cogs float-right"></i> '+mydomain+' Upstream settings</h5>')
     print('				</div>')
     print('				<div class="card-body">')  # card-body
 
@@ -92,7 +92,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
             sys.exit(0)
 
         # Ok we are done with getting the settings,now lets present it to the user
-        print('				<form class="form" method="post" id="modalForm2" onsubmit="return false;">')
+        print('				<form class="form" method="post" id="toastForm2" onsubmit="return false;">')
         if backend_category == 'PROXY':
             print(('			<div class="alert alert-info">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with template  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
         else:
@@ -107,7 +107,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         if mybackend == backend_category:
             print('				<div class="input-group">')
             print('					<div class="input-group-prepend input-group-prepend-min">')
-            print('						<label class="input-group-text">Backend</label>')
+            print('						<label class="input-group-text">Upstream</label>')
             print('					</div>')
             print('					<select name="backendversion" class="custom-select">')
             for mybackend_version in backends_dict.keys():
@@ -139,7 +139,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         else:
             print('				<div class="input-group">')
             print('					<div class="input-group-prepend input-group-prepend-min">')
-            print('						<label class="input-group-text">Backend</label>')
+            print('						<label class="input-group-text">Upstream</label>')
             print('					</div>')
             print('					<select name="backendversion" class="custom-select">')
             for mybackend_version in backends_dict.keys():
