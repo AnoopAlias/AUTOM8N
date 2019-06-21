@@ -66,11 +66,11 @@ def print_branding():
 
 
 def print_green(theoption, hint):
-    print(('<div class="col-md-6"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 label" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_red(theoption, hint):
-    print(('<div class="col-md-6"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 label" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_forbidden():
@@ -90,7 +90,7 @@ def print_error_alert(themessage):
 
 
 def print_sys_tip(theoption, hint):
-    print(('<div class="col-md-6"><div class="alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'))
+    print(('<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_disabled():
