@@ -92,7 +92,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
             sys.exit(0)
 
         # Ok we are done with getting the settings,now lets present it to the user
-        print('				<form class="form" method="post" id="modalForm2" onsubmit="return false;">')
+        print('				<form class="form" method="post" id="toastForm2" onsubmit="return false;">')
         if backend_category == 'PROXY':
             print(('			<div class="alert alert-info">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with template  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
         else:

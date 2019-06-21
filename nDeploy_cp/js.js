@@ -29,12 +29,12 @@ jQuery(document).ready(function($){
         }});
     });
 
-    $('#modalForm2').submit(function() {
-        var $f = $('#modalForm2');
+    $('#toastForm2').submit(function() {
+        var $f = $('#toastForm2');
         var $url = "save_app_settings.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModalback").find('.modal-body').html(result)
-            $("#myModalback").modal('show');
+            $("#myToastback").find('.toast-body').html(result)
+            $("#myToastback").toast('show');
         }});
     });
 
@@ -106,8 +106,8 @@ jQuery(document).ready(function($){
         var $f = $('#modalForm10');
         var $url = "dependency_installer.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal-nl").find('.modal-body').html(result)
-            $("#myModal-nl").modal('show');
+            $("#myModal").find('.modal-body').html(result)
+            $("#myModal").modal('show');
         }});
     });
 
