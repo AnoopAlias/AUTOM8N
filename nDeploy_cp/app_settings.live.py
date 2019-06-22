@@ -284,7 +284,7 @@ if form.getvalue('domain'):
         print('			</div>')  # card-body end
 
         print('			<div class="card-footer">')
-        print('				<small>To change the application server select a new category above and hit select</small>')
+        print('				<small>To change the application server select a new category above</small>')
         print('			</div>')
         print('		</div>')  # card end
 
@@ -677,7 +677,7 @@ if form.getvalue('domain'):
             print(('<input class="hidden" name="pagespeed" value="'+pagespeed+'">'))
 
         # pagespeed filter level
-        pagespeed_filter_hint = "CoreFilters load the Core filters, PassThrough allows you to enable individual filters via custom nginx conf"
+        pagespeed_filter_hint = "CoreFilters loads the Core filters. PassThrough allows you to enable individual filters via custom nginx conf"
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
             if pagespeed_filter == 'CoreFilters':
                 commoninclude.print_red("pagespeed filters", pagespeed_filter_hint)
@@ -899,16 +899,16 @@ if form.getvalue('domain'):
         print('								<select name="wwwredirect" class="custom-select">')
         if wwwredirect == 'none':
             print(('							<option selected value="none">no redirection</option>'))
-            print(('							<option value="tononwww">redirect www. to non-www</option>'))
-            print(('							<option value="towww">redirect non-www to www.</option>'))
+            print(('							<option value="tononwww">www to non-www</option>'))
+            print(('							<option value="towww">non-www to www</option>'))
         elif wwwredirect == 'towww':
             print(('							<option value="none">no redirection</option>'))
-            print(('							<option value="tononwww">redirect www. to non-www</option>'))
-            print(('							<option selected value="towww">redirect non-www to www.</option>'))
+            print(('							<option value="tononwww">www to non-www</option>'))
+            print(('							<option selected value="towww">non-www to www</option>'))
         elif wwwredirect == 'tononwww':
             print(('							<option value="none">no redirection</option>'))
-            print(('							<option selected value="tononwww">redirect www. to non-www</option>'))
-            print(('							<option value="towww">redirect non-www to www.</option>'))
+            print(('							<option selected value="tononwww">www to non-www</option>'))
+            print(('							<option value="towww">non-www to www</option>'))
         print('								</select>')
         print('							</div>')
         print('						</div>')
@@ -916,32 +916,32 @@ if form.getvalue('domain'):
         # URL Redirect
         url_redirect_hint = "select redirection status 301 or 307"
         if redirectstatus == 'none':
-            commoninclude.print_red("URL Redirect", url_redirect_hint)
+            commoninclude.print_red("URL redirect", url_redirect_hint)
         else:
-            commoninclude.print_green("URL Redirect", url_redirect_hint)
+            commoninclude.print_green("URL redirect", url_redirect_hint)
         print('						<div class="col-md-6">')
         print('							<div class="input-group btn-group">')
         print('								<select name="redirectstatus" class="custom-select">')
         if redirectstatus == 'none':
             print(('							<option selected value="none">no redirection</option>'))
-            print(('							<option value="301">Permanent Redirect</option>'))
-            print(('							<option value="307">Temporary Redirect</option>'))
+            print(('							<option value="301">permanent (301)</option>'))
+            print(('							<option value="307">temporary (307)</option>'))
         elif redirectstatus == '301':
             print(('							<option value="none">no redirection</option>'))
-            print(('							<option value="307">Temporary Redirect</option>'))
-            print(('							<option selected value="301">Permanent Redirect</option>'))
+            print(('							<option value="307">temporary (307)</option>'))
+            print(('							<option selected value="301">permanent (301)</option>'))
         elif redirectstatus == '307':
             print(('							<option value="none">no redirection</option>'))
-            print(('							<option selected value="307">Temporary Redirect</option>'))
-            print(('							<option value="301">Permanent Redirect</option>'))
+            print(('							<option selected value="307">temporary (307)</option>'))
+            print(('							<option value="301">permanent (301)</option>'))
         print('								</select>')
         print('							</div>')
         print('						</div>')
 
         # Append request_uri to redirect
-        append_requesturi_hint = 'append $request_uri to the redirect URL'
+        append_requesturi_hint = 'maintain original request $request_uri (with arguments)'
         if append_requesturi == 'enabled' and redirectstatus != 'none':
-            commoninclude.print_green("append $request_uri to redirecturl", append_requesturi_hint)
+            commoninclude.print_green("append redirecturl", append_requesturi_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
@@ -953,7 +953,7 @@ if form.getvalue('domain'):
             print('						</div>')
             print('					</div>')
         else:
-            commoninclude.print_red("append $request_uri to redirecturl", append_requesturi_hint)
+            commoninclude.print_red("append redirecturl", append_requesturi_hint)
             print('					<div class="col-md-6">')
             print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
@@ -1043,7 +1043,7 @@ if form.getvalue('domain'):
         print('					</form>')
         print('				</div>')  # card-body end
         print('				<div class="card-footer">')
-        print('					<small>The path entered below must follow the format <br> <kbd>/blog</kbd> <kbd>/us/forum</kbd> etc.</small>')
+        print('					<small>The path entered above must follow this format <kbd>/blog</kbd> <kbd>/us/forum</kbd></small>')
         print('				</div>')
         print('			</div>')  # card end
     else:
