@@ -330,13 +330,13 @@ if os.path.isdir('/etc/borgmatic'):
 
     print('				</div>')  # card-body end
     print('				<div class="card-footer">')
-    print('					<small>Keep encryption_passphrase copied safely. Losing it would make data recovery impossible on a server crash</small>')
+    print('					<small>Keep your encryption_passphrase in a safe place. Losing it would make data recovery impossible on a server crash.</small>')
     print('				</div>')
     print('			</div>')  # card end
 
     print('			<div class="card">')  # card
     print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i> Additional Home directory to backup</h5>')
+    print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i> Additional home directory to backup.</h5>')
     print('				</div>')
     print('			<div class="card-body">')  # card-body
 

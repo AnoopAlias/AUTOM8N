@@ -76,7 +76,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         subdir_apps_dict[thesubdir] = the_subdir_dict
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        commoninclude.print_success('Sub-directory App Settings Updated')
+        commoninclude.print_success('Sub-directory app settings saved')
     else:
         commoninclude.print_error('domain-data file i/o error')
 else:

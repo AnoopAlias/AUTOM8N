@@ -125,9 +125,9 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
         with codecs.open('/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh', 'w', 'utf-8') as borgmatic_hook_myscript:
             borgmatic_hook_myscript.write(borgmatic_hook_script)
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
-        commoninclude.print_success('Backup Settings Updated')
+        commoninclude.print_success('Backup settings saved')
     else:
-        commoninclude.print_error('Backup Config Error')
+        commoninclude.print_error('Backup config error')
 else:
     commoninclude.print_forbidden()
 

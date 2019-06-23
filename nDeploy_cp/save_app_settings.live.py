@@ -75,7 +75,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
             print('<div class="alert alert-danger">Turned off gzip, brotli and set_expire_static options as they are incompatible with the template generated nginx.conf. The config will not work if you turn on these options</div>')
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        commoninclude.print_success('Application Settings Saved')
+        commoninclude.print_success('Upstream settings saved')
     else:
         commoninclude.print_error('domain-data file i/o error')
 else:

@@ -48,7 +48,7 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
                     p = subprocess.Popen("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
                 else:
                     p = subprocess.Popen('service ndeploy_backends restart', shell=True)
-                commoninclude.print_success('PHP-FPM pool settings updated')
+                commoninclude.print_success('PHP-FPM pool settings saved')
         else:
             commoninclude.print_forbidden()
     elif form.getvalue('action') == 'delete':
@@ -64,7 +64,7 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
                 q = subprocess.Popen("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
             else:
                 q = subprocess.Popen('service ndeploy_backends restart', shell=True)
-            commoninclude.print_success('PHP-FPM pool settings updated')
+            commoninclude.print_success('PHP-FPM pool settings saved')
 else:
     commoninclude.print_forbidden()
 

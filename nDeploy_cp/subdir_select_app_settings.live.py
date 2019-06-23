@@ -260,7 +260,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print(('				<input class="hidden" name="domain" value="'+mydomain+'">'))
             print(('				<input class="hidden" name="backend" value="'+mybackend+'">'))
             print(('				<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-            print('					<button class="btn btn-outline-primary btn-block " type="submit">Update settings</button>')
+            print('					<button class="btn btn-outline-primary btn-block " type="submit">Update Settings</button>')
             print('				</form>')
             print('			</div>')  # card-body end
             print('		</div>')  # card end
