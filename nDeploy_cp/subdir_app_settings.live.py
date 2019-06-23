@@ -284,7 +284,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			</form>')
                 print('		</div>')  # card-body end
                 print('		<div class="card-footer">')
-                print('			<small>To change the application server select a new category below and hit select</small>')
+                print('			<small>To change the application server select a new category above</small>')
                 print('		</div>')
 
                 print('</div>')  # card end
@@ -415,9 +415,9 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('					</div>')
 
                 # Append request_uri to redirect
-                append_requesturi_hint = 'append $request_uri to the redirect URL'
+                append_requesturi_hint = 'maintain original request $request_uri (with arguments)'
                 if append_requesturi == 'enabled' and redirectstatus != 'none':
-                    commoninclude.print_green("append $request_uri to redirecturl", append_requesturi_hint)
+                    commoninclude.print_green("append redirecturl", append_requesturi_hint)
                     print('				<div class="col-md-6">')
                     print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('						<label class="btn btn-light active">')
@@ -429,7 +429,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('					</div>')
                     print('				</div>')
                 else:
-                    commoninclude.print_red("append $request_uri to redirecturl", append_requesturi_hint)
+                    commoninclude.print_red("append redirecturl", append_requesturi_hint)
                     print('				<div class="col-md-6">')
                     print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('						<label class="btn btn-light">')

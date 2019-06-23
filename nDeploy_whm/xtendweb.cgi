@@ -436,7 +436,7 @@ for thepkg in sorted(mypkgs.get('package')):
     print(('							<option value="'+pkgname+'">'+pkgname+'</option>'))
 print('								</select>')
 print('							</div>')
-print('							<input class="btn btn-outline-primary btn-block" type="submit" value="Edit Pkg">')
+print('							<button class="btn btn-outline-primary btn-block" type="submit">Edit Pkg</button>')
 print('						</form>')
 
 print('					</div>')  # card-body end
