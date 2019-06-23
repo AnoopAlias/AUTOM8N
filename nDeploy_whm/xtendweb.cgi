@@ -118,7 +118,7 @@ print('                                </div>')
 
 
 # Process Tracker
-print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-bug"></i>&nbsp;Detect&nbsp;Abnormal&nbsp;Process</div>')
+print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-bug"></i>&nbsp;Abnormal&nbsp;Detection</div>')
 print('                                <div class="col-md-6">')
 print('                                    <form class="form" id="modalForm3" onsubmit="return false;">')
 print('                                        <button type="submit" class="alert alert-info btn btn-info ">Check&nbsp;Process</button>')
