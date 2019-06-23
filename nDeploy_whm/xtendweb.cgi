@@ -66,10 +66,10 @@ for myprocess in psutil.process_iter():
 
 if nginx_status:
     print(('					<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('					<div class="col-md-6 alert alert-success">Active</div>'))
+    print(('					<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Active</div>'))
 else:
     print(('					<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('					<div class="col-md-6 alert alert-danger">Inactive</div>'))
+    print(('					<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Inactive</div>'))
 
 watcher_status = False
 for myprocess in psutil.process_iter():
@@ -84,10 +84,10 @@ for myprocess in psutil.process_iter():
 
 if watcher_status:
     print(('					<div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i> NDEPLOY_WATCHER</div>'))
-    print(('					<div class="col-md-6 alert alert-success">Active</div>'))
+    print(('					<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Active</div>'))
 else:
     print(('					<div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i> NDEPLOY_WATCHER</div>'))
-    print(('					<div class="col-md-6 alert alert-danger">Inactive</div>'))
+    print(('					<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Inactive</div>'))
 
 # Default PHP
 if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
@@ -143,7 +143,7 @@ print('						</div>')  # row end
 print('					</div>')  # card-body
 
 print('					<div class="card-footer">')
-print('						<small><strong>Do NOT</strong> restart Nginx, but reload <kbd>nginx -t && nginx -s reload</kbd></small>')
+print('						<small><strong>Do NOT</strong> restart Nginx, instead use reload <kbd>nginx -t && nginx -s reload</kbd></small>')
 print('					</div>')
 print('				</div>')  # card end
 
@@ -254,7 +254,7 @@ print('						</form>')
 
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
-print('						<small>If MultiPHP is enabled, the PHP version selected by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results</small>')
+print('						<small>If MultiPHP is enabled, the PHP version selected by MultiPHP is used by autoconfig. For best results, it is recommended to enable MultiPHP across all accounts.</small>')
 print('					</div>')
 print('				</div>')  # card end
 
@@ -330,8 +330,8 @@ else:
 print('						</div>')  # row end
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
-print('						<small>Turn these settings on when you are under a DDOS Attack</small><br>')
-print('						<small>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)</small>')
+print('						<small>Turn these settings on when you are under a DDOS Attack.</small><br>')
+print('						<small>Disable CSF or any other firewall before turning on SYNPROXY (FireHol).</small>')
 print('					</div>')
 print('				</div>')  # card end
 
@@ -375,7 +375,7 @@ print('						</form>')
 
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
-print('						<small>Settings such as: pm.max_requests, pm.max_spare_servers, session.save_path, pm.max_children</small>')
+print('						<small>Settings such as: pm.max_requests, pm.max_spare_servers, session.save_path, pm.max_children.</small>')
 print('					</div>')
 print('				</div>')  # card end
 
@@ -441,7 +441,7 @@ print('						</form>')
 
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
-print('						<small>sync nginx to pkg when enabled will reset all nginx config/settings on plan upgrade/downgrade</small>')
+print('						<small>Sync nginx to pkg when enabled will reset all nginx config/settings on plan upgrade/downgrade.</small>')
 print('					</div>')
 print('				</div>')  # card end
 
@@ -504,7 +504,7 @@ if not osrelease == 'CloudLinux':
 
 print('					</div>')  # card-body end
 print('					<div class="card-footer">')
-print('						<small>BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory</small>')
+print('						<small>BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory.</small>')
 print('					</div>')
 print('				</div>')  # card end
 

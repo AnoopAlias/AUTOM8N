@@ -186,7 +186,7 @@ if form.getvalue('cpanelpkg'):
     print('					</div>')  # card-body end
 
     print('					<div class="card-footer">')
-    print('						<small>To change the Upstream select a new category above and hit submit</small>')
+    print('						<small>To change the Upstream select a new category above.</small>')
     print('					</div>')
     print('				</form>')
     print('			</div>')  # card

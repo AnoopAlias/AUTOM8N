@@ -226,7 +226,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
     with open(pkgdomaindata, 'w') as yaml_file:
         yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-    commoninclude.print_success('cPanel Package Settings Saved')
+    commoninclude.print_success('cPanel package settings saved')
 else:
     commoninclude.print_forbidden()
 

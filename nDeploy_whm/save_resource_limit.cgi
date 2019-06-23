@@ -264,7 +264,7 @@ if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and 
                     subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl set-property '+myservice+' MemoryAccounting=yes"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
                     subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl daemon-reload"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
 
-    commoninclude.print_success('Resource Limits Updated')
+    commoninclude.print_success('Resource limits saved')
 else:
     commoninclude.print_forbidden()
 

@@ -284,7 +284,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			</form>')
                 print('		</div>')  # card-body end
                 print('		<div class="card-footer">')
-                print('			<small>To change the application server select a new category above</small>')
+                print('			<small>To change the application server select a new category above.</small>')
                 print('		</div>')
 
                 print('</div>')  # card end
@@ -492,7 +492,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('					</form>')
             print('				</div>')  # card-body end
             print('				<div class="card-footer">')
-            print('					<small>To change the application server choose a new category above and hit select</small>')
+            print('					<small>To change the Upstream select a new category above.</small>')
             print('				</div>')
             print('			</div>')  # card end
     else:
