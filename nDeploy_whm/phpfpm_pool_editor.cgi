@@ -108,7 +108,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
 
         print('			</div>')  # card-body end
         print('			<div class="card-footer footer-warning">')
-        print('				<small>WARNING: Editing pool config with invalid settings can bring down your PHP application server. Edit at your own risk</small>')
+        print('				<small><strong>WARNING USE AT YOUR OWN RISK</strong>: Adding or editing pool config with invalid settings can bring down your PHP application server.</small>')
         print('			</div>')
 else:
         commoninclude.print_forbidden()

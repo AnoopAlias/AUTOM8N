@@ -408,7 +408,7 @@ for thepkg in sorted(mypkgs.get('package')):
     print(('                                        <option value="'+pkgname+'">'+pkgname+'</option>'))
 print('                                    </select>')
 print('                                </div>')
-print('                                <input class="btn btn-outline-primary btn-block" type="submit" value="Edit Pkg">')
+print('                                <button class="btn btn-outline-primary btn-block" type="submit">Edit Pkg</button>')
 print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes a Upgrade/Downgrade process.')
