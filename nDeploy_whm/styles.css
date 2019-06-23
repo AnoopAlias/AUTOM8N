@@ -231,8 +231,8 @@ kbd {
   .card .align-items-center .label {
     text-align: right; }
   .card .align-items-center [class*='col-']:nth-last-child(2).label {
-    margin-top: .6rem; } }
+    margin-top: .4rem; } }
 
 @media (max-width: 767px) {
-  .card .align-items-center [class*='col-']:nth-child(2) {
-    margin-top: .6rem; } }
+  .card .align-items-center > [class*='col-']:first-child.label {
+    bottom: .4rem; } }

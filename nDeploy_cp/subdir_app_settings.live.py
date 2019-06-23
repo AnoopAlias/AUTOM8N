@@ -400,16 +400,16 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('							<select name="redirectstatus" class="custom-select">')
                 if redirectstatus == 'none':
                     print(('						<option selected value="none">no redirection</option>'))
-                    print(('						<option value="301">Permanent Redirect</option>'))
-                    print(('						<option value="307">Temporary Redirect</option>'))
+                    print(('						<option value="301">Permanent (301)</option>'))
+                    print(('						<option value="307">Temporary (307)</option>'))
                 elif redirectstatus == '301':
                     print(('						<option value="none">no redirection</option>'))
-                    print(('						<option value="307">Temporary Redirect</option>'))
-                    print(('						<option selected value="301">Permanent Redirect</option>'))
+                    print(('						<option value="307">Temporary (307)</option>'))
+                    print(('						<option selected value="301">Permanent (301)</option>'))
                 elif redirectstatus == '307':
                     print(('						<option value="none">no redirection</option>'))
-                    print(('						<option selected value="307">Temporary Redirect</option>'))
-                    print(('						<option value="301">Permanent Redirect</option>'))
+                    print(('						<option selected value="307">Temporary (307)</option>'))
+                    print(('						<option value="301">Permanent (301)</option>'))
                 print('							</select>')
                 print('						</div>')
                 print('					</div>')
@@ -453,7 +453,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     commoninclude.print_green("Redirect to URL", redirecturl_hint)
                 print('								</span>')
                 print('							</div>')
-                print(('						<input class="form-control" placeholder='+redirecturl+' type="text" name="redirecturl">'))
+                print(('						<input class="form-control" type="text" name="redirecturl" value='+redirecturl+'>'))
                 print('						</div>')
                 print('					</div>')
 

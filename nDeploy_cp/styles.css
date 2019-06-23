@@ -234,5 +234,5 @@ kbd {
     margin-top: .6rem; } }
 
 @media (max-width: 767px) {
-  .card .align-items-center [class*='col-']:nth-child(2) {
-    margin-top: .6rem; } }
+  .card .align-items-center > [class*='col-']:first-child.label {
+    bottom: .5rem; } }

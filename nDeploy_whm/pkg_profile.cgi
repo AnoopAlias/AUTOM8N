@@ -198,7 +198,7 @@ if form.getvalue('cpanelpkg'):
     print('				<div class="card-header">')
     print('					<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> General App Settings</h5>')
     print('				</div>')
-    print('				<div class="card-body text-right">')  # card-body
+    print('				<div class="card-body">')  # card-body
 
     print('						<div class="row align-items-center">')
 
@@ -360,7 +360,7 @@ if form.getvalue('cpanelpkg'):
     print('				<div class="card-header">')
     print('					<h5 class="card-title mb-0"><i class="fas fa-shield-alt float-right"></i> Security Settings</h5>')
     print('				</div>')
-    print('				<div class="card-body text-right">')  # card-body
+    print('				<div class="card-body">')  # card-body
 
     print('					<div class="row align-items-center">')
 
@@ -549,7 +549,7 @@ if form.getvalue('cpanelpkg'):
     print('					<div class="card-header">')
     print('						<h5 class="card-title mb-0"><i class="fas fa-dumbbell float-right"></i> Content Optimizations</h5>')
     print('					</div>')
-    print('					<div class="card-body text-right">')  # card-body
+    print('					<div class="card-body">')  # card-body
 
     # set_expire_static
     set_expire_static_hint = "Set Expires/Cache-Control headers for static content"
@@ -738,7 +738,7 @@ if form.getvalue('cpanelpkg'):
     print('					<div class="card-header">')
     print('						<h5 class="card-title mb-0"><i class="fas fa-directions float-right"></i> Redirections</h5>')
     print('					</div>')
-    print('					<div class="card-body text-right">')  # card-body
+    print('					<div class="card-body">')  # card-body
 
     # redirect_to_ssl
     redirect_to_ssl_hint = "redirect http:// to https:// "

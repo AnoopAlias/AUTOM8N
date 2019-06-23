@@ -127,7 +127,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # system_files
     system_files_hint = "Backup cPanel system files"
-    print('						<div class="row align-items-center text-right">')
+    print('						<div class="row align-items-center">')
     if system_files == 'enabled':
         commoninclude.print_green("system_files", system_files_hint)
         print('						<div class="col-md-6">')

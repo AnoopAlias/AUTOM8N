@@ -41,7 +41,7 @@ if form.getvalue('domain'):
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        commoninclude.print_success('Nginx Configuration Reloaded')
+        commoninclude.print_success('Nginx configuration successfully reloaded')
     else:
         commoninclude.print_error('domain-data file i/o error')
 else:
