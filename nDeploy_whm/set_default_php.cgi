@@ -46,7 +46,7 @@ if form.getvalue('phpversion'):
         userdata_dict = {'PHP': {form.getvalue('phpversion'): required_version_path}}
         with open(installation_path+"/conf/preferred_php.yaml", 'w') as yaml_file:
             yaml.dump(userdata_dict, yaml_file, default_flow_style=False)
-        commoninclude.print_success('Default PHP for Autoswitch Set')
+        commoninclude.print_success('Default PHP for Autoswitch set')
     else:
         commoninclude.print_forbidden()
 else:

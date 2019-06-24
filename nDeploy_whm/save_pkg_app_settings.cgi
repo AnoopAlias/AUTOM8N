@@ -70,7 +70,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend') and form.getvalue('ba
             print('<div class="alert alert-danger"><i class="fas fa-exclamation"></i> Turned off gzip, brotli and set_expire_static options as they are incompatible with Wordpress Total Cache generated nginx.conf. The config will not work if you turn on these options</div>')
         with open(pkgdomaindata, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        commoninclude.print_success('Upstream settings Saved')
+        commoninclude.print_success('Upstream settings saved')
 else:
     commoninclude.print_forbidden()
 

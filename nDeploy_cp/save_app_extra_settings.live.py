@@ -290,13 +290,9 @@ else:
     else:
         commoninclude.print_error('Error: Forbidden::append_requesturi')
         sys.exit(0)
-if form.getvalue('thesubdir'):
-    print(('Domain: '+mydomain+'/'+form.getvalue('thesubdir')))
-else:
-    print(('Domain: '+mydomain+''))
 with open(profileyaml, 'w') as yaml_file:
     yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-commoninclude.print_success('Server Settings Updated')
+commoninclude.print_success('Server settings saved')
 
 print('</body>')
 print('</html>')

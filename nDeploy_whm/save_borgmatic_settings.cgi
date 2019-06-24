@@ -149,7 +149,7 @@ with open(borgmatic_config_file, 'w') as borgmatic_conf:
     yaml.dump(yaml_parsed_borgmaticyaml, borgmatic_conf, default_flow_style=False)
 os.chmod(borgmatic_config_file, 0o640)
 
-commoninclude.print_success('Borgmatic Settings updated')
+commoninclude.print_success('Borgmatic settings saved')
 
 print('</body>')
 print('</html>')

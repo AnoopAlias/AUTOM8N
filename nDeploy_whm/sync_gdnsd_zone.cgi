@@ -38,7 +38,7 @@ print('<body>')
 
 if form.getvalue('user'):
     subprocess.call(installation_path+'/scripts/cluster_gdnsd_ensure_user.py '+form.getvalue('user'), shell=True)
-    commoninclude.print_success('DNS Zone Synced')
+    commoninclude.print_success('DNS zone synced')
 else:
     commoninclude.print_forbidden()
 

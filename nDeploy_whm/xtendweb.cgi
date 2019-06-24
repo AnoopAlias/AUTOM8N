@@ -54,10 +54,10 @@ for myprocess in psutil.process_iter():
 
 if nginx_status:
     print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('                                <div class="col-md-6 alert alert-success">Active</div>'))
+    print(('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Active</div>'))
 else:
     print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('                                <div class="col-md-6 alert alert-danger">Inactive</div>'))
+    print(('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Inactive</div>'))
 
 watcher_status = False
 for myprocess in psutil.process_iter():
@@ -73,10 +73,10 @@ for myprocess in psutil.process_iter():
 
 if watcher_status:
     print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i> NDEPLOY_WATCHER</div>'))
-    print(('                                <div class="col-md-6 alert alert-success">Active</div>'))
+    print(('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Active</div>'))
 else:
     print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i> NDEPLOY_WATCHER</div>'))
-    print(('                                <div class="col-md-6 alert alert-danger">Inactive</div>'))
+    print(('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Inactive</div>'))
 
 
 # Default PHP
