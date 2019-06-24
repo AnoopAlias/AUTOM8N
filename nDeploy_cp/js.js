@@ -93,12 +93,12 @@ jQuery(document).ready(function($){
         }});
     });
 
-    $('#modalForm9').submit(function() {
-        var $f = $('#modalForm9');
+    $('#toastForm9').submit(function() {
+        var $f = $('#toastForm9');
         var $url = "autoswitch.live.py?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
-            $("#myModal-nl").find('.modal-body').html(result)
-            $("#myModal-nl").modal('show');
+            $("#myToast-nl").find('.toast-body').html(result)
+            $("#myToast-nl").toast('show');
         }});
     });
 
