@@ -42,7 +42,9 @@ def branding_print_support():
 
 
 def print_branding():
-    print('        <header id="main-header">')
+    heading_background_color = "#121212"
+    heading_foreground_color = "ghostwhite"
+    print('        <header id="main-header" style="color:'+heading_foreground_color+';background-color:'+heading_background_color+'">')
     print('            '+branding_print_support())
     print('            <div class="logo">')
     print('                <h4>')
@@ -122,6 +124,7 @@ def print_loader():
 
 
 def print_header(title=''):
+    body_background_color = "#101010"
     print(('Content-Type: text/html'))
     print((''))
     print(('<html>'))
@@ -138,7 +141,7 @@ def print_header(title=''):
     print('    </head>')
     print('')
     print('    <!-- Body Start -->')
-    print('    <body>')
+    print('    <body style="background-color:'+body_background_color+'">')
     print_branding()
     print('')
     print('        <!-- Main Container Start -->')
@@ -169,16 +172,16 @@ def cardfooter(text='Unmodified Footer Text'):
 
 
 #Breadcrumbs
-def bcrumb(pagename):
+def bcrumb(pagename="Unnamed Page",active_page_color="ghostwhite",active_fa_icon="fas fa-database",):
     print('')
     print('            <!-- Navigation -->')
     print('            <nav aria-label="breadcrumb">')
     print('                <ol class="breadcrumb justify-content-md-center">')
     if pagename != 'Home':
-        print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
-        print('                    <li class="breadcrumb-item active" aria-current="page">'+pagename+'</li>')
+        print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i>&nbsp;Home</a></li>')
+        print('                    <li style="color:'+active_page_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>')
     else:
-        print('                    <li class="breadcrumb-item active" aria-current="page"><a href="xtendweb.cgi"><i class="fas fa-redo"></i> Home</a></li>')
+        print('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+active_page_color+' !important;" href="xtendweb.cgi"><i class="fas fa-redo"></i>&nbsp;Home</a></li>')
     print('                </ol>')
     print('            </nav>')
     print('')
