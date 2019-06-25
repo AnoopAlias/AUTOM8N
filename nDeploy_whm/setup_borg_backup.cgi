@@ -28,7 +28,7 @@ cgitb.enable()
 form = cgi.FieldStorage()
 
 print_header('nDeploy HA Control - Borg Backup Configuration')
-bcrumb('Borg Backup Configuration')
+bcrumb('Borg Backup Configuration','ghostwhite','fas fa-database')
 
 print('            <!-- WHM Starter Row -->')
 print('            <div class="row justify-content-md-center">')

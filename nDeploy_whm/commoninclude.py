@@ -7,52 +7,17 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
+heading_background_color = "#121212"
+heading_foreground_color = "ghostwhite"
+body_background_color = "#101010"
 
-def branding_print_logo_name():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
-    else:
-        brand_logo = "xtendweb.png"
-    return brand_logo
-
-
-def branding_print_banner():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
-    else:
-        brand_name = "AUTOM8N"
-    return brand_name
-
-
-def branding_print_support():
-    "Branding support"
-    if os.path.isfile(installation_path+"/conf/branding.yaml"):
-        with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
-            yaml_parsed_brand = yaml.safe_load(brand_data_file)
-        brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
-    else:
-        brand_support = '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>'
-    return brand_support
-
-
-def print_branding():
-    heading_background_color = "#121212"
-    heading_foreground_color = "ghostwhite"
-    print('        <header id="main-header" style="color:'+heading_foreground_color+';background-color:'+heading_background_color+'">')
-    print('            '+branding_print_support())
-    print('            <div class="logo">')
-    print('                <h4>')
-    print('                    <a href="xtendweb.cgi"><img border="0" src="'+branding_print_logo_name()+'" width="48" height="48"></a>'+branding_print_banner())
-    print('                </h4>')
-    print('            </div>')
-    print('        </header>')
-
+if os.path.isfile(installation_path+"/conf/branding.yaml"):
+    with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+        yaml_parsed_brand = yaml.safe_load(brand_data_file)
+    brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
+    brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
+    brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
+    brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
 
 def return_green(theoption, hint):
     result = '<div class="col-md-6 d-flex align-items-center justify-content-end"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'
@@ -124,7 +89,6 @@ def print_loader():
 
 
 def print_header(title=''):
-    body_background_color = "#101010"
     print(('Content-Type: text/html'))
     print((''))
     print(('<html>'))
@@ -142,7 +106,14 @@ def print_header(title=''):
     print('')
     print('    <!-- Body Start -->')
     print('    <body style="background-color:'+body_background_color+'">')
-    print_branding()
+    print('        <header id="main-header" style="color:'+heading_foreground_color+';background-color:'+heading_background_color+'">')
+    print('            '+brand_support)
+    print('            <div class="logo">')
+    print('                <h4>')
+    print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="48" height="48"></a>'+brand_name)
+    print('                </h4>')
+    print('            </div>')
+    print('        </header>')
     print('')
     print('        <!-- Main Container Start -->')
     print('        <div id="main-container" class="container">') #Main Container
@@ -163,7 +134,7 @@ def cardfooter(text='Unmodified Footer Text'):
     print('')
     print('                        <!-- Card Footer Start -->')
     print('                        <div class="card-footer">')
-    print('                            <small>'+text+'</small>')
+    print('                            <small><center>'+text+'</center></small>')
     print('                        </div>')
     print('')
     print('                    <!-- Bootstrap Card End -->')
@@ -172,16 +143,16 @@ def cardfooter(text='Unmodified Footer Text'):
 
 
 #Breadcrumbs
-def bcrumb(pagename="Unnamed Page",active_page_color="ghostwhite",active_fa_icon="fas fa-database",):
+def bcrumb(pagename="Unnamed Page",active_page_color="ghostwhite",active_fa_icon="fas fa-infinity",):
     print('')
     print('            <!-- Navigation -->')
     print('            <nav aria-label="breadcrumb">')
     print('                <ol class="breadcrumb justify-content-md-center">')
     if pagename != 'Home':
-        print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i>&nbsp;Home</a></li>')
+        print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
         print('                    <li style="color:'+active_page_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>')
     else:
-        print('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+active_page_color+' !important;" href="xtendweb.cgi"><i class="fas fa-redo"></i>&nbsp;Home</a></li>')
+        print('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+active_page_color+' !important;" href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
     print('                </ol>')
     print('            </nav>')
     print('')
