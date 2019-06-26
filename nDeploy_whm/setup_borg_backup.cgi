@@ -52,7 +52,7 @@ if os.path.isdir('/etc/borgmatic'):
         pkgacct_backup = yaml_parsed_backupyaml.get('pkgacct_backup', 'enabled')
         system_files = yaml_parsed_backupyaml.get('system_files', 'enabled')
         mysql_backup = yaml_parsed_backupyaml.get('mysql_backup', 'enabled')
-        backup_path = yaml_parsed_backupyaml.get('backup_path')
+        backup_path = yaml_parsed_backupyaml.get('backup_path','/backup')
     else:
         pkgacct_backup = "enabled"
         system_files = "enabled"
@@ -138,26 +138,25 @@ if os.path.isdir('/etc/borgmatic'):
 
     
     # backup_path
-    backup_path_hint = "The directory where the cPanel pkgacct, MySQL backup and system files are stored"
+    backup_path_hint = "This is the directory where the cPanel PKG Accounts, SQL backups, and system files are stored."
     print('                                        <div class="col-md-12">')
     print('                                            <div class="input-group mt-2 mb-2">')
     print('                                                <div class="input-group-prepend">')
     print('                                                    <span class="input-group-text">')
-    print('                                                        '+commoninclude.return_multi_input("pkgacct backup path", backup_path_hint))
+    print('                                                        '+commoninclude.return_multi_input("PKGacct Backup Path", backup_path_hint))
     print('                                                    </span>')
     print('                                                </div>')
     print('                                                <input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
     print('                                            </div>')
     print('                                        </div>')
-#Stopped HERE ----------------
-
-
-    print('							<div class="col-md-12">')
-    print('								<button class="btn btn-outline-primary btn-block mt-2" type="submit">Save Backup Settings</button>')
-    print('							</div>')
-    print('						</div>')
-
-    print('					</form>')
+    print('                                        <div class="col-md-12">')
+    print('                                            <button class="btn btn-outline-primary btn-block mt-2" type="submit">Save Backup Settings</button>')
+    print('                                        </div>')
+    print('                                    </div>')
+    print('                                </form>')
+    print('                            </div> <!-- Row End -->') #Row Start
+    print('                        </div> <!-- Card Body End -->') #Card Body End
+    cardfooter('some shit')
 
     # Check if borgmatic config file is present or initilize otherwise
     if not os.path.isfile(borgmatic_config_file):
@@ -178,49 +177,43 @@ if os.path.isdir('/etc/borgmatic'):
         with open(borgmatic_config_file, 'r') as borgmatic_config_file_stream:
             yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_config_file_stream)
 
-    print('				</div>')  # card-body end
-    print('			</div>')  # card end
 
     #First Column End
     print('                <!-- First Column End -->')
     print('                </div>')
     print('')
 
-
+    
     #Second Column
     print('                <!-- Second Column Start -->')
     print('                <div class="col-lg-6">') #Right Column
     print('')
 
-    print('			<div class="card">')  # card
-    print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i> Borg Settings</h5>')
-    print('				</div>')
-    print('				<div class="card-body">')  # card-body
-
-    print('					<form class="form input-group-prepend-min" method="post" id="toastForm12" onsubmit="return false;"> ')
+    cardheader('Borg Settings','fas fa-database')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <form class="form input-group-prepend-min" method="post" id="toastForm12" onsubmit="return false;"> ')
 
     # repositories
     repositories_hint = "eg: user@backupserver:sourcehostname.borg"
-    print('						<div class="input-group">')
-    print('							<div class="input-group-prepend">')
-    print('								<span class="input-group-text">')
+    print('                                <div class="input-group">')
+    print('                                    <div class="input-group-prepend">')
+    print('                                        <span class="input-group-text">')
     commoninclude.print_multi_input("repositories", repositories_hint)
-    print('								</span>')
-    print('							</div>')
-    print('							<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
-    print('						</div>')
+    print('                                        </span>')
+    print('                                    </div>')
+    print('                                    <input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
+    print('                                </div>')
 
     # ssh_command
     ssh_command_hint = "options for ssh"
-    print('						<div class="input-group">')
-    print('							<div class="input-group-prepend">')
-    print('								<span class="input-group-text">')
+    print('                                <div class="input-group">')
+    print('                                    <div class="input-group-prepend">')
+    print('                                        <span class="input-group-text">')
     commoninclude.print_multi_input("ssh_command", ssh_command_hint)
-    print('								</span>')
-    print('							</div>')
-    print('								<input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
-    print('						</div>')
+    print('                                        </span>')
+    print('                                    </div>')
+    print('                                    <input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
+    print('                                </div>')
 
     # encryption_passphrase
     encryption_passphrase_hint = "passphrase used to encrypt the backup"

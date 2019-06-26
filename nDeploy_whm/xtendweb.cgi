@@ -204,7 +204,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardfooter('Choose a user to sync Zones for.')
 else:
     cardheader('GDNSD Zone Sync Disabled','fas fa-sync')
-    cardfooter('GDNSD Zone Sync Disabled. We are running with cPanel DNS.')
+    cardfooter('GDNSD Zone Sync Disabled.<br>We are running with cPanel DNS.')
 
 # Set Default PHP for AutoConfig
 cardheader('Default PHP for Auto Configuration','fab fa-php')
