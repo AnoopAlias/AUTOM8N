@@ -29,10 +29,18 @@ body {
     margin-right: 5px; }
 
 .card {
+  .card-columns {
+    @include media-breakpoint-only(lg) {
+      column-count: 2; }
+  @include media-breakpoint-only(xl) {
+    column-count: 2;}
+  }
+
+  
   margin-bottom: 2rem; }
-  .card .card-header,
+  /*.card .card-header,
   .card .card-footer {
-    color: #777777; }
+    color: #777777; }*/
   .card .card-body .no-gutters .alert {
     padding: .8rem .8rem .8rem 1.25rem;
     text-align: center;

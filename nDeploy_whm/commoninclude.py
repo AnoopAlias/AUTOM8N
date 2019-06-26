@@ -7,16 +7,35 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
-heading_background_color = "#121212"
-heading_foreground_color = "ghostwhite"
-body_background_color = "#101010"
 
+#Theming Support
+if os.path.isfile(installation_path+"/conf/theming.yaml"):
+    with open(installation_path+"/conf/theming.yaml", 'r') as theme_data_file:
+        yaml_parsed_theme = yaml.safe_load(theme_data_file)
+    heading_background_color = yaml_parsed_theme.get("heading_background_color","#FFFFFF")
+    heading_foreground_color = yaml_parsed_theme.get("heading_foreground_color","#3D4366")
+    body_background_color = yaml_parsed_theme.get("body_background_color","#F1F1F8")
+    card_color = yaml_parsed_theme.get("card_color","light")
+    text_color = yaml_parsed_theme.get("text_color","dark")
+    breadcrumb_active_color = yaml_parsed_theme.get("breadcrumb_active_color","#121212")
+    heading_height = yaml_parsed_theme.get("heading_height","50")
+    header_button_color = yaml_parsed_theme.get("header_button_color","primary")
+    icon_height = yaml_parsed_theme.get("icon_height","48")
+    icon_width = yaml_parsed_theme.get("icon_width","48")
+    logo_not_icon = yaml_parsed_theme.get("logo_not_icon","disabled")
+    logo_height = yaml_parsed_theme.get("logo_height","29")
+    logo_width = yaml_parsed_theme.get("logo_width","242")
+    logo_url = yaml_parsed_theme.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
+
+    app_title = yaml_parsed_theme.get("app_title","AUTOM8N")
+    theme_data_file.close()
+
+#Branding Support
 if os.path.isfile(installation_path+"/conf/branding.yaml"):
     with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
         yaml_parsed_brand = yaml.safe_load(brand_data_file)
     brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
     brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
-    brand_support = yaml_parsed_brand.get("brand_support", '<div class="help float-right"><a class="btn btn-primary" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
 
 def return_green(theoption, hint):
@@ -93,7 +112,7 @@ def print_header(title=''):
     print((''))
     print(('<html>'))
     print(('    <head>'))
-    print(('        <title>'+title+'</title>'))
+    print(('        <title>'+app_title+' - '+title+'</title>'))
     print(('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
     print(('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
     print(('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
@@ -106,12 +125,19 @@ def print_header(title=''):
     print('')
     print('    <!-- Body Start -->')
     print('    <body style="background-color:'+body_background_color+'">')
-    print('        <header id="main-header" style="color:'+heading_foreground_color+';background-color:'+heading_background_color+'">')
-    print('            '+brand_support)
+    print('        <header id="main-header" class="d-flex justify-content-between align-items-center" style="height:'+heading_height+';color:'+heading_foreground_color+';background-color:'+heading_background_color+'">')
     print('            <div class="logo">')
     print('                <h4>')
-    print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="48" height="48"></a>'+brand_name)
+    if logo_not_icon == 'enabled':
+        print('                    <a href="xtendweb.cgi"><img border="0" src="'+logo_url+'" width="'+logo_width+'" height="'+logo_height+'"></a>')
+    else:
+        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="'+icon_width+'" height="'+icon_height+'"></a>'+brand_name)
     print('                </h4>')
+    print('            </div>')
+    print('            <div class="d-flex header-buttons">')
+    print('                <div class="buttons p-1"><a class="btn btn-'+header_button_color+'" href="branding.cgi"> branding <i class="fas fa-code-branch"></i></a></div>')
+    print('                <div class="buttons p-1"><a class="btn btn-'+header_button_color+'" href="bootstrap_layout.cgi"> bootstrap layout <i class="fas fa-swatchbook"></i></a></div>')
+    print('                <div class="buttons p-1"><a class="btn btn-'+header_button_color+'" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     print('            </div>')
     print('        </header>')
     print('')
@@ -122,7 +148,7 @@ def print_header(title=''):
 #CardStart
 def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
     print('                    <!-- Bootstrap Card Start for '+header+' -->')
-    print('                    <div class="card">')
+    print('                    <div class="card mb-4 text-'+text_color+' bg-'+card_color+'">')
     print('                        <div class="card-header">')
     print('                            <h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>')
     print('                        </div>')
@@ -143,16 +169,16 @@ def cardfooter(text='Unmodified Footer Text'):
 
 
 #Breadcrumbs
-def bcrumb(pagename="Unnamed Page",active_page_color="ghostwhite",active_fa_icon="fas fa-infinity",):
+def bcrumb(pagename="Unnamed Page",active_fa_icon="fas fa-infinity"):
     print('')
     print('            <!-- Navigation -->')
     print('            <nav aria-label="breadcrumb">')
     print('                <ol class="breadcrumb justify-content-md-center">')
     if pagename != 'Home':
         print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
-        print('                    <li style="color:'+active_page_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>')
+        print('                    <li style="color:'+breadcrumb_active_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>')
     else:
-        print('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+active_page_color+' !important;" href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
+        print('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+breadcrumb_active_color+' !important;" href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
     print('                </ol>')
     print('            </nav>')
     print('')

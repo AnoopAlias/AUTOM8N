@@ -26,7 +26,7 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
 cgitb.enable()
-print_header('nDeploy HA Control - Home')
+print_header('Home')
 bcrumb('Home')
 
 print('            <!-- WHM Starter Row -->')

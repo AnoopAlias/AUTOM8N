@@ -27,11 +27,11 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print_header('nDeploy HA Control - Borg Backup Configuration')
-bcrumb('Borg Backup Configuration','ghostwhite','fas fa-database')
+print_header('Borg Backup Configuration')
+bcrumb('Borg Backup Configuration','fas fa-database')
 
 print('            <!-- WHM Starter Row -->')
-print('            <div class="row justify-content-md-center">')
+print('            <div class="row justify-content-lg-center">')
 print('                <!-- First Column Start -->')
 print('                <div class="col-lg-6">') #Column
 print('')
