@@ -208,7 +208,7 @@ if os.path.isdir('/etc/borgmatic'):
                 print('                                        <form class="form toastForm13-wrap" method="post" id="toastForm13'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('                                            <input hidden name="thehomedir" value="'+path+'">')
                 print('                                            <input hidden name="action" value="delete">')
-                print('                                            <button class="btn btn-outline-danger" type="submit">')
+                print('                                            <button class="btn btn-danger" type="submit">')
                 print('                                                <span class="sr-only">Delete</span>')
                 print('                                                <i class="fas fa-times"></i>')
                 print('                                            </button>')
