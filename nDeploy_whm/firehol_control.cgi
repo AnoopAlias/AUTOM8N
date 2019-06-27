@@ -28,7 +28,7 @@ print('<head>')
 print('</head>')
 print('<body>')
 
-if True:#form.getvalue('ddos'):
+if form.getvalue('ddos'):
     try:
         with open(os.devnull, 'w') as FNULL:
             subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
