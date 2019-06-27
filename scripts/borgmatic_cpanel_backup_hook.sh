@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BACKUPDIR="/hello"
+BACKUPDIR="/backup"
 
 if [ ! -f ${BACKUPDIR} ]
 then

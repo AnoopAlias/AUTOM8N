@@ -225,7 +225,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                        <span class="input-group-text">Enter Path</span>')
     print('                                    </div>')
     print('                                    <input class="form-control" placeholder="/home2" type="text" name="thehomedir">')
-    print(('                                    <input class="hidden" name="action" value="add">'))
+    print(('                                    <input hidden name="action" value="add">'))
     print('                                    <div class="input-group-append">')
     print('                                        <button class="btn btn-outline-primary" type="submit">')
     print('                                            <span class="sr-only">Add</span><i class="fas fa-plus"></i>')
@@ -235,7 +235,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End    
-    cardfooter('')            
+    cardfooter('Configure additional /home directories that you would like to backup.')            
 
 
     #First Column End
@@ -265,7 +265,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     # ssh_command
-    ssh_command_hint = "options for ssh"
+    ssh_command_hint = "Additinal options for SSH"
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
@@ -276,7 +276,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     # encryption_passphrase
-    encryption_passphrase_hint = "passphrase used to encrypt the backup"
+    encryption_passphrase_hint = "Your Passphrase used to Encrypt the Backup"
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
@@ -287,7 +287,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     # remote_rate_limit
-    remote_rate_limit_hint = "network upload rate limit in kiBytes/second"
+    remote_rate_limit_hint = "Set the Network Upload Rate Limit in KB/s"
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
@@ -348,7 +348,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                            </form>')
 
     print('                        </div> <!-- Card Body End -->') #Card Body End
-    cardfooter('Keep your encryption_passphrase in a safe place. Losing it would make data recovery impossible on a server crash.')
+    cardfooter('Keep your Encryption Passphrase in a safe place. <br>Losing it would make data recovery impossible on a server crash.')
 
 else:
     print('                                <center><h1><i class="fas fa-exclamation"></i></h1>')
