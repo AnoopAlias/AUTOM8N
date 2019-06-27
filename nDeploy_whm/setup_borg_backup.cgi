@@ -300,7 +300,7 @@ if os.path.isdir('/etc/borgmatic'):
     # retention
     print('                                <label class="label mt-2 mb-2">Backup Retention</label>')
     # keep_hourly
-    keep_hourly_hint = "number of hourly backups to keep"
+    keep_hourly_hint = "Enter the number of hourly backups to keep."
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
@@ -311,7 +311,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     # keep_daily
-    keep_daily_hint = "number of daily backups to keep"
+    keep_daily_hint = "Enter the number of daily backups to keep."
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
@@ -322,7 +322,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     # keep_weekly
-    keep_weekly_hint = "number of weekly backups to keep"
+    keep_weekly_hint = "Enter the number of weekly backups to keep."
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
@@ -333,7 +333,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     # keep_monthly
-    keep_monthly_hint = "number of monthly backups to keep"
+    keep_monthly_hint = "Enter the number of monthly backups to keep."
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
