@@ -72,11 +72,11 @@ for myprocess in psutil.process_iter():
         break
 
 if watcher_status:
-    print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i> NDEPLOY_WATCHER</div>'))
-    print(('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Active</div>'))
+    print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i>&nbsp;Watcher</div>'))
+    print(('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i>&nbsp;Active</div>'))
 else:
-    print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i> NDEPLOY_WATCHER</div>'))
-    print(('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Inactive</div>'))
+    print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i>&nbsp;Watcher</div>'))
+    print(('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Inactive</div>'))
 
 
 # Default PHP
@@ -85,7 +85,7 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
     preferred_php_yaml.close()
     phpversion = preferred_php_yaml_parsed.get('PHP')
-    print(('                                <div class="col-md-6 alert alert-light"><i class="fab fa-php"></i> Default PHP</div>'))
+    print(('                                <div class="col-md-6 alert alert-light"><i class="fab fa-php"></i>&nbsp;Default&nbsp;PHP</div>'))
     print(('                                <div class="col-md-6 alert alert-success">'+phpversion.keys()[0])+'</div>')
 
 
@@ -94,7 +94,7 @@ myhostname = socket.gethostname()
 print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div>')
 print('                                <div class="col-md-6">')
 print('                                    <form class="form" action="https://'+myhostname+'/netdata/" target="_blank">')
-print('                                        <input class="alert alert-info btn btn-info" type="submit" value="View&nbsp;Graph">')
+print('                                        <button class="alert alert-info btn btn-info" type="submit">View&nbsp;Graph&nbsp;<i class="fas fa-external-link-alt"></i></button>')
 print('                                    </form>')
 print('                                </div>')
 
@@ -103,7 +103,7 @@ print('                                </div>')
 print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-thermometer-half"></i>&nbsp;Glances</div>')
 print('                                <div class="col-md-6">')
 print('                                    <form class="form" action="https://'+myhostname+'/glances/" target="_blank">')
-print('                                        <input class="alert alert-info btn btn-info" type="submit" value="System&nbsp;Status">')
+print('                                        <button class="alert alert-info btn btn-info" type="submit">System&nbsp;Status&nbsp;<i class="fas fa-external-link-alt"></i></button>')
 print('                                    </form>')
 print('                                </div>')
 
@@ -121,7 +121,7 @@ print('                                </div>')
 print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-bug"></i>&nbsp;Abnormal&nbsp;Detection</div>')
 print('                                <div class="col-md-6">')
 print('                                    <form class="form" id="modalForm3" onsubmit="return false;">')
-print('                                        <button type="submit" class="alert alert-info btn btn-info ">Check&nbsp;Process</button>')
+print('                                        <button type="submit" class="alert alert-info btn btn-info">Check&nbsp;Process</button>')
 print('                                    </form>')
 print('                                </div>')
 
