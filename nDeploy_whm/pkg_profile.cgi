@@ -7,6 +7,7 @@ import os
 import shutil
 import yaml
 import sys
+from commoninclude import bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -25,24 +26,14 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-commoninclude.print_header()
+print_header('Edit cPanel Package')
+bcrumb('Edit cPanel Package','fas fa-database')
 
-print('<body>')
-
-commoninclude.print_branding()
-
-print('<div id="main-container" class="container">')  # main container
-
-print('		<nav aria-label="breadcrumb">')
-print('			<ol class="breadcrumb">')
-print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')
-print('				<li class="breadcrumb-item active">Edit cPanel package</li>')
-print('			</ol>')
-print('		</nav>')
-
-print('		<div class="row">')
-
-print('			<div class="col-lg-6">')  # col left
+print('            <!-- WHM Starter Row -->')
+print('            <div class="row">')
+print('                <!-- First Column Start -->')
+print('                <div class="col-lg-6">') #Column
+print('')
 
 if form.getvalue('cpanelpkg'):
     if form.getvalue('cpanelpkg') == 'default':
@@ -85,7 +76,7 @@ if form.getvalue('cpanelpkg'):
     symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
     user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
     subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
-    phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '16')
+    phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '2')
     settings_lock = yaml_parsed_profileyaml.get('settings_lock', 'disabled')
     # get the human friendly name of the app template
     if os.path.isfile(app_template_file):
@@ -104,102 +95,91 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Ok we are done with getting the settings, now lets present it to the user
-
-    print('			<div class="card">')  # card
-    print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-users-cog float-right"></i> '+form.getvalue('cpanelpkg')+'</h5>')
-    print('				</div>')
-
+    cardheader('Edit '+form.getvalue('cpanelpkg')+' cPanel Package','fas fa-users-cog')
+    
     # Current Profile Status
-    print('				<form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
-    print('					<div class="card-body p-0">')  # card-body
-    print('						<div class="row no-gutters align-items-center">')  # row
+    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
+    print('                            <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+    print('                                <div class="row no-gutters align-items-center"> <!-- Row Start -->') #Row Start
+
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
             # Running
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
-            print('					<div class="col-md-6 alert alert-success">Nginx</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
+            print('                                    <div class="col-md-6 alert alert-success">Nginx</div>')
 
             # Backend
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
-            print('					<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
+            print('                                    <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
             # Description
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Config template</div>')
-            print('					<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Config template</div>')
+            print('                                    <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
             # .hitaccess
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('					<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> &nbsp;</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+            print('                                    <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> &nbsp;</div>')
         else:
             # Running
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
-            print('					<div class="col-md-6 alert alert-success">Nginx</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
+            print('                                    <div class="col-md-6 alert alert-success">Nginx</div>')
 
             # Backend
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
-            print('					<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
+            print('                                    <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
             # Description
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>Config template</div>')
-            print('					<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>Config template</div>')
+            print('                                    <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
             # .hitaccess
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('					<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+            print('                                    <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
     else:
         # Running
-        print('						<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
-        print('						<div class="col-md-6 alert alert-success">Nginx</div>')
+        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
+        print('                                    <div class="col-md-6 alert alert-success">Nginx</div>')
 
         # Backend
-        print('						<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
-        print('						<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
+        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
+        print('                                    <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
         # Description
-        print('						<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>Config template</div>')
-        print('						<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
+        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>Config template</div>')
+        print('                                    <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
         # .hitaccess
-        print('						<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-        print('						<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
+        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+        print('                                    <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
 
-    print('						</div>')  # row end
-    print('					</div>')  # card-body end
+    print('                                </div> <!-- Row End -->') #Row End
+    print('                            </div> <!-- Card Body End -->') #Card End
 
-    print('					<div class="card-body">')  # card-body
-    print('						<div class="input-group">')
-    print('							<select name="backend" class="custom-select">')
+    print('                            <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                                <div class="input-group">')
+    print('                                    <select name="backend" class="custom-select">')
     for backends_defined in backend_data_yaml_parsed.keys():
         if backends_defined == backend_category:
-            print(('					<option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
+            print(('                                        <option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
         else:
-            print(('					<option value="'+backends_defined+'">'+backends_defined+'</option>'))
-    print('							</select>')
+            print(('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>'))
+    print('                                    </select>')
     # Pass on the domain name to the next stage
-    print('							<div class="input-group-append">')
-    print(('							<input class="hidden" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
-    print('								<button class="btn btn-outline-primary" type="submit">Select</button>')
-    print('							</div>')
-    print('						</div>')
+    print('                                    <div class="input-group-append">')
+    print(('                                        <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
+    print('                                        <button class="btn btn-outline-primary" type="submit">Select</button>')
+    print('                                    </div>')
+    print('                                </div>')
+    print('                            </div> <!-- Card Body End -->') #Card End
+    print('                        </form>')
+    cardfooter('To change the upstream, choose a category above.')
 
-    print('					</div>')  # card-body end
-
-    print('					<div class="card-footer">')
-    print('						<small>To change the Upstream select a new category above.</small>')
-    print('					</div>')
-    print('				</form>')
-    print('			</div>')  # card
-
-    print('			<form class="form" id="toastForm17" onsubmit="return false;" method="post" >')
+    print('                        <form class="form" id="toastForm17" onsubmit="return false;" method="post" >')
 
     # General App Settings
-    print('			<div class="card">')  # card
-    print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> General App Settings</h5>')
-    print('				</div>')
-    print('				<div class="card-body">')  # card-body
-
+    cardheader('General Application Settings','fas fa-sliders-h')
+    print('                            <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    
     print('						<div class="row">')
 
     # PHPMAXCHILDREN
