@@ -44,11 +44,11 @@ def return_green(theoption, hint):
 
 
 def print_green(theoption, hint):
-    print(('<div class="col-md-6 label" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
+    print(('<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_red(theoption, hint):
-    print(('<div class="col-md-6 label" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
+    print(('<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def return_red(theoption, hint):
