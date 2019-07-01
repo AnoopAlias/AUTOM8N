@@ -106,52 +106,52 @@ if form.getvalue('cpanelpkg'):
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
             # Running
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
             print('                                    <div class="col-md-6 alert alert-success">Nginx</div>')
 
             # Backend
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
             print('                                    <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
             # Description
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Config template</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
             print('                                    <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
             # .hitaccess
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('                                    <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> &nbsp;</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+            print('                                    <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i>&nbsp;</div>')
         else:
             # Running
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
             print('                                    <div class="col-md-6 alert alert-success">Nginx</div>')
 
             # Backend
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
             print('                                    <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
             # Description
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>Config template</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
             print('                                    <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
             # .hitaccess
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('                                    <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
+            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+            print('                                    <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
     else:
         # Running
-        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
+        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
         print('                                    <div class="col-md-6 alert alert-success">Nginx</div>')
 
         # Backend
-        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
+        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
         print('                                    <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
         # Description
-        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>Config template</div>')
+        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
         print('                                    <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
         # .hitaccess
-        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-        print('                                    <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
+        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+        print('                                    <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
 
     print('                                </div> <!-- Row End -->') #Row End
     print('                            </div> <!-- Card Body End -->') #Card End
