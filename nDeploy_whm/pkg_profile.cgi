@@ -29,11 +29,6 @@ form = cgi.FieldStorage()
 print_header('Edit cPanel Package')
 bcrumb('Edit cPanel Package','fas fa-database')
 
-print('            <!-- WHM Starter Row -->')
-print('            <div class="row">')
-print('                <!-- First Column Start -->')
-print('                <div class="col-lg-6">') #Column
-print('')
 
 if form.getvalue('cpanelpkg'):
     if form.getvalue('cpanelpkg') == 'default':
@@ -85,16 +80,22 @@ if form.getvalue('cpanelpkg'):
         apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
         apptemplate_description = apptemplate_dict.get(apptemplate_code)
     else:
-        commoninclude.print_error('Error: app template data file error')
+        commoninclude.print_nontoast_error('Error: Application Template Data File Error')
         sys.exit(0)
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     else:
-        commoninclude.print_error('Error: backend config file error')
+        commoninclude.print_nontoast_error('Error: Backend Configuration File Error')
         sys.exit(0)
 
     # Ok we are done with getting the settings, now lets present it to the user
+    print('            <!-- WHM Starter Row -->')
+    print('            <div class="row">')
+    print('                <!-- First Column Start -->')
+    print('                <div class="col-lg-6">') #Column
+    print('')
+
     cardheader('Edit '+form.getvalue('cpanelpkg')+' cPanel Package','fas fa-users-cog')
     
     # Current Profile Status

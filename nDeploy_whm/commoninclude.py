@@ -28,6 +28,7 @@ if os.path.isfile(installation_path+"/conf/theming.yaml"):
     logo_url = yaml_parsed_theme.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
 
     app_title = yaml_parsed_theme.get("app_title","AUTOM8N")
+    app_email = yaml_parsed_theme.get("app_email","ops@gnusys.net")
     theme_data_file.close()
 
 #Branding Support
@@ -54,6 +55,23 @@ def print_red(theoption, hint):
 def return_red(theoption, hint):
     result = '<div class="col-md-6 d-flex align-items-center justify-content-end"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'
     return result
+
+
+def print_nontoast_error(themessage):
+    print('            <div class="row d-flex justify-content-center">')
+    print('                <div class="col-md-6 alert alert-danger">')
+    print('                    <div class="text-center">')
+    print('                        <i class="h1 fas fa-exclamation"></i>')
+    print('                        <p>'+themessage+'</p>')
+    print('                        <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
+    print('                    </div>')
+    print('                </div>')
+    print('            </div>')
+    print('        </div> <!-- Main Container End -->')
+    print('')
+    print('    <!-- Body End -->')
+    print('    </body>')
+    print('</html>')
 
 
 def print_forbidden():
