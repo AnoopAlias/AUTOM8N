@@ -227,6 +227,12 @@ kbd {
   .toast button > span {
     color: #FFFFFF; }
 
+.fa-external-link-alt {
+  margin-left: .2rem;
+  font-size: .8rem;
+  position: relative;
+  top: -1px; }
+
 @media (min-width: 768px) {
   .card .align-items-center .label {
     text-align: right; }
