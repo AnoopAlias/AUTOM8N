@@ -16,11 +16,14 @@ yum -y install MySQL-python iproute autoconf automake curl gcc git libmnl-devel 
 bash <(curl -Ss https://my-netdata.io/kickstart-static64.sh)
 ### netdata static build ###
 
-echo -e '\e[93m Please set a password for user netdata below \e[0m'
+if [ ! -f /etc/nginx/conf.d/netdata.password ]; then
 
-printf "netdata:$(openssl passwd -apr1)" > /etc/nginx/conf.d/netdata.password
-chmod 400 /etc/nginx/conf.d/netdata.password
-chown nobody /etc/nginx/conf.d/netdata.password
+  echo -e '\e[93m Please set a password for user netdata below \e[0m'
+
+  printf "netdata:$(openssl passwd -apr1)" > /etc/nginx/conf.d/netdata.password
+  chmod 400 /etc/nginx/conf.d/netdata.password
+  chown nobody /etc/nginx/conf.d/netdata.password
+fi
 
 conflineno=$(wc -l /opt/netdata/etc/netdata/netdata.conf|awk '{print $1}')
 
