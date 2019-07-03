@@ -45,12 +45,9 @@ def return_label(theoption, hint):
     return result
 
 
-def print_green(theoption, hint):
-    print(('<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
-
-
-def print_red(theoption, hint):
-    print(('<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
+def return_disabled():
+    result = '<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+app_title+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div></div>'
+    return result
 
 
 def print_nontoast_error(themessage):
@@ -68,6 +65,14 @@ def print_nontoast_error(themessage):
     print('    <!-- Body End -->')
     print('    </body>')
     print('</html>')
+
+
+def print_green(theoption, hint):
+    print(('<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
+
+
+def print_red(theoption, hint):
+    print(('<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_forbidden():
@@ -91,7 +96,7 @@ def print_sys_tip(theoption, hint):
 
 
 def print_disabled():
-    print(('<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title="An additional nginx module is required for this functionality">Not Installed</div></div>'))
+    print('<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+app_title+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div></div>')
 
 
 def print_forbidden_wrapper():

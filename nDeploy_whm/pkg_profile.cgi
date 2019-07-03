@@ -7,7 +7,7 @@ import os
 import shutil
 import yaml
 import sys
-from commoninclude import return_label, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, return_disabled, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -338,9 +338,9 @@ if form.getvalue('cpanelpkg'):
     print('                            <div class="row"> <!-- Row Start -->') #Row Start
     
     # settings_lock
-    settings_lock_hint = "Lock application server and security settings"
+    settings_lock_hint = " Lock Application Server and Security Settings within cPanel. "
+    print('                                '+return_label("settings_lock", settings_lock_hint))
     if settings_lock == 'enabled':
-        commoninclude.print_green("settings_lock", settings_lock_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
         print('                                        <label class="btn btn-light active">')
@@ -352,7 +352,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
     else:
-        commoninclude.print_red("settings_lock", settings_lock_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
         print('                                        <label class="btn btn-light">')
@@ -365,9 +364,9 @@ if form.getvalue('cpanelpkg'):
         print('                                </div>')
 
     # security_headers
-    security_headers_hint = "X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, HSTS"
+    security_headers_hint = " X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, HSTS "
+    print('                                '+return_label("security_headers", security_headers_hint))
     if security_headers == 'enabled':
-        commoninclude.print_green("security_headers", security_headers_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light active">')
@@ -379,7 +378,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
     else:
-        commoninclude.print_red("security_headers", security_headers_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light">')
@@ -392,9 +390,9 @@ if form.getvalue('cpanelpkg'):
         print('                                </div>')
 
     # dos_mitigate
-    dos_mitigate_hint = "Enable only when under a dos attack"
+    dos_mitigate_hint = " Enable ONLY when under a (D)DOS Attack. "
+    print('                                '+return_label("dos_mitigate", dos_mitigate_hint))
     if dos_mitigate == 'enabled':
-        commoninclude.print_green("dos_mitigate", dos_mitigate_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light active">')
@@ -406,7 +404,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
     else:
-        commoninclude.print_red("dos_mitigate", dos_mitigate_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light">')
@@ -419,10 +416,10 @@ if form.getvalue('cpanelpkg'):
         print('                                </div>')
 
     # test_cookie
-    test_cookie_hint = "Disable most bots except good ones like google/yahoo etc with a cookie challenge"
-    if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
+    test_cookie_hint = " Allow good bots in (like Google/Yahoo). Disable most bad bots by using a cookie challenge. "
+    print('                                '+return_label("bot_mitigate", test_cookie_hint))
+    if not True:#os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
         if test_cookie == 'enabled':
-            commoninclude.print_green("bot_mitigate", test_cookie_hint)
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('                                        label class="btn btn-light active">')
@@ -434,7 +431,6 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
         else:
-            commoninclude.print_red("bot_mitigate", test_cookie_hint)
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
             print('                                        <label class="btn btn-light">')
@@ -446,14 +442,13 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        commoninclude.print_red("bot_mitigate", test_cookie_hint)
-        commoninclude.print_disabled()
-        print(('				<input hidden name="test_cookie" value="'+test_cookie+'">'))
+        print('                                '+return_disabled())
+        print(('                                <input hidden name="test_cookie" value="'+test_cookie+'">'))
 
     # symlink_protection
-    symlink_protection_hint = "Access to a file is denied if any component of the pathname is a symbolic link, and the link and object that the link points to have different owners"
+    symlink_protection_hint = " Access to a file is denied if any component of the pathname is a symbolic link, and if the link and object that the link points to has different owners. "
+    print('                                '+return_label("symlink_protection", symlink_protection_hint))
     if symlink_protection == 'enabled':
-        commoninclude.print_green("symlink_protection", symlink_protection_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light active">')
@@ -465,7 +460,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
     else:
-        commoninclude.print_red("symlink_protection", symlink_protection_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light">')
@@ -478,10 +472,10 @@ if form.getvalue('cpanelpkg'):
         print('                                </div>')
 
     # mod_security
-    mod_security_hint = "mod_security v3 WAF"
-    if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+    mod_security_hint = " Mod Security v3 Web Application Firewall "
+    print('                                '+return_label("mod_security", mod_security_hint))
+    if not True:#os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
         if mod_security == 'enabled':
-            commoninclude.print_green('mod_security', mod_security_hint)
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
             print('                                        <label class="btn btn-light active">')
@@ -493,7 +487,6 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
         else:
-            commoninclude.print_red('mod_security', mod_security_hint)
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
             print('                                        <label class="btn btn-light">')
@@ -505,9 +498,8 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        commoninclude.print_red('mod_security', mod_security_hint)
-        commoninclude.print_disabled()
-        print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
+        print('                                '+return_disabled())
+        print(('                                <input hidden name="test_cookie" value="'+mod_security+'">'))        
 
     print('                            </div> <!-- Row End -->') #End Row
     print('                        </div> <!-- Card Body End -->') #Card End
@@ -527,8 +519,8 @@ if form.getvalue('cpanelpkg'):
 
     # Content Optimizations
     cardheader('Content Optimizations','fas fa-dumbbell')
-    print('                    <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    print('                        <div class="row"> <!-- Row Start -->') #Row Start
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row"> <!-- Row Start -->') #Row Start
 
     # set_expire_static
     set_expire_static_hint = "Set Expires/Cache-Control headers for static content"
