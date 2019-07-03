@@ -173,17 +173,15 @@ if form.getvalue('cpanelpkg'):
     print('                                </div>')
     print('                            </div>')
     print('                        </div> <!-- Card Body End -->') #Card End
-    #print('                        </form> <!-- Form End -->')
+    print('                        </form> <!-- Form End -->')
     cardfooter('To change the upstream, choose a category above.')
-
     
+
     # General App Settings
     cardheader('General Application Settings','fas fa-sliders-h')
-    #print('                        <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
+    print('                        <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
     print('                            <div class="row"> <!-- Row Start -->') #Row Start
-
-
 
     # PHPMAXCHILDREN
     print('                                <div class="col-md-12">')

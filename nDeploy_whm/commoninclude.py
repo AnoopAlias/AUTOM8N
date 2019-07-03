@@ -176,12 +176,13 @@ def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
 
 #CardFooter
 def cardfooter(text='Unmodified Footer Text'):
-    print('')
-    print('                        <!-- Card Footer Start -->')
-    print('                        <div class="card-footer">')
-    print('                            <small><center>'+text+'</center></small>')
-    print('                        </div>')
-    print('')
+    if text != '':
+        print('')
+        print('                        <!-- Card Footer Start -->')
+        print('                        <div class="card-footer">')
+        print('                            <small><center>'+text+'</center></small>')
+        print('                        </div>')
+        print('')
     print('                    <!-- Bootstrap Card End -->')
     print('                    </div>')
     print('')

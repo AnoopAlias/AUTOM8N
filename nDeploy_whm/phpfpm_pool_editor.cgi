@@ -5,7 +5,7 @@ import cgitb
 import os
 import configparser
 import codecs
-from commoninclude import return_red, return_green, return_multi_input, print_forbidden, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, return_multi_input, print_forbidden, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
