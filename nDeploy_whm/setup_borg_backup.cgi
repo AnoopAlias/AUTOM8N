@@ -10,7 +10,7 @@ import psutil
 import signal
 import jinja2
 import codecs
-from commoninclude import return_red, return_green, return_multi_input, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, return_multi_input, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -88,7 +88,7 @@ if os.path.isdir('/etc/borgmatic'):
     system_files_hint = "Backup the cPanel System Files"
     print('                                    <div class="row align-items-center"> <!-- Row Start -->')
     if system_files == 'enabled':
-        print('                                        '+return_green("system_files", system_files_hint))
+        print('                                        '+return_label("system_files", system_files_hint))
         print('                                        <div class="col-md-6">')
         print('                                            <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
         print('                                                <label class="btn btn-light active">')
@@ -100,7 +100,7 @@ if os.path.isdir('/etc/borgmatic'):
         print('                                            </div>')
         print('                                        </div>')
     else:
-        print('                                        '+return_red("system_files", system_files_hint))
+        print('                                        '+return_label("system_files", system_files_hint))
         print('                                        <div class="col-md-6">')
         print('                                            <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
         print('                                                <label class="btn btn-light">')
@@ -116,7 +116,7 @@ if os.path.isdir('/etc/borgmatic'):
     # mysql_backup
     mysql_backup_hint = "Use MariaBackup to Backup the FULL MySQL Data Directory"
     if mysql_backup == 'enabled':
-        print('                                        '+return_green("mariabackup", mysql_backup_hint))
+        print('                                        '+return_label("mariabackup", mysql_backup_hint))
         print('                                        <div class="col-md-6">')
         print('                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                                <label class="btn btn-light active">')
@@ -128,7 +128,7 @@ if os.path.isdir('/etc/borgmatic'):
         print('                                            </div>')
         print('                                        </div>')
     else:
-        print('                                        '+return_red("mariabackup", mysql_backup_hint))
+        print('                                        '+return_label("mariabackup", mysql_backup_hint))
         print('                                        <div class="col-md-6">')
         print('                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                                <label class="btn btn-light">')

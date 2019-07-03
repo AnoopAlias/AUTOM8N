@@ -39,8 +39,9 @@ if os.path.isfile(installation_path+"/conf/branding.yaml"):
     brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
     brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
 
-def return_green(theoption, hint):
-    result = '<div class="col-md-6 d-flex align-items-center justify-content-end"><div class="label label-info" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'
+
+def return_label(theoption, hint):
+    result = '<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
 
 
@@ -50,11 +51,6 @@ def print_green(theoption, hint):
 
 def print_red(theoption, hint):
     print(('<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
-
-
-def return_red(theoption, hint):
-    result = '<div class="col-md-6 d-flex align-items-center justify-content-end"><div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div></div>'
-    return result
 
 
 def print_nontoast_error(themessage):

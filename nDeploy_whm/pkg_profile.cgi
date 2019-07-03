@@ -7,7 +7,7 @@ import os
 import shutil
 import yaml
 import sys
-from commoninclude import bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -99,107 +99,109 @@ if form.getvalue('cpanelpkg'):
     cardheader('Edit '+form.getvalue('cpanelpkg')+' cPanel Package','fas fa-users-cog')
     
     # Current Profile Status
-    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
-    print('                            <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-    print('                                <div class="row no-gutters align-items-center"> <!-- Row Start -->') #Row Start
+    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get"> <!-- Form Start -->')
+    print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row no-gutters align-items-center"> <!-- Row Start -->') #Row Start
 
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
             # Running
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
-            print('                                    <div class="col-md-6 alert alert-success">Nginx</div>')
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
+            print('                                <div class="col-md-6 alert alert-success">Nginx</div>')
 
             # Backend
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
-            print('                                    <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
+            print('                                <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
             # Description
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
-            print('                                    <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
+            print('                                <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
-            # .hitaccess
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-            print('                                    <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i>&nbsp;</div>')
+            # .htaccess
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+            print('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i>&nbsp;</div>')
         else:
             # Running
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
-            print('                                    <div class="col-md-6 alert alert-success">Nginx</div>')
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
+            print('                                <div class="col-md-6 alert alert-success">Nginx</div>')
 
             # Backend
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
-            print('                                    <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
+            print('                                <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
             # Description
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
-            print('                                    <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
+            print('                                <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
-            # .hitaccess
-            print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-            print('                                    <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+            # .htaccess
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+            print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
     else:
         # Running
-        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
-        print('                                    <div class="col-md-6 alert alert-success">Nginx</div>')
+        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
+        print('                                <div class="col-md-6 alert alert-success">Nginx</div>')
 
         # Backend
-        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
-        print('                                    <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
+        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
+        print('                                <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
 
         # Description
-        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
-        print('                                    <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
+        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
+        print('                                <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
 
-        # .hitaccess
-        print('                                    <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-        print('                                    <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+        # .htaccess
+        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+        print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
 
-    print('                                </div> <!-- Row End -->') #Row End
-    print('                            </div> <!-- Card Body End -->') #Card End
+    print('                            </div> <!-- Row End -->') #Row End
+    print('                        </div> <!-- Card Body End -->') #Card End
 
-    print('                            <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    print('                                <div class="input-group">')
-    print('                                    <select name="backend" class="custom-select">')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="input-group">')
+    print('                                <select name="backend" class="custom-select">')
     for backends_defined in backend_data_yaml_parsed.keys():
         if backends_defined == backend_category:
-            print(('                                        <option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
+            print(('                                    <option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
         else:
-            print(('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>'))
-    print('                                    </select>')
+            print(('                                    <option value="'+backends_defined+'">'+backends_defined+'</option>'))
+    print('                                </select>')
     
     #Pass on the domain name to the next stage
-    print('                                    <div class="input-group-append">')
-    print(('                                        <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
-    print('                                        <button class="btn btn-outline-primary" type="submit">Select</button>')
-    print('                                    </div>')
+    print('                                <div class="input-group-append">')
+    print(('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
+    print('                                    <button class="btn btn-outline-primary" type="submit">Select</button>')
     print('                                </div>')
-    print('                            </div> <!-- Card Body End -->') #Card End
+    print('                            </div>')
+    print('                        </div> <!-- Card Body End -->') #Card End
     print('                        </form>')
     cardfooter('To change the upstream, choose a category above.')
 
     
     # General App Settings
     cardheader('General Application Settings','fas fa-sliders-h')
-    print('                        <form class="form" id="toastForm17" onsubmit="return false;" method="post" >')
-    print('                            <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    print('                                <div class="row"> <!-- Row Start -->') #Row Start
-    
+    print('                        <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row"> <!-- Row Start -->') #Row Start
+
+
+
     # PHPMAXCHILDREN
-    print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group btn-group mt-0 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    phpmaxchildren_hint = "The maximum PHP process that can be spawned"
-    commoninclude.print_red("PHP MAXCHILDREN", phpmaxchildren_hint)
-    print('                                                </span>')
-    print('                                            </div>')
-    print(('                                            <input class="form-control" placeholder='+phpmaxchildren+' value='+phpmaxchildren+' type="text" name="phpmaxchildren">'))
+    print('                                <div class="col-md-12">')
+    print('                                    <div class="input-group btn-group mt-0 mb-2">')
+    print('                                        <div class="input-group-prepend">')
+    print('                                            <span class="input-group-text">')
+    phpmaxchildren_hint = " The Maximum amount of PHP processes that can be spawned. "
+    print('                                                '+return_label("PHP MAXCHILDREN", phpmaxchildren_hint))
+    print('                                            </span>')
     print('                                        </div>')
+    print(('                                        <input class="form-control" placeholder='+phpmaxchildren+' value='+phpmaxchildren+' type="text" name="phpmaxchildren">'))
     print('                                    </div>')
+    print('                                </div>')
 
     # autoindex
-    autoindex_hint = "enable for directory listing"
+    autoindex_hint = " Enable for Native NGINX directory listing. "
+    print('                                '+return_label("autoindex", autoindex_hint))
     if autoindex == 'enabled':
-        commoninclude.print_green("autoindex", autoindex_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light active">')
@@ -211,7 +213,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
     else:
-        commoninclude.print_red("autoindex", autoindex_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light">')
@@ -224,9 +225,9 @@ if form.getvalue('cpanelpkg'):
         print('                                </div>')
 
     # ssl_offload
-    ssl_offload_hint = "enable for performance, disable if redirect loop error"
+    ssl_offload_hint = " Enable for a performance increase. Disable if a redirect loop error occurs. "
+    print('                                '+return_label("ssl_offload", ssl_offload_hint))
     if ssl_offload == 'enabled':
-        commoninclude.print_green("ssl_offload", ssl_offload_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light active">')
@@ -238,7 +239,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
     else:
-        commoninclude.print_red("ssl_offload", ssl_offload_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light">')
@@ -251,9 +251,9 @@ if form.getvalue('cpanelpkg'):
         print('                                </div>')
 
     # proxy_to_master
-    proxy_to_master_hint = "in cluster proxy to master instead of local server "
+    proxy_to_master_hint = " When running in a cluster, PROXY to MASTER instead of local server. "
+    print('                                '+return_label("proxy_to_master", proxy_to_master_hint))
     if proxy_to_master == 'enabled':
-        commoninclude.print_green("proxy_to_master", proxy_to_master_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light active">')
@@ -265,7 +265,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
     else:
-        commoninclude.print_red("proxy_to_master", proxy_to_master_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light">')
@@ -278,9 +277,9 @@ if form.getvalue('cpanelpkg'):
         print('                                </div>')
 
     # access_log
-    access_log_hint = "disabling access_log increase performance but stats wont work"
+    access_log_hint = " Disabling access_log will increase performance, but cPanel stats fail to work. "
+    print('                                '+return_label("access_log", access_log_hint))
     if access_log == 'enabled':
-        commoninclude.print_green("access_log", access_log_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light active">')
@@ -292,7 +291,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
     else:
-        commoninclude.print_red("access_log", access_log_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                        <label class="btn btn-light">')
@@ -305,9 +303,9 @@ if form.getvalue('cpanelpkg'):
         print('                                </div>')
 
     # open_file_cache
-    open_file_cache_hint = "increase performance, disable on dev environment for no caching"
+    open_file_cache_hint = " Enable for performance increase. Disable on development environment to not cache. "
+    print('                                '+return_label("open_file_cache", open_file_cache_hint))
     if open_file_cache == 'enabled':
-        commoninclude.print_green("open_file_cache", open_file_cache_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
         print('                                        <label class="btn btn-light active">')
@@ -319,7 +317,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
     else:
-        commoninclude.print_red("open_file_cache", open_file_cache_hint)
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
         print('                                        <label class="btn btn-light">')
