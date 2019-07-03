@@ -27,7 +27,7 @@ cgitb.enable()
 form = cgi.FieldStorage()
 
 print_header('Edit cPanel Package')
-bcrumb('Edit cPanel Package','fas fa-database')
+bcrumb('Edit cPanel Package','fas fa-box-open')
 
 
 if form.getvalue('cpanelpkg'):
@@ -173,13 +173,13 @@ if form.getvalue('cpanelpkg'):
     print('                                </div>')
     print('                            </div>')
     print('                        </div> <!-- Card Body End -->') #Card End
-    print('                        </form>')
+    #print('                        </form> <!-- Form End -->')
     cardfooter('To change the upstream, choose a category above.')
 
     
     # General App Settings
     cardheader('General Application Settings','fas fa-sliders-h')
-    print('                        <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
+    #print('                        <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
     print('                            <div class="row"> <!-- Row Start -->') #Row Start
 
@@ -697,177 +697,167 @@ if form.getvalue('cpanelpkg'):
 
     cardfooter('')
     
+
     # Redirections
-    print('				<div class="card">')  # card
-    print('					<div class="card-header">')
-    print('						<h5 class="card-title mb-0"><i class="fas fa-directions float-right"></i> Redirections</h5>')
-    print('					</div>')
-    print('					<div class="card-body">')  # card-body
+    cardheader('Redirections','fas fa-directions')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row"> <!-- Row Start -->') #Row Start
 
     # redirect_to_ssl
-    redirect_to_ssl_hint = "redirect http:// to https:// "
-    print('						<div class="row">')
+    redirect_to_ssl_hint = " Redirect HTTP -> HTTPS. "
+    print('                                '+return_label("redirect_to_ssl", redirect_to_ssl_hint))
     if redirect_to_ssl == 'enabled':
-        commoninclude.print_green("redirect_to_ssl", redirect_to_ssl_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectSslOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="redirect_to_ssl" value="disabled" id="RedirectSslOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectSslOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="redirect_to_ssl" value="disabled" id="RedirectSslOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("redirect_to_ssl", redirect_to_ssl_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectSslOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="redirect_to_ssl" value="disabled" id="RedirectSslOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectSslOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="redirect_to_ssl" value="disabled" id="RedirectSslOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # redirect_aliases
-    redirect_aliases_hint = "redirect all alias domains to the main domain"
+    redirect_aliases_hint = " Redirect all cPanel aliases to the main domain. "
+    print('                                '+return_label("redirect_aliases", redirect_aliases_hint))
     if redirect_aliases == 'enabled':
-        commoninclude.print_green("redirect_aliases", redirect_aliases_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="redirect_aliases" value="enabled" id="RedirectAliasesOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="redirect_aliases" value="disabled" id="RedirectAliasesOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="redirect_aliases" value="enabled" id="RedirectAliasesOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="redirect_aliases" value="disabled" id="RedirectAliasesOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("redirect_aliases", redirect_aliases_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="redirect_aliases" value="enabled" id="RedirectAliasesOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="redirect_aliases" value="disabled" id="RedirectAliasesOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="redirect_aliases" value="enabled" id="RedirectAliasesOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="redirect_aliases" value="disabled" id="RedirectAliasesOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # www redirect
-    www_redirect_hint = "select redirection mode"
+    www_redirect_hint = " Select WWW redirection mode. "
+    print('                                '+return_label("www redirect", www_redirect_hint))
+    print('                                <div class="col-md-6">')
+    print('                                    <div class="input-group btn-group">')
+    print('                                        <select name="wwwredirect" class="custom-select">')
     if wwwredirect == 'none':
-        commoninclude.print_red("www redirect", www_redirect_hint)
-    else:
-        commoninclude.print_green("www redirect", www_redirect_hint)
-    print('							<div class="col-md-6">')
-    print('								<div class="input-group btn-group">')
-    print('									<select name="wwwredirect" class="custom-select">')
-    if wwwredirect == 'none':
-        print(('								<option selected value="none">no redirection</option>'))
-        print(('								<option value="tononwww">www to non-www</option>'))
-        print(('								<option value="towww">non-www to www</option>'))
+        print(('                                            <option selected value="none">No Redirection</option>'))
+        print(('                                            <option value="tononwww">WWW -> Non-WWW</option>'))
+        print(('                                            <option value="towww">Non-WWW -> WWW</option>'))
     elif wwwredirect == 'towww':
-        print(('								<option value="none">no redirection</option>'))
-        print(('								<option value="tononwww">www to non-www</option>'))
-        print(('								<option selected value="towww">non-www to www</option>'))
+        print(('                                            <option value="none">No Redirection</option>'))
+        print(('                                            <option value="tononwww">WWW -> Non-WWW</option>'))
+        print(('                                            <option selected value="towww">Non-WWW -> WWW</option>'))
     elif wwwredirect == 'tononwww':
-        print(('								<option value="none">no redirection</option>'))
-        print(('								<option selected value="tononwww">www to non-www</option>'))
-        print(('								<option value="towww">non-www to www</option>'))
-    print('									</select>')
-    print('								</div>')
-    print('							</div>')
+        print(('                                            <option value="none">No Redirection</option>'))
+        print(('                                            <option selected value="tononwww">WWW -> Non-WWW</option>'))
+        print(('                                            <option value="towww">Non-WWW -> WWW</option>'))
+    print('                                        </select>')
+    print('                                    </div>')
+    print('                                </div>')
 
     # URL Redirect
-    url_redirect_hint = "select redirection status 301 or 307"
+    url_redirect_hint = " Select URL redirection type. "
+    print('                                '+return_label("URL redirect", url_redirect_hint))
+    print('                                <div class="col-md-6">')
+    print('                                    <div class="input-group btn-group">')
+    print('                                        <select name="redirectstatus" class="custom-select">')
     if redirectstatus == 'none':
-        commoninclude.print_red("URL redirect", url_redirect_hint)
-    else:
-        commoninclude.print_green("URL redirect", url_redirect_hint)
-    print('							<div class="col-md-6">')
-    print('								<div class="input-group btn-group">')
-    print('									<select name="redirectstatus" class="custom-select">')
-    if redirectstatus == 'none':
-        print(('								<option selected value="none">no redirection</option>'))
-        print(('								<option value="301">Permanent (301)</option>'))
-        print(('								<option value="307">Temporary (307)</option>'))
+        print(('                                            <option selected value="none">No Redirection</option>'))
+        print(('                                            <option value="301">Permanent (301)</option>'))
+        print(('                                            <option value="307">Temporary (307)</option>'))
     elif redirectstatus == '301':
-        print(('								<option value="none">no redirection</option>'))
-        print(('								<option value="307">Temporary (307)</option>'))
-        print(('								<option selected value="301">Permanent (301)</option>'))
+        print(('                                            <option value="none">No Redirection</option>'))
+        print(('                                            <option value="307">Temporary (307)</option>'))
+        print(('                                            <option selected value="301">Permanent (301)</option>'))
     elif redirectstatus == '307':
-        print(('								<option value="none">no redirection</option>'))
-        print(('								<option selected value="307">Temporary (307)</option>'))
-        print(('								<option value="301">Permanent (301)</option>'))
-    print('									</select>')
-    print('								</div>')
-    print('							</div>')
+        print(('                                            <option value="none">No Redirection</option>'))
+        print(('                                            <option selected value="307">Temporary (307)</option>'))
+        print(('                                            <option value="301">Permanent (301)</option>'))
+    print('                                        </select>')
+    print('                                    </div>')
+    print('                                </div>')
 
     # Append request_uri to redirect
-    append_requesturi_hint = 'maintain original request $request_uri (with arguments)'
+    append_requesturi_hint = ' Maintain the original Request URI ($request_uri (with arguments)). '
+    print('                                '+return_label("append redirecturl", append_requesturi_hint))
     if append_requesturi == 'enabled' and redirectstatus != 'none':
-        commoninclude.print_green("append redirecturl", append_requesturi_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                           <input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("append redirecturl", append_requesturi_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # Redirect URL
     redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
-    print('							<div class="col-md-12">')
-    print('								<div class="input-group btn-group mb-0">')
-    print('									<div class="input-group-prepend">')
-    print('										<span class="input-group-text">')
-    if redirecturl == "none" or redirectstatus == 'none':
-        commoninclude.print_red("Redirect to URL", redirecturl_hint)
-    else:
-        commoninclude.print_green("Redirect to URL", redirecturl_hint)
-    print('										</span>')
-    print('									</div>')
-    print(('								<input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
-    print('								</div>')
-    print('							</div>')
 
-    print('					</div>')  # row end
+    print('                                <div class="col-md-12">')
+    print('                                    <div class="input-group btn-group mb-0">')
+    print('                                        <div class="input-group-prepend">')
+    print('                                            <span class="input-group-text">')
+    print('                                                '+return_label("Redirect to URL", redirecturl_hint))
+    print('                                            </span>')
+    print('                                        </div>')
+    print(('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
+    print('                                    </div>')
+    print('                                </div>')
 
-    print('				</div>')  # card end
-    print('			</div>')  # card end
+    print('                            </div> <!-- Row End -->') #End Row
+    print('                        </div> <!-- Card Body End -->') #Card End
+    cardfooter('')
 
-    print('			<div class="card">')  # card
-    print('				<div class="card-body text-center">')  # card-body
-
+    cardheader('Save cPanel Package Settings')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row"> <!-- Row Start -->') #Row Start
+    print('                                <div class="col-md-12">')
     # Pass on the package name to the next stage
-    print(('					<input class="hidden" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
-    print('						<button class="btn btn-outline-primary  btn-block" type="submit">Save Settings</button>')
+    print(('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
+    print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Save Settings</button>')
+    print('                                </div>')
+    print('                            </div> <!-- Row End -->') #End Row
+    print('                        </div> <!-- Card Body End -->') #Card End
+    print('                </form> <!-- Form End -->')
+    cardfooter('')
 
-    print('					</div>')  # card-body end
-    print('				</div>')  # card end
 
-    print('			</form>')
 else:
         commoninclude.print_forbidden_wrapper()
 
