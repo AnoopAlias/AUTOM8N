@@ -30,26 +30,10 @@ ssl_key=/etc/mysql-ssl/client-key.pem
 persistpoolmax=100
 persistmaxtime=3600
 
-
-# ReadOnly Slaves
-[server3]
-type=server
-address=127.0.0.1
-port=13306
-protocol=MariaDBBackend
-ssl=required
-ssl_version=MAX
-ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
-ssl_cert=/etc/mysql-ssl/client-cert.pem
-ssl_key=/etc/mysql-ssl/client-key.pem
-persistpoolmax=100
-persistmaxtime=3600
-
-
 [MySQL-Monitor]
 type=monitor
 module=mmmon
-servers=server3,server1,server2
+servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 monitor_interval=10000
@@ -61,16 +45,18 @@ router=readwritesplit
 master_failure_mode=fail_on_write
 use_sql_variables_in=master
 connection_keepalive=60
+master_reconnection=true
 slave_selection_criteria=ADAPTIVE_ROUTING
 {% else %}
 router=readconnroute
 router_options=master
 {% endif %}
-servers=server3,server1,server2
+servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
 connection_timeout=60
 max_connections=500
+auth_all_servers=false
 
 [MaxAdmin-Service]
 type=service
