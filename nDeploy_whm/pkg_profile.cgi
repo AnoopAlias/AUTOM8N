@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import os
@@ -20,7 +19,6 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 default_domain_data_file = installation_path+'/conf/domain_data_default.yaml'
 app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
-
 
 cgitb.enable()
 
@@ -73,20 +71,21 @@ if form.getvalue('cpanelpkg'):
     subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
     phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '2')
     settings_lock = yaml_parsed_profileyaml.get('settings_lock', 'disabled')
-    # get the human friendly name of the app template
+
+    # Get the human friendly name of the app template
     if os.path.isfile(app_template_file):
         with open(app_template_file, 'r') as apptemplate_data_yaml:
             apptemplate_data_yaml_parsed = yaml.safe_load(apptemplate_data_yaml)
         apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
         apptemplate_description = apptemplate_dict.get(apptemplate_code)
     else:
-        commoninclude.print_nontoast_error('Error: Application Template Data File Error')
+        print_nontoast_error('Error: Application Template Data File Error')
         sys.exit(0)
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     else:
-        commoninclude.print_nontoast_error('Error: Backend Configuration File Error')
+        print_nontoast_error('Error: Backend Configuration File Error')
         sys.exit(0)
 
     # Ok we are done with getting the settings, now lets present it to the user
@@ -330,6 +329,7 @@ if form.getvalue('cpanelpkg'):
     print('                        </div> <!-- Card Body End -->') #Card End
 
     cardfooter('')
+
     # Security Settings
     cardheader('Security Settings','fas fa-shield-alt')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
@@ -508,12 +508,10 @@ if form.getvalue('cpanelpkg'):
     print('                </div>')
     print('')
 
-
     #Second Column
     print('                <!-- Second Column Start -->')
     print('                <div class="col-lg-6">') #Right Column
     print('')
-
 
     # Content Optimizations
     cardheader('Content Optimizations','fas fa-dumbbell')
@@ -842,10 +840,12 @@ if form.getvalue('cpanelpkg'):
     print('                        </div> <!-- Card Body End -->') #Card End
     cardfooter('')
 
+    # Save settings
     cardheader('Save cPanel Package Settings')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
     print('                            <div class="row"> <!-- Row Start -->') #Row Start
     print('                                <div class="col-md-12">')
+
     # Pass on the package name to the next stage
     print(('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
     print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Save Settings</button>')
