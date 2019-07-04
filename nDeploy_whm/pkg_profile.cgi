@@ -30,7 +30,7 @@ print_header('Edit cPanel Package')
 bcrumb('Edit cPanel Package','fas fa-box-open')
 
 
-if not True:#form.getvalue('cpanelpkg'):
+if form.getvalue('cpanelpkg'):
     if form.getvalue('cpanelpkg') == 'default':
         pkgdomaindata = installation_path+'/conf/domain_data_default_local.yaml'
     else:
