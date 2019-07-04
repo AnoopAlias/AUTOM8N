@@ -67,14 +67,6 @@ def print_nontoast_error(themessage):
     print('</html>')
 
 
-def print_green(theoption, hint):
-    print(('<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
-
-
-def print_red(theoption, hint):
-    print(('<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
-
-
 def print_forbidden():
     print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
 
@@ -109,10 +101,6 @@ def print_error_wrapper(themessage):
 
 def print_success_wrapper(themessage):
     print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>'))
-
-
-def print_multi_input(theoption, hint):
-    print(('<div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def return_multi_input(theoption, hint):
