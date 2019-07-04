@@ -5,7 +5,8 @@ import cgitb
 import os
 import configparser
 import codecs
-from commoninclude import print_nontoast_error, return_label, return_multi_input, print_forbidden, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -29,14 +30,13 @@ print('            <div class="row justify-content-lg-center">')
 print('                <!-- Column Start -->')
 print('                <div class="col-lg-8">') #Column
 
-
 if form.getvalue('poolfile') and form.getvalue('section'):
     myphpini = form.getvalue('poolfile')
     mysection = int(form.getvalue('section'))
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
-        cardheader('Edit PHP-FPM Settings for '+config.sections()[mysection].upper(),'fas fa-sitemap')
+        cardheader('Edit PHP-FPM Pool Settings for '+config.sections()[mysection].upper(),'fas fa-sitemap')
         print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
         myconfig = dict(config.items(config.sections()[mysection]))
@@ -74,7 +74,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         cardfooter('')
 
         # New PHP Param
-        cardheader('Add New Pool Setting','fas fa-sitemap')
+        cardheader('Add New PHP-FPM Pool Setting for '+config.sections()[mysection].upper(),'fas fa-sitemap')
         print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
         print('                            <form class="m-0" method="post" id="toastForm20" onsubmit="return false;">')
@@ -97,7 +97,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('                            </form>')
 
         print('                        </div> <!-- Card Body End -->') #Card Body End
-        cardfooter('<strong>WARNING USE AT YOUR OWN RISK</strong>: Adding or editing pool config with invalid settings can bring down your PHP application server.')
+        cardfooter('<strong>WARNING USE AT YOUR OWN RISK! </strong><br>Adding or modifying pool configurations with invalid settings can bring down your PHP application server.')
 else:
     print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
 
