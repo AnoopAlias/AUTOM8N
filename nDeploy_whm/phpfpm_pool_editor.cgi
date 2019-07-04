@@ -5,7 +5,7 @@ import cgitb
 import os
 import configparser
 import codecs
-from commoninclude import return_label, return_multi_input, print_forbidden, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, return_label, return_multi_input, print_forbidden, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -99,7 +99,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('                        </div> <!-- Card Body End -->') #Card Body End
         cardfooter('<strong>WARNING USE AT YOUR OWN RISK</strong>: Adding or editing pool config with invalid settings can bring down your PHP application server.')
 else:
-        print_forbidden()
+    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
 
 #Column End
 print('                <!-- Column End -->')
