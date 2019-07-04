@@ -35,7 +35,7 @@ if form.getvalue('ddos'):
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.disabled /etc/nginx/conf.d/dos_mitigate_systemwide.enabled && nginx -s reload\"'
             run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print_success('Nginx DDOS mitigation is now enabled')
+        print_success('Nginx DDOS mitigation is now enabled.')
         if os.path.isfile(cluster_config_file):
             print('<ul class="list-unstyled text-left">')
             while True:
@@ -51,7 +51,7 @@ if form.getvalue('ddos'):
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.enabled /etc/nginx/conf.d/dos_mitigate_systemwide.disabled && nginx -s reload\"'
             run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print_success('Nginx DDOS mitigation is now disabled')
+        print_success('Nginx DDOS mitigation is now disabled.')
         if os.path.isfile(cluster_config_file):
             print('<ul class="list-unstyled text-left">')
             while True:
