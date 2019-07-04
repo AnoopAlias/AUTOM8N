@@ -852,7 +852,7 @@ if form.getvalue('cpanelpkg'):
     print('                                </div>')
     print('                            </div> <!-- Row End -->') #End Row
     print('                        </div> <!-- Card Body End -->') #Card End
-    print('                </form> <!-- Form End -->')
+    print('                    </form> <!-- Form End -->')
     cardfooter('')
 
 
