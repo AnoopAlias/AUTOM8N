@@ -10,7 +10,8 @@ import psutil
 import signal
 import jinja2
 import codecs
-from commoninclude import return_label, return_multi_input, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+import sys
+from commoninclude import print_nontoast_error, return_label, return_multi_input, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -28,31 +29,28 @@ form = cgi.FieldStorage()
 
 print_header('Borg Backup Configuration')
 bcrumb('Borg Backup Configuration','fas fa-database')
+
 print('            <!-- WHM Starter Row -->')
 print('            <div class="row justify-content-lg-center">')
 print('                <!-- First Column Start -->')
 print('                <div class="col-lg-6">') #Column
 print('')
 
-
-# System Status
-cardheader('Borg Backup Settings','fas fa-database')
-print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-
 if os.path.isdir('/etc/borgmatic'):
 
-    # Check if backup config file is present or initilize otherwise
+    # System Status
+    cardheader('Borg Backup Settings','fas fa-database')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
+    # Check if backup config file is present or initilize otherwise
     if os.path.isfile(backup_config_file):
 
         # Get all config settings from the backup config file
-
         with open(backup_config_file, 'r') as backup_config_file_stream:
             yaml_parsed_backupyaml = yaml.safe_load(backup_config_file_stream)
         
         # Backup settings
-        
         pkgacct_backup = yaml_parsed_backupyaml.get('pkgacct_backup', 'enabled')
         system_files = yaml_parsed_backupyaml.get('system_files', 'enabled')
         mysql_backup = yaml_parsed_backupyaml.get('mysql_backup', 'enabled')
@@ -66,6 +64,7 @@ if os.path.isdir('/etc/borgmatic'):
         with open(backup_config_file, 'w') as backup_config_file_stream:
             yaml.dump(backup_config_dict, backup_config_file_stream, default_flow_style=False)
     if not os.path.isfile('/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh'):
+
         # We create the borgmatic hook now
         # Initiate Jinja2 templateEnv
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
@@ -163,12 +162,10 @@ if os.path.isdir('/etc/borgmatic'):
     cardfooter('Configure the Borg backup settings to control what content is backed up, and at what location to create the backups.')
 
     # Check if borgmatic config file is present or initilize otherwise
-
     if not os.path.isfile(borgmatic_config_file):
 
         # We create the borgmatic config now
         # Initiate Jinja2 templateEnv
-
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
         templateVars = {"BACKUP_PATH": backup_path}
@@ -179,11 +176,9 @@ if os.path.isdir('/etc/borgmatic'):
         os.chmod(borgmatic_config_file, 0o640)
 
     # Since we have a borgmatic config now.Lets load it up and present to the user
-
     if os.path.isfile(borgmatic_config_file):
 
         # Get all config settings from the borgmatic config file
-
         with open(borgmatic_config_file, 'r') as borgmatic_config_file_stream:
             yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_config_file_stream)
 
@@ -191,7 +186,6 @@ if os.path.isdir('/etc/borgmatic'):
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
     # backup directories
-
     backup_dir_list = yaml_parsed_borgmaticyaml['location']['source_directories']
 
     if backup_dir_list:
@@ -237,13 +231,11 @@ if os.path.isdir('/etc/borgmatic'):
     print('                        </div> <!-- Card Body End -->') #Card Body End    
     cardfooter('Configure additional /home directories that you would like to backup.')            
 
-
     #First Column End
     print('                <!-- First Column End -->')
     print('                </div>')
     print('')
 
-    
     #Second Column
     print('                <!-- Second Column Start -->')
     print('                <div class="col-lg-6">') #Right Column
@@ -351,13 +343,8 @@ if os.path.isdir('/etc/borgmatic'):
     cardfooter('Keep your Encryption Passphrase in a safe place. <br>Losing it would make data recovery impossible on a server crash.')
 
 else:
-    print('                                <center><h1><i class="fas fa-exclamation"></i></h1>')
-    print('                                <p>Borg/Borgmatic is currently not installed.<br>To install run the following command:')
-    print('                                <kbd>/opt/nDeploy/scripts/easy_borg_setup.sh</kbd></p></center>')
-    print('                            </div> <!-- Row End -->') #Row End
-    print('                        </div> <!-- Card Body End -->') #Card End
-    cardfooter('Borg backup software is not installed.')
-
+    print_nontoast_error ('<p>Borg/Borgmatic is currently not installed.<br>To install run the following command:<br><kbd>/opt/nDeploy/scripts/easy_borg_setup.sh</kbd></p>')
+    sys.exit(0)
 
 #Second Column End
 print('                <!-- Second Column End -->')

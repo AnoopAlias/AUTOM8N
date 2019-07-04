@@ -35,9 +35,11 @@ if form.getvalue('cpanelpkg'):
         pkgdomaindata = installation_path+'/conf/domain_data_default_local_'+form.getvalue('cpanelpkg')+'.yaml'
     if not os.path.isfile(pkgdomaindata):
         shutil.copyfile(default_domain_data_file, pkgdomaindata)
+
     # Get all config settings from the domains domain-data config file
     with open(pkgdomaindata, 'r') as profileyaml_data_stream:
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+
     # App settings
     backend_category = yaml_parsed_profileyaml.get('backend_category')
     backend_version = yaml_parsed_profileyaml.get('backend_version')
@@ -46,6 +48,7 @@ if form.getvalue('cpanelpkg'):
     mod_security = yaml_parsed_profileyaml.get('mod_security', 'disabled')
     auth_basic = yaml_parsed_profileyaml.get('auth_basic', 'disabled')
     set_expire_static = yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
+
     # Server Settings
     autoindex = yaml_parsed_profileyaml.get('autoindex', 'disabled')
     pagespeed = yaml_parsed_profileyaml.get('pagespeed', 'disabled')
@@ -104,6 +107,7 @@ if form.getvalue('cpanelpkg'):
 
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
+
             # Running
             print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
             print('                                <div class="col-md-6 alert alert-success">Nginx</div>')
@@ -857,6 +861,7 @@ if form.getvalue('cpanelpkg'):
 
 else:
     print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    sys.exit(0)
 
 #Second Column End
 print('                <!-- Second Column End -->')

@@ -35,6 +35,7 @@ if os.path.isfile(installation_path+"/conf/theming.yaml"):
     app_email = yaml_parsed_theme.get("app_email","ops@gnusys.net")
     theme_data_file.close()
 
+
 #Branding Support
 if os.path.isfile(installation_path+"/conf/branding.yaml"):
     with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
@@ -56,7 +57,7 @@ def return_disabled():
 
 def print_nontoast_error(themessage):
     print('            <div class="row d-flex justify-content-center">')
-    print('                <div class="col-md-6 alert alert-danger">')
+    print('                <div class="col-lg-6 alert alert-danger">')
     print('                    <div class="text-center">')
     print('                        <i class="h1 fas fa-exclamation"></i>')
     print('                        <p>'+themessage+'</p>')
