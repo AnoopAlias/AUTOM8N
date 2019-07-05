@@ -178,6 +178,22 @@ if os.path.isfile(cluster_config_file):
             else:
                 print(('		<div class="col-md-9 alert alert-light">'+myhome+'_'+servername+'</div>'))
                 print(('		<div class="col-md-3 alert alert-danger">Out of Sync</div>'))
+        filesync_status = False
+        for myprocess in psutil.process_iter():
+            # Workaround for Python 2.6
+            if platform.python_version().startswith('2.6'):
+                mycmdline = myprocess.cmdline
+            else:
+                mycmdline = myprocess.cmdline()
+            if '/usr/bin/unison' in mycmdline and 'phpsessions_'+servername in mycmdline:
+                filesync_status = True
+                break
+        if filesync_status:
+            print(('		<div class="col-md-9 alert alert-light">phpsessions_'+servername+'</div>'))
+            print(('		<div class="col-md-3 alert alert-success">In Sync</div>'))
+        else:
+            print(('		<div class="col-md-9 alert alert-light">phpsessions_'+servername+'</div>'))
+            print(('		<div class="col-md-3 alert alert-danger">Out of Sync</div>'))
     print('					</div>')  # row end
     print('				</div>')  # card-body
 
