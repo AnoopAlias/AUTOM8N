@@ -6,7 +6,7 @@ import os
 import shutil
 import yaml
 import sys
-from commoninclude import print_nontoast_error, return_label, return_disabled, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, return_label, return_prepend, return_disabled, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -166,7 +166,7 @@ if form.getvalue('cpanelpkg'):
     print('                                        <div class="input-group-prepend">')
     print('                                            <span class="input-group-text">')
     phpmaxchildren_hint = " The Maximum amount of PHP processes that can be spawned. "
-    print('                                                '+return_label("PHP MAXCHILDREN", phpmaxchildren_hint))
+    print('                                                '+return_prepend("PHP MAXCHILDREN", phpmaxchildren_hint))
     print('                                            </span>')
     print('                                        </div>')
     print(('                                        <input class="form-control" placeholder='+phpmaxchildren+' value='+phpmaxchildren+' type="text" name="phpmaxchildren">'))
@@ -807,7 +807,7 @@ if form.getvalue('cpanelpkg'):
     print('                                    <div class="input-group btn-group mb-0">')
     print('                                        <div class="input-group-prepend">')
     print('                                            <span class="input-group-text">')
-    print('                                                '+return_label("Redirect to URL", redirecturl_hint))
+    print('                                                '+return_prepend("Redirect to URL", redirecturl_hint))
     print('                                            </span>')
     print('                                        </div>')
     print(('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))

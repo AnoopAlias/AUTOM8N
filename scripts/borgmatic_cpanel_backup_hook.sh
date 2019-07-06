@@ -20,28 +20,5 @@ done
 
 # system_files
 
-rm -rf ${BACKUPDIR}/SYSTEM_FILES
-if [ ! -f ${BACKUPDIR}/SYSTEM_FILES ]
-then
-  mkdir -p ${BACKUPDIR}/SYSTEM_FILES
-fi
-for file in $(cat /opt/nDeploy/conf/cpanel_systembackup.include)
-do
-  if [ -e ${file} ]
-  then
-    rsync -a ${file} ${BACKUPDIR}/SYSTEM_FILES/
-  fi
-done
-
 
 # mysql_backup
-
-rm -rf ${BACKUPDIR}/MYSQL_BACKUP
-if [ ! -f ${BACKUPDIR}/MYSQL_BACKUP ]
-then
-  mkdir -p ${BACKUPDIR}/MYSQL_BACKUP
-fi
-if [ -f /usr/bin/mariabackup ]
-then
-  mariabackup --backup --target-dir ${BACKUPDIR}/MYSQL_BACKUP
-fi

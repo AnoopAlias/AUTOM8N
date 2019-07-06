@@ -46,7 +46,12 @@ if os.path.isfile(installation_path+"/conf/branding.yaml"):
 
 
 def return_label(theoption, hint):
-    result = '<div class="col-md-6 label d-flex align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
+    result = '<div class="d-flex w-50 justify-content-end align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
+    return result
+
+
+def return_prepend(theoption, hint):
+    result = '<div class="d-flex w-50 align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
 
 

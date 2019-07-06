@@ -39,7 +39,7 @@ print('')
 # System Status
 cardheader('System Setup')
 print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-print('                            <div class="row no-gutters align-items-center"> <!-- Row Start -->') #Row Start
+print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
 nginx_status = False
 for myprocess in psutil.process_iter():
@@ -53,11 +53,11 @@ for myprocess in psutil.process_iter():
         break
 
 if nginx_status:
-    print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Active</div>'))
+    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i> Nginx</div>'))
+    print(('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>'))
 else:
-    print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Inactive</div>'))
+    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i> Nginx</div>'))
+    print(('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>'))
 
 watcher_status = False
 for myprocess in psutil.process_iter():
@@ -72,11 +72,11 @@ for myprocess in psutil.process_iter():
         break
 
 if watcher_status:
-    print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i>&nbsp;Watcher</div>'))
-    print(('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i>&nbsp;Active</div>'))
+    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-eye"></i>&nbsp;Watcher</div>'))
+    print(('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>'))
 else:
-    print(('                                <div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i>&nbsp;Watcher</div>'))
-    print(('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Inactive</div>'))
+    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-eye"></i>&nbsp;Watcher</div>'))
+    print(('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>'))
 
 
 # Default PHP
@@ -85,42 +85,42 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
     preferred_php_yaml.close()
     phpversion = preferred_php_yaml_parsed.get('PHP')
-    print(('                                <div class="col-md-6 alert alert-light"><i class="fab fa-php"></i>&nbsp;Default&nbsp;PHP</div>'))
-    print(('                                <div class="col-md-6 alert alert-success">'+phpversion.keys()[0])+'</div>')
+    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fab fa-php"></i>&nbsp;Default&nbsp;PHP</div>'))
+    print(('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+phpversion.keys()[0])+'</div>')
 
 
 # Net Data
 myhostname = socket.gethostname()
-print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div>')
-print('                                <div class="col-md-6">')
-print('                                    <form class="form" action="https://'+myhostname+'/netdata/" target="_blank">')
+print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div>')
+print('                                <div class="d-flex w-50">')
+print('                                    <form class="form w-100" action="https://'+myhostname+'/netdata/" target="_blank">')
 print('                                        <button class="alert alert-info btn btn-info" type="submit">View&nbsp;Graph&nbsp;<i class="fas fa-external-link-alt"></i></button>')
 print('                                    </form>')
 print('                                </div>')
 
 
 # Glances
-print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-thermometer-half"></i>&nbsp;Glances</div>')
-print('                                <div class="col-md-6">')
-print('                                    <form class="form" action="https://'+myhostname+'/glances/" target="_blank">')
+print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-thermometer-half"></i>&nbsp;Glances</div>')
+print('                                <div class="d-flex w-50">')
+print('                                    <form class="form w-100" action="https://'+myhostname+'/glances/" target="_blank">')
 print('                                        <button class="alert alert-info btn btn-info" type="submit">System&nbsp;Status&nbsp;<i class="fas fa-external-link-alt"></i></button>')
 print('                                    </form>')
 print('                                </div>')
 
 
 # Borg Backup
-print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-database"></i>&nbsp;Borg&nbsp;Backup</div>')
-print('                                <div class="col-md-6">')
-print('                                    <form class="form" method="get" action="setup_borg_backup.cgi">')
+print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-database"></i>&nbsp;Borg&nbsp;Backup</div>')
+print('                                <div class="d-flex w-50">')
+print('                                    <form class="form w-100" method="get" action="setup_borg_backup.cgi">')
 print('                                        <button class="alert alert-info btn btn-info" type="submit">Setup&nbsp;Borg</button>')
 print('                                    </form>')
 print('                                </div>')
 
 
 # Process Tracker
-print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-bug"></i>&nbsp;Abnormal&nbsp;Detection</div>')
-print('                                <div class="col-md-6">')
-print('                                    <form class="form" id="modalForm3" onsubmit="return false;">')
+print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-bug"></i>&nbsp;Abnormal&nbsp;Detection</div>')
+print('                                <div class="d-flex w-50">')
+print('                                    <form class="form w-100" id="modalForm3" onsubmit="return false;">')
 print('                                        <button type="submit" class="alert alert-info btn btn-info">Check&nbsp;Process</button>')
 print('                                    </form>')
 print('                                </div>')
