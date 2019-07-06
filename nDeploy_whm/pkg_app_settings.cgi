@@ -3,9 +3,11 @@
 import cgi
 import cgitb
 import os
+import psutil
+import platform
 import yaml
 import sys
-from commoninclude import print_nontoast_error, return_label, return_disabled, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -62,30 +64,71 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
 
         # Ok we are done with getting the settings,now lets present it to the user
 
+        # Cpanel Package App Status
         print('            <!-- WHM Starter Row -->')
         print('            <div class="row justify-content-lg-center">')
         print('                <!-- First Column Start -->')
-        print('                <div class="col-lg-6">') #Column
+        print('                <div class="col-lg-8">') #Column
         print('')
-        
-        cardheader(form.getvalue('cpanelpkg')+' cPanel Package','fas fa-box-open')
-        print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
-        print('                        <form class="form" method="post" id="toastForm18" onsubmit="return false;">')
-        if backend_category == 'PROXY':
-            print('                            <div class="alert alert-success">')
-            print('                                <p>Your current setup is: <br>Nginx proxying to <span class="p-2 badge badge-info">'+backend_version+'</span> with template <span class="p-2 badge badge-info">'+apptemplate_description+'</span></p>')
-            print('                            </div>')
+        cardheader(form.getvalue('cpanelpkg')+' cPanel Package','fas fa-box-open')
+        print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+        print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+
+        nginx_status = False
+        for myprocess in psutil.process_iter():
+            # Workaround for Python 2.6align-items-center
+            if platform.python_version().startswith('2.6'):
+                mycmdline = myprocess.cmdline
+            else:
+                mycmdline = myprocess.cmdline()
+            if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+                nginx_status = True
+                break
+
+        if nginx_status:
+            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+            print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>')
         else:
-            print('                            <div class="alert alert-info">')
-            print('                                <p>Your current project is <span class="p-2 badge badge-primary">'+apptemplate_description+'</span> on native <span class="p-2 badge badge-primary">NGINX</span> with <span class="p-2 badge badge-primary">'+backend_category+'</span> <span class="p-2 badge badge-primary">'+backend_version+'</span> upstream server.')
-            print('                            </div>')
+            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+            print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>')
+
+        # Backend
+        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
+        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
+
+        # Description
+        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
+        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+apptemplate_description+'</div>')
         
-        print('                            <div class="alert alert-info">')
-        print('                                <p>You selected <span class="p-2 badge badge-primary">'+mybackend+'</span> as the new upstream, select the version and template for this upstream below</p>')
+        # .htaccess
+        if backend_category == 'PROXY' and backend_version == 'httpd':
+
+            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+            print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
+            
+        else:
+
+            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+            print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+
+        # New Upstream
+        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;New&nbsp;Backend&nbsp;Category</div>')
+        print('                                <div class="d-flex w-50 alert alert-warning align-items-right justify-content-center">'+mybackend+'</div>')
+
+        print('                            </div> <!-- Row End -->') #End Row
+        print('                        </div> <!-- Card Body End -->') #Card Body End
+       
+        print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+        
+        print('                            <div class="alert alert-info text-center">')
+        print('                                You selected <span class="p-2 badge badge-warning">'+mybackend+'</span> as the new upstream backend <br>category for the '+form.getvalue('cpanelpkg')+' package. Select the desired <br>version and template for this cPanel Package.')
         print('                            </div>')
+
         backends_dict = backend_data_yaml_parsed.get(mybackend)
         new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
+        print('                            <form class="form" method="post" id="toastForm18" onsubmit="return false;">')
+
         if mybackend == backend_category:
             print('                            <div class="input-group">')
             print('                                <div class="input-group-prepend input-group-prepend-min">')
