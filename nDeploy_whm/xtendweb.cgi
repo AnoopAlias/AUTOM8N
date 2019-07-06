@@ -14,7 +14,6 @@ except ImportError:
 from commoninclude import bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 
-
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
 __license__ = "GPL"
@@ -34,7 +33,6 @@ print('            <div class="row">')
 print('                <!-- First Column Start -->')
 print('                <div class="col-lg-6">') #Left Column
 print('')
-
 
 # System Status
 cardheader('System Setup')
@@ -88,7 +86,6 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fab fa-php"></i>&nbsp;Default&nbsp;PHP</div>'))
     print(('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+phpversion.keys()[0])+'</div>')
 
-
 # Net Data
 myhostname = socket.gethostname()
 print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div>')
@@ -98,7 +95,6 @@ print('                                        <button class="alert alert-info b
 print('                                    </form>')
 print('                                </div>')
 
-
 # Glances
 print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-thermometer-half"></i>&nbsp;Glances</div>')
 print('                                <div class="d-flex w-50">')
@@ -107,7 +103,6 @@ print('                                        <button class="alert alert-info b
 print('                                    </form>')
 print('                                </div>')
 
-
 # Borg Backup
 print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-database"></i>&nbsp;Borg&nbsp;Backup</div>')
 print('                                <div class="d-flex w-50">')
@@ -115,7 +110,6 @@ print('                                    <form class="form w-100" method="get"
 print('                                        <button class="alert alert-info btn btn-info" type="submit">Setup&nbsp;Borg</button>')
 print('                                    </form>')
 print('                                </div>')
-
 
 # Process Tracker
 print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-bug"></i>&nbsp;Abnormal&nbsp;Detection</div>')
@@ -129,7 +123,6 @@ print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 
 cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kbd>nginx -t && nginx -s reload</kbd>')
-
 
 # Cluster Status
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
@@ -178,7 +171,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardfooter('Only perform a hard reset if the unison archive is corrupt. The unison archive rebuild can be time consuming.')
 else:
     cardheader('Cluster Unison Sync Status Disabled','fas fa-align-justify')
-    cardfooter('Cluster Unison Sync Status is disabled. We are running with a Single Point of Failure.')
+    cardfooter('Cluster Unison Sync Status is disabled. <br>We are running with a Single Point of Failure.')
 
 
 # Sync GeoDNS zone
@@ -204,7 +197,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardfooter('Choose a user to sync Zones for.')
 else:
     cardheader('GDNSD Zone Sync Disabled','fas fa-sync')
-    cardfooter('GDNSD Zone Sync Disabled.<br>We are running with cPanel DNS.')
+    cardfooter('GDNSD Zone Sync Disabled. <br>We are running with cPanel DNS.')
 
 # Set Default PHP for AutoConfig
 cardheader('Default PHP for Auto Configuration','fab fa-php')
@@ -236,18 +229,15 @@ print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('If MultiPHP is enabled, <kbd>'+phpversion+'</kbd> by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
 
-
 #First Column End
 print('                <!-- First Column End -->')
 print('                </div>')
 print('')
 
-
 #Second Column
 print('                <!-- Second Column Start -->')
 print('                <div class="col-lg-6">') #Right Column
 print('')
-
 
 # DDOS Protection
 cardheader('DDOS Protection','fas fa-user-shield')
@@ -319,7 +309,6 @@ else:
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('Turn these settings on when you are under a DDOS Attack.<br>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)')
 
-
 # PHP-FPM Pool Editor
 cardheader('PHP-FPM Pool Editor','fas fa-sitemap')
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
@@ -351,7 +340,6 @@ print('                                <button class="btn btn-outline-primary bt
 print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('Settings such as: pm.max_requests, pm.max_spare_servers, session.save_path, pm.max_children')
-
 
 # Map cPanel Package to NGINX
 cardheader('Map cPanel Package to NGINX','fas fa-box-open')
@@ -396,23 +384,24 @@ if platform.python_version().startswith('2.6'):
 else:
     listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
 mypkgs = json.loads(listpkgs)
+
 print('                            <form class="form" action="pkg_profile.cgi" method="get">')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <label class="input-group-text" for="inputGroupSelect07">PKG</label>')
 print('                                    </div>')
-
 print('                                    <select name="cpanelpkg" class="custom-select">')
+
 for thepkg in sorted(mypkgs.get('package')):
     pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
     print(('                                        <option value="'+pkgname+'">'+pkgname+'</option>'))
+
 print('                                    </select>')
 print('                                </div>')
 print('                                <button class="btn btn-outline-primary btn-block" type="submit">Edit Pkg</button>')
 print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes a Upgrade/Downgrade process.')
-
 
 # System Resource Limit
 cardheader('System Resource Limit','fas fa-compress')
@@ -422,6 +411,7 @@ with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
 if not osrelease == 'CloudLinux':
     if os.path.isfile('/usr/bin/systemctl'):
+
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
             userlist = os.listdir("/var/cpanel/users")
@@ -431,9 +421,11 @@ if not osrelease == 'CloudLinux':
             print('                                        <label class="input-group-text">User</label>')
             print('                                    </div>')
             print('                                    <select name="unit" class="custom-select">')
+
             for cpuser in sorted(userlist):
                 if cpuser != 'nobody' and cpuser != 'system':
                     print(('                                        <option value="'+cpuser+'">'+cpuser+'</option>'))
+
             print('                                    </select>')
             print(('                                    <input class="hidden" name="mode" value="user">'))
             print('                                </div>')
@@ -446,8 +438,10 @@ if not osrelease == 'CloudLinux':
             print('                                        <label class="input-group-text">Service</label>')
             print('                                    </div>')
             print('                                    <select name="unit" class="custom-select">')
+
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
                 print(('                                        <option value="'+service+'">'+service+'</option>'))
+
             print('                                    </select>')
             print(('                                    <input class="hidden" name="mode" value="service">'))
             print('                                </div>')
@@ -460,8 +454,10 @@ if not osrelease == 'CloudLinux':
             print('                                        <label class="input-group-text">Resource</label>')
             print('                                    </div>')
             print('                                    <select name="unit" class="custom-select">')
+
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
                 print(('                                        <option value="'+service+'">'+service+'</option>'))
+
             print('                                    </select>')
             print(('                                    <input class="hidden" name="mode" value="service">'))
             print('                                </div>')
@@ -469,7 +465,6 @@ if not osrelease == 'CloudLinux':
             print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
-
 
 #Second Column End
 print('                <!-- Second Column End -->')
