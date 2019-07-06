@@ -113,7 +113,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
 
         # New Upstream
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;New&nbsp;Backend&nbsp;Category</div>')
+        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
         print('                                <div class="d-flex w-50 alert alert-warning align-items-right justify-content-center">'+mybackend+'</div>')
 
         print('                            </div> <!-- Row End -->') #End Row
@@ -122,7 +122,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
         
         print('                            <div class="alert alert-info text-center">')
-        print('                                You selected <span class="p-2 badge badge-warning">'+mybackend+'</span> as the new upstream backend <br>category for the '+form.getvalue('cpanelpkg')+' package. Select the desired <br>version and template for this cPanel Package.')
+        print('                                You selected <span class="p-2 badge badge-warning">'+mybackend+'</span> as the new upstream type <br>for the '+form.getvalue('cpanelpkg')+' package. Select the desired <br>version and template for this cPanel Package.')
         print('                            </div>')
 
         backends_dict = backend_data_yaml_parsed.get(mybackend)

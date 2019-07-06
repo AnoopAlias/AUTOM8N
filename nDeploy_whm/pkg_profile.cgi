@@ -103,58 +103,32 @@ if form.getvalue('cpanelpkg'):
     # Current Profile Status
     print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get"> <!-- Form Start -->')
     print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-    print('                            <div class="row no-gutters align-items-center"> <!-- Row Start -->') #Row Start
+    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
-    if backend_category == 'PROXY':
-        if backend_version == 'httpd':
+    # Running
+    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Running</div>')
+    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">Nginx</div>')
 
-            # Running
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
-            print('                                <div class="col-md-6 alert alert-success">Nginx</div>')
+    # Backend Category
+    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream&nbsp;Type</div>')
+    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_category+'</div>')
 
-            # Backend
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
-            print('                                <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
+    # Backend
+    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
+    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
 
-            # Description
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
-            print('                                <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
+    # Description
+    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
+    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+apptemplate_description+'</div>')
 
-            # .htaccess
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-            print('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check"></i>&nbsp;</div>')
-        else:
-            # Running
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
-            print('                                <div class="col-md-6 alert alert-success">Nginx</div>')
-
-            # Backend
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
-            print('                                <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
-
-            # Description
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
-            print('                                <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
-
-            # .htaccess
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-            print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
-    else:
-        # Running
-        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-play"></i>&nbsp;Running</div>')
-        print('                                <div class="col-md-6 alert alert-success">Nginx</div>')
-
-        # Backend
-        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
-        print('                                <div class="col-md-6 alert alert-success">'+backend_version+'</div>')
-
-        # Description
-        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
-        print('                                <div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
-
+    if backend_category == 'PROXY' and backend_version == 'httpd':
         # .htaccess
-        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-        print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
+    else:
+        # .htaccess
+        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+        print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
 
     print('                            </div> <!-- Row End -->') #Row End
     print('                        </div> <!-- Card Body End -->') #Card End
