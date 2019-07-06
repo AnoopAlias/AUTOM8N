@@ -242,34 +242,25 @@ print('')
 # DDOS Protection
 cardheader('DDOS Protection','fas fa-user-shield')
 print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+print('                            <form id="toastForm1" class="form" onsubmit="return false;">')
 print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;No matter how many characters are in here, Nginx</div>')
 
 if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
-    print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;Nginx</div>')
-    print('                                <div class="col-md-6">')
-    print('                                    <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-    print('                                        <div class="col-md-6 alert alert-success">Enabled</div>')
-    print('                                        <div class="col-md-6">')
-    print('                                            <form id="toastForm1" class="form" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
-    print(('                                                <input class="hidden" name="ddos" value="disable">'))
-    print('                                            </form>')
-    print('                                        </div>')
-    print('                                    </div> <!-- Row End -->')
-    print('                                </div>')
+    print('                                <div class="d-flex w-25 alert alert-success align-items-center justify-content-center">Enabled</div>')
+    print('                                <div class="d-flex w-25">')
+    print('                                    <button type="submit" class="alert alert-info">Disable</button>')
+    print('                                    <input hidden name="ddos" value="disable">')
 else:
-    print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;Nginx</div>')
-    print('                                <div class="col-md-6">')
-    print('                                    <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-    print('                                        <div class="col-md-6 alert alert-secondary">Disabled</div>')
-    print('                                        <div class="col-md-6">')
-    print('                                            <form id="toastForm1" class="form" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
-    print(('                                                <input class="hidden" name="ddos" value="enable">'))
-    print('                                            </form>')
-    print('                                        </div>')
-    print('                                    </div> <!-- Row End -->')
-    print('                                </div>')
+    print('                                <div class="d-flex w-25 alert alert-secondary align-items-center justify-content-center">Disabled</div>')
+    print('                                <div class="d-flex w-25">')
+    print('                                    <button type="submit" class="alert alert-info">Enable</button>')
+    print('                                    <input hidden name="ddos" value="enable">')
+
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                            </form>')
+
 try:
     with open(os.devnull, 'w') as FNULL:
         subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
@@ -278,34 +269,25 @@ except OSError:
 else:
     with open(os.devnull, 'w') as FNULL:
         firehol_enabled = subprocess.call("systemctl is-active firehol.service", stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
+
+        print('                            <form id="toastForm2" class="form" onsubmit="return false;">')
+        print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+        print('                                <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;They will always be even both horizontally and vertically, SYNPROXY</div>')
+
     if firehol_enabled == 0:
-        print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;SYNPROXY</div>')
-        print('                                <div class="col-md-6">')
-        print('                                    <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-        print('                                        <div class="col-md-6 alert alert-success">Enabled</div>')
-        print('                                        <div class="col-md-6">')
-        print('                                            <form id="toastForm2" class="form" onsubmit="return false;">')
-        print('                                                <button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
-        print(('                                                <input class="hidden" name="ddos" value="disable">'))
-        print('                                            </form>')
-        print('                                        </div>')
-        print('                                    </div> <!-- Row End -->')       
-        print('                                </div>')
-        print('                            </div> <!-- Row End -->')
+        print('                                <div class="d-flex w-25 alert alert-success align-items-center justify-content-center">Enabled</div>')
+        print('                                <div class="d-flex w-25">')
+        print('                                    <button type="submit" class="alert alert-info">Disable</button>')
+        print('                                    <input hidden name="ddos" value="disable">')
     else:
-        print('                                <div class="col-md-6 alert alert-light">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;SYNPROXY</div>')
-        print('                                <div class="col-md-6">')
-        print('                                    <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-        print('                                        <div class="col-md-6 alert alert-secondary">Disabled</div>')
-        print('                                        <div class="col-md-6">')
-        print('                                            <form id="toastForm2" class="form" onsubmit="return false;">')
-        print('                                                <button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
-        print(('                                                <input class="hidden" name="ddos" value="enable">'))
-        print('                                            </form>')
-        print('                                        </div>')
-        print('                                    </div> <!-- Row End -->')
-        print('                                </div>')
-        print('                            </div> <!-- Row End -->')
+        print('                                <div class="d-flex w-25 alert alert-secondary align-items-center justify-content-center">Disabled</div>')
+        print('                                <div class="d-flex w-25">')
+        print('                                    <button type="submit" class="alert alert-info">Enable</button>')
+        print('                                    <input class="hidden" name="ddos" value="enable">')
+
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('Turn these settings on when you are under a DDOS Attack.<br>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)')
 
