@@ -153,7 +153,7 @@ def print_header(title=''):
     print('            </div>')
     print('            <div class="d-flex header-buttons">')
     print('                <div class="buttons p-1"><a class="btn btn-'+header_button_color+'" href="branding.cgi"> branding <i class="fas fa-code-branch"></i></a></div>')
-    print('                <div class="buttons p-1"><a class="btn btn-'+header_button_color+'" href="bs_themer_for_ndeploy.cgi"> bootstrap layout <i class="fas fa-swatchbook"></i></a></div>')
+    print('                <div class="buttons p-1"><a class="btn btn-'+header_button_color+'" href="bs_themer_for_ndeploy.cgi"> bootstrap themer <i class="fas fa-swatchbook"></i></a></div>')
     print('                <div class="buttons p-1"><a class="btn btn-'+header_button_color+'" target="_blank" href="help.txt"> docs <i class="fas fa-book-open"></i></a></div>')
     print('            </div>')
     print('        </header>')
