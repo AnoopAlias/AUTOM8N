@@ -11,7 +11,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import bcrumb, return_prepend, print_header, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -199,13 +199,16 @@ else:
     cardfooter('GDNSD Zone Sync Disabled. <br>We are running with cPanel DNS.')
 
 # Set Default PHP for AutoConfig
+phpver_hint = " Selected the desired default PHP Version for our AutoConfig Feature. "
 cardheader('Default PHP for Auto Configuration','fab fa-php')
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
 print('                            <form class="form" id="toastForm6" onsubmit="return false;">')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend">')
-print('                                        <label class="input-group-text">PHP</label>')
+print('                                        <span class="input-group-text">')
+print('                                            '+return_prepend("PHP Version", phpver_hint))
+print('                                        </span>')
 print('                                    </div>')
 
 print('                                    <select name="phpversion" class="custom-select">')
@@ -291,12 +294,15 @@ print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('Turn these settings on when you are under a DDOS Attack.<br>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)')
 
 # PHP-FPM Pool Editor
+phpfpmpool_hint = " Secure and non secure PHP-FPM Pools attached to cPanel users for use with Native NGINX. "
 cardheader('PHP-FPM Pool Editor','fas fa-sitemap')
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <form class="form" action="phpfpm_pool_editor.cgi" method="get">')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend">')
-print('                                        <label class="input-group-text" for="inputGroupSelect01">Account</label>')
+print('                                        <span class="input-group-text">')
+print('                                            '+return_prepend("cPanel User", phpfpmpool_hint))
+print('                                        </span>')
 print('                                    </div>')
 print('                                    <select name="poolfile" class="custom-select">')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
@@ -346,6 +352,7 @@ print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
+cpanpackage_hint = " Map a NGINX configuration to an installed cPanel package. "
 
 # Workaround for python 2.6
 if platform.python_version().startswith('2.6'):
@@ -357,7 +364,9 @@ mypkgs = json.loads(listpkgs)
 print('                            <form class="form" action="pkg_profile.cgi" method="get">')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend">')
-print('                                        <label class="input-group-text" for="inputGroupSelect07">PKG</label>')
+print('                                        <span class="input-group-text">')
+print('                                            '+return_prepend("cPanel Package", cpanpackage_hint))
+print('                                        </span>')
 print('                                    </div>')
 print('                                    <select name="cpanelpkg" class="custom-select">')
 
