@@ -155,8 +155,8 @@ if form.getvalue('cpanelpkg'):
     
 
     # General App Settings
+    print('                    <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
     cardheader('General Application Settings','fas fa-sliders-h')
-    print('                        <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
     print('                            <div class="row"> <!-- Row Start -->') #Row Start
 
@@ -830,9 +830,8 @@ if form.getvalue('cpanelpkg'):
     print('                                </div>')
     print('                            </div> <!-- Row End -->') #End Row
     print('                        </div> <!-- Card Body End -->') #Card End
-    print('                    </form> <!-- Form End -->')
     cardfooter('')
-
+    print('                </form> <!-- Form End -->')
 else:
     print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
     sys.exit(0)
