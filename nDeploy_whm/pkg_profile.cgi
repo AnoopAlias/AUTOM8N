@@ -113,7 +113,7 @@ if form.getvalue('cpanelpkg'):
     # Current Profile Status
     print('				<form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
     print('					<div class="card-body p-0">')  # card-body
-    print('						<div class="row no-gutters align-items-center">')  # row
+    print('						<div class="row no-gutters row-multi">')  # row
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
             # Running
