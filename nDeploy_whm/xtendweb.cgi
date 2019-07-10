@@ -23,6 +23,7 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
+version_info_file = installation_path+"/conf/version.yaml"
 
 cgitb.enable()
 
@@ -67,6 +68,12 @@ for myprocess in psutil.process_iter():
         watcher_status = True
         break
 
+# get version of Nginx and plugin
+with open(version_info_file, 'r') as version_info_yaml:
+    version_info_yaml_parsed = yaml.safe_load(version_info_yaml)
+nginx_version = version_info_yaml_parsed.get('nginx_version')
+autom8n_version = version_info_yaml_parsed.get('autom8n_version')
+
 # System Status
 print('				<div class="card">')  # card
 print('					<div class="card-body p-0">')  # card-body
@@ -75,7 +82,7 @@ print('					        <div class="col-md-4">')
 print('					            <div class="p-3 bg-light border-bottom text-center">')
 print('					                <h4 class="mb-0">Nginx Status</h4>')
 print('                                 <ul class="list-unstyled mb-0">')
-print('					                    <li><small>v1.2.4</small></li>')
+print('					                    <li><small>'+nginx_version+'</small></li>')
 if nginx_status:
     print('					                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
@@ -88,7 +95,7 @@ print('					        <div class="col-md-4">')
 print('					            <div class="p-3 bg-light border-bottom text-center">')
 print('					                <h4 class="mb-0">Watcher Status</h4>')
 print('                                 <ul class="list-unstyled mb-0">')
-print('					                    <li><small>v1.2</small></li>')
+print('					                    <li><small>'+autom8n_version+'</small></li>')
 if watcher_status:
     print('					                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
