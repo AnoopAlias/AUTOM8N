@@ -43,15 +43,7 @@ print('		</nav>')
 
 print('		<div class="row">')
 
-print('			<div class="col-lg-6">')  # col left
-
-# System Status
-print('				<div class="card">')  # card
-print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-cogs float-right"></i> System Setup</h5>')
-print('					</div>')
-print('					<div class="card-body p-0">')  # card-body
-print('						<div class="row no-gutters align-items-center">')
+print('			<div class="col-md-12">')  # top dash
 
 nginx_status = False
 for myprocess in psutil.process_iter():
@@ -64,13 +56,6 @@ for myprocess in psutil.process_iter():
         nginx_status = True
         break
 
-if nginx_status:
-    print(('					<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('					<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Active</div>'))
-else:
-    print(('					<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('					<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Inactive</div>'))
-
 watcher_status = False
 for myprocess in psutil.process_iter():
     # Workaround for Python 2.6
@@ -82,59 +67,87 @@ for myprocess in psutil.process_iter():
         watcher_status = True
         break
 
-if watcher_status:
-    print(('					<div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i> Watcher</div>'))
-    print(('					<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Active</div>'))
+# System Status
+print('				<div class="card">')  # card
+print('					<div class="card-body p-0">')  # card-body
+print('						<div class="row no-gutters row-3-col">')
+print('					        <div class="col-md-4">')
+print('					            <div class="p-3 bg-light border-bottom text-center">')
+print('					                <h4 class="mb-0">Nginx Status</h4>')
+print('                                 <ul class="list-unstyled mb-0">')
+print('					                    <li><small>v1.2.4</small></li>')
+if nginx_status:
+    print('					                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print(('					<div class="col-md-6 alert alert-light"><i class="fas fa-eye"></i> Watcher</div>'))
-    print(('					<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Inactive</div>'))
+    print('					                <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
+print('                                 </ul>')
+print('                             </div>')
+print('					            <button class="btn btn-text btn-block">Reload</button>')
+print('                         </div>')
+print('					        <div class="col-md-4">')
+print('					            <div class="p-3 bg-light border-bottom text-center">')
+print('					                <h4 class="mb-0">Watcher Status</h4>')
+print('                                 <ul class="list-unstyled mb-0">')
+print('					                    <li><small>v1.2</small></li>')
+if watcher_status:
+    print('					                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
+else:
+    print('					                <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
+print('                                 </ul>')
+print('                             </div>')
+print('					            <button class="btn btn-text btn-block">Restart</button>')
+print('                         </div>')
+print('					        <div class="col-md-4">')
+print('					            <div class="p-3 bg-light border-bottom text-center">')
+print('					                <h4 class="mb-0">Clear Caches</h4>')
+print('                                 <ul class="list-unstyled mb-0">')
+print('					                    <li><small>Redis</small></li>')
+print('					                    <li class="mt-2"><i class="fas fa-memory ml-1"></i></li>')
+print('                                 </ul>')
+print('                             </div>')
+print('					            <button class="btn btn-text btn-block">Flush All</button>')
+print('                         </div>')
+print('                     </div>')
+print('                 </div>')
+print('             </div>')
 
-# Default PHP
-if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
-    preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
-    preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
-    preferred_php_yaml.close()
-    phpversion = preferred_php_yaml_parsed.get('PHP')
-    print(('					<div class="col-md-6 alert alert-light"><i class="fab fa-php"></i> Default PHP</div>'))
-    print(('					<div class="col-md-6 alert alert-success">'+phpversion.keys()[0])+'</div>')
+print('         </div>')  # end top dash
+
+print('			<div class="col-lg-6">')  # col left
+
+# System Health & Backup
+print('				<div class="card">')  # card
+print('					<div class="card-header">')
+print('						<h5 class="card-title mb-0"><i class="fas fa-cogs float-right"></i> System Health & Backup</h5>')
+print('					</div>')
+print('					<div class="card-body p-0">')  # card-body
+print('						<div class="row no-gutters row-2-col">')
 
 # Net Data
 myhostname = socket.gethostname()
-print('							<div class="col-md-6 alert alert-light"><i class="fas fa-heartbeat"></i> Netdata</div>')
 print('							<div class="col-md-6">')
-
-print('								<form class="form" action="https://'+myhostname+'/netdata/" target="_blank">')
-print('									<button class="alert alert-info btn btn-info" type="submit">View Graph <i class="fas fa-external-link-alt"></i></button>')
-print('								</form>')
-
+print('                             <a class="btn btn-text btn-block" href="https://'+myhostname+'/netdata/" target="_blank"><i class="fas fa-heartbeat"></i> Netdata <i class="fas fa-external-link-alt"></i></a>')
 print('							</div>')
 
 # Glances
-print('							<div class="col-md-6 alert alert-light"><i class="fas fa-thermometer-half"></i> Glances</div>')
 print('							<div class="col-md-6">')
-
-print('								<form class="form" action="https://'+myhostname+'/glances/" target="_blank">')
-print('									<button class="alert alert-info btn btn-info" type="submit">System Status <i class="fas fa-external-link-alt"></i></button>')
-print('								</form>')
-
+print('                             <a class="btn btn-text btn-block" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>')
 print('							</div>')
 
 # Borg Backup
-print('							<div class="col-md-6 alert alert-light"><i class="fas fa-database"></i> Borg Backup</div>')
 print('							<div class="col-md-6">')
 
 print('								<form class="form" method="get" action="setup_borg_backup.cgi">')
-print('									<button class="alert alert-info btn btn-info" type="submit">Setup Borg</button>')
+print('									<button class="btn btn-text btn-block" type="submit"><i class="fas fa-database"></i> Borg Backup</button>')
 print('								</form>')
 
 print('							</div>')
 
 # Process Tracker
-print('							<div class="col-md-6 alert alert-light"><i class="fas fa-bug"></i> Abnormal Detection</div>')
 print('							<div class="col-md-6">')
 
 print('								<form class="form" id="modalForm3" onsubmit="return false;">')
-print('									<button type="submit" class="alert alert-info btn btn-info">Check Process</button>')
+print('									<button type="submit" class="btn btn-text btn-block"><i class="fas fa-bug"></i> Check Processes</button>')
 print('								</form>')
 
 print('							</div>')
@@ -142,9 +155,6 @@ print('							</div>')
 print('						</div>')  # row end
 print('					</div>')  # card-body
 
-print('					<div class="card-footer">')
-print('						<small><strong>Do NOT</strong> restart Nginx, instead use reload <kbd>nginx -t && nginx -s reload</kbd></small>')
-print('					</div>')
 print('				</div>')  # card end
 
 # Cluster Status
@@ -154,7 +164,7 @@ if os.path.isfile(cluster_config_file):
     print('					<h5 class="card-title mb-0"><i class="fas fa-align-justify float-right"></i> Cluster Status</h5>')
     print('				</div>')
     print('				<div class="card-body p-0">')  # card-body
-    print('					<div class="row no-gutters">')
+    print('					<div class="row no-gutters row-1">')
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     with open(homedir_config_file, 'r') as homedir_data_yaml:
@@ -196,7 +206,7 @@ if os.path.isfile(cluster_config_file):
     print('				</div>')  # card-body
 
     print('				<div class="card-footer">')
-    print('					<small>Only perform a hard reset if the unison archive is corrupt.Unison archive rebuild is time consuming</small>')
+    print('					<small>Only perform a hard reset if the unison archive is corrupt. Unison archive rebuild is time consuming.</small>')
     print('				</div>')
     print('			</div>')  # card end
 
@@ -230,8 +240,21 @@ print('				<div class="card">')  # card
 print('					<div class="card-header">')
 print('						<h5 class="card-title mb-0"><i class="fab fa-php float-right"></i> Default PHP for Autoswitch</h5>')
 print('					</div>')
-print('					<div class="card-body">')  # card-body
+print('                 <div class="card-body p-0">')  # card-body
+print('					    <div class="row no-gutters row-1">')
 
+# Default PHP
+if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
+    preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
+    preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
+    preferred_php_yaml.close()
+    phpversion = preferred_php_yaml_parsed.get('PHP')
+    print(('					<div class="col-6 alert alert-light"><i class="fab fa-php"></i> Default PHP</div>'))
+    print(('					<div class="col-6 alert alert-success">'+phpversion.keys()[0])+'</div>')
+print('					    </div>')
+print('                 </div>')  # end card-body
+
+print('                 <div class="card-body">')  # card-body
 print('						<form class="form" id="toastForm6" onsubmit="return false;">')
 print('							<div class="input-group">')
 print('								<div class="input-group-prepend">')
@@ -264,14 +287,14 @@ print('					<div class="card-header">')
 print('						<h5 class="card-title mb-0"><i class="fas fa-user-shield float-right"></i> DDOS Protection</h5>')
 print('					</div>')
 print('					<div class="card-body p-0">')  # card-body
-print('						<div class="row no-gutters">')
+print('						<div class="row no-gutters row-2-col row-no-btm">')
 
 if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> Nginx</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-md-6 alert alert-success">Enabled</div>')
-    print('								<div class="col-md-6">')
+    print('								<div class="col-6 alert alert-success">Enabled</div>')
+    print('								<div class="col-6">')
     print('									<form id="toastForm1" class="form" onsubmit="return false;">')
     print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
     print(('									<input class="hidden" name="ddos" value="disable">'))
@@ -283,8 +306,8 @@ else:
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> Nginx</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-md-6 alert alert-secondary">Disabled</div>')
-    print('								<div class="col-md-6">')
+    print('								<div class="col-6 alert alert-secondary">Disabled</div>')
+    print('								<div class="col-6">')
     print('									<form id="toastForm1" class="form" onsubmit="return false;">')
     print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
     print(('									<input class="hidden" name="ddos" value="enable">'))
@@ -304,8 +327,8 @@ else:
         print('					<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> SYNPROXY</div>')
         print('					<div class="col-md-6">')
         print('						<div class="row no-gutters">')
-        print('							<div class="col-md-6 alert alert-success">Enabled</div>')
-        print('								<div class="col-md-6">')
+        print('							<div class="col-6 alert alert-success">Enabled</div>')
+        print('								<div class="col-6">')
         print('								<form id="toastForm2" class="form" onsubmit="return false;">')
         print('									<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
         print(('								<input class="hidden" name="ddos" value="disable">'))
@@ -317,8 +340,8 @@ else:
         print('					<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> SYNPROXY</div>')
         print('					<div class="col-md-6">')
         print('						<div class="row no-gutters">')
-        print('							<div class="col-md-6 alert alert-secondary">Disabled</div>')
-        print('							<div class="col-md-6">')
+        print('							<div class="col-6 alert alert-secondary">Disabled</div>')
+        print('							<div class="col-6">')
         print('								<form id="toastForm2" class="form" onsubmit="return false;">')
         print('									<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
         print(('								<input class="hidden" name="ddos" value="enable">'))
@@ -385,14 +408,14 @@ print('					<div class="card-header">')
 print('						<h5 class="card-title mb-0"><i class="fas fa-box-open float-right"></i> Map cPanel pkg to nginx setting</h5>')
 print('					</div>')
 print('					<div class="card-body p-0">')  # card-body
-print('						<div class="row no-gutters">')
+print('						<div class="row no-gutters row-1">')
 
 if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-md-6 alert alert-success">Enabled</div>')
-    print('								<div class="col-md-6">')
+    print('								<div class="col-6 alert alert-success">Enabled</div>')
+    print('								<div class="col-6">')
     print('									<form class="form" method="post" id="toastForm16" onsubmit="return false;">')
     print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
     print(('									<input class="hidden" name="package_lock" value="disabled">'))
@@ -404,8 +427,8 @@ else:
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-md-6 alert alert-secondary">Disabled</div>')
-    print('								<div class="col-md-6">')
+    print('								<div class="col-6 alert alert-secondary">Disabled</div>')
+    print('								<div class="col-6">')
     print('									<form class="form" method="post" id="toastForm16" onsubmit="return false;">')
     print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
     print(('									<input class="hidden" name="package_lock" value="enabled">'))
