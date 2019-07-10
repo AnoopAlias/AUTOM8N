@@ -113,8 +113,6 @@ print('                                        <button type="submit" class="aler
 print('                                    </div>')
 print('                                </form>')
 
-
-
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 

@@ -13,8 +13,8 @@ homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
 
 #Theming Support
-if os.path.isfile(installation_path+"/conf/theming.yaml"):
-    with open(installation_path+"/conf/theming.yaml", 'r') as theme_data_file:
+if os.path.isfile(installation_path+"/conf/bs_themer.yaml"):
+    with open(installation_path+"/conf/bs_themer.yaml", 'r') as theme_data_file:
         yaml_parsed_theme = yaml.safe_load(theme_data_file)
     heading_background_color = yaml_parsed_theme.get("heading_background_color","#FFFFFF")
     heading_foreground_color = yaml_parsed_theme.get("heading_foreground_color","#3D4366")
@@ -30,10 +30,26 @@ if os.path.isfile(installation_path+"/conf/theming.yaml"):
     logo_height = yaml_parsed_theme.get("logo_height","29")
     logo_width = yaml_parsed_theme.get("logo_width","242")
     logo_url = yaml_parsed_theme.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
-
     app_title = yaml_parsed_theme.get("app_title","AUTOM8N")
     app_email = yaml_parsed_theme.get("app_email","ops@gnusys.net")
     theme_data_file.close()
+else:
+    heading_background_color = "#FFFFFF"
+    heading_foreground_color = "#3D4366"
+    body_background_color = "#F1F1F8"
+    card_color = "light"
+    text_color = "dark"
+    breadcrumb_active_color = "#121212"
+    heading_height = "50"
+    header_button_color = "primary"
+    icon_height = "48"
+    icon_width = "48"
+    logo_not_icon = "disabled"
+    logo_height = "29"
+    logo_width = "242"
+    logo_url = "https://autom8n.com/assets/img/logo-dark.png"
+    app_title = "AUTOM8N"
+    app_email = "ops@gnusys.net"
 
 
 #Branding Support
@@ -180,7 +196,7 @@ def cardfooter(text='Unmodified Footer Text'):
         print('                        <div class="card-footer">')
         print('                            <small><center>'+text+'</center></small>')
         print('                        </div>')
-        print('')
+    print('')
     print('                    <!-- Bootstrap Card End -->')
     print('                    </div>')
     print('')
