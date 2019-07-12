@@ -23,7 +23,7 @@ __status__ = "Development"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-bs_themer_file = installation_path+"/conf/bs_themer.yaml"
+ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 
 cgitb.enable()
@@ -37,25 +37,43 @@ bcrumb('nDeploy Control Center','fab fa-bootstrap')
 print('            <!-- WHM Starter Row -->')
 print('            <div class="row justify-content-lg-center flex-nowrap">')
 
-if os.path.isfile(bs_themer_file):
-    with open(bs_themer_file, 'r') as theme_data_file:
-        yaml_parsed_theme = yaml.safe_load(theme_data_file)
-    heading_background_color = yaml_parsed_theme.get("heading_background_color","#FFFFFF")
-    heading_foreground_color = yaml_parsed_theme.get("heading_foreground_color","#3D4366")
-    body_background_color = yaml_parsed_theme.get("body_background_color","#F1F1F8")
-    card_color = yaml_parsed_theme.get("card_color","light")
-    text_color = yaml_parsed_theme.get("text_color","dark")
-    breadcrumb_active_color = yaml_parsed_theme.get("breadcrumb_active_color","#121212")
-    heading_height = yaml_parsed_theme.get("heading_height","50")
-    header_button_color = yaml_parsed_theme.get("header_button_color","primary")
-    icon_height = yaml_parsed_theme.get("icon_height","48")
-    icon_width = yaml_parsed_theme.get("icon_width","48")
-    logo_not_icon = yaml_parsed_theme.get("logo_not_icon","disabled")
-    logo_height = yaml_parsed_theme.get("logo_height","29")
-    logo_width = yaml_parsed_theme.get("logo_width","242")
-    logo_url = yaml_parsed_theme.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
-    app_title = yaml_parsed_theme.get("app_title","AUTOM8N")
-    app_email = yaml_parsed_theme.get("app_email","ops@gnusys.net")
+if os.path.isfile(ndeploy_control_file):
+    with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
+        yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
+    heading_background_color = yaml_parsed_ndeploy_control_settings.get("heading_background_color","#FFFFFF")
+    heading_foreground_color = yaml_parsed_ndeploy_control_settings.get("heading_foreground_color","#3D4366")
+    body_background_color = yaml_parsed_ndeploy_control_settings.get("body_background_color","#F1F1F8")
+    card_color = yaml_parsed_ndeploy_control_settings.get("card_color","light")
+    text_color = yaml_parsed_ndeploy_control_settings.get("text_color","dark")
+    breadcrumb_active_color = yaml_parsed_ndeploy_control_settings.get("breadcrumb_active_color","#121212")
+    heading_height = yaml_parsed_ndeploy_control_settings.get("heading_height","50")
+    header_button_color = yaml_parsed_ndeploy_control_settings.get("header_button_color","primary")
+    icon_height = yaml_parsed_ndeploy_control_settings.get("icon_height","48")
+    icon_width = yaml_parsed_ndeploy_control_settings.get("icon_width","48")
+    logo_not_icon = yaml_parsed_ndeploy_control_settings.get("logo_not_icon","disabled")
+    logo_height = yaml_parsed_ndeploy_control_settings.get("logo_height","29")
+    logo_width = yaml_parsed_ndeploy_control_settings.get("logo_width","242")
+    logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
+    app_title = yaml_parsed_ndeploy_control_settings.get("app_title","AUTOM8N")
+    app_email = yaml_parsed_ndeploy_control_settings.get("app_email","ops@gnusys.net")
+else:
+    heading_background_color = "#FFFFFF"
+    heading_foreground_color = "#3D4366"
+    body_background_color = "#F1F1F8"
+    card_color = "light"
+    text_color = "dark"
+    breadcrumb_active_color = "#121212"
+    heading_height = "50"
+    header_button_color = "primary"
+    icon_height = "48"
+    icon_width = "48"
+    logo_not_icon = "disabled"
+    logo_height = "29"
+    logo_width = "242"
+    logo_url = "https://autom8n.com/assets/img/logo-dark.png"
+    app_title = "AUTOM8N"
+    app_email = "ops@gnusys.net"
+
 
 #Branding Support
 if os.path.isfile(branding_file):
@@ -67,6 +85,15 @@ if os.path.isfile(branding_file):
     brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>') #Depreciated
     brand_anchor = yaml_parsed_brand.get("brand_anchor", "A U T O M 8 N")
     brand_link = yaml_parsed_brand.get("brand_link", "https://autom8n.com/")
+else:
+    brand_logo = "xtendweb.png"
+    brand_name = "AUTOM8N"
+    brand_group = "NGINX AUTOMATION"
+    brand_footer = '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>' #Depreciated
+    brand_anchor = "A U T O M 8 N"
+    brand_link = "https://autom8n.com/"
+
+
 
 print('')
 print('                <!-- Secondary Navigation -->')
@@ -101,9 +128,9 @@ print('                </div> <!-- End Home Tab -->')
 print('')
 print('                <!-- Branding Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-branding" role="tabpanel" aria-labelledby="v-pills-branding-tab">')
-
+print('                <form class="form w-100" action="save_ndeploy_branding_settings.cgi" method="get">')
 cardheader('Branding Settings','fas fa-infinity')
-brand_logo_hint = " This is a brand_logo hint. "
+brand_logo_hint = " Enter the filename of the brand logo used for this system in the suggested directories. "
 brand_name_hint = " This is a brand_name hint. "
 brand_group_hint = " This is a brand_group hint. "
 brand_footer_hint = " This is a brand_footer hint. "
@@ -114,73 +141,71 @@ brand_link_hint = " This is a brand_link hint. "
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 
-print('                                <form class="form w-100" action="save_ndeploy_branding_settings.cgi" method="get">')
-
-print('                                    <label for="brand_logo">brand_logo</label>')
-print('                                    <div class="input-group">')
-print('                                        <div class="input-group-prepend">')
-print('                                            <span class="input-group-text" id="brand_logo_desc">')
-print('                                                '+return_prepend("brand_logo", brand_logo_hint))
-print('                                            </span>')
-print('                                        </div>')
-print('                                        <input type="text" class="form-control" value="'+brand_logo+'" id="brand_logo" aria-describedby="brand_logo_desc">')
+print('                                <label for="brand_logo">Place a 48 x 48 pixel icon of your brand in <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to personalize the panel\'s icon in various areas.</label>')
+print('                                <div class="input-group mb-4">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <span class="input-group-text" id="brand_logo_desc">')
+print('                                            '+return_prepend("brand_logo", brand_logo_hint))
+print('                                        </span>')
 print('                                    </div>')
+print('                                    <input type="text" class="form-control" value="'+brand_logo+'" id="brand_logo" aria-describedby="brand_logo_desc">')
+print('                                </div>')
 
-print('                                    <label for="brand_name">brand_name</label>')
-print('                                    <div class="input-group">')
-print('                                        <div class="input-group-prepend">')
-print('                                            <span class="input-group-text" id="brand_name_desc">')
-print('                                                '+return_prepend("brand_name", brand_name_hint))
-print('                                            </span>')
-print('                                        </div>')
-print('                                        <input type="text" class="form-control" value="'+brand_name+'" id="brand_name" aria-describedby="brand_name_desc">')
+print('                                <label for="brand_name">Enter the brand name you want to represent for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>logo_not_icon</kbd> method.</label>')
+print('                                <div class="input-group mb-4">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <span class="input-group-text" id="brand_name_desc">')
+print('                                            '+return_prepend("brand_name", brand_name_hint))
+print('                                        </span>')
 print('                                    </div>')
+print('                                    <input type="text" class="form-control" value="'+brand_name+'" id="brand_name" aria-describedby="brand_name_desc">')
+print('                                </div>')
 
-print('                                    <label for="brand_group">brand_group</label>')
-print('                                    <div class="input-group">')
-print('                                        <div class="input-group-prepend">')
-print('                                            <span class="input-group-text" id="brand_group_desc">')
-print('                                                '+return_prepend("brand_group", brand_group_hint))
-print('                                            </span>')
-print('                                        </div>')
-print('                                        <input type="text" class="form-control" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
+print('                                <label for="brand_group">Enter the section text you want to use in cPanel brand_group</label>')
+print('                                <div class="input-group mb-4">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <span class="input-group-text" id="brand_group_desc">')
+print('                                            '+return_prepend("brand_group", brand_group_hint))
+print('                                        </span>')
 print('                                    </div>')
+print('                                    <input type="text" class="form-control" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
+print('                                </div>')
 
-print('                                    <label for="brand_anchor">brand_anchor</label>')
-print('                                    <div class="input-group">')
-print('                                        <div class="input-group-prepend">')
-print('                                            <span class="input-group-text" id="brand_anchor_desc">')
-print('                                                '+return_prepend("brand_anchor", brand_anchor_hint))
-print('                                            </span>')
-print('                                        </div>')
-print('                                        <input type="text" class="form-control" value="'+brand_anchor+'" id="brand_anchor" aria-describedby="brand_anchor_desc">')
+print('                                <label for="brand_anchor">brand_anchor</label>')
+print('                                <div class="input-group mb-4">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <span class="input-group-text" id="brand_anchor_desc">')
+print('                                            '+return_prepend("brand_anchor", brand_anchor_hint))
+print('                                        </span>')
 print('                                    </div>')
+print('                                    <input type="text" class="form-control" value="'+brand_anchor+'" id="brand_anchor" aria-describedby="brand_anchor_desc">')
+print('                                </div>')
 
-print('                                    <label for="brand_link">brand_link</label>')
-print('                                    <div class="input-group">')
-print('                                        <div class="input-group-prepend">')
-print('                                            <span class="input-group-text" id="brand_link_desc">')
-print('                                                '+return_prepend("brand_link", brand_link_hint))
-print('                                            </span>')
-print('                                        </div>')
-print('                                        <input type="text" class="form-control" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
+print('                                <label for="brand_link">brand_link</label>')
+print('                                <div class="input-group mb-4">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <span class="input-group-text" id="brand_link_desc">')
+print('                                            '+return_prepend("brand_link", brand_link_hint))
+print('                                        </span>')
 print('                                    </div>')
+print('                                    <input type="text" class="form-control" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
+print('                                </div>')
 
-print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Save Branding Options</button>')
-
-print('                                </form>')
+print('                                <button class="m-4 btn btn-outline-primary btn-block" type="submit">Save Branding Options</button>')
 
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 
 cardfooter('')
 
+print('                </form>')
 print('                </div> <!-- End Branding Tab -->')
 
 #Breadcrumb Tab
 print('')
 print('                <!-- Breadcrumb Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-breadcrumb" role="tabpanel" aria-labelledby="v-pills-breadcrumb-tab">')
+print('                <form class="form w-100" action="save_ndeploy_control_settings.cgi" method="get">')
 
 cardheader('Breadcrumb Settings','fas fa-bread-slice')
 breadcrumb_active_color_hint = " This is a breadcrumb_active_color hint. "
@@ -188,17 +213,15 @@ breadcrumb_active_color_hint = " This is a breadcrumb_active_color hint. "
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 
-print('                                <form class="form w-100" action="save_ndeploy_control_settings.cgi" method="get">')
-
-print('                                    <label for="breadcrumb_active_color">breadcrumb_active_color</label>')
-print('                                    <div class="input-group">')
-print('                                        <div class="input-group-prepend">')
-print('                                            <span class="input-group-text" id="breadcrumb_active_color_desc">')
-print('                                                '+return_prepend("breadcrumb_active_color", breadcrumb_active_color_hint))
-print('                                            </span>')
-print('                                        </div>')
-print('                                        <input type="text" class="form-control" value="'+breadcrumb_active_color+'" id="breadcrumb_active_color" aria-describedby="breadcrumb_active_color_desc">')
+print('                                <label for="breadcrumb_active_color">breadcrumb_active_color</label>')
+print('                                <div class="input-group mb-4">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <span class="input-group-text" id="breadcrumb_active_color_desc">')
+print('                                            '+return_prepend("breadcrumb_active_color", breadcrumb_active_color_hint))
+print('                                        </span>')
 print('                                    </div>')
+print('                                    <input type="text" class="form-control" value="'+breadcrumb_active_color+'" id="breadcrumb_active_color" aria-describedby="breadcrumb_active_color_desc">')
+print('                                </div>')
 
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
@@ -238,6 +261,7 @@ print('                        </div> <!-- Card Body End -->') #Card Body End
 
 cardfooter('')
 
+print('                </form>')
 print('                </div> <!-- End Application Tab -->')
 
 #Column End

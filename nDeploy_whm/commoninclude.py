@@ -8,31 +8,31 @@ import signal
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
+branding_file = installation_path+"/conf/branding.yaml"
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 
 
-#Theming Support
-if os.path.isfile(installation_path+"/conf/bs_themer.yaml"):
-    with open(installation_path+"/conf/bs_themer.yaml", 'r') as theme_data_file:
-        yaml_parsed_theme = yaml.safe_load(theme_data_file)
-    heading_background_color = yaml_parsed_theme.get("heading_background_color","#FFFFFF")
-    heading_foreground_color = yaml_parsed_theme.get("heading_foreground_color","#3D4366")
-    body_background_color = yaml_parsed_theme.get("body_background_color","#F1F1F8")
-    card_color = yaml_parsed_theme.get("card_color","light")
-    text_color = yaml_parsed_theme.get("text_color","dark")
-    breadcrumb_active_color = yaml_parsed_theme.get("breadcrumb_active_color","#121212")
-    heading_height = yaml_parsed_theme.get("heading_height","50")
-    header_button_color = yaml_parsed_theme.get("header_button_color","primary")
-    icon_height = yaml_parsed_theme.get("icon_height","48")
-    icon_width = yaml_parsed_theme.get("icon_width","48")
-    logo_not_icon = yaml_parsed_theme.get("logo_not_icon","disabled")
-    logo_height = yaml_parsed_theme.get("logo_height","29")
-    logo_width = yaml_parsed_theme.get("logo_width","242")
-    logo_url = yaml_parsed_theme.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
-    app_title = yaml_parsed_theme.get("app_title","AUTOM8N")
-    app_email = yaml_parsed_theme.get("app_email","ops@gnusys.net")
-    theme_data_file.close()
+if os.path.isfile(ndeploy_control_file):
+    with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
+        yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
+    heading_background_color = yaml_parsed_ndeploy_control_settings.get("heading_background_color","#FFFFFF")
+    heading_foreground_color = yaml_parsed_ndeploy_control_settings.get("heading_foreground_color","#3D4366")
+    body_background_color = yaml_parsed_ndeploy_control_settings.get("body_background_color","#F1F1F8")
+    card_color = yaml_parsed_ndeploy_control_settings.get("card_color","light")
+    text_color = yaml_parsed_ndeploy_control_settings.get("text_color","dark")
+    breadcrumb_active_color = yaml_parsed_ndeploy_control_settings.get("breadcrumb_active_color","#121212")
+    heading_height = yaml_parsed_ndeploy_control_settings.get("heading_height","50")
+    header_button_color = yaml_parsed_ndeploy_control_settings.get("header_button_color","primary")
+    icon_height = yaml_parsed_ndeploy_control_settings.get("icon_height","48")
+    icon_width = yaml_parsed_ndeploy_control_settings.get("icon_width","48")
+    logo_not_icon = yaml_parsed_ndeploy_control_settings.get("logo_not_icon","disabled")
+    logo_height = yaml_parsed_ndeploy_control_settings.get("logo_height","29")
+    logo_width = yaml_parsed_ndeploy_control_settings.get("logo_width","242")
+    logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
+    app_title = yaml_parsed_ndeploy_control_settings.get("app_title","AUTOM8N")
+    app_email = yaml_parsed_ndeploy_control_settings.get("app_email","ops@gnusys.net")
 else:
     heading_background_color = "#FFFFFF"
     heading_foreground_color = "#3D4366"
@@ -53,12 +53,22 @@ else:
 
 
 #Branding Support
-if os.path.isfile(installation_path+"/conf/branding.yaml"):
-    with open(installation_path+"/conf/branding.yaml", 'r') as brand_data_file:
+if os.path.isfile(branding_file):
+    with open(branding_file, 'r') as brand_data_file:
         yaml_parsed_brand = yaml.safe_load(brand_data_file)
     brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
     brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
     brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
+    brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>') #Depreciated
+    brand_anchor = yaml_parsed_brand.get("brand_anchor", "A U T O M 8 N")
+    brand_link = yaml_parsed_brand.get("brand_link", "https://autom8n.com/")
+else:
+    brand_logo = "xtendweb.png"
+    brand_name = "AUTOM8N"
+    brand_group = "NGINX AUTOMATION"
+    brand_footer = '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>' #Depreciated
+    brand_anchor = "A U T O M 8 N"
+    brand_link = "https://autom8n.com/"
 
 
 def return_label(theoption, hint):
@@ -179,6 +189,7 @@ def print_header(title=''):
 
 #CardStart
 def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
+    print('')
     print('                    <!-- Bootstrap Card Start for '+header+' -->')
     print('                    <div class="card mb-4 text-'+text_color+' bg-'+card_color+'">')
     print('                        <div class="card-header">')
