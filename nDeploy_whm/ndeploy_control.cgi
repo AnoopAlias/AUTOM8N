@@ -114,7 +114,7 @@ brand_link_hint = " This is a brand_link hint. "
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 
-print('                                <form class="form w-100" action="save_ndeploy_control_settings.cgi" method="get">')
+print('                                <form class="form w-100" action="save_ndeploy_branding_settings.cgi" method="get">')
 
 print('                                    <label for="brand_logo">brand_logo</label>')
 print('                                    <div class="input-group">')
@@ -183,10 +183,23 @@ print('                <!-- Breadcrumb Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-breadcrumb" role="tabpanel" aria-labelledby="v-pills-breadcrumb-tab">')
 
 cardheader('Breadcrumb Settings','fas fa-bread-slice')
+breadcrumb_active_color_hint = " This is a breadcrumb_active_color hint. "
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
-print('                                <p>Configure your breadcrumb settings here.</p>')
+
+print('                                <form class="form w-100" action="save_ndeploy_control_settings.cgi" method="get">')
+
+print('                                    <label for="breadcrumb_active_color">breadcrumb_active_color</label>')
+print('                                    <div class="input-group">')
+print('                                        <div class="input-group-prepend">')
+print('                                            <span class="input-group-text" id="breadcrumb_active_color_desc">')
+print('                                                '+return_prepend("breadcrumb_active_color", breadcrumb_active_color_hint))
+print('                                            </span>')
+print('                                        </div>')
+print('                                        <input type="text" class="form-control" value="'+breadcrumb_active_color+'" id="breadcrumb_active_color" aria-describedby="breadcrumb_active_color_desc">')
+print('                                    </div>')
+
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 
