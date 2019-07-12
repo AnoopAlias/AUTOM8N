@@ -33,6 +33,7 @@ print('                <div class="col-lg-8">') #Column
 if form.getvalue('poolfile') and form.getvalue('section'):
     myphpini = form.getvalue('poolfile')
     mysection = int(form.getvalue('section'))
+
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
