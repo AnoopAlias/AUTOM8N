@@ -23,6 +23,7 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
+version_info_file = installation_path+"/conf/version.yaml"
 
 cgitb.enable()
 
@@ -67,6 +68,12 @@ for myprocess in psutil.process_iter():
         watcher_status = True
         break
 
+# get version of Nginx and plugin
+with open(version_info_file, 'r') as version_info_yaml:
+    version_info_yaml_parsed = yaml.safe_load(version_info_yaml)
+nginx_version = version_info_yaml_parsed.get('nginx_version')
+autom8n_version = version_info_yaml_parsed.get('autom8n_version')
+
 # System Status
 print('				<div class="card">')  # card
 print('					<div class="card-body p-0">')  # card-body
@@ -75,7 +82,7 @@ print('					        <div class="col-md-4">')
 print('					            <div class="p-3 bg-light border-bottom text-center">')
 print('					                <h4 class="mb-0">Nginx Status</h4>')
 print('                                 <ul class="list-unstyled mb-0">')
-print('					                    <li><small>v1.2.4</small></li>')
+print('					                    <li><small>'+nginx_version+'</small></li>')
 if nginx_status:
     print('					                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
@@ -88,7 +95,7 @@ print('					        <div class="col-md-4">')
 print('					            <div class="p-3 bg-light border-bottom text-center">')
 print('					                <h4 class="mb-0">Watcher Status</h4>')
 print('                                 <ul class="list-unstyled mb-0">')
-print('					                    <li><small>v1.2</small></li>')
+print('					                    <li><small>'+autom8n_version+'</small></li>')
 if watcher_status:
     print('					                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
@@ -112,7 +119,9 @@ print('                 </div>')
 print('             </div>')
 
 print('         </div>')  # end top dash
+print('     </div>')  # end row
 
+print('     <div class="row">')  # col left
 print('			<div class="col-lg-6">')  # col left
 
 # System Health & Backup
@@ -136,25 +145,20 @@ print('							</div>')
 
 # Borg Backup
 print('							<div class="col-md-6">')
-
 print('								<form class="form" method="get" action="setup_borg_backup.cgi">')
 print('									<button class="btn btn-text btn-block" type="submit"><i class="fas fa-database"></i> Borg Backup</button>')
 print('								</form>')
-
 print('							</div>')
 
 # Process Tracker
 print('							<div class="col-md-6">')
-
 print('								<form class="form" id="modalForm3" onsubmit="return false;">')
 print('									<button type="submit" class="btn btn-text btn-block"><i class="fas fa-bug"></i> Check Processes</button>')
 print('								</form>')
-
 print('							</div>')
 
 print('						</div>')  # row end
 print('					</div>')  # card-body
-
 print('				</div>')  # card end
 
 # Cluster Status
@@ -188,6 +192,22 @@ if os.path.isfile(cluster_config_file):
             else:
                 print(('		<div class="col-md-9 alert alert-light">'+myhome+'_'+servername+'</div>'))
                 print(('		<div class="col-md-3 alert alert-danger">Out of Sync</div>'))
+        filesync_status = False
+        for myprocess in psutil.process_iter():
+            # Workaround for Python 2.6
+            if platform.python_version().startswith('2.6'):
+                mycmdline = myprocess.cmdline
+            else:
+                mycmdline = myprocess.cmdline()
+            if '/usr/bin/unison' in mycmdline and 'phpsessions_'+servername in mycmdline:
+                filesync_status = True
+                break
+        if filesync_status:
+            print(('		<div class="col-md-9 alert alert-light">phpsessions_'+servername+'</div>'))
+            print(('		<div class="col-md-3 alert alert-success">In Sync</div>'))
+        else:
+            print(('		<div class="col-md-9 alert alert-light">phpsessions_'+servername+'</div>'))
+            print(('		<div class="col-md-3 alert alert-danger">Out of Sync</div>'))
     print('					</div>')  # row end
     print('				</div>')  # card-body
 
@@ -293,10 +313,10 @@ if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> Nginx</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-6 alert alert-success">Enabled</div>')
-    print('								<div class="col-6">')
+    print('								<div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('								<div class="col-9">')
     print('									<form id="toastForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info">Disable</button>')
     print(('									<input class="hidden" name="ddos" value="disable">'))
     print('									</form>')
     print('								</div>')
@@ -306,10 +326,10 @@ else:
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> Nginx</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-6 alert alert-secondary">Disabled</div>')
-    print('								<div class="col-6">')
+    print('								<div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('								<div class="col-9">')
     print('									<form id="toastForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info">Enable</button>')
     print(('									<input class="hidden" name="ddos" value="enable">'))
     print('									</form>')
     print('								</div>')
@@ -327,10 +347,10 @@ else:
         print('					<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> SYNPROXY</div>')
         print('					<div class="col-md-6">')
         print('						<div class="row no-gutters">')
-        print('							<div class="col-6 alert alert-success">Enabled</div>')
-        print('								<div class="col-6">')
+        print('							<div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+        print('							<div class="col-9">')
         print('								<form id="toastForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
+        print('									<button type="submit" class="alert alert-info btn btn-info">Disable</button>')
         print(('								<input class="hidden" name="ddos" value="disable">'))
         print('								</form>')
         print('							</div>')
@@ -340,10 +360,10 @@ else:
         print('					<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> SYNPROXY</div>')
         print('					<div class="col-md-6">')
         print('						<div class="row no-gutters">')
-        print('							<div class="col-6 alert alert-secondary">Disabled</div>')
-        print('							<div class="col-6">')
+        print('							<div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+        print('							<div class="col-9">')
         print('								<form id="toastForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
+        print('									<button type="submit" class="alert alert-info btn btn-info">Enable</button>')
         print(('								<input class="hidden" name="ddos" value="enable">'))
         print('								</form>')
         print('							</div>')
@@ -414,10 +434,10 @@ if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-6 alert alert-success">Enabled</div>')
-    print('								<div class="col-6">')
+    print('								<div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('								<div class="col-9">')
     print('									<form class="form" method="post" id="toastForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info">Disable</button>')
     print(('									<input class="hidden" name="package_lock" value="disabled">'))
     print('									</form>')
     print('								</div>')
@@ -427,10 +447,10 @@ else:
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-6 alert alert-secondary">Disabled</div>')
-    print('								<div class="col-6">')
+    print('								<div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('								<div class="col-9">')
     print('									<form class="form" method="post" id="toastForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info">Enable</button>')
     print(('									<input class="hidden" name="package_lock" value="enabled">'))
     print('									</form>')
     print('								</div>')

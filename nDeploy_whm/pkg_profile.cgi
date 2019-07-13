@@ -130,7 +130,7 @@ if form.getvalue('cpanelpkg'):
 
             # .hitaccess
             print('					<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('					<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> &nbsp;</div>')
+            print('					<div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
         else:
             # Running
             print('					<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
@@ -146,7 +146,7 @@ if form.getvalue('cpanelpkg'):
 
             # .hitaccess
             print('					<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('					<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
+            print('					<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
     else:
         # Running
         print('						<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
@@ -162,7 +162,7 @@ if form.getvalue('cpanelpkg'):
 
         # .hitaccess
         print('						<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-        print('						<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
+        print('						<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
 
     print('						</div>')  # row end
     print('					</div>')  # card-body end
