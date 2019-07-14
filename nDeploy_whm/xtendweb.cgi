@@ -128,7 +128,9 @@ print('                 </div>')
 print('             </div>')
 
 print('         </div>')  # end top dash
+print('     </div>')  # end row
 
+print('     <div class="row">')  # col left
 print('			<div class="col-lg-6">')  # col left
 
 # System Health & Backup
@@ -152,25 +154,20 @@ print('							</div>')
 
 # Borg Backup
 print('							<div class="col-md-6">')
-
 print('								<form class="form" method="get" action="setup_borg_backup.cgi">')
 print('									<button class="btn btn-text btn-block" type="submit"><i class="fas fa-database"></i> Borg Backup</button>')
 print('								</form>')
-
 print('							</div>')
 
 # Process Tracker
 print('							<div class="col-md-6">')
-
 print('								<form class="form" id="modalForm3" onsubmit="return false;">')
 print('									<button type="submit" class="btn btn-text btn-block"><i class="fas fa-bug"></i> Check Processes</button>')
 print('								</form>')
-
 print('							</div>')
 
 print('						</div>')  # row end
 print('					</div>')  # card-body
-
 print('				</div>')  # card end
 
 # Cluster Status
@@ -325,10 +322,10 @@ if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> Nginx</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-6 alert alert-success">Enabled</div>')
-    print('								<div class="col-6">')
+    print('								<div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('								<div class="col-9">')
     print('									<form id="toastForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info">Disable</button>')
     print(('									<input class="hidden" name="ddos" value="disable">'))
     print('									</form>')
     print('								</div>')
@@ -338,10 +335,10 @@ else:
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> Nginx</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-6 alert alert-secondary">Disabled</div>')
-    print('								<div class="col-6">')
+    print('								<div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('								<div class="col-9">')
     print('									<form id="toastForm1" class="form" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info">Enable</button>')
     print(('									<input class="hidden" name="ddos" value="enable">'))
     print('									</form>')
     print('								</div>')
@@ -359,10 +356,10 @@ else:
         print('					<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> SYNPROXY</div>')
         print('					<div class="col-md-6">')
         print('						<div class="row no-gutters">')
-        print('							<div class="col-6 alert alert-success">Enabled</div>')
-        print('								<div class="col-6">')
+        print('							<div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+        print('							<div class="col-9">')
         print('								<form id="toastForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
+        print('									<button type="submit" class="alert alert-info btn btn-info">Disable</button>')
         print(('								<input class="hidden" name="ddos" value="disable">'))
         print('								</form>')
         print('							</div>')
@@ -372,10 +369,10 @@ else:
         print('					<div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> SYNPROXY</div>')
         print('					<div class="col-md-6">')
         print('						<div class="row no-gutters">')
-        print('							<div class="col-6 alert alert-secondary">Disabled</div>')
-        print('							<div class="col-6">')
+        print('							<div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+        print('							<div class="col-9">')
         print('								<form id="toastForm2" class="form" onsubmit="return false;">')
-        print('									<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
+        print('									<button type="submit" class="alert alert-info btn btn-info">Enable</button>')
         print(('								<input class="hidden" name="ddos" value="enable">'))
         print('								</form>')
         print('							</div>')
@@ -446,10 +443,10 @@ if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-6 alert alert-success">Enabled</div>')
-    print('								<div class="col-6">')
+    print('								<div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('								<div class="col-9">')
     print('									<form class="form" method="post" id="toastForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Disable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info">Disable</button>')
     print(('									<input class="hidden" name="package_lock" value="disabled">'))
     print('									</form>')
     print('								</div>')
@@ -459,10 +456,10 @@ else:
     print('						<div class="col-md-6 alert alert-light"><i class="fas fa-box"></i>sync nginx to pkg</div>')
     print('						<div class="col-md-6">')
     print('							<div class="row no-gutters">')
-    print('								<div class="col-6 alert alert-secondary">Disabled</div>')
-    print('								<div class="col-6">')
+    print('								<div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('								<div class="col-9">')
     print('									<form class="form" method="post" id="toastForm16" onsubmit="return false;">')
-    print('										<button type="submit" class="alert alert-info btn btn-info ">Enable</button>')
+    print('										<button type="submit" class="alert alert-info btn btn-info">Enable</button>')
     print(('									<input class="hidden" name="package_lock" value="enabled">'))
     print('									</form>')
     print('								</div>')
