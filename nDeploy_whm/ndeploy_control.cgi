@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#import cgi
+import cgi
 import cgitb
 #import subprocess
 import os
@@ -28,7 +28,7 @@ branding_file = installation_path+"/conf/branding.yaml"
 
 cgitb.enable()
 
-#form = cgi.FieldStorage()
+form = cgi.FieldStorage()
 
 print_header('nDeploy Control Center')
 bcrumb('nDeploy Control Center','fab fa-bootstrap')
@@ -94,7 +94,6 @@ else:
     brand_link = "https://autom8n.com/"
 
 
-
 print('')
 print('                <!-- Secondary Navigation -->')
 print('                <div class="col-md-3 nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
@@ -128,10 +127,9 @@ print('                </div> <!-- End Home Tab -->')
 print('')
 print('                <!-- Branding Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-branding" role="tabpanel" aria-labelledby="v-pills-branding-tab">')
-print('                <form class="form w-100" action="save_ndeploy_branding_settings.cgi" method="get">')
 cardheader('Branding Settings','fas fa-infinity')
 brand_logo_hint = " Enter the filename of the brand logo used for this system in the suggested directories. "
-brand_name_hint = " This is a brand_name hint. "
+brand_name_hint = " Enter the text you want to represent this application as for whitelabeling purposes. This shows up in both WHM and cPanel."
 brand_group_hint = " This is a brand_group hint. "
 brand_footer_hint = " This is a brand_footer hint. "
 brand_anchor_hint = " This is a brand_anchor hint. "
@@ -148,7 +146,7 @@ print('                                        <span class="input-group-text" id
 print('                                            '+return_prepend("brand_logo", brand_logo_hint))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" value="'+brand_logo+'" id="brand_logo" aria-describedby="brand_logo_desc">')
+print('                                    <input type="text" class="form-control" name="brand_logo" value="'+brand_logo+'" id="brand_logo" aria-describedby="brand_logo_desc">')
 print('                                </div>')
 
 print('                                <label for="brand_name">Enter the brand name you want to represent for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>logo_not_icon</kbd> method.</label>')
@@ -158,17 +156,17 @@ print('                                        <span class="input-group-text" id
 print('                                            '+return_prepend("brand_name", brand_name_hint))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" value="'+brand_name+'" id="brand_name" aria-describedby="brand_name_desc">')
+print('                                    <input type="text" class="form-control" name="brand_name" value="'+brand_name+'" id="brand_name" aria-describedby="brand_name_desc">')
 print('                                </div>')
 
-print('                                <label for="brand_group">Enter the section text you want to use in cPanel brand_group</label>')
+print('                                <label for="brand_group">Enter the section you want this application to be placed in within each user\'s cPanel.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_group_desc">')
 print('                                            '+return_prepend("brand_group", brand_group_hint))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
+print('                                    <input type="text" class="form-control" name="brand_group" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
 print('                                </div>')
 
 print('                                <label for="brand_anchor">brand_anchor</label>')
@@ -178,7 +176,7 @@ print('                                        <span class="input-group-text" id
 print('                                            '+return_prepend("brand_anchor", brand_anchor_hint))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" value="'+brand_anchor+'" id="brand_anchor" aria-describedby="brand_anchor_desc">')
+print('                                    <input type="text" class="form-control" name="brand_anchor" value="'+brand_anchor+'" id="brand_anchor" aria-describedby="brand_anchor_desc">')
 print('                                </div>')
 
 print('                                <label for="brand_link">brand_link</label>')
@@ -188,24 +186,28 @@ print('                                        <span class="input-group-text" id
 print('                                            '+return_prepend("brand_link", brand_link_hint))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
+print('                                    <input type="text" class="form-control" name="brand_link" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
 print('                                </div>')
 
-print('                                <button class="m-4 btn btn-outline-primary btn-block" type="submit">Save Branding Options</button>')
+print('                                <form class="form ndeploy_control_branding" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
+print('                                    <input type="text" hidden name="brand_logo" value="'+brand_logo+'">')
+print('                                    <button class="btn btn-outline-primary" type="submit">Save Branding Options</button>')
+print('                                </form>')
 
+
+print('                                    <button class="btn btn-outline-primary" type="submit">Rebuild Brand</button>')
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 
-cardfooter('')
+cardfooter('Test this first: Current variables we need to send over: '+brand_logo+' '+brand_name+' '+brand_group+' '+brand_anchor+' '+brand_link)
 
-print('                </form>')
 print('                </div> <!-- End Branding Tab -->')
 
 #Breadcrumb Tab
 print('')
 print('                <!-- Breadcrumb Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-breadcrumb" role="tabpanel" aria-labelledby="v-pills-breadcrumb-tab">')
-print('                <form class="form w-100" action="save_ndeploy_control_settings.cgi" method="get">')
+#print('                <form class="form w-100" action="save_ndeploy_control_settings.cgi" method="get">')
 
 cardheader('Breadcrumb Settings','fas fa-bread-slice')
 breadcrumb_active_color_hint = " This is a breadcrumb_active_color hint. "
@@ -220,7 +222,7 @@ print('                                        <span class="input-group-text" id
 print('                                            '+return_prepend("breadcrumb_active_color", breadcrumb_active_color_hint))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" value="'+breadcrumb_active_color+'" id="breadcrumb_active_color" aria-describedby="breadcrumb_active_color_desc">')
+print('                                    <input type="text" class="form-control" name="breadcrumb_active_color" value="'+breadcrumb_active_color+'" id="breadcrumb_active_color" aria-describedby="breadcrumb_active_color_desc">')
 print('                                </div>')
 
 print('                            </div> <!-- Row End -->') #End Row
@@ -261,7 +263,7 @@ print('                        </div> <!-- Card Body End -->') #Card Body End
 
 cardfooter('')
 
-print('                </form>')
+#print('                </form>')
 print('                </div> <!-- End Application Tab -->')
 
 #Column End

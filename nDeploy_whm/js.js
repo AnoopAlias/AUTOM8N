@@ -196,6 +196,17 @@ jQuery(document).ready(function($){
         }});
     });
 
+
+    $('#ndeploy_control_branding').submit(function() {
+        var $f = $('#ndeploy_control_branding');
+        var $url = "save_ndeploy_branding_settings.cgi?" + $f.serialize();
+        $.ajax({url: $url, success: function(result){
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
+        }});
+    });
+
+
     $('#myModal').on('hidden.bs.modal', function () {
     	location.reload()
     });
