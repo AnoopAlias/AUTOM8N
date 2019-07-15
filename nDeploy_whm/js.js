@@ -196,10 +196,27 @@ jQuery(document).ready(function($){
         }});
     });
 
-
     $('#ndeploy_control_branding').submit(function() {
         var $f = $('#ndeploy_control_branding');
         var $url = "save_ndeploy_branding_settings.cgi?" + $f.serialize();
+        $.ajax({url: $url, success: function(result){
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
+        }});
+    });
+    
+    $('#ndeploy_control_rebuild_brand').submit(function() {
+        var $f = $('#ndeploy_control_rebuild_brand');
+        var $url = "rebuild_branding_via_whm.cgi?" + $f.serialize();
+        $.ajax({url: $url, success: function(result){
+            $("#myToast").find('.toast-body').html(result)
+            $("#myToast").toast('show');
+        }});
+    });
+
+    $('#ndeploy_control_config').submit(function() {
+        var $f = $('#ndeploy_control_config');
+        var $url = "save_ndeploy_control_config.cgi?" + $f.serialize();
         $.ajax({url: $url, success: function(result){
             $("#myToast").find('.toast-body').html(result)
             $("#myToast").toast('show');

@@ -138,7 +138,17 @@ brand_link_hint = " This is a brand_link hint. "
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
-print('                            <form class="form" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
+print('                                <form class="form w-100" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
+
+print('                                <label for="brand">Enter the brand name you want to represent for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>logo_not_icon</kbd> method.</label>')
+print('                                <div class="input-group mb-4">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <span class="input-group-text" id="brand_desc">')
+print('                                            '+return_prepend("brand", brand_hint))
+print('                                        </span>')
+print('                                    </div>')
+print('                                    <input type="text" class="form-control" name="brand" value="'+brand+'" id="brand" aria-describedby="brand_desc">')
+print('                                </div>')
 
 print('                                <label for="brand_logo">Place a 48 x 48 pixel icon of your brand in <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to personalize the panel\'s icon in various areas.</label>')
 print('                                <div class="input-group mb-4">')
@@ -150,15 +160,6 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_logo" value="'+brand_logo+'" id="brand_logo" aria-describedby="brand_logo_desc">')
 print('                                </div>')
 
-print('                                <label for="brand">Enter the brand name you want to represent for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>logo_not_icon</kbd> method.</label>')
-print('                                <div class="input-group mb-4">')
-print('                                    <div class="input-group-prepend">')
-print('                                        <span class="input-group-text" id="brand_desc">')
-print('                                            '+return_prepend("brand", brand_hint))
-print('                                        </span>')
-print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="brand" value="'+brand+'" id="brand" aria-describedby="brand_desc">')
-print('                                </div>')
 
 print('                                <label for="brand_group">Enter the section you want this application to be placed in within each user\'s cPanel.</label>')
 print('                                <div class="input-group mb-4">')
@@ -189,10 +190,13 @@ print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_link" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
 print('                                </div>')
-print('                                    <button class="mr-2 btn btn-outline-primary" type="submit">Save Branding Options</button>')
+print('                                <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Save Branding Options</button>')
 print('                                </form>')
 
-print('                                    <button class="btn btn-outline-primary" type="submit">Rebuild Brand</button>')
+print('                                <form class="form w-100" id="ndeploy_control_rebuild_brand" method="post" onsubmit="return false;">')
+print('                                <input hidden class="form-control" name="rebuild_brand" value="enabled">')
+print('                                <button class="btn btn-outline-primary btn-block" type="submit">Rebuild Brand</button>')
+print('                                </form>')
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 
@@ -204,13 +208,13 @@ print('                </div> <!-- End Branding Tab -->')
 print('')
 print('                <!-- Breadcrumb Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-breadcrumb" role="tabpanel" aria-labelledby="v-pills-breadcrumb-tab">')
-#print('                <form class="form w-100" action="save_ndeploy_control_settings.cgi" method="get">')
 
 cardheader('Breadcrumb Settings','fas fa-bread-slice')
 breadcrumb_active_color_hint = " This is a breadcrumb_active_color hint. "
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
+print('                                <form class="form w-100" id="ndeploy_control_config" method="post" onsubmit="return false;">')
 
 print('                                <label for="breadcrumb_active_color">breadcrumb_active_color</label>')
 print('                                <div class="input-group mb-4">')
@@ -221,11 +225,13 @@ print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="breadcrumb_active_color" value="'+breadcrumb_active_color+'" id="breadcrumb_active_color" aria-describedby="breadcrumb_active_color_desc">')
 print('                                </div>')
+print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Save BreadCrumb Settings</button>')
+print('                                </form>')
 
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 
-cardfooter('')
+cardfooter(breadcrumb_active_color)
 
 print('                </div> <!-- End Breadcrumbs Tab -->')
 
@@ -260,7 +266,6 @@ print('                        </div> <!-- Card Body End -->') #Card Body End
 
 cardfooter('')
 
-#print('                </form>')
 print('                </div> <!-- End Application Tab -->')
 
 #Column End
