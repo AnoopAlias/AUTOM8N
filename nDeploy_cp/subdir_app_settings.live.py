@@ -47,10 +47,6 @@ print('				<li class="breadcrumb-item active">Subdir Config</li>')
 print('			</ol>')
 print('		</nav>')
 
-print('		<div class="row justify-content-lg-center">')
-
-print('			<div class="col-lg-6">')  # col left
-
 if form.getvalue('domain') and form.getvalue('thesubdir'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
@@ -89,6 +85,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         # We do a fresh config
         if subdir_apps_dict:
             if not subdir_apps_dict.get(thesubdir):
+                print('<div class="row justify-content-lg-center">')
+                print('<div class="col-lg-6">')
                 print('	<div class="card">')  # card
                 print('		<div class="card-header">')
                 print('			<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> '+mydomain+'/'+thesubdir+'</h5>')
@@ -113,6 +111,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			</form>')
                 print('		</div>')  # card-body end
                 print('</div>')  # card end
+                print('</div>')  # col end
+                print('</div>')  # row end
             else:
                 # we get the current app settings for the subdir
                 the_subdir_dict = subdir_apps_dict.get(thesubdir)
@@ -148,79 +148,83 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     commoninclude.print_error_wrapper('Error: app template data file error')
                     sys.exit(0)
 
+                print('		<div class="row">')
+                print('			<div class="col-lg-12">')  # dash
+
+                # Domain Status
+                print('				<div class="card">')  # card
+                print('					<div class="card-body p-0">')  # card-body
+                print('						<div class="row no-gutters row-3-col">')
+                print('					        <div class="col-md-4">')
+                print('					            <div class="p-3 bg-light text-center">')
+                print('					                <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
+                print('                                 <ul class="list-unstyled mb-0">')
+                print('					                    <li class="mt-2 text-success">Nginx</li>')
+                print('                                 </ul>')
+                print('                             </div>')
+                print('                         </div>')
+                print('					        <div class="col-md-4">')
+                print('					            <div class="p-3 bg-light text-center">')
+                print('					                <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
+                print('                                 <ul class="list-unstyled mb-0">')
+                print('					                    <li class="mt-2 text-success">'+backend_version+'</li>')
+                print('                                 </ul>')
+                print('                             </div>')
+                print('                         </div>')
+                print('					        <div class="col-md-4">')
+                print('					            <div class="p-3 bg-light text-center">')
+                print('					                <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
+                print('                                 <ul class="list-unstyled mb-0">')
+                print('					                    <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+                print('                                 </ul>')
+                print('                             </div>')
+                print('                         </div>')
+                print('                     </div>')
+                print('                 </div>')
+                print('             </div>')
+
+                print('         </div>')  # end top dash
+                print('    </div>')  # end row
+
                 # Ok we are done with getting the settings,now lets present it to the user
+                print('<div class="row">')
+                print('<div class="col-lg-6">')  # col left
                 print('	<div class="card">')  # card
                 print('		<div class="card-header">')
                 print('			<h5 class="card-title mb-0"><i class="fas fa-users-cog float-right"></i> '+mydomain+'/'+thesubdir+'</h5>')
                 print('		</div>')
                 print('		<div class="card-body p-0">')  # card-body
-                print('			<div class="row no-gutters">')  # row
+                print('			<div class="row no-gutters row-multi">')  # row
                 if backend_category == 'PROXY':
                     if backend_version == 'httpd':
-                        # Running
-                        print('		<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
-                        print('		<div class="col-md-6 alert alert-success">Nginx</div>')
-
-                        # Backend
-                        print('		<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
-                        print('		<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
-
-                        # Description
-                        print('		<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Template</div>')
-                        print('		<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
-
                         # .hitaccess
                         print('		<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-                        print('		<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> &nbsp;</div>')
+                        print('		<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i></div>')
                     else:
-                        # Running
-                        print('		<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
-                        print('		<div class="col-md-6 alert alert-success">Nginx</div>')
-
-                        # Backend
-                        print('		<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
-                        print('		<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
-
-                        # Description
-                        print('		<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Template</div>')
-                        print('		<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
-
                         # .hitaccess
                         print('		<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-                        print('		<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
+                        print('		<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
                 else:
-                    # Running
-                    print('			<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
-                    print('			<div class="col-md-6 alert alert-success">Nginx</div>')
-
-                    # Backend
-                    print('			<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
-                    print('			<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
-
-                    # Description
-                    print('			<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Template</div>')
-                    print('			<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
-
                     # .hitaccess
                     print('			<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-                    print('			<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Ignored</div>')
+                    print('			<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
 
                 # User config reload
                 nginx_log_hint = document_root+"/"+thesubdir+"/nginx.conf"
                 commoninclude.print_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
                 if os.path.isfile(nginx_log_hint):
                     if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
-                        print('		<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i> Valid</div>')
+                        print('		<div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
                     else:
-                        print('		<div class="col-md-6 alert alert-danger"><i class="fas fa-times"></i> Invalid or require reload</div>')
+                        print('		<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i> Invalid/Require Reload</div>')
                 else:
-                    print('			<div class="col-md-6 alert alert-secondary"><i class="fas fa-file-upload"></i> No File uploaded</div>')
+                    print('			<div class="col-md-6 alert alert-secondary"><i class="fas fa-file-upload"></i> Not Present</div>')
 
                 # Reload Nginx
                 print('					<div class="col-md-6 alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
                 print('					<div class="col-md-6">')
                 print('						<form class="form" method="post" id="toastForm4" onsubmit="return false;">')
-                print('							<button class="alert alert-info btn btn-info " type="submit">Reload</button>')
+                print('							<button class="alert alert-info btn btn-info" type="submit">Reload</button>')
                 print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print('						</form>')
                 print('					</div>')
@@ -229,7 +233,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('					<div class="col-md-6 alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
                 print('					<div class="col-md-6">')
                 print('						<form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-                print('							<button class="alert alert-info btn btn-info " type="submit">View Log</button>')
+                print('							<button class="alert alert-info btn btn-info" type="submit">View Log</button>')
                 print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
                 print('						</form>')
                 print('					</div>')
