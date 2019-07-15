@@ -40,10 +40,6 @@ print('				<li class="breadcrumb-item active">Edit cPanel package</li>')
 print('			</ol>')
 print('		</nav>')
 
-print('		<div class="row">')
-
-print('			<div class="col-lg-6">')  # col left
-
 if form.getvalue('cpanelpkg'):
     if form.getvalue('cpanelpkg') == 'default':
         pkgdomaindata = installation_path+'/conf/domain_data_default_local.yaml'
@@ -103,8 +99,49 @@ if form.getvalue('cpanelpkg'):
         commoninclude.print_error('Error: backend config file error')
         sys.exit(0)
 
-    # Ok we are done with getting the settings, now lets present it to the user
+    print('		<div class="row">')
+    print('			<div class="col-lg-12">')  # dash
 
+    # Domain Status
+    print('				<div class="card">')  # card
+    print('					<div class="card-body p-0">')  # card-body
+    print('						<div class="row no-gutters row-3-col">')
+    print('					        <div class="col-md-4">')
+    print('					            <div class="p-3 bg-light text-center">')
+    print('					                <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
+    print('                                 <ul class="list-unstyled mb-0">')
+    print('					                    <li class="mt-2 text-success">Nginx</li>')
+    print('                                 </ul>')
+    print('                             </div>')
+    print('                         </div>')
+    print('					        <div class="col-md-4">')
+    print('					            <div class="p-3 bg-light text-center">')
+    print('					                <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
+    print('                                 <ul class="list-unstyled mb-0">')
+    print('					                    <li class="mt-2 text-success">'+backend_version+'</li>')
+    print('                                 </ul>')
+    print('                             </div>')
+    print('                         </div>')
+    print('					        <div class="col-md-4">')
+    print('					            <div class="p-3 bg-light text-center">')
+    print('					                <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
+    print('                                 <ul class="list-unstyled mb-0">')
+    print('					                    <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+    print('                                 </ul>')
+    print('                             </div>')
+    print('                         </div>')
+    print('                     </div>')
+    print('                 </div>')
+    print('             </div>')
+
+    print('         </div>')  # end top dash
+    print('    </div>')  # end row
+
+    print('		<div class="row">')
+
+    print('			<div class="col-lg-6">')  # col left
+
+    # Ok we are done with getting the settings, now lets present it to the user
     print('			<div class="card">')  # card
     print('				<div class="card-header">')
     print('					<h5 class="card-title mb-0"><i class="fas fa-users-cog float-right"></i> '+form.getvalue('cpanelpkg')+'</h5>')
@@ -116,50 +153,14 @@ if form.getvalue('cpanelpkg'):
     print('						<div class="row no-gutters row-multi">')  # row
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
-            # Running
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
-            print('					<div class="col-md-6 alert alert-success">Nginx</div>')
-
-            # Backend
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
-            print('					<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
-
-            # Description
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i> Config template</div>')
-            print('					<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
-
             # .hitaccess
             print('					<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
             print('					<div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
         else:
-            # Running
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
-            print('					<div class="col-md-6 alert alert-success">Nginx</div>')
-
-            # Backend
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
-            print('					<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
-
-            # Description
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>Config template</div>')
-            print('					<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
-
             # .hitaccess
             print('					<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
             print('					<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
     else:
-        # Running
-        print('						<div class="col-md-6 alert alert-light"><i class="fas fa-play"></i> Running</div>')
-        print('						<div class="col-md-6 alert alert-success">Nginx</div>')
-
-        # Backend
-        print('						<div class="col-md-6 alert alert-light"><i class="fas fa-server"></i> Upstream</div>')
-        print('						<div class="col-md-6 alert alert-success">'+backend_version+'</div>')
-
-        # Description
-        print('						<div class="col-md-6 alert alert-light"><i class="fas fa-cog"></i>Config template</div>')
-        print('						<div class="col-md-6 alert alert-success">'+apptemplate_description+'</div>')
-
         # .hitaccess
         print('						<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
         print('						<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')

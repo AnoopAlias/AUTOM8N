@@ -54,6 +54,8 @@ body {
         top: 2px;
         font-size: 1.3rem;
         line-height: 1.6rem; }
+    .card .card-body .no-gutters .alert.alert-info:last-child {
+      border-top: 1px solid #e1e1e1; }
     .card .card-body .no-gutters .alert.btn {
       margin-top: 0; }
   .card .card-body .no-gutters.row-2-col [class*='col-'] {
@@ -103,7 +105,7 @@ body {
     border-top: none;
     border-bottom: none; }
   .card .card-body .no-gutters .btn-block {
-    padding: .8rem .8rem .8rem 1.25rem;
+    padding: .83rem .8rem .83rem 1.25rem;
     border: none;
     border-radius: 0;
     color: #777777; }
@@ -114,6 +116,8 @@ body {
       margin-right: .15rem;
       text-align: left;
       min-width: 1.6rem; }
+    .card .card-body .no-gutters .btn-block.alert-info {
+      border-top: 1px solid gainsboro; }
   .card .card-body .form {
     margin-bottom: 0; }
     .card .card-body .form .btn.btn-info {
