@@ -127,7 +127,6 @@ print('                </div> <!-- End Home Tab -->')
 print('')
 print('                <!-- Branding Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-branding" role="tabpanel" aria-labelledby="v-pills-branding-tab">')
-print('                <form class="form" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
 cardheader('Branding Settings','fas fa-infinity')
 brand_logo_hint = " Enter the filename of the brand logo used for this system in the suggested directories. "
 brand_hint = " Enter the text you want to represent this application as for whitelabeling purposes. This shows up in both WHM and cPanel."
@@ -139,6 +138,7 @@ brand_link_hint = " This is a brand_link hint. "
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
+print('                            <form class="form" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
 
 print('                                <label for="brand_logo">Place a 48 x 48 pixel icon of your brand in <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to personalize the panel\'s icon in various areas.</label>')
 print('                                <div class="input-group mb-4">')
