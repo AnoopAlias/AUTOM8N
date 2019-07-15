@@ -80,14 +80,14 @@ if os.path.isfile(branding_file):
     with open(branding_file, 'r') as brand_data_file:
         yaml_parsed_brand = yaml.safe_load(brand_data_file)
     brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
-    brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
+    brand = yaml_parsed_brand.get("brand", "AUTOM8N")
     brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
     brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>') #Depreciated
     brand_anchor = yaml_parsed_brand.get("brand_anchor", "A U T O M 8 N")
     brand_link = yaml_parsed_brand.get("brand_link", "https://autom8n.com/")
 else:
     brand_logo = "xtendweb.png"
-    brand_name = "AUTOM8N"
+    brand = "AUTOM8N"
     brand_group = "NGINX AUTOMATION"
     brand_footer = '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>' #Depreciated
     brand_anchor = "A U T O M 8 N"
@@ -127,9 +127,10 @@ print('                </div> <!-- End Home Tab -->')
 print('')
 print('                <!-- Branding Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-branding" role="tabpanel" aria-labelledby="v-pills-branding-tab">')
+print('                <form class="form" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
 cardheader('Branding Settings','fas fa-infinity')
 brand_logo_hint = " Enter the filename of the brand logo used for this system in the suggested directories. "
-brand_name_hint = " Enter the text you want to represent this application as for whitelabeling purposes. This shows up in both WHM and cPanel."
+brand_hint = " Enter the text you want to represent this application as for whitelabeling purposes. This shows up in both WHM and cPanel."
 brand_group_hint = " This is a brand_group hint. "
 brand_footer_hint = " This is a brand_footer hint. "
 brand_anchor_hint = " This is a brand_anchor hint. "
@@ -149,14 +150,14 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_logo" value="'+brand_logo+'" id="brand_logo" aria-describedby="brand_logo_desc">')
 print('                                </div>')
 
-print('                                <label for="brand_name">Enter the brand name you want to represent for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>logo_not_icon</kbd> method.</label>')
+print('                                <label for="brand">Enter the brand name you want to represent for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>logo_not_icon</kbd> method.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
-print('                                        <span class="input-group-text" id="brand_name_desc">')
-print('                                            '+return_prepend("brand_name", brand_name_hint))
+print('                                        <span class="input-group-text" id="brand_desc">')
+print('                                            '+return_prepend("brand", brand_hint))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="brand_name" value="'+brand_name+'" id="brand_name" aria-describedby="brand_name_desc">')
+print('                                    <input type="text" class="form-control" name="brand" value="'+brand+'" id="brand" aria-describedby="brand_desc">')
 print('                                </div>')
 
 print('                                <label for="brand_group">Enter the section you want this application to be placed in within each user\'s cPanel.</label>')
@@ -188,18 +189,14 @@ print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_link" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
 print('                                </div>')
-
-print('                                <form class="form ndeploy_control_branding" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
-print('                                    <input type="text" hidden name="brand_logo" value="'+brand_logo+'">')
-print('                                    <button class="btn btn-outline-primary" type="submit">Save Branding Options</button>')
+print('                                    <button class="mr-2 btn btn-outline-primary" type="submit">Save Branding Options</button>')
 print('                                </form>')
-
 
 print('                                    <button class="btn btn-outline-primary" type="submit">Rebuild Brand</button>')
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 
-cardfooter('Test this first: Current variables we need to send over: '+brand_logo+' '+brand_name+' '+brand_group+' '+brand_anchor+' '+brand_link)
+cardfooter('')
 
 print('                </div> <!-- End Branding Tab -->')
 
