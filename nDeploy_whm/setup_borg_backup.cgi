@@ -378,7 +378,7 @@ else:
     print('					<p>Install and setup Borg/Borgmatic</p>')
     print('					            <form class="form" id="toastForm23" onsubmit="return false;">')
     print(('					            <input class="hidden" name="action" value="redisflush">'))
-    print('					                <button class="btn btn-text btn-block">Install</button>')
+    print('					                <button class="btn btn-primary">Install</button>')
     print('								</form>')
 
 print('					</div>')  # card-body end
