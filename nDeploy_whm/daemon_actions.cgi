@@ -80,6 +80,7 @@ if form.getvalue('action'):
     else:
         commoninclude.print_forbidden()
         the_raw_cmd = 'echo ""'
+    print(the_raw_cmd)
     run_cmd = subprocess.Popen(the_raw_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     print('<samp>')
     while True:
