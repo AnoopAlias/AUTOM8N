@@ -375,10 +375,11 @@ if os.path.isdir('/etc/borgmatic'):
 
     print('					</form>')
 else:
-    print('					<i class="fas fa-exclamation"></i>')
-    print('					<p>Borg/Borgmatic not installed.</p>')
-    print('					<small class="mb-1">To install run the following command</small>')
-    print('					<kbd>/opt/nDeploy/scripts/easy_borg_setup.sh</kbd>')
+    print('					<p>Install and setup Borg/Borgmatic</p>')
+    print('					            <form class="form" id="toastForm23" onsubmit="return false;">')
+    print(('					            <input class="hidden" name="action" value="redisflush">'))
+    print('					                <button class="btn btn-text btn-block">Install</button>')
+    print('								</form>')
 
 print('					</div>')  # card-body end
 print('				</div>')  # card end
