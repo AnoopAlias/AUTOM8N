@@ -35,6 +35,15 @@ if form.getvalue('action'):
                 break
             print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
         print('</samp>')
+    elif form.getvalue('action') == 'initrepo':
+        run_cmd = subprocess.Popen('/usr/local/bin/borgmatic --init --encryption repokey-blake2', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+        print('<samp>')
+        while True:
+            line = run_cmd.stdout.readline()
+            if not line:
+                break
+            print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
+        print('</samp>')
     else:
         commoninclude.print_forbidden()
 else:

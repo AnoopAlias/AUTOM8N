@@ -66,6 +66,15 @@ jQuery(document).ready(function($){
 	        }});
 	    });
 
+			$('#modalForm5').submit(function() {
+		        var $f = $('#modalForm5');
+		        var $url = "install_borg.cgi?" + $f.serialize();
+		        $.ajax({url: $url, success: function(result){
+		            $("#myModal-xl").find('.modal-body').html(result)
+		            $("#myModal-xl").modal('show');
+		        }});
+		    });
+
 	$('#toastForm4').submit(function() {
         var $f = $('#toastForm4');
         var $url = "fix_unison.cgi?" + $f.serialize();
