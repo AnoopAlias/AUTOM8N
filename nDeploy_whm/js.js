@@ -196,6 +196,15 @@ jQuery(document).ready(function($){
         }});
     });
 
+		$('#toastForm21').submit(function() {
+				var $f = $('#toastForm21');
+				var $url = "daemon_actions.cgi?" + $f.serialize();
+				$.ajax({url: $url, success: function(result){
+						$("#myToast").find('.toast-body').html(result)
+						$("#myToast").toast('show');
+				}});
+		});
+
     $('#myModal').on('hidden.bs.modal', function () {
     	location.reload()
     });
