@@ -4,7 +4,7 @@ location:
       - /home
   one_file_system: true
   repositories:
-        - user@backupserver:sourcehostname.borg
+        - ssh://user@host:port/path/to/repo
   exclude_from:
     - /etc/borgmatic/excludes
     - /opt/nDeploy/conf/borg_excludes
