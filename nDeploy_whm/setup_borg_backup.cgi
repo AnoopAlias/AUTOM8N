@@ -376,8 +376,8 @@ if os.path.isdir('/etc/borgmatic'):
     print('					</form>')
 else:
     print('					<p>Install and setup Borg/Borgmatic</p>')
-    print('					            <form class="form" id="toastForm23" onsubmit="return false;">')
-    print(('					            <input class="hidden" name="action" value="redisflush">'))
+    print('					            <form class="form" id="modalForm4" onsubmit="return false;">')
+    print(('					            <input class="hidden" name="action" value="installborg">'))
     print('					                <button class="btn btn-primary">Install</button>')
     print('								</form>')
 
