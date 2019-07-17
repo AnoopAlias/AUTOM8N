@@ -205,6 +205,24 @@ jQuery(document).ready(function($){
 				}});
 		});
 
+		$('#toastForm22').submit(function() {
+				var $f = $('#toastForm22');
+				var $url = "daemon_actions.cgi?" + $f.serialize();
+				$.ajax({url: $url, success: function(result){
+						$("#myToast").find('.toast-body').html(result)
+						$("#myToast").toast('show');
+				}});
+		});
+
+		$('#toastForm23').submit(function() {
+				var $f = $('#toastForm23');
+				var $url = "daemon_actions.cgi?" + $f.serialize();
+				$.ajax({url: $url, success: function(result){
+						$("#myToast").find('.toast-body').html(result)
+						$("#myToast").toast('show');
+				}});
+		});
+
     $('#myModal').on('hidden.bs.modal', function () {
     	location.reload()
     });
