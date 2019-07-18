@@ -230,7 +230,8 @@ if os.path.isdir('/etc/borgmatic'):
         print('				</div>')
         print('				<div class="card-body">')  # card-body
 
-        output = subprocess.check_output('borgmatic --list --json', shell=True)
+        proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
+        output = proc.stdout.read()
         print(output)
 
         print('				</div>')  # card-body end
