@@ -222,6 +222,20 @@ if os.path.isdir('/etc/borgmatic'):
     print('				</div>')  # card-body end
     print('			</div>')  # card end
 
+    # list backup and allow restore
+    if os.path.isfile('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE'):
+        print('			<div class="card">')  # card
+        print('				<div class="card-header">')
+        print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i>Restore points</h5>')
+        print('				</div>')
+        print('				<div class="card-body">')  # card-body
+
+        output = subprocess.check_output('borgmatic --list --json', shell=True)
+        print(output)
+
+        print('				</div>')  # card-body end
+        print('			</div>')  # card end
+
     print('		</div>')  # end col left
 
     print('		<div class="col-lg-6">')  # col right
