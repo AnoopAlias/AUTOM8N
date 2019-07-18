@@ -39,10 +39,19 @@ print('		</nav>')
 print('		<div class="row justify-content-lg-center">')
 print('			<div class="col-lg-8">')
 
+print('		<div class="card">')  # card
+print('			<div class="card-header">')
+print('				<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> '+config.sections()[mysection]+'</h5>')
+print('			</div>')
+print('			<div class="card-body last">')  # card-body
+
 if os.path.isfile('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE'):
     pass
 else:
     commoninclude.print_forbidden()
+
+print('			</div>')  # card-body end
+print('		</div>')  # card end
 
 print('			</div>')  # col end
 print('		</div>')  # row end
