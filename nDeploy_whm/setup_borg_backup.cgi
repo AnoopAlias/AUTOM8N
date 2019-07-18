@@ -242,7 +242,8 @@ if os.path.isdir('/etc/borgmatic'):
         myarchives = output[0].get('archives')
         mykeypos = 1
         for backup in myarchives:
-            print('<li class="mb-2"><samp>'+backup.get('archive')+'</samp></li><hr>')
+            print('<hr>')
+            print(backup.get('archive'))
             if not mount_flag:
                 print('         <form class="m-0 toastForm10-wrap" id="toastForm10'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
                 print(('					<input class="hidden" name="restorepoint" value="'+backup.get('archive')+'">'))
