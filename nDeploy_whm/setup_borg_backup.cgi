@@ -234,8 +234,8 @@ if os.path.isdir('/etc/borgmatic'):
         proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
         output = json.loads(proc.stdout.read())
         myarchives = output[0].get('archives')
-        print(myarchives)
-
+        for backup in myarchives:
+            print('<li class="mb-2"><samp>'+backup.get('archive')+'</samp></li><hr>')
         print('				</div>')  # card-body end
         print('			</div>')  # card end
 
