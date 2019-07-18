@@ -46,7 +46,7 @@ print('			</div>')
 print('			<div class="card-body last">')  # card-body
 
 if os.path.isfile('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE'):
-    output = subprocess.check_output('borgmatic --list --json', Shell=True)
+    output = subprocess.check_output('borgmatic --list --json', shell=True)
     print(output)
     pass
 else:
