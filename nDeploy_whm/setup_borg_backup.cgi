@@ -225,12 +225,17 @@ if os.path.isdir('/etc/borgmatic'):
 
     # list backup and allow restore
     if os.path.isfile('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE'):
+        if not os.path.exists('/root/borg_restore_point'):
+            os.makedirs('/root/borg_restore_point')
         print('			<div class="card">')  # card
         print('				<div class="card-header">')
         print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i>Restore points</h5>')
         print('				</div>')
         print('				<div class="card-body">')  # card-body
-
+        if os.path.ismount('/root/borg_restore_point'):
+            print("MOUNTED")
+        else:
+            print("NOT MOUNTED")
         proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
         output = json.loads(proc.stdout.read())
         myarchives = output[0].get('archives')
