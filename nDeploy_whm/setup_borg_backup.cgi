@@ -11,6 +11,7 @@ import psutil
 import signal
 import jinja2
 import codecs
+import json
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -231,7 +232,7 @@ if os.path.isdir('/etc/borgmatic'):
         print('				<div class="card-body">')  # card-body
 
         proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
-        output = proc.stdout.read()
+        output = json.loads(proc.stdout.read())
         print(output)
 
         print('				</div>')  # card-body end
