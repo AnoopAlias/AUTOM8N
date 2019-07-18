@@ -234,13 +234,22 @@ if os.path.isdir('/etc/borgmatic'):
         print('				<div class="card-body">')  # card-body
         if os.path.ismount('/root/borg_restore_point'):
             print("MOUNTED")
+            mount_flag=True
         else:
-            print("NOT MOUNTED")
+            mount_flag=False
         proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
         output = json.loads(proc.stdout.read())
         myarchives = output[0].get('archives')
+        mykeypos = 1
         for backup in myarchives:
             print('<li class="mb-2"><samp>'+backup.get('archive')+'</samp></li><hr>')
+            if not mount_flag:
+                print('         <form class="m-0 toastForm10-wrap" id="toastForm10'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+                print(('					<input class="hidden" name="restorepoint" value="'+backup.get('archive')+'">'))
+                print(('					<input class="hidden" name="action" value="mount">'))
+                print('						<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Save</span><i class="fas fa-hdd"></i></button>')
+                print('          </form>')
+                mykeypos = mykeypos + 1
         print('				</div>')  # card-body end
         print('			</div>')  # card end
 
