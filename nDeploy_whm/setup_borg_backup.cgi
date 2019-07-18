@@ -247,7 +247,7 @@ if os.path.isdir('/etc/borgmatic'):
                 print('         <form class="m-0 toastForm10-wrap" id="toastForm10'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
                 print(('					<input class="hidden" name="restorepoint" value="'+backup.get('archive')+'">'))
                 print(('					<input class="hidden" name="action" value="mount">'))
-                print('						<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Save</span><i class="fas fa-hdd"></i></button>')
+                print('						<button class="btn btn-outline-primary btn-block mt-3" type="submit">Save<i class="fas fa-upload"></i></button>')
                 print('          </form>')
                 mykeypos = mykeypos + 1
         print('				</div>')  # card-body end
