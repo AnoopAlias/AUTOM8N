@@ -331,6 +331,9 @@ if os.path.isdir('/etc/borgmatic'):
     print(('					 <input class="hidden" name="action" value="initrepo">'))
     print('						 <button class="btn btn-outline-primary btn-block mt-3" type="submit">Init borg repo</button>')
     print('	                </form>')
+    print('					<form class="form" method="get" action="borg_restore.cgi">')
+    print('						 <button class="btn btn-outline-primary btn-block mt-3" type="submit">Restore backup</button>')
+    print('	                </form>')
 
     print('				</div>')  # card-body end
     print('				<div class="card-footer">')

@@ -4,6 +4,7 @@ import commoninclude
 import cgi
 import cgitb
 import subprocess
+import os
 
 
 __author__ = "Anoop P Alias"
@@ -44,6 +45,7 @@ if form.getvalue('action'):
                 break
             print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
         print('</samp>')
+        os.mknod('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE')
     else:
         commoninclude.print_forbidden()
 else:
