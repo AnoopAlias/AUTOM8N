@@ -41,7 +41,7 @@ print('			<div class="col-lg-8">')
 
 print('		<div class="card">')  # card
 print('			<div class="card-header">')
-print('				<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> '+config.sections()[mysection]+'</h5>')
+print('				<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> Backup Restore points</h5>')
 print('			</div>')
 print('			<div class="card-body last">')  # card-body
 
