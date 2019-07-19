@@ -236,7 +236,7 @@ if os.path.isdir('/etc/borgmatic'):
             with open('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE', 'r') as restore_point_conf:
                 yaml_parsed_restorepoint = yaml.safe_load(restore_point_conf)
             restore_point = yaml_parsed_restorepoint.get('restore_point', 'snapshot')
-            commoninclude.print_success_alert('currently mounted:  <br>'+restore_point)
+            commoninclude.print_success_alert('<center>currently mounted</center><br><hr>'+restore_point)
             print('				<form class="form mb-3" id="toastForm24" onsubmit="return false;">')
             print(('				<input class="hidden" name="action" value="umount">'))
             print('					<button type="submit" class="btn btn-outline-primary btn-block ">Umount Restore Point</button>')
