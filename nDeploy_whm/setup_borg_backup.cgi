@@ -245,24 +245,29 @@ if os.path.isdir('/etc/borgmatic'):
         else:
             mount_flag=False
         proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
-        output = json.loads(proc.stdout.read())
-        myarchives = output[0].get('archives')
-        mykeypos = 1
-        print('                 <div class="input-group">')
-        print('                     <select name="myarchives" class="custom-select">')
-        for backup in myarchives:
-            print(('                    <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>'))
-        print('                     </select>')
-        if not mount_flag:
-            print('                 <div class="input-group-append">')
-            print('                     <form class="m-0 toastForm25-wrap" id="toastForm25'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-            print(('                        <input class="hidden" name="restorepoint" value="'+backup.get('archive')+'">'))
-            print(('                        <input class="hidden" name="action" value="mount">'))
-            print('                         <button class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
-            print('                     </form>')
+        try:
+            output = json.loads(proc.stdout.read())
+        except ValueError, e:
+            pass
+        else:
+            myarchives = output[0].get('archives')
+            mykeypos = 1
+            print('                 <div class="input-group">')
+            print('                     <select name="myarchives" class="custom-select">')
+            for backup in myarchives:
+                print(('                    <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>'))
+            print('                     </select>')
+            if not mount_flag:
+                print('                 <div class="input-group-append">')
+                print('                     <form class="m-0 toastForm25-wrap" id="toastForm25'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+                print(('                        <input class="hidden" name="restorepoint" value="'+backup.get('archive')+'">'))
+                print(('                        <input class="hidden" name="action" value="mount">'))
+                print('                         <button class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
+                print('                     </form>')
+                print('                 </div>')
+                mykeypos = mykeypos + 1
             print('                 </div>')
-            mykeypos = mykeypos + 1
-        print('                 </div>')
+
         print('				</div>')  # card-body end
         print('				<div class="card-footer">')
         print('					<small><kbd>/root/borg_restore_point</kbd> is the mount point</small>')
