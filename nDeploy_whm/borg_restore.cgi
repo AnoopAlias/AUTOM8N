@@ -50,7 +50,7 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
         exit(0)
     run_cmd = subprocess.Popen(the_raw_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=my_env, shell=True)
     print('<samp>')
-    commoninclude.print_success("action completed")
+    commoninclude.print_success("Done. Check /root/borg_restore_point ")
     while True:
         line = run_cmd.stdout.readline()
         if not line:
