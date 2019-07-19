@@ -241,6 +241,25 @@ jQuery(document).ready(function($){
 				}});
 		});
 
+		$('#toastForm24').submit(function() {
+				var $f = $('#toastForm24');
+				var $url = "borg_restore.cgi?" + $f.serialize();
+				$.ajax({url: $url, success: function(result){
+						$("#myToast").find('.toast-body').html(result)
+						$("#myToast").toast('show');
+				}});
+		});
+
+		$('.toastForm25-wrap').submit(function(e) {
+					var $id = e.target.id;
+					var $f = $('#' + $id);
+					var $url = "borg_restore.cgi?" + $f.serialize();
+					$.ajax({url: $url, success: function(result){
+							$("#myToast").find('.toast-body').html(result)
+							$("#myToast").toast('show');
+					}});
+			});
+
     $('#myModal').on('hidden.bs.modal', function () {
     	location.reload()
     });
