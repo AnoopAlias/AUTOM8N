@@ -242,6 +242,15 @@ kbd {
 .hidden {
   display: none; }
 
+.dont-break-out, .alert p {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto; }
+
 #loader {
   vertical-align: middle;
   display: none;
