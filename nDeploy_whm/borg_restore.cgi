@@ -44,6 +44,12 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
         if form.getvalue('restorepoint'):
             the_raw_cmd_orig = 'borg mount '+borg_repo+'::'+form.getvalue('restorepoint')+' /root/borg_restore_point'
             the_raw_cmd = the_raw_cmd_orig.encode('utf-8')
+            if isinstance(the_raw_cmd, str):
+                print "ordinary string"
+            elif isinstance(the_raw_cmd, unicode):
+                print "unicode string"
+            else:
+                print "not a string"
             print(the_raw_cmd)
         else:
             commoninclude.print_forbidden()
