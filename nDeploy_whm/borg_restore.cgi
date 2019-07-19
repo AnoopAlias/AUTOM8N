@@ -43,6 +43,9 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
         the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
     elif form.getvalue('action') == 'mount':
         if form.getvalue('restorepoint'):
+            restore_point_dict = {'restore_point': form.getvalue('restorepoint')}
+            with open('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE', 'w') as restore_point_conf:
+                yaml.dump(restore_point_dict, restore_point_conf, default_flow_style=False)
             the_raw_cmd_orig = 'borg mount '+borg_repo+'::'+form.getvalue('restorepoint')+' /root/borg_restore_point'
             the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
         else:
