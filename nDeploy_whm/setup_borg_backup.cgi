@@ -387,7 +387,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     print('				</div>')  # card-body end
     print('				<div class="card-footer">')
-    print('					<small>Keep your encryption_passphrase in a safe place. Losing it would make data recovery impossible on a server crash<br><hr>repositories must either a local folder: <kbd>/mnt/backup</kbd> or a ssh URI: <kbd>ssh://user@backupserver.com:22/home/user/backup</kbd></small>')
+    print('					<small>Keep your encryption_passphrase in a safe place. Losing it would make data recovery impossible on a server crash<br><hr>repositories must either a local folder: <kbd>/mnt/backup</kbd> <br> or a ssh URI: <kbd>ssh://user@backupserver.com:22/home/user/backup</kbd></small>')
     print('				</div>')
     print('			</div>')  # card end
 
