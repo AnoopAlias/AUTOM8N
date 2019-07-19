@@ -37,6 +37,7 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
     encryption_passphrase = yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']
     my_env = os.environ.copy()
     my_env["BORG_PASSPHRASE"] = encryption_passphrase
+    my_env["LANG"] = 'en_US.UTF-8'
     if form.getvalue('action') == 'umount':
         the_raw_cmd = 'borg umount /root/borg_restore_point'
     elif form.getvalue('action') == 'mount':
