@@ -39,18 +39,12 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
     my_env["BORG_PASSPHRASE"] = encryption_passphrase
     my_env["LANG"] = 'en_US.UTF-8'
     if form.getvalue('action') == 'umount':
-        the_raw_cmd = 'borg umount /root/borg_restore_point'
+        the_raw_cmd_orig = 'borg umount /root/borg_restore_point'
+        the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
     elif form.getvalue('action') == 'mount':
         if form.getvalue('restorepoint'):
             the_raw_cmd_orig = 'borg mount '+borg_repo+'::'+form.getvalue('restorepoint')+' /root/borg_restore_point'
-            the_raw_cmd = the_raw_cmd_orig.encode('utf-8')
-            if isinstance(the_raw_cmd, str):
-                print "ordinary string"
-            elif isinstance(the_raw_cmd, unicode):
-                print "unicode string"
-            else:
-                print "not a string"
-            print(the_raw_cmd)
+            the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
         else:
             commoninclude.print_forbidden()
             exit(0)
