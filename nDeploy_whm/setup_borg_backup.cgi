@@ -265,7 +265,7 @@ if os.path.isdir('/etc/borgmatic'):
         print('                 </div>')
         print('				</div>')  # card-body end
         print('				<div class="card-footer">')
-        print('					<small>/root/borg_restore_point is the mount point.</small>')
+        print('					<small><kbd>/root/borg_restore_point</kbd> is the mount point</small>')
         print('				</div>')
         print('			</div>')  # card end
 
