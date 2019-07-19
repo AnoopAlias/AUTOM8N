@@ -248,8 +248,7 @@ if os.path.isdir('/etc/borgmatic'):
             print('<hr>')
             print(backup.get('archive'))
             if not mount_flag:
-                print('								<form class="form" method="get" action="borg_restore.cgi">')
-                # print('         <form class="m-0 toastForm25-wrap" id="toastForm25'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+                print('         <form class="m-0 toastForm25-wrap" id="toastForm25'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
                 print(('					<input class="hidden" name="restorepoint" value="'+backup.get('archive')+'">'))
                 print(('					<input class="hidden" name="action" value="mount">'))
                 print('						<button class="btn btn-outline-primary btn-block mt-3" type="submit">Mount restore point <i class="fas fa-upload"></i></button>')
