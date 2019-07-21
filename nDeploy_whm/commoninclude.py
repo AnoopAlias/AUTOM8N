@@ -115,6 +115,10 @@ def print_success(themessage):
     print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
 
 
+def print_success_alert(themessage):
+    print(('<div class="alert alert-success">'+themessage+'</div>'))
+
+
 def print_error_alert(themessage):
     print(('<div class="alert alert-danger text-left">'+themessage+'</div>'))
 
@@ -192,9 +196,10 @@ def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
     print('')
     print('                    <!-- Bootstrap Card Start for '+header+' -->')
     print('                    <div class="card mb-4 text-'+text_color+' bg-'+card_color+'">')
-    print('                        <div class="card-header">')
-    print('                            <h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>')
-    print('                        </div>')
+    if header != '':
+        print('                        <div class="card-header">')
+        print('                            <h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>')
+        print('                        </div>')
     print('')
 
 

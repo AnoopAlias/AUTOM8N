@@ -11,6 +11,7 @@ import signal
 import jinja2
 import codecs
 import sys
+import json
 from commoninclude import print_nontoast_error, return_label, return_multi_input, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Anoop P Alias"
@@ -41,8 +42,7 @@ if os.path.isdir('/etc/borgmatic'):
     # System Status
     cardheader('Borg Backup Settings','fas fa-database')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-
+    
     # Check if backup config file is present or initilize otherwise
     if os.path.isfile(backup_config_file):
 
@@ -80,84 +80,83 @@ if os.path.isdir('/etc/borgmatic'):
             borgmatic_hook_myscript.write(borgmatic_hook_script)
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
 
-    print('                                <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
+    print('                            <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
+    print('                                <div class="row align-items-center"> <!-- Row Start -->')
 
     
     # system_files
     system_files_hint = "Backup the cPanel System Files"
-    print('                                    <div class="row align-items-center"> <!-- Row Start -->')
     if system_files == 'enabled':
-        print('                                        '+return_label("system_files", system_files_hint))
-        print('                                        <div class="col-md-6">')
-        print('                                            <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('                                                <label class="btn btn-light active">')
-        print('                                                    <input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off" checked> Enabled')
-        print('                                                </label>')
-        print('                                                <label class="btn btn-light">')
-        print('                                                    <input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off"> Disabled')
-        print('                                                </label>')
-        print('                                            </div>')
+        print('                                    '+return_label("system_files", system_files_hint))
+        print('                                    <div class="col-md-6">')
+        print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                            <label class="btn btn-light active">')
+        print('                                                <input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off" checked> Enabled')
+        print('                                            </label>')
+        print('                                            <label class="btn btn-light">')
+        print('                                                <input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off"> Disabled')
+        print('                                            </label>')
         print('                                        </div>')
+        print('                                    </div>')
     else:
-        print('                                        '+return_label("system_files", system_files_hint))
-        print('                                        <div class="col-md-6">')
-        print('                                            <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('                                                <label class="btn btn-light">')
-        print('                                                    <input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off"> Enabled')
-        print('                                                </label>')
-        print('                                                <label class="btn btn-light active">')
-        print('                                                    <input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off" checked> Disabled')
-        print('                                                </label>')
-        print('                                            </div>')
+        print('                                    '+return_label("system_files", system_files_hint))
+        print('                                    <div class="col-md-6">')
+        print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                            <label class="btn btn-light">')
+        print('                                                <input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off"> Enabled')
+        print('                                            </label>')
+        print('                                            <label class="btn btn-light active">')
+        print('                                                <input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off" checked> Disabled')
+        print('                                            </label>')
         print('                                        </div>')
+        print('                                    </div>')
 
     
     # mysql_backup
     mysql_backup_hint = "Use MariaBackup to Backup the FULL MySQL Data Directory"
     if mysql_backup == 'enabled':
-        print('                                        '+return_label("mariabackup", mysql_backup_hint))
-        print('                                        <div class="col-md-6">')
-        print('                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('                                                <label class="btn btn-light active">')
-        print('                                                    <input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off" checked> Enabled')
-        print('                                                </label>')
-        print('                                                <label class="btn btn-light">')
-        print('                                                    <input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off"> Disabled')
-        print('                                                </label>')
-        print('                                            </div>')
+        print('                                    '+return_label("mariabackup", mysql_backup_hint))
+        print('                                    <div class="col-md-6">')
+        print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                            <label class="btn btn-light active">')
+        print('                                                <input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off" checked> Enabled')
+        print('                                            </label>')
+        print('                                            <label class="btn btn-light">')
+        print('                                                <input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off"> Disabled')
+        print('                                            </label>')
         print('                                        </div>')
+        print('                                    </div>')
     else:
-        print('                                        '+return_label("mariabackup", mysql_backup_hint))
-        print('                                        <div class="col-md-6">')
-        print('                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('                                                <label class="btn btn-light">')
-        print('                                                    <input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off"> Enabled')
-        print('                                                </label>')
-        print('                                                <label class="btn btn-light active">')
-        print('                                                    <input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off" checked> Disabled')
-        print('                                                </label>')
-        print('                                            </div>')
+        print('                                    '+return_label("mariabackup", mysql_backup_hint))
+        print('                                    <div class="col-md-6">')
+        print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                            <label class="btn btn-light">')
+        print('                                                <input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off"> Enabled')
+        print('                                            </label>')
+        print('                                            <label class="btn btn-light active">')
+        print('                                                <input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off" checked> Disabled')
+        print('                                            </label>')
         print('                                        </div>')
+        print('                                    </div>')
 
     
     # backup_path
     backup_path_hint = "This is the directory where the cPanel PKG Accounts, SQL backups, and system files are stored."
-    print('                                        <div class="col-md-12">')
-    print('                                            <div class="input-group mt-2 mb-2">')
-    print('                                                <div class="input-group-prepend">')
-    print('                                                    <span class="input-group-text">')
-    print('                                                        '+return_multi_input("PKGacct Backup Path", backup_path_hint))
-    print('                                                    </span>')
-    print('                                                </div>')
-    print('                                                <input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
+    print('                                    <div class="col-md-12">')
+    print('                                        <div class="input-group mt-2 mb-2">')
+    print('                                            <div class="input-group-prepend">')
+    print('                                                <span class="input-group-text">')
+    print('                                                    '+return_multi_input("PKGacct Backup Path", backup_path_hint))
+    print('                                                </span>')
     print('                                            </div>')
-    print('                                        </div>')
-    print('                                        <div class="col-md-12">')
-    print('                                            <button class="btn btn-outline-primary btn-block mt-2" type="submit">Save Backup Settings</button>')
+    print('                                            <input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
     print('                                        </div>')
     print('                                    </div>')
-    print('                                </form>')
-    print('                            </div> <!-- Row End -->') #Row Start
+    print('                                    <div class="col-md-12">')
+    print('                                        <button class="btn btn-outline-primary btn-block mt-2" type="submit">Save Backup Settings</button>')
+    print('                                    </div>')
+    print('                                </div> <!-- Row End -->') #Row Start
+    print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End
     cardfooter('Configure the Borg backup settings to control what content is backed up, and at what location to create the backups.')
 
@@ -181,6 +180,54 @@ if os.path.isdir('/etc/borgmatic'):
         # Get all config settings from the borgmatic config file
         with open(borgmatic_config_file, 'r') as borgmatic_config_file_stream:
             yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_config_file_stream)
+
+    # list backup and allow restore
+    if os.path.isfile('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE'):
+        if not os.path.exists('/root/borg_restore_point'):
+            os.makedirs('/root/borg_restore_point')
+
+        cardheader('Restore Points','fas fas-database')
+        print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+
+        if os.path.ismount('/root/borg_restore_point'):
+            with open('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE', 'r') as restore_point_conf:
+                yaml_parsed_restorepoint = yaml.safe_load(restore_point_conf)
+            restore_point = yaml_parsed_restorepoint.get('restore_point', 'snapshot')
+            commoninclude.print_success_alert('<center>currently mounted</center><hr>'+restore_point)
+            print('				<form class="form mb-3" id="toastForm24" onsubmit="return false;">')
+            print(('				<input class="hidden" name="action" value="umount">'))
+            print('					<button type="submit" class="btn btn-outline-primary btn-block ">Umount Restore Point</button>')
+            print('				</form>')
+            mount_flag=True
+        else:
+            mount_flag=False
+        proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
+        try:
+            output = json.loads(proc.stdout.read())
+        except ValueError, e:
+            pass
+        else:
+            myarchives = output[0].get('archives')
+            if myarchives:
+                mykeypos = 1
+                print('                 <div class="input-group">')
+                print('                     <select name="myarchives" class="custom-select">')
+                for backup in myarchives:
+                    print(('                    <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>'))
+                print('                     </select>')
+                if not mount_flag:
+                    print('                 <div class="input-group-append">')
+                    print('                     <form class="m-0 toastForm25-wrap" id="toastForm25'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+                    print(('                        <input class="hidden" name="restorepoint" value="'+backup.get('archive')+'">'))
+                    print(('                        <input class="hidden" name="action" value="mount">'))
+                    print('                         <button class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
+                    print('                     </form>')
+                    print('                 </div>')
+                    mykeypos = mykeypos + 1
+                print('                 </div>')
+
+        print('                        </div>')  # card-body end
+        cardfooter('<kbd>/root/borg_restore_point</kbd> is the mount point')
 
     cardheader('Additional <kbd> /home</kbd> Directory Backup','fas fa-database')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
@@ -228,8 +275,8 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     print('                            </form>')
-    print('                        </div> <!-- Card Body End -->') #Card Body End    
-    cardfooter('Configure additional /home directories that you would like to backup.')            
+    print('                        </div> <!-- Card Body End -->') #Card Body End
+    cardfooter('Configure additional /home directories that you would like to backup.')
 
     #First Column End
     print('                <!-- First Column End -->')
@@ -338,14 +385,17 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save Borg Settings</button>')
 
     print('                            </form>')
+    print('                            <form class="form" id="modalForm5" onsubmit="return false;">')
+    print('                                <input hidden name="action" value="initrepo">')
+    print('                                <button class="btn btn-outline-primary btn-block mt-3" type="submit">Init Borg Repo</button>')
+    print('                            </form>')
 
     print('                        </div> <!-- Card Body End -->') #Card Body End
-    cardfooter('Keep your Encryption Passphrase in a safe place. <br>Losing it would make data recovery impossible on a server crash.')
+    cardfooter('Keep your encryption_passphrase in a safe place. Losing it would make data recovery impossible on a server crash<br><hr>repositories must either a local folder: <kbd>/mnt/backup</kbd> <br> or a ssh URI: <kbd>ssh://user@backupserver.com:22/home/user/backup</kbd>')
 
 else:
-    print_nontoast_error ('<p>Borg/Borgmatic is currently not installed.<br>To install run the following command:<br><kbd>/opt/nDeploy/scripts/easy_borg_setup.sh</kbd></p>')
-    sys.exit(0)
-
+    print_nontoast_error ('''Install and setup Borg/Borgmatic<form class="form" id="modalForm4" onsubmit="return false;"><input hidden name="action" value="installborg"><button class="btn btn-primary">Install</button></form>''')
+    
 #Second Column End
 print('                <!-- Second Column End -->')
 print('                </div>')

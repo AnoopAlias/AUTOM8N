@@ -30,6 +30,7 @@ def control_unison(trigger):
             for server in cluster_data_yaml_parsed.keys():
                 for myhome in homedir_list:
                     proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison "+myhome+"_"+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+                proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison phpsessions_"+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
         elif trigger == "stop":
             subprocess.call("killall unison", shell=True)
         elif trigger == "reload":
@@ -42,6 +43,7 @@ def control_unison(trigger):
             for server in cluster_data_yaml_parsed.keys():
                 for myhome in homedir_list:
                     proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison "+myhome+"_"+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+                proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison phpsessions_"+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
         else:
             return
 

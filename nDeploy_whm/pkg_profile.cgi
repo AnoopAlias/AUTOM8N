@@ -27,7 +27,6 @@ form = cgi.FieldStorage()
 print_header('Edit cPanel Package')
 bcrumb('Edit cPanel Package','fas fa-box-open')
 
-
 if form.getvalue('cpanelpkg'):
     if form.getvalue('cpanelpkg') == 'default':
         pkgdomaindata = installation_path+'/conf/domain_data_default_local.yaml'
@@ -91,49 +90,121 @@ if form.getvalue('cpanelpkg'):
         print_nontoast_error('Error: Backend Configuration File Error')
         sys.exit(0)
 
+#<<<<<<< HEAD
+
+#    print('')
+#
+#    cardheader('Edit '+form.getvalue('cpanelpkg')+' cPanel Package','fas fa-users-cog')
+#    
+#    # Current Profile Status
+#    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get"> <!-- Form Start -->')
+#    print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+#    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+#
+#    # Running
+#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Running</div>')
+#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">Nginx</div>')
+#
+#    # Backend Category
+#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream&nbsp;Type</div>')
+#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_category+'</div>')
+#
+#    # Backend
+#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
+#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
+#
+#    # Description
+#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
+#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+apptemplate_description+'</div>')
+#
+#    if backend_category == 'PROXY' and backend_version == 'httpd':
+#        # .htaccess
+#        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+#        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
+#    else:
+#        # .htaccess
+#        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+#        print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+#
+#    print('                            </div> <!-- Row End -->') #Row End
+#    print('                        </div> <!-- Card Body End -->') #Card End
+#
+#    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+#    print('                            <div class="input-group">')
+#    print('                                <select name="backend" class="custom-select">')
+#=======
     # Ok we are done with getting the settings, now lets present it to the user
     print('            <!-- WHM Starter Row -->')
     print('            <div class="row">')
-    print('                <!-- First Column Start -->')
-    print('                <div class="col-lg-6">') #Column
     print('')
+    print('                <!-- Dash Start -->')
+    print('                <div class="col-md-12">') #Dash Start
 
-    cardheader('Edit '+form.getvalue('cpanelpkg')+' cPanel Package','fas fa-users-cog')
+    # Domain Status
+    cardheader('Current '+form.getvalue('cpanelpkg')+' cPanel Package Settings','fas fa-users-cog')
+    print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
+    print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
+    print('                                <div class="col-md-4">')
+    print('                                    <div class="p-3 text-center">')
+    print('                                        <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
+    print('                                        <ul class="list-unstyled mb-0">')
+    print('                                            <li class="mt-2 text-success">Nginx</li>')
+    print('                                        </ul>')
+    print('                                    </div>')
+    print('                                </div>')
+    print('                                <div class="col-md-4">')
+    print('                                    <div class="p-3 text-center">')
+    print('                                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
+    print('                                        <ul class="list-unstyled mb-0">')
+    print('                                            <li class="mt-2 text-success">'+backend_version+'</li>')
+    print('                                        </ul>')
+    print('                                    </div>')
+    print('                                </div>')
+    print('                                <div class="col-md-4">')
+    print('                                    <div class="p-3 text-center">')
+    print('                                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
+    print('                                        <ul class="list-unstyled mb-0">')
+    print('                                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+    print('                                        </ul>')
+    print('                                    </div>')
+    print('                                </div>')
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
+    cardfooter('')
+
+    print('                </div> <!--End Dash-->') # End Dash
     
+    print('')
+    print('            <!-- WHM End Row -->')
+    print('            </div>')
+    print('')
+    print('            <!-- WHM Starter Row -->')
+    print('            <div class="row">')
+    print('')
+    print('                <!-- Left Column -->')
+    print('                <div class="col-lg-6">') #Left Column Start
+
+    # Ok we are done with getting the settings, now lets present it to the user
+    cardheader('Change Upstream','fas fa-users-cog')
+
     # Current Profile Status
-    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get"> <!-- Form Start -->')
-    print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
+    print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
+    print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
 
-    # Running
-    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Running</div>')
-    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">Nginx</div>')
-
-    # Backend Category
-    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream&nbsp;Type</div>')
-    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_category+'</div>')
-
-    # Backend
-    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
-    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
-
-    # Description
-    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
-    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+apptemplate_description+'</div>')
-
-    if backend_category == 'PROXY' and backend_version == 'httpd':
-        # .htaccess
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
+    # .htaccess
+    if backend_category == 'PROXY':
+        if backend_version == 'httpd':
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+            print('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
     else:
-        # .htaccess
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-        print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+        print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
 
-    print('                            </div> <!-- Row End -->') #Row End
-    print('                        </div> <!-- Card Body End -->') #Card End
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
 
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                        <div class="card-body"> <!-- Card Body Start -->')  # card-body
     print('                            <div class="input-group">')
     print('                                <select name="backend" class="custom-select">')
     for backends_defined in backend_data_yaml_parsed.keys():
@@ -151,7 +222,7 @@ if form.getvalue('cpanelpkg'):
     print('                            </div>')
     print('                        </div> <!-- Card Body End -->') #Card End
     print('                        </form> <!-- Form End -->')
-    cardfooter('To change the upstream, choose a category above.')
+    cardfooter('To change the upstream, choose a category from above.')
     
 
     # General App Settings

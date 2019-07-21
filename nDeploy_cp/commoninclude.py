@@ -85,6 +85,10 @@ def print_success(themessage):
     print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
 
 
+def print_success_alert(themessage):
+    print(('<div class="alert alert-success">'+themessage+'</div>'))
+
+
 def print_error_alert(themessage):
     print(('<div class="alert alert-danger text-left">'+themessage+'</div>'))
 

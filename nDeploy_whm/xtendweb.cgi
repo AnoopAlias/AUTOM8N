@@ -23,6 +23,7 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
+version_info_file = installation_path+"/conf/version.yaml"
 
 cgitb.enable()
 print_header('Home')
@@ -30,19 +31,13 @@ bcrumb('Home')
 
 print('            <!-- WHM Starter Row -->')
 print('            <div class="row">')
-print('                <!-- First Column Start -->')
-print('                <div class="col-lg-6">') #Left Column
 print('')
-
-# System Status
-cardheader('System Setup')
-print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+print('                <!-- Dash Start -->')
+print('                <div class="col-md-12">') #Dash Start
 
 nginx_status = False
 watcher_status = False
 for myprocess in psutil.process_iter():
-
     # Workaround for Python 2.6
     if platform.python_version().startswith('2.6'):
         mycmdline = myprocess.cmdline
@@ -50,87 +45,130 @@ for myprocess in psutil.process_iter():
         mycmdline = myprocess.cmdline()
     if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
         nginx_status = True
-        
     if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
         watcher_status = True
+        break
 
+# get version of Nginx and plugin
+with open(version_info_file, 'r') as version_info_yaml:
+    version_info_yaml_parsed = yaml.safe_load(version_info_yaml)
+nginx_version = version_info_yaml_parsed.get('nginx_version')
+autom8n_version = version_info_yaml_parsed.get('autom8n_version')
+
+# System Status
+cardheader('')
+print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
+print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
+print('                                <div class="col-md-4">')
+print('                                    <div class="p-3 border-bottom text-center">')
+print('                                        <h4 class="mb-0">Nginx Status</h4>')
+print('                                        <ul class="list-unstyled mb-0">')
+print('                                            <li><small>'+nginx_version+'</small></li>')
 if nginx_status:
-    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>'))
+    print('                                            <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i> Nginx</div>'))
-    print(('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>'))
-
+    print('                                            <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
+print('                                        </ul>')
+print('                                    </div>')
+print('                                    <form class="form" id="toastForm21" onsubmit="return false;">')
+print('                                        <input hidden name="action" value="nginxreload">')
+print('                                        <button class="alert alert-light btn btn-block">Reload</button>')
+print('                                    </form>')
+print('                                </div>')
+print('                                <div class="col-md-4">')
+print('                                    <div class="p-3 border-bottom text-center">')
+print('                                        <h4 class="mb-0">Watcher Status</h4>')
+print('                                        <ul class="list-unstyled mb-0">')
+print('                                            <li><small>'+autom8n_version+'</small></li>')
 if watcher_status:
-    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-eye"></i>&nbsp;Watcher</div>'))
-    print(('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>'))
+    print('                                            <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-eye"></i>&nbsp;Watcher</div>'))
-    print(('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>'))
+    print('                                            <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
+print('                                        </ul>')
+print('                                    </div>')
+print('                                    <form class="form" id="toastForm22" onsubmit="return false;">')
+print('                                        <input hidden name="action" value="watcherrestart">')
+print('                                        <button class="alert alert-light btn btn-block">Restart</button>')
+print('                                    </form>')
+print('                                </div>')
+print('                                <div class="col-md-4">')
+print('                                    <div class="p-3 border-bottom text-center">')
+print('                                        <h4 class="mb-0">Clear Caches</h4>')
+print('                                        <ul class="list-unstyled mb-0">')
+print('                                            <li><small>Redis</small></li>')
+print('                                            <li class="mt-2"><i class="fas fa-memory ml-1"></i></li>')
+print('                                        </ul>')
+print('                                    </div>')
+print('                                    <form class="form" id="toastForm23" onsubmit="return false;">')
+print('                                        <input hidden name="action" value="redisflush">')
+print('                                        <button class="alert alert-light btn btn-block">Flush All</button>')
+print('                                    </form>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+cardfooter('')
 
+print('                </div> <!--End Dash-->') # End Dash
 
-# Default PHP
-if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
-    preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
-    preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
-    preferred_php_yaml.close()
-    phpversion = preferred_php_yaml_parsed.get('PHP')
+print('')
+print('            <!-- WHM End Row -->')
+print('            </div>')
+print('')
+print('            <!-- WHM Starter Row -->')
+print('            <div class="row">')
+print('')
+print('                <!-- Left Column -->')
+print('                <div class="col-lg-6">') #Left Column Start
 
-    print(('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fab fa-php"></i>&nbsp;Default&nbsp;PHP</div>'))
-    print(('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+phpversion.keys()[0])+'</div>')
+# System Health & Backup
+cardheader('System Health & Backup','fas fa-cogs')
+print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
+print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
 # Net Data
 myhostname = socket.gethostname()
-
-print('                                <form class="d-flex form w-100" action="https://'+myhostname+'/netdata/" target="_blank">')
-print('                                    <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-heartbeat"></i>&nbsp;Netdata</div>')
-print('                                    <div class="d-flex w-50">')
-print('                                        <button class="alert alert-info" type="submit">View&nbsp;Graph&nbsp;<i class="fas fa-external-link-alt"></i></button>')
-print('                                    </div>')
-print('                                </form>')
+print('                                <div class="col-md-6">')
+print('                                    <a class="alert alert-light btn btn-block" href="https://'+myhostname+'/netdata/" target="_blank"><i class="fas fa-heartbeat"></i> Netdata <i class="fas fa-external-link-alt"></i></a>')
+print('                                </div>')
 
 # Glances
-print('                                <form class="d-flex form w-100" action="https://'+myhostname+'/glances/" target="_blank">')
-print('                                    <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-thermometer-half"></i>&nbsp;Glances</div>')
-print('                                    <div class="d-flex w-50">')
-print('                                        <button class="alert alert-info" type="submit">System&nbsp;Status&nbsp;<i class="fas fa-external-link-alt"></i></button>')
-print('                                    </div>')
-print('                                </form>')
+print('                                <div class="col-md-6">')
+print('                                    <a class="alert alert-light btn btn-block" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>')
+print('                                </div>')
 
 # Borg Backup
-print('                                <form class="d-flex w-100 form" method="get" action="setup_borg_backup.cgi">')
-print('                                    <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-database"></i>&nbsp;Borg&nbsp;Backup</div>')
-print('                                    <div class="d-flex w-50">')
-print('                                        <button class="alert alert-info" type="submit">Setup&nbsp;Borg</button>')
-print('                                    </div>')
-print('                                </form>')
+print('                                <div class="col-md-6">')
+print('                                    <form class="form" method="get" action="setup_borg_backup.cgi">')
+print('                                        <button class="alert alert-light btn btn-block" type="submit"><i class="fas fa-database"></i> Borg Backup</button>')
+print('                                    </form>')
+print('                                </div>')
 
 # Process Tracker
-print('                                <form class="d-flex w-100 form" id="modalForm3" onsubmit="return false;">')
-print('                                    <div class="d-flex w-50  alert alert-light align-items-center">&nbsp;<i class="fas fa-bug"></i>&nbsp;Abnormal&nbsp;Detection</div>')
-print('                                    <div class="d-flex w-50">')
-print('                                        <button type="submit" class="alert alert-info">Check&nbsp;Process</button>')
-print('                                    </div>')
-print('                                </form>')
-
-print('                            </div> <!-- Row End -->') #End Row
-print('                        </div> <!-- Card Body End -->') #Card Body End
-
-cardfooter('<strong>DO NOT RESTART NGINX</strong>, but rather reload it with <kbd>nginx -t && nginx -s reload</kbd>')
+print('                                <div class="col-md-6">')
+print('                                    <form class="form" id="modalForm3" onsubmit="return false;">')
+print('                                        <button type="submit" class="alert alert-light btn btn-block"><i class="fas fa-bug"></i> Check Processes</button>')
+print('                                    </form>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+cardfooter('')
 
 # Cluster Status
-if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
-    cardheader('Cluster Unison Sync Status','fas fa-align-justify')
-    print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+if os.path.isfile(cluster_config_file):
+    cardheader('Cluster Status','fas fa-align-justify')
+    print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
+    print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
 
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     with open(homedir_config_file, 'r') as homedir_data_yaml:
         homedir_data_yaml_parsed = yaml.safe_load(homedir_data_yaml)
     homedir_list = homedir_data_yaml_parsed.get('homedir')
+
     for servername in cluster_data_yaml_parsed.keys():
+
         for myhome in homedir_list:
+
             filesync_status = False
             for myprocess in psutil.process_iter():
 
@@ -142,12 +180,32 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
                 if '/usr/bin/unison' in mycmdline and myhome+'_'+servername in mycmdline:
                     filesync_status = True
                     break
+
             if filesync_status:
-                print(('                                <div class="col-md-9"><div class="alert alert-light">'+myhome+'_'+servername.split('.')[0]+'</div></div>'))
-                print(('                                <div class="col-md-3"><div class="alert alert-success">In Sync</div></div>'))
+                print('                                <div class="col-md-9 alert alert-light"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
+                print('                                <div class="col-md-3 alert alert-success">In Sync</div>')
             else:
-                print(('                                <div class="col-md-9"><div class="alert alert-light">'+myhome+'_'+servername.split('.')[0]+'</div></div>'))
-                print(('                                <div class="col-md-3"><div class="alert alert-danger">Out of Sync</div></div>'))
+                print('                                <div class="col-md-9 alert alert-light"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
+                print('                                <div class="col-md-3 alert alert-danger">Out of Sync</div>')
+
+        filesync_status = False
+        for myprocess in psutil.process_iter():
+
+            # Workaround for Python 2.6
+            if platform.python_version().startswith('2.6'):
+                mycmdline = myprocess.cmdline
+            else:
+                mycmdline = myprocess.cmdline()
+            if '/usr/bin/unison' in mycmdline and 'phpsessions_'+servername in mycmdline:
+                filesync_status = True
+                break
+
+        if filesync_status:
+            print(('                                <div class="col-md-9 alert alert-light"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>'))
+            print(('                                <div class="col-md-3 alert alert-success">In Sync</div>'))
+        else:
+            print(('                                <div class="col-md-9 alert alert-light"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>'))
+            print(('                                <div class="col-md-3 alert alert-danger">Out of Sync</div>'))
 
     print('                            </div> <!-- Row End -->') #Row End
     print('                        </div> <!-- Card Body End -->') #Card Body End
@@ -165,11 +223,10 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End
 
-    cardfooter('Only perform a hard reset if the unison archive is corrupt. The unison archive rebuild can be time consuming.')
+    cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
 else:
     cardheader('Cluster Unison Sync Status Disabled','fas fa-align-justify')
-    cardfooter('Cluster Unison Sync Status is disabled. <br>We are running with a Single Point of Failure.')
-
+    cardfooter('The cluster Unison sync status is disabled so this system is not running with High Availability failover.')
 
 # Sync GeoDNS zone
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
@@ -191,22 +248,33 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End
-    cardfooter('Choose a user to sync Zones for.')
+    cardfooter('Choose a user to sync GDNSD Zones for.')
 else:
     cardheader('GDNSD Zone Sync Disabled','fas fa-sync')
-    cardfooter('GDNSD Zone Sync Disabled. <br>We are running with cPanel DNS.')
+    cardfooter('The GDNSD zone sync is disabled as this system is running with cPanel DNS.')
 
 # Set Default PHP for AutoConfig
-phpver_hint = " Selected the desired default PHP Version for our AutoConfig Feature. "
-cardheader('Default PHP for Auto Configuration','fab fa-php')
-print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+cardheader('Default PHP for Autoswitch','fab fa-php')
+print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
+print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
 
+# Default PHP
+if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
+    preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
+    preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
+    preferred_php_yaml.close()
+    phpversion = preferred_php_yaml_parsed.get('PHP')
+    print(('                                <div class="col-md-6 alert alert-light align-items-center"><i class="fab fa-php"></i> Default PHP</div>'))
+    print(('                                <div class="col-md-6 alert alert-success align-items-center justify-content-center">'+phpversion.keys()[0])+'</div>')
+
+print('                            </div>')
+print('                        </div> <!-- Card Body End -->') #Card Body End
+
+print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <form class="form" id="toastForm6" onsubmit="return false;">')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend">')
-print('                                        <span class="input-group-text">')
-print('                                            '+return_prepend("PHP Version", phpver_hint))
-print('                                        </span>')
+print('                                        <label class="input-group-text">PHP</label>')
 print('                                    </div>')
 
 print('                                    <select name="phpversion" class="custom-select">')
@@ -215,13 +283,14 @@ backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
 phpversion = phpversion.keys()[0]
+
 if "PHP" in backend_data_yaml_parsed:
     php_backends_dict = backend_data_yaml_parsed["PHP"]
     for versions_defined in list(php_backends_dict.keys()):
         if versions_defined == phpversion:
-            print(('                                        <option selected value="'+phpversion+'">'+phpversion+'</option>'))
+            print('                                        <option selected value="'+phpversion+'">'+phpversion+'</option>')
         else:
-            print(('                                        <option value="'+versions_defined+'">'+versions_defined+'</option>'))
+            print('                                        <option value="'+versions_defined+'">'+versions_defined+'</option>')
 print('                                    </select>')
 print('                                </div>')
 print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
@@ -241,25 +310,29 @@ print('')
 
 # DDOS Protection
 cardheader('DDOS Protection','fas fa-user-shield')
-print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-print('                            <form id="toastForm1" class="form" onsubmit="return false;">')
-print('                                <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-print('                                    <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;Nginx</div>')
+print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
+print('                            <div class="row no-gutters row-2-col row-no-btm"> <!-- Row Start -->')
+print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> Nginx</div>')
+print('                                <div class="col-md-6">')
+print('                                    <div class="row no-gutters">')
 
 if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
-    print('                                    <div class="d-flex w-25 alert alert-success align-items-center justify-content-center">Enabled</div>')
-    print('                                    <div class="d-flex w-25">')
-    print('                                        <button type="submit" class="alert alert-info">Disable</button>')
-    print('                                        <input hidden name="ddos" value="disable">')
+    print('                                        <div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                                        <div class="col-9">')
+    print('                                            <form id="toastForm1" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info">Disable</button>')
+    print('                                                <input hidden name="ddos" value="disable">')
 else:
-    print('                                    <div class="d-flex w-25 alert alert-secondary align-items-center justify-content-center">Disabled</div>')
-    print('                                    <div class="d-flex w-25">')
-    print('                                        <button type="submit" class="alert alert-info">Enable</button>')
-    print('                                        <input hidden name="ddos" value="enable">')
+    print('                                        <div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                                        <div class="col-9">')
+    print('                                            <form id="toastForm1" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info">Enable</button>')
+    print('                                                <input hidden name="ddos" value="enable">')
 
+print('                                            </form>')
+print('                                        </div>')
 print('                                    </div>')
-print('                                </div> <!-- Row End -->')
-print('                            </form>')
+print('                                </div>')
 
 try:
     with open(os.devnull, 'w') as FNULL:
@@ -269,27 +342,31 @@ except OSError:
 else:
     with open(os.devnull, 'w') as FNULL:
         firehol_enabled = subprocess.call("systemctl is-active firehol.service", stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
-
-        print('                            <form id="toastForm2" class="form" onsubmit="return false;">')
-        print('                                <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-        print('                                    <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-shield-alt"></i>&nbsp;SYNPROXY</div>')
+    print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-shield-alt"></i> SYNPROXY</div>')
+    print('                                <div class="col-md-6">')
+    print('                                    <div class="row no-gutters">')
 
     if firehol_enabled == 0:
-        print('                                    <div class="d-flex w-25 alert alert-success align-items-center justify-content-center">Enabled</div>')
-        print('                                    <div class="d-flex w-25">')
-        print('                                        <button type="submit" class="alert alert-info">Disable</button>')
-        print('                                        <input hidden name="ddos" value="disable">')
+        print('                                        <div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+        print('                                        <div class="col-9">')
+        print('                                            <form id="toastForm2" class="form" onsubmit="return false;">')
+        print('                                                <button type="submit" class="alert alert-info btn btn-info">Disable</button>')
+        print('                                               <input hidden name="ddos" value="disable">')
     else:
-        print('                                    <div class="d-flex w-25 alert alert-secondary align-items-center justify-content-center">Disabled</div>')
-        print('                                    <div class="d-flex w-25">')
-        print('                                        <button type="submit" class="alert alert-info">Enable</button>')
-        print('                                        <input hidden name="ddos" value="enable">')
+        print('                                        <div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+        print('                                        <div class="col-9">')
+        print('                                            <form id="toastForm2" class="form" onsubmit="return false;">')
+        print('                                                <button type="submit" class="alert alert-info btn btn-info">Enable</button>')
+        print('                                                <input hidden name="ddos" value="enable">')
 
-print('                                    </div>')
-print('                                </div> <!-- Row End -->')
-print('                            </form>')
+    print('                                            </form>')
+    print('                                        </div>')
+    print('                                    </div>')
+    print('                                </div>')
+
+print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->') #Card Body End
-cardfooter('Turn these settings on when you are under a DDOS Attack.<br>Disable CSF or any other firewall before turning on SYNPROXY (FireHol)')
+cardfooter('Turn these settings on when you are under a DDOS Attack but remember to disable CSF or any other firewall before turning on SYNPROXY (FireHol).')
 
 # PHP-FPM Pool Editor
 phpfpmpool_hint = " Secure and non secure PHP-FPM Pools attached to cPanel users for use with Native NGINX. "
@@ -329,24 +406,32 @@ cardfooter('Settings such as: pm.max_requests, pm.max_spare_servers, session.sav
 # Map cPanel Package to NGINX
 cardheader('Map cPanel Package to NGINX','fas fa-box-open')
 print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-print('                            <form class="form" method="post" id="toastForm16" onsubmit="return false;">')
-print('                                <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-print('                                    <div class="d-flex w-50 alert alert-light align-items-center">&nbsp;<i class="fas fa-box"></i>NGINX -> Package</div>')
+print('                            <div class="row no-gutters row-1"> <!-- Row Start -->') #Row Start
+print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-box"></i> NGINX -> Package</div>')
+print('                                <div class="col-md-6">')
+print('                                    <div class="row no-gutters">')
 
 if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
-    print('                                    <div class="d-flex w-25 alert alert-success align-items-center justify-content-center">Enabled</div>')
-    print('                                    <div class="d-flex w-25">')
-    print('                                        <button type="submit" class="alert alert-info">Disable</button>')
-    print('                                        <input hidden name="package_lock" value="disabled">')
+    print('                                        <div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                                        <div class="col-9">')
+    print('                                            <form class="form" method="post" id="toastForm16" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info">Disable</button>')
+    print('                                                <input hidden name="package_lock" value="disabled">')
+    print('                                            </form>')
+    print('                                        </div>')
+    print('                                    </div>')
 else:
-    print('                                    <div class="d-flex w-25 alert alert-secondary align-items-center justify-content-center">Disabled</div>')
-    print('                                    <div class="d-flex w-25">')
-    print('                                        <button type="submit" class="alert alert-info">Enable</button>')
-    print('                                        <input hidden name="package_lock" value="enabled">')
+    print('                                        <div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                                        <div class="col-9">')
+    print('                                            <form class="form" method="post" id="toastForm16" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info">Enable</button>')
+    print('                                                <input hidden name="package_lock" value="enabled">')
+    print('                                            </form>')
+    print('                                        </div>')
+    print('                                    </div>')
 
-print('                                    </div>')
-print('                                </div> <!-- Row End -->')
-print('                            </form>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
@@ -377,7 +462,7 @@ print('                                </div>')
 print('                                <button class="btn btn-outline-primary btn-block" type="submit">Edit Pkg</button>')
 print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
-cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes a Upgrade/Downgrade process.')
+cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes an Upgrade/Downgrade process.')
 
 # System Resource Limit
 cardheader('System Resource Limit','fas fa-compress')
