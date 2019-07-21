@@ -11,6 +11,7 @@ import psutil
 import signal
 import jinja2
 import codecs
+import json
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -222,6 +223,58 @@ if os.path.isdir('/etc/borgmatic'):
     print('				</div>')  # card-body end
     print('			</div>')  # card end
 
+    # list backup and allow restore
+    if os.path.isfile('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE'):
+        if not os.path.exists('/root/borg_restore_point'):
+            os.makedirs('/root/borg_restore_point')
+        print('			<div class="card">')  # card
+        print('				<div class="card-header">')
+        print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i>Restore points</h5>')
+        print('				</div>')
+        print('				<div class="card-body">')  # card-body
+        if os.path.ismount('/root/borg_restore_point'):
+            with open('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE', 'r') as restore_point_conf:
+                yaml_parsed_restorepoint = yaml.safe_load(restore_point_conf)
+            restore_point = yaml_parsed_restorepoint.get('restore_point', 'snapshot')
+            commoninclude.print_success_alert('<center>currently mounted</center><hr>'+restore_point)
+            print('				<form class="form mb-3" id="toastForm24" onsubmit="return false;">')
+            print(('				<input class="hidden" name="action" value="umount">'))
+            print('					<button type="submit" class="btn btn-outline-primary btn-block ">Umount Restore Point</button>')
+            print('				</form>')
+            mount_flag=True
+        else:
+            mount_flag=False
+        proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
+        try:
+            output = json.loads(proc.stdout.read())
+        except ValueError, e:
+            pass
+        else:
+            myarchives = output[0].get('archives')
+            if myarchives:
+                mykeypos = 1
+                print('                 <div class="input-group">')
+                print('                     <select name="myarchives" class="custom-select">')
+                for backup in myarchives:
+                    print(('                    <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>'))
+                print('                     </select>')
+                if not mount_flag:
+                    print('                 <div class="input-group-append">')
+                    print('                     <form class="m-0 toastForm25-wrap" id="toastForm25'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+                    print(('                        <input class="hidden" name="restorepoint" value="'+backup.get('archive')+'">'))
+                    print(('                        <input class="hidden" name="action" value="mount">'))
+                    print('                         <button class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
+                    print('                     </form>')
+                    print('                 </div>')
+                    mykeypos = mykeypos + 1
+                print('                 </div>')
+
+        print('				</div>')  # card-body end
+        print('				<div class="card-footer">')
+        print('					<small><kbd>/root/borg_restore_point</kbd> is the mount point</small>')
+        print('				</div>')
+        print('			</div>')  # card end
+
     print('		</div>')  # end col left
 
     print('		<div class="col-lg-6">')  # col right
@@ -327,16 +380,20 @@ if os.path.isdir('/etc/borgmatic'):
     print('						<button class="btn btn-outline-primary btn-block mt-3" type="submit">Save Borg Settings</button>')
 
     print('					</form>')
+    print('					<form class="form" id="modalForm5" onsubmit="return false;">')
+    print(('					 <input class="hidden" name="action" value="initrepo">'))
+    print('						 <button class="btn btn-outline-primary btn-block mt-3" type="submit">Init Borg Repo</button>')
+    print('	                </form>')
 
     print('				</div>')  # card-body end
     print('				<div class="card-footer">')
-    print('					<small>Keep your encryption_passphrase in a safe place. Losing it would make data recovery impossible on a server crash.</small>')
+    print('					<small>Keep your encryption_passphrase in a safe place. Losing it would make data recovery impossible on a server crash<br><hr>repositories must either a local folder: <kbd>/mnt/backup</kbd> <br> or a ssh URI: <kbd>ssh://user@backupserver.com:22/home/user/backup</kbd></small>')
     print('				</div>')
     print('			</div>')  # card end
 
     print('			<div class="card">')  # card
     print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i> Additional home directory to backup.</h5>')
+    print('					<h5 class="card-title mb-0"><i class="fas fa-database float-right"></i> Additional home directory to backup</h5>')
     print('				</div>')
     print('			<div class="card-body">')  # card-body
 
@@ -375,10 +432,11 @@ if os.path.isdir('/etc/borgmatic'):
 
     print('					</form>')
 else:
-    print('					<i class="fas fa-exclamation"></i>')
-    print('					<p>Borg/Borgmatic not installed.</p>')
-    print('					<small class="mb-1">To install run the following command</small>')
-    print('					<kbd>/opt/nDeploy/scripts/easy_borg_setup.sh</kbd>')
+    print('					<p>Install and setup Borg/Borgmatic</p>')
+    print('					            <form class="form" id="modalForm4" onsubmit="return false;">')
+    print(('					            <input class="hidden" name="action" value="installborg">'))
+    print('					                <button class="btn btn-primary">Install</button>')
+    print('								</form>')
 
 print('					</div>')  # card-body end
 print('				</div>')  # card end

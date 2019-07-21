@@ -46,6 +46,21 @@ def fix_unison(trigger):
                     if not filesync_ok:
                         filesync_fail_count = filesync_fail_count+1
                         status.append(myhome+'_'+servername+":FAIL")
+            for servername in cluster_data_yaml_parsed.keys():
+                filesync_ok = False
+                for myprocess in psutil.process_iter():
+                    # Workaround for Python 2.6
+                    if platform.python_version().startswith('2.6'):
+                        mycmdline = myprocess.cmdline
+                    else:
+                        mycmdline = myprocess.cmdline()
+                    if '/usr/bin/unison' in mycmdline and 'phpsessions_'+servername in mycmdline:
+                        filesync_ok = True
+                    else:
+                        pass
+                if not filesync_ok:
+                    filesync_fail_count = filesync_fail_count+1
+                    status.append('phpsessions_'+servername+":FAIL")
             if filesync_fail_count > 0:
                 print("Unison filesync not running for - "+str(status)+" . Trying autofix:")
                 print("Trying an autorepair")

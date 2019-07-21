@@ -5,11 +5,19 @@
 - name: Install and setup unison in nDeploy cluster master
   file: path=/root/.unison state=directory
 
-- name: create the unison preference file
+- name: create the unison preference file for homedir
   template:
     src: default.prf.j2
     dest: /root/.unison/{{ item[0] }}_{{ item[1] }}.prf
     # force: no
   with_nested:
     - "{{ homedir }}"
+    - "{{ groups['ndeployslaves'] }}"
+
+- name: create the unison preference file for phpsessions
+  template:
+    src: phpsessions.prf.j2
+    dest: /root/.unison/phpsessions_{{ item }}.prf
+    # force: no
+  with_items:
     - "{{ groups['ndeployslaves'] }}"

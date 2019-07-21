@@ -47,6 +47,8 @@ router=readwritesplit
 master_failure_mode=fail_on_write
 connection_keepalive=60
 use_sql_variables_in=master
+master_reconnection=true
+slave_selection_criteria=ADAPTIVE_ROUTING
 {% else %}
 router=readconnroute
 router_options=master
@@ -56,6 +58,7 @@ user=maxscale
 passwd={{ MAXSCALEPASS }}
 connection_timeout=60
 max_connections=500
+auth_all_servers=false
 
 [MaxAdmin-Service]
 type=service

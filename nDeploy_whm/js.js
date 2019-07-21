@@ -57,6 +57,24 @@ jQuery(document).ready(function($){
         }});
     });
 
+		$('#modalForm4').submit(function() {
+	        var $f = $('#modalForm4');
+	        var $url = "install_borg.cgi?" + $f.serialize();
+	        $.ajax({url: $url, success: function(result){
+	            $("#myModal-xl").find('.modal-body').html(result)
+	            $("#myModal-xl").modal('show');
+	        }});
+	    });
+
+			$('#modalForm5').submit(function() {
+		        var $f = $('#modalForm5');
+		        var $url = "install_borg.cgi?" + $f.serialize();
+		        $.ajax({url: $url, success: function(result){
+		            $("#myModal-xl").find('.modal-body').html(result)
+		            $("#myModal-xl").modal('show');
+		        }});
+		    });
+
 	$('#toastForm4').submit(function() {
         var $f = $('#toastForm4');
         var $url = "fix_unison.cgi?" + $f.serialize();
@@ -195,6 +213,52 @@ jQuery(document).ready(function($){
             $("#myToast").toast('show');
         }});
     });
+
+		$('#toastForm21').submit(function() {
+				var $f = $('#toastForm21');
+				var $url = "daemon_actions.cgi?" + $f.serialize();
+				$.ajax({url: $url, success: function(result){
+						$("#myToast").find('.toast-body').html(result)
+						$("#myToast").toast('show');
+				}});
+		});
+
+		$('#toastForm22').submit(function() {
+				var $f = $('#toastForm22');
+				var $url = "daemon_actions.cgi?" + $f.serialize();
+				$.ajax({url: $url, success: function(result){
+						$("#myToast").find('.toast-body').html(result)
+						$("#myToast").toast('show');
+				}});
+		});
+
+		$('#toastForm23').submit(function() {
+				var $f = $('#toastForm23');
+				var $url = "daemon_actions.cgi?" + $f.serialize();
+				$.ajax({url: $url, success: function(result){
+						$("#myToast").find('.toast-body').html(result)
+						$("#myToast").toast('show');
+				}});
+		});
+
+		$('#toastForm24').submit(function() {
+				var $f = $('#toastForm24');
+				var $url = "borg_restore.cgi?" + $f.serialize();
+				$.ajax({url: $url, success: function(result){
+						$("#myToast").find('.toast-body').html(result)
+						$("#myToast").toast('show');
+				}});
+		});
+
+		$('.toastForm25-wrap').submit(function(e) {
+					var $id = e.target.id;
+					var $f = $('#' + $id);
+					var $url = "borg_restore.cgi?" + $f.serialize();
+					$.ajax({url: $url, success: function(result){
+							$("#myToast").find('.toast-body').html(result)
+							$("#myToast").toast('show');
+					}});
+			});
 
     $('#myModal').on('hidden.bs.modal', function () {
     	location.reload()

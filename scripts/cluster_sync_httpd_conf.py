@@ -5,7 +5,8 @@ import os
 import yaml
 import socket
 import subprocess
-
+import psutil
+import platform
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -38,4 +39,17 @@ if __name__ == "__main__":
     new_conf = multiple_replace(cluster_dict_ipmap, theconf)
     with open('/etc/apache2/conf/httpd.conf', 'w') as apache_conf:
         apache_conf.write(new_conf)
-    subprocess.call(['/usr/sbin/apachectl', 'graceful'])
+        httpd_status = False
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if '/usr/sbin/httpd' in mycmdline:
+            httpd_status = True
+            break
+    if httpd_status:
+        subprocess.call(['/usr/sbin/apachectl', 'graceful'])
+    else:
+        subprocess.call('systemctl restart httpd', shell=True)
