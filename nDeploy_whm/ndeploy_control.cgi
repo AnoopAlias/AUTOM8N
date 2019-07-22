@@ -2,16 +2,9 @@
 
 import cgi
 import cgitb
-#import subprocess
 import os
 import yaml
-#import platform
-#import psutil
-#import signal
-#import jinja2
-#import codecs
-#import sys
-from commoninclude import print_success, return_label, return_prepend, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, return_prepend, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Budd P Grant"
 __copyright__ = "Copyright Budd P Grant"
@@ -43,8 +36,8 @@ if os.path.isfile(ndeploy_control_file):
     heading_background_color = yaml_parsed_ndeploy_control_settings.get("heading_background_color","#FFFFFF") #done
     heading_foreground_color = yaml_parsed_ndeploy_control_settings.get("heading_foreground_color","#3D4366") #done
     body_background_color = yaml_parsed_ndeploy_control_settings.get("body_background_color","#F1F1F8") #done
-    card_color = yaml_parsed_ndeploy_control_settings.get("card_color","light") 
-    text_color = yaml_parsed_ndeploy_control_settings.get("text_color","dark")
+    card_color = yaml_parsed_ndeploy_control_settings.get("card_color","light") #done
+    text_color = yaml_parsed_ndeploy_control_settings.get("text_color","dark") #done
     breadcrumb_active_color = yaml_parsed_ndeploy_control_settings.get("breadcrumb_active_color","#121212") #done
     heading_height = yaml_parsed_ndeploy_control_settings.get("heading_height","50") #done
     header_button_color = yaml_parsed_ndeploy_control_settings.get("header_button_color","primary") #done
