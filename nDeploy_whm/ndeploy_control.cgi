@@ -164,7 +164,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_group" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
 print('                                </div>')
 
-print('                                <label for="brand_anchor">brand_anchor</label>')
+print('                                <label for="brand_anchor">Enter your brand\'s anchor text that will be used on the footer of the application.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_anchor_desc">')
@@ -174,7 +174,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_anchor" value="'+brand_anchor+'" id="brand_anchor" aria-describedby="brand_anchor_desc">')
 print('                                </div>')
 
-print('                                <label for="brand_link">brand_link</label>')
+print('                                <label for="brand_link">Enter your brand\'s website link that the above anchor text will link to via the footer.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_link_desc">')
@@ -203,17 +203,17 @@ print('                <!-- Breadcrumb Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-breadcrumb" role="tabpanel" aria-labelledby="v-pills-breadcrumb-tab">')
 
 cardheader('Breadcrumb Settings','fas fa-bread-slice')
-breadcrumb_active_color_hint = " This is a breadcrumb_active_color hint. "
+breadcrumb_active_color_hint = " This can be a HEX code, a RGB color code, or just a web browser supported color format like grey, black, white, etc. "
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 print('                                <form class="form w-100" id="ndeploy_control_config" method="post" onsubmit="return false;">')
 
-print('                                <label for="breadcrumb_active_color">breadcrumb_active_color</label>')
+print('                                <label for="breadcrumb_active_color">Enter the desired color code for the currently ACTIVE page in this application\'s breadcrumb section which is located beneath the header.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="breadcrumb_active_color_desc">')
-print('                                            '+return_prepend("breadcrumb_active_color", breadcrumb_active_color_hint))
+print('                                            '+return_prepend("Breadcrumb Active Page Color", breadcrumb_active_color_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="breadcrumb_active_color" value="'+breadcrumb_active_color+'" id="breadcrumb_active_color" aria-describedby="breadcrumb_active_color_desc">')
@@ -233,9 +233,9 @@ print('                <!-- Heading Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-heading" role="tabpanel" aria-labelledby="v-pills-heading-tab">')
 
 cardheader('Heading Settings','fas fa-heading')
-heading_background_color_hint = " This is a heading_background_color hint. "
-heading_foreground_color_hint = " This is a heading_foreground_color hint. "
-heading_height_hint = " This is a heading_height hint. "
+heading_background_color_hint = " This can be a HEX code, a RGB color code, or just a web browser supported color format like grey, black, white, etc. "
+heading_foreground_color_hint = " This can be a HEX code, a RGB color code, or just a web browser supported color format like grey, black, white, etc. "
+heading_height_hint = " This can be in pixels, REM, EM, VH, VW or any other supported size supported by the browser. "
 header_button_color_hint = " This is a header_button_color hint. "
 icon_height_hint = " This is a icon_height hint. "
 icon_width_hint = " This is a icon_width hint. "
@@ -248,31 +248,31 @@ logo_url_hint = " This is a logo_url hint. "
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 
-print('                                <label for="heading_background_color">heading_background_color</label>')
+print('                                <label for="heading_background_color">Enter the desired background color for the header.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="heading_background_color_desc">')
-print('                                            '+return_prepend("heading_background_color", heading_background_color_hint))
+print('                                            '+return_prepend("Header Background Color", heading_background_color_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="heading_background_color" value="'+heading_background_color+'" id="heading_background_color" aria-describedby="heading_background_color_desc">')
 print('                                </div>')
 
-print('                                <label for="heading_foreground_color">heading_foreground_color</label>')
+print('                                <label for="heading_foreground_color">Enter the desired foreground color for the header.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="heading_foreground_color_desc">')
-print('                                            '+return_prepend("heading_foreground_color", heading_foreground_color_hint))
+print('                                            '+return_prepend("Header Foreground Color", heading_foreground_color_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="heading_foreground_color" value="'+heading_foreground_color+'" id="heading_foreground_color" aria-describedby="heading_foreground_color_desc">')
 print('                                </div>')
 
-print('                                <label for="heading_height">heading_height</label>')
+print('                                <label for="heading_height">Enter the desired header height. Use this to present your logo more cleanly.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="heading_height_desc">')
-print('                                            '+return_prepend("heading_height", heading_height_hint))
+print('                                            '+return_prepend("Header Height", heading_height_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="heading_height" value="'+heading_height+'" id="heading_height" aria-describedby="heading_height_desc">')
@@ -281,7 +281,7 @@ print('                                </div>')
 print('                                <label for="header_button_color">header_button_color</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
-print('                                        <label class="input-group-text">'+return_prepend("header_button_color", header_button_color_hint)+'</label>')
+print('                                        <label class="input-group-text">'+return_prepend("Header Button Color", header_button_color_hint)+'</label>')
 print('                                    </div>')
 print('                                    <select name="header_button_color" class="custom-select">')
 
