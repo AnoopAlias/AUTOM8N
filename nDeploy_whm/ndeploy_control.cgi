@@ -4,7 +4,7 @@ import cgi
 import cgitb
 import os
 import yaml
-from commoninclude import return_label, return_prepend, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, return_prepend, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Budd P Grant"
 __copyright__ = "Copyright Budd P Grant"
@@ -473,7 +473,9 @@ print('                </div>')
 print('')
 print('            <!-- WHM End Row -->')
 print('            </div>')
-print('')
+
+print_footer()
+
 print('        </div> <!-- Main Container End -->')
 print('')
 

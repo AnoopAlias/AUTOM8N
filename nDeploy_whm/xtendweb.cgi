@@ -11,7 +11,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, return_prepend, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import bcrumb, return_prepend, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -533,7 +533,9 @@ print('                </div>')
 print('')
 print('            <!-- WHM End Row -->')
 print('            </div>')
-print('')
+
+print_footer()
+
 print('        </div> <!-- Main Container End -->')
 print('')
 
@@ -543,3 +545,5 @@ print_loader()
 print('    <!-- Body End -->')
 print('    </body>')
 print('</html>')
+
+

@@ -12,7 +12,7 @@ import jinja2
 import codecs
 import sys
 import json
-from commoninclude import print_nontoast_error, return_label, return_multi_input, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, return_label, return_multi_input, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -402,7 +402,9 @@ print('                </div>')
 print('')
 print('            <!-- WHM End Row -->')
 print('            </div>')
-print('')
+
+print_footer()
+
 print('        </div> <!-- Main Container End -->')
 print('')
 

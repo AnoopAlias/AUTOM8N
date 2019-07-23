@@ -154,6 +154,7 @@ def print_loader():
     print('')
 
 
+# Print Header
 def print_header(title=''):
     print(('Content-Type: text/html'))
     print((''))
@@ -191,7 +192,17 @@ def print_header(title=''):
     print('        <div id="main-container" class="container">') #Main Container
 
 
-#CardStart
+# Print Footer
+def print_footer():
+    print('')
+    print('            <!-- Footer Start -->')
+    print('            <div class="row justify-content-center">')
+    print('                <a href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
+    print('            </div>')
+    print('')
+
+
+# Card Start
 def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
     print('')
     print('                    <!-- Bootstrap Card Start for '+header+' -->')
@@ -203,7 +214,7 @@ def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
     print('')
 
 
-#CardFooter
+# Card Footer
 def cardfooter(text='Unmodified Footer Text'):
     if text != '':
         print('')
@@ -217,7 +228,7 @@ def cardfooter(text='Unmodified Footer Text'):
     print('')
 
 
-#Breadcrumbs
+# Breadcrumbs
 def bcrumb(pagename="Unnamed Page",active_fa_icon="fas fa-infinity"):
     print('')
     print('            <!-- Navigation -->')
