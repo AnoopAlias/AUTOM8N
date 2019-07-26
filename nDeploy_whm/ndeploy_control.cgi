@@ -121,33 +121,33 @@ print('')
 print('                <!-- Branding Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-branding" role="tabpanel" aria-labelledby="v-pills-branding-tab">')
 cardheader('Branding Settings','fas fa-infinity')
-brand_logo_hint = " Enter the filename of the brand logo used for this system in the suggested directories. "
-brand_hint = " Enter the text you want to represent this application as for whitelabeling purposes. This shows up in both WHM and cPanel."
-brand_group_hint = " This is a brand_group hint. "
-brand_footer_hint = " This is a brand_footer hint. "
-brand_anchor_hint = " This is a brand_anchor hint. "
-brand_link_hint = " This is a brand_link hint. "
+brand_logo_hint = " Enter the filename of the brand logo used for this application in the suggested directories. "
+brand_hint = " Enter the textual name you want to represent this application as for whitelabeling purposes. This shows up in both WHM and cPanel."
+brand_group_hint = " cPanel creates sections for content. Enter the section title you want this application to show up in. "
+brand_footer_hint = " This is depreciated. "
+brand_anchor_hint = " The textual part of the link that's located in the footer of this application. "
+brand_link_hint = " This is the link that is attached to the above 'Branding Anchor Text' for use on the footer of the application. "
 
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 print('                                <form class="form w-100" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
 
-print('                                <label for="brand">Enter the brand name you want to represent for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>logo_not_icon</kbd> method.</label>')
+print('                                <label for="brand">Enter the brand name you want to represent this application as for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>Heading::logo_not_icon</kbd> method.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_desc">')
-print('                                            '+return_prepend("brand", brand_hint))
+print('                                            '+return_prepend("Brand Name", brand_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand" value="'+brand+'" id="brand" aria-describedby="brand_desc">')
 print('                                </div>')
 
-print('                                <label for="brand_logo">Place a 48 x 48 pixel icon of your brand in <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to personalize the panel\'s icon in various areas.</label>')
+print('                                <label for="brand_logo">Place an icon of your brand in <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to personalize the panel\'s icon in various areas. You can customize the icon size in the <kbd>Heading::icon_width/icon_height</kbd> section to control aesthetics in the header.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_logo_desc">')
-print('                                            '+return_prepend("brand_logo", brand_logo_hint))
+print('                                            '+return_prepend("Brand Icon", brand_logo_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_logo" value="'+brand_logo+'" id="brand_logo" aria-describedby="brand_logo_desc">')
@@ -158,7 +158,7 @@ print('                                <label for="brand_group">Enter the sectio
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_group_desc">')
-print('                                            '+return_prepend("brand_group", brand_group_hint))
+print('                                            '+return_prepend("cPanel Section", brand_group_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_group" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
@@ -168,7 +168,7 @@ print('                                <label for="brand_anchor">Enter your bran
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_anchor_desc">')
-print('                                            '+return_prepend("brand_anchor", brand_anchor_hint))
+print('                                            '+return_prepend("Footer Anchor Text", brand_anchor_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_anchor" value="'+brand_anchor+'" id="brand_anchor" aria-describedby="brand_anchor_desc">')
@@ -178,7 +178,7 @@ print('                                <label for="brand_link">Enter your brand\
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_link_desc">')
-print('                                            '+return_prepend("brand_link", brand_link_hint))
+print('                                            '+return_prepend("Footer Link", brand_link_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_link" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
@@ -209,7 +209,7 @@ print('                        <div class="card-body"> <!-- Card Body Start -->'
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 print('                                <form class="form w-100" id="ndeploy_control_config" method="post" onsubmit="return false;">')
 
-print('                                <label for="breadcrumb_active_color">Enter the desired color code for the currently ACTIVE page in this application\'s breadcrumb section which is located beneath the header.</label>')
+print('                                <label for="breadcrumb_active_color">Enter the desired color code for the currently ACTIVE page in this application\'s breadcrumb section which is located beneath the header and above the application\'s content.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="breadcrumb_active_color_desc">')
@@ -235,11 +235,11 @@ print('                <div class="tab-pane fade" id="v-pills-heading" role="tab
 cardheader('Heading Settings','fas fa-heading')
 heading_background_color_hint = " This can be a HEX code, a RGB color code, or just a web browser supported color format like grey, black, white, etc. "
 heading_foreground_color_hint = " This can be a HEX code, a RGB color code, or just a web browser supported color format like grey, black, white, etc. "
-heading_height_hint = " This can be in pixels, REM, EM, VH, VW or any other supported size supported by the browser. "
-header_button_color_hint = " This is a header_button_color hint. "
-icon_height_hint = " This is a icon_height hint. "
-icon_width_hint = " This is a icon_width hint. "
-logo_not_icon_hint = " This is a logo_not_icon hint. "
+heading_height_hint = " This can be in pixels, REM, EM, VH, VW or any other DIV supported size format. "
+header_button_color_hint = " Select a color from the supported Bootstrap Button Colors. "
+icon_height_hint = " This can be in pixels, REM, EM, VH, VW or any other IMG supported size format. "
+icon_width_hint = " This can be in pixels, REM, EM, VH, VW or any other IMG supported size format. "
+logo_not_icon_hint = " This allows you to override the older icon-only supported branding in the header, with a new, more robust, fully graphical logo in the header. This disables <kbd>Branding::Brand Logo</kbd> and <kbd>Branding::Brand Icon</kbd>. "
 logo_height_hint = " This is a logo_height hint. "
 logo_width_hint = " This is a logo_width hint. "
 logo_url_hint = " This is a logo_url hint. "
@@ -248,7 +248,7 @@ logo_url_hint = " This is a logo_url hint. "
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 
-print('                                <label for="heading_background_color">Enter the desired background color for the header.</label>')
+print('                                <label for="heading_background_color">Enter the desired background color for the header. Transparency is supported.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="heading_background_color_desc">')
@@ -258,7 +258,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="heading_background_color" value="'+heading_background_color+'" id="heading_background_color" aria-describedby="heading_background_color_desc">')
 print('                                </div>')
 
-print('                                <label for="heading_foreground_color">Enter the desired foreground color for the header.</label>')
+print('                                <label for="heading_foreground_color">Enter the desired foreground color for the header text.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="heading_foreground_color_desc">')
@@ -278,14 +278,14 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="heading_height" value="'+heading_height+'" id="heading_height" aria-describedby="heading_height_desc">')
 print('                                </div>')
 
-print('                                <label for="header_button_color">header_button_color</label>')
+print('                                <label for="header_button_color">Enter the bootstrap button color for header buttons.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <label class="input-group-text">'+return_prepend("Header Button Color", header_button_color_hint)+'</label>')
 print('                                    </div>')
 print('                                    <select name="header_button_color" class="custom-select">')
 
-bootstrap_colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted', 'white']
+bootstrap_colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted', 'link']
 for color in bootstrap_colors:
     if header_button_color != color:
         print('                                        <option value="'+color+'">'+color+'</option>')
@@ -294,29 +294,30 @@ for color in bootstrap_colors:
 print('                                    </select>')
 print('                                </div>')
 
-print('                                <label for="icon_height">icon_height</label>')
+print('                                <label for="icon_height">Select the height of the icon selected in the <kbd>Branding::Brand Icon</kbd> section.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="icon_height_desc">')
-print('                                            '+return_prepend("icon_height", icon_height_hint))
+print('                                            '+return_prepend("Branding Icon Height", icon_height_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="icon_height" value="'+icon_height+'" id="icon_height" aria-describedby="icon_height_desc">')
 print('                                </div>')
 
-print('                                <label for="icon_width">icon_width</label>')
+print('                                <label for="icon_width">Select the width of the icon selected in the <kbd>Branding::Brand Icon</kbd> section.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="icon_width_desc">')
-print('                                            '+return_prepend("icon_width", icon_width_hint))
+print('                                            '+return_prepend("Branding Icon Width", icon_width_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="icon_width" value="'+icon_width+'" id="icon_width" aria-describedby="icon_width_desc">')
 print('                                </div>')
 
-# logo_not_icon 
+# logo_not_icon
+print('                                <label for="logo_not_icon">This allows you to override the older icon-only supported branding, with a new, more robust, fully graphical logo in the header. <br>This overides the <kbd>Branding::Brand Logo</kbd> and <kbd>Branding::Brand Icon</kbd> options.</label>')
+print('                                    '+return_label("Logo Override", logo_not_icon_hint))
 if logo_not_icon == 'enabled':
-    print('                                    '+return_label("logo_not_icon", logo_not_icon_hint))
     print('                                    <div class="col-md-6">')
     print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
     print('                                            <label class="btn btn-light active">')
@@ -328,7 +329,6 @@ if logo_not_icon == 'enabled':
     print('                                        </div>')
     print('                                    </div>')
 else:
-    print('                                    '+return_label("logo_not_icon", logo_not_icon_hint))
     print('                                    <div class="col-md-6">')
     print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
     print('                                            <label class="btn btn-light">')
@@ -340,31 +340,31 @@ else:
     print('                                        </div>')
     print('                                    </div>')
 
-print('                                <label for="logo_height">logo_height</label>')
+print('                                <label for="logo_height">Select the height of the logo used within the header.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="logo_height_desc">')
-print('                                            '+return_prepend("logo_height", logo_height_hint))
+print('                                            '+return_prepend("Logo Height", logo_height_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="logo_height" value="'+logo_height+'" id="logo_height" aria-describedby="logo_height_desc">')
 print('                                </div>')
 
-print('                                <label for="logo_width">logo_width</label>')
+print('                                <label for="logo_width">Select the width of the logo used within the header.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="logo_width_desc">')
-print('                                            '+return_prepend("logo_width", logo_width_hint))
+print('                                            '+return_prepend("Logo Width", logo_width_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="logo_width" value="'+logo_width+'" id="logo_width" aria-describedby="logo_width_desc">')
 print('                                </div>')
 
-print('                                <label for="logo_url">logo_url</label>')
+print('                                <label for="logo_url">Enter the logo URL to use in the header. Requires <kbd>Header::Logo Override</kbd> to be enabled.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="logo_url_desc">')
-print('                                            '+return_prepend("logo_url", logo_url_hint))
+print('                                            '+return_prepend("Logo URL", logo_url_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="logo_url" value="'+logo_url+'" id="logo_url" aria-describedby="logo_url_desc">')
