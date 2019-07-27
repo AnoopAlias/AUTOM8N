@@ -260,6 +260,15 @@ jQuery(document).ready(function($){
 					}});
 			});
 
+			$('#toastForm26').submit(function() {
+	        var $f = $('#toastForm26');
+	        var $url = "fix_csync2.cgi?" + $f.serialize();
+	        $.ajax({url: $url, success: function(result){
+	            $("#myToast").find('.toast-body').html(result)
+	            $("#myToast").toast('show');
+	        }});
+	    });
+
     $('#myModal').on('hidden.bs.modal', function () {
     	location.reload()
     });
