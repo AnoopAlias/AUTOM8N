@@ -93,7 +93,7 @@ print('                <div class="col-md-3 nav flex-column nav-pills" id="v-pil
 print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>')
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-selected="false">Branding</a>')
 print('                    <a class="nav-link" id="v-pills-breadcrumb-tab" data-toggle="pill" href="#v-pills-breadcrumb" role="tab" aria-controls="v-pills-breadcrumb" aria-selected="false">Breadcrumb</a>')
-print('                    <a class="nav-link" id="v-pills-heading-tab" data-toggle="pill" href="#v-pills-heading" role="tab" aria-controls="v-pills-heading" aria-selected="false">Heading</a>')
+print('                    <a class="nav-link" id="v-pills-heading-tab" data-toggle="pill" href="#v-pills-heading" role="tab" aria-controls="v-pills-heading" aria-selected="false">Header</a>')
 print('                    <a class="nav-link" id="v-pills-application-tab" data-toggle="pill" href="#v-pills-application" role="tab" aria-controls="v-pills-application" aria-selected="false">Application</a>')
 print('                </div>')
 print('')
@@ -133,7 +133,7 @@ print('                        <div class="card-body"> <!-- Card Body Start -->'
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 print('                                <form class="form w-100" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
 
-print('                                <label for="brand">Enter the brand name you want to represent this application as for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>Heading::logo_not_icon</kbd> method.</label>')
+print('                                <label for="brand">Enter the brand name you want to represent this application as for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>Header::Logo&nbsp;Override</kbd> method.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_desc">')
@@ -143,7 +143,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand" value="'+brand+'" id="brand" aria-describedby="brand_desc">')
 print('                                </div>')
 
-print('                                <label for="brand_logo">Place an icon of your brand in <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to personalize the panel\'s icon in various areas. You can customize the icon size in the <kbd>Heading::icon_width/icon_height</kbd> section to control aesthetics in the header.</label>')
+print('                                <label for="brand_logo">Place an icon of your brand in <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to personalize the panel\'s icon in various areas. You can customize the icon size in the <kbd>Header::Branding&nbsp;Icon&nbsp;Width</kbd> and <kbd>Header::Branding&nbsp;Icon&nbsp;Height</kbd> section to control aesthetics in the header.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_logo_desc">')
@@ -232,14 +232,14 @@ print('')
 print('                <!-- Heading Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-heading" role="tabpanel" aria-labelledby="v-pills-heading-tab">')
 
-cardheader('Heading Settings','fas fa-heading')
+cardheader('Header Options','fas fa-heading')
 heading_background_color_hint = " This can be a HEX code, a RGB color code, or just a web browser supported color format like grey, black, white, etc. "
 heading_foreground_color_hint = " This can be a HEX code, a RGB color code, or just a web browser supported color format like grey, black, white, etc. "
 heading_height_hint = " This can be in pixels, REM, EM, VH, VW or any other DIV supported size format. "
 header_button_color_hint = " Select a color from the supported Bootstrap Button Colors. "
 icon_height_hint = " This can be in pixels, REM, EM, VH, VW or any other IMG supported size format. "
 icon_width_hint = " This can be in pixels, REM, EM, VH, VW or any other IMG supported size format. "
-logo_not_icon_hint = " This allows you to override the older icon-only supported branding in the header, with a new, more robust, fully graphical logo in the header. This disables <kbd>Branding::Brand Logo</kbd> and <kbd>Branding::Brand Icon</kbd>. "
+logo_not_icon_hint = " This allows you to override the older icon-only supported branding in the header, with a new, more robust, fully graphical logo in the header. This disables <kbd>Branding::Brand&nbsp;Logo</kbd> and <kbd>Branding::Brand&nbsp;Icon</kbd>. "
 logo_height_hint = " This is a logo_height hint. "
 logo_width_hint = " This is a logo_width hint. "
 logo_url_hint = " This is a logo_url hint. "
@@ -294,7 +294,7 @@ for color in bootstrap_colors:
 print('                                    </select>')
 print('                                </div>')
 
-print('                                <label for="icon_height">Select the height of the icon selected in the <kbd>Branding::Brand Icon</kbd> section.</label>')
+print('                                <label for="icon_height">Select the height of the icon selected in the <kbd>Branding::Brand&nbsp;Icon</kbd> section.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="icon_height_desc">')
@@ -304,7 +304,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="icon_height" value="'+icon_height+'" id="icon_height" aria-describedby="icon_height_desc">')
 print('                                </div>')
 
-print('                                <label for="icon_width">Select the width of the icon selected in the <kbd>Branding::Brand Icon</kbd> section.</label>')
+print('                                <label for="icon_width">Select the width of the icon selected in the <kbd>Branding::Brand&nbsp;Icon</kbd> section.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="icon_width_desc">')
@@ -315,7 +315,7 @@ print('                                    <input type="text" class="form-contro
 print('                                </div>')
 
 # logo_not_icon
-print('                                <label for="logo_not_icon">This allows you to override the older icon-only supported branding, with a new, more robust, fully graphical logo in the header. <br>This overides the <kbd>Branding::Brand Logo</kbd> and <kbd>Branding::Brand Icon</kbd> options.</label>')
+print('                                <label for="logo_not_icon">This allows you to override the older icon-only supported branding, with a new, more robust, fully graphical logo in the header. This overides the <kbd>Branding::Brand&nbsp;Logo</kbd> and <kbd>Branding::Brand&nbsp;Icon</kbd> options.</label>')
 print('                                    '+return_label("Logo Override", logo_not_icon_hint))
 if logo_not_icon == 'enabled':
     print('                                    <div class="col-md-6">')
@@ -360,7 +360,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="logo_width" value="'+logo_width+'" id="logo_width" aria-describedby="logo_width_desc">')
 print('                                </div>')
 
-print('                                <label for="logo_url">Enter the logo URL to use in the header. Requires <kbd>Header::Logo Override</kbd> to be enabled.</label>')
+print('                                <label for="logo_url">Enter the logo URL to use in the header. Requires <kbd>Header::Logo&nbsp;Override</kbd> to be enabled.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="logo_url_desc">')
@@ -385,49 +385,49 @@ print('')
 print('                <!-- Application Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-application" role="tabpanel" aria-labelledby="v-pills-application-tab">')
 cardheader('Application Settings','fas fa-tools')
-app_title_hint = " This is a app_title hint. "
-app_email_hint = " This is a app_email hint. "
-body_background_color_hint = " This is a body_background_color hint. "
-card_color_hint = " This is a card_color hint. "
-text_color_hint = " This is a text_color hint. "
+app_title_hint = " Use this to alter the application name throughout the application for whitelabeling purposes. "
+app_email_hint = " Enter the email address this application will use when users hit a bind. This email will show up at useful times. "
+body_background_color_hint = " This can be a HEX code, a RGB color code, or just a web browser supported color format like grey, black, white, etc. "
+card_color_hint = " Select a color from the supported Bootstrap Card Colors. "
+text_color_hint = " Select a color from the supported Bootstrap Text Colors. "
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 
-print('                                <label for="app_title">app_title</label>')
+print('                                <label for="app_title">Enter the desired application name to be used throughout the application. This include title, main dash, and other areas.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="app_title_desc">')
-print('                                            '+return_prepend("app_title", app_title_hint))
+print('                                            '+return_prepend("Application Title", app_title_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="app_title" value="'+app_title+'" id="app_title" aria-describedby="app_title_desc">')
 print('                                </div>')
 
-print('                                <label for="app_email">app_email</label>')
+print('                                <label for="app_email">Enter support email for users if they run into various issues.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="app_email_desc">')
-print('                                            '+return_prepend("app_email", app_email_hint))
+print('                                            '+return_prepend("Support E-mail", app_email_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="app_email" value="'+app_email+'" id="app_email" aria-describedby="app_email_desc">')
 print('                                </div>')
 
-print('                                <label for="body_background_color">body_background_color</label>')
+print('                                <label for="body_background_color">Enter desired color for the background of this application.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="body_background_color_desc">')
-print('                                            '+return_prepend("body_background_color", body_background_color_hint))
+print('                                            '+return_prepend("Body Background Color", body_background_color_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="body_background_color" value="'+body_background_color+'" id="body_background_color" aria-describedby="body_background_color_desc">')
 print('                                </div>')
 
-print('                                <label for="card_color">card_color</label>')
+print('                                <label for="card_color">Select desired Card color for this application.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
-print('                                        <label class="input-group-text">'+return_prepend("card_color", card_color_hint)+'</label>')
+print('                                        <label class="input-group-text">'+return_prepend("Card Color", card_color_hint)+'</label>')
 print('                                    </div>')
 print('                                    <select name="card_color" class="custom-select">')
 
@@ -440,10 +440,10 @@ for color in bootstrap_colors:
 print('                                    </select>')
 print('                                </div>')
 
-print('                                <label for="text_color">text_color</label>')
+print('                                <label for="text_color">Select desired Text color for this application.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
-print('                                        <label class="input-group-text">'+return_prepend("text_color", text_color_hint)+'</label>')
+print('                                        <label class="input-group-text">'+return_prepend("Text Color", text_color_hint)+'</label>')
 print('                                    </div>')
 print('                                    <select name="text_color" class="custom-select">')
 
