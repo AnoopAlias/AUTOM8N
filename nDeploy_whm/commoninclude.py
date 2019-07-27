@@ -31,7 +31,6 @@ if os.path.isfile(ndeploy_control_file):
     logo_height = yaml_parsed_ndeploy_control_settings.get("logo_height","29")
     logo_width = yaml_parsed_ndeploy_control_settings.get("logo_width","242")
     logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
-    app_title = yaml_parsed_ndeploy_control_settings.get("app_title","AUTOM8N")
     app_email = yaml_parsed_ndeploy_control_settings.get("app_email","ops@gnusys.net")
 else:
     heading_background_color = "#FFFFFF"
@@ -48,7 +47,6 @@ else:
     logo_height = "29"
     logo_width = "242"
     logo_url = "https://autom8n.com/assets/img/logo-dark.png"
-    app_title = "AUTOM8N"
     app_email = "ops@gnusys.net"
 
 
@@ -57,14 +55,14 @@ if os.path.isfile(branding_file):
     with open(branding_file, 'r') as brand_data_file:
         yaml_parsed_brand = yaml.safe_load(brand_data_file)
     brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
-    brand_name = yaml_parsed_brand.get("brand", "AUTOM8N")
+    brand = yaml_parsed_brand.get("brand", "AUTOM8N")
     brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
     brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>') #Depreciated
     brand_anchor = yaml_parsed_brand.get("brand_anchor", "A U T O M 8 N")
     brand_link = yaml_parsed_brand.get("brand_link", "https://autom8n.com/")
 else:
     brand_logo = "xtendweb.png"
-    brand_name = "AUTOM8N"
+    brand = "AUTOM8N"
     brand_group = "NGINX AUTOMATION"
     brand_footer = '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>' #Depreciated
     brand_anchor = "A U T O M 8 N"
@@ -82,7 +80,7 @@ def return_prepend(theoption, hint):
 
 
 def return_disabled():
-    result = '<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+app_title+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div></div>'
+    result = '<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div></div>'
     return result
 
 
@@ -128,7 +126,7 @@ def print_sys_tip(theoption, hint):
 
 
 def print_disabled():
-    print('<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+app_title+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div></div>')
+    print('<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div></div>')
 
 
 def print_forbidden_wrapper():
@@ -160,7 +158,7 @@ def print_header(title=''):
     print((''))
     print(('<html>'))
     print(('    <head>'))
-    print(('        <title>'+app_title+' - '+title+'</title>'))
+    print(('        <title>'+brand+' - '+title+'</title>'))
     print(('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
     print(('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
     print(('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
@@ -179,7 +177,7 @@ def print_header(title=''):
     if logo_not_icon == 'enabled':
         print('                    <a href="xtendweb.cgi"><img border="0" src="'+logo_url+'" width="'+logo_width+'" height="'+logo_height+'"></a>')
     else:
-        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="'+icon_width+'" height="'+icon_height+'"></a>'+brand_name)
+        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="'+icon_width+'" height="'+icon_height+'"></a>'+brand)
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex header-buttons">')

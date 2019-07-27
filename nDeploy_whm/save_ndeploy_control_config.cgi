@@ -42,7 +42,6 @@ def ndeploy_control_data():
     yaml_parsed_ndeploy_control_config['logo_width'] = form.getvalue('logo_width')
     yaml_parsed_ndeploy_control_config['logo_height'] = form.getvalue('logo_height')
     yaml_parsed_ndeploy_control_config['logo_url'] = form.getvalue('logo_url')
-    yaml_parsed_ndeploy_control_config['app_title'] = form.getvalue('app_title')
     yaml_parsed_ndeploy_control_config['app_email'] = form.getvalue('app_email')
     yaml_parsed_ndeploy_control_config['body_background_color'] = form.getvalue('body_background_color')
     yaml_parsed_ndeploy_control_config['text_color'] = form.getvalue('text_color')
@@ -58,7 +57,6 @@ if form.getvalue('breadcrumb_active_color') and \
 	form.getvalue('logo_width') and \
 	form.getvalue('logo_height') and \
 	form.getvalue('logo_url') and \
-	form.getvalue('app_title') and \
 	form.getvalue('app_email') and \
 	form.getvalue('body_background_color') and \
 	form.getvalue('text_color') and \

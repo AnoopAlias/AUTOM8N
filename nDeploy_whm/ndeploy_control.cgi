@@ -47,7 +47,6 @@ if os.path.isfile(ndeploy_control_file):
     logo_height = yaml_parsed_ndeploy_control_settings.get("logo_height","29") #done
     logo_width = yaml_parsed_ndeploy_control_settings.get("logo_width","242") #done
     logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url","https://autom8n.com/assets/img/logo-dark.png") #done
-    app_title = yaml_parsed_ndeploy_control_settings.get("app_title","AUTOM8N") #done
     app_email = yaml_parsed_ndeploy_control_settings.get("app_email","ops@gnusys.net") #done
 else:
     heading_background_color = "#FFFFFF"
@@ -64,7 +63,6 @@ else:
     logo_height = "29"
     logo_width = "242"
     logo_url = "https://autom8n.com/assets/img/logo-dark.png"
-    app_title = "AUTOM8N"
     app_email = "ops@gnusys.net"
 
 
@@ -133,7 +131,7 @@ print('                        <div class="card-body"> <!-- Card Body Start -->'
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 print('                                <form class="form w-100" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
 
-print('                                <label for="brand">Enter the brand name you want to represent this application as for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>Header::Logo&nbsp;Override</kbd> method. <em>The brand name must contain only letters, numbers, a hyphen, and an underscore.</em></label>')
+print('                                <label for="brand">Enter the brand name you want to represent this application as for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>Header::Logo&nbsp;Override</kbd> method. <em>The brand name must contain only letters, numbers, a hyphen, or an underscore.</em></label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_desc">')
@@ -385,7 +383,6 @@ print('')
 print('                <!-- Application Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-application" role="tabpanel" aria-labelledby="v-pills-application-tab">')
 cardheader('Application Settings','fas fa-tools')
-app_title_hint = " Use this to alter the application name throughout the application for whitelabeling purposes. "
 app_email_hint = " Enter the email address this application will use when users hit a bind. This email will show up at useful times. "
 body_background_color_hint = " This can be a HEX code, a RGB color code, or just a web browser supported color format like grey, black, white, etc. "
 card_color_hint = " Select a color from the supported Bootstrap Card Colors. "
@@ -393,16 +390,6 @@ text_color_hint = " Select a color from the supported Bootstrap Text Colors. "
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
-
-print('                                <label for="app_title">Enter the desired application name to be used throughout the application. This include title, main dash, and other areas.</label>')
-print('                                <div class="input-group mb-4">')
-print('                                    <div class="input-group-prepend">')
-print('                                        <span class="input-group-text" id="app_title_desc">')
-print('                                            '+return_prepend("Application Title", app_title_hint))
-print('                                        </span>')
-print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="app_title" value="'+app_title+'" id="app_title" aria-describedby="app_title_desc">')
-print('                                </div>')
 
 print('                                <label for="app_email">Enter support email for users if they run into various issues.</label>')
 print('                                <div class="input-group mb-4">')
