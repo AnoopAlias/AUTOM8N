@@ -232,7 +232,7 @@ if os.path.isfile(cluster_config_file):
     print('						<button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
     print('					</form>')
 
-    print('					<form class="form mb-0" id="toastForm26" onsubmit="return false;">')
+    print('					<form class="form mb-3" id="toastForm26" onsubmit="return false;">')
     print(('					<input class="hidden" name="mode" value="reset">'))
     print('						<button type="submit" class="btn btn-outline-primary btn-block">Reset Csync2 Sync</button>')
     print('					</form>')
