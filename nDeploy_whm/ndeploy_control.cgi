@@ -133,7 +133,7 @@ print('                        <div class="card-body"> <!-- Card Body Start -->'
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 print('                                <form class="form w-100" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
 
-print('                                <label for="brand">Enter the brand name you want to represent this application as for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>Header::Logo&nbsp;Override</kbd> method.</label>')
+print('                                <label for="brand">Enter the brand name you want to represent this application as for cPanel\'s and WHM\'s icon label, as well as the header if not using the full <kbd>Header::Logo&nbsp;Override</kbd> method. <em>The brand name must contain only letters, numbers, a hyphen, and an underscore.</em></label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="brand_desc">')
