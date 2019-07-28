@@ -23,13 +23,8 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print_header('nDeploy Control Center')
-bcrumb('nDeploy Control Center','fab fa-bootstrap')
 
 #Theming Support
-print('            <!-- WHM Starter Row -->')
-print('            <div class="row justify-content-lg-center flex-nowrap">')
-
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
@@ -84,6 +79,11 @@ else:
     brand_anchor = "A U T O M 8 N"
     brand_link = "https://autom8n.com/"
 
+print_header(brand+' Control Center')
+bcrumb(brand+' Control Center','fas fa-tools')
+
+print('            <!-- WHM Starter Row -->')
+print('            <div class="row justify-content-lg-center flex-nowrap">')
 
 print('')
 print('                <!-- Secondary Navigation -->')
@@ -102,11 +102,11 @@ print('')
 print('                <!-- Home Tab -->')
 print('                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">')
 
-cardheader('Welcome to nDeploy Control','fab fa-bootstrap')
+cardheader('Welcome to '+brand+' Control','fas fa-tools')
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
-print('                                <p>Welcome to the nDeploy Control Center.&nbsp;&nbsp;Here you will have control over various theme and configuration aspects of nDeploy whether it is branding or theme configuration settings to what features you want available to the users.</p>')
+print('                                <p>Welcome to the '+brand+' Control Center.&nbsp;&nbsp;Here you will have control over various theming, branding, and configuration settings for this application.</p>')
 print('                            </div> <!-- Row End -->') #End Row
 print('                        </div> <!-- Card Body End -->') #Card Body End
 

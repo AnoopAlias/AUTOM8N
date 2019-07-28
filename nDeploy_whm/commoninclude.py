@@ -12,8 +12,10 @@ ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
+version_info_file = installation_path+"/conf/version.yaml"
 
 
+#nDeploy Control
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
@@ -50,7 +52,7 @@ else:
     app_email = "ops@gnusys.net"
 
 
-#Branding Support
+# Branding Support
 if os.path.isfile(branding_file):
     with open(branding_file, 'r') as brand_data_file:
         yaml_parsed_brand = yaml.safe_load(brand_data_file)
@@ -67,6 +69,13 @@ else:
     brand_footer = '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>' #Depreciated
     brand_anchor = "A U T O M 8 N"
     brand_link = "https://autom8n.com/"
+
+
+# Get version of Nginx and Plugin
+with open(version_info_file, 'r') as version_info_yaml:
+    version_info_yaml_parsed = yaml.safe_load(version_info_yaml)
+nginx_version = version_info_yaml_parsed.get('nginx_version')
+autom8n_version = version_info_yaml_parsed.get('autom8n_version')
 
 
 def return_label(theoption, hint):
@@ -181,8 +190,9 @@ def print_header(title=''):
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex header-buttons">')
-    print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="ndeploy_control.cgi"><i class="fab fa-bootstrap"></i> nDeploy Control </a></div>')
-    print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" target="_blank" href="help.txt"><i class="fas fa-book-open"></i> docs</a></div>')
+    print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="ndeploy_control.cgi"><i class="fas fa-tools"></i> '+brand+' Control </a></div>')
+    print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="mailto:'+app_email+'"><i class="fas fa-envelope"></i> Support </a></div>')
+    print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" target="_blank" href="help.txt"><i class="fas fa-book-open"></i> Documentation </a></div>')
     print('            </div>')
     print('        </header>')
     print('')
@@ -196,6 +206,9 @@ def print_footer():
     print('            <!-- Footer Start -->')
     print('            <div class="row justify-content-center">')
     print('                <a href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
+    print('            </div>')
+    print('            <div class="row justify-content-center text-center text-'+text_color+'">')
+    print('                <p class="small">We are running '+brand+' version '+autom8n_version.replace("Autom8n",'')+' on '+nginx_version+'.</p>')
     print('            </div>')
     print('')
 
