@@ -237,10 +237,10 @@ heading_height_hint = " This can be in pixels, REM, EM, VH, VW or any other DIV 
 header_button_color_hint = " Select a color from the supported Bootstrap Button Colors. "
 icon_height_hint = " This can be in pixels, REM, EM, VH, VW or any other IMG supported size format. "
 icon_width_hint = " This can be in pixels, REM, EM, VH, VW or any other IMG supported size format. "
-logo_not_icon_hint = " This allows you to override the older icon-only supported branding in the header, with a new, more robust, fully graphical logo in the header. This disables <kbd>Branding::Brand&nbsp;Logo</kbd> and <kbd>Branding::Brand&nbsp;Icon</kbd>. "
-logo_height_hint = " This is a logo_height hint. "
-logo_width_hint = " This is a logo_width hint. "
-logo_url_hint = " This is a logo_url hint. "
+logo_not_icon_hint = " This disables the regular branding icon and text with a full graphical logo. "
+logo_height_hint = " This is the logo height in pixels. "
+logo_width_hint = " This is the logo width in pixels. "
+logo_url_hint = " This is the logo URL used in the header. "
 
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
