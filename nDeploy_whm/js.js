@@ -339,10 +339,13 @@ jQuery(document).ready(function($) {
     $('#toastForm26').submit(function() {
         var $f = $('#toastForm26');
         var $url = "fix_csync2.cgi?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myToast").find('.toast-body').html(result)
-            $("#myToast").toast('show');
-        }});
+        $.ajax({
+            url: $url, 
+            success: function(result){
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
     });
 
     $('#ndeploy_control_branding').submit(function() {
