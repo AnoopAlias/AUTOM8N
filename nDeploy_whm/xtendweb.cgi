@@ -213,13 +213,18 @@ if os.path.isfile(cluster_config_file):
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body
 
     print('                            <form class="form mb-3" id="toastForm4" onsubmit="return false;">')
-    print(('                                <input hidden name="mode" value="restart">'))
+    print('                                <input hidden name="mode" value="restart">')
     print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Soft Restart Unison Sync</button>')
     print('                            </form>')
 
-    print('                            <form class="form mb-0" id="toastForm5" onsubmit="return false;">')
-    print(('                                <input hidden name="mode" value="reset">'))
+    print('                            <form class="form mb-3" id="toastForm5" onsubmit="return false;">')
+    print('                                <input hidden name="mode" value="reset">')
     print('                                <button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
+    print('                            </form>')
+
+    print('                            <form class="form" id="toastForm26" onsubmit="return false;">')
+    print('                                <input hidden name="mode" value="reset">')
+    print('                                <button type="submit" class="btn btn-outline-primary btn-block">Reset Csync2 Sync</button>')
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End
 

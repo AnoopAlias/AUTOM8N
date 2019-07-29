@@ -44,7 +44,7 @@ type=service
 router=readwritesplit
 master_accept_reads=true
 master_failure_mode=fail_on_write
-connection_keepalive=60
+connection_keepalive=600
 use_sql_variables_in=master
 master_reconnection=true
 slave_selection_criteria=ADAPTIVE_ROUTING
@@ -55,8 +55,8 @@ router_options=master
 servers=server1,server2
 user=maxscale
 passwd={{ MAXSCALEPASS }}
-connection_timeout=60
-max_connections=500
+connection_timeout=600
+max_connections=1024
 auth_all_servers=false
 
 
