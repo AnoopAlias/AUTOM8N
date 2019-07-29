@@ -19,7 +19,7 @@
     packages:
      - csync2-nDeploy
      - unison-nDeploy
-     - "{{ webserver }}-nDeploy"
+     - nginx-nDeploy
      - python-pip
      - stunnel
      - redis
