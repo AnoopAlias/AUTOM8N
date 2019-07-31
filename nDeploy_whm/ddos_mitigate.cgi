@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-import cgi
+import commoninclude
 import cgitb
 import subprocess
 import os
-from commoninclude import sighupnginx, print_success, print_nontoast_error
+import cgi
 
 
 __author__ = "Anoop P Alias"
@@ -30,12 +30,12 @@ print('<body>')
 if form.getvalue('ddos'):
     if form.getvalue('ddos') == 'enable':
         os.rename("/etc/nginx/conf.d/dos_mitigate_systemwide.disabled", "/etc/nginx/conf.d/dos_mitigate_systemwide.enabled")
-        sighupnginx()
+        commoninclude.sighupnginx()
         # Do this clusterwide if we are on a cluster
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.disabled /etc/nginx/conf.d/dos_mitigate_systemwide.enabled && nginx -s reload\"'
             run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print_success('Nginx DDOS mitigation is now enabled.')
+        commoninclude.print_success('Nginx DDOS mitigation is now enabled.')
         if os.path.isfile(cluster_config_file):
             print('<ul class="list-unstyled text-left">')
             while True:
@@ -46,12 +46,12 @@ if form.getvalue('ddos'):
             print('</ul>')
     elif form.getvalue('ddos') == 'disable':
         os.rename("/etc/nginx/conf.d/dos_mitigate_systemwide.enabled", "/etc/nginx/conf.d/dos_mitigate_systemwide.disabled")
-        sighupnginx()
+        commoninclude.sighupnginx()
         # Do this clusterwide if we are on a cluster
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.enabled /etc/nginx/conf.d/dos_mitigate_systemwide.disabled && nginx -s reload\"'
             run_cmd = subprocess.Popen(the_raw_cmd_slave, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print_success('Nginx DDOS mitigation is now disabled.')
+        commoninclude.print_success('Nginx DDOS mitigation is now disabled.')
         if os.path.isfile(cluster_config_file):
             print('<ul class="list-unstyled text-left">')
             while True:
@@ -61,7 +61,7 @@ if form.getvalue('ddos'):
                 print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
             print('</ul>')
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    commoninclude.print_forbidden()
 
 print('</body>')
 print('</html>')

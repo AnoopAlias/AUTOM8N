@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-import commoninclude
 import cgitb
 import cgi
 import subprocess
 import yaml
-from commoninclude import bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+import sys
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -14,8 +14,6 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
-#wtf is this?
-#xtendweb_installation_path = "/opt/nDeploy"  # Absolute Installation Path
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 
@@ -128,12 +126,20 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print(('                                <input hidden name="unit" value="'+form.getvalue('unit')+'">'))
     print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
     print('                            </form>')
+    print('                        </div> <!-- Card Body End -->') #Card Body End
+    cardfooter('Set the desired resource percentages for '+myservice)
 else:
-    commoninclude.print_forbidden()
+    print_header('Resource Usage')
+    bcrumb('Resource Usage','fas fa-compress')
+    print('            <!-- WHM Starter Row -->')
+    print('            <div class="row justify-content-lg-center">')
+    print('                <!-- First Column Start -->')
+    print('                <div class="col-lg-6">') #Left Column
+    print('')
 
-print('                        </div> <!-- Card Body End -->') #Card Body End
-cardfooter('Set the desired resource percentages for '+myservice)
-        
+    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    sys.exit(0)
+
 #Second Column End
 print('                <!-- First Column End -->')
 print('                </div>')
