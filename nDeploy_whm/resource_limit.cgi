@@ -5,7 +5,7 @@ import cgi
 import subprocess
 import yaml
 import sys
-from commoninclude import print_nontoast_error, bcrumb, print_header, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -146,7 +146,9 @@ print('                </div>')
 print('')
 print('            <!-- WHM End Row -->')
 print('            </div>')
-print('')
+
+print_footer()
+
 print('        </div> <!-- Main Container End -->')
 print('')
 

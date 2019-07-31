@@ -12,7 +12,8 @@ ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
-version_info_file = installation_path+"/conf/version.yaml"
+autom8n_version_info_file = installation_path+"/conf/version.yaml"
+nginx_version_info_file = "/etc/nginx/version.yaml"
 
 
 #nDeploy Control
@@ -71,11 +72,13 @@ else:
     brand_link = "https://autom8n.com/"
 
 
-# Get version of Nginx and Plugin
-with open(version_info_file, 'r') as version_info_yaml:
-    version_info_yaml_parsed = yaml.safe_load(version_info_yaml)
-nginx_version = version_info_yaml_parsed.get('nginx_version')
-autom8n_version = version_info_yaml_parsed.get('autom8n_version')
+# get version of Nginx and plugin
+with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
+    autom8n_version_info_yaml_parsed = yaml.safe_load(autom8n_version_info_yaml)
+with open(nginx_version_info_file, 'r') as nginx_version_info_yaml:
+    nginx_version_info_yaml_parsed = yaml.safe_load(nginx_version_info_yaml)
+nginx_version = nginx_version_info_yaml_parsed.get('nginx_version')
+autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 
 
 def return_label(theoption, hint):
