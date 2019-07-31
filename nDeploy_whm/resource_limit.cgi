@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
-import commoninclude
 import cgitb
 import cgi
 import subprocess
 import yaml
+import sys
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -13,7 +14,6 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
-xtendweb_installation_path = "/opt/nDeploy"  # Absolute Installation Path
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 
@@ -21,65 +21,49 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 cgitb.enable()
 form = cgi.FieldStorage()
 
-commoninclude.print_header()
-
-print('<body>')
-
-commoninclude.print_branding()
-
-print('<div id="main-container" class="container">')  # main container
-
-print('		<nav aria-label="breadcrumb">')
-print('			<ol class="breadcrumb">')
-print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')
-print('				<li class="breadcrumb-item active">Resource Limits</li>')
-print('			</ol>')
-print('		</nav>')
-
-print('		<div class="row justify-content-lg-center">')
-print('			<div class="col-lg-6">')
-
-print('				<div class="card">')  # card
 
 if form.getvalue('mode') and form.getvalue('unit'):
     if form.getvalue('mode') == 'service':
         myservice = form.getvalue('unit')+".service"
 
-        print('			<div class="card-header">')
-        print('				<h5 class="card-title mb-0"><i class="fas fa-compress float-right"></i> Resource Usage '+myservice+'</h5>')
-        print('			</div>')
-        print('			<div class="card-body text-center">')  # card-body
+        print_header('Resource Usage for '+myservice)
+        bcrumb('Resource Usage for '+myservice,'fas fa-compress')
+        print('            <!-- WHM Starter Row -->')
+        print('            <div class="row justify-content-lg-center">')
+        print('                <!-- First Column Start -->')
+        print('                <div class="col-lg-6">') #Left Column
+        print('')
+        cardheader('Resource Usage for '+myservice,'fas fa-compress')
+        print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
         mymem = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  MemoryLimit', shell=True).split('=')[1]
         mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
         myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
-        print('			<div class="alert alert-success">')
-        print('				<ul class="list-unstyled text-center mb-0">')
+        print('                            <div class="alert alert-success">')
+        print('                                <ul class="list-unstyled text-center mb-0">')
         if int(myio) == 18446744073709551615:
-            print('				<li>BlockIOWeight = nolimit</li>')
+            print('                                    <li>BlockIOWeight = nolimit</li>')
         else:
-            print('				<li>BlockIOWeight = '+myio+'</li>')
-        if int(mycpu) == 18446744073709551615:
-            print('				<li>CPUShares = nolimit</li>')
+            print('                                    <li>BlockIOWeight = '+myio.rstrip()+'</li>')
+        if int(mycpu) == 18446744073709551615:                                
+            print('                                    <li>CPUShares = nolimit</li>')
         else:
-            print('				<li>CPUShares = '+mycpu+'</li>')
+            print('                                    <li>CPUShares = '+mycpu.rstrip()+'</li>')
         if int(mymem) == 18446744073709551615:
-            print('				<li>MemoryLimit = nolimit</li>')
+            print('                                    <li>MemoryLimit = nolimit</li>')
         else:
             mymem_inmb = float(mymem) / (1024.0 * 1024.0)
-            print('				<li>MemoryLimit = '+str(mymem_inmb)+'Mb</li>')
-        print('				</ul>')
-        print('			</div>')
+            print('                                    <li>MemoryLimit = '+str(mymem_inmb).rstrip()+'Mb</li>')
+        print('                                </ul>')
+        print('                            </div>')
 
     elif form.getvalue('mode') == 'user':
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
         php_backends_dict = backend_data_yaml_parsed["PHP"]
 
-        print('			<div class="card-header">')
-        print('				<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> Resource Usage '+form.getvalue('unit')+'</h5>')
-        print('			</div>')
-        print('			<div class="card-body text-center">')  # card-body
+        cardheader('Resource Usage for '+form.getvalue('unit'),'fas fa-signal')
+        print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
         for backend_name in list(php_backends_dict.keys()):
             myservice = backend_name+'@'+form.getvalue('unit')+".service"
@@ -87,74 +71,90 @@ if form.getvalue('mode') and form.getvalue('unit'):
             mycpu = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  CPUShares', shell=True).split('=')[1]
             myio = subprocess.check_output('/usr/bin/systemctl show '+myservice+' -p  BlockIOWeight', shell=True).split('=')[1]
             print(myservice)
-            print('			<div class="alert alert-success">')
-            print('				<ul class="list-unstyled text-center mb-0">')
+            print('                            <div class="alert alert-success">')
+            print('                                <ul class="list-unstyled text-center mb-0">')
             if int(myio) == 18446744073709551615:
-                print('				<li>BlockIOWeight = nolimit</li>')
+                print('                                    <li>BlockIOWeight = nolimit</li>')
             else:
-                print('				<li>BlockIOWeight = '+myio+'</li>')
+                print('                                    <li>BlockIOWeight = '+myio.rstrip()+'</li>')
             if int(mycpu) == 18446744073709551615:
-                print('				<li>CPUShares = nolimit</li>')
+                print('                                    <li>CPUShares = nolimit</li>')
             else:
-                print('				<li>CPUShares = '+mycpu+'</li>')
+                print('                                    <li>CPUShares = '+mycpu.rstrip()+'</li>')
             if int(mymem) == 18446744073709551615:
-                print('				<li>MemoryLimit = nolimit</li>')
+                print('                                    <li>MemoryLimit = nolimit</li>')
             else:
                 mymem_inmb = float(mymem) / (1024.0 * 1024.0)
-                print('				<li>MemoryLimit = '+str(mymem_inmb)+'Mb</li>')
-            print('				</ul>')
-            print('			</div>')
+                print('                                    <li>MemoryLimit = '+str(mymem_inmb).rstrip()+'Mb</li>')
+            print('                                </ul>')
+            print('                            </div>')
 
     # Set Limits
-    print('					<form class="form" method="post" id="toastForm19" onsubmit="return false;">')
+    print('                            <form class="form" method="post" id="toastForm19" onsubmit="return false;">')
 
-    print('						<div class="input-group">')
-    print('							<div class="input-group-prepend input-group-prepend-min">')
-    print('								<label class="input-group-text">CPU</label>')
-    print('							</div>')
-    print('							<select name="cpu" class="custom-select">')
+    print('                                <div class="input-group">')
+    print('                                    <div class="input-group-prepend input-group-prepend-min">')
+    print('                                        <label class="input-group-text">CPU</label>')
+    print('                                    </div>')
+    print('                                    <select name="cpu" class="custom-select">')
     for percentage in '100', '75', '50', '25':
-        print(('						<option value="'+percentage+'">'+percentage+'%</option>'))
-    print('							</select>')
-    print('						</div>')
+        print(('                                        <option value="'+percentage+'">'+percentage+'%</option>'))
+    print('                                    </select>')
+    print('                                </div>')
 
-    print('						<div class="input-group">')
-    print('							<div class="input-group-prepend input-group-prepend-min">')
-    print('								<label class="input-group-text">Memory</label>')
-    print('							</div>')
-    print('							<select name="memory" class="custom-select">')
+    print('                                <div class="input-group">')
+    print('                                    <div class="input-group-prepend input-group-prepend-min">')
+    print('                                        <label class="input-group-text">Memory</label>')
+    print('                                    </div>')
+    print('                                    <select name="memory" class="custom-select">')
     for percentage in '100', '75', '50', '25':
-        print(('						<option value="'+percentage+'">'+percentage+'%</option>'))
-    print('							</select>')
-    print('						</div>')
+        print(('                                        <option value="'+percentage+'">'+percentage+'%</option>'))
+    print('                                    </select>')
+    print('                                </div>')
 
-    print('						<div class="input-group">')
-    print('							<div class="input-group-prepend input-group-prepend-min">')
-    print('								<label class="input-group-text">Block IO</label>')
-    print('							</div>')
-    print('							<select name="blockio" class="custom-select">')
+    print('                                <div class="input-group">')
+    print('                                    <div class="input-group-prepend input-group-prepend-min">')
+    print('                                        <label class="input-group-text">Block IO</label>')
+    print('                                    </div>')
+    print('                                    <select name="blockio" class="custom-select">')
     for percentage in '100', '75', '50', '25':
-        print(('						<option value="'+percentage+'">'+percentage+'%</option>'))
-    print('							</select>')
-    print('						</div>')
+        print(('                                        <option value="'+percentage+'">'+percentage+'%</option>'))
+    print('                                    </select>')
+    print('                                </div>')
 
-    print(('					<input class="hidden" name="mode" value="'+form.getvalue('mode')+'">'))
-    print(('					<input class="hidden" name="unit" value="'+form.getvalue('unit')+'">'))
-    print('						<button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
-    print('					</form>')
+    print(('                                <input hidden name="mode" value="'+form.getvalue('mode')+'">'))
+    print(('                                <input hidden name="unit" value="'+form.getvalue('unit')+'">'))
+    print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+    print('                            </form>')
+    print('                        </div> <!-- Card Body End -->') #Card Body End
+    cardfooter('Set the desired resource percentages for '+myservice)
 else:
-    commoninclude.print_forbidden()
+    print_header('Resource Usage')
+    bcrumb('Resource Usage','fas fa-compress')
+    print('            <!-- WHM Starter Row -->')
+    print('            <div class="row justify-content-lg-center">')
+    print('                <!-- First Column Start -->')
+    print('                <div class="col-lg-6">') #Left Column
+    print('')
 
-print('					</div>')  # card-body end
-print('				</div>')  # card end
+    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    sys.exit(0)
 
-print('			</div>')  # col end
-print('		</div>')  # row end
+#Second Column End
+print('                <!-- First Column End -->')
+print('                </div>')
+print('')
+print('            <!-- WHM End Row -->')
+print('            </div>')
 
-print('</div>')  # main-container end
+print_footer()
 
-commoninclude.print_modals()
-commoninclude.print_loader()
+print('        </div> <!-- Main Container End -->')
+print('')
 
-print('</body>')
+print_modals()
+print_loader()
+
+print('    <!-- Body End -->')
+print('    </body>')
 print('</html>')

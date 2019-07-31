@@ -455,7 +455,7 @@ if form.getvalue('domain'):
             print(('		<input class="hidden" name="mod_security" value="'+mod_security+'">'))
         else:
 
-            print('			<div class="row align-items-center">')
+            print('			<div class="row">')
 
             # security_headers
             security_headers_hint = "X-Frame-Options,X-Content-Type-Options,X-XSS-Protection,HSTS"
@@ -617,7 +617,7 @@ if form.getvalue('domain'):
         print('				</div>')
         print('				<div class="card-body">')  # card-body
 
-        print('					<div class="row align-items-center">')
+        print('					<div class="row">')
 
         # set_expire_static
         set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
@@ -807,7 +807,7 @@ if form.getvalue('domain'):
         print('				</div>')
         print('				<div class="card-body">')  # card-body
 
-        print('					<div class="row align-items-center">')
+        print('					<div class="row">')
 
         # redirect_to_ssl
         redirect_to_ssl_hint = "redirect http:// to https:// "

@@ -1,12 +1,12 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import os
 import shutil
 import yaml
 import sys
+from commoninclude import print_nontoast_error, return_label, return_prepend, return_disabled, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -20,25 +20,12 @@ default_domain_data_file = installation_path+'/conf/domain_data_default.yaml'
 app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 
-
 cgitb.enable()
 
 form = cgi.FieldStorage()
 
-commoninclude.print_header()
-
-print('<body>')
-
-commoninclude.print_branding()
-
-print('<div id="main-container" class="container">')  # main container
-
-print('		<nav aria-label="breadcrumb">')
-print('			<ol class="breadcrumb">')
-print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')
-print('				<li class="breadcrumb-item active">Edit cPanel package</li>')
-print('			</ol>')
-print('		</nav>')
+print_header('Edit cPanel Package')
+bcrumb('Edit cPanel Package','fas fa-box-open')
 
 if form.getvalue('cpanelpkg'):
     if form.getvalue('cpanelpkg') == 'default':
@@ -47,9 +34,11 @@ if form.getvalue('cpanelpkg'):
         pkgdomaindata = installation_path+'/conf/domain_data_default_local_'+form.getvalue('cpanelpkg')+'.yaml'
     if not os.path.isfile(pkgdomaindata):
         shutil.copyfile(default_domain_data_file, pkgdomaindata)
+
     # Get all config settings from the domains domain-data config file
     with open(pkgdomaindata, 'r') as profileyaml_data_stream:
         yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+
     # App settings
     backend_category = yaml_parsed_profileyaml.get('backend_category')
     backend_version = yaml_parsed_profileyaml.get('backend_version')
@@ -58,6 +47,7 @@ if form.getvalue('cpanelpkg'):
     mod_security = yaml_parsed_profileyaml.get('mod_security', 'disabled')
     auth_basic = yaml_parsed_profileyaml.get('auth_basic', 'disabled')
     set_expire_static = yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
+
     # Server Settings
     autoindex = yaml_parsed_profileyaml.get('autoindex', 'disabled')
     pagespeed = yaml_parsed_profileyaml.get('pagespeed', 'disabled')
@@ -81,840 +71,857 @@ if form.getvalue('cpanelpkg'):
     symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
     user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
     subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
-    phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '16')
+    phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '2')
     settings_lock = yaml_parsed_profileyaml.get('settings_lock', 'disabled')
-    # get the human friendly name of the app template
+
+    # Get the human friendly name of the app template
     if os.path.isfile(app_template_file):
         with open(app_template_file, 'r') as apptemplate_data_yaml:
             apptemplate_data_yaml_parsed = yaml.safe_load(apptemplate_data_yaml)
         apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
         apptemplate_description = apptemplate_dict.get(apptemplate_code)
     else:
-        commoninclude.print_error('Error: app template data file error')
+        print_nontoast_error('Error: Application Template Data File Error')
         sys.exit(0)
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     else:
-        commoninclude.print_error('Error: backend config file error')
+        print_nontoast_error('Error: Backend Configuration File Error')
         sys.exit(0)
 
-    print('		<div class="row">')
-    print('			<div class="col-lg-12">')  # dash
+#<<<<<<< HEAD
+
+#    print('')
+#
+#    cardheader('Edit '+form.getvalue('cpanelpkg')+' cPanel Package','fas fa-users-cog')
+#    
+#    # Current Profile Status
+#    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get"> <!-- Form Start -->')
+#    print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
+#    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+#
+#    # Running
+#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Running</div>')
+#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">Nginx</div>')
+#
+#    # Backend Category
+#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream&nbsp;Type</div>')
+#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_category+'</div>')
+#
+#    # Backend
+#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
+#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
+#
+#    # Description
+#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
+#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+apptemplate_description+'</div>')
+#
+#    if backend_category == 'PROXY' and backend_version == 'httpd':
+#        # .htaccess
+#        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+#        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
+#    else:
+#        # .htaccess
+#        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
+#        print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+#
+#    print('                            </div> <!-- Row End -->') #Row End
+#    print('                        </div> <!-- Card Body End -->') #Card End
+#
+#    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+#    print('                            <div class="input-group">')
+#    print('                                <select name="backend" class="custom-select">')
+#=======
+    # Ok we are done with getting the settings, now lets present it to the user
+    print('            <!-- WHM Starter Row -->')
+    print('            <div class="row">')
+    print('')
+    print('                <!-- Dash Start -->')
+    print('                <div class="col-md-12">') #Dash Start
 
     # Domain Status
-    print('				<div class="card">')  # card
-    print('					<div class="card-body p-0">')  # card-body
-    print('						<div class="row no-gutters row-3-col">')
-    print('					        <div class="col-md-4">')
-    print('					            <div class="p-3 bg-light text-center">')
-    print('					                <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
-    print('                                 <ul class="list-unstyled mb-0">')
-    print('					                    <li class="mt-2 text-success">Nginx</li>')
-    print('                                 </ul>')
-    print('                             </div>')
-    print('                         </div>')
-    print('					        <div class="col-md-4">')
-    print('					            <div class="p-3 bg-light text-center">')
-    print('					                <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
-    print('                                 <ul class="list-unstyled mb-0">')
-    print('					                    <li class="mt-2 text-success">'+backend_version+'</li>')
-    print('                                 </ul>')
-    print('                             </div>')
-    print('                         </div>')
-    print('					        <div class="col-md-4">')
-    print('					            <div class="p-3 bg-light text-center">')
-    print('					                <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
-    print('                                 <ul class="list-unstyled mb-0">')
-    print('					                    <li class="mt-2 text-success">'+apptemplate_description+'</li>')
-    print('                                 </ul>')
-    print('                             </div>')
-    print('                         </div>')
-    print('                     </div>')
-    print('                 </div>')
-    print('             </div>')
+    cardheader('Current '+form.getvalue('cpanelpkg')+' cPanel Package Settings','fas fa-users-cog')
+    print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
+    print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
+    print('                                <div class="col-md-4">')
+    print('                                    <div class="p-3 text-center">')
+    print('                                        <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
+    print('                                        <ul class="list-unstyled mb-0">')
+    print('                                            <li class="mt-2 text-success">Nginx</li>')
+    print('                                        </ul>')
+    print('                                    </div>')
+    print('                                </div>')
+    print('                                <div class="col-md-4">')
+    print('                                    <div class="p-3 text-center">')
+    print('                                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
+    print('                                        <ul class="list-unstyled mb-0">')
+    print('                                            <li class="mt-2 text-success">'+backend_version+'</li>')
+    print('                                        </ul>')
+    print('                                    </div>')
+    print('                                </div>')
+    print('                                <div class="col-md-4">')
+    print('                                    <div class="p-3 text-center">')
+    print('                                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
+    print('                                        <ul class="list-unstyled mb-0">')
+    print('                                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+    print('                                        </ul>')
+    print('                                    </div>')
+    print('                                </div>')
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
+    cardfooter('')
 
-    print('         </div>')  # end top dash
-    print('    </div>')  # end row
-
-    print('		<div class="row">')
-
-    print('			<div class="col-lg-6">')  # col left
+    print('                </div> <!--End Dash-->') # End Dash
+    
+    print('')
+    print('            <!-- WHM End Row -->')
+    print('            </div>')
+    print('')
+    print('            <!-- WHM Starter Row -->')
+    print('            <div class="row">')
+    print('')
+    print('                <!-- Left Column -->')
+    print('                <div class="col-lg-6">') #Left Column Start
 
     # Ok we are done with getting the settings, now lets present it to the user
-    print('			<div class="card">')  # card
-    print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-users-cog float-right"></i> '+form.getvalue('cpanelpkg')+'</h5>')
-    print('				</div>')
+    cardheader('Change Upstream','fas fa-users-cog')
 
     # Current Profile Status
-    print('				<form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
-    print('					<div class="card-body p-0">')  # card-body
-    print('						<div class="row no-gutters row-multi">')  # row
+    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
+    print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
+    print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
+
+    # .htaccess
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
-            # .hitaccess
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('					<div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
-        else:
-            # .hitaccess
-            print('					<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('					<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
+            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+            print('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
     else:
-        # .hitaccess
-        print('						<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-        print('						<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
+        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+        print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
 
-    print('						</div>')  # row end
-    print('					</div>')  # card-body end
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
 
-    print('					<div class="card-body">')  # card-body
-    print('						<div class="input-group">')
-    print('							<select name="backend" class="custom-select">')
+    print('                        <div class="card-body"> <!-- Card Body Start -->')  # card-body
+    print('                            <div class="input-group">')
+    print('                                <select name="backend" class="custom-select">')
     for backends_defined in backend_data_yaml_parsed.keys():
         if backends_defined == backend_category:
-            print(('					<option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
+            print(('                                    <option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
         else:
-            print(('					<option value="'+backends_defined+'">'+backends_defined+'</option>'))
-    print('							</select>')
-    # Pass on the domain name to the next stage
-    print('							<div class="input-group-append">')
-    print(('							<input class="hidden" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
-    print('								<button class="btn btn-outline-primary" type="submit">Select</button>')
-    print('							</div>')
-    print('						</div>')
-
-    print('					</div>')  # card-body end
-
-    print('					<div class="card-footer">')
-    print('						<small>To change the Upstream select a new category above.</small>')
-    print('					</div>')
-    print('				</form>')
-    print('			</div>')  # card
-
-    print('			<form class="form" id="toastForm17" onsubmit="return false;" method="post" >')
+            print(('                                    <option value="'+backends_defined+'">'+backends_defined+'</option>'))
+    print('                                </select>')
+    
+    #Pass on the domain name to the next stage
+    print('                                <div class="input-group-append">')
+    print(('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
+    print('                                    <button class="btn btn-outline-primary" type="submit">Select</button>')
+    print('                                </div>')
+    print('                            </div>')
+    print('                        </div> <!-- Card Body End -->') #Card End
+    print('                        </form> <!-- Form End -->')
+    cardfooter('To change the upstream, choose a category from above.')
+    
 
     # General App Settings
-    print('			<div class="card">')  # card
-    print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> General App Settings</h5>')
-    print('				</div>')
-    print('				<div class="card-body">')  # card-body
-
-    print('						<div class="row align-items-center">')
+    print('                    <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
+    cardheader('General Application Settings','fas fa-sliders-h')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row"> <!-- Row Start -->') #Row Start
 
     # PHPMAXCHILDREN
-    print('							<div class="col-md-12">')
-    print('								<div class="input-group btn-group mt-0 mb-2">')
-    print('									<div class="input-group-prepend">')
-    print('										<span class="input-group-text">')
-    phpmaxchildren_hint = "The maximum PHP process that can be spawned"
-    commoninclude.print_red("PHP MAXCHILDREN", phpmaxchildren_hint)
-    print('										</span>')
-    print('									</div>')
-    print(('								<input class="form-control" placeholder='+phpmaxchildren+' value='+phpmaxchildren+' type="text" name="phpmaxchildren">'))
-    print('								</div>')
-    print('							</div>')
+    print('                                <div class="col-md-12">')
+    print('                                    <div class="input-group btn-group mt-0 mb-2">')
+    print('                                        <div class="input-group-prepend">')
+    print('                                            <span class="input-group-text">')
+    phpmaxchildren_hint = " The Maximum amount of PHP processes that can be spawned. "
+    print('                                                '+return_prepend("PHP MAXCHILDREN", phpmaxchildren_hint))
+    print('                                            </span>')
+    print('                                        </div>')
+    print(('                                        <input class="form-control" placeholder='+phpmaxchildren+' value='+phpmaxchildren+' type="text" name="phpmaxchildren">'))
+    print('                                    </div>')
+    print('                                </div>')
 
     # autoindex
-    autoindex_hint = "enable for directory listing"
+    autoindex_hint = " Enable for Native NGINX directory listing. "
+    print('                                '+return_label("autoindex", autoindex_hint))
     if autoindex == 'enabled':
-        commoninclude.print_green("autoindex", autoindex_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="autoindex" value="enabled" id="AutoIndexOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="autoindex" value="disabled" id="AutoIndexOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="autoindex" value="enabled" id="AutoIndexOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="autoindex" value="disabled" id="AutoIndexOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("autoindex", autoindex_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="autoindex" value="enabled" id="AutoIndexOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="autoindex" value="disabled" id="AutoIndexOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="autoindex" value="enabled" id="AutoIndexOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="autoindex" value="disabled" id="AutoIndexOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # ssl_offload
-    ssl_offload_hint = "enable for performance, disable if redirect loop error"
+    ssl_offload_hint = " Enable for a performance increase. Disable if a redirect loop error occurs. "
+    print('                                '+return_label("ssl_offload", ssl_offload_hint))
     if ssl_offload == 'enabled':
-        commoninclude.print_green("ssl_offload", ssl_offload_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="ssl_offload" value="enabled" id="SslOffloadOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="ssl_offload" value="disabled" id="SslOffloadOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="ssl_offload" value="enabled" id="SslOffloadOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="ssl_offload" value="disabled" id="SslOffloadOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("ssl_offload", ssl_offload_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="ssl_offload" value="enabled" id="SslOffloadOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="ssl_offload" value="disabled" id="SslOffloadOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="ssl_offload" value="enabled" id="SslOffloadOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="ssl_offload" value="disabled" id="SslOffloadOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # proxy_to_master
-    proxy_to_master_hint = "in cluster proxy to master instead of local server "
+    proxy_to_master_hint = " When running in a cluster, PROXY to MASTER instead of local server. "
+    print('                                '+return_label("proxy_to_master", proxy_to_master_hint))
     if proxy_to_master == 'enabled':
-        commoninclude.print_green("proxy_to_master", proxy_to_master_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="proxy_to_master" value="enabled" id="ProxyMasterOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="proxy_to_master" value="disabled" id="ProxyMasterOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="proxy_to_master" value="enabled" id="ProxyMasterOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="proxy_to_master" value="disabled" id="ProxyMasterOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("proxy_to_master", proxy_to_master_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="proxy_to_master" value="enabled" id="ProxyMasterOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="proxy_to_master" value="disabled" id="ProxyMasterOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="proxy_to_master" value="enabled" id="ProxyMasterOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="proxy_to_master" value="disabled" id="ProxyMasterOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # access_log
-    access_log_hint = "disabling access_log increase performance but stats wont work"
+    access_log_hint = " Disabling access_log will increase performance, but cPanel stats fail to work. "
+    print('                                '+return_label("access_log", access_log_hint))
     if access_log == 'enabled':
-        commoninclude.print_green("access_log", access_log_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="access_log" value="enabled" id="AccessLogOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="access_log" value="disabled" id="AccessLogOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="access_log" value="enabled" id="AccessLogOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="access_log" value="disabled" id="AccessLogOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("access_log", access_log_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="access_log" value="enabled" id="AccessLogOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="access_log" value="disabled" id="AccessLogOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="access_log" value="enabled" id="AccessLogOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="access_log" value="disabled" id="AccessLogOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # open_file_cache
-    open_file_cache_hint = "increase performance, disable on dev environment for no caching"
+    open_file_cache_hint = " Enable for performance increase. Disable on development environment to not cache. "
+    print('                                '+return_label("open_file_cache", open_file_cache_hint))
     if open_file_cache == 'enabled':
-        commoninclude.print_green("open_file_cache", open_file_cache_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="open_file_cache" value="enabled" id="OpenFileCacheOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="open_file_cache" value="disabled" id="OpenFileCacheOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="open_file_cache" value="enabled" id="OpenFileCacheOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="open_file_cache" value="disabled" id="OpenFileCacheOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("open_file_cache", open_file_cache_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="open_file_cache" value="enabled" id="OpenFileCacheOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="open_file_cache" value="disabled" id="OpenFileCacheOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="open_file_cache" value="enabled" id="OpenFileCacheOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="open_file_cache" value="disabled" id="OpenFileCacheOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
-    print('						</div>')  # row end
+    print('                            </div> <!-- Row End -->') #End Row
+    print('                        </div> <!-- Card Body End -->') #Card End
 
-    print('					</div>')  # card-body end
-    print('				</div>')  # card end
+    cardfooter('')
 
     # Security Settings
-    print('			<div class="card">')  # card
-    print('				<div class="card-header">')
-    print('					<h5 class="card-title mb-0"><i class="fas fa-shield-alt float-right"></i> Security Settings</h5>')
-    print('				</div>')
-    print('				<div class="card-body">')  # card-body
-
-    print('					<div class="row align-items-center">')
-
+    cardheader('Security Settings','fas fa-shield-alt')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row"> <!-- Row Start -->') #Row Start
+    
     # settings_lock
-    settings_lock_hint = "Lock application server and security settings"
+    settings_lock_hint = " Lock Application Server and Security Settings within cPanel. "
+    print('                                '+return_label("settings_lock", settings_lock_hint))
     if settings_lock == 'enabled':
-        commoninclude.print_green("settings_lock", settings_lock_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("settings_lock", settings_lock_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="settings_lock" value="enabled" id="SettingsLockOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="settings_lock" value="disabled" id="SettingsLockOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # security_headers
-    security_headers_hint = "X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, HSTS"
+    security_headers_hint = " X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, HSTS "
+    print('                                '+return_label("security_headers", security_headers_hint))
     if security_headers == 'enabled':
-        commoninclude.print_green("security_headers", security_headers_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off" checked> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off"> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("security_headers", security_headers_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off"> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off" checked> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="security_headers" value="enabled" id="SecurityHeadersOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        label class="btn btn-light active">')
+        print('                                            <input type="radio" name="security_headers" value="disabled" id="SecurityHeadersOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # dos_mitigate
-    dos_mitigate_hint = "Enable only when under a dos attack"
+    dos_mitigate_hint = " Enable ONLY when under a (D)DOS Attack. "
+    print('                                '+return_label("dos_mitigate", dos_mitigate_hint))
     if dos_mitigate == 'enabled':
-        commoninclude.print_green("dos_mitigate", dos_mitigate_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="dos_mitigate" value="enabled" id="DosMitigateOn" autocomplete="off" checked> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="dos_mitigate" value="disabled" id="DosMitigateOff" autocomplete="off"> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="dos_mitigate" value="enabled" id="DosMitigateOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="dos_mitigate" value="disabled" id="DosMitigateOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("dos_mitigate", dos_mitigate_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="dos_mitigate" value="enabled" id="DosMitigateOn" autocomplete="off"> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="dos_mitigate" value="disabled" id="DosMitigateOff" autocomplete="off" checked> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="dos_mitigate" value="enabled" id="DosMitigateOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="dos_mitigate" value="disabled" id="DosMitigateOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # test_cookie
-    test_cookie_hint = "Disable most bots except good ones like google/yahoo etc with a cookie challenge"
+    test_cookie_hint = " Allow good bots in (like Google/Yahoo). Disable most bad bots by using a cookie challenge. "
+    print('                                '+return_label("bot_mitigate", test_cookie_hint))
     if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
         if test_cookie == 'enabled':
-            commoninclude.print_green("bot_mitigate", test_cookie_hint)
-            print('				<div class="col-md-6">')
-            print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-            print('						<label class="btn btn-light active">')
-            print('							<input type="radio" name="test_cookie" value="enabled" id="TestCookieOn" autocomplete="off" checked> Enabled')
-            print('						</label>')
-            print('						<label class="btn btn-light">')
-            print('							<input type="radio" name="test_cookie" value="disabled" id="TestCookieOff" autocomplete="off"> Disabled')
-            print('						</label>')
-            print('					</div>')
-            print('				</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('                                        label class="btn btn-light active">')
+            print('                                            <input type="radio" name="test_cookie" value="enabled" id="TestCookieOn" autocomplete="off" checked> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="test_cookie" value="disabled" id="TestCookieOff" autocomplete="off"> Disabled')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
         else:
-            commoninclude.print_red("bot_mitigate", test_cookie_hint)
-            print('				<div class="col-md-6">')
-            print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-            print('						<label class="btn btn-light">')
-            print('							<input type="radio" name="test_cookie" value="enabled" id="TestCookieOn" autocomplete="off"> Enabled')
-            print('						</label>')
-            print('						<label class="btn btn-light active">')
-            print('							<input type="radio" name="test_cookie" value="disabled" id="TestCookieOff" autocomplete="off" checked> Disabled')
-            print('						</label>')
-            print('					</div>')
-            print('				</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="test_cookie" value="enabled" id="TestCookieOn" autocomplete="off"> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="test_cookie" value="disabled" id="TestCookieOff" autocomplete="off" checked> Disabled')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
     else:
-        commoninclude.print_red("bot_mitigate", test_cookie_hint)
-        commoninclude.print_disabled()
-        print(('				<input class="hidden" name="test_cookie" value="'+test_cookie+'">'))
+        print('                                '+return_disabled())
+        print(('                                <input hidden name="test_cookie" value="'+test_cookie+'">'))
 
     # symlink_protection
-    symlink_protection_hint = "Access to a file is denied if any component of the pathname is a symbolic link, and the link and object that the link points to have different owners"
+    symlink_protection_hint = " Access to a file is denied if any component of the pathname is a symbolic link, and if the link and object that the link points to has different owners. "
+    print('                                '+return_label("symlink_protection", symlink_protection_hint))
     if symlink_protection == 'enabled':
-        commoninclude.print_green("symlink_protection", symlink_protection_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="symlink_protection" value="enabled" id="SymlinkProtectionOn" autocomplete="off" checked> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="symlink_protection" value="disabled" id="SymlinkProtectionOff" autocomplete="off"> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="symlink_protection" value="enabled" id="SymlinkProtectionOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="symlink_protection" value="disabled" id="SymlinkProtectionOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("symlink_protection", symlink_protection_hint)
-        print('					<div class="col-md-6">')
-        print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('							<label class="btn btn-light">')
-        print('								<input type="radio" name="symlink_protection" value="enabled" id="SymlinkProtectionOn" autocomplete="off"> Enabled')
-        print('							</label>')
-        print('							<label class="btn btn-light active">')
-        print('								<input type="radio" name="symlink_protection" value="disabled" id="SymlinkProtectionOff" autocomplete="off" checked> Disabled')
-        print('							</label>')
-        print('						</div>')
-        print('					</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="symlink_protection" value="enabled" id="SymlinkProtectionOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="symlink_protection" value="disabled" id="SymlinkProtectionOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # mod_security
-    mod_security_hint = "mod_security v3 WAF"
+    mod_security_hint = " Mod Security v3 Web Application Firewall "
+    print('                                '+return_label("mod_security", mod_security_hint))
     if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
         if mod_security == 'enabled':
-            commoninclude.print_green('mod_security', mod_security_hint)
-            print('				<div class="col-md-6">')
-            print('					<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-            print('						<label class="btn btn-light active">')
-            print('							<input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
-            print('						</label>')
-            print('						<label class="btn btn-light">')
-            print('							<input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
-            print('						</label>')
-            print('					</div>')
-            print('				</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
         else:
-            commoninclude.print_red('mod_security', mod_security_hint)
-            print('				<div class="col-md-6">')
-            print('					<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-            print('						<label class="btn btn-light">')
-            print('							<input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
-            print('						</label>')
-            print('						<label class="btn btn-light active">')
-            print('							<input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
-            print('						</label>')
-            print('					</div>')
-            print('				</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
     else:
-        commoninclude.print_red('mod_security', mod_security_hint)
-        commoninclude.print_disabled()
-        print(('				<input class="hidden" name="mod_security" value="'+mod_security+'">'))
-    print('					</div>')  # row end
+        print('                                '+return_disabled())
+        print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
 
-    print('				</div>')  # card-body end
-    print('			</div>')  # card end
+    print('                            </div> <!-- Row End -->') #End Row
+    print('                        </div> <!-- Card Body End -->') #Card End
+    cardfooter('')
 
-    print('		</div>')  # left col end
+    #First Column End
+    print('                <!-- First Column End -->')
+    print('                </div>')
+    print('')
 
-    print('		<div class="col-lg-6">')  # col right
+    #Second Column
+    print('                <!-- Second Column Start -->')
+    print('                <div class="col-lg-6">') #Right Column
+    print('')
 
     # Content Optimizations
-    print('				<div class="card">')  # card
-    print('					<div class="card-header">')
-    print('						<h5 class="card-title mb-0"><i class="fas fa-dumbbell float-right"></i> Content Optimizations</h5>')
-    print('					</div>')
-    print('					<div class="card-body">')  # card-body
+    cardheader('Content Optimizations','fas fa-dumbbell')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row"> <!-- Row Start -->') #Row Start
 
     # set_expire_static
-    set_expire_static_hint = "Set Expires/Cache-Control headers for static content"
-    print('						<div class="row align-items-center">')
+    set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
+    print('                                '+return_label("set expires header", set_expire_static_hint))
     if set_expire_static == 'enabled':
-        commoninclude.print_green('set expires header', set_expire_static_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red('set expires header', set_expire_static_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # pagespeed
-    pagespeed_hint = "delivers pagespeed optimized webpage, resource intensive"
+    pagespeed_hint = " Delivers PageSpeed-optimized pages, but is resource intensive. "
+    print('                                '+return_label("pagespeed", pagespeed_hint))
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
         if pagespeed == 'enabled':
-            commoninclude.print_green("pagespeed", pagespeed_hint)
-            print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-            print('							<label class="btn btn-light active">')
-            print('								<input type="radio" name="pagespeed" value="enabled" id="PagespeedOn" autocomplete="off" checked> Enabled')
-            print('							</label>')
-            print('							<label class="btn btn-light">')
-            print('								<input type="radio" name="pagespeed" value="disabled" id="PagespeedOff" autocomplete="off"> Disabled')
-            print('							</label>')
-            print('						</div>')
-            print('					</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="pagespeed" value="enabled" id="PagespeedOn" autocomplete="off" checked> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="pagespeed" value="disabled" id="PagespeedOff" autocomplete="off"> Disabled')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
         else:
-            commoninclude.print_red("pagespeed", pagespeed_hint)
-            print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-            print('							<label class="btn btn-light">')
-            print('								<input type="radio" name="pagespeed" value="enabled" id="PagespeedOn" autocomplete="off"> Enabled')
-            print('							</label>')
-            print('							<label class="btn btn-light active">')
-            print('								<input type="radio" name="pagespeed" value="disabled" id="PagespeedOff" autocomplete="off" checked> Disabled')
-            print('							</label>')
-            print('						</div>')
-            print('					</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="pagespeed" value="enabled" id="PagespeedOn" autocomplete="off"> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="pagespeed" value="disabled" id="PagespeedOff" autocomplete="off" checked> Disabled')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
     else:
-        commoninclude.print_red("pagespeed", pagespeed_hint)
-        commoninclude.print_disabled()
-        print(('<input class="hidden" name="pagespeed" value="'+pagespeed+'">'))
+        print('                                '+return_disabled())
+        print(('                                <input hidden name="pagespeed" value="'+pagespeed+'">'))
 
     # pagespeed filter level
-    pagespeed_filter_hint = "CoreFilters load the Core filters, PassThrough allows you to enable individual filters via custom nginx conf"
+    pagespeed_filter_hint = " CoreFilters loads the Core Filters, PassThrough allows you to enable individual filters via a custom NGINX Configuration. "
+    print('                                '+return_label("pagespeed filters", pagespeed_filter_hint))
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
         if pagespeed_filter == 'CoreFilters':
-            commoninclude.print_red("pagespeed filters", pagespeed_filter_hint)
-            print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-            print('							<label class="btn btn-light active">')
-            print('								<input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off" checked> Core')
-            print('							</label>')
-            print('							<label class="btn btn-light">')
-            print('								<input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off"> Pass')
-            print('							</label>')
-            print('						</div>')
-            print('					</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off" checked> Core')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off"> Pass')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
         else:
-            commoninclude.print_green("pagespeed filters", pagespeed_filter_hint)
-            print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-            print('							<label class="btn btn-light">')
-            print('								<input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off"> Core')
-            print('							</label>')
-            print('							<label class="btn btn-light active">')
-            print('								<input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off" checked> Pass')
-            print('							</label>')
-            print('						</div>')
-            print('					</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off"> Core')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off" checked> Pass')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
     else:
-        commoninclude.print_red("pagespeed filters", pagespeed_filter_hint)
-        commoninclude.print_disabled()
-        print(('<input class="hidden" name="pagespeed_filter" value="'+pagespeed_filter+'">'))
+        print('                                '+return_disabled())
+        print(('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">'))
+
 
     # brotli
-    brotli_hint = "bandwidth optimization, resource intensive, tls only"
+    brotli_hint = " A newer bandwidth optimization created by Google. It is resource intensive and applies to TLS (HTTPS) ONLY. "
+    print('                                '+return_label("brotli", brotli_hint))
     if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
         if brotli == 'enabled':
-            commoninclude.print_green("brotli", brotli_hint)
-            print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-            print('							<label class="btn btn-light active">')
-            print('								<input type="radio" name="brotli" value="enabled" id="BrotliOn" autocomplete="off" checked> Enabled')
-            print('							</label>')
-            print('							<label class="btn btn-light">')
-            print('								<input type="radio" name="brotli" value="disabled" id="BrotliOff" autocomplete="off"> Disabled')
-            print('							</label>')
-            print('						</div>')
-            print('					</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="brotli" value="enabled" id="BrotliOn" autocomplete="off" checked> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="brotli" value="disabled" id="BrotliOff" autocomplete="off"> Disabled')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
         else:
-            commoninclude.print_red("brotli", brotli_hint)
-            print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-            print('							<label class="btn btn-light">')
-            print('								<input type="radio" name="brotli" value="enabled" id="BrotliOn" autocomplete="off"> Enabled')
-            print('							</label>')
-            print('							<label class="btn btn-light active">')
-            print('								<input type="radio" name="brotli" value="disabled" id="BrotliOff" autocomplete="off" checked> Disabled')
-            print('							</label>')
-            print('						</div>')
-            print('					</div>')
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="brotli" value="enabled" id="BrotliOn" autocomplete="off"> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="brotli" value="disabled" id="BrotliOff" autocomplete="off" checked> Disabled')
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
     else:
-        commoninclude.print_red("brotli", brotli_hint)
-        commoninclude.print_disabled()
-        print(('<input class="hidden" name="brotli" value="'+brotli+'">'))
+        print('                                '+return_disabled())
+        print(('                                <input hidden name="brotli" value="'+brotli+'">'))
+
 
     # gzip
-    gzip_hint = "bandwidth optimization, resource intensive"
+    gzip_hint = " A bandwidth optimization that is mildly resource intensive. "
+    print('                                '+return_label("gzip", gzip_hint))
     if gzip == 'enabled':
-        commoninclude.print_green("gzip", gzip_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="gzip" value="enabled" id="GzipOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="gzip" value="disabled" id="GzipOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="gzip" value="enabled" id="GzipOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="gzip" value="disabled" id="GzipOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("gzip", gzip_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="gzip" value="enabled" id="GzipOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="gzip" value="disabled" id="GzipOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="gzip" value="enabled" id="GzipOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="gzip" value="disabled" id="GzipOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # http2
-    http2_hint = "works only with TLS"
+    http2_hint = " A newer protocol that works with TLS (HTTPS) Only. "
+    print('                                '+return_label("http2", http2_hint))
     if http2 == 'enabled':
-        commoninclude.print_green("http2", http2_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="http2" value="enabled" id="Http2On" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="http2" value="disabled" id="Http2Off" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="http2" value="enabled" id="Http2On" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="http2" value="disabled" id="Http2Off" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("http2", http2_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="http2" value="enabled" id="Http2On" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="http2" value="disabled" id="Http2Off" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
-    print('						</div>')  # row end
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="http2" value="enabled" id="Http2On" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="http2" value="disabled" id="Http2Off" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
-    print('					</div>')  # card-body end
-    print('				</div>')  # card end
+    print('                            </div> <!-- Row End -->') #End Row
+    print('                        </div> <!-- Card Body End -->') #Card End
+
+    cardfooter('')
+    
 
     # Redirections
-    print('				<div class="card">')  # card
-    print('					<div class="card-header">')
-    print('						<h5 class="card-title mb-0"><i class="fas fa-directions float-right"></i> Redirections</h5>')
-    print('					</div>')
-    print('					<div class="card-body">')  # card-body
+    cardheader('Redirections','fas fa-directions')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row"> <!-- Row Start -->') #Row Start
 
     # redirect_to_ssl
-    redirect_to_ssl_hint = "redirect http:// to https:// "
-    print('						<div class="row align-items-center">')
+    redirect_to_ssl_hint = " Redirect HTTP -> HTTPS. "
+    print('                                '+return_label("redirect_to_ssl", redirect_to_ssl_hint))
     if redirect_to_ssl == 'enabled':
-        commoninclude.print_green("redirect_to_ssl", redirect_to_ssl_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectSslOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="redirect_to_ssl" value="disabled" id="RedirectSslOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectSslOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="redirect_to_ssl" value="disabled" id="RedirectSslOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("redirect_to_ssl", redirect_to_ssl_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectSslOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="redirect_to_ssl" value="disabled" id="RedirectSslOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectSslOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="redirect_to_ssl" value="disabled" id="RedirectSslOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # redirect_aliases
-    redirect_aliases_hint = "redirect all alias domains to the main domain"
+    redirect_aliases_hint = " Redirect all cPanel aliases to the main domain. "
+    print('                                '+return_label("redirect_aliases", redirect_aliases_hint))
     if redirect_aliases == 'enabled':
-        commoninclude.print_green("redirect_aliases", redirect_aliases_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="redirect_aliases" value="enabled" id="RedirectAliasesOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="redirect_aliases" value="disabled" id="RedirectAliasesOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="redirect_aliases" value="enabled" id="RedirectAliasesOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="redirect_aliases" value="disabled" id="RedirectAliasesOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("redirect_aliases", redirect_aliases_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="redirect_aliases" value="enabled" id="RedirectAliasesOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="redirect_aliases" value="disabled" id="RedirectAliasesOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="redirect_aliases" value="enabled" id="RedirectAliasesOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="redirect_aliases" value="disabled" id="RedirectAliasesOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # www redirect
-    www_redirect_hint = "select redirection mode"
+    www_redirect_hint = " Select WWW redirection mode. "
+    print('                                '+return_label("www redirect", www_redirect_hint))
+    print('                                <div class="col-md-6">')
+    print('                                    <div class="input-group btn-group">')
+    print('                                        <select name="wwwredirect" class="custom-select">')
     if wwwredirect == 'none':
-        commoninclude.print_red("www redirect", www_redirect_hint)
-    else:
-        commoninclude.print_green("www redirect", www_redirect_hint)
-    print('							<div class="col-md-6">')
-    print('								<div class="input-group btn-group">')
-    print('									<select name="wwwredirect" class="custom-select">')
-    if wwwredirect == 'none':
-        print(('								<option selected value="none">no redirection</option>'))
-        print(('								<option value="tononwww">www to non-www</option>'))
-        print(('								<option value="towww">non-www to www</option>'))
+        print(('                                            <option selected value="none">No Redirection</option>'))
+        print(('                                            <option value="tononwww">WWW -> Non-WWW</option>'))
+        print(('                                            <option value="towww">Non-WWW -> WWW</option>'))
     elif wwwredirect == 'towww':
-        print(('								<option value="none">no redirection</option>'))
-        print(('								<option value="tononwww">www to non-www</option>'))
-        print(('								<option selected value="towww">non-www to www</option>'))
+        print(('                                            <option value="none">No Redirection</option>'))
+        print(('                                            <option value="tononwww">WWW -> Non-WWW</option>'))
+        print(('                                            <option selected value="towww">Non-WWW -> WWW</option>'))
     elif wwwredirect == 'tononwww':
-        print(('								<option value="none">no redirection</option>'))
-        print(('								<option selected value="tononwww">www to non-www</option>'))
-        print(('								<option value="towww">non-www to www</option>'))
-    print('									</select>')
-    print('								</div>')
-    print('							</div>')
+        print(('                                            <option value="none">No Redirection</option>'))
+        print(('                                            <option selected value="tononwww">WWW -> Non-WWW</option>'))
+        print(('                                            <option value="towww">Non-WWW -> WWW</option>'))
+    print('                                        </select>')
+    print('                                    </div>')
+    print('                                </div>')
 
     # URL Redirect
-    url_redirect_hint = "select redirection status 301 or 307"
+    url_redirect_hint = " Select URL redirection type. "
+    print('                                '+return_label("URL redirect", url_redirect_hint))
+    print('                                <div class="col-md-6">')
+    print('                                    <div class="input-group btn-group">')
+    print('                                        <select name="redirectstatus" class="custom-select">')
     if redirectstatus == 'none':
-        commoninclude.print_red("URL redirect", url_redirect_hint)
-    else:
-        commoninclude.print_green("URL redirect", url_redirect_hint)
-    print('							<div class="col-md-6">')
-    print('								<div class="input-group btn-group">')
-    print('									<select name="redirectstatus" class="custom-select">')
-    if redirectstatus == 'none':
-        print(('								<option selected value="none">no redirection</option>'))
-        print(('								<option value="301">Permanent (301)</option>'))
-        print(('								<option value="307">Temporary (307)</option>'))
+        print(('                                            <option selected value="none">No Redirection</option>'))
+        print(('                                            <option value="301">Permanent (301)</option>'))
+        print(('                                            <option value="307">Temporary (307)</option>'))
     elif redirectstatus == '301':
-        print(('								<option value="none">no redirection</option>'))
-        print(('								<option value="307">Temporary (307)</option>'))
-        print(('								<option selected value="301">Permanent (301)</option>'))
+        print(('                                            <option value="none">No Redirection</option>'))
+        print(('                                            <option value="307">Temporary (307)</option>'))
+        print(('                                            <option selected value="301">Permanent (301)</option>'))
     elif redirectstatus == '307':
-        print(('								<option value="none">no redirection</option>'))
-        print(('								<option selected value="307">Temporary (307)</option>'))
-        print(('								<option value="301">Permanent (301)</option>'))
-    print('									</select>')
-    print('								</div>')
-    print('							</div>')
+        print(('                                            <option value="none">No Redirection</option>'))
+        print(('                                            <option selected value="307">Temporary (307)</option>'))
+        print(('                                            <option value="301">Permanent (301)</option>'))
+    print('                                        </select>')
+    print('                                    </div>')
+    print('                                </div>')
 
     # Append request_uri to redirect
-    append_requesturi_hint = 'maintain original request $request_uri (with arguments)'
+    append_requesturi_hint = ' Maintain the original Request URI ($request_uri (with arguments)). '
+    print('                                '+return_label("append redirecturl", append_requesturi_hint))
     if append_requesturi == 'enabled' and redirectstatus != 'none':
-        commoninclude.print_green("append redirecturl", append_requesturi_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off" checked> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off"> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off" checked> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                           <input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off"> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
     else:
-        commoninclude.print_red("append redirecturl", append_requesturi_hint)
-        print('						<div class="col-md-6">')
-        print('							<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-        print('								<label class="btn btn-light">')
-        print('									<input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off"> Enabled')
-        print('								</label>')
-        print('								<label class="btn btn-light active">')
-        print('									<input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off" checked> Disabled')
-        print('								</label>')
-        print('							</div>')
-        print('						</div>')
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off"> Enabled')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off" checked> Disabled')
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
 
     # Redirect URL
     redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
-    print('							<div class="col-md-12">')
-    print('								<div class="input-group btn-group mb-0">')
-    print('									<div class="input-group-prepend">')
-    print('										<span class="input-group-text">')
-    if redirecturl == "none" or redirectstatus == 'none':
-        commoninclude.print_red("Redirect to URL", redirecturl_hint)
-    else:
-        commoninclude.print_green("Redirect to URL", redirecturl_hint)
-    print('										</span>')
-    print('									</div>')
-    print(('								<input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
-    print('								</div>')
-    print('							</div>')
 
-    print('					</div>')  # row end
+    print('                                <div class="col-md-12">')
+    print('                                    <div class="input-group btn-group mb-0">')
+    print('                                        <div class="input-group-prepend">')
+    print('                                            <span class="input-group-text">')
+    print('                                                '+return_prepend("Redirect to URL", redirecturl_hint))
+    print('                                            </span>')
+    print('                                        </div>')
+    print(('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
+    print('                                    </div>')
+    print('                                </div>')
 
-    print('				</div>')  # card end
-    print('			</div>')  # card end
+    print('                            </div> <!-- Row End -->') #End Row
+    print('                        </div> <!-- Card Body End -->') #Card End
+    cardfooter('')
 
-    print('			<div class="card">')  # card
-    print('				<div class="card-body text-center">')  # card-body
+    # Save settings
+    cardheader('Save cPanel Package Settings')
+    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('                            <div class="row"> <!-- Row Start -->') #Row Start
+    print('                                <div class="col-md-12">')
 
     # Pass on the package name to the next stage
-    print(('					<input class="hidden" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
-    print('						<button class="btn btn-outline-primary  btn-block" type="submit">Save Settings</button>')
-
-    print('					</div>')  # card-body end
-    print('				</div>')  # card end
-
-    print('			</form>')
+    print(('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
+    print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Save Settings</button>')
+    print('                                </div>')
+    print('                            </div> <!-- Row End -->') #End Row
+    print('                        </div> <!-- Card Body End -->') #Card End
+    cardfooter('')
+    print('                </form> <!-- Form End -->')
 else:
-        commoninclude.print_forbidden_wrapper()
+    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    sys.exit(0)
 
-print('			</div>')  # col end
-print('		</div>')  # row end
+#Second Column End
+print('                <!-- Second Column End -->')
+print('                </div>')
+print('')
+print('            <!-- WHM End Row -->')
+print('            </div>')
 
-print('</div>')  # main-container end
+print_footer()
 
-commoninclude.print_modals()
-commoninclude.print_loader()
+print('        </div> <!-- Main Container End -->')
+print('')
 
-print('</body>')
+print_modals()
+print_loader()
+
+print('    <!-- Body End -->')
+print('    </body>')
 print('</html>')

@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import subprocess
 import os
+from commoninclude import sighupnginx, print_success, print_nontoast_error
 
 
 __author__ = "Anoop P Alias"
@@ -15,17 +15,7 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
-
 cgitb.enable()
-
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
 
 form = cgi.FieldStorage()
 
@@ -38,9 +28,9 @@ print('<body>')
 
 if form.getvalue('user'):
     subprocess.call(installation_path+'/scripts/cluster_gdnsd_ensure_user.py '+form.getvalue('user'), shell=True)
-    commoninclude.print_success('DNS zone synced')
+    print_success('GeoDNS zones synced successfully.')
 else:
-    commoninclude.print_forbidden()
+    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
 
 print('</body>')
 print('</html>')

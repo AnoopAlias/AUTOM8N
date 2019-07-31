@@ -15,18 +15,7 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
-installation_path = "/opt/nDeploy"  # Absolute Installation Path
-
 cgitb.enable()
-
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
 
 form = cgi.FieldStorage()
 
@@ -65,7 +54,7 @@ for myprocess in psutil.process_iter():
             print('EXE: <kbd>'+myexe+'</kbd>')
             print('<hr>')
 if not malware:
-    commoninclude.print_success('No suspicious process found')
+    commoninclude.print_success('No suspicious processes found')
 
 print('</body>')
 print('</html>')
