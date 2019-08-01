@@ -90,49 +90,6 @@ if form.getvalue('cpanelpkg'):
         print_nontoast_error('Error: Backend Configuration File Error')
         sys.exit(0)
 
-#<<<<<<< HEAD
-
-#    print('')
-#
-#    cardheader('Edit '+form.getvalue('cpanelpkg')+' cPanel Package','fas fa-users-cog')
-#    
-#    # Current Profile Status
-#    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get"> <!-- Form Start -->')
-#    print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-#    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-#
-#    # Running
-#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Running</div>')
-#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">Nginx</div>')
-#
-#    # Backend Category
-#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream&nbsp;Type</div>')
-#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_category+'</div>')
-#
-#    # Backend
-#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
-#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
-#
-#    # Description
-#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
-#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+apptemplate_description+'</div>')
-#
-#    if backend_category == 'PROXY' and backend_version == 'httpd':
-#        # .htaccess
-#        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-#        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
-#    else:
-#        # .htaccess
-#        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-#        print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
-#
-#    print('                            </div> <!-- Row End -->') #Row End
-#    print('                        </div> <!-- Card Body End -->') #Card End
-#
-#    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-#    print('                            <div class="input-group">')
-#    print('                                <select name="backend" class="custom-select">')
-#=======
     # Ok we are done with getting the settings, now lets present it to the user
     print('            <!-- WHM Starter Row -->')
     print('            <div class="row">')
