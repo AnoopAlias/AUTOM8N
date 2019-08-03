@@ -29,12 +29,12 @@ cgitb.enable()
 form = cgi.FieldStorage()
 
 print_header('Borg Backup Configuration')
-bcrumb('Borg Backup Configuration','fas fa-database')
+bcrumb('Borg Backup Configuration', 'fas fa-database')
 
 print('            <!-- WHM Starter Row -->')
 print('            <div class="row justify-content-lg-center">')
 print('                <!-- First Column Start -->')
-print('                <div class="col-lg-6">') #Column
+print('                <div class="col-lg-6">')  # Column
 print('')
 
 if os.path.isdir('/etc/borgmatic'):
@@ -229,7 +229,7 @@ if os.path.isdir('/etc/borgmatic'):
         print('                        </div>')  # card-body end
         cardfooter('<kbd>/root/borg_restore_point</kbd> is the mount point')
 
-    cardheader('Additional <kbd> /home</kbd> Directory Backup','fas fa-database')
+    cardheader('Additional <kbd> home</kbd> Directory Backup','fas fa-database')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
     # backup directories
@@ -258,7 +258,7 @@ if os.path.isdir('/etc/borgmatic'):
             mykeypos = mykeypos + 1
             print('                                </div>')
     print('                            </div>')
-    print('                            <div class="label label-default mt-2 mb-2">Add another <kbd> /home</kbd> directory to backup:</div>')
+    print('                            <div class="label label-default mt-2 mb-2">Add another <kbd> home </kbd> directory to backup:</div>')
     print('                            <form class="form" method="post" id="toastForm14" onsubmit="return false;">')
 
     print('                                <div class="input-group mb-0">')
