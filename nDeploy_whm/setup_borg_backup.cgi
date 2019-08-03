@@ -42,14 +42,14 @@ if os.path.isdir('/etc/borgmatic'):
     # System Status
     cardheader('Borg Backup Settings','fas fa-database')
     print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    
+
     # Check if backup config file is present or initilize otherwise
     if os.path.isfile(backup_config_file):
 
         # Get all config settings from the backup config file
         with open(backup_config_file, 'r') as backup_config_file_stream:
             yaml_parsed_backupyaml = yaml.safe_load(backup_config_file_stream)
-        
+
         # Backup settings
         pkgacct_backup = yaml_parsed_backupyaml.get('pkgacct_backup', 'enabled')
         system_files = yaml_parsed_backupyaml.get('system_files', 'enabled')
@@ -83,7 +83,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                            <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
     print('                                <div class="row align-items-center"> <!-- Row Start -->')
 
-    
+
     # system_files
     system_files_hint = "Backup the cPanel System Files"
     if system_files == 'enabled':
@@ -111,7 +111,7 @@ if os.path.isdir('/etc/borgmatic'):
         print('                                        </div>')
         print('                                    </div>')
 
-    
+
     # mysql_backup
     mysql_backup_hint = "Use MariaBackup to Backup the FULL MySQL Data Directory"
     if mysql_backup == 'enabled':
@@ -139,7 +139,7 @@ if os.path.isdir('/etc/borgmatic'):
         print('                                        </div>')
         print('                                    </div>')
 
-    
+
     # backup_path
     backup_path_hint = "This is the directory where the cPanel PKG Accounts, SQL backups, and system files are stored."
     print('                                    <div class="col-md-12">')
@@ -193,7 +193,7 @@ if os.path.isdir('/etc/borgmatic'):
             with open('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE', 'r') as restore_point_conf:
                 yaml_parsed_restorepoint = yaml.safe_load(restore_point_conf)
             restore_point = yaml_parsed_restorepoint.get('restore_point', 'snapshot')
-            commoninclude.print_success_alert('<center>currently mounted</center><hr>'+restore_point)
+            print('<center>currently mounted</center><hr>'+restore_point)
             print('				<form class="form mb-3" id="toastForm24" onsubmit="return false;">')
             print(('				<input class="hidden" name="action" value="umount">'))
             print('					<button type="submit" class="btn btn-outline-primary btn-block ">Umount Restore Point</button>')
@@ -395,7 +395,7 @@ if os.path.isdir('/etc/borgmatic'):
 
 else:
     print_nontoast_error ('''Install and setup Borg/Borgmatic<form class="form" id="modalForm4" onsubmit="return false;"><input hidden name="action" value="installborg"><button class="btn btn-primary">Install</button></form>''')
-    
+
 #Second Column End
 print('                <!-- Second Column End -->')
 print('                </div>')
