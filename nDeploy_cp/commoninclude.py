@@ -103,12 +103,17 @@ def return_disabled():
     return result
 
 
+def return_sys_tip(theoption, hint):
+    result = '<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
+    return result
+
+
 def print_nontoast_error(themessage):
-    print('            <div class="row d-flex justify-content-center">')
+    print('            <div class="row justify-content-center">')
     print('                <div class="col-lg-6 alert alert-danger">')
     print('                    <div class="text-center">')
     print('                        <i class="h1 fas fa-exclamation"></i>')
-    print('                        <p>'+themessage+'</p>')
+    print('                        <span>'+themessage+'</span>')
     print('                        <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
     print('                    </div>')
     print('                </div>')
