@@ -35,7 +35,8 @@ if form.getvalue('action'):
         if os.path.isfile(cluster_config_file):
             the_raw_cmd = '/usr/sbin/nginx -s reload && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"nginx -s reload\"'
         else:
-            the_raw_cmd = '/usr/sbin/nginx -s reload;systemctl is-active --quiet nginx && echo NGINX has been reloaded and is active.'
+            the_raw_cmd = '/usr/sbin/nginx -s reload'
+            print('Reload initialized.')
     elif form.getvalue('action') == 'watcherrestart':
         the_raw_cmd = 'service ndeploy_watcher stop && /bin/rm -f /opt/nDeploy/watcher.pid && service ndeploy_watcher start'
     elif form.getvalue('action') == 'redisflush':
