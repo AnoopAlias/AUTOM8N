@@ -236,8 +236,8 @@ if form.getvalue('domain'):
         # Dependencies
 
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
-            print('                        <div class="card-body">  <!-- Card Body Start -->')
-            print('                            <form class="mb-0" id="modalForm10" onsubmit="return false;">')
+            print('                        <div class="card-body pt-3 pb-0">  <!-- Card Body Start -->')
+            print('                            <form class="form" id="modalForm10" onsubmit="return false;">')
             if backend_category == "RUBY":
                 dep_file = document_root + '/Gemfile'
             elif backend_category == "NODEJS":
@@ -250,11 +250,11 @@ if form.getvalue('domain'):
             print('                                <input hidden name="document_root" value="'+document_root+'">')
             print('                                <input hidden name="backend_category" value="'+backend_category+'">')
             print('                                <input hidden name="backend_version" value="'+backend_version+'">')
-            print('                                <button class="btn btn-outline-warning btn-block " data-toggle="tooltip" title="'+dep_file+'" type="submit">Install '+backend_category+' project deps</button>')
+            print('                                <button class="btn btn-outline-warning btn-block mb-2" data-toggle="tooltip" title="'+dep_file+'" type="submit">Install '+backend_category+' Project Deps</button>')
             print('                            </form>')
 
             if backend_category == 'PHP':
-                print('                            <form class="mb-0 mt-3" id="modalForm1" onsubmit="return false;">')
+                print('                            <form class="form" id="modalForm1" onsubmit="return false;">')
                 print('                                <button class="btn btn-outline-warning btn-block" type="submit">View PHP Log</button>')
                 print('                            </form>')
 
