@@ -9,7 +9,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import close_cpanel_liveapisock, print_nontoast_error, bcrumb, return_sys_tip, return_label, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import close_cpanel_liveapisock, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_label, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -33,7 +33,7 @@ form = cgi.FieldStorage()
 print_header('Manual Configuration')
 bcrumb('Manual Configuration','fas fa-redo')
 
-if not True:#form.getvalue('domain'):
+if form.getvalue('domain'):
 
     # Get the domain name from form data
 
@@ -296,7 +296,6 @@ if not True:#form.getvalue('domain'):
         # auth_basic
         
         auth_basic_hint = " Setup password for "+document_root+" in cPanel -> Files -> Directory Privacy. "
-
         print('                                '+return_label('password protect app url', auth_basic_hint))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
@@ -321,7 +320,6 @@ if not True:#form.getvalue('domain'):
         # autoindex
 
         autoindex_hint = " Enable for Native NGINX directory listing. "
-
         print('                                '+return_label("autoindex", autoindex_hint))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -346,7 +344,6 @@ if not True:#form.getvalue('domain'):
         # ssl_offload
 
         ssl_offload_hint = " Enable for a performance increase. Disable if a redirect loop error occurs. "
-
         print('                                '+return_label("ssl_offload", ssl_offload_hint))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -371,7 +368,6 @@ if not True:#form.getvalue('domain'):
         # access_log
 
         access_log_hint = " Disabling access_log will increase performance, but cPanel stats fail to work. "
-
         print('                                '+return_label("access_log", access_log_hint))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -396,7 +392,6 @@ if not True:#form.getvalue('domain'):
         # open_file_cache
 
         open_file_cache_hint = " Enable for performance increase. Disable on development environment to not cache. "
-
         print('                                '+return_label("open_file_cache", open_file_cache_hint))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -427,20 +422,19 @@ if not True:#form.getvalue('domain'):
         cardheader('Security Settings','fas fa-shield-alt')
         print('                        <div class="card-body">  <!-- Card Body Start -->')
 
-        if settings_lock == 'enabled':
-            print('                        <div class="alert alert-info mb-0">Security settings are locked by the administrator</div>')
+        if True:#settings_lock == 'enabled':
+            print('                        <div class="alert alert-info text-center mb-0">Security settings have been disabled by your host.</div>')
             print('                        <input hidden name="security_headers" value="'+security_headers+'">')
             print('                        <input hidden name="dos_mitigate" value="'+dos_mitigate+'">')
             print('                        <input hidden name="test_cookie" value="'+test_cookie+'">')
             print('                        <input hidden name="symlink_protection" value="'+symlink_protection+'">')
             print('                        <input hidden name="mod_security" value="'+mod_security+'">')
         else:
-            print('                            <div class="row"> <!-- Row Start -->')
+            print('                            <div class="row align-items-center"> <!-- Row Start -->')
 
             # security_headers
 
             security_headers_hint = " X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, HSTS "
-
             print('                                '+return_label("security_headers", security_headers_hint))
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
@@ -465,10 +459,10 @@ if not True:#form.getvalue('domain'):
             # dos_mitigate
 
             dos_mitigate_hint = " Enable ONLY when under a (D)DOS Attack. "
-
             print('                                '+return_label("dos_mitigate", dos_mitigate_hint))
             print('                                <div class="col-md-6">')
-            print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            
             if dos_mitigate == 'enabled':
                 print('                                        <label class="btn btn-light active">')
                 print('                                            <input type="radio" name="dos_mitigate" value="enabled" id="DosMitigateOn" autocomplete="off" checked> Enabled')
@@ -489,103 +483,102 @@ if not True:#form.getvalue('domain'):
             # test_cookie
 
             test_cookie_hint = " Allow good bots in (like Google/Yahoo). Disable most bad bots by using a cookie challenge. "
+            print('                                '+return_label("bot_mitigate", test_cookie_hint))
 
             if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
+
+                print('                                <div class="col-md-6">')
+                print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+
                 if test_cookie == 'enabled':
-                    return_label("bot_mitigate", test_cookie_hint)
-                    print('			<div class="col-md-6">')
-                    print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('					<label class="btn btn-light active">')
                     print('						<input type="radio" name="test_cookie" value="enabled" id="TestCookieOn" autocomplete="off" checked> Enabled')
                     print('					</label>')
                     print('					<label class="btn btn-light">')
                     print('						<input type="radio" name="test_cookie" value="disabled" id="TestCookieOff" autocomplete="off"> Disabled')
-                    print('					</label>')
-                    print('				</div>')
-                    print('			</div>')
                 else:
-                    return_label("bot_mitigate", test_cookie_hint)
-                    print('			<div class="col-md-6">')
-                    print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('					<label class="btn btn-light">')
                     print('						<input type="radio" name="test_cookie" value="enabled" id="TestCookieOn" autocomplete="off"> Enabled')
                     print('					</label>')
                     print('					<label class="btn btn-light active">')
                     print('						<input type="radio" name="test_cookie" value="disabled" id="TestCookieOff" autocomplete="off" checked> Disabled')
-                    print('					</label>')
-                    print('				</div>')
-                    print('			</div>')
+
+                print('                                        </label>')
+                print('                                    </div>')
+                print('                                </div>')
+
+
             else:
-                return_label("bot_mitigate", test_cookie_hint)
-                commoninclude.print_disabled()
-                print(('<input class="hidden" name="test_cookie" value="'+test_cookie+'">'))
+                print_disabled()
+                print('                                <input hidden name="test_cookie" value="'+test_cookie+'">')
 
             # symlink_protection
-            symlink_protection_hint = "Access to a file is denied if any component of the pathname is a symbolic link, and the link and object that the link points to have different owners"
+            
+            symlink_protection_hint = " Access to a file is denied if any component of the pathname is a symbolic link, and if the link and object that the link points to has different owners. "
+            print('                                '+return_label("symlink_protection", symlink_protection_hint))
+            print('                                <div class="col-md-6">')
+            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+            
             if symlink_protection == 'enabled':
-                return_label("symlink_protection", symlink_protection_hint)
-                print('				<div class="col-md-6">')
-                print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('						<label class="btn btn-light active">')
-                print('							<input type="radio" name="symlink_protection" value="enabled" id="SymlinkProtectionOn" autocomplete="off" checked> Enabled')
-                print('						</label>')
-                print('						<label class="btn btn-light">')
-                print('							<input type="radio" name="symlink_protection" value="disabled" id="SymlinkProtectionOff" autocomplete="off"> Disabled')
-                print('						</label>')
-                print('					</div>')
-                print('				</div>')
+                print('                                        <label class="btn btn-light active">')
+                print('                                            <input type="radio" name="symlink_protection" value="enabled" id="SymlinkProtectionOn" autocomplete="off" checked> Enabled')
+                print('                                        </label>')
+                print('                                        <label class="btn btn-light">')
+                print('                                            <input type="radio" name="symlink_protection" value="disabled" id="SymlinkProtectionOff" autocomplete="off"> Disabled')
             else:
-                return_label("symlink_protection", symlink_protection_hint)
-                print('				<div class="col-md-6">')
-                print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                print('						<label class="btn btn-light">')
-                print('							<input type="radio" name="symlink_protection" value="enabled" id="SymlinkProtectionOn" autocomplete="off"> Enabled')
-                print('						</label>')
-                print('						<label class="btn btn-light active">')
-                print('							<input type="radio" name="symlink_protection" value="disabled" id="SymlinkProtectionOff" autocomplete="off" checked> Disabled')
-                print('						</label>')
-                print('					</div>')
-                print('				</div>')
+                print('                                        <label class="btn btn-light">')
+                print('                                            <input type="radio" name="symlink_protection" value="enabled" id="SymlinkProtectionOn" autocomplete="off"> Enabled')
+                print('                                        </label>')
+                print('                                        <label class="btn btn-light active">')
+                print('                                            <input type="radio" name="symlink_protection" value="disabled" id="SymlinkProtectionOff" autocomplete="off" checked> Disabled')
+
+            print('                                        </label>')
+            print('                                    </div>')
+            print('                                </div>')
 
             # mod_security
-            mod_security_hint = "mod_security v3 WAF"
+
+            mod_security_hint = " Mod Security v3 Web Application Firewall "
+            print('                                '+return_label('mod_security', mod_security_hint))
+
             if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+                print('                                <div class="col-md-6">')
+                print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+
                 if mod_security == 'enabled':
-                    return_label('mod_security', mod_security_hint)
-                    print('			<div class="col-md-6">')
-                    print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                    print('					<label class="btn btn-light active">')
-                    print('						<input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
-                    print('					</label>')
-                    print('					<label class="btn btn-light">')
-                    print('						<input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
-                    print('					</label>')
-                    print('				</div>')
-                    print('			</div>')
+                    print('                                        <label class="btn btn-light active">')
+                    print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
+                    print('                                        </label>')
+                    print('                                        <label class="btn btn-light">')
+                    print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
                 else:
-                    return_label('mod_security', mod_security_hint)
-                    print('			<div class="col-md-6">')
-                    print('				<div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-                    print('					<label class="btn btn-light">')
-                    print('						<input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
-                    print('					</label>')
-                    print('					<label class="btn btn-light active">')
-                    print('						<input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
-                    print('					</label>')
-                    print('				</div>')
-                    print('			</div>')
+                    print('                                        <label class="btn btn-light">')
+                    print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
+                    print('                                        </label>')
+                    print('                                        <label class="btn btn-light active">')
+                    print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
+
+                print('                                        </label>')
+                print('                                    </div>')
+                print('                                </div>')
+
             else:
-                return_label('mod_security', mod_security_hint)
-                commoninclude.print_disabled()
-                print(('<input class="hidden" name="mod_security" value="'+mod_security+'">'))
-            print('					</div>')  # row end
+                print_disabled()
+                print('                                <input hidden name="mod_security" value="'+mod_security+'">')
 
-        print('				</div>')  # card-body end
-        print('			</div>')  # card end
+            print('                            </div> <!-- Row End -->')
+        print('                        </div> <!-- Card Body End -->')
+        cardfooter('Testing')
 
-        print('		</div>')   # col left end
-
-        print('		<div class="col-lg-6">')  # col Right
+        #First Column End
+        print('                <!-- First Column End -->')
+        print('                </div>')
+        print('')
+    
+        #Second Column
+        print('                <!-- Second Column Start -->')
+        print('                <div class="col-lg-6">') #Right Column
+        print('')
 
         # Content Optimizations
         print('			<div class="card">')  # card

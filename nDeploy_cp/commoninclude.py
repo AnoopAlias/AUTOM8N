@@ -150,7 +150,9 @@ def print_sys_tip(theoption, hint):
 
 
 def print_disabled():
-    print('<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div></div>')
+    print('                                <div class="col-md-6">')
+    print('                                    <div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div>')
+    print('                                </div>')
 
 
 def print_forbidden_wrapper():
