@@ -423,7 +423,7 @@ if form.getvalue('domain'):
         print('                        <div class="card-body">  <!-- Card Body Start -->')
 
         if True:#settings_lock == 'enabled':
-            print('                        <div class="alert alert-info text-center mb-0">Security settings have been disabled by your host.</div>')
+            print('                        <div class="alert alert-info text-center mb-0">Security settings have been disabled by your host. A customized messages needs to be added to nDeploy Control. </div>')
             print('                        <input hidden name="security_headers" value="'+security_headers+'">')
             print('                        <input hidden name="dos_mitigate" value="'+dos_mitigate+'">')
             print('                        <input hidden name="test_cookie" value="'+test_cookie+'">')
@@ -581,41 +581,33 @@ if form.getvalue('domain'):
         print('')
 
         # Content Optimizations
-        print('			<div class="card">')  # card
-        print('				<div class="card-header">')
-        print('					<h5 class="card-title mb-0"><i class="fas fa-dumbbell float-right"></i> Content Optimization</h5>')
-        print('				</div>')
-        print('				<div class="card-body">')  # card-body
+        cardheader('Content Optimizations', 'fas fa-dumbbell')
 
-        print('					<div class="row">')
+        print('                        <div class="card-body">  <!-- Card Body Start -->')
+        print('                            <div class="row"> <!-- Row Start -->')
 
         # set_expire_static
-        set_expire_static_hint = "Set Expires/Cache-Control headers for satic content"
+        set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
+        print('                                '+return_label('set expires header', set_expire_static_hint))
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+
         if set_expire_static == 'enabled':
-            return_label('set expires header', set_expire_static_hint)
-            print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
             print('							<label class="btn btn-light active">')
             print('								<input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off" checked> Enabled')
             print('							</label>')
             print('							<label class="btn btn-light">')
             print('								<input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off"> Disabled')
-            print('							</label>')
-            print('						</div>')
-            print('					</div>')
         else:
-            return_label('set expires header', set_expire_static_hint)
-            print('					<div class="col-md-6">')
-            print('						<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
             print('							<label class="btn btn-light">')
             print('								<input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off"> Enabled')
             print('							</label>')
             print('							<label class="btn btn-light active">')
             print('								<input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off" checked> Disabled')
-            print('							</label>')
-            print('						</div>')
-            print('					</div>')
 
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
         # pagespeed
         pagespeed_hint = "delivers pagespeed optimized webpage, resource intensive"
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
