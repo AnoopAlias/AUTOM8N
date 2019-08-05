@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import commoninclude
 import os
 import yaml
 import cgi
@@ -12,6 +11,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
+from commoninclude import close_cpanel_liveapisock, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_prepend, return_label, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -27,27 +27,15 @@ user_app_template_file = installation_path+"/conf/"+cpaneluser+"_apptemplates_su
 backend_config_file = installation_path+"/conf/backends.yaml"
 
 cgitb.enable()
+close_cpanel_liveapisock()
 
-commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
-
-commoninclude.print_header()
-
-print('<body>')
-
-commoninclude.print_branding()
-
-print('<div id="main-container" class="container">')  # main container
-
-print('		<nav aria-label="breadcrumb">')
-print('			<ol class="breadcrumb">')
-print('				<li class="breadcrumb-item"><a href="xtendweb.live.py"><i class="fas fa-redo"></i></a></li>')
-print('				<li class="breadcrumb-item active">Subdir Config</li>')
-print('			</ol>')
-print('		</nav>')
+print_header('Subdirectory Configuration')
+bcrumb('Subdirectory Configuration', 'fas fa-cogs')
 
 if form.getvalue('domain') and form.getvalue('thesubdir'):
+
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
     if mydomain.startswith('_wildcard_.'):
@@ -71,48 +59,51 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         commoninclude.print_error_wrapper('Error: Invalid char in sub-directory name')
         sys.exit(0)
     profileyaml = installation_path + "/domain-data/" + mydomain
+
     # Get data about the backends available
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     if os.path.isfile(profileyaml):
+
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         subdir_apps_dict = yaml_parsed_profileyaml.get('subdir_apps')
         user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
+        
         # If there are no entries in subdir_apps_dict or there is no specific config for the subdirectory
         # We do a fresh config
         if subdir_apps_dict:
             if not subdir_apps_dict.get(thesubdir):
-                print('<div class="row justify-content-lg-center">')
-                print('<div class="col-lg-6">')
-                print('	<div class="card">')  # card
-                print('		<div class="card-header">')
-                print('			<h5 class="card-title mb-0"><i class="fas fa-signal float-right"></i> '+mydomain+'/'+thesubdir+'</h5>')
-                print('		</div>')
-                print('		<div class="card-body">')  # card-body
-                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
-                print(('			<div class="alert alert-info">Select an upstream for this subdirectory</div>'))
-                print('				<div class="input-group mb-3">')
-                print('					<div class="input-group-prepend input-group-prepend-min">')
-                print('						<label class="input-group-text">Upstream</label>')
-                print('					</div>')
-                print('					<select name="backend" class="custom-select">')
+                print('            <!-- cPanel Starter Row -->')
+                print('            <div class="row justify-content-lg-center">')
+                print('')
+                print('                <!-- Column Start -->')
+                print('                <div class="col-lg-6">')
+
+                cardheader(mydomain+'/wtf/'+thesubdir)
+                print('                        <div class="card-body">  <!-- Card Body Start -->')
+                print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
+                print('                                <div class="alert alert-info">Select an upstream for this subdirectory</div>')
+                print('                                <div class="input-group mb-3">')
+                print('                                    <div class="input-group-prepend input-group-prepend-min">')
+                print('                                        <label class="input-group-text">Upstream</label>')
+                print('                                    </div>')
+                print('                                    <select name="backend" class="custom-select">')
                 for backends_defined in backend_data_yaml_parsed.keys():
-                    print(('				<option value="'+backends_defined+'">'+backends_defined+'</option>'))
-                print('					</select>')
-                print('				</div>')
+                    print('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>')
+                print('                                    </select>')
+                print('                                </div>')
 
                 # Pass on the domain name to the next stage
-                print(('			<input class="hidden" name="domain" value="'+mydomain+'">'))
-                print(('			<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('				<button class="btn btn-outline-primary btn-block " type="submit">Select</button>')
-                print('			</form>')
-                print('		</div>')  # card-body end
-                print('</div>')  # card end
-                print('</div>')  # col end
-                print('</div>')  # row end
+                print('                                <input hidden name="domain" value="'+mydomain+'">')
+                print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
+                print('                                <button class="btn btn-outline-primary btn-block" type="submit">Select</button>')
+                print('                            </form>')
+                print('                        </div> <!-- Card Body End -->')
+                cardfooter('')
+
             else:
                 # we get the current app settings for the subdir
                 the_subdir_dict = subdir_apps_dict.get(thesubdir)
@@ -145,46 +136,53 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         if apptemplate_code in user_apptemplate_dict.keys():
                             apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
                 else:
-                    commoninclude.print_error_wrapper('Error: app template data file error')
+                    print_nontoast_error('<h3>Error!</h3>Application Tempate Data File Error')
                     sys.exit(0)
 
-                print('		<div class="row">')
-                print('			<div class="col-lg-12">')  # dash
+                print('            <!-- cPanel Start Dash Row -->')
+                print('            <div class="row justify-content-lg-center">')
+                print('')
+                print('                <!-- Dash Start -->')
+                print('                <div class="col-lg-12">')
 
                 # Domain Status
-                print('				<div class="card">')  # card
-                print('					<div class="card-body p-0">')  # card-body
-                print('						<div class="row no-gutters row-3-col">')
-                print('					        <div class="col-md-4">')
-                print('					            <div class="p-3 bg-light text-center">')
-                print('					                <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
-                print('                                 <ul class="list-unstyled mb-0">')
-                print('					                    <li class="mt-2 text-success">Nginx</li>')
-                print('                                 </ul>')
-                print('                             </div>')
-                print('                         </div>')
-                print('					        <div class="col-md-4">')
-                print('					            <div class="p-3 bg-light text-center">')
-                print('					                <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
-                print('                                 <ul class="list-unstyled mb-0">')
-                print('					                    <li class="mt-2 text-success">'+backend_version+'</li>')
-                print('                                 </ul>')
-                print('                             </div>')
-                print('                         </div>')
-                print('					        <div class="col-md-4">')
-                print('					            <div class="p-3 bg-light text-center">')
-                print('					                <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
-                print('                                 <ul class="list-unstyled mb-0">')
-                print('					                    <li class="mt-2 text-success">'+apptemplate_description+'</li>')
-                print('                                 </ul>')
-                print('                             </div>')
-                print('                         </div>')
-                print('                     </div>')
-                print('                 </div>')
-                print('             </div>')
+                cardheader('')
+                print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
+                print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
+                print('                                <div class="col-md-4">')
+                print('                                    <div class="p-3 text-center">')
+                print('                                        <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
+                print('                                        <ul class="list-unstyled mb-0">')
+                print('                                            <li class="mt-2 text-success">Nginx</li>')
+                print('                                        </ul>')
+                print('                                    </div>')
+                print('                                </div>')
+                print('                                <div class="col-md-4">')
+                print('                                    <div class="p-3 text-center">')
+                print('                                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
+                print('                                        <ul class="list-unstyled mb-0">')
+                print('                                            <li class="mt-2 text-success">'+backend_version+'</li>')
+                print('                                        </ul>')
+                print('                                    </div>')
+                print('                                </div>')
+                print('                                <div class="col-md-4">')
+                print('                                    <div class="p-3 text-center">')
+                print('                                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
+                print('                                        <ul class="list-unstyled mb-0">')
+                print('                                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+                print('                                        </ul>')
+                print('                                    </div>')
+                print('                                </div>')
+                print('                            </div> <!-- Row End -->')
+                print('                        </div> <!-- Card Body End -->')
+                cardfooter('')
 
-                print('         </div>')  # end top dash
-                print('    </div>')  # end row
+                print('                <!-- Dash End -->')
+                print('                </div>')
+                print('')
+                print('            <!-- End Dash Row -->')
+                print('            </div>')
+
 
                 # Ok we are done with getting the settings,now lets present it to the user
                 print('<div class="row">')
@@ -211,7 +209,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # User config reload
                 nginx_log_hint = document_root+"/"+thesubdir+"/nginx.conf"
-                commoninclude.print_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
+                return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
                 if os.path.isfile(nginx_log_hint):
                     if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
                         print('		<div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
@@ -310,7 +308,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # auth_basic
                 auth_basic_hint = "Setup password for "+document_root+"/"+thesubdir+" in cPanel -> Files -> Directory Privacy"
                 if auth_basic == 'enabled':
-                    commoninclude.print_green('password protect app url', auth_basic_hint)
+                    return_label('password protect app url', auth_basic_hint)
                     print('				<div class="col-md-6">')
                     print('					<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
                     print('						<label class="btn btn-light active">')
@@ -322,7 +320,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('					</div>')
                     print('				</div>')
                 else:
-                    commoninclude.print_red('password protect app url', auth_basic_hint)
+                    return_label('password protect app url', auth_basic_hint)
                     print('				<div class="col-md-6">')
                     print('					<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
                     print('						<label class="btn btn-light">')
@@ -337,7 +335,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # set_expire_static
                 set_expire_static_hint = "Set Expires/Cache-Control headers for static content"
                 if set_expire_static == 'enabled':
-                    commoninclude.print_green('set expires header', set_expire_static_hint)
+                    return_label('set expires header', set_expire_static_hint)
                     print('				<div class="col-md-6">')
                     print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('						<label class="btn btn-light active">')
@@ -349,7 +347,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('					</div>')
                     print('				</div>')
                 else:
-                    commoninclude.print_red('set expires header', set_expire_static_hint)
+                    return_label('set expires header', set_expire_static_hint)
                     print('				<div class="col-md-6">')
                     print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('						<label class="btn btn-light">')
@@ -365,7 +363,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 mod_security_hint = "mod_security v3 WAF"
                 if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
                     if mod_security == 'enabled':
-                        commoninclude.print_green('mod_security', mod_security_hint)
+                        return_label('mod_security', mod_security_hint)
                         print('			<div class="col-md-6">')
                         print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                         print('					<label class="btn btn-light active">')
@@ -377,7 +375,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         print('				</div>')
                         print('			</div>')
                     else:
-                        commoninclude.print_red('mod_security', mod_security_hint)
+                        return_label('mod_security', mod_security_hint)
                         print('			<div class="col-md-6">')
                         print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                         print('					<label class="btn btn-light">')
@@ -389,16 +387,16 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         print('				</div>')
                         print('			</div>')
                 else:
-                    commoninclude.print_red('mod_security', mod_security_hint)
+                    return_label('mod_security', mod_security_hint)
                     commoninclude.print_disabled()
                     print(('<input class="hidden" name="mod_security" value="'+mod_security+'">'))
 
                 # URL Redirect
                 url_redirect_hint = "select redirection status 301 or 307"
                 if redirectstatus == 'none':
-                    commoninclude.print_red("URL Redirect", url_redirect_hint)
+                    return_label("URL Redirect", url_redirect_hint)
                 else:
-                    commoninclude.print_green("URL Redirect", url_redirect_hint)
+                    return_label("URL Redirect", url_redirect_hint)
                 print('					<div class="col-md-6">')
                 print('						<div class="input-group btn-group">')
                 print('							<select name="redirectstatus" class="custom-select">')
@@ -421,7 +419,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # Append request_uri to redirect
                 append_requesturi_hint = 'maintain original request $request_uri (with arguments)'
                 if append_requesturi == 'enabled' and redirectstatus != 'none':
-                    commoninclude.print_green("append redirecturl", append_requesturi_hint)
+                    return_label("append redirecturl", append_requesturi_hint)
                     print('				<div class="col-md-6">')
                     print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('						<label class="btn btn-light active">')
@@ -433,7 +431,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('					</div>')
                     print('				</div>')
                 else:
-                    commoninclude.print_red("append redirecturl", append_requesturi_hint)
+                    return_label("append redirecturl", append_requesturi_hint)
                     print('				<div class="col-md-6">')
                     print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
                     print('						<label class="btn btn-light">')
@@ -452,9 +450,9 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('							<div class="input-group-prepend">')
                 print('								<span class="input-group-text">')
                 if redirecturl == "none" or redirectstatus == 'none':
-                    commoninclude.print_red("Redirect to URL", redirecturl_hint)
+                    return_label("Redirect to URL", redirecturl_hint)
                 else:
-                    commoninclude.print_green("Redirect to URL", redirecturl_hint)
+                    return_label("Redirect to URL", redirecturl_hint)
                 print('								</span>')
                 print('							</div>')
                 print(('						<input class="form-control" type="text" name="redirecturl" value='+redirecturl+'>'))
@@ -499,17 +497,31 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('					<small>To change the Upstream select a new category above.</small>')
             print('				</div>')
             print('			</div>')  # card end
+
     else:
-        commoninclude.print_error_wrapper('domain-data file i/o error')
+        print_nontoast_error('<h3>Error!</h3>Domain-Data File IO Error.')
+        sys.exit(0)
+
 else:
-    commoninclude.print_forbidden_wrapper()
+    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    sys.exit(0)
 
-print('		</div>')  # row end
 
-print('</div>')  # main-container end
+# Column End
+print('                <!-- Column End -->')
+print('                </div>')
+print('')
+print('            <!-- cPanel End Row -->')
+print('            </div>')
 
-commoninclude.print_modals()
-commoninclude.print_loader()
+print_footer()
 
-print('</body>')
+print('        </div> <!-- Main Container End -->')
+print('')
+
+print_modals()
+print_loader()
+
+print('    <!-- Body End -->')
+print('    </body>')
 print('</html>')

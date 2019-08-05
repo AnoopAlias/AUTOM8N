@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
-import commoninclude
 import os
 import yaml
 import cgi
 import cgitb
 import sys
+from commoninclude import close_cpanel_liveapisock, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_prepend, return_label, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -22,25 +22,12 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 
 
 cgitb.enable()
+close_cpanel_liveapisock()
 
-commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
-
-commoninclude.print_header()
-
-print('<body>')
-
-commoninclude.print_branding()
-
-print('<div id="main-container" class="container">')  # main container
-
-print('		<nav aria-label="breadcrumb">')
-print('			<ol class="breadcrumb">')
-print('				<li class="breadcrumb-item"><a href="xtendweb.live.py"><i class="fas fa-redo"></i></a></li>')
-print('				<li class="breadcrumb-item active">Subdir Settings</li>')
-print('			</ol>')
-print('		</nav>')
+print_header('Subdirectory Settings')
+bcrumb('Subdirectory Settings', 'fas fa-cogs')
 
 print('		<div class="row justify-content-lg-center"">')
 
@@ -274,8 +261,8 @@ print('		</div>')  # row end
 
 print('</div>')  # main-container end
 
-commoninclude.print_modals()
-commoninclude.print_loader()
+print_modals()
+print_loader()
 
 print('</body>')
 print('</html>')
