@@ -71,7 +71,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         subdir_apps_dict = yaml_parsed_profileyaml.get('subdir_apps')
         user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
-        
+                
         # If there are no entries in subdir_apps_dict or there is no specific config for the subdirectory
         # We do a fresh config
         if subdir_apps_dict:
@@ -260,11 +260,11 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         print('                            <form class="form" id="modalForm1" onsubmit="return false;">')
                         print('                                <button class="btn btn-outline-warning btn-block" type="submit">View PHP Log</button>')
                         print('                            </form>')
-        
+
                     print('                        </div> <!-- Card Body End -->')
-              
+
                 print('                        <div class="card-body mb-0">  <!-- Card Body Start -->')
-  
+
                 print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
                 print('                                <div class="input-group mb-0">')
                 print('                                    <select name="backend" class="custom-select">')
@@ -290,7 +290,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                <!-- First Column End -->')
                 print('                </div>')
                 print('')
-        
+
                 #Second Column
                 print('                <!-- Second Column Start -->')
                 print('                <div class="col-lg-6">')
@@ -349,125 +349,117 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                    </div>')
 
                 # mod_security
-                mod_security_hint = "mod_security v3 WAF"
+                mod_security_hint = " Mod Security v3 Web Application Firewall "
+                print('                                    '+return_label('mod_security', mod_security_hint))
+
                 if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+                    print('                                    <div class="col-md-6">')
+                    print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+
                     if mod_security == 'enabled':
-                        return_label('mod_security', mod_security_hint)
-                        print('			<div class="col-md-6">')
-                        print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                        print('					<label class="btn btn-light active">')
-                        print('						<input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
-                        print('					</label>')
-                        print('					<label class="btn btn-light">')
-                        print('						<input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
-                        print('					</label>')
-                        print('				</div>')
-                        print('			</div>')
+                        print('                                            <label class="btn btn-light active">')
+                        print('                                                <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
+                        print('                                            </label>')
+                        print('                                            <label class="btn btn-light">')
+                        print('                                                <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
                     else:
-                        return_label('mod_security', mod_security_hint)
-                        print('			<div class="col-md-6">')
-                        print('				<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                        print('					<label class="btn btn-light">')
-                        print('						<input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
-                        print('					</label>')
-                        print('					<label class="btn btn-light active">')
-                        print('						<input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
-                        print('					</label>')
-                        print('				</div>')
-                        print('			</div>')
+                        print('                                            <label class="btn btn-light">')
+                        print('                                                <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
+                        print('                                            </label>')
+                        print('                                            <label class="btn btn-light active">')
+                        print('                                                <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
+
+                    print('                                            </label>')
+                    print('                                        </div>')
+                    print('                                    </div>')
+
                 else:
-                    return_label('mod_security', mod_security_hint)
-                    commoninclude.print_disabled()
-                    print(('<input class="hidden" name="mod_security" value="'+mod_security+'">'))
+                    print_disabled()
+                    print('                                <input hidden name="mod_security" value="'+mod_security+'">')
 
                 # URL Redirect
-                url_redirect_hint = "select redirection status 301 or 307"
+                url_redirect_hint = " Select URL redirection type. "
+                print('                                '+return_label("URL redirect", url_redirect_hint))
+                print('                                <div class="col-md-6">')
+                print('                                    <div class="input-group btn-group">')
+                print('                                        <select name="redirectstatus" class="custom-select">')
+
                 if redirectstatus == 'none':
-                    return_label("URL Redirect", url_redirect_hint)
-                else:
-                    return_label("URL Redirect", url_redirect_hint)
-                print('					<div class="col-md-6">')
-                print('						<div class="input-group btn-group">')
-                print('							<select name="redirectstatus" class="custom-select">')
-                if redirectstatus == 'none':
-                    print(('						<option selected value="none">no redirection</option>'))
-                    print(('						<option value="301">Permanent (301)</option>'))
-                    print(('						<option value="307">Temporary (307)</option>'))
+                    print('                                            <option selected value="none">No Redirection</option>')
+                    print('                                            <option value="301">Permanent (301)</option>')
+                    print('                                            <option value="307">Temporary (307)</option>')
                 elif redirectstatus == '301':
-                    print(('						<option value="none">no redirection</option>'))
-                    print(('						<option value="307">Temporary (307)</option>'))
-                    print(('						<option selected value="301">Permanent (301)</option>'))
+                    print('                                            <option value="none">No Redirection</option>')
+                    print('                                            <option value="307">Temporary (307)</option>')
+                    print('                                            <option selected value="301">Permanent (301)</option>')
                 elif redirectstatus == '307':
-                    print(('						<option value="none">no redirection</option>'))
-                    print(('						<option selected value="307">Temporary (307)</option>'))
-                    print(('						<option value="301">Permanent (301)</option>'))
-                print('							</select>')
-                print('						</div>')
-                print('					</div>')
+                    print('                                            <option value="none">No Redirection</option>')
+                    print('                                            <option selected value="307">Temporary (307)</option>')
+                    print('                                            <option value="301">Permanent (301)</option>')
+
+                print('                                        </select>')
+                print('                                    </div>')
+                print('                                </div>')
 
                 # Append request_uri to redirect
-                append_requesturi_hint = 'maintain original request $request_uri (with arguments)'
+                append_requesturi_hint = ' Maintain the original Request URI ($request_uri (with arguments)). '
+                print('                                '+return_label("append redirecturl", append_requesturi_hint))
+                print('                                <div class="col-md-6">')
+                print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+
                 if append_requesturi == 'enabled' and redirectstatus != 'none':
-                    return_label("append redirecturl", append_requesturi_hint)
-                    print('				<div class="col-md-6">')
-                    print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                    print('						<label class="btn btn-light active">')
-                    print('							<input type="radio" name="append_requesturi" value="enabled" id="AppendRequestUriOn" autocomplete="off" checked> Enabled')
-                    print('						</label>')
-                    print('						<label class="btn btn-light">')
-                    print('							<input type="radio" name="append_requesturi" value="disabled" id="AppendRequestUriOff" autocomplete="off"> Disabled')
-                    print('						</label>')
-                    print('					</div>')
-                    print('				</div>')
+                    print('                                        <label class="btn btn-light active">')
+                    print('                                            <input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off" checked> Enabled')
+                    print('                                        </label>')
+                    print('                                        <label class="btn btn-light">')
+                    print('                                           <input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off"> Disabled')
                 else:
-                    return_label("append redirecturl", append_requesturi_hint)
-                    print('				<div class="col-md-6">')
-                    print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                    print('						<label class="btn btn-light">')
-                    print('							<input type="radio" name="append_requesturi" value="enabled" id="AppendRequestUriOn" autocomplete="off"> Enabled')
-                    print('						</label>')
-                    print('						<label class="btn btn-light active">')
-                    print('							<input type="radio" name="append_requesturi" value="disabled" id="AppendRequestUriOff" autocomplete="off" checked> Disabled')
-                    print('						</label>')
-                    print('					</div>')
-                    print('				</div>')
+                    print('                                        <label class="btn btn-light">')
+                    print('                                            <input type="radio" name="append_requesturi" value="enabled" id="AppendRequesturiOn" autocomplete="off"> Enabled')
+                    print('                                        </label>')
+                    print('                                        <label class="btn btn-light active">')
+                    print('                                            <input type="radio" name="append_requesturi" value="disabled" id="AppendRequesturiOff" autocomplete="off" checked> Disabled')
+
+                print('                                        </label>')
+                print('                                    </div>')
+                print('                                </div>')
 
                 # Redirect URL
                 redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
-                print('					<div class="col-md-12">')
-                print('						<div class="input-group btn-group mb-0">')
-                print('							<div class="input-group-prepend">')
-                print('								<span class="input-group-text">')
-                if redirecturl == "none" or redirectstatus == 'none':
-                    return_label("Redirect to URL", redirecturl_hint)
-                else:
-                    return_label("Redirect to URL", redirecturl_hint)
-                print('								</span>')
-                print('							</div>')
-                print(('						<input class="form-control" type="text" name="redirecturl" value='+redirecturl+'>'))
-                print('						</div>')
-                print('					</div>')
 
-                print('				</div>')  # Row end
-                print('			</div>')  # card-body end
-                print('		</div>')  # card end
+                print('                                <div class="col-md-12">')
+                print('                                    <div class="input-group btn-group mb-0">')
+                print('                                        <div class="input-group-prepend">')
+                print('                                            <span class="input-group-text">')
+                print('                                                '+return_prepend("Redirect to URL", redirecturl_hint))
+                print('                                            </span>')
+                print('                                        </div>')
+                print('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">')
+                print('                                    </div>')
+                print('                                </div>')                
+
+                print('                            </div> <!-- Row End -->')
+                print('                        </div> <!-- Card Body End -->')
+                cardfooter('')
 
                 # Save Settings
-                print('		<div class="card">')  # card
-                print('			<div class="card-body text-center">')  # card-body
-                print(('			<input class="hidden" name="domain" value="'+mydomain+'">'))
-                print(('			<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('				<button class="btn btn-outline-primary btn-block " type="submit">Save Settings</button>')
-                print('			</div>')  # card-body end
-                print('		</div>')  # card end
-                print('			</form>')
-                print('	</div>')  # col right end
+
+                cardheader('Save Settings')
+                print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
+                print('                            <input hidden name="domain" value="'+mydomain+'">')
+                print('                            <input hidden name="thesubdir" value="'+thesubdir+'">')
+                print('                            <button class="btn btn-outline-primary btn-block " type="submit">Apply Settings to '+mydomain+'/'+thesubdir+'</button>')
+                print('                            </form>')
+                print('                        </div> <!-- Card Body End -->')
+                cardfooter('')
+
         else:
             print('            <!-- cPanel Starter Row -->')
             print('            <div class="row justify-content-lg-center">')
             print('')
             print('                <!-- Column Start -->')
             print('                <div class="col-lg-6">')
+
             cardheader('Upstream Selector')
             print('                        <div class="card-body">  <!-- Card Body Start -->')
             print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
@@ -477,47 +469,21 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('                                        <label class="input-group-text">Upstream</label>')
             print('                                    </div>')
             print('                                    <select name="backend" class="custom-select">')
+            
             for backends_defined in backend_data_yaml_parsed.keys():
                 print('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>')
+            
             print('                                    </select>')
             print('                                </div>')
-            # Pass on the domain name to the next stage
+
+            # Pass on the domain and subdirectory to the next stage
+
             print('                                <input hidden name="domain" value="'+mydomain+'">')
             print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
             print('                                <button class="btn btn-outline-primary btn-block" type="submit">Confirm Upstream</button>')
             print('                            </form>')
             print('                        </div> <!-- Card Body End -->')
             cardfooter('To change the Upstream select a new category above.')
-
-
-
-
-
-
-
-            #print('			<div class="card">')  # card
-            #print('				<div class="card-header">')
-            #print('					<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> Upstream settings</h5>')
-            #print('				</div>')
-            #print('				<div class="card-body text-center">')  # card-body
-            #print('					<form class="form" action="subdir_select_app_settings.live.py" method="get">')
-            #print('						<div class="input-group mb-0">')
-            #print('							<select name="backend" class="custom-select">')
-            #for backends_defined in backend_data_yaml_parsed.keys():
-            #    print(('						<option value="'+backends_defined+'">'+backends_defined+'</option>'))
-            #print('							</select>')
-            #print('							<div class="input-group-append">')
-            #print(('							<input class="hidden" name="domain" value="'+mydomain+'">'))
-            #print(('							<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-            #print('								<button class="btn btn-outline-primary" type="submit" value="Submit">Select</button>')
-            #print('							</div>')
-            #print('						</div>')
-            #print('					</form>')
-            #print('				</div>')  # card-body end
-            #print('				<div class="card-footer">')
-            #print('					<small>To change the Upstream select a new category above.</small>')
-            #print('				</div>')
-            #print('			</div>')  # card end
 
     else:
         print_nontoast_error('<h3>Error!</h3>Domain-Data File IO Error.')
