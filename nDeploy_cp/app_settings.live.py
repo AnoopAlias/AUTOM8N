@@ -189,7 +189,7 @@ if form.getvalue('domain'):
         # Ok we are done with getting the settings,now lets present it to the user
 
         # System Setup
-        cardheader('Server: '+mydomain, 'fas fa-users-cog')
+        cardheader('Application: '+mydomain, 'fas fa-users-cog')
         print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
         print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
 
@@ -226,7 +226,7 @@ if form.getvalue('domain'):
         print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
         print('                                <div class="col-md-6">')
         print('                                    <form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-        print('                                        <button class="btn btn-text btn-block alert-info" type="submit">View Log</button>')
+        print('                                        <button class="btn btn-block alert-info" type="submit">View Log</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
         print('                                    </form>')
         print('                                </div>')

@@ -53,10 +53,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
     if thesubdir.endswith('/'):
         thesubdir = thesubdir[:-1]
     if not thesubdir:
-        commoninclude.print_error_wrapper('Error: Invalid sub-directory name')
+        print_nontoast_error('<h3>Error!</h3>Invalid subdirectory name.')
         sys.exit(0)
     if not re.match("^[\.0-9a-zA-Z/_-]*$", thesubdir):
-        commoninclude.print_error_wrapper('Error: Invalid char in sub-directory name')
+        print_nontoast_error('<h3>Error!</h3>Invalid character in subdirectory name.')
         sys.exit(0)
     profileyaml = installation_path + "/domain-data/" + mydomain
 
@@ -82,10 +82,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                <!-- Column Start -->')
                 print('                <div class="col-lg-6">')
 
-                cardheader(mydomain+'/wtf/'+thesubdir)
-                print('                        <div class="card-body">  <!-- Card Body Start -->')
+                cardheader('Upstream Selector')
+                print('                        <div class="card-body"> <!-- Card Body Start -->')
                 print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
-                print('                                <div class="alert alert-info">Select an upstream for this subdirectory</div>')
+                print('                                <div class="alert alert-info text-center">Select an upstream for "<strong>'+mydomain+'/'+thesubdir+'</strong>."</div>')
                 print('                                <div class="input-group mb-3">')
                 print('                                    <div class="input-group-prepend input-group-prepend-min">')
                 print('                                        <label class="input-group-text">Upstream</label>')
@@ -99,10 +99,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # Pass on the domain name to the next stage
                 print('                                <input hidden name="domain" value="'+mydomain+'">')
                 print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
-                print('                                <button class="btn btn-outline-primary btn-block" type="submit">Select</button>')
+                print('                                <button class="btn btn-outline-primary btn-block" type="submit">Confirm Upstream</button>')
                 print('                            </form>')
                 print('                        </div> <!-- Card Body End -->')
-                cardfooter('')
+                cardfooter('To change the Upstream select a new category above.')
 
             else:
                 # we get the current app settings for the subdir
@@ -147,7 +147,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # Domain Status
                 cardheader('')
-                print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
+                print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
                 print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
                 print('                                <div class="col-md-4">')
                 print('                                    <div class="p-3 text-center">')
@@ -185,64 +185,62 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
 
                 # Ok we are done with getting the settings,now lets present it to the user
-                print('<div class="row">')
-                print('<div class="col-lg-6">')  # col left
-                print('	<div class="card">')  # card
-                print('		<div class="card-header">')
-                print('			<h5 class="card-title mb-0"><i class="fas fa-users-cog float-right"></i> '+mydomain+'/'+thesubdir+'</h5>')
-                print('		</div>')
-                print('		<div class="card-body p-0">')  # card-body
-                print('			<div class="row no-gutters row-multi">')  # row
+
+                print('            <!-- cPanel Starter Row -->')
+                print('            <div class="row">')
+                print('')
+                print('                <!-- Left Column Start-->')
+                print('                <div class="col-lg-6">')
+
+                # System Setup
+                cardheader('Application: '+mydomain+'/'+thesubdir, 'fas fa-users-cog')
+                print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
+                print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
+
+                # .htaccess
                 if backend_category == 'PROXY':
                     if backend_version == 'httpd':
-                        # .hitaccess
-                        print('		<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-                        print('		<div class="col-md-6 alert alert-success"><i class="fas fa-check"></i></div>')
-                    else:
-                        # .hitaccess
-                        print('		<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-                        print('		<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
+                        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+                        print('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
                 else:
-                    # .hitaccess
-                    print('			<div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-                    print('			<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
+                    print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
+                    print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
 
                 # User config reload
                 nginx_log_hint = document_root+"/"+thesubdir+"/nginx.conf"
-                return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)
+                print('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint))
                 if os.path.isfile(nginx_log_hint):
                     if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
-                        print('		<div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
+                        print('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
                     else:
-                        print('		<div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i> Invalid/Require Reload</div>')
+                        print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i> Invalid/Require Reload</div>')
                 else:
-                    print('			<div class="col-md-6 alert alert-secondary"><i class="fas fa-file-upload"></i> Not Present</div>')
+                    print('                                <div class="col-md-6 alert alert-secondary"><i class="fas fa-file-upload"></i> Not Present</div>')
 
                 # Reload Nginx
-                print('					<div class="col-md-6 alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
-                print('					<div class="col-md-6">')
-                print('						<form class="form" method="post" id="toastForm4" onsubmit="return false;">')
-                print('							<button class="btn btn-text btn-block alert-info" type="submit">Reload</button>')
-                print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
-                print('						</form>')
-                print('					</div>')
+                print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
+                print('                                <div class="col-md-6">')
+                print('                                    <form class="form" method="post" id="toastForm4" onsubmit="return false;">')
+                print('                                        <button class="btn btn-block alert-info" type="submit">Reload</button>')
+                print('                                        <input hidden name="domain" value="'+mydomain+'">')
+                print('                                    </form>')
+                print('                                </div>')
 
                 # Nginx Log
-                print('					<div class="col-md-6 alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
-                print('					<div class="col-md-6">')
-                print('						<form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-                print('							<button class="btn btn-text btn-block alert-info" type="submit">View Log</button>')
-                print(('						<input class="hidden" name="domain" value="'+mydomain+'">'))
-                print('						</form>')
-                print('					</div>')
-
-                print('			</div>')  # row end
-                print('		</div>')  # card-body end
+                print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
+                print('                                <div class="col-md-6">')
+                print('                                    <form class="form" method="post" id="modalForm5" onsubmit="return false;">')
+                print('                                        <button class="btn btn-block alert-info" type="submit">View Log</button>')
+                print('                                        <input hidden name="domain" value="'+mydomain+'">')
+                print('                                    </form>')
+                print('                                </div>')
+                print('                            </div> <!-- Row End -->')
+                print('                        </div> <!-- Card Body End -->')
 
                 if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
-                    # Next section start here
-                    print('<div class="card-body pb-0">')  # card-body
-                    print('		<form class="form mb-0" method="post" id="modalForm10" onsubmit="return false;">')
+                    print('                        <div class="card-body pt-3 pb-0">  <!-- Card Body Start -->')
+                    print('                            <form class="form" id="modalForm10" onsubmit="return false;">')
+
                     if backend_category == "RUBY":
                         dep_file = document_root+'/'+thesubdir+'/Gemfile'
                     elif backend_category == "NODEJS":
@@ -251,113 +249,104 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         dep_file = document_root+'/'+thesubdir+'/requirements.txt'
                     elif backend_category == 'PHP':
                         dep_file = document_root+'/'+thesubdir+'/composer.json'
-                    print(('		<input class="hidden" name="domain" value="'+mydomain+'/'+thesubdir+'">'))
-                    print(('		<input class="hidden" name="document_root" value="'+document_root+'/'+thesubdir+'">'))
-                    print(('		<input class="hidden" name="backend_category" value="'+backend_category+'">'))
-                    print(('		<input class="hidden" name="backend_version" value="'+backend_version+'">'))
-                    print('			<button class="btn btn-outline-warning btn-block " data-toggle="tooltip" data-placement="top" title="'+dep_file+'" type="submit">Install '+backend_category+' project deps</button>')
-                    print('		</form>')
+                    print('                                <input hidden name="domain" value="'+mydomain+'/'+thesubdir+'">')
+                    print('                                <input hidden name="document_root" value="'+document_root+'/'+thesubdir+'">')
+                    print('                                <input hidden name="backend_category" value="'+backend_category+'">')
+                    print('                                <input hidden name="backend_version" value="'+backend_version+'">')
+                    print('                                <button class="btn btn-outline-warning btn-block" data-toggle="tooltip" data-placement="top" title="'+dep_file+'" type="submit">Install '+backend_category+' Project Deps</button>')
+                    print('                            </form>')
 
                     if backend_category == 'PHP':
-                        print('			<form class="mb-0 mt-3" method="post" id="modalForm1" onsubmit="return false;">')
-                        print('				<button class="btn btn-outline-warning btn-block " type="submit">View PHP Log</button>')
-                        print('			</form>')
-
-                    print('</div>')  # card-body end
-
-                print('		<div class="card-body mb-0">')  # card-body
-
-                print('			<form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
-                print('				<div class="input-group mb-0">')
-                print('					<select name="backend" class="custom-select">')
+                        print('                            <form class="form" id="modalForm1" onsubmit="return false;">')
+                        print('                                <button class="btn btn-outline-warning btn-block" type="submit">View PHP Log</button>')
+                        print('                            </form>')
+        
+                    print('                        </div> <!-- Card Body End -->')
+              
+                print('                        <div class="card-body mb-0">  <!-- Card Body Start -->')
+  
+                print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
+                print('                                <div class="input-group mb-0">')
+                print('                                    <select name="backend" class="custom-select">')
                 for backends_defined in backend_data_yaml_parsed.keys():
                     if backends_defined == backend_category:
-                        print(('			<option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
+                        print('                                        <option selected value="'+backends_defined+'">'+backends_defined+'</option>')
                     else:
-                        print(('			<option value="'+backends_defined+'">'+backends_defined+'</option>'))
-                print('					</select>')
+                        print('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>')
+                print('                                    </select>')
+
                 # Pass on the domain name to the next stage
-                print('					<div class="input-group-append">')
-                print(('					<input class="hidden" name="domain" value="'+mydomain+'">'))
-                print(('					<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('						<button class="btn btn-outline-primary" type="submit">Select</button>')
-                print('					</div>')
-                print('				</div>')
-                print('			</form>')
-                print('		</div>')  # card-body end
-                print('		<div class="card-footer">')
-                print('			<small>To change the application server select a new category above.</small>')
-                print('		</div>')
+                print('                                    <div class="input-group-append">')
+                print('                                        <input hidden name="domain" value="'+mydomain+'">')
+                print('                                        <input hidden name="thesubdir" value="'+thesubdir+'">')
+                print('                                        <button class="btn btn-outline-primary" type="submit">Select</button>')
+                print('                                    </div>')
+                print('                                </div>')
+                print('                            </form>')
+                print('                        </div> <!-- Card Body End -->')
+                cardfooter('To change the application server select a new category above.')
 
-                print('</div>')  # card end
-
-                print('</div>')  # col left end
-
-                print('<div class="col-lg-6">')  # col right
+                #First Column End
+                print('                <!-- First Column End -->')
+                print('                </div>')
+                print('')
+        
+                #Second Column
+                print('                <!-- Second Column Start -->')
+                print('                <div class="col-lg-6">')
+                print('')
 
                 # Application Settings
-                print('		<div class="card">')  # card
-                print('			<div class="card-header">')
-                print('				<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> General Settings</h5>')
-                print('			</div>')
-                print('			<div class="card-body">')  # card-body
-
-                print('			<form class="form" id="toastForm6" onsubmit="return false;">')
-                print('				<div class="row align-items-center">')
+                cardheader('General Settings', 'fas fa-sliders-h')
+                print('                        <div class="card-body"> <!-- Card Body Start -->')
+                print('                            <form class="form" id="toastForm6" onsubmit="return false;">')
+                print('                                <div class="row align-items-center">')
 
                 # auth_basic
-                auth_basic_hint = "Setup password for "+document_root+"/"+thesubdir+" in cPanel -> Files -> Directory Privacy"
+                auth_basic_hint = " Setup password for "+document_root+"/"+thesubdir+" in cPanel -> Files -> Directory Privacy. "
+                print('                                    '+return_label('password protect app url', auth_basic_hint))
+                print('                                    <div class="col-md-6">')
+                print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+
                 if auth_basic == 'enabled':
-                    return_label('password protect app url', auth_basic_hint)
-                    print('				<div class="col-md-6">')
-                    print('					<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-                    print('						<label class="btn btn-light active">')
-                    print('							<input type="radio" name="auth_basic" value="enabled" id="AuthBasicOn" autocomplete="off" checked> Enabled')
-                    print('						</label>')
-                    print('						<label class="btn btn-light">')
-                    print('							<input type="radio" name="auth_basic" value="disabled" id="AuthBasicOff" autocomplete="off"> Disabled')
-                    print('						</label>')
-                    print('					</div>')
-                    print('				</div>')
+                    print('                                            <label class="btn btn-light active">')
+                    print('                                                <input type="radio" name="auth_basic" value="enabled" id="AuthBasicOn" autocomplete="off" checked> Enabled')
+                    print('                                            </label>')
+                    print('                                            <label class="btn btn-light">')
+                    print('                                                <input type="radio" name="auth_basic" value="disabled" id="AuthBasicOff" autocomplete="off"> Disabled')
                 else:
-                    return_label('password protect app url', auth_basic_hint)
-                    print('				<div class="col-md-6">')
-                    print('					<div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-                    print('						<label class="btn btn-light">')
-                    print('							<input type="radio" name="auth_basic" value="enabled" id="AuthBasicOn" autocomplete="off"> Enabled')
-                    print('						</label>')
-                    print('						<label class="btn btn-light active">')
-                    print('							<input type="radio" name="auth_basic" value="disabled" id="AuthBasicOff" autocomplete="off" checked> Disabled')
-                    print('						</label>')
-                    print('					</div>')
-                    print('				</div>')
+                    print('                                            <label class="btn btn-light">')
+                    print('                                                <input type="radio" name="auth_basic" value="enabled" id="AuthBasicOn" autocomplete="off"> Enabled')
+                    print('                                            </label>')
+                    print('                                            <label class="btn btn-light active">')
+                    print('                                                <input type="radio" name="auth_basic" value="disabled" id="AuthBasicOff" autocomplete="off" checked> Disabled')
+
+                print('                                            </label>')
+                print('                                        </div>')
+                print('                                    </div>')
 
                 # set_expire_static
-                set_expire_static_hint = "Set Expires/Cache-Control headers for static content"
+                set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
+                print('                                    '+return_label('set expires header', set_expire_static_hint))
+                print('                                    <div class="col-md-6">')
+                print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+
                 if set_expire_static == 'enabled':
-                    return_label('set expires header', set_expire_static_hint)
-                    print('				<div class="col-md-6">')
-                    print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                    print('						<label class="btn btn-light active">')
-                    print('							<input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off" checked> Enabled')
-                    print('						</label>')
-                    print('						<label class="btn btn-light">')
-                    print('							<input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off"> Disabled')
-                    print('						</label>')
-                    print('					</div>')
-                    print('				</div>')
+                    print('                                            <label class="btn btn-light active">')
+                    print('                                                <input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off" checked> Enabled')
+                    print('                                            </label>')
+                    print('                                            <label class="btn btn-light">')
+                    print('                                                <input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off"> Disabled')
                 else:
-                    return_label('set expires header', set_expire_static_hint)
-                    print('				<div class="col-md-6">')
-                    print('					<div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-                    print('						<label class="btn btn-light">')
-                    print('							<input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off"> Enabled')
-                    print('						</label>')
-                    print('						<label class="btn btn-light active">')
-                    print('							<input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off" checked> Disabled')
-                    print('						</label>')
-                    print('					</div>')
-                    print('				</div>')
+                    print('                                            <label class="btn btn-light">')
+                    print('                                                <input type="radio" name="set_expire_static" value="enabled" id="SetExpireStaticOn" autocomplete="off"> Enabled')
+                    print('                                            </label>')
+                    print('                                            <label class="btn btn-light active">')
+                    print('                                                <input type="radio" name="set_expire_static" value="disabled" id="SetExpireStaticOff" autocomplete="off" checked> Disabled')
+
+                print('                                            </label>')
+                print('                                        </div>')
+                print('                                    </div>')
 
                 # mod_security
                 mod_security_hint = "mod_security v3 WAF"
@@ -474,29 +463,61 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('			</form>')
                 print('	</div>')  # col right end
         else:
-            print('			<div class="card">')  # card
-            print('				<div class="card-header">')
-            print('					<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> Upstream settings</h5>')
-            print('				</div>')
-            print('				<div class="card-body text-center">')  # card-body
-            print('					<form class="form" action="subdir_select_app_settings.live.py" method="get">')
-            print('						<div class="input-group mb-0">')
-            print('							<select name="backend" class="custom-select">')
+            print('            <!-- cPanel Starter Row -->')
+            print('            <div class="row justify-content-lg-center">')
+            print('')
+            print('                <!-- Column Start -->')
+            print('                <div class="col-lg-6">')
+            cardheader('Upstream Selector')
+            print('                        <div class="card-body">  <!-- Card Body Start -->')
+            print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
+            print('                                <div class="alert alert-info text-center">Select an upstream for "<strong>'+mydomain+'/'+thesubdir+'</strong>."</div>')
+            print('                                <div class="input-group mb-3">')
+            print('                                    <div class="input-group-prepend input-group-prepend-min">')
+            print('                                        <label class="input-group-text">Upstream</label>')
+            print('                                    </div>')
+            print('                                    <select name="backend" class="custom-select">')
             for backends_defined in backend_data_yaml_parsed.keys():
-                print(('						<option value="'+backends_defined+'">'+backends_defined+'</option>'))
-            print('							</select>')
-            print('							<div class="input-group-append">')
-            print(('							<input class="hidden" name="domain" value="'+mydomain+'">'))
-            print(('							<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-            print('								<button class="btn btn-outline-primary" type="submit" value="Submit">Select</button>')
-            print('							</div>')
-            print('						</div>')
-            print('					</form>')
-            print('				</div>')  # card-body end
-            print('				<div class="card-footer">')
-            print('					<small>To change the Upstream select a new category above.</small>')
-            print('				</div>')
-            print('			</div>')  # card end
+                print('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>')
+            print('                                    </select>')
+            print('                                </div>')
+            # Pass on the domain name to the next stage
+            print('                                <input hidden name="domain" value="'+mydomain+'">')
+            print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
+            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Confirm Upstream</button>')
+            print('                            </form>')
+            print('                        </div> <!-- Card Body End -->')
+            cardfooter('To change the Upstream select a new category above.')
+
+
+
+
+
+
+
+            #print('			<div class="card">')  # card
+            #print('				<div class="card-header">')
+            #print('					<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> Upstream settings</h5>')
+            #print('				</div>')
+            #print('				<div class="card-body text-center">')  # card-body
+            #print('					<form class="form" action="subdir_select_app_settings.live.py" method="get">')
+            #print('						<div class="input-group mb-0">')
+            #print('							<select name="backend" class="custom-select">')
+            #for backends_defined in backend_data_yaml_parsed.keys():
+            #    print(('						<option value="'+backends_defined+'">'+backends_defined+'</option>'))
+            #print('							</select>')
+            #print('							<div class="input-group-append">')
+            #print(('							<input class="hidden" name="domain" value="'+mydomain+'">'))
+            #print(('							<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
+            #print('								<button class="btn btn-outline-primary" type="submit" value="Submit">Select</button>')
+            #print('							</div>')
+            #print('						</div>')
+            #print('					</form>')
+            #print('				</div>')  # card-body end
+            #print('				<div class="card-footer">')
+            #print('					<small>To change the Upstream select a new category above.</small>')
+            #print('				</div>')
+            #print('			</div>')  # card end
 
     else:
         print_nontoast_error('<h3>Error!</h3>Domain-Data File IO Error.')
