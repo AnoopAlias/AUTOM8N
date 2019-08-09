@@ -189,7 +189,7 @@ if form.getvalue('domain'):
         # Ok we are done with getting the settings,now lets present it to the user
 
         # System Setup
-        cardheader('Application: '+mydomain, 'fas fa-users-cog')
+        cardheader('Application Status', 'fas fa-users-cog')
         print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
         print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
 

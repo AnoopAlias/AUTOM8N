@@ -5,6 +5,8 @@ import yaml
 import cgi
 import cgitb
 import sys
+import psutil
+import platform
 from commoninclude import close_cpanel_liveapisock, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_prepend, return_label, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
@@ -26,8 +28,8 @@ close_cpanel_liveapisock()
 
 form = cgi.FieldStorage()
 
-print_header('Subdirectory Settings')
-bcrumb('Subdirectory Settings', 'fas fa-cogs')
+print_header('Subdirectory Upstream Configuration')
+bcrumb('Subdirectory Upstream Configuration', 'fas fa-cogs')
 
 if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesubdir'):
     
@@ -69,10 +71,14 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('                <!-- Column Start -->')
                 print('                <div class="col-lg-6">')
 
-                cardheader('Upstream & Template 1', 'fas fa-sliders-h')
+                cardheader('Initial Upstream Configuration', 'fas fa-sliders-h')
                 print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+                print('                            <div class="alert alert-info text-center">')
+                print('                                <p class="m-0 pb-1">You selected <span class="badge badge-warning">'+mybackend+'</span> as the new upstream type for:</p>')
+                print('                                <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>')
+                print('                                <p class="m-0 pt-1">Select the version and template for this upstream below.')
+                print('                            </div>')
                 print('                            <form class="form" method="post" id="toastForm8" onsubmit="return false;">')
-                print('                                <div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the upstream, select the version and template for this upstream</div>')
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
                 if os.path.isfile(user_app_template_file):
@@ -106,7 +112,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('                                <input hidden name="domain" value="'+mydomain+'">')
                 print('                                <input hidden name="backend" value="'+mybackend+'">')
                 print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
-                print('                                <button class="btn btn-outline-primary btn-block" type="submit">Update settings</button>')
+                print('                                <button class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Configuration</button>')
                 print('                            </form>')
                 print('                        </div> <!-- Card Body End -->')
                 cardfooter('')
@@ -128,21 +134,69 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                     if apptemplate_code in user_apptemplate_dict.keys():
                         apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
 
+
                 # Ok we are done with getting the settings,now lets present it to the user
                 print('            <!-- cPanel Starter Row -->')
                 print('            <div class="row justify-content-lg-center">')
                 print('')
-                print('                <!-- Column Start -->')
-                print('                <div class="col-lg-6">')
 
-                cardheader('Upstream & Template 2', 'fas fa-user-cog')
-                print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
-                print('                            <form class="form" method="post" id="toastForm8" onsubmit="return false;">')
-                if backend_category == 'PROXY':
-                    print('                                    <div class="alert alert-info">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>')
+                print('                <!-- Column Start -->')
+                print('                <div class="col-lg-8">')
+
+                cardheader('Upstream Configuration Settings')
+                print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
+                print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+
+                nginx_status = False
+                for myprocess in psutil.process_iter():
+
+                    # Workaround for Python 2.6
+                    if platform.python_version().startswith('2.6'):
+                        mycmdline = myprocess.cmdline
+                    else:
+                        mycmdline = myprocess.cmdline()
+                    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+                        nginx_status = True
+                        break
+
+                if nginx_status:
+                    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+                    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>')
                 else:
-                    print('                                    <div class="alert alert-success">Your current project is <span class="label label-success">'+apptemplate_description+'</span> on native <span class="label label-success">NGINX</span> with <span class="label label-success">'+backend_category+'</span> <span class="label label-success">'+backend_version+'</span> upstream server</div>')
-                print('                                    <div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the new upstream, select the version and template for this upstream</div>')
+                    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+                    print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>')
+        
+                # Backend
+                print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
+                print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
+        
+                # Description
+                print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
+                print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center text-center">'+apptemplate_description+'</div>')
+        
+                # .htaccess
+                if backend_category == 'PROXY' and backend_version == 'httpd':
+                    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+                    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
+                else:
+                    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+                    print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+        
+                # New Upstream
+                print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
+                print('                                <div class="d-flex w-50 alert alert-warning align-items-right justify-content-center">'+mybackend+'</div>')
+        
+                print('                            </div> <!-- Row End -->')
+                print('                        </div> <!-- Card Body End -->')
+
+                print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+
+                print('                            <div class="alert alert-info text-center">')
+                print('                                <p class="m-0 pb-1">You selected <span class="badge badge-warning">'+mybackend+'</span> as the new upstream type for:</p>')
+                print('                                <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>')
+                print('                                <p class="m-0 pt-1">Select the version and template for this upstream below.')
+                print('                            </div>')
+                print('                            <form class="form" method="post" id="toastForm8" onsubmit="return false;">')
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
                 if os.path.isfile(user_app_template_file):
@@ -150,70 +204,72 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 else:
                     user_new_apptemplate_dict = {}
                 if mybackend == backend_category:
-                    print('			<div class="input-group">')
-                    print('				<div class="input-group-prepend input-group-prepend-min">')
-                    print('					<label class="input-group-text">Upstream</label>')
-                    print('				</div>')
-                    print('				<select name="backendversion" class="custom-select">')
+                    print('                                <div class="input-group">')
+                    print('                                    <div class="input-group-prepend input-group-prepend-min">')
+                    print('                                        <label class="input-group-text">Upstream</label>')
+                    print('                                    </div>')
+                    print('                                    <select name="backendversion" class="custom-select">')
                     for mybackend_version in backends_dict.keys():
                         if mybackend_version == backend_version:
-                            print(('		<option selected value="'+mybackend_version+'">'+mybackend_version+'</option>'))
+                            print('                                        <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>')
                         else:
-                            print(('		<option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
-                    print('				</select>')
-                    print('			</div>')
+                            print('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                    print('                                    </select>')
+                    print('                                </div>')
 
-                    print('			<div class="input-group">')
-                    print('				<div class="input-group-prepend input-group-prepend-min">')
-                    print('					<label class="input-group-text">Template</label>')
-                    print('				</div>')
-                    print('				<select name="apptemplate" class="custom-select">')
+                    print('                                <div class="input-group">')
+                    print('                                    <div class="input-group-prepend input-group-prepend-min">')
+                    print('                                        <label class="input-group-text">Template</label>')
+                    print('                                    </div>')
+                    print('                                    <select name="apptemplate" class="custom-select">')
                     for myapptemplate in sorted(new_apptemplate_dict.keys()):
                         if myapptemplate == apptemplate_code:
-                            print(('		<option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                            print('                                        <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
                         else:
-                            print(('		<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                            print('                                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
                     if user_new_apptemplate_dict:
                         for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
                             if user_myapptemplate == apptemplate_code:
-                                print(('	<option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
+                                print('                                        <option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
                             else:
-                                print(('	<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
-                    print('				</select>')
-                    print('			</div>')
+                                print('                                        <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+                    print('                                    </select>')
+                    print('                                </div>')
                 else:
-                    print('			<div class="input-group">')
-                    print('				<div class="input-group-prepend input-group-prepend-min">')
-                    print('					<label class="input-group-text">Upstream</label>')
-                    print('				</div>')
-                    print('				<select name="backendversion" class="custom-select">')
+                    print('                                <div class="input-group">')
+                    print('                                    <div class="input-group-prepend input-group-prepend-min">')
+                    print('                                        <label class="input-group-text">Upstream</label>')
+                    print('                                    </div>')
+                    print('                                    <select name="backendversion" class="custom-select">')
                     for mybackend_version in backends_dict.keys():
-                        print(('			<option selected value="'+mybackend_version+'">'+mybackend_version+'</option>'))
-                    print('				</select>')
-                    print('			</div>')
+                        print('                                        <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                    print('                                    </select>')
+                    print('                                </div>')
 
-                    print('			<div class="input-group">')
-                    print('				<div class="input-group-prepend input-group-prepend-min">')
-                    print('					<label class="input-group-text">Template</label>')
-                    print('				</div>')
-                    print('				<select name="apptemplate" class="custom-select">')
+                    print('                                <div class="input-group">')
+                    print('                                    <div class="input-group-prepend input-group-prepend-min">')
+                    print('                                        <label class="input-group-text">Template</label>')
+                    print('                                    </div>')
+                    print('                                    <select name="apptemplate" class="custom-select">')
                     for myapptemplate in sorted(new_apptemplate_dict.keys()):
-                        print(('			<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                        print('                                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
                     if user_new_apptemplate_dict:
                         for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
-                            print(('		<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
-                    print('				</select>')
-                    print('			</div>')
+                            print('                                        <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+                    print('                                    </select>')
+                    print('                                </div>')
 
                 # Pass on the domain name to the next stage
-                print(('			<input class="hidden" name="domain" value="'+mydomain+'">'))
-                print(('			<input class="hidden" name="backend" value="'+mybackend+'">'))
-                print(('			<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('				<button class="btn btn-outline-primary btn-block" type="submit">Update settings</button>')
-                print('			</form>')
-                print('		</div>')  # card-body end
-                print('</div>')  # card end
+                print('                                <input hidden name="domain" value="'+mydomain+'">')
+                print('                                <input hidden name="backend" value="'+mybackend+'">')
+                print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
+                print('                                <button class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Configuration</button>')
+                print('                            </form>')
+                print('                        </div> <!-- Card Body End -->')
+                cardfooter('')
+        
         else:
+            
             # Ok we are done with getting the settings,now lets present it to the user
             print('            <!-- cPanel Starter Row -->')
             print('            <div class="row justify-content-lg-center">')
@@ -225,19 +281,23 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
             print('                            <form class="form" id="toastForm8" onsubmit="return false;">')
             print('                                <div class="alert alert-info">You selected <span class="badge badge-warning p-2">'+mybackend+'</span> as the upstream for '+mydomain+'/'+thesubdir+'. Select the version and template for this backend.</div>')
+            
             backends_dict = backend_data_yaml_parsed.get(mybackend)
             new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
             if os.path.isfile(user_app_template_file):
                 user_new_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(mybackend)
             else:
                 user_new_apptemplate_dict = {}
+            
             print('                                <div class="input-group">')
             print('                                    <div class="input-group-prepend input-group-prepend-min">')
             print('                                        <label class="input-group-text">Upstream</label>')
             print('                                    </div>')
             print('                                    <select name="backendversion" class="custom-select">')
+            
             for mybackend_version in backends_dict.keys():
                 print('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+            
             print('                                    </select>')
             print('                                </div>')
 
@@ -246,10 +306,12 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('                                        <label class="input-group-text">Template</label>')
             print('                                    </div>')
             print('                                    <select name="apptemplate" class="custom-select">')
+            
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 print('                                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
             for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
                 print('                                        <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+            
             print('                                    </select>')
             print('                                </div>')
 

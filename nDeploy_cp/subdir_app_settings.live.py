@@ -193,7 +193,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                <div class="col-lg-6">')
 
                 # System Setup
-                cardheader('Application: '+mydomain+'/'+thesubdir, 'fas fa-users-cog')
+                cardheader('Application Status', 'fas fa-users-cog')
                 print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
                 print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
 

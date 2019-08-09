@@ -27,8 +27,8 @@ cgitb.enable()
 close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
-print_header('Upstream Settings')
-bcrumb('Upstream Settings', 'fas fa-cogs')
+print_header('Upstream Configuration')
+bcrumb('Upstream Configuration', 'fas fa-cogs')
 
 if form.getvalue('domain') and form.getvalue('backend'):
 
@@ -84,7 +84,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('                <!-- Column Start -->')
         print('                <div class="col-lg-8">')
 
-        cardheader('Upstream settings for '+mydomain)
+        cardheader('Upstream Configuration')
         print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
         print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
@@ -136,7 +136,9 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('                        <div class="card-body"> <!-- Card Body Start -->')
 
         print('                            <div class="alert alert-info text-center">')
-        print(('                                You selected <span class="p-2 badge badge-warning">'+mybackend+'</span> as the new upstream type, select the version and template for this upstream below.'))
+        print('                                <p class="m-0 pb-1">You selected <span class="badge badge-warning">'+mybackend+'</span> as the new upstream type for:</p>')
+        print('                                <kbd class="m-1">'+mydomain+'</kbd>')
+        print('                                <p class="m-0 pt-1">Select the version and template for this upstream below.')
         print('                            </div>')
 
         print('                            <form class="form" method="post" id="toastForm2" onsubmit="return false;">')
@@ -206,7 +208,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         # Pass on the domain name to the next stage
         print('                                <input hidden name="domain" value="'+mydomain+'">')
         print('                                <input hidden name="backend" value="'+mybackend+'">')
-        print('                                <button class="btn btn-outline-primary btn-block" type="submit">Update '+mydomain+'</button>')
+        print('                                <button class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Configuration</button>')
         print('                            </form>')
         print('                        </div> <!-- Card Body End -->')
         cardfooter('')
