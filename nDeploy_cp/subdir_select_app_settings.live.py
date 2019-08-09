@@ -29,16 +29,14 @@ form = cgi.FieldStorage()
 print_header('Subdirectory Settings')
 bcrumb('Subdirectory Settings', 'fas fa-cogs')
 
-print('		<div class="row justify-content-lg-center"">')
-
-print('			<div class="col-lg-6">')
-
 if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesubdir'):
+    
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
     mybackend = form.getvalue('backend')
     thesubdir = form.getvalue('thesubdir')
     profileyaml = installation_path + "/domain-data/" + mydomain
+    
     # Get data about the backends available
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
@@ -53,68 +51,74 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
         commoninclude.print_error_wrapper('Error: app template data file error')
         sys.exit(0)
     if os.path.isfile(profileyaml):
+        
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         subdir_apps_dict = yaml_parsed_profileyaml.get('subdir_apps')
+
         # If there are no entries in subdir_apps_dict or there is no specific config for the subdirectory
         # We do a fresh config
         if subdir_apps_dict:
             if not subdir_apps_dict.get(thesubdir):
                 # Ok we are done with getting the settings,now lets present it to the user
 
-                print('<div class="card">')  # card
-                print('		<div class="card-header">')
-                print('			<h5 class="card-title mb-0"><i class="fas fa-sliders-h float-right"></i> Upstream & Template</h5>')
-                print('		</div>')
-                print('		<div class="card-body text-center">')  # card-body
-                print('			<form class="form" method="post" id="toastForm8" onsubmit="return false;">')
-                print(('			<div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the upstream, select the version and template for this upstream</div>'))
+                print('            <!-- cPanel Starter Row -->')
+                print('            <div class="row justify-content-lg-center">')
+                print('')
+                print('                <!-- Column Start -->')
+                print('                <div class="col-lg-6">')
+
+                cardheader('Upstream & Template 1', 'fas fa-sliders-h')
+                print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+                print('                            <form class="form" method="post" id="toastForm8" onsubmit="return false;">')
+                print('                                <div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the upstream, select the version and template for this upstream</div>')
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
                 if os.path.isfile(user_app_template_file):
                     user_new_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(mybackend)
                 else:
                     user_new_apptemplate_dict = {}
-                print('				<div class="input-group">')
-                print('					<div class="input-group-prepend input-group-prepend-min">')
-                print('						<label class="input-group-text">Upstream</label>')
-                print('					</div>')
-                print('					<select name="backendversion" class="custom-select">')
+                print('                                <div class="input-group">')
+                print('                                    <div class="input-group-prepend input-group-prepend-min">')
+                print('                                        <label class="input-group-text">Upstream</label>')
+                print('                                    </div>')
+                print('                                    <select name="backendversion" class="custom-select">')
                 for mybackend_version in backends_dict.keys():
-                    print(('				<option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
-                print('					</select>')
-                print('				</div>')
+                    print('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                print('                                    </select>')
+                print('                                </div>')
 
-                print('				<div class="input-group">')
-                print('					<div class="input-group-prepend input-group-prepend-min">')
-                print('						<label class="input-group-text">Template</label>')
-                print('					</div>')
-                print('					<select name="apptemplate" class="custom-select">')
+                print('                                <div class="input-group">')
+                print('                                    <div class="input-group-prepend input-group-prepend-min">')
+                print('                                        <label class="input-group-text">Template</label>')
+                print('                                    </div>')
+                print('                                    <select name="apptemplate" class="custom-select">')
                 for myapptemplate in sorted(new_apptemplate_dict.keys()):
-                    print(('				<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                    print('                                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
                 if user_new_apptemplate_dict:
                     for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
-                        print(('			<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
-                print('					</select>')
-                print('				</div>')
+                        print('                                        <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+                print('                                    </select>')
+                print('                                </div>')
 
                 # Pass on the domain name to the next stage
-                print(('			<input class="hidden" name="domain" value="'+mydomain+'">'))
-                print(('			<input class="hidden" name="backend" value="'+mybackend+'">'))
-                print(('			<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-                print('				<button class="btn btn-outline-primary btn-block" type="submit">Update settings</button>')
-                print('			</form>')
-                print('		</div>')  # card-body end
-                print('</div>')  # card end
+                print('                                <input hidden name="domain" value="'+mydomain+'">')
+                print('                                <input hidden name="backend" value="'+mybackend+'">')
+                print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
+                print('                                <button class="btn btn-outline-primary btn-block" type="submit">Update settings</button>')
+                print('                            </form>')
+                print('                        </div> <!-- Card Body End -->')
+                cardfooter('')
             else:
-                # we get the current app settings for the subdir
+                # We get the current app settings for the subdirectory
                 the_subdir_dict = subdir_apps_dict.get(thesubdir)
                 backend_category = the_subdir_dict.get('backend_category')
                 backend_version = the_subdir_dict.get('backend_version')
                 backend_path = the_subdir_dict.get('backend_path')
                 apptemplate_code = the_subdir_dict.get('apptemplate_code')
-                # get the human friendly name of the app template
+
+                # Get the human friendly name of the app template
                 apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
                 apptemplate_description = apptemplate_dict.get(apptemplate_code)
                 if apptemplate_code in apptemplate_dict.keys():
@@ -125,17 +129,20 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                         apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
 
                 # Ok we are done with getting the settings,now lets present it to the user
-                print('<div class="card">')  # card
-                print('		<div class="card-header">')
-                print('			<h5 class="card-title mb-0"><i class="fas fa-user-cog float-right"></i> Upstream & Template</h5>')
-                print('		</div>')
-                print('		<div class="card-body text-center">')  # card-body
-                print('			<form class="form" method="post" id="toastForm8" onsubmit="return false;">')
+                print('            <!-- cPanel Starter Row -->')
+                print('            <div class="row justify-content-lg-center">')
+                print('')
+                print('                <!-- Column Start -->')
+                print('                <div class="col-lg-6">')
+
+                cardheader('Upstream & Template 2', 'fas fa-user-cog')
+                print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+                print('                            <form class="form" method="post" id="toastForm8" onsubmit="return false;">')
                 if backend_category == 'PROXY':
-                    print(('		<div class="alert alert-info">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>'))
+                    print('                                    <div class="alert alert-info">Your current setup is: Nginx proxying to <span class="label label-primary">'+backend_version+'</span> with settings  <span class="label label-primary">'+apptemplate_description+'</span></div>')
                 else:
-                    print(('		<div class="alert alert-success">Your current project is <span class="label label-success">'+apptemplate_description+'</span> on native <span class="label label-success">NGINX</span> with <span class="label label-success">'+backend_category+'</span> <span class="label label-success">'+backend_version+'</span> upstream server</div>'))
-                print(('			<div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the new upstream, select the version and template for this upstream</div>'))
+                    print('                                    <div class="alert alert-success">Your current project is <span class="label label-success">'+apptemplate_description+'</span> on native <span class="label label-success">NGINX</span> with <span class="label label-success">'+backend_category+'</span> <span class="label label-success">'+backend_version+'</span> upstream server</div>')
+                print('                                    <div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the new upstream, select the version and template for this upstream</div>')
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
                 if os.path.isfile(user_app_template_file):
@@ -208,61 +215,76 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('</div>')  # card end
         else:
             # Ok we are done with getting the settings,now lets present it to the user
-            print('		<div class="card">')  # card
-            print('			<div class="card-header">')
-            print('				<h5 class="card-title mb-0"><i class="fas fa-user-cog float-right"></i> Upstream & Template</h5>')
-            print('			</div>')
-            print('			<div class="card-body text-center">')  # card-body
-            print('				<form class="form" id="toastForm8" onsubmit="return false;">')
-            print(('				<div class="alert alert-info">You selected <span class="label label-primary">'+mybackend+'</span> as the upstream, select the version and template for this upstream</div>'))
+            print('            <!-- cPanel Starter Row -->')
+            print('            <div class="row justify-content-lg-center">')
+            print('')
+            print('                <!-- Column Start -->')
+            print('                <div class="col-lg-6">')
+            
+            cardheader('Upstream & Template 3', 'fas fa-user-cog')
+            print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+            print('                            <form class="form" id="toastForm8" onsubmit="return false;">')
+            print('                                <div class="alert alert-info">You selected <span class="badge badge-warning p-2">'+mybackend+'</span> as the upstream for '+mydomain+'/'+thesubdir+'. Select the version and template for this backend.</div>')
             backends_dict = backend_data_yaml_parsed.get(mybackend)
             new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
             if os.path.isfile(user_app_template_file):
                 user_new_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(mybackend)
             else:
                 user_new_apptemplate_dict = {}
-            print('					<div class="input-group">')
-            print('						<div class="input-group-prepend input-group-prepend-min">')
-            print('							<label class="input-group-text">Upstream</label>')
-            print('						</div>')
-            print('						<select name="backendversion" class="custom-select">')
+            print('                                <div class="input-group">')
+            print('                                    <div class="input-group-prepend input-group-prepend-min">')
+            print('                                        <label class="input-group-text">Upstream</label>')
+            print('                                    </div>')
+            print('                                    <select name="backendversion" class="custom-select">')
             for mybackend_version in backends_dict.keys():
-                print(('					<option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
-            print('						</select>')
-            print('					</div>')
+                print('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+            print('                                    </select>')
+            print('                                </div>')
 
-            print('					<div class="input-group">')
-            print('						<div class="input-group-prepend input-group-prepend-min">')
-            print('							<label class="input-group-text">Template</label>')
-            print('						</div>')
-            print('						<select name="apptemplate" class="custom-select">')
+            print('                                <div class="input-group">')
+            print('                                    <div class="input-group-prepend input-group-prepend-min">')
+            print('                                        <label class="input-group-text">Template</label>')
+            print('                                    </div>')
+            print('                                    <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
-                print(('					<option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                print('                                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
             for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
-                print(('					<option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
-            print('						</select>')
-            print('					</div>')
+                print('                                        <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+            print('                                    </select>')
+            print('                                </div>')
 
             # Pass on the domain name to the next stage
-            print(('				<input class="hidden" name="domain" value="'+mydomain+'">'))
-            print(('				<input class="hidden" name="backend" value="'+mybackend+'">'))
-            print(('				<input class="hidden" name="thesubdir" value="'+thesubdir+'">'))
-            print('					<button class="btn btn-outline-primary btn-block " type="submit">Update Settings</button>')
-            print('				</form>')
-            print('			</div>')  # card-body end
-            print('		</div>')  # card end
+            print(('                                <input hidden name="domain" value="'+mydomain+'">'))
+            print(('                                <input hidden name="backend" value="'+mybackend+'">'))
+            print(('                                <input hidden name="thesubdir" value="'+thesubdir+'">'))
+            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Settings for '+mydomain+'/'+thesubdir+'</button>')
+            print('                            </form>')
+            print('                        </div> <!-- Card Body End -->')
+            cardfooter('')
     else:
-        commoninclude.print_error_wrapper('domain-data file i/o error')
+        print_nontoast_error('<h3>Error!</h3>Domain-Data File IO Error.')
+        sys.exit(0)
+
 else:
-    commoninclude.print_forbidden_wrapper()
+    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    sys.exit(0)
 
-print('			</div>')  # end col
-print('		</div>')  # row end
 
-print('</div>')  # main-container end
+# Column End
+print('                <!-- Column End -->')
+print('                </div>')
+print('')
+print('            <!-- cPanel End Row -->')
+print('            </div>')
+
+print_footer()
+
+print('        </div> <!-- Main Container End -->')
+print('')
 
 print_modals()
 print_loader()
 
-print('</body>')
+print('    <!-- Body End -->')
+print('    </body>')
 print('</html>')

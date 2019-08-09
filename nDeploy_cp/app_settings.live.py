@@ -885,7 +885,7 @@ if form.getvalue('domain'):
 
         # Redirect URL
         redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
-    
+                    
         print('                                <div class="col-md-12">')
         print('                                    <div class="input-group btn-group mb-0">')
         print('                                        <div class="input-group-prepend">')

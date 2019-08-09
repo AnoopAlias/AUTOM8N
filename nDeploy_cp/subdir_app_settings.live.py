@@ -71,7 +71,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         subdir_apps_dict = yaml_parsed_profileyaml.get('subdir_apps')
         user_config = yaml_parsed_profileyaml.get('user_config', 'disabled')
-                
+
         # If there are no entries in subdir_apps_dict or there is no specific config for the subdirectory
         # We do a fresh config
         if subdir_apps_dict:
@@ -82,7 +82,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                <!-- Column Start -->')
                 print('                <div class="col-lg-6">')
 
-                cardheader('Upstream Selector')
+                cardheader('New Subdirectory Upstream Configuration')
                 print('                        <div class="card-body"> <!-- Card Body Start -->')
                 print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
                 print('                                <div class="alert alert-info text-center">Select an upstream for "<strong>'+mydomain+'/'+thesubdir+'</strong>."</div>')
@@ -102,10 +102,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                <button class="btn btn-outline-primary btn-block" type="submit">Confirm Upstream</button>')
                 print('                            </form>')
                 print('                        </div> <!-- Card Body End -->')
-                cardfooter('To change the Upstream select a new category above.')
+                cardfooter('Select the upstream category to use with this application.')
 
             else:
-                # we get the current app settings for the subdir
+                # We get the current app settings for the subdir
                 the_subdir_dict = subdir_apps_dict.get(thesubdir)
                 backend_category = the_subdir_dict.get('backend_category')
                 backend_version = the_subdir_dict.get('backend_version')
@@ -119,7 +119,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 redirecturl = the_subdir_dict.get('redirecturl', 'none')
                 uniq_path = document_root+thesubdir
                 uniq_filename = md5(uniq_path.encode("utf-8")).hexdigest()
-                # get the human friendly name of the app template
+
+                # Get the human friendly name of the app template
                 if os.path.isfile(app_template_file):
                     with open(app_template_file, 'r') as apptemplate_data_yaml:
                         apptemplate_data_yaml_parsed = yaml.safe_load(apptemplate_data_yaml)
@@ -136,7 +137,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         if apptemplate_code in user_apptemplate_dict.keys():
                             apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
                 else:
-                    print_nontoast_error('<h3>Error!</h3>Application Tempate Data File Error')
+                    print_nontoast_error('<h3>Error!</h3>Application Template Data File Error')
                     sys.exit(0)
 
                 print('            <!-- cPanel Start Dash Row -->')
@@ -182,7 +183,6 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('')
                 print('            <!-- End Dash Row -->')
                 print('            </div>')
-
 
                 # Ok we are done with getting the settings,now lets present it to the user
 
@@ -239,7 +239,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
                     print('                        <div class="card-body pt-3 pb-0">  <!-- Card Body Start -->')
-                    print('                            <form class="form" id="modalForm10" onsubmit="return false;">')
+                    print('                            <form class="form mb-2" id="modalForm10" onsubmit="return false;">')
 
                     if backend_category == "RUBY":
                         dep_file = document_root+'/'+thesubdir+'/Gemfile'
@@ -436,7 +436,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                        </div>')
                 print('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">')
                 print('                                    </div>')
-                print('                                </div>')                
+                print('                                </div>')
 
                 print('                            </div> <!-- Row End -->')
                 print('                        </div> <!-- Card Body End -->')
@@ -460,7 +460,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('                <!-- Column Start -->')
             print('                <div class="col-lg-6">')
 
-            cardheader('Upstream Selector')
+            cardheader('Upstream Selector 3')
             print('                        <div class="card-body">  <!-- Card Body Start -->')
             print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
             print('                                <div class="alert alert-info text-center">Select an upstream for "<strong>'+mydomain+'/'+thesubdir+'</strong>."</div>')
@@ -469,10 +469,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('                                        <label class="input-group-text">Upstream</label>')
             print('                                    </div>')
             print('                                    <select name="backend" class="custom-select">')
-            
+
             for backends_defined in backend_data_yaml_parsed.keys():
                 print('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>')
-            
+                            
             print('                                    </select>')
             print('                                </div>')
 
