@@ -71,7 +71,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('                <!-- Column Start -->')
                 print('                <div class="col-lg-6">')
 
-                cardheader('Initial Upstream Configuration', 'fas fa-sliders-h')
+                cardheader('New Upstream Configuration', 'fas fa-sliders-h')
                 print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
                 print('                            <div class="alert alert-info text-center">')
                 print('                                <p class="m-0 pb-1">You selected <span class="badge badge-warning">'+mybackend+'</span> as the new upstream type for:</p>')
@@ -277,10 +277,15 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('                <!-- Column Start -->')
             print('                <div class="col-lg-6">')
             
-            cardheader('Upstream & Template 3', 'fas fa-user-cog')
+            cardheader('Initial Upstream Configuration', 'fas fa-user-cog')
             print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+            print('                            <div class="alert alert-info text-center">')
+            print('                                <p class="m-0 pb-1">You selected <span class="badge badge-warning">'+mybackend+'</span> as the new upstream type for:</p>')
+            print('                                <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>')
+            print('                                <p class="m-0 pt-1">Select the version and template for this upstream below.')
+            print('                            </div>')
+
             print('                            <form class="form" id="toastForm8" onsubmit="return false;">')
-            print('                                <div class="alert alert-info">You selected <span class="badge badge-warning p-2">'+mybackend+'</span> as the upstream for '+mydomain+'/'+thesubdir+'. Select the version and template for this backend.</div>')
             
             backends_dict = backend_data_yaml_parsed.get(mybackend)
             new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
@@ -316,10 +321,10 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('                                </div>')
 
             # Pass on the domain name to the next stage
-            print(('                                <input hidden name="domain" value="'+mydomain+'">'))
-            print(('                                <input hidden name="backend" value="'+mybackend+'">'))
-            print(('                                <input hidden name="thesubdir" value="'+thesubdir+'">'))
-            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Settings for '+mydomain+'/'+thesubdir+'</button>')
+            print('                                <input hidden name="domain" value="'+mydomain+'">')
+            print('                                <input hidden name="backend" value="'+mybackend+'">')
+            print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
+            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Configuration</button>')
             print('                            </form>')
             print('                        </div> <!-- Card Body End -->')
             cardfooter('')

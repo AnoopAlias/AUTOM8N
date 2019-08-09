@@ -85,7 +85,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 cardheader('New Subdirectory Upstream Configuration')
                 print('                        <div class="card-body"> <!-- Card Body Start -->')
                 print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
-                print('                                <div class="alert alert-info text-center">Select an upstream for "<strong>'+mydomain+'/'+thesubdir+'</strong>."</div>')
+                print('                                <div class="alert alert-info text-center">')
+                print('                                    <p class="m-0 pb-1">Select upstream type for:</p>')
+                print('                                    <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>')
+                print('                                </div>')
                 print('                                <div class="input-group mb-3">')
                 print('                                    <div class="input-group-prepend input-group-prepend-min">')
                 print('                                        <label class="input-group-text">Upstream</label>')
@@ -284,7 +287,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                </div>')
                 print('                            </form>')
                 print('                        </div> <!-- Card Body End -->')
-                cardfooter('To change the application server select a new category above.')
+                cardfooter('Select the upstream category to use with this application.')
 
                 #First Column End
                 print('                <!-- First Column End -->')
@@ -460,7 +463,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('                <!-- Column Start -->')
             print('                <div class="col-lg-6">')
 
-            cardheader('Upstream Selector 3')
+            cardheader('Initial Subdirectory Upstream Configuration')
             print('                        <div class="card-body">  <!-- Card Body Start -->')
             print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
             print('                                <div class="alert alert-info text-center">Select an upstream for "<strong>'+mydomain+'/'+thesubdir+'</strong>."</div>')
@@ -483,7 +486,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('                                <button class="btn btn-outline-primary btn-block" type="submit">Confirm Upstream</button>')
             print('                            </form>')
             print('                        </div> <!-- Card Body End -->')
-            cardfooter('To change the Upstream select a new category above.')
+            cardfooter('Select the upstream category to use with this application.')
 
     else:
         print_nontoast_error('<h3>Error!</h3>Domain-Data File IO Error.')
