@@ -32,7 +32,7 @@ print('</head>')
 print('<body>')
 
 nginx_log = cpanelhome+"/logs/nginx.log"
-if not True:#os.path.isfile(nginx_log):
+if os.path.isfile(nginx_log):
     tail_cmd = '/usr/bin/tail -20 '+nginx_log
     run_tail_cmd = subprocess.Popen(tail_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
     print('<ul class="list-unstyled text-left">')
