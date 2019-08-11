@@ -73,7 +73,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
                 if apptemplate_code in user_apptemplate_dict.keys():
                     apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
         else:
-            print_nontoast_error('Error!' 'Application Template Data File Error!')
+            print_nontoast_error('Error!', 'Application Template Data File Error!')
             sys.exit(0)
 
         # Ok we are done with getting the settings,now lets present it to the user
@@ -88,24 +88,8 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
         print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
-#        nginx_status = False
-#        for myprocess in psutil.process_iter():
-#
-#            # Workaround for Python 2.6
-#            if platform.python_version().startswith('2.6'):
-#                mycmdline = myprocess.cmdline
-#            else:
-#                mycmdline = myprocess.cmdline()
-#            if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-#                nginx_status = True
-#                break
-
-#        if nginx_status:
         print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
         print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>')
-#        else:
-#            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
-#            print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>')
 
         # Backend
         print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
@@ -218,7 +202,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         sys.exit(0)
 
 else:
-    print_nontoast_error('Forbidden!' 'Domain Data Missing!')
+    print_nontoast_error('Forbidden!', 'Domain Data Missing!')
     sys.exit(0)
 
 
