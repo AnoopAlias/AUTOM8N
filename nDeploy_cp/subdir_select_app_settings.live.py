@@ -147,24 +147,24 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
                 print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
 
-                nginx_status = False
-                for myprocess in psutil.process_iter():
+#                nginx_status = False
+#                for myprocess in psutil.process_iter():
+#
+#                    # Workaround for Python 2.6
+#                    if platform.python_version().startswith('2.6'):
+#                        mycmdline = myprocess.cmdline
+#                    else:
+#                        mycmdline = myprocess.cmdline()
+#                    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+#                        nginx_status = True
+#                        break
 
-                    # Workaround for Python 2.6
-                    if platform.python_version().startswith('2.6'):
-                        mycmdline = myprocess.cmdline
-                    else:
-                        mycmdline = myprocess.cmdline()
-                    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-                        nginx_status = True
-                        break
-
-                if nginx_status:
-                    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
-                    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>')
-                else:
-                    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
-                    print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>')
+#                if nginx_status:
+                print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+                print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>')
+#                else:
+#                    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+#                    print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>')
         
                 # Backend
                 print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
