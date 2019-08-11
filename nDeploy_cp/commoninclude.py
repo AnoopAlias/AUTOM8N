@@ -70,12 +70,15 @@ else:
     brand_link = "https://autom8n.com/"
 
 
-# get version of Nginx and plugin
+# Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
     autom8n_version_info_yaml_parsed = yaml.safe_load(autom8n_version_info_yaml)
-with open(nginx_version_info_file, 'r') as nginx_version_info_yaml:
-    nginx_version_info_yaml_parsed = yaml.safe_load(nginx_version_info_yaml)
-nginx_version = nginx_version_info_yaml_parsed.get('nginx_version')
+if os.access(nginx_version_info_file, os.R_OK): # Check for read access
+    with open(nginx_version_info_file, 'r') as nginx_version_info_yaml:
+        nginx_version_info_yaml_parsed = yaml.safe_load(nginx_version_info_yaml)
+    nginx_version = nginx_version_info_yaml_parsed.get('nginx_version')
+else:
+    nginx_version = ""
 autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 
 
