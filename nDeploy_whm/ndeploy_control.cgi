@@ -391,7 +391,7 @@ text_color_hint = " Select a color from the supported Bootstrap Text Colors. "
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
 
-print('                                <label for="app_email">Enter support email for users if they run into various issues.</label>')
+print('                                <label for="app_email">Enter support email for users if they run into various issues. Set to "None" to disable this feature thoughout the application.</label>')
 print('                                <div class="input-group mb-4">')
 print('                                    <div class="input-group-prepend">')
 print('                                        <span class="input-group-text" id="app_email_desc">')

@@ -197,7 +197,8 @@ def print_header(title=''):
     print('            </div>')
     print('            <div class="d-flex header-buttons">')
     print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="ndeploy_control.cgi"><i class="fas fa-tools"></i> '+brand+' Control </a></div>')
-    print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="mailto:'+app_email+'"><i class="fas fa-envelope"></i> Support </a></div>')
+    if app_email != 'None':
+        print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="mailto:'+app_email+'"><i class="fas fa-envelope"></i> Support </a></div>')
     print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" target="_blank" href="help.txt"><i class="fas fa-book-open"></i> Documentation </a></div>')
     print('            </div>')
     print('        </header>')

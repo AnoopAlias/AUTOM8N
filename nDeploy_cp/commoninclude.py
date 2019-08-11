@@ -18,21 +18,21 @@ nginx_version_info_file = "/etc/nginx/version.yaml"
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
-    heading_background_color = yaml_parsed_ndeploy_control_settings.get("heading_background_color","#FFFFFF")
-    heading_foreground_color = yaml_parsed_ndeploy_control_settings.get("heading_foreground_color","#3D4366")
-    body_background_color = yaml_parsed_ndeploy_control_settings.get("body_background_color","#F1F1F8")
-    card_color = yaml_parsed_ndeploy_control_settings.get("card_color","light")
-    text_color = yaml_parsed_ndeploy_control_settings.get("text_color","dark")
-    breadcrumb_active_color = yaml_parsed_ndeploy_control_settings.get("breadcrumb_active_color","#121212")
-    heading_height = yaml_parsed_ndeploy_control_settings.get("heading_height","50")
-    header_button_color = yaml_parsed_ndeploy_control_settings.get("header_button_color","primary")
-    icon_height = yaml_parsed_ndeploy_control_settings.get("icon_height","48")
-    icon_width = yaml_parsed_ndeploy_control_settings.get("icon_width","48")
-    logo_not_icon = yaml_parsed_ndeploy_control_settings.get("logo_not_icon","disabled")
-    logo_height = yaml_parsed_ndeploy_control_settings.get("logo_height","29")
-    logo_width = yaml_parsed_ndeploy_control_settings.get("logo_width","242")
-    logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
-    app_email = yaml_parsed_ndeploy_control_settings.get("app_email","None")
+    heading_background_color = yaml_parsed_ndeploy_control_settings.get("heading_background_color", "#FFFFFF")
+    heading_foreground_color = yaml_parsed_ndeploy_control_settings.get("heading_foreground_color", "#3D4366")
+    body_background_color = yaml_parsed_ndeploy_control_settings.get("body_background_color", "#F1F1F8")
+    card_color = yaml_parsed_ndeploy_control_settings.get("card_color", "light")
+    text_color = yaml_parsed_ndeploy_control_settings.get("text_color", "dark")
+    breadcrumb_active_color = yaml_parsed_ndeploy_control_settings.get("breadcrumb_active_color", "#121212")
+    heading_height = yaml_parsed_ndeploy_control_settings.get("heading_height", "50")
+    header_button_color = yaml_parsed_ndeploy_control_settings.get("header_button_color", "primary")
+    icon_height = yaml_parsed_ndeploy_control_settings.get("icon_height", "48")
+    icon_width = yaml_parsed_ndeploy_control_settings.get("icon_width", "48")
+    logo_not_icon = yaml_parsed_ndeploy_control_settings.get("logo_not_icon", "disabled")
+    logo_height = yaml_parsed_ndeploy_control_settings.get("logo_height", "29")
+    logo_width = yaml_parsed_ndeploy_control_settings.get("logo_width", "242")
+    logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "https://autom8n.com/assets/img/logo-dark.png")
+    app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
 else:
     heading_background_color = "#FFFFFF"
     heading_foreground_color = "#3D4366"
@@ -73,6 +73,8 @@ else:
 # Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
     autom8n_version_info_yaml_parsed = yaml.safe_load(autom8n_version_info_yaml)
+
+# Bypass Cloudlinux perms
 if os.access(nginx_version_info_file, os.R_OK): # Check for read access
     with open(nginx_version_info_file, 'r') as nginx_version_info_yaml:
         nginx_version_info_yaml_parsed = yaml.safe_load(nginx_version_info_yaml)
