@@ -32,7 +32,7 @@ if os.path.isfile(ndeploy_control_file):
     logo_height = yaml_parsed_ndeploy_control_settings.get("logo_height","29")
     logo_width = yaml_parsed_ndeploy_control_settings.get("logo_width","242")
     logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
-    app_email = yaml_parsed_ndeploy_control_settings.get("app_email","ops@gnusys.net")
+    app_email = yaml_parsed_ndeploy_control_settings.get("app_email","None")
 else:
     heading_background_color = "#FFFFFF"
     heading_foreground_color = "#3D4366"
@@ -48,7 +48,7 @@ else:
     logo_height = "29"
     logo_width = "242"
     logo_url = "https://autom8n.com/assets/img/logo-dark.png"
-    app_email = "ops@gnusys.net"
+    app_email = "None"
 
 
 # Branding Support
@@ -97,12 +97,6 @@ def return_prepend(theoption, hint):
     result = '<div class="d-flex w-50 align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
 
-
-def return_disabled():
-    result = '<div class="col-md-6"><div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div></div>'
-    return result
-
-
 def return_sys_tip(theoption, hint):
     result = '<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
@@ -115,10 +109,12 @@ def print_nontoast_error(thenotice, thereason):
     print('                        <i class="h1 fas fa-exclamation"></i>')
     print('                        <h3>'+thenotice+'</h3>')
     print('                        <h5>'+thereason+'</h5>')
-    print('                        <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
+    if app_email != 'None':
+        print('                        <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
     print('                    </div>')
     print('                </div>')
     print('            </div>')
+    print_footer()
     print('        </div> <!-- Main Container End -->')
     print('')
     print('    <!-- Body End -->')
@@ -152,7 +148,10 @@ def print_sys_tip(theoption, hint):
 
 def print_disabled():
     print('                                <div class="col-md-6">')
-    print('                                    <div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div>')
+    if app_email != 'None':
+        print('                                    <div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div>')
+    else:
+        print('                                    <div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. ">Not Installed</div>')
     print('                                </div>')
 
 
@@ -208,8 +207,8 @@ def print_header(title=''):
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex header-buttons">')
-    #print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="ndeploy_control.cgi"><i class="fas fa-tools"></i> '+brand+' Control </a></div>')
-    print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="mailto:'+app_email+'"><i class="fas fa-envelope"></i> Support </a></div>')
+    if app_email != 'None':
+        print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="mailto:'+app_email+'"><i class="fas fa-envelope"></i> Support </a></div>')
     print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" target="_blank" href="help.txt"><i class="fas fa-book-open"></i> Documentation </a></div>')
     print('            </div>')
     print('        </header>')

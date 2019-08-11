@@ -30,7 +30,7 @@ close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
 print_header('Manual Configuration')
-bcrumb('Manual Configuration','fas fa-redo')
+bcrumb('Manual Configuration', 'fas fa-redo')
 
 if form.getvalue('domain'):
 

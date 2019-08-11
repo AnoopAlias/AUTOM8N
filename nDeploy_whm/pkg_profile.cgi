@@ -6,7 +6,7 @@ import os
 import shutil
 import yaml
 import sys
-from commoninclude import print_nontoast_error, return_label, return_prepend, return_disabled, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, return_label, return_prepend, print_disabled, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -446,7 +446,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="test_cookie" value="'+test_cookie+'">'))
 
     # symlink_protection
@@ -502,7 +502,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
 
     print('                            </div> <!-- Row End -->') #End Row
@@ -577,7 +577,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="pagespeed" value="'+pagespeed+'">'))
 
     # pagespeed filter level
@@ -607,7 +607,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">'))
 
 
@@ -638,7 +638,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="brotli" value="'+brotli+'">'))
 
 
