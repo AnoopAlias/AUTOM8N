@@ -25,10 +25,6 @@ form = cgi.FieldStorage()
 
 print_header('PHP-FPM Pool Editor')
 bcrumb('PHP-FPM Pool Editor','fas fa-sitemap')
-print('            <!-- WHM Starter Row -->')
-print('            <div class="row justify-content-lg-center">')
-print('                <!-- Column Start -->')
-print('                <div class="col-lg-8">') #Column
 
 if form.getvalue('poolfile') and form.getvalue('section'):
     myphpini = form.getvalue('poolfile')
@@ -37,6 +33,10 @@ if form.getvalue('poolfile') and form.getvalue('section'):
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
+        print('            <!-- WHM Starter Row -->')
+        print('            <div class="row justify-content-lg-center">')
+        print('                <!-- Column Start -->')
+        print('                <div class="col-lg-8">')
         cardheader('Edit PHP-FPM Pool Settings for '+config.sections()[mysection].upper(),'fas fa-sitemap')
         print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
@@ -100,7 +100,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('                        </div> <!-- Card Body End -->') #Card Body End
         cardfooter('<strong>WARNING USE AT YOUR OWN RISK! </strong><br>Adding or modifying pool configurations with invalid settings can bring down your PHP application server.')
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!', 'Missing Poolfile Data!')
 
 #Column End
 print('                <!-- Column End -->')

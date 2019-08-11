@@ -59,7 +59,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             if apptemplate_code in apptemplate_dict.keys():
                 apptemplate_description = apptemplate_dict.get(apptemplate_code)
         else:
-            print_nontoast_error('Error: Application Template Data File Error')
+            print_nontoast_error('Error!', 'Application Template Data File Error!')
             sys.exit(0)
 
         # Ok we are done with getting the settings,now lets present it to the user
@@ -183,7 +183,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         print('                        </div> <!-- Card Body End -->') #Card End
         cardfooter('')
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!', 'Missing cPanel Package Data!')
     sys.exit(0)
 
 #Column End

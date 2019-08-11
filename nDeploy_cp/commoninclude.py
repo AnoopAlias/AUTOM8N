@@ -108,12 +108,13 @@ def return_sys_tip(theoption, hint):
     return result
 
 
-def print_nontoast_error(themessage):
+def print_nontoast_error(thenotice, thereason):
     print('            <div class="row justify-content-center">')
     print('                <div class="col-lg-6 alert alert-danger">')
     print('                    <div class="text-center">')
     print('                        <i class="h1 fas fa-exclamation"></i>')
-    print('                        <span>'+themessage+'</span>')
+    print('                        <h3>'+thenotice+'</h3>')
+    print('                        <h5>'+thereason+'</h5>')
     print('                        <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
     print('                    </div>')
     print('                </div>')

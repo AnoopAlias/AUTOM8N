@@ -329,11 +329,11 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('                        </div> <!-- Card Body End -->')
             cardfooter('')
     else:
-        print_nontoast_error('<h3>Error!</h3>Domain-Data File IO Error.')
+        print_nontoast_error('Error!', 'Domain Data File IO Error!')
         sys.exit(0)
 
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!', 'Domain Data Missing!')
     sys.exit(0)
 
 

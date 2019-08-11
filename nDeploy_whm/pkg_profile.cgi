@@ -81,13 +81,13 @@ if form.getvalue('cpanelpkg'):
         apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
         apptemplate_description = apptemplate_dict.get(apptemplate_code)
     else:
-        print_nontoast_error('Error: Application Template Data File Error')
+        print_nontoast_error('Error!', 'Application Template Data File Error!')
         sys.exit(0)
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     else:
-        print_nontoast_error('Error: Backend Configuration File Error')
+        print_nontoast_error('Error!', 'Backend Configuration File Error!')
         sys.exit(0)
 
     # Ok we are done with getting the settings, now lets present it to the user
@@ -861,7 +861,7 @@ if form.getvalue('cpanelpkg'):
     cardfooter('')
     print('                </form> <!-- Form End -->')
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!', 'Missing cPanel Package Data!')
     sys.exit(0)
 
 #Second Column End

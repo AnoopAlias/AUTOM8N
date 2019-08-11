@@ -24,7 +24,6 @@ cpaneluser = os.environ["USER"]
 user_app_template_file = installation_path+"/conf/"+cpaneluser+"_apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 
-
 cgitb.enable()
 close_cpanel_liveapisock()
 
@@ -36,7 +35,6 @@ bcrumb('Manual Configuration','fas fa-redo')
 if form.getvalue('domain'):
 
     # Get the domain name from form data
-
     mydomain = form.getvalue('domain')
     if mydomain.startswith('_wildcard_.'):
         cpmydomain = '*.'+mydomain.replace('_wildcard_.', '')
@@ -45,7 +43,6 @@ if form.getvalue('domain'):
     profileyaml = installation_path + "/domain-data/" + mydomain
 
     # Get data about the backends available
-
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
@@ -78,13 +75,14 @@ if form.getvalue('domain'):
     with open(cpdomainjson, 'r') as cpaneldomain_data_stream:
         json_parsed_cpaneldomain = json.load(cpaneldomain_data_stream)
     document_root = json_parsed_cpaneldomain.get('documentroot')
+
     if os.path.isfile(profileyaml):
 
         # Get all config settings from the domains domain-data config file
-
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        # App settings
+
+        # App Settings
         backend_category = yaml_parsed_profileyaml.get('backend_category')
         backend_version = yaml_parsed_profileyaml.get('backend_version')
         backend_path = yaml_parsed_profileyaml.get('backend_path')
@@ -92,6 +90,7 @@ if form.getvalue('domain'):
         mod_security = yaml_parsed_profileyaml.get('mod_security', 'disabled')
         auth_basic = yaml_parsed_profileyaml.get('auth_basic', 'disabled')
         set_expire_static = yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
+
         # Server Settings
         autoindex = yaml_parsed_profileyaml.get('autoindex', 'disabled')
         pagespeed = yaml_parsed_profileyaml.get('pagespeed', 'disabled')
@@ -115,8 +114,7 @@ if form.getvalue('domain'):
         symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
         subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
 
-        # Get the human friendly name of the app template
-                
+        # Get the human friendly name of the app template                
         if os.path.isfile(app_template_file):
             with open(app_template_file, 'r') as apptemplate_data_yaml:
                 apptemplate_data_yaml_parsed = yaml.safe_load(apptemplate_data_yaml)
@@ -133,7 +131,7 @@ if form.getvalue('domain'):
                 if apptemplate_code in user_apptemplate_dict.keys():
                     apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
         else:
-            print_nontoast_error('<h3>Forbidden!</h3>Application Template IO Error!')
+            print_nontoast_error('Forbidden!', 'Application Template IO Error!')
             sys.exit(0)
 
         print('            <!-- cPanel Start Dash Row -->')
@@ -234,7 +232,6 @@ if form.getvalue('domain'):
         print('                        </div> <!-- Card Body End -->')
 
         # Dependencies
-
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
             print('                        <div class="card-body pt-3 pb-0">  <!-- Card Body Start -->')
             print('                            <form class="form" id="modalForm10" onsubmit="return false;">')
@@ -276,7 +273,6 @@ if form.getvalue('domain'):
             print('                                    </select>')
 
             # Pass on the domain name to the next stage
-
             print('                                    <div class="input-group-append">')
             print('                                        <input hidden name="domain" value="'+mydomain+'">')
             print('                                        <button type="submit" class="btn btn-outline-primary">Select</button>')
@@ -288,7 +284,6 @@ if form.getvalue('domain'):
         cardfooter('To change the Upstream select a new category above.')
 
         # Application Settings
-
         cardheader('General Settings', 'fas fa-sliders-h')
         print('                        <div class="card-body">  <!-- Card Body Start -->')
 
@@ -574,6 +569,7 @@ if form.getvalue('domain'):
         print('')
 
         # Content Optimizations
+
         cardheader('Content Optimizations', 'fas fa-dumbbell')
 
         print('                        <div class="card-body">  <!-- Card Body Start -->')
@@ -634,7 +630,7 @@ if form.getvalue('domain'):
         # pagespeed filter level
         pagespeed_filter_hint = " CoreFilters loads the Core Filters, PassThrough allows you to enable individual filters via a custom NGINX Configuration. "
         print('                                '+return_label("pagespeed filters", pagespeed_filter_hint))
-        
+
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -750,7 +746,7 @@ if form.getvalue('domain'):
         print('                                '+return_label("redirect_to_ssl", redirect_to_ssl_hint))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-        
+
         if redirect_to_ssl == 'enabled':
             print('                                        <label class="btn btn-light active">')
             print('                                            <input type="radio" name="redirect_to_ssl" value="enabled" id="RedirectToSslOn" autocomplete="off" checked> Enabled')
@@ -885,7 +881,7 @@ if form.getvalue('domain'):
 
         # Redirect URL
         redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
-                    
+
         print('                                <div class="col-md-12">')
         print('                                    <div class="input-group btn-group mb-0">')
         print('                                        <div class="input-group-prepend">')
@@ -958,11 +954,11 @@ if form.getvalue('domain'):
         cardfooter('The path entered above must follow this format <kbd>/blog</kbd> <kbd>/us/forum</kbd>')
 
     else:
-        print_nontoast_error('<h3>Error!</h3>Domain-Data File IO Error.')
+        print_nontoast_error('Error!', 'Domain Data File IO Error!')
         sys.exit(0)
 
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!', 'Domain Data Missing!')
     sys.exit(0)
 
 #Second Column End

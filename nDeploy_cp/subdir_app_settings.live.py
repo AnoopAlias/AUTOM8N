@@ -53,10 +53,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
     if thesubdir.endswith('/'):
         thesubdir = thesubdir[:-1]
     if not thesubdir:
-        print_nontoast_error('<h3>Error!</h3>Invalid subdirectory name.')
+        print_nontoast_error('Error!', 'Invalid subdirectory name!')
         sys.exit(0)
     if not re.match("^[\.0-9a-zA-Z/_-]*$", thesubdir):
-        print_nontoast_error('<h3>Error!</h3>Invalid character in subdirectory name.')
+        print_nontoast_error('Error!', 'Invalid character in subdirectory name!')
         sys.exit(0)
     profileyaml = installation_path + "/domain-data/" + mydomain
 
@@ -140,7 +140,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         if apptemplate_code in user_apptemplate_dict.keys():
                             apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
                 else:
-                    print_nontoast_error('<h3>Error!</h3>Application Template Data File Error')
+                    print_nontoast_error('Error!', 'Application Template Data File Error!')
                     sys.exit(0)
 
                 print('            <!-- cPanel Start Dash Row -->')
@@ -492,11 +492,11 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             cardfooter('Select the upstream category to use with this application.')
 
     else:
-        print_nontoast_error('<h3>Error!</h3>Domain-Data File IO Error.')
+        print_nontoast_error('Error!', 'Domain Data File IO Error!')
         sys.exit(0)
 
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!', 'Domain Data Missing!')
     sys.exit(0)
 
 

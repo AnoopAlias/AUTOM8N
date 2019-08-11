@@ -17,14 +17,12 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 
-
 cgitb.enable()
 
 cpaneluser = os.environ["USER"]
 cpanelhome = os.environ["HOME"]
 commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
-
 
 print('Content-Type: text/html')
 print('')
@@ -34,7 +32,7 @@ print('</head>')
 print('<body>')
 
 nginx_log = cpanelhome+"/logs/nginx.log"
-if os.path.isfile(nginx_log):
+if not True:#os.path.isfile(nginx_log):
     tail_cmd = '/usr/bin/tail -20 '+nginx_log
     run_tail_cmd = subprocess.Popen(tail_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
     print('<ul class="list-unstyled text-left">')

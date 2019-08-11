@@ -7,7 +7,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import close_cpanel_liveapisock, bcrumb, return_prepend, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import close_cpanel_liveapisock, print_header, bcrumb, cardheader, cardfooter, print_footer, print_modals, print_loader
 
 
 __author__ = "Anoop P Alias"
@@ -18,7 +18,6 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
-
 cgitb.enable()
 close_cpanel_liveapisock()
 
@@ -27,8 +26,8 @@ cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
 with open(cpuserdatajson, 'r') as cpaneluser_data_stream:
     json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
 main_domain = json_parsed_cpaneluser.get('main_domain')
-# parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   # This data is irrelevant as parked domain list is in ServerAlias
-addon_domains_dict = json_parsed_cpaneluser.get('addon_domains')     # So we know which addon is mapped to which sub-domain
+# parked_domains = yaml_parsed_cpaneluser.get('parked_domains') # This data is irrelevant as parked domain list is in ServerAlias
+addon_domains_dict = json_parsed_cpaneluser.get('addon_domains') # So we know which addon is mapped to which sub-domain
 sub_domains = json_parsed_cpaneluser.get('sub_domains')
 
 # Settings Lock
@@ -80,6 +79,7 @@ print('                            <form class="form" action="app_settings.live.
 print('                                <div class="input-group mb-0">')
 print('                                    <select name="domain" class="custom-select">')
 print('                                        <option value="'+main_domain+'">'+main_domain+'</option>')
+
 for domain_in_subdomains in sub_domains:
     if domain_in_subdomains not in addon_domains_dict.values():
         if domain_in_subdomains.startswith("*"):
@@ -89,15 +89,14 @@ for domain_in_subdomains in sub_domains:
             print('                                        <option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>')
 for the_addon_domain in addon_domains_dict.keys():
     print('                                        <option value="'+addon_domains_dict.get(the_addon_domain)+'">'+the_addon_domain+'</option>')
+
 print('                                    </select>')
 print('                                    <div class="input-group-append">')
 print('                                        <button class="btn btn-outline-primary" type="submit">Configure</button>')
 print('                                    </div>')
 print('                                </div>')
 print('                            </form>')
-
 print('                        </div> <!-- Card Body End -->')
-
 cardfooter('')
 
 # Column End

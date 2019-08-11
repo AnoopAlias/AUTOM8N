@@ -73,7 +73,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
                 if apptemplate_code in user_apptemplate_dict.keys():
                     apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
         else:
-            print_nontoast_error('<h3>Error!</h3>Application Template Data File Error.')
+            print_nontoast_error('Error!' 'Application Template Data File Error!')
             sys.exit(0)
 
         # Ok we are done with getting the settings,now lets present it to the user
@@ -214,11 +214,11 @@ if form.getvalue('domain') and form.getvalue('backend'):
         cardfooter('')
 
     else:
-        print_nontoast_error('<h3>Error!</h3>Domain-Data File IO Error.')
+        print_nontoast_error('Error!', 'Domain Data File IO Error!')
         sys.exit(0)
 
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!' 'Domain Data Missing!')
     sys.exit(0)
 
 

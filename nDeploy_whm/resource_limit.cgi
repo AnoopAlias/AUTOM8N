@@ -137,7 +137,7 @@ else:
     print('                <div class="col-lg-6">') #Left Column
     print('')
 
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!', 'Missing Data!')
     sys.exit(0)
 
 #Second Column End
