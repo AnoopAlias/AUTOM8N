@@ -75,7 +75,7 @@ else:
     brand_logo = "xtendweb.png"
     brand = "AUTOM8N"
     brand_group = "NGINX AUTOMATION"
-    brand_footer = '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>' #Depreciated
+    #brand_footer = '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>' #Depreciated
     brand_anchor = "A U T O M 8 N"
     brand_link = "https://autom8n.com/"
 
