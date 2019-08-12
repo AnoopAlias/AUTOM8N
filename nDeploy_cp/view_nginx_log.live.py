@@ -17,14 +17,12 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 
-
 cgitb.enable()
 
 cpaneluser = os.environ["USER"]
 cpanelhome = os.environ["HOME"]
 commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
-
 
 print('Content-Type: text/html')
 print('')

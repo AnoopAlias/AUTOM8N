@@ -59,7 +59,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             if apptemplate_code in apptemplate_dict.keys():
                 apptemplate_description = apptemplate_dict.get(apptemplate_code)
         else:
-            print_nontoast_error('Error: Application Template Data File Error')
+            print_nontoast_error('Error!', 'Application Template Data File Error!')
             sys.exit(0)
 
         # Ok we are done with getting the settings,now lets present it to the user
@@ -77,7 +77,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
 
         nginx_status = False
         for myprocess in psutil.process_iter():
-            # Workaround for Python 2.6align-items-center
+            # Workaround for Python 2.6
             if platform.python_version().startswith('2.6'):
                 mycmdline = myprocess.cmdline
             else:
@@ -99,7 +99,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
 
         # Description
         print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
-        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+apptemplate_description+'</div>')
+        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center text-center">'+apptemplate_description+'</div>')
         
         # .htaccess
         if backend_category == 'PROXY' and backend_version == 'httpd':
@@ -183,7 +183,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         print('                        </div> <!-- Card Body End -->') #Card End
         cardfooter('')
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!', 'Missing cPanel Package Data!')
     sys.exit(0)
 
 #Column End

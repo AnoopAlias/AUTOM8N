@@ -6,7 +6,7 @@ import os
 import shutil
 import yaml
 import sys
-from commoninclude import print_nontoast_error, return_label, return_prepend, return_disabled, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, return_label, return_prepend, print_disabled, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -81,58 +81,15 @@ if form.getvalue('cpanelpkg'):
         apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
         apptemplate_description = apptemplate_dict.get(apptemplate_code)
     else:
-        print_nontoast_error('Error: Application Template Data File Error')
+        print_nontoast_error('Error!', 'Application Template Data File Error!')
         sys.exit(0)
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     else:
-        print_nontoast_error('Error: Backend Configuration File Error')
+        print_nontoast_error('Error!', 'Backend Configuration File Error!')
         sys.exit(0)
 
-#<<<<<<< HEAD
-
-#    print('')
-#
-#    cardheader('Edit '+form.getvalue('cpanelpkg')+' cPanel Package','fas fa-users-cog')
-#    
-#    # Current Profile Status
-#    print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get"> <!-- Form Start -->')
-#    print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-#    print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
-#
-#    # Running
-#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Running</div>')
-#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">Nginx</div>')
-#
-#    # Backend Category
-#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream&nbsp;Type</div>')
-#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_category+'</div>')
-#
-#    # Backend
-#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Upstream</div>')
-#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
-#
-#    # Description
-#    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Config Template</div>')
-#    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+apptemplate_description+'</div>')
-#
-#    if backend_category == 'PROXY' and backend_version == 'httpd':
-#        # .htaccess
-#        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-#        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
-#    else:
-#        # .htaccess
-#        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;.htaccess</div>')
-#        print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
-#
-#    print('                            </div> <!-- Row End -->') #Row End
-#    print('                        </div> <!-- Card Body End -->') #Card End
-#
-#    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-#    print('                            <div class="input-group">')
-#    print('                                <select name="backend" class="custom-select">')
-#=======
     # Ok we are done with getting the settings, now lets present it to the user
     print('            <!-- WHM Starter Row -->')
     print('            <div class="row">')
@@ -489,7 +446,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="test_cookie" value="'+test_cookie+'">'))
 
     # symlink_protection
@@ -545,7 +502,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
 
     print('                            </div> <!-- Row End -->') #End Row
@@ -620,7 +577,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="pagespeed" value="'+pagespeed+'">'))
 
     # pagespeed filter level
@@ -650,7 +607,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">'))
 
 
@@ -681,7 +638,7 @@ if form.getvalue('cpanelpkg'):
             print('                                    </div>')
             print('                                </div>')
     else:
-        print('                                '+return_disabled())
+        print_disabled()
         print(('                                <input hidden name="brotli" value="'+brotli+'">'))
 
 
@@ -904,7 +861,7 @@ if form.getvalue('cpanelpkg'):
     cardfooter('')
     print('                </form> <!-- Form End -->')
 else:
-    print_nontoast_error('<h3>Forbidden!</h3>Though shall not Pass!')
+    print_nontoast_error('Forbidden!', 'Missing cPanel Package Data!')
     sys.exit(0)
 
 #Second Column End

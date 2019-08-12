@@ -12,7 +12,7 @@ import jinja2
 import codecs
 import sys
 import json
-from commoninclude import print_nontoast_error, return_label, return_multi_input, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, return_multi_input, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -390,11 +390,19 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                <button class="btn btn-outline-primary btn-block mt-3" type="submit">Init Borg Repo</button>')
     print('                            </form>')
 
-    print('                        </div> <!-- Card Body End -->') #Card Body End
+    print('                        </div> <!-- Card Body End -->')
     cardfooter('Keep your encryption_passphrase in a safe place. Losing it would make data recovery impossible on a server crash<br><hr>repositories must either a local folder: <kbd>/mnt/backup</kbd> <br> or a ssh URI: <kbd>ssh://user@backupserver.com:22/home/user/backup</kbd>')
 
 else:
-    print_nontoast_error ('''Install and setup Borg/Borgmatic<form class="form" id="modalForm4" onsubmit="return false;"><input hidden name="action" value="installborg"><button class="btn btn-primary">Install</button></form>''')
+    cardheader('Install and Setup Borg/Borgomatic')
+    print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+    print('                            <p>Install and setup Borg/Borgmatic</p>')
+    print('                            <form class="form" id="modalForm4" onsubmit="return false;">')
+    print('                                <input hidden name="action" value="installborg">')
+    print('                                <button class="btn btn-primary">Install</button>')
+    print('                            </form>')
+    print('                        </div> <!-- Card Body End -->')
+    cardfooter('')
 
 #Second Column End
 print('                <!-- Second Column End -->')

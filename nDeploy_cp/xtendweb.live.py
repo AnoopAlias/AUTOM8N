@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-import commoninclude
 import os
-import yaml
 import cgitb
+import yaml
 try:
     import simplejson as json
 except ImportError:
     import json
+from commoninclude import close_cpanel_liveapisock, print_header, bcrumb, cardheader, cardfooter, print_footer, print_modals, print_loader
 
 
 __author__ = "Anoop P Alias"
@@ -17,19 +17,17 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
-
 
 cgitb.enable()
+close_cpanel_liveapisock()
 
-commoninclude.close_cpanel_liveapisock()
 cpaneluser = os.environ["USER"]
 cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
 with open(cpuserdatajson, 'r') as cpaneluser_data_stream:
     json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
 main_domain = json_parsed_cpaneluser.get('main_domain')
-# parked_domains = yaml_parsed_cpaneluser.get('parked_domains')   # This data is irrelevant as parked domain list is in ServerAlias
-addon_domains_dict = json_parsed_cpaneluser.get('addon_domains')     # So we know which addon is mapped to which sub-domain
+# parked_domains = yaml_parsed_cpaneluser.get('parked_domains') # This data is irrelevant as parked domain list is in ServerAlias
+addon_domains_dict = json_parsed_cpaneluser.get('addon_domains') # So we know which addon is mapped to which sub-domain
 sub_domains = json_parsed_cpaneluser.get('sub_domains')
 
 # Settings Lock
@@ -56,69 +54,67 @@ with open(TEMPLATE_FILE, 'r') as templatefile_data_stream:
     yaml_parsed_templatefile = yaml.safe_load(templatefile_data_stream)
 settings_lock = yaml_parsed_templatefile.get('settings_lock', 'disabled')
 
+print_header('Home')
+bcrumb('Home')
 
-commoninclude.print_header()
-
-print('<body>')
-
-commoninclude.print_branding()
-
-print('<div id="main-container" class="container">')    # main container
-
-print('		<nav aria-label="breadcrumb">')
-print('			<ol class="breadcrumb">')
-print('				<li class="breadcrumb-item"><a href="xtendweb.live.py"><i class="fas fa-redo"></i></a></li>')
-print('				<li class="breadcrumb-item active">Config</li>')
-print('			</ol>')
-print('		</nav>')
-
-print('		<div class="row justify-content-lg-center">')
-print('			<div class="col-lg-6">')
+print('            <!-- cPanel Starter Row -->')
+print('            <div class="row justify-content-lg-center">')
+print('')
+print('                <!-- Column Start -->')
+print('                <div class="col-lg-6">')
 
 # Auto Switch To Nginx
-print('				<div class="card">')  # card
-print('					<div class="card-header">')
-print('						<h5 class="card-title mb-0"><i class="fas fa-cogs float-right"></i> Auto/Manual Configuration</h5>')
-print('					</div>')
-print('					<div class="card-body">')  # card-body
+cardheader('Auto/Manual Configuration','fas fa-cogs')
+print('                        <div class="card-body">  <!-- Card Body Start -->')
 
 if settings_lock == 'enabled':
-    print(('				<div class="alert alert-info">Application Server settings are locked by the administrator</div>'))
+    print('                        <div class="text-center alert alert-info">Application Server settings are locked by the administrator</div>')
 else:
-    print('					<form class="form mb-3" method="post" id="toastForm9" onsubmit="return false;">')
-    print('						<button class="btn btn-outline-primary btn-block " type="submit">Auto Switch To Nginx</button>')
-    print(('					<input class="hidden" name="cpaneluser" value="'+cpaneluser+'">'))
-    print('					</form>')
+    print('                            <form class="form mb-3" method="post" id="toastForm9" onsubmit="return false;">')
+    print('                                <button class="btn btn-outline-primary btn-block " type="submit">Auto Switch To Nginx</button>')
+    print('                                <input class="hidden" name="cpaneluser" value="'+cpaneluser+'">')
+    print('                            </form>')
 
-print('						<form class="form" action="app_settings.live.py" method="get">')
-print('							<div class="input-group mb-0">')
-print('								<select name="domain" class="custom-select">')
-print(('								<option value="'+main_domain+'">'+main_domain+'</option>'))
+print('                            <form class="form" action="app_settings.live.py" method="get">')
+print('                                <div class="input-group mb-0">')
+print('                                    <select name="domain" class="custom-select">')
+print('                                        <option value="'+main_domain+'">'+main_domain+'</option>')
+
 for domain_in_subdomains in sub_domains:
     if domain_in_subdomains not in addon_domains_dict.values():
         if domain_in_subdomains.startswith("*"):
             wildcard_domain = "_wildcard_."+domain_in_subdomains.replace('*.', '')
-            print(('					<option value="'+wildcard_domain+'">'+domain_in_subdomains+'</option>'))
+            print('                                        <option value="'+wildcard_domain+'">'+domain_in_subdomains+'</option>')
         else:
-            print(('					<option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>'))
+            print('                                        <option value="'+domain_in_subdomains+'">'+domain_in_subdomains+'</option>')
 for the_addon_domain in addon_domains_dict.keys():
-    print(('							<option value="'+addon_domains_dict.get(the_addon_domain)+'">'+the_addon_domain+'</option>'))
-print('								</select>')
-print('								<div class="input-group-append">')
-print('									<button class="btn btn-outline-primary" type="submit">Configure</button>')
-print('								</div>')
-print('							</div>')
-print('						</form>')
+    print('                                        <option value="'+addon_domains_dict.get(the_addon_domain)+'">'+the_addon_domain+'</option>')
 
-print('					</div>')  # card-body end
-print('				</div>')  # card end
-print('			</div>')  # col end
-print('		</div>')  # row end
+print('                                    </select>')
+print('                                    <div class="input-group-append">')
+print('                                        <button class="btn btn-outline-primary" type="submit">Configure</button>')
+print('                                    </div>')
+print('                                </div>')
+print('                            </form>')
+print('                        </div> <!-- Card Body End -->')
+cardfooter('')
 
-print('</div>')  # main-container end
+# Column End
+print('                <!-- Column End -->')
+print('                </div>')
+print('')
+print('            <!-- cPanel End Row -->')
+print('            </div>')
 
-commoninclude.print_modals()
-commoninclude.print_loader()
+print_footer()
 
-print('</body>')
+print('        <!-- Main Container End -->')
+print('        </div>')
+print('')
+
+print_modals()
+print_loader()
+
+print('    <!-- Body End -->')
+print('    </body>')
 print('</html>')

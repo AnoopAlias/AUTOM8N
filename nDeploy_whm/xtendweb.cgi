@@ -48,7 +48,6 @@ for myprocess in psutil.process_iter():
         nginx_status = True
     if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
         watcher_status = True
-        break
 
 # get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
