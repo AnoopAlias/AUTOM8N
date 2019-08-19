@@ -279,31 +279,31 @@ print('                                <div class="col-md-6 alert alert-success 
 print('                            </div>')
 print('                        </div> <!-- Card Body End -->')
 
-print('                        <div class="card-body"> <!-- Card Body Start -->')
-print('                            <form class="form" id="toastForm6" onsubmit="return false;">')
-print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
-print('                                        <label class="input-group-text">PHP</label>')
-print('                                    </div>')
-print('                                    <select name="phpversion" class="custom-select">')
-
 backend_config_file = installation_path+"/conf/backends.yaml"
 backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
 
 if "PHP" in backend_data_yaml_parsed:
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
+    print('                            <form class="form" id="toastForm6" onsubmit="return false;">')
+    print('                                <div class="input-group">')
+    print('                                    <div class="input-group-prepend">')
+    print('                                        <label class="input-group-text">PHP</label>')
+    print('                                    </div>')
+    print('                                    <select name="phpversion" class="custom-select">')
+    
     php_backends_dict = backend_data_yaml_parsed["PHP"]
     for versions_defined in list(php_backends_dict.keys()):
         if versions_defined == myphpversion:
             print('                                        <option selected value="'+myphpversion+'">'+myphpversion+'</option>')
         else:
             print('                                        <option value="'+versions_defined+'">'+versions_defined+'</option>')
-print('                                    </select>')
-print('                                </div>')
-print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
-print('                            </form>')
-print('                        </div> <!-- Card Body End -->')
+    print('                                    </select>')
+    print('                                </div>')
+    print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
+    print('                            </form>')
+    print('                        </div> <!-- Card Body End -->')
 cardfooter('Automatic switch to Nginx will use versions set in MultiPHP or if MultiPHP is not used the phpversion above')
 
 # First Column End
