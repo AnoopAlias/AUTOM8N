@@ -857,7 +857,7 @@ if form.getvalue('domain'):
         print('                                </div>')
 
         # Append request_uri to redirect
-        append_requesturi_hint = ' Maintain the original Request URI ($request_uri (with arguments)). '
+        append_requesturi_hint = " Maintain the original Request URI ($request_uri (with arguments)). "
         print('                                '+return_label("Append Redirect URL", append_requesturi_hint))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -880,7 +880,7 @@ if form.getvalue('domain'):
         print('                                </div>')
 
         # Redirect URL
-        redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
+        redirecturl_hint = " A Valid URL, Eg: https://mynewurl.tld "
 
         print('                                <div class="col-md-12">')
         print('                                    <div class="input-group btn-group mb-0">')

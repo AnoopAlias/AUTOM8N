@@ -307,7 +307,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # auth_basic
                 auth_basic_hint = " Setup password for "+document_root+"/"+thesubdir+" in cPanel -> Files -> Directory Privacy. "
-                print('                                    '+return_label('password protect app url', auth_basic_hint))
+                print('                                    '+return_label("Password Protect Application", auth_basic_hint))
                 print('                                    <div class="col-md-6">')
                 print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
 
@@ -330,7 +330,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # set_expire_static
                 set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
-                print('                                    '+return_label('set expires header', set_expire_static_hint))
+                print('                                    '+return_label("Expires / Cache-Control", set_expire_static_hint))
                 print('                                    <div class="col-md-6">')
                 print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -353,7 +353,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # mod_security
                 mod_security_hint = " Mod Security v3 Web Application Firewall "
-                print('                                    '+return_label('mod_security', mod_security_hint))
+                print('                                    '+return_label("Mod Security", mod_security_hint))
 
                 if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
                     print('                                    <div class="col-md-6">')
@@ -382,7 +382,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # URL Redirect
                 url_redirect_hint = " Select URL redirection type. "
-                print('                                '+return_label("URL redirect", url_redirect_hint))
+                print('                                '+return_label("URL Redirect", url_redirect_hint))
                 print('                                <div class="col-md-6">')
                 print('                                    <div class="input-group btn-group">')
                 print('                                        <select name="redirectstatus" class="custom-select">')
@@ -405,8 +405,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                </div>')
 
                 # Append request_uri to redirect
-                append_requesturi_hint = ' Maintain the original Request URI ($request_uri (with arguments)). '
-                print('                                '+return_label("append redirecturl", append_requesturi_hint))
+                append_requesturi_hint = " Maintain the original Request URI ($request_uri (with arguments)). "
+                print('                                '+return_label("Append Redirect URL", append_requesturi_hint))
                 print('                                <div class="col-md-6">')
                 print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -428,7 +428,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                </div>')
 
                 # Redirect URL
-                redirecturl_hint = "A Valid URL, eg: http://mynewurl.tld"
+                redirecturl_hint = " A Valid URL, Eg: https://mynewurl.tld "
 
                 print('                                <div class="col-md-12">')
                 print('                                    <div class="input-group btn-group mb-0">')
