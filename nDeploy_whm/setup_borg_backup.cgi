@@ -195,7 +195,7 @@ if os.path.isdir('/etc/borgmatic'):
             restore_point = yaml_parsed_restorepoint.get('restore_point', 'snapshot')
             print('<center>currently mounted</center><hr>'+restore_point)
             print('				<form class="form mb-3" id="toastForm24" onsubmit="return false;">')
-            print(('				<input class="hidden" name="action" value="umount">'))
+            print(('				<input hidden name="action" value="umount">'))
             print('					<button type="submit" class="btn btn-outline-primary btn-block ">Umount Restore Point</button>')
             print('				</form>')
             mount_flag=True
@@ -218,8 +218,8 @@ if os.path.isdir('/etc/borgmatic'):
                 if not mount_flag:
                     print('                 <div class="input-group-append">')
                     print('                     <form class="m-0 toastForm25-wrap" id="toastForm25'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-                    print(('                        <input class="hidden" name="restorepoint" value="'+backup.get('archive')+'">'))
-                    print(('                        <input class="hidden" name="action" value="mount">'))
+                    print(('                        <input hidden name="restorepoint" value="'+backup.get('archive')+'">'))
+                    print(('                        <input hidden name="action" value="mount">'))
                     print('                         <button class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
                     print('                     </form>')
                     print('                 </div>')

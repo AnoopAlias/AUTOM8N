@@ -72,7 +72,7 @@ if settings_lock == 'enabled':
 else:
     print('                            <form class="form mb-3" method="post" id="toastForm9" onsubmit="return false;">')
     print('                                <button class="btn btn-outline-primary btn-block " type="submit">Auto Switch To Nginx</button>')
-    print('                                <input class="hidden" name="cpaneluser" value="'+cpaneluser+'">')
+    print('                                <input hidden name="cpaneluser" value="'+cpaneluser+'">')
     print('                            </form>')
 
 print('                            <form class="form" action="app_settings.live.py" method="get">')
