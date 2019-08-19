@@ -304,7 +304,7 @@ print('                                </div>')
 print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
 print('                            </form>')
 print('                        </div> <!-- Card Body End -->')
-cardfooter('If MultiPHP is enabled, <kbd>'+myphpversion+'</kbd> by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
+cardfooter('Automatic switch to Nginx will use versions set in MultiPHP or if MultiPHP is not used the phpversion above')
 
 # First Column End
 print('                <!-- First Column End -->')
