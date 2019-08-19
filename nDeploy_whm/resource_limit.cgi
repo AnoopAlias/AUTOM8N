@@ -98,7 +98,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('                                    </div>')
     print('                                    <select name="cpu" class="custom-select">')
     for percentage in '100', '75', '50', '25':
-        print(('                                        <option value="'+percentage+'">'+percentage+'%</option>'))
+        print('                                        <option value="'+percentage+'">'+percentage+'%</option>')
     print('                                    </select>')
     print('                                </div>')
 
@@ -108,7 +108,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('                                    </div>')
     print('                                    <select name="memory" class="custom-select">')
     for percentage in '100', '75', '50', '25':
-        print(('                                        <option value="'+percentage+'">'+percentage+'%</option>'))
+        print('                                        <option value="'+percentage+'">'+percentage+'%</option>')
     print('                                    </select>')
     print('                                </div>')
 
@@ -118,12 +118,12 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('                                    </div>')
     print('                                    <select name="blockio" class="custom-select">')
     for percentage in '100', '75', '50', '25':
-        print(('                                        <option value="'+percentage+'">'+percentage+'%</option>'))
+        print('                                        <option value="'+percentage+'">'+percentage+'%</option>')
     print('                                    </select>')
     print('                                </div>')
 
-    print(('                                <input hidden name="mode" value="'+form.getvalue('mode')+'">'))
-    print(('                                <input hidden name="unit" value="'+form.getvalue('unit')+'">'))
+    print('                                <input hidden name="mode" value="'+form.getvalue('mode')+'">')
+    print('                                <input hidden name="unit" value="'+form.getvalue('unit')+'">')
     print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End

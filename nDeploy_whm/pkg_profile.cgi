@@ -166,14 +166,14 @@ if form.getvalue('cpanelpkg'):
     print('                                <select name="backend" class="custom-select">')
     for backends_defined in backend_data_yaml_parsed.keys():
         if backends_defined == backend_category:
-            print(('                                    <option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
+            print('                                    <option selected value="'+backends_defined+'">'+backends_defined+'</option>')
         else:
-            print(('                                    <option value="'+backends_defined+'">'+backends_defined+'</option>'))
+            print('                                    <option value="'+backends_defined+'">'+backends_defined+'</option>')
     print('                                </select>')
     
     #Pass on the domain name to the next stage
     print('                                <div class="input-group-append">')
-    print(('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
+    print('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
     print('                                    <button class="btn btn-outline-primary" type="submit">Select</button>')
     print('                                </div>')
     print('                            </div>')
@@ -197,7 +197,7 @@ if form.getvalue('cpanelpkg'):
     print('                                                '+return_prepend("PHP MAXCHILDREN", phpmaxchildren_hint))
     print('                                            </span>')
     print('                                        </div>')
-    print(('                                        <input class="form-control" placeholder='+phpmaxchildren+' value='+phpmaxchildren+' type="text" name="phpmaxchildren">'))
+    print('                                        <input class="form-control" placeholder='+phpmaxchildren+' value='+phpmaxchildren+' type="text" name="phpmaxchildren">')
     print('                                    </div>')
     print('                                </div>')
 
@@ -447,7 +447,7 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print(('                                <input hidden name="test_cookie" value="'+test_cookie+'">'))
+        print('                                <input hidden name="test_cookie" value="'+test_cookie+'">')
 
     # symlink_protection
     symlink_protection_hint = " Access to a file is denied if any component of the pathname is a symbolic link, and if the link and object that the link points to has different owners. "
@@ -503,7 +503,7 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
+        print('                                <input hidden name="mod_security" value="'+mod_security+'">')
 
     print('                            </div> <!-- Row End -->') #End Row
     print('                        </div> <!-- Card Body End -->') #Card End
@@ -578,7 +578,7 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print(('                                <input hidden name="pagespeed" value="'+pagespeed+'">'))
+        print('                                <input hidden name="pagespeed" value="'+pagespeed+'">')
 
     # pagespeed filter level
     pagespeed_filter_hint = " CoreFilters loads the Core Filters, PassThrough allows you to enable individual filters via a custom NGINX Configuration. "
@@ -608,7 +608,7 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print(('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">'))
+        print('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">')
 
 
     # brotli
@@ -639,7 +639,7 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print(('                                <input hidden name="brotli" value="'+brotli+'">'))
+        print('                                <input hidden name="brotli" value="'+brotli+'">')
 
 
     # gzip
@@ -765,17 +765,17 @@ if form.getvalue('cpanelpkg'):
     print('                                    <div class="input-group btn-group">')
     print('                                        <select name="wwwredirect" class="custom-select">')
     if wwwredirect == 'none':
-        print(('                                            <option selected value="none">No Redirection</option>'))
-        print(('                                            <option value="tononwww">WWW -> Non-WWW</option>'))
-        print(('                                            <option value="towww">Non-WWW -> WWW</option>'))
+        print('                                            <option selected value="none">No Redirection</option>')
+        print('                                            <option value="tononwww">WWW -> Non-WWW</option>')
+        print('                                            <option value="towww">Non-WWW -> WWW</option>')
     elif wwwredirect == 'towww':
-        print(('                                            <option value="none">No Redirection</option>'))
-        print(('                                            <option value="tononwww">WWW -> Non-WWW</option>'))
-        print(('                                            <option selected value="towww">Non-WWW -> WWW</option>'))
+        print('                                            <option value="none">No Redirection</option>')
+        print('                                            <option value="tononwww">WWW -> Non-WWW</option>')
+        print('                                            <option selected value="towww">Non-WWW -> WWW</option>')
     elif wwwredirect == 'tononwww':
-        print(('                                            <option value="none">No Redirection</option>'))
-        print(('                                            <option selected value="tononwww">WWW -> Non-WWW</option>'))
-        print(('                                            <option value="towww">Non-WWW -> WWW</option>'))
+        print('                                            <option value="none">No Redirection</option>')
+        print('                                            <option selected value="tononwww">WWW -> Non-WWW</option>')
+        print('                                            <option value="towww">Non-WWW -> WWW</option>')
     print('                                        </select>')
     print('                                    </div>')
     print('                                </div>')
@@ -787,17 +787,17 @@ if form.getvalue('cpanelpkg'):
     print('                                    <div class="input-group btn-group">')
     print('                                        <select name="redirectstatus" class="custom-select">')
     if redirectstatus == 'none':
-        print(('                                            <option selected value="none">No Redirection</option>'))
-        print(('                                            <option value="301">Permanent (301)</option>'))
-        print(('                                            <option value="307">Temporary (307)</option>'))
+        print('                                            <option selected value="none">No Redirection</option>')
+        print('                                            <option value="301">Permanent (301)</option>')
+        print('                                            <option value="307">Temporary (307)</option>')
     elif redirectstatus == '301':
-        print(('                                            <option value="none">No Redirection</option>'))
-        print(('                                            <option value="307">Temporary (307)</option>'))
-        print(('                                            <option selected value="301">Permanent (301)</option>'))
+        print('                                            <option value="none">No Redirection</option>')
+        print('                                            <option value="307">Temporary (307)</option>')
+        print('                                            <option selected value="301">Permanent (301)</option>')
     elif redirectstatus == '307':
-        print(('                                            <option value="none">No Redirection</option>'))
-        print(('                                            <option selected value="307">Temporary (307)</option>'))
-        print(('                                            <option value="301">Permanent (301)</option>'))
+        print('                                            <option value="none">No Redirection</option>')
+        print('                                            <option selected value="307">Temporary (307)</option>')
+        print('                                            <option value="301">Permanent (301)</option>')
     print('                                        </select>')
     print('                                    </div>')
     print('                                </div>')
@@ -838,7 +838,7 @@ if form.getvalue('cpanelpkg'):
     print('                                                '+return_prepend("Redirect to URL", redirecturl_hint))
     print('                                            </span>')
     print('                                        </div>')
-    print(('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
+    print('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">')
     print('                                    </div>')
     print('                                </div>')
 
@@ -853,7 +853,7 @@ if form.getvalue('cpanelpkg'):
     print('                                <div class="col-md-12">')
 
     # Pass on the package name to the next stage
-    print(('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
+    print('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
     print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Save Settings</button>')
     print('                                </div>')
     print('                            </div> <!-- Row End -->') #End Row

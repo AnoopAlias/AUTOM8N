@@ -203,11 +203,11 @@ if os.path.isfile(cluster_config_file):
                 break
 
         if filesync_status:
-            print(('                                <div class="col-md-9 alert alert-light"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>'))
-            print(('                                <div class="col-md-3 alert alert-success">In Sync</div>'))
+            print('                                <div class="col-md-9 alert alert-light"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
+            print('                                <div class="col-md-3 alert alert-success">In Sync</div>')
         else:
-            print(('                                <div class="col-md-9 alert alert-light"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>'))
-            print(('                                <div class="col-md-3 alert alert-danger">Out of Sync</div>'))
+            print('                                <div class="col-md-9 alert alert-light"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
+            print('                                <div class="col-md-3 alert alert-danger">Out of Sync</div>')
 
     print('                            </div> <!-- Row End -->') #Row End
     print('                        </div> <!-- Card Body End -->') #Card Body End
@@ -249,7 +249,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     user_list = os.listdir("/var/cpanel/users")
     for cpuser in sorted(user_list):
         if cpuser != 'nobody' and cpuser != 'system':
-            print(('                                        <option value="'+cpuser+'">'+cpuser+'</option>'))
+            print('                                        <option value="'+cpuser+'">'+cpuser+'</option>')
     print('                                    </select>')
     print('                                </div>')
     print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
@@ -393,19 +393,19 @@ if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
-            print(('                                        <option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
+            print('                                        <option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>')
 else:
     conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
     for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
-            print(('                                        <option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
+            print('                                        <option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>')
 print('                                    </select>')
 print('                                </div>')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-    print(('                                <input hidden name="section" value="1">'))
+    print('                                <input hidden name="section" value="1">')
 else:
-    print(('                                <input hidden name="section" value="0">'))
+    print('                                <input hidden name="section" value="0">')
 print('                                <button class="btn btn-outline-primary btn-block" type="submit">Edit Settings</button>')
 print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
@@ -463,7 +463,7 @@ print('                                    <select name="cpanelpkg" class="custo
 
 for thepkg in sorted(mypkgs.get('package')):
     pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
-    print(('                                        <option value="'+pkgname+'">'+pkgname+'</option>'))
+    print('                                        <option value="'+pkgname+'">'+pkgname+'</option>')
 
 print('                                    </select>')
 print('                                </div>')
@@ -493,10 +493,10 @@ if not osrelease == 'CloudLinux':
 
             for cpuser in sorted(userlist):
                 if cpuser != 'nobody' and cpuser != 'system':
-                    print(('                                        <option value="'+cpuser+'">'+cpuser+'</option>'))
+                    print('                                        <option value="'+cpuser+'">'+cpuser+'</option>')
 
             print('                                    </select>')
-            print(('                                    <input hidden name="mode" value="user">'))
+            print('                                    <input hidden name="mode" value="user">')
             print('                                </div>')
             print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
             print('                            </form>')
@@ -509,10 +509,10 @@ if not osrelease == 'CloudLinux':
             print('                                    <select name="unit" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print(('                                        <option value="'+service+'">'+service+'</option>'))
+                print('                                        <option value="'+service+'">'+service+'</option>')
 
             print('                                    </select>')
-            print(('                                    <input hidden name="mode" value="service">'))
+            print('                                    <input hidden name="mode" value="service">')
             print('                                </div>')
             print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
             print('                            </form>')
@@ -525,10 +525,10 @@ if not osrelease == 'CloudLinux':
             print('                                    <select name="unit" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print(('                                        <option value="'+service+'">'+service+'</option>'))
+                print('                                        <option value="'+service+'">'+service+'</option>')
 
             print('                                    </select>')
-            print(('                                    <input hidden name="mode" value="service">'))
+            print('                                    <input hidden name="mode" value="service">')
             print('                                </div>')
             print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
             print('                            </form>')
