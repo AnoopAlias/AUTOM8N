@@ -150,7 +150,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                <div class="col-lg-12">')
 
                 # Domain Status
-                cardheader('')
+                cardheader('Current Application Settings: <kbd class="p-1">'+mydomain+'/'+thesubdir+'</kbd>','fas fa-users-cog')
                 print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
                 print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
                 print('                                <div class="col-md-4">')
