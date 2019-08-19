@@ -271,54 +271,47 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
     preferred_php_yaml.close()
     phpversion = preferred_php_yaml_parsed.get('PHP')
-
-    print('                                <div class="col-md-6 alert alert-light align-items-center"><i class="fab fa-php"></i> Default PHP</div>')
-    print('                                <div class="col-md-6 alert alert-success align-items-center justify-content-center">'+phpversion.keys()[0]+'</div>')
-    print('                            </div>')
-    print('                        </div> <!-- Card Body End -->')
-
-    print('                        <div class="card-body"> <!-- Card Body Start -->')
-    print('                            <form class="form" id="toastForm6" onsubmit="return false;">')
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <label class="input-group-text">PHP</label>')
-    print('                                    </div>')
-    print('                                    <select name="phpversion" class="custom-select">')
-
-    backend_config_file = installation_path+"/conf/backends.yaml"
-    backend_data_yaml = open(backend_config_file, 'r')
-    backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
-    backend_data_yaml.close()
-
-    if "PHP" in backend_data_yaml_parsed:
-        php_backends_dict = backend_data_yaml_parsed["PHP"]
-        for versions_defined in list(php_backends_dict.keys()):
-            if versions_defined == phpversion:
-                print('                                        <option selected value="'+phpversion+'">'+phpversion+'</option>')
-            else:
-                print('                                        <option value="'+versions_defined+'">'+versions_defined+'</option>')
-    print('                                    </select>')
-    print('                                </div>')
-    print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
-    print('                            </form>')
-    print('                        </div> <!-- Card Body End -->')
-    cardfooter('If MultiPHP is enabled, <kbd>'+phpversion+'</kbd> by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')    
+    myphpversion = phpversion.keys()[0]
 else:
-    # No Preferred PHP present.
-    phpversion = 'Undefined'
+    myphpversion = "Unset"
+print('                                <div class="col-md-6 alert alert-light align-items-center"><i class="fab fa-php"></i> Default PHP</div>')
+print('                                <div class="col-md-6 alert alert-success align-items-center justify-content-center">'+myphpversion+'</div>')
+print('                            </div>')
+print('                        </div> <!-- Card Body End -->')
 
-    print('                                <div class="col-md-6 alert alert-light align-items-center"><i class="fab fa-php"></i> Default PHP</div>')
-    print('                                <div class="col-md-6 alert alert-success align-items-center justify-content-center">'+phpversion+'</div>')
-    print('                            </div>')
-    print('                        </div> <!-- Card Body End -->')
-    cardfooter('PHP applications servers have not been added to the system. Please run <kbd>/opt/nDeploy/scripts/easy_php_setup.sh</kbd> to add cPanel EA4 PHP Versions as supported backends.')
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <form class="form" id="toastForm6" onsubmit="return false;">')
+print('                                <div class="input-group">')
+print('                                    <div class="input-group-prepend">')
+print('                                        <label class="input-group-text">PHP</label>')
+print('                                    </div>')
+print('                                    <select name="phpversion" class="custom-select">')
 
-#First Column End
+backend_config_file = installation_path+"/conf/backends.yaml"
+backend_data_yaml = open(backend_config_file, 'r')
+backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+backend_data_yaml.close()
+
+if "PHP" in backend_data_yaml_parsed:
+    php_backends_dict = backend_data_yaml_parsed["PHP"]
+    for versions_defined in list(php_backends_dict.keys()):
+        if versions_defined == phpversion:
+            print('                                        <option selected value="'+phpversion+'">'+phpversion+'</option>')
+        else:
+            print('                                        <option value="'+versions_defined+'">'+versions_defined+'</option>')
+print('                                    </select>')
+print('                                </div>')
+print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
+print('                            </form>')
+print('                        </div> <!-- Card Body End -->')
+cardfooter('If MultiPHP is enabled, <kbd>'+phpversion+'</kbd> by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
+
+# First Column End
 print('                <!-- First Column End -->')
 print('                </div>')
 print('')
 
-#Second Column
+# Second Column
 print('                <!-- Second Column Start -->')
 print('                <div class="col-lg-6">') #Right Column
 print('')
@@ -560,5 +553,3 @@ print_loader()
 print('    <!-- Body End -->')
 print('    </body>')
 print('</html>')
-
-
