@@ -295,8 +295,8 @@ backend_data_yaml.close()
 if "PHP" in backend_data_yaml_parsed:
     php_backends_dict = backend_data_yaml_parsed["PHP"]
     for versions_defined in list(php_backends_dict.keys()):
-        if versions_defined == phpversion:
-            print('                                        <option selected value="'+phpversion+'">'+phpversion+'</option>')
+        if versions_defined == myphpversion:
+            print('                                        <option selected value="'+myphpversion+'">'+myphpversion+'</option>')
         else:
             print('                                        <option value="'+versions_defined+'">'+versions_defined+'</option>')
 print('                                    </select>')
@@ -304,7 +304,7 @@ print('                                </div>')
 print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Set Default PHP</button>')
 print('                            </form>')
 print('                        </div> <!-- Card Body End -->')
-cardfooter('If MultiPHP is enabled, <kbd>'+phpversion+'</kbd> by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
+cardfooter('If MultiPHP is enabled, <kbd>'+myphpversion+'</kbd> by MultiPHP is used by autoconfig. It is recommended that MultiPHP is enabled for all accounts for best results.')
 
 # First Column End
 print('                <!-- First Column End -->')
