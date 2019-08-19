@@ -17,10 +17,8 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 
-
 cgitb.enable()
 form = cgi.FieldStorage()
-
 
 if form.getvalue('mode') and form.getvalue('unit'):
     if form.getvalue('mode') == 'service':
@@ -128,6 +126,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End
     cardfooter('Set the desired resource percentages for '+myservice)
+
 else:
     print_header('Resource Usage')
     bcrumb('Resource Usage','fas fa-compress')
@@ -140,7 +139,7 @@ else:
     print_nontoast_error('Forbidden!', 'Missing Data!')
     sys.exit(0)
 
-#Second Column End
+# Column End
 print('                <!-- First Column End -->')
 print('                </div>')
 print('')

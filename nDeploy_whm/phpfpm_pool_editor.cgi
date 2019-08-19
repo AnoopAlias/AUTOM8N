@@ -100,8 +100,13 @@ if form.getvalue('poolfile') and form.getvalue('section'):
 
         print('                        </div> <!-- Card Body End -->') #Card Body End
         cardfooter('<strong>WARNING USE AT YOUR OWN RISK! </strong><br>Adding or modifying pool configurations with invalid settings can bring down your PHP application server.')
+
+    else:
+        print_nontoast_error('Forbidden!', 'Missing Poolfile!')
+        sys.exit(0)
+
 else:
-    print_nontoast_error('Forbidden!', 'Missing Poolfile Data!')
+    print_nontoast_error('Forbidden!', 'Missing Poolfile or Section Data!')
     sys.exit(0)
 
 #Column End

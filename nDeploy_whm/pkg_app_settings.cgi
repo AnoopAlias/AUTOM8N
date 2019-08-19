@@ -182,8 +182,13 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         print('                        </form>')
         print('                        </div> <!-- Card Body End -->') #Card End
         cardfooter('')
+
+    else:
+        print_nontoast_error('Forbidden!', 'Missing cPanel Package Data File!')
+        sys.exit(0)
+
 else:
-    print_nontoast_error('Forbidden!', 'Missing cPanel Package Data!')
+    print_nontoast_error('Forbidden!', 'Missing cPanel Package or Backend Data!')
     sys.exit(0)
 
 #Column End
