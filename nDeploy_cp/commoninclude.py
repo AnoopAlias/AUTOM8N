@@ -128,27 +128,27 @@ def print_nontoast_error(thenotice, thereason):
 
 
 def print_forbidden():
-    print(('<i class="fas fa-exclamation"></i><p>Forbidden</p>'))
+    print('<i class="fas fa-exclamation"></i><p>Forbidden</p>')
 
 
 def print_error(themessage):
-    print(('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>'))
+    print('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>')
 
 
 def print_success(themessage):
-    print(('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>'))
+    print('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>')
 
 
 def print_success_alert(themessage):
-    print(('<div class="alert alert-success">'+themessage+'</div>'))
+    print('<div class="alert alert-success">'+themessage+'</div>')
 
 
 def print_error_alert(themessage):
-    print(('<div class="alert alert-danger text-left">'+themessage+'</div>'))
+    print('<div class="alert alert-danger text-left">'+themessage+'</div>')
 
 
 def print_sys_tip(theoption, hint):
-    print(('<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
+    print('<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>')
 
 
 def print_disabled():
@@ -161,15 +161,15 @@ def print_disabled():
 
 
 def print_forbidden_wrapper():
-    print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>Forbidden</p></div></div>'))
+    print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>Forbidden</p></div></div>')
 
 
 def print_error_wrapper(themessage):
-    print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>'+themessage+'</p></div></div>'))
+    print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>'+themessage+'</p></div></div>')
 
 
 def print_success_wrapper(themessage):
-    print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>'))
+    print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>')
 
 
 def return_multi_input(theoption, hint):
@@ -179,25 +179,25 @@ def return_multi_input(theoption, hint):
 
 def print_loader():
     print('')
-    print(('        <div id="loader"><i class="fas fa-infinity fa-spin"></i></div>'))
+    print('        <div id="loader"><i class="fas fa-infinity fa-spin"></i></div>')
     print('')
 
 
 # Print Header
 def print_header(title=''):
-    print(('Content-Type: text/html'))
-    print((''))
-    print(('<html>'))
-    print(('    <head>'))
-    print(('        <title>'+brand+' - '+title+'</title>'))
-    print(('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>'))
-    print(('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>'))
-    print(('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>'))
-    print(('        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">'))
-    print(('        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">'))
-    print(('        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">'))
-    print(('        <script src="js.js"></script>'))
-    print(('        <link rel="stylesheet" href="styles.css">'))
+    print('Content-Type: text/html')
+    print('')
+    print('<html>')
+    print('    <head>')
+    print('        <title>'+brand+' - '+title+'</title>')
+    print('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>')
+    print('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>')
+    print('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>')
+    print('        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">')
+    print('        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">')
+    print('        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">')
+    print('        <script src="js.js"></script>')
+    print('        <link rel="stylesheet" href="styles.css">')
     print('    </head>')
     print('')
     print('    <!-- Body Start -->')
