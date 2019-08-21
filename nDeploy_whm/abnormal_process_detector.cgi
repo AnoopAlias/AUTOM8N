@@ -45,7 +45,7 @@ for myprocess in psutil.process_iter():
     if myusername in user_list and mystatus != 'zombie':
         if not myexe.endswith(("/usr/libexec/openssh/sftp-server")) and (myexe.startswith(("/usr/bin/perl", "/home")) or myexe == '/'):
             malware = True
-            if os.path.isfile('/opt/nDeploy/conf/autokill_malware'):
+            if not os.path.isfile('/opt/nDeploy/conf/disable_autokill_malware'):
                 subprocess.call('killall -9 -u '+myusername, shell=True)
                 print('STATUS: <kbd>killed</kbd><br>')
             print('PID: <kbd>'+str(mypid)+'</kbd><br>')
