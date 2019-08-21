@@ -137,9 +137,9 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('                                <select name="backendversion" class="custom-select">')
             for mybackend_version in backends_dict.keys():
                 if mybackend_version == backend_version:
-                    print(('                                    <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>'))
+                    print('                                    <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>')
                 else:
-                    print(('                                    <option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
+                    print('                                    <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
             print('                                </select>')
             print('                            </div>')
 
@@ -150,9 +150,9 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('                                <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 if myapptemplate == apptemplate_code:
-                    print(('                                    <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                    print('                                    <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
                 else:
-                    print(('                                    <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                    print('                                    <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
             print('                                </select>')
             print('                            </div>')
         else:
@@ -162,7 +162,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('                                </div>')
             print('                                <select name="backendversion" class="custom-select">')
             for mybackend_version in backends_dict.keys():
-                print(('                                    <option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
+                print('                                    <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
             print('                                </select>')
             print('                            </div>')
             print('                            <div class="input-group">')
@@ -171,19 +171,24 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('                                </div>')
             print('                                <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
-                print(('                                    <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
+                print('                                    <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
             print('                                </select>')
             print('                            </div>')
 
         # Pass on the domain name to the next stage
-        print(('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
-        print(('                            <input hidden name="backend" value="'+mybackend+'">'))
+        print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
+        print('                            <input hidden name="backend" value="'+mybackend+'">')
         print('                            <button class="btn btn-outline-primary btn-block" type="submit">Update Package</button>')
         print('                        </form>')
         print('                        </div> <!-- Card Body End -->') #Card End
         cardfooter('')
+
+    else:
+        print_nontoast_error('Forbidden!', 'Missing cPanel Package Data File!')
+        sys.exit(0)
+
 else:
-    print_nontoast_error('Forbidden!', 'Missing cPanel Package Data!')
+    print_nontoast_error('Forbidden!', 'Missing cPanel Package or Backend Data!')
     sys.exit(0)
 
 #Column End

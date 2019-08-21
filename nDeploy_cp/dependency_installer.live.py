@@ -36,7 +36,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     mybackend = form.getvalue('backend_category')
     mybackendversion = form.getvalue('backend_version')
     mydocroot = form.getvalue('document_root')
-    print(('<p class="text-left">Project root: <kbd>'+mydocroot+'</<kbd></p>'))
+    print('<p class="text-left">Project root: <kbd>'+mydocroot+'</<kbd></p>')
     if mybackend == 'RUBY':
         if os.path.isfile(mydocroot+'/Gemfile'):
             if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
@@ -52,14 +52,14 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('<div class="alert alert-info">')
                 print('<p>If the install failed run the following command in your shell to proceed with manual installation:<p>')
                 print('<ul class="list-unstyled text-left">')
-                print(('<li class="mb-1">cd '+mydocroot+'</li>'))
-                print(('<li class="mb-1">/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle</li>'))
+                print('<li class="mb-1">cd '+mydocroot+'</li>')
+                print('<li class="mb-1">/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle</li>')
                 print('</ul>')
                 print('</div>')
             else:
                 commoninclude.print_error('bundler command not found')
         else:
-            commoninclude.print_error_alert(('<p>Gemfile not found for <span class="badge badge-warning">RUBY</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>' + mydocroot + '/Gemfile</kbd></li></ul>'))
+            commoninclude.print_error_alert('<p>Gemfile not found for <span class="badge badge-warning">RUBY</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>' + mydocroot + '/Gemfile</kbd></li></ul>')
     elif mybackend == 'NODEJS':
         if os.path.isfile(mydocroot+'/package.json'):
             if os.path.isfile('/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm'):
@@ -77,15 +77,15 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('<div class="alert alert-info">')
                 print('<p>If the install failed run the following command in your shell to proceed with manual installation:<p>')
                 print('<ul class="list list-unstyled mb-0">')
-                print(('<li>export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"</li>'))
-                print(('<li>cd '+mydocroot+'<li>'))
-                print(('<li>npm install --production</li>'))
+                print('<li>export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"</li>')
+                print('<li>cd '+mydocroot+'<li>')
+                print('<li>npm install --production</li>')
                 print('</ul>')
                 print('</div>')
             else:
                 commoninclude.print_error('npm command not found')
         else:
-            commoninclude.print_error_alert(('<p>package.json not found for <span class="badge badge-warning">NODEJS</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:<li></li><kbd>'+mydocroot+'/package.json</kbd></li></ul>'))
+            commoninclude.print_error_alert('<p>package.json not found for <span class="badge badge-warning">NODEJS</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:<li></li><kbd>'+mydocroot+'/package.json</kbd></li></ul>')
     elif mybackend == 'PYTHON':
         if os.path.isfile(mydocroot+'/requirements.txt'):
             if os.path.isfile('/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip'):
@@ -101,15 +101,15 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('<div class="alert alert-info">')
                 print('<p>If the install failed run the following command in your shell to proceed with manual installation:</p>')
                 print('<ul class="list list-unstyled mb-0">')
-                print(('<li>export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"</li>'))
-                print(('<li>cd '+mydocroot+'</li>'))
+                print('<li>export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"</li>')
+                print('<li>cd '+mydocroot+'</li>')
                 print('<li>pip install --user -r requirements.txt</li>')
                 print('</ul>')
                 print('</div>')
             else:
                 commoninclude.print_error('pip command not found')
         else:
-            commoninclude.print_error_alert(('<p>requirements.txt not found for <span class="badge badge-warning">PYTHON</span> project</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/requirements.txt</kbd><li></ul>'))
+            commoninclude.print_error_alert('<p>requirements.txt not found for <span class="badge badge-warning">PYTHON</span> project</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/requirements.txt</kbd><li></ul>')
     elif mybackend == 'PHP':
         if os.path.isfile(mydocroot+'/composer.json'):
             if os.path.isfile('/opt/cpanel/composer/bin/composer'):
@@ -125,15 +125,15 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print('<div class="alert alert-info">')
                 print('<p>If the install failed run the following command in your shell to proceed with manual installation:</p>')
                 print('<ul class="list list-unstyled mb-0">')
-                print(('<li>export PATH="$PATH:/opt/cpanel/composer/bin"</li>'))
-                print(('<li>cd '+mydocroot+'</li>'))
-                print(('<li>/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install</li>'))
+                print('<li>export PATH="$PATH:/opt/cpanel/composer/bin"</li>')
+                print('<li>cd '+mydocroot+'</li>')
+                print('<li>/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install</li>')
                 print('</ul>')
                 print('</div>')
             else:
                 commoninclude.print_error('composer command not found')
         else:
-            commoninclude.print_error_alert(('<p>composer.json not found for <span class="badge badge-warning">PHP</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/composer.json</kbd></li></ul>'))
+            commoninclude.print_error_alert('<p>composer.json not found for <span class="badge badge-warning">PHP</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/composer.json</kbd></li></ul>')
 else:
     commoninclude.print_forbidden()
 
