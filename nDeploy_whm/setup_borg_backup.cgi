@@ -258,7 +258,7 @@ if os.path.isdir('/etc/borgmatic'):
             mykeypos = mykeypos + 1
             print('                                </div>')
     print('                            </div>')
-    print('                            <div class="label label-default mt-2 mb-2">Add another <kbd> home </kbd> directory to backup:</div>')
+    print('                            <div class="label label-default mt-2 mb-2">Add another <kbd>home</kbd>  directory to backup:</div>')
     print('                            <form class="form" method="post" id="toastForm14" onsubmit="return false;">')
 
     print('                                <div class="input-group mb-0">')
