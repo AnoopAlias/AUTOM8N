@@ -40,8 +40,8 @@ print('')
 if os.path.isdir('/etc/borgmatic'):
 
     # System Status
-    cardheader('Borg Backup Settings','fas fa-database')
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    cardheader('Borg Backup Settings', 'fas fa-database')
+    print('                        <div class="card-body"> <!-- Card Body Start -->')  # Card Body Start
 
     # Check if backup config file is present or initilize otherwise
     if os.path.isfile(backup_config_file):
@@ -54,7 +54,7 @@ if os.path.isdir('/etc/borgmatic'):
         pkgacct_backup = yaml_parsed_backupyaml.get('pkgacct_backup', 'enabled')
         system_files = yaml_parsed_backupyaml.get('system_files', 'enabled')
         mysql_backup = yaml_parsed_backupyaml.get('mysql_backup', 'enabled')
-        backup_path = yaml_parsed_backupyaml.get('backup_path','/backup')
+        backup_path = yaml_parsed_backupyaml.get('backup_path', '/backup')
     else:
         pkgacct_backup = "enabled"
         system_files = "enabled"
@@ -83,7 +83,6 @@ if os.path.isdir('/etc/borgmatic'):
     print('                            <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
     print('                                <div class="row align-items-center"> <!-- Row Start -->')
 
-
     # system_files
     system_files_hint = "Backup the cPanel System Files"
     if system_files == 'enabled':
@@ -110,7 +109,6 @@ if os.path.isdir('/etc/borgmatic'):
         print('                                            </label>')
         print('                                        </div>')
         print('                                    </div>')
-
 
     # mysql_backup
     mysql_backup_hint = "Use MariaBackup to Backup the FULL MySQL Data Directory"
@@ -139,7 +137,6 @@ if os.path.isdir('/etc/borgmatic'):
         print('                                        </div>')
         print('                                    </div>')
 
-
     # backup_path
     backup_path_hint = "This is the directory where the cPanel PKG Accounts, SQL backups, and system files are stored."
     print('                                    <div class="col-md-12">')
@@ -149,15 +146,15 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                                    '+return_multi_input("PKGacct Backup Path", backup_path_hint))
     print('                                                </span>')
     print('                                            </div>')
-    print('                                            <input class="form-control" placeholder="'+backup_path+'" type="text" name="backup_path">')
+    print('                                            <input class="form-control" value="'+backup_path+'" type="text" name="backup_path">')
     print('                                        </div>')
     print('                                    </div>')
     print('                                    <div class="col-md-12">')
     print('                                        <button class="btn btn-outline-primary btn-block mt-2" type="submit">Save Backup Settings</button>')
     print('                                    </div>')
-    print('                                </div> <!-- Row End -->') #Row Start
+    print('                                </div> <!-- Row End -->')  # Row Start
     print('                            </form>')
-    print('                        </div> <!-- Card Body End -->') #Card Body End
+    print('                        </div> <!-- Card Body End -->')  # Card Body End
     cardfooter('Configure the Borg backup settings to control what content is backed up, and at what location to create the backups.')
 
     # Check if borgmatic config file is present or initilize otherwise
@@ -186,8 +183,8 @@ if os.path.isdir('/etc/borgmatic'):
         if not os.path.exists('/root/borg_restore_point'):
             os.makedirs('/root/borg_restore_point')
 
-        cardheader('Restore Points','fas fas-database')
-        print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+        cardheader('Restore Points', 'fas fas-database')
+        print('                        <div class="card-body"> <!-- Card Body Start -->')  # Card Body Start
 
         if os.path.ismount('/root/borg_restore_point'):
             with open('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE', 'r') as restore_point_conf:
@@ -198,9 +195,9 @@ if os.path.isdir('/etc/borgmatic'):
             print('				<input hidden name="action" value="umount">')
             print('					<button type="submit" class="btn btn-outline-primary btn-block ">Umount Restore Point</button>')
             print('				</form>')
-            mount_flag=True
+            mount_flag = True
         else:
-            mount_flag=False
+            mount_flag = False
         proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
         try:
             output = json.loads(proc.stdout.read())
@@ -229,8 +226,8 @@ if os.path.isdir('/etc/borgmatic'):
         print('                        </div>')  # card-body end
         cardfooter('<kbd>/root/borg_restore_point</kbd> is the mount point')
 
-    cardheader('Additional <kbd> home</kbd> Directory Backup','fas fa-database')
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    cardheader('Additional <kbd> home</kbd> Directory Backup', 'fas fa-database')
+    print('                        <div class="card-body"> <!-- Card Body Start -->')  # Card Body Start
 
     # backup directories
     backup_dir_list = yaml_parsed_borgmaticyaml['location']['source_directories']
@@ -238,7 +235,7 @@ if os.path.isdir('/etc/borgmatic'):
     if backup_dir_list:
         print('                            <div class="label label-default mb-2">Currently backing up:</div>')
         print('                            <div class="clearfix">')
-        mykeypos=1
+        mykeypos = 1
         for path in backup_dir_list:
             print('                                <div class="input-group input-group-inline input-group-sm">')
             print('                                    <div class="input-group-prepend">')
@@ -275,21 +272,21 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     print('                            </form>')
-    print('                        </div> <!-- Card Body End -->') #Card Body End
+    print('                        </div> <!-- Card Body End -->')  # Card Body End
     cardfooter('Configure additional /home directories that you would like to backup.')
 
-    #First Column End
+    # First Column End
     print('                <!-- First Column End -->')
     print('                </div>')
     print('')
 
-    #Second Column
+    # Second Column
     print('                <!-- Second Column Start -->')
-    print('                <div class="col-lg-6">') #Right Column
+    print('                <div class="col-lg-6">')  # Right Column
     print('')
 
-    cardheader('Borg Settings','fas fa-database')
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    cardheader('Borg Settings', 'fas fa-database')
+    print('                        <div class="card-body"> <!-- Card Body Start -->')  # Card Body Start
     print('                            <form class="form input-group-prepend-min" method="post" id="toastForm12" onsubmit="return false;"> ')
 
     # repositories
@@ -300,7 +297,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            '+return_multi_input("repositories", repositories_hint))
     print('                                        </span>')
     print('                                    </div>')
-    print('                                    <input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
+    print('                                    <input class="form-control" value="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
     print('                                </div>')
 
     # ssh_command
@@ -311,7 +308,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            '+return_multi_input("ssh_command", ssh_command_hint))
     print('                                        </span>')
     print('                                    </div>')
-    print('                                    <input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
+    print('                                    <input class="form-control" value="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
     print('                                </div>')
 
     # encryption_passphrase
@@ -333,7 +330,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            '+return_multi_input("remote_rate_limit", remote_rate_limit_hint))
     print('                                        </span>')
     print('                                    </div>')
-    print('                                    <input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
+    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
     print('                                </div>')
 
     # retention
@@ -346,7 +343,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            '+return_multi_input("keep_hourly", keep_hourly_hint))
     print('                                        </span>')
     print('                                    </div>')
-    print('                                    <input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_hourly'])+'" type="text" name="keep_hourly">')
+    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_hourly'])+'" type="text" name="keep_hourly">')
     print('                                </div>')
 
     # keep_daily
@@ -357,7 +354,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            '+return_multi_input("keep_daily", keep_daily_hint))
     print('                                        </span>')
     print('                                    </div>')
-    print('                                    <input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_daily'])+'" type="text" name="keep_daily">')
+    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_daily'])+'" type="text" name="keep_daily">')
     print('                                </div>')
 
     # keep_weekly
@@ -368,7 +365,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            '+return_multi_input("keep_weekly", keep_weekly_hint))
     print('                                        </span>')
     print('                                    </div>')
-    print('                                    <input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
+    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
     print('                                </div>')
 
     # keep_monthly
@@ -379,7 +376,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            '+return_multi_input("keep_monthly", keep_monthly_hint))
     print('                                        </span>')
     print('                                    </div>')
-    print('                                    <input class="form-control" placeholder="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
+    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
     print('                                </div>')
 
     print('                                <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save Borg Settings</button>')
@@ -404,7 +401,7 @@ else:
     print('                        </div> <!-- Card Body End -->')
     cardfooter('')
 
-#Second Column End
+# Second Column End
 print('                <!-- Second Column End -->')
 print('                </div>')
 print('')
