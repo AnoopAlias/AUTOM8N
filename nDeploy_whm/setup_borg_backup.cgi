@@ -319,7 +319,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            '+return_multi_input("passphrase", encryption_passphrase_hint))
     print('                                        </span>')
     print('                                    </div>')
-    print('                                    <input class="form-control" placeholder="'+yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']+'" type="text" name="encryption_passphrase">')
+    print('                                    <input class="form-control" value="'+yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']+'" type="text" name="encryption_passphrase">')
     print('                                </div>')
 
     # remote_rate_limit
