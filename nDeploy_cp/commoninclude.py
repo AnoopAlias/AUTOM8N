@@ -230,7 +230,7 @@ def print_footer():
     print('                <a href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
     print('            </div>')
     print('            <div class="row justify-content-center text-center text-'+text_color+'">')
-    print('                <p class="small">We are running '+brand+' version '+autom8n_version.replace("Autom8n",'')+' on '+nginx_version+'.</p>')
+    print('                <p class="small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
     print('            </div>')
     print('')
 
