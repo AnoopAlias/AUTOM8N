@@ -12,7 +12,7 @@ __license__ = "GPL"
 __version__ = "1.0.0"
 __maintainer__ = "Budd Grant, https://highavailability.io"
 __email__ = "ops@highavailability.io"
-__status__ = "Development"
+__status__ = "Production"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -24,7 +24,7 @@ cgitb.enable()
 form = cgi.FieldStorage()
 
 
-#Theming Support
+# nDeploy Control
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
@@ -61,7 +61,7 @@ else:
     app_email = "None"
 
 
-#Branding Support
+# Branding Support
 if os.path.isfile(branding_file):
     with open(branding_file, 'r') as brand_data_file:
         yaml_parsed_brand = yaml.safe_load(brand_data_file)

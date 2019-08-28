@@ -25,6 +25,7 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 autom8n_version_info_file = installation_path+"/conf/version.yaml"
 nginx_version_info_file = "/etc/nginx/version.yaml"
+branding_file = installation_path+"/conf/branding.yaml"
 
 cgitb.enable()
 print_header('Home')
@@ -57,6 +58,14 @@ with open(nginx_version_info_file, 'r') as nginx_version_info_yaml:
 nginx_version = nginx_version_info_yaml_parsed.get('nginx_version')
 autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 
+#Branding Data Pull
+if os.path.isfile(branding_file):
+    with open(branding_file, 'r') as brand_data_file:
+        yaml_parsed_brand = yaml.safe_load(brand_data_file)
+    brand = yaml_parsed_brand.get("brand", "AUTOM8N")
+else:
+    brand = "AUTOM8N"
+
 # System Status
 cardheader('')
 print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
@@ -81,7 +90,7 @@ print('                                <div class="col-md-4">')
 print('                                    <div class="p-3 border-bottom text-center">')
 print('                                        <h4 class="mb-0">Watcher Status</h4>')
 print('                                        <ul class="list-unstyled mb-0">')
-print('                                            <li><small>'+autom8n_version+'</small></li>')
+print('                                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n",'')+'</small></li>')
 if watcher_status:
     print('                                            <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:

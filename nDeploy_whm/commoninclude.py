@@ -16,7 +16,7 @@ autom8n_version_info_file = installation_path+"/conf/version.yaml"
 nginx_version_info_file = "/etc/nginx/version.yaml"
 
 
-#nDeploy Control
+# nDeploy Control
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
