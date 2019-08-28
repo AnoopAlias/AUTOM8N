@@ -50,7 +50,7 @@ for myprocess in psutil.process_iter():
     if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
         watcher_status = True
 
-# get version of Nginx and plugin
+# Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
     autom8n_version_info_yaml_parsed = yaml.safe_load(autom8n_version_info_yaml)
 with open(nginx_version_info_file, 'r') as nginx_version_info_yaml:
@@ -58,7 +58,7 @@ with open(nginx_version_info_file, 'r') as nginx_version_info_yaml:
 nginx_version = nginx_version_info_yaml_parsed.get('nginx_version')
 autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 
-#Branding Data Pull
+# Branding Data Pull
 if os.path.isfile(branding_file):
     with open(branding_file, 'r') as brand_data_file:
         yaml_parsed_brand = yaml.safe_load(brand_data_file)
