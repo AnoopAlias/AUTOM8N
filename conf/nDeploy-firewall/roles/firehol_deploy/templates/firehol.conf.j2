@@ -39,7 +39,7 @@ client_xtendhttps_ports="default"
 
 
 cpanel_services_in="ftp ssh smtp smtpalt smtps submission dns http https xtendhttp xtendhttps pop3 pop3s imap imaps mysql webdav webdavs caldav caldavs cpanel cpanels whm whms webmail webmails"
-cpanel_services_out="cpan ftp smtp smtps time submission dhcp dns whois http https xtendhttp xtendhttps ident rsync razor webdav webdavs caldav caldavs cplicense apns dcc pyzor whm whms"
+cpanel_services_out="cpan ftp ssh smtp smtps time submission dhcp dns whois http https xtendhttp xtendhttps ident rsync razor webdav webdavs caldav caldavs cplicense apns dcc pyzor whm whms"
 
 {% for myip in ansible_all_ipv4_addresses %}
 ipv4 synproxy input inface {{ ansible_default_ipv4.interface }} dst {{ myip }} dport 80 accept
