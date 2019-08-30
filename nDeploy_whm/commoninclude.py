@@ -20,38 +20,15 @@ nginx_version_info_file = "/etc/nginx/version.yaml"
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
-    heading_background_color = yaml_parsed_ndeploy_control_settings.get("heading_background_color","#FFFFFF")
-    heading_foreground_color = yaml_parsed_ndeploy_control_settings.get("heading_foreground_color","#3D4366")
-    body_background_color = yaml_parsed_ndeploy_control_settings.get("body_background_color","#F1F1F8")
-    card_color = yaml_parsed_ndeploy_control_settings.get("card_color","light")
-    text_color = yaml_parsed_ndeploy_control_settings.get("text_color","dark")
-    breadcrumb_active_color = yaml_parsed_ndeploy_control_settings.get("breadcrumb_active_color","#121212")
-    heading_height = yaml_parsed_ndeploy_control_settings.get("heading_height","50")
-    header_button_color = yaml_parsed_ndeploy_control_settings.get("header_button_color","primary")
-    icon_height = yaml_parsed_ndeploy_control_settings.get("icon_height","48")
-    icon_width = yaml_parsed_ndeploy_control_settings.get("icon_width","48")
-    logo_not_icon = yaml_parsed_ndeploy_control_settings.get("logo_not_icon","disabled")
-    logo_height = yaml_parsed_ndeploy_control_settings.get("logo_height","29")
-    logo_width = yaml_parsed_ndeploy_control_settings.get("logo_width","242")
-    logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url","https://autom8n.com/assets/img/logo-dark.png")
-    app_email = yaml_parsed_ndeploy_control_settings.get("app_email","None")
+    ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light") 
+    primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#121212")
+    logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "None")
+    app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
 else:
-    heading_background_color = "#FFFFFF"
-    heading_foreground_color = "#3D4366"
-    body_background_color = "#F1F1F8"
-    card_color = "light"
-    text_color = "dark"
-    breadcrumb_active_color = "#121212"
-    heading_height = "50"
-    header_button_color = "primary"
-    icon_height = "48"
-    icon_width = "48"
-    logo_not_icon = "disabled"
-    logo_height = "29"
-    logo_width = "242"
+    ndeploy_theme_color = "light"
+    primary_color = "#121212"
     logo_url = "https://autom8n.com/assets/img/logo-dark.png"
     app_email = "None"
-
 
 # Branding Support
 if os.path.isfile(branding_file):
@@ -60,17 +37,14 @@ if os.path.isfile(branding_file):
     brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
     brand = yaml_parsed_brand.get("brand", "AUTOM8N")
     brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
-    brand_footer = yaml_parsed_brand.get("brand_footer", '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>') #Depreciated
     brand_anchor = yaml_parsed_brand.get("brand_anchor", "A U T O M 8 N")
     brand_link = yaml_parsed_brand.get("brand_link", "https://autom8n.com/")
 else:
     brand_logo = "xtendweb.png"
     brand = "AUTOM8N"
     brand_group = "NGINX AUTOMATION"
-    brand_footer = '<a target="_blank" href="https://autom8n.com/">A U T O M 8 N</a>' #Depreciated
     brand_anchor = "A U T O M 8 N"
     brand_link = "https://autom8n.com/"
-
 
 # Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
@@ -185,21 +159,21 @@ def print_header(title=''):
     print('    </head>')
     print('')
     print('    <!-- Body Start -->')
-    print('    <body style="background-color:'+body_background_color+'">')
-    print('        <header id="main-header" class="d-flex justify-content-between align-items-center" style="height:'+heading_height+';color:'+heading_foreground_color+';background-color:'+heading_background_color+'">')
+    print('    <body class="ndeploy-theme-'+ndeploy_theme_color+'">')
+    print('        <header id="main-header" class="d-flex justify-content-between align-items-center">')
     print('            <div class="logo">')
     print('                <h4>')
-    if logo_not_icon == 'enabled':
-        print('                    <a href="xtendweb.cgi"><img border="0" src="'+logo_url+'" width="'+logo_width+'" height="'+logo_height+'"></a>')
+    if logo_url != 'None':
+        print('                    <a href="xtendweb.cgi"><img border="0" src="'+logo_url+'"></a>')
     else:
-        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="'+icon_width+'" height="'+icon_height+'"></a>'+brand)
+        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="48" height="48"></a>'+brand)
     print('                </h4>')
     print('            </div>')
-    print('            <div class="d-flex header-buttons">')
-    print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="ndeploy_control.cgi"><i class="fas fa-tools"></i> '+brand+' Control </a></div>')
+    print('            <div class="d-flex">')
+    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="ndeploy_control.cgi"><i class="fas fa-tools"></i> '+brand+'&nbsp;Control </a></div>')
     if app_email != 'None':
-        print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" href="mailto:'+app_email+'"><i class="fas fa-envelope"></i> Support </a></div>')
-    print('                <div class="buttons p-2"><a class="btn btn-'+header_button_color+'" target="_blank" href="help.txt"><i class="fas fa-book-open"></i> Documentation </a></div>')
+        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'"><i class="fas fa-envelope"></i> Support </a></div>')
+    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt"><i class="fas fa-book-open"></i> Documentation </a></div>')
     print('            </div>')
     print('        </header>')
     print('')
@@ -212,19 +186,25 @@ def print_footer():
     print('')
     print('            <!-- Footer Start -->')
     print('            <div class="row justify-content-center">')
-    print('                <a href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
+    print('                <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
     print('            </div>')
-    print('            <div class="row justify-content-center text-center text-'+text_color+'">')
-    print('                <p class="small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+    print('            <div class="row justify-content-center text-center text-TEXTCOLORCLASSNEEDED">')
+    if ndeploy_theme_color == 'light':
+        print('                <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+    if ndeploy_theme_color == 'dark':
+        print('                <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
     print('            </div>')
     print('')
 
 
 # Card Start
-def cardheader(header='Untitled Card',faicon='fas fa-cogs'):
+def cardheader(header='Untitled Card', faicon='fas fa-cogs'):
     print('')
     print('                    <!-- Bootstrap Card Start for '+header+' -->')
-    print('                    <div class="card mb-4 text-'+text_color+' bg-'+card_color+'">')
+    if ndeploy_theme_color == 'dark':
+        print('                    <div class="card mb-4 text-white bg-'+ndeploy_theme_color+'">')
+    if ndeploy_theme_color == 'light':
+        print('                    <div class="card mb-4 text-dark bg-'+ndeploy_theme_color+'">')
     if header != '':
         print('                        <div class="card-header">')
         print('                            <h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>')
@@ -247,16 +227,16 @@ def cardfooter(text='Unmodified Footer Text'):
 
 
 # Breadcrumbs
-def bcrumb(pagename="Unnamed Page",active_fa_icon="fas fa-infinity"):
+def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-infinity"):
     print('')
     print('            <!-- Navigation -->')
     print('            <nav aria-label="breadcrumb">')
     print('                <ol class="breadcrumb justify-content-md-center">')
     if pagename != 'Home':
         print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
-        print('                    <li style="color:'+breadcrumb_active_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>')
+        print('                    <li style="color:'+primary_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>')
     else:
-        print('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+breadcrumb_active_color+' !important;" href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
+        print('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+primary_color+' !important;" href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
     print('                </ol>')
     print('            </nav>')
     print('')

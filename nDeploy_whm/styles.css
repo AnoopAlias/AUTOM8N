@@ -4,6 +4,20 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+.ndeploy-theme-dark {
+  background-color: #0E0E07;
+}
+.ndeploy-theme-dark #main-header {
+  background-color: #000000;
+}
+
+.ndeploy-theme-light {
+  background-color: #F1F1F8;
+}
+.ndeploy-theme-light #main-header {
+  background-color: #FFFFFF;
+}
+
 #main-header {
   background-color: #FFFFFF;
   padding: 0.5rem 1rem 0.1rem;
@@ -13,7 +27,7 @@ body {
 }
 #main-header img {
   position: relative;
-  top: -2px;
+  max-height: 65px;
 }
 #main-header .logo {
   display: inline-block;
@@ -427,4 +441,4 @@ kbd {
   }
 }
 
-/*# sourceMappingURL=styles.css.map */
+/*# sourceMappingURL=test.css.map */
