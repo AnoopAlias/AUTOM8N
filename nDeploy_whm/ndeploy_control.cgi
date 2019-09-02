@@ -155,10 +155,9 @@ print('                                    </div>')
 print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Save Branding Options</button>')
 print('                                </form>')
 
-# Need to REMOVE
-print('                                <form class="form w-100" id="ndeploy_control_rebuild_brand" method="post" onsubmit="return false;">')
-print('                                <input hidden class="form-control" name="rebuild_brand" value="enabled">')
-print('                                <button class="btn btn-outline-primary btn-block" type="submit">Rebuild Brand - Remove Me</button>')
+print('                                <form class="form w-100" id="restore_branding_defaults" method="post" onsubmit="return false;">')
+print('                                    <input hidden class="form-control" name="restore_defaults" value="enabled">')
+print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Restore Branding Defaults</button>')
 print('                                </form>')
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
@@ -228,8 +227,15 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="app_email" value="'+app_email+'" id="app_email" aria-describedby="app_email_desc">')
 print('                                </div>')
 
-print('                                <button class="btn btn-outline-primary btn-block" type="submit">Save '+brand+' Aesthetics Settings</button>')
+print('                                <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Save '+brand+' Aesthetics Settings</button>')
 print('                                </form>')
+
+print('                                <form class="form w-100" id="restore_ndeploy_control_defaults" method="post" onsubmit="return false;">')
+print('                                    <input hidden class="form-control" name="restore_defaults" value="enabled">')
+print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Restore Aesthetics Defaults</button>')
+print('                                </form>')
+
+
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 

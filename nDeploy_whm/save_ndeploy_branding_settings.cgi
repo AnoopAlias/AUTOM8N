@@ -5,6 +5,7 @@ import cgi
 import cgitb
 import yaml
 import os
+import subprocess
 
 
 __author__ = "Budd P Grant"
@@ -48,7 +49,8 @@ if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalu
     with open(branding_file, 'w') as ndeploy_control_branding_conf:
             yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
-    commoninclude.print_success('Branding configuration has been updated.')
+    subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
+    commoninclude.print_success('Branding Configuration has been updated in WHM and cPanel.')
 else:
     commoninclude.print_forbidden()
 
