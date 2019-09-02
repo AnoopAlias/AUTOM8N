@@ -51,10 +51,10 @@ if form.getvalue('ndeploy_theme_color') and \
         with open(ndeploy_control_file, 'w') as ndeploy_control_config:
                 yaml.dump(yaml_parsed_ndeploy_control_config, ndeploy_control_config, default_flow_style=False)
 
-        commoninclude.print_success('nDeploy Control configuration has been updated.')
+        commoninclude.print_success('The nDeploy aesthetics configuration has been updated.')
 
-        # Create the desired config if one doesn't exist
-    if not os.path.isfile(ndeploy_control_file):
+    # Create the desired config if one doesn't exist
+    else:
         yaml_parsed_ndeploy_control_config = {}
 
         ndeploy_control_data()
@@ -62,7 +62,7 @@ if form.getvalue('ndeploy_theme_color') and \
     	with open(ndeploy_control_file, 'w+') as ndeploy_control_config:
             yaml.dump(yaml_parsed_ndeploy_control_config, ndeploy_control_config, default_flow_style=False)
 
-        commoninclude.print_success('nDeploy Control configuration has been created.')        
+        commoninclude.print_success('The nDeploy aesthetics configuration has been created.')        
 
 else:
     commoninclude.print_forbidden()
