@@ -27,7 +27,7 @@ if os.path.isfile(ndeploy_control_file):
 else:
     ndeploy_theme_color = "light"
     primary_color = "#121212"
-    logo_url = "https://autom8n.com/assets/img/logo-dark.png"
+    logo_url = "None"
     app_email = "None"
 
 # Branding Support
@@ -188,7 +188,7 @@ def print_footer():
     print('            <div class="row justify-content-center">')
     print('                <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
     print('            </div>')
-    print('            <div class="row justify-content-center text-center text-TEXTCOLORCLASSNEEDED">')
+    print('            <div class="row justify-content-center text-center">')
     if ndeploy_theme_color == 'light':
         print('                <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
     if ndeploy_theme_color == 'dark':
