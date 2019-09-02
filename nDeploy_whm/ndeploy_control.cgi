@@ -227,7 +227,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="app_email" value="'+app_email+'" id="app_email" aria-describedby="app_email_desc">')
 print('                                </div>')
 
-print('                                <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Save '+brand+' Aesthetics Settings</button>')
+print('                                <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Save Aesthetics Settings</button>')
 print('                                </form>')
 
 print('                                <form class="form w-100" id="restore_ndeploy_control_defaults" method="post" onsubmit="return false;">')

@@ -37,7 +37,7 @@ if form.getvalue('restore_defaults') == 'enabled':
         yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
     subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
-    commoninclude.print_success('Branding Configuration has been restored to defaults.')
+    commoninclude.print_success('The nDeploy branding configuration has been restored to defaults.')
 else:
     commoninclude.print_forbidden()
 

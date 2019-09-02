@@ -35,7 +35,7 @@ if form.getvalue('restore_defaults') == 'enabled':
     with open(ndeploy_control_file, 'w') as ndeploy_control_conf:
         yaml.dump(yaml_parsed_restore_ndeploy_control_conf, ndeploy_control_conf, default_flow_style=False)
 
-    commoninclude.print_success('Aesthetics Configuration has been restored to defaults.')
+    commoninclude.print_success('The nDeploy aesthetics configuration has been restored to defaults.')
 else:
     commoninclude.print_forbidden()
 
