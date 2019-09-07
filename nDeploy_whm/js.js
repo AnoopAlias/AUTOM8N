@@ -402,8 +402,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
             }
         });
     });

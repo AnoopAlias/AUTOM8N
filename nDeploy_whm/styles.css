@@ -10,12 +10,18 @@ body {
 .ndeploy-theme-dark #main-header {
   background-color: #000000;
 }
+.ndeploy-theme-dark button.close {
+  color: #FFFFFF;
+}
 
 .ndeploy-theme-light {
   background-color: #F1F1F8;
 }
 .ndeploy-theme-light #main-header {
   background-color: #FFFFFF;
+}
+.ndeploy-theme-light button.close {
+  color: #000000;
 }
 
 #main-header {
@@ -362,6 +368,9 @@ kbd {
 
 .modal .modal-body {
   text-align: center;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: auto;
 }
 .modal .modal-body p:last-child {
   margin-bottom: 0;
@@ -372,6 +381,19 @@ kbd {
   display: block;
   text-align: center;
   margin: 0.6rem 0 2rem 0;
+}
+.modal .modal-body .shelloutput {
+  text-align: left;
+  list-style-type: none;
+  background-color: #000000;
+  color: #1e7e34;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 1rem;
+  border: 1px solid #1e7e34;
+}
+.modal .modal-dialog {
+  overflow-y: initial !important;
 }
 
 .toast {

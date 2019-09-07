@@ -31,8 +31,16 @@ print('</head>')
 print('<body>')
 
 if form.getvalue('run_installer') == 'enabled':
-    subprocess.call(installation_path+"/scripts/easy_php_setup.sh", shell=True)
-    commoninclude.print_success('Native nGinx PHP support has been configured.')        
+    procExe = subprocess.Popen(installation_path+"/scripts/easy_php_setup.sh", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    
+    print('<ul class="shelloutput">')
+    print('    <li><b>Executing Native NGINX PHP Installer</b>')
+    print('    </li><li>&nbsp;</li>')
+    for line in iter(procExe.stdout.readline, b''):
+        print('    <li>'+line.rstrip()+'</li>')
+    print('    <li>&nbsp;</li>')
+    print('    <li><b>Native nGinx PHP support has been configured.</b></li>')
+    print('</ul>')
 
 else:
     commoninclude.print_forbidden()
