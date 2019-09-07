@@ -65,6 +65,7 @@ print('                <div class="col-md-3 nav flex-column nav-pills" id="v-pil
 print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>')
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-selected="false">Branding</a>')
 print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-selected="false">Aesthetics</a>')
+print('                    <a class="nav-link" id="v-pills-php_install-tab" data-toggle="pill" href="#v-pills-php_install" role="tab" aria-controls="v-pills-php_install" aria-selected="false">PHP Configuration</a>')
 print('                </div>')
 print('')
 print('                <div class="tab-content col-md-9" id="v-pills-tabContent">')
@@ -242,6 +243,28 @@ print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
 print('                </div> <!-- End Aesthetics Tab -->')
+
+# PHP Installer
+print('')
+print('                <!-- PHP Installer Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-php_install" role="tabpanel" aria-labelledby="v-pills-php_install-tab">')
+
+cardheader('PHP Install Settings','fas fa-tools')
+
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                                <p class="small">PHP installer initial setup.</p>')
+print('                                <form class="form w-100" id="easy_php_setup" method="post" onsubmit="return false;">')
+print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
+print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Install Native nGinx PHP Support</button>')
+print('                                </form>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('')
+
+print('                </div> <!-- End PHP Installer Tab -->')
+
 
 print('                <!-- Column End -->')
 print('                </div>')

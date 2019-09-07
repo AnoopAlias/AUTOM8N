@@ -396,6 +396,19 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#easy_php_setup').submit(function() {
+        var $f = $('#easy_php_setup');
+        var $url = "easy_php_setup.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()
     });
