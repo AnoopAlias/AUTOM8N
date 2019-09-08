@@ -395,6 +395,16 @@ kbd {
 .modal .modal-dialog {
   overflow-y: initial !important;
 }
+.modal .modal-header {
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+.modal .modal-footer {
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
 
 .toast {
   z-index: 100;
