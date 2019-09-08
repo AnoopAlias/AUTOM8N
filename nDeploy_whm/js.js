@@ -360,9 +360,9 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#ndeploy_control_rebuild_brand').submit(function() {
-        var $f = $('#ndeploy_control_rebuild_brand');
-        var $url = "rebuild_branding_via_whm.cgi?" + $f.serialize();
+    $('#restore_branding_defaults').submit(function() {
+        var $f = $('#restore_branding_defaults');
+        var $url = "restore_branding_defaults.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
@@ -375,6 +375,18 @@ jQuery(document).ready(function($) {
     $('#ndeploy_control_config').submit(function() {
         var $f = $('#ndeploy_control_config');
         var $url = "save_ndeploy_control_config.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#restore_ndeploy_control_defaults').submit(function() {
+        var $f = $('#restore_ndeploy_control_defaults');
+        var $url = "restore_ndeploy_control_defaults.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {

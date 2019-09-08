@@ -34,14 +34,14 @@ bcrumb('Borg Backup Configuration', 'fas fa-database')
 print('            <!-- WHM Starter Row -->')
 print('            <div class="row justify-content-lg-center">')
 print('                <!-- First Column Start -->')
-print('                <div class="col-lg-6">')  # Column
+print('                <div class="col-lg-6">')
 print('')
 
 if os.path.isdir('/etc/borgmatic'):
 
     # System Status
     cardheader('Borg Backup Settings', 'fas fa-database')
-    print('                        <div class="card-body"> <!-- Card Body Start -->')  # Card Body Start
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
 
     # Check if backup config file is present or initilize otherwise
     if os.path.isfile(backup_config_file):
@@ -84,61 +84,53 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                <div class="row align-items-center"> <!-- Row Start -->')
 
     # system_files
-    system_files_hint = "Backup the cPanel System Files"
+    system_files_hint = " Enable to backup the cPanel system files. "
+    print('                                    '+return_label("System Files", system_files_hint))
+    print('                                    <div class="col-md-6">')
+    print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
+    
     if system_files == 'enabled':
-        print('                                    '+return_label("system_files", system_files_hint))
-        print('                                    <div class="col-md-6">')
-        print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
         print('                                            <label class="btn btn-light active">')
         print('                                                <input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off" checked> Enabled')
         print('                                            </label>')
         print('                                            <label class="btn btn-light">')
         print('                                                <input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off"> Disabled')
-        print('                                            </label>')
-        print('                                        </div>')
-        print('                                    </div>')
     else:
-        print('                                    '+return_label("system_files", system_files_hint))
-        print('                                    <div class="col-md-6">')
-        print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
         print('                                            <label class="btn btn-light">')
         print('                                                <input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off"> Enabled')
         print('                                            </label>')
         print('                                            <label class="btn btn-light active">')
         print('                                                <input type="radio" name="system_files" value="disabled" id="BuFilesOff" autocomplete="off" checked> Disabled')
-        print('                                            </label>')
-        print('                                        </div>')
-        print('                                    </div>')
 
+    print('                                            </label>')
+    print('                                        </div>')
+    print('                                    </div>')
+    
     # mysql_backup
-    mysql_backup_hint = "Use MariaBackup to Backup the FULL MySQL Data Directory"
+    mysql_backup_hint = " Enable MariaBackup to backup the FULL MySQL data directory. "
+    print('                                    '+return_label("Maria Backup", mysql_backup_hint))
+    print('                                    <div class="col-md-6">')
+    print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+    
     if mysql_backup == 'enabled':
-        print('                                    '+return_label("mariabackup", mysql_backup_hint))
-        print('                                    <div class="col-md-6">')
-        print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                            <label class="btn btn-light active">')
         print('                                                <input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off" checked> Enabled')
         print('                                            </label>')
         print('                                            <label class="btn btn-light">')
         print('                                                <input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off"> Disabled')
-        print('                                            </label>')
-        print('                                        </div>')
-        print('                                    </div>')
     else:
-        print('                                    '+return_label("mariabackup", mysql_backup_hint))
-        print('                                    <div class="col-md-6">')
-        print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
         print('                                            <label class="btn btn-light">')
         print('                                                <input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off"> Enabled')
         print('                                            </label>')
         print('                                            <label class="btn btn-light active">')
         print('                                                <input type="radio" name="mysql_backup" value="disabled" id="BuDataOff" autocomplete="off" checked> Disabled')
-        print('                                            </label>')
-        print('                                        </div>')
-        print('                                    </div>')
 
+    print('                                            </label>')
+    print('                                        </div>')
+    print('                                    </div>')
+    
     # backup_path
-    backup_path_hint = "This is the directory where the cPanel PKG Accounts, SQL backups, and system files are stored."
+    backup_path_hint = " The directory where the cPanel package accounts, SQL backups, and system files are stored. "
     print('                                    <div class="col-md-12">')
     print('                                        <div class="input-group mt-2 mb-2">')
     print('                                            <div class="input-group-prepend">')
@@ -152,9 +144,9 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                    <div class="col-md-12">')
     print('                                        <button class="btn btn-outline-primary btn-block mt-2" type="submit">Save Backup Settings</button>')
     print('                                    </div>')
-    print('                                </div> <!-- Row End -->')  # Row Start
+    print('                                </div> <!-- Row End -->')
     print('                            </form>')
-    print('                        </div> <!-- Card Body End -->')  # Card Body End
+    print('                        </div> <!-- Card Body End -->')
     cardfooter('Configure the Borg backup settings to control what content is backed up, and at what location to create the backups.')
 
     # Check if borgmatic config file is present or initilize otherwise
@@ -171,30 +163,30 @@ if os.path.isdir('/etc/borgmatic'):
             borgmatic_conf_file.write(borgmatic_conf)
         os.chmod(borgmatic_config_file, 0o640)
 
-    # Since we have a borgmatic config now.Lets load it up and present to the user
+    # Since we have a borgmatic config now, let's load it up and present to the user
     if os.path.isfile(borgmatic_config_file):
 
         # Get all config settings from the borgmatic config file
         with open(borgmatic_config_file, 'r') as borgmatic_config_file_stream:
             yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_config_file_stream)
 
-    # list backup and allow restore
+    # List backup and allow restore
     if os.path.isfile('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE'):
         if not os.path.exists('/root/borg_restore_point'):
             os.makedirs('/root/borg_restore_point')
 
-        cardheader('Restore Points', 'fas fas-database')
-        print('                        <div class="card-body"> <!-- Card Body Start -->')  # Card Body Start
+        cardheader('Restore Points', 'fas fa-database')
+        print('                        <div class="card-body"> <!-- Card Body Start -->')
 
         if os.path.ismount('/root/borg_restore_point'):
             with open('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE', 'r') as restore_point_conf:
                 yaml_parsed_restorepoint = yaml.safe_load(restore_point_conf)
             restore_point = yaml_parsed_restorepoint.get('restore_point', 'snapshot')
-            print('<center>currently mounted</center><hr>'+restore_point)
-            print('				<form class="form mb-3" id="toastForm24" onsubmit="return false;">')
-            print('				<input hidden name="action" value="umount">')
-            print('					<button type="submit" class="btn btn-outline-primary btn-block ">Umount Restore Point</button>')
-            print('				</form>')
+            print('                            <center>currently mounted</center><hr>'+restore_point)
+            print('                            <form class="form mb-3" id="toastForm24" onsubmit="return false;">')
+            print('                                <input hidden name="action" value="umount">')
+            print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Umount Restore Point</button>')
+            print('                            </form>')
             mount_flag = True
         else:
             mount_flag = False
@@ -207,27 +199,27 @@ if os.path.isdir('/etc/borgmatic'):
             myarchives = output[0].get('archives')
             if myarchives:
                 mykeypos = 1
-                print('                 <div class="input-group">')
-                print('                     <select name="myarchives" class="custom-select">')
+                print('                            <div class="input-group">')
+                print('                                <select name="myarchives" class="custom-select">')
                 for backup in myarchives:
-                    print('                    <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>')
-                print('                     </select>')
+                    print('                                    <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>')
+                print('                                </select>')
                 if not mount_flag:
-                    print('                 <div class="input-group-append">')
-                    print('                     <form class="m-0 toastForm25-wrap" id="toastForm25'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-                    print('                        <input hidden name="restorepoint" value="'+backup.get('archive')+'">')
-                    print('                        <input hidden name="action" value="mount">')
-                    print('                         <button class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
-                    print('                     </form>')
-                    print('                 </div>')
+                    print('                                <div class="input-group-append">')
+                    print('                                    <form class="m-0 toastForm25-wrap" id="toastForm25'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+                    print('                                        <input hidden name="restorepoint" value="'+backup.get('archive')+'">')
+                    print('                                        <input hidden name="action" value="mount">')
+                    print('                                        <button class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
+                    print('                                    </form>')
+                    print('                                </div>')
                     mykeypos = mykeypos + 1
-                print('                 </div>')
+                print('                            </div>')
 
-        print('                        </div>')  # card-body end
-        cardfooter('<kbd>/root/borg_restore_point</kbd> is the mount point')
+        print('                        </div> <!-- Card Body End -->')
+        cardfooter('Mount point: <kbd>/root/borg_restore_point</kbd>')
 
-    cardheader('Additional <kbd> home</kbd> Directory Backup', 'fas fa-database')
-    print('                        <div class="card-body"> <!-- Card Body Start -->')  # Card Body Start
+    cardheader('Additional \'home\' Directory Backup', 'fas fa-database')
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
 
     # backup directories
     backup_dir_list = yaml_parsed_borgmaticyaml['location']['source_directories']
@@ -255,12 +247,12 @@ if os.path.isdir('/etc/borgmatic'):
             mykeypos = mykeypos + 1
             print('                                </div>')
     print('                            </div>')
-    print('                            <div class="label label-default mt-2 mb-2">Add another <kbd>home</kbd>  directory to backup:</div>')
+    print('                            <div class="label label-default mt-2 mb-2">Add another \'home\' directory to backup:</div>')
     print('                            <form class="form" method="post" id="toastForm14" onsubmit="return false;">')
 
     print('                                <div class="input-group mb-0">')
     print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">Enter Path</span>')
+    print('                                        <span class="input-group-text">Path</span>')
     print('                                    </div>')
     print('                                    <input class="form-control" placeholder="/home2" type="text" name="thehomedir">')
     print('                                    <input hidden name="action" value="add">')
@@ -272,8 +264,8 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     print('                            </form>')
-    print('                        </div> <!-- Card Body End -->')  # Card Body End
-    cardfooter('Configure additional /home directories that you would like to backup.')
+    print('                        </div> <!-- Card Body End -->')
+    cardfooter('Configure additional \'home\' directories that you would like to backup.')
 
     # First Column End
     print('                <!-- First Column End -->')
@@ -282,52 +274,52 @@ if os.path.isdir('/etc/borgmatic'):
 
     # Second Column
     print('                <!-- Second Column Start -->')
-    print('                <div class="col-lg-6">')  # Right Column
+    print('                <div class="col-lg-6">')
     print('')
 
     cardheader('Borg Settings', 'fas fa-database')
-    print('                        <div class="card-body"> <!-- Card Body Start -->')  # Card Body Start
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
     print('                            <form class="form input-group-prepend-min" method="post" id="toastForm12" onsubmit="return false;"> ')
 
     # repositories
-    repositories_hint = "eg: user@backupserver:sourcehostname.borg"
+    repositories_hint = " Eg: user@backupserver:sourcehostname.borg "
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("repositories", repositories_hint))
+    print('                                            '+return_multi_input("Repositories", repositories_hint))
     print('                                        </span>')
     print('                                    </div>')
     print('                                    <input class="form-control" value="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
     print('                                </div>')
 
     # ssh_command
-    ssh_command_hint = "Additinal options for SSH"
+    ssh_command_hint = " Enter additional options for SSH. "
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("ssh_command", ssh_command_hint))
+    print('                                            '+return_multi_input("SSH Command", ssh_command_hint))
     print('                                        </span>')
     print('                                    </div>')
     print('                                    <input class="form-control" value="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
     print('                                </div>')
 
     # encryption_passphrase
-    encryption_passphrase_hint = "Your Passphrase used to Encrypt the Backup"
+    encryption_passphrase_hint = " Enter your passphrase used to encrypt the backup. "
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("passphrase", encryption_passphrase_hint))
+    print('                                            '+return_multi_input("Passphrase", encryption_passphrase_hint))
     print('                                        </span>')
     print('                                    </div>')
     print('                                    <input class="form-control" value="'+yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']+'" type="text" name="encryption_passphrase">')
     print('                                </div>')
 
     # remote_rate_limit
-    remote_rate_limit_hint = "Set the Network Upload Rate Limit in KB/s"
+    remote_rate_limit_hint = " Set the network upload rate limit in KB/s. "
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("remote_rate_limit", remote_rate_limit_hint))
+    print('                                            '+return_multi_input("Remote Rate Limit", remote_rate_limit_hint))
     print('                                        </span>')
     print('                                    </div>')
     print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
@@ -335,45 +327,46 @@ if os.path.isdir('/etc/borgmatic'):
 
     # retention
     print('                                <label class="label mt-2 mb-2">Backup Retention</label>')
+    
     # keep_hourly
-    keep_hourly_hint = "Enter the number of hourly backups to keep."
+    keep_hourly_hint = " Enter the number of hourly backups to keep. "
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("keep_hourly", keep_hourly_hint))
+    print('                                            '+return_multi_input("Hourly Keep", keep_hourly_hint))
     print('                                        </span>')
     print('                                    </div>')
     print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_hourly'])+'" type="text" name="keep_hourly">')
     print('                                </div>')
 
     # keep_daily
-    keep_daily_hint = "Enter the number of daily backups to keep."
+    keep_daily_hint = " Enter the number of daily backups to keep. "
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("keep_daily", keep_daily_hint))
+    print('                                            '+return_multi_input("Daily Keep", keep_daily_hint))
     print('                                        </span>')
     print('                                    </div>')
     print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_daily'])+'" type="text" name="keep_daily">')
     print('                                </div>')
 
     # keep_weekly
-    keep_weekly_hint = "Enter the number of weekly backups to keep."
+    keep_weekly_hint = " Enter the number of weekly backups to keep. "
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("keep_weekly", keep_weekly_hint))
+    print('                                            '+return_multi_input("Weekly Keep", keep_weekly_hint))
     print('                                        </span>')
     print('                                    </div>')
     print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
     print('                                </div>')
 
     # keep_monthly
-    keep_monthly_hint = "Enter the number of monthly backups to keep."
+    keep_monthly_hint = " Enter the number of monthly backups to keep. "
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend">')
     print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("keep_monthly", keep_monthly_hint))
+    print('                                            '+return_multi_input("Monthly Keep", keep_monthly_hint))
     print('                                        </span>')
     print('                                    </div>')
     print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
@@ -388,7 +381,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                            </form>')
 
     print('                        </div> <!-- Card Body End -->')
-    cardfooter('Keep your encryption_passphrase in a safe place. Losing it would make data recovery impossible on a server crash<br><hr>repositories must either a local folder: <kbd>/mnt/backup</kbd> <br> or a ssh URI: <kbd>ssh://user@backupserver.com:22/home/user/backup</kbd>')
+    cardfooter('Keep your encryption passphrase in a safe place as losing it would make data recovery impossible on a server crash. <br>Repositories must be either a local folder: <kbd>/mnt/backup</kbd> or a SSH URI: <kbd>ssh://user@backupserver.com:22/home/user/backup</kbd>')
 
 else:
     cardheader('Install and Setup Borg/Borgomatic')
@@ -401,7 +394,6 @@ else:
     print('                        </div> <!-- Card Body End -->')
     cardfooter('')
 
-# Second Column End
 print('                <!-- Second Column End -->')
 print('                </div>')
 print('')
