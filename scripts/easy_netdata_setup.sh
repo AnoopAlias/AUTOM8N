@@ -27,7 +27,7 @@ if [ ! -f /etc/nginx/conf.d/netdata.password ]; then
     chown nobody /etc/nginx/conf.d/netdata.password
   else
 
-    echo "netdata:$(openssl passwd -apr1 ${$1})" > /etc/nginx/conf.d/netdata.password
+    echo "netdata:$(openssl passwd -apr1 $1)" > /etc/nginx/conf.d/netdata.password
   fi
 fi
 
