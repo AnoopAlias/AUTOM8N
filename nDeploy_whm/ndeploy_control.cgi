@@ -66,6 +66,8 @@ print('                    <a class="nav-link active" id="v-pills-home-tab" data
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-selected="false"><i class="fas fa-infinity"></i>&nbsp;Branding</a>')
 print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-selected="false"><i class="fas fa-palette"></i>&nbsp;Aesthetics</a>')
 print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-selected="false"><i class="fab fa-php"></i>&nbsp;PHP&nbsp;Backends</a>')
+print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-selected="false"><i class="fab fa-centos"></i>&nbsp;NetData</a>')
+
 print('                </div>')
 print('')
 print('                <div class="tab-content col-md-9" id="v-pills-tabContent">')
@@ -265,6 +267,37 @@ cardfooter('')
 
 print('                </div> <!-- End PHP Backends Tab -->')
 
+# NetData Tab
+print('')
+print('                <!-- NetData Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-netdata" role="tabpanel" aria-labelledby="v-pills-netdata-tab">')
+
+cardheader('NetData Setup','fab fa-centos')
+netdata_pass = ""
+netdata_pass_hint = " Enter the password for NetData. "
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                                <form class="form w-100" id="easy_netdata_setup" method="post" onsubmit="return false;">')
+print('                                    <label class="small" for="netdata_pass">Your username is <kbd>netdata</kbd>. Enter the password you wish to use to access the NetData Monitoring System.</label>')
+print('                                    <div class="input-group mb-4">')
+print('                                        <div class="input-group-prepend">')
+print('                                            <span class="input-group-text" id="netdata_pass_desc">')
+print('                                                '+return_prepend("NetData Password", netdata_pass_hint))
+print('                                            </span>')
+print('                                        </div>')
+print('                                        <input type="text" class="form-control" name="netdata_pass" value="'+netdata_pass+'" id="netdata_pass" aria-describedby="netdata_pass_desc">')
+print('                                    </div>')
+print('                                    <p class="small">NetData Init. <em>This process can take up to a minute depending on processing power and connection speed.</em></p>')
+print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
+print('                                    <input hidden class="form-control" name="netdata_pass" value="'+netdata_pass+'">')
+print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Install NetData Monitoring System</button>')
+print('                                </form>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('')
+
+print('                </div> <!-- End NetData Tab -->')
 
 print('                <!-- Column End -->')
 print('                </div>')

@@ -408,6 +408,17 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#easy_netdata_setup').submit(function() {
+        var $f = $('#easy_netdata_setup');
+        var $url = "easy_netdata_setup.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
 
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()

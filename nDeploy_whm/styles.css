@@ -368,7 +368,7 @@ kbd {
 
 .modal .modal-body {
   text-align: center;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 40vh);
   overflow-y: auto;
   overflow-x: auto;
 }
