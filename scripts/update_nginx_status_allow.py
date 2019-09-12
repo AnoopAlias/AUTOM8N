@@ -30,7 +30,6 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
         dnsmap_dict = connect_server_dict.get("dnsmap")
         mergedlist = mergedlist + ipmap_dict.keys() + ipmap_dict.values() + dnsmap_dict.keys() + dnsmap_dict.values()
     the_iplist = list(set(mergedlist))
-    print(the_iplist)
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
     templateEnv = jinja2.Environment(loader=templateLoader)
     TEMPLATE_FILE = "nginx_status_allow.j2"
