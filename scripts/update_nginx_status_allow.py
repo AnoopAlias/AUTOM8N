@@ -3,6 +3,8 @@
 
 import yaml
 import os
+import jinja2
+import codecs
 
 
 __author__ = "Anoop P Alias"
@@ -12,6 +14,7 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+nginx_status_allow_file = "/etc/nginx/conf.d/nginx_status_allow.conf"
 
 
 if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
@@ -27,4 +30,11 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
         dnsmap_dict = connect_server_dict.get("dnsmap")
         mergedlist = mergedlist + ipmap_dict.keys() + ipmap_dict.values() + dnsmap_dict.keys() + dnsmap_dict.values()
     the_iplist = list(set(mergedlist))
-    print(the_iplist)
+    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    TEMPLATE_FILE = "nginx_status_allow.j2"
+    template = templateEnv.get_template(TEMPLATE_FILE)
+    templateVars = {"iplist": the_iplist}
+    generated_config = template.render(templateVars)
+    with codecs.open(nginx_status_allow_file, 'w', 'utf-8') as confout:
+        confout.write(generated_config)

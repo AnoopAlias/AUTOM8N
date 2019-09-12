@@ -13,6 +13,9 @@
 - name: Setup ipmap
   shell: bash /root/xtendweb_ipmap
 
+- name: Setup nginx_status_allow_file
+  shell: /opt/nDeploy/scripts/update_nginx_status_allow.py
+
 - name: Do a DNS Sync
   shell: "for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do /opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py $CPANELUSER; done"
   when:
