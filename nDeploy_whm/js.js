@@ -420,6 +420,18 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#clear_netdata_credentials').submit(function() {
+        var $f = $('#clear_netdata_credentials');
+        var $url = "easy_netdata_setup.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()
     });
