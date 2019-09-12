@@ -56,11 +56,6 @@
     job: "/opt/nDeploy/scripts/purgemysqllogs_master.sh"
     minute: "0"
 
-- name: Allow server status check from all cluster nodes
-  template:
-    src: nginx_status_allow.conf.j2
-    dest: /etc/nginx/conf.d/nginx_status_allow.conf
-
 - name: check if CSF is active
   stat:
     path: /usr/sbin/csf
