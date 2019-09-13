@@ -44,21 +44,21 @@ def shelloutput():
 if form.getvalue('run_installer') == 'enabled':
 
     if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
-        print('<span class="p-1">NetData credentials already exist. Installing latest NetData with current credentials...</span>')
+        print('<p>Previous Netdata credentials detected. Reinstalling latest Netdata using current credentials...</p>')
         procExe = subprocess.Popen(installation_path+"/scripts/easy_netdata_setup.sh", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         shelloutput()
         
     elif form.getvalue('netdata_pass') != None:
-        print('<span class="p-1">NetData is being set up using <kbd>netdata::'+form.getvalue('netdata_pass')+'</kbd> for credentials.</span>')    
+        print('<p>Netdata is being set up using <kbd>netdata::'+form.getvalue('netdata_pass')+'</kbd> for credentials. Please keep this data for your records.</p>')    
         procExe = subprocess.Popen(installation_path+"/scripts/easy_netdata_setup.sh "+form.getvalue('netdata_pass'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         shelloutput()
 
     else:
-        print('<span class="p-1">Pass is empty and netdata.password does not exist.<span>')
+        print('<p>No existing Netdata credentials have been detected. <br>No password has been entered into the <kbd>Netdata Password</kbd> box. <br>Please try again wtih adequate credentials.</p>')
     
 elif form.getvalue('remove_netdata_creds') == 'enabled':
     os.remove('/etc/nginx/conf.d/netdata.password')
-    print('NetData Credentials have been removed. You can now set up NetData using a new password.')
+    print('<p>Netdata credentials have been removed! You can now set up Netdata using new credentials.</p>')
 
 else:
     commoninclude.print_forbidden()
