@@ -84,7 +84,6 @@ def print_nontoast_error(thenotice, thereason):
     print('    </body>')
     print('</html>')
 
-
 def print_forbidden():
     print('<i class="fas fa-exclamation"></i><p>Forbidden</p>')
 
@@ -320,17 +319,20 @@ def print_modals():
     # Modal Large Width
     print('        <div class="modal fade" id="myModal-xl" tabindex="-1" role="dialog">')
     print('            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
-    print('                <div class="modal-content">')
+    if ndeploy_theme_color == 'dark':
+        print('                <div class="modal-content bg-dark text-white">')
+    if ndeploy_theme_color == 'light':
+        print('                <div class="modal-content bg-light text-dark">')
     print('                    <div class="modal-header">')
     print('                        <h4 class="modal-title">Command Output</h4>')
-    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+    print('                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">')
     print('                            <span aria-hidden="true">&times;</span>')
     print('                        </button>')
     print('                    </div>')
     print('                    <div class="modal-body">')
     print('                    </div>')
     print('                    <div class="modal-footer">')
-    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+    print('                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
     print('                    </div>')
     print('                </div>')
     print('            </div>')

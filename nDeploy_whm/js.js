@@ -396,6 +396,42 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#easy_php_setup').submit(function() {
+        var $f = $('#easy_php_setup');
+        var $url = "easy_php_setup.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#easy_netdata_setup').submit(function() {
+        var $f = $('#easy_netdata_setup');
+        var $url = "easy_netdata_setup.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#clear_netdata_credentials').submit(function() {
+        var $f = $('#clear_netdata_credentials');
+        var $url = "easy_netdata_setup.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()
     });

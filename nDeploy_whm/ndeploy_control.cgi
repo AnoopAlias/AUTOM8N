@@ -65,6 +65,9 @@ print('                <div class="col-md-3 nav flex-column nav-pills" id="v-pil
 print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>')
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-selected="false">Branding</a>')
 print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-selected="false">Aesthetics</a>')
+print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-selected="false">PHP&nbsp;Backends</a>')
+print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-selected="false">Netdata</a>')
+
 print('                </div>')
 print('')
 print('                <div class="tab-content col-md-9" id="v-pills-tabContent">')
@@ -242,6 +245,70 @@ print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
 print('                </div> <!-- End Aesthetics Tab -->')
+
+# PHP Installer
+print('')
+print('                <!-- PHP Backends Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-php_backends" role="tabpanel" aria-labelledby="v-pills-php_backends-tab">')
+
+cardheader('Setup PHP Backends', 'fab fa-php')
+
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                                <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
+print('                                <form class="form w-100" id="easy_php_setup" method="post" onsubmit="return false;">')
+print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
+print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Install Native nGinx PHP Support</button>')
+print('                                </form>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('')
+
+print('                </div> <!-- End PHP Backends Tab -->')
+
+# NetData Tab
+print('')
+print('                <!-- Netdata Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-netdata" role="tabpanel" aria-labelledby="v-pills-netdata-tab">')
+
+cardheader('Netdata Setup', 'fab fa-centos')
+netdata_pass = ""
+netdata_pass_hint = " Enter the password to access Netdata. "
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                                <form class="form w-100" id="easy_netdata_setup" method="post" onsubmit="return false;">')
+print('                                    <p class="small">Welcome to the Netdata Installer. Netdata is distributed, real-time, performance and health monitoring for systems and applications. Netdata provides unparalleled insights, in real-time, of everything happening on the systems it runs (including web servers, databases, applications), using highly interactive web dashboards. <em>This process can take up to a minute depending on processing power and connection speed.</em></p>')
+if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
+    print('                                    <label class="small" for="netdata_pass">The Netdata username is <kbd>netdata</kbd>. Enter the password you wish to use to access the Netdata Monitoring System.</label>')
+    print('                                    <div class="input-group mb-4">')
+    print('                                        <div class="input-group-prepend">')
+    print('                                            <span class="input-group-text" id="netdata_pass_desc">')
+    print('                                                '+return_prepend("Netdata Password", netdata_pass_hint))
+    print('                                            </span>')
+    print('                                        </div>')
+    print('                                        <input type="text" class="form-control" name="netdata_pass" value="'+netdata_pass+'" id="netdata_pass" aria-describedby="netdata_pass_desc">')
+    print('                                    </div>')
+print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
+print('                                    <input hidden class="form-control" name="netdata_pass" value="'+netdata_pass+'">')
+if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
+    print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Reinstall Netdata Monitoring System</button>')
+else:
+    print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Install Netdata Monitoring System</button>')
+print('                                </form>')
+
+if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
+    print('                                <form class="form w-100" id="clear_netdata_credentials" method="post" onsubmit="return false;">')
+    print('                                    <input hidden class="form-control" name="remove_netdata_creds" value="enabled">')
+    print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Remove Netdata Credentials</button>')
+    print('                                </form>')
+
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('')
+
+print('                </div> <!-- End Netdata Tab -->')
 
 print('                <!-- Column End -->')
 print('                </div>')
