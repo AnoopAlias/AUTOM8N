@@ -432,6 +432,30 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#easy_glances_setup').submit(function() {
+        var $f = $('#easy_glances_setup');
+        var $url = "easy_glances_setup.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#clear_glances_credentials').submit(function() {
+        var $f = $('#clear_glances_credentials');
+        var $url = "easy_glances_setup.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()
     });

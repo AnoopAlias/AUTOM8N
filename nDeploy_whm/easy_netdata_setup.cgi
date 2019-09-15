@@ -54,7 +54,7 @@ if form.getvalue('run_installer') == 'enabled':
         shelloutput()
 
     else:
-        print('<p>No existing Netdata credentials have been detected. <br>No password has been entered into the <kbd>Netdata Password</kbd> box. <br>Please try again wtih adequate credentials.</p>')
+        print('<p>No existing Netdata credentials have been detected. <br>No password has been entered into the <kbd>Netdata Password</kbd> box. <br>Please try again with adequate credentials.</p>')
     
 elif form.getvalue('remove_netdata_creds') == 'enabled':
     os.remove('/etc/nginx/conf.d/netdata.password')
