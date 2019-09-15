@@ -67,6 +67,7 @@ print('                    <a class="nav-link" id="v-pills-branding-tab" data-to
 print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-selected="false">Aesthetics</a>')
 print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-selected="false">PHP&nbsp;Backends</a>')
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-selected="false">Netdata</a>')
+print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-selected="false">Glances</a>')
 
 print('                </div>')
 print('')
@@ -267,7 +268,7 @@ cardfooter('')
 
 print('                </div> <!-- End PHP Backends Tab -->')
 
-# NetData Tab
+# Netdata Tab
 print('')
 print('                <!-- Netdata Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-netdata" role="tabpanel" aria-labelledby="v-pills-netdata-tab">')
@@ -309,6 +310,49 @@ print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
 print('                </div> <!-- End Netdata Tab -->')
+
+# Glances Tab
+print('')
+print('                <!-- Glances Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-glances" role="tabpanel" aria-labelledby="v-pills-glances-tab">')
+
+cardheader('Glances Setup', 'fab fa-centos')
+glances_pass = ""
+glances_pass_hint = " Enter the password to access Glances. "
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                                <form class="form w-100" id="easy_glances_setup" method="post" onsubmit="return false;">')
+print('                                    <p class="small">Welcome to the Glances Installer. Glances is distributed, real-time, performance and health monitoring for systems and applications. Glances provides unparalleled insights, in real-time, of everything happening on the systems it runs (including web servers, databases, applications), using highly interactive web dashboards. <em>This process can take up to a minute depending on processing power and connection speed.</em></p>')
+if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
+    print('                                    <label class="small" for="glances_pass">The Glances username is <kbd>glances</kbd>. Enter the password you wish to use to access the Glances Monitoring System.</label>')
+    print('                                    <div class="input-group mb-4">')
+    print('                                        <div class="input-group-prepend">')
+    print('                                            <span class="input-group-text" id="glances_pass_desc">')
+    print('                                                '+return_prepend("Glances Password", glances_pass_hint))
+    print('                                            </span>')
+    print('                                        </div>')
+    print('                                        <input type="text" class="form-control" name="glances_pass" value="'+glances_pass+'" id="glances_pass" aria-describedby="glances_pass_desc">')
+    print('                                    </div>')
+print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
+print('                                    <input hidden class="form-control" name="glances_pass" value="'+glances_pass+'">')
+if os.path.isfile('/etc/nginx/conf.d/glances.password'):
+    print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Reinstall Glances Monitoring System</button>')
+else:
+    print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Install Glances Monitoring System</button>')
+print('                                </form>')
+
+if os.path.isfile('/etc/nginx/conf.d/glances.password'):
+    print('                                <form class="form w-100" id="clear_glances_credentials" method="post" onsubmit="return false;">')
+    print('                                    <input hidden class="form-control" name="remove_glances_creds" value="enabled">')
+    print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Remove Glances Credentials</button>')
+    print('                                </form>')
+
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('')
+
+print('                </div> <!-- End Glances Tab -->')
 
 print('                <!-- Column End -->')
 print('                </div>')
