@@ -316,7 +316,7 @@ netdata_pass_hint = " Enter the password to access Netdata. "
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
 print('                                <form class="form w-100" id="easy_netdata_setup" method="post" onsubmit="return false;">')
-print('                                    <p class="small">Welcome to the Netdata Installer. Netdata is distributed, real-time, performance and health monitoring for systems and applications. Netdata provides unparalleled insights, in real-time, of everything happening on the systems it runs (including web servers, databases, applications), using highly interactive web dashboards. <em>This process can take up to a minute depending on processing power and connection speed.</em></p>')
+print('                                    <p class="small">Welcome to the Netdata Installer. Netdata is distributed, real-time, performance and health monitoring for systems and applications. Netdata provides unparalleled insights, in real-time, of everything happening on the systems it runs (including web servers, databases, applications), using highly interactive web dashboards. <em>The Netdata installation process can take up to a minute depending on processing power and connection speed.</em></p>')
 if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                                    <label class="small" for="netdata_pass">The Netdata username is <kbd>netdata</kbd>. Enter the password you wish to use to access the Netdata Monitoring System.</label>')
     print('                                    <div class="input-group mb-4">')
@@ -359,7 +359,7 @@ glances_pass_hint = " Enter the password to access Glances. "
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
 print('                                <form class="form w-100" id="easy_glances_setup" method="post" onsubmit="return false;">')
-print('                                    <p class="small">Welcome to the Glances Installer. Glances is a cross-platform system monitoring tool written in Python. <em>This process can take up to a minute depending on processing power and connection speed.</em></p>')
+print('                                    <p class="small">Welcome to the Glances Installer. Glances is a cross-platform system monitoring tool written in Python. <em>The Glances installation process can take up to a minute depending on processing power and connection speed.</em></p>')
 if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                                    <label class="small" for="glances_pass">The Glances username is <kbd>glances</kbd>. Enter the password you wish to use to access the Glances Monitoring System.</label>')
     print('                                    <div class="input-group mb-4">')
