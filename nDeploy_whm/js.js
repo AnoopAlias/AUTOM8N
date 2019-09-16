@@ -456,6 +456,31 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#disable_ndeploy').submit(function() {
+        var $f = $('#disable_ndeploy');
+        var $url = "plugin_status.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#enable_ndeploy').submit(function() {
+        var $f = $('#enable_ndeploy');
+        var $url = "plugin_status.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()
     });

@@ -4,6 +4,8 @@ import cgi
 import cgitb
 import os
 import yaml
+import psutil
+import platform
 from commoninclude import return_label, return_prepend, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Budd P Grant"
@@ -80,9 +82,44 @@ print('                <div class="tab-pane fade show active" id="v-pills-home" 
 
 cardheader('Welcome to '+brand+' Control','fas fa-tools')
 
-print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
-print('                                <p class="small">Welcome to the '+brand+' Control Center.&nbsp;&nbsp;Here you will have control over various theming, branding, and configuration settings for this application.</p>')
+print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
+print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
+print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-infinity"></i> '+brand+' cPanel Plugin</div>')
+print('                                <div class="col-md-6">')
+print('                                    <div class="row no-gutters">')
+
+nginx_status = False
+for myprocess in psutil.process_iter():
+    # Workaround for Python 2.6
+    if platform.python_version().startswith('2.6'):
+        mycmdline = myprocess.cmdline
+    else:
+        mycmdline = myprocess.cmdline()
+    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+        nginx_status = True
+
+if nginx_status:
+    print('                                        <div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                                        <div class="col-9">')
+    print('                                            <form id="disable_ndeploy" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info">Disable</button>')
+    print('                                                <input hidden name="plugin_status" value="disable">')
+else:
+    print('                                        <div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                                        <div class="col-9">')
+    print('                                            <form id="enable_ndeploy" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info">Enable</button>')
+    print('                                                <input hidden name="plugin_status" value="enable">')
+
+print('                                            </form>')
+print('                                        </div>')
+print('                                    </div>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                                <p class="small">Welcome to the '+brand+' Control Center. Here you will have control over various theming, branding, and configuration settings for this application. You can enable and disable the application above.</p>')
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 
