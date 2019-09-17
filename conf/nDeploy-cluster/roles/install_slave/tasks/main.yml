@@ -27,6 +27,7 @@
      - gdnsd-nDeploy
      - MySQL-python
      - gnusys-monitoring
+     - monit
 
 - name: Install AUTOM8N cluster slave rpm package
   yum: name={{ packages }} enablerepo={{ repo }},epel state=present

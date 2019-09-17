@@ -8,3 +8,11 @@
 - name: just force systemd to reread configs
   systemd:
     daemon_reload: yes
+
+- name: Setup monit for httpd
+  template:
+    src: apache.conf.j2
+    dest: /etc/monit.d/apache.conf
+
+- name: Restart monit
+  service: name=monit enabled=yes state=restarted
