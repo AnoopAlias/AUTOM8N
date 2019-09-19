@@ -71,6 +71,7 @@ print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-
 print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-selected="false">PHP&nbsp;Backends</a>')
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-selected="false">Netdata</a>')
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-selected="false">Glances</a>')
+print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-selected="false">Modules</a>')
 
 print('                </div>')
 print('')
@@ -443,6 +444,129 @@ print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
 print('                </div> <!-- End Glances Tab -->')
+
+# Modules Tab
+print('')
+print('                <!-- Modules Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-modules" role="tabpanel" aria-labelledby="v-pills-modules-tab">')
+print('                <form id="module-test-cookie" class="form" onsubmit="return false;">')
+
+cardheader(brand+' Modules Setup', 'fab fa-centos')
+test_cookie_hint = " Controls loading of nginx-nDeploy-module-testcookie_access which allows good bots in while keeping bad bots out. "
+mod_security_hint = " Controls loading of nginx-nDeploy-module-modsecurity which installs the Mod Security v3 Web Application Firewall. "
+pagespeed_hint = " Controls loading of nginx-nDeploy-module-pagespeed which delivers PageSpeed-optimized pages. "
+brotli_hint = " Controls loading of nginx-nDeploy-module-brotli which is a newer bandwidth optimization created by Google. "
+geoip2_hint = " Controls loading of nginx-nDeploy-module-geoip2 which creates variables based on the client IP address. "
+
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <div class="row"> <!-- Row Start -->')
+
+print('                                '+return_label("Bot Mitigate Module", test_cookie_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="test_cookie" value="enabled" id="TestCookieOn" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="test_cookie" value="disabled" id="TestCookieOff" autocomplete="off"> Uninstall')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="test_cookie" value="enabled" id="TestCookieOn" autocomplete="off"> Install')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="test_cookie" value="disabled" id="TestCookieOff" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+print('                                    </div>')
+print('                                </div>')
+
+print('                                '+return_label("ModSecurity Version 3 Module", mod_security_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="mod_security" value="enabled" id="TestCookieOn" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="mod_security" value="disabled" id="TestCookieOff" autocomplete="off"> Uninstall')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="mod_security" value="enabled" id="TestCookieOn" autocomplete="off"> Install')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="mod_security" value="disabled" id="TestCookieOff" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+print('                                    </div>')
+print('                                </div>')
+
+print('                                '+return_label("PageSpeed Module", pagespeed_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="pagespeed" value="enabled" id="TestCookieOn" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="pagespeed" value="disabled" id="TestCookieOff" autocomplete="off"> Uninstall')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="pagespeed" value="enabled" id="TestCookieOn" autocomplete="off"> Install')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="pagespeed" value="disabled" id="TestCookieOff" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+print('                                    </div>')
+print('                                </div>')
+
+print('                                '+return_label("Brotli Module", brotli_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="brotli" value="enabled" id="TestCookieOn" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="brotli" value="disabled" id="TestCookieOff" autocomplete="off"> Uninstall')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="brotli" value="enabled" id="TestCookieOn" autocomplete="off"> Install')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="brotli" value="disabled" id="TestCookieOff" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+print('                                    </div>')
+print('                                </div>')
+
+print('                                '+return_label("Geoip2 Module", geoip2_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/geoip2.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="geoip2" value="enabled" id="TestCookieOn" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="geoip2" value="disabled" id="TestCookieOff" autocomplete="off"> Uninstall')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="geoip2" value="enabled" id="TestCookieOn" autocomplete="off"> Install')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="geoip2" value="disabled" id="TestCookieOff" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+print('                                    </div>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('Note that each module increases NGINX size and processing requirements, <br>so only install the required functionality for best performance.')
+
+print('                </form>')
+print('                </div> <!-- End Modules Tab -->')
 
 print('                <!-- Column End -->')
 print('                </div>')
