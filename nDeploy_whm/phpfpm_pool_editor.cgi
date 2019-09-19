@@ -1,11 +1,12 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import os
 import configparser
 import codecs
+import sys
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -23,105 +24,106 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-commoninclude.print_header()
-
-print('<body>')
-
-commoninclude.print_branding()
-
-print('<div id="main-container" class="container">')  # main container
-
-print('		<nav aria-label="breadcrumb">')
-print('			<ol class="breadcrumb">')
-print('				<li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-redo"></i></a></li>')
-print('				<li class="breadcrumb-item active">PHP-FPM pool edit</li>')
-print('			</ol>')
-print('		</nav>')
-
-print('		<div class="row justify-content-lg-center">')
-print('			<div class="col-lg-8">')
+print_header('PHP-FPM Pool Editor')
+bcrumb('PHP-FPM Pool Editor','fas fa-sitemap')
 
 if form.getvalue('poolfile') and form.getvalue('section'):
     myphpini = form.getvalue('poolfile')
     mysection = int(form.getvalue('section'))
+
     if os.path.isfile(myphpini):
         config = configparser.ConfigParser()
         config.readfp(codecs.open(myphpini, 'r', 'utf8'))
-        print('		<div class="card">')  # card
-        print('			<div class="card-header">')
-        print('				<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> '+config.sections()[mysection]+'</h5>')
-        print('			</div>')
-        print('			<div class="card-body last">')  # card-body
+        print('            <!-- WHM Starter Row -->')
+        print('            <div class="row justify-content-lg-center">')
+        print('                <!-- Column Start -->')
+        print('                <div class="col-lg-8">')
+        cardheader('Edit PHP-FPM Pool Settings for '+config.sections()[mysection].upper(),'fas fa-sitemap')
+        print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
         myconfig = dict(config.items(config.sections()[mysection]))
         mykeypos = 1
         for mykey in myconfig.keys():
-            print('			<label for="'+mykey+'">')
-            print(mykey)
-            print('			</label>')
-            print('         <form class="m-0 toastForm10-wrap" id="toastForm10'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-            print('             <div class="input-group mb-4">')
-            print('                 <input class="form-control" value='+myconfig.get(mykey)+' type="text" name="thevalue">')
-            print('                 <div class="input-group-append">')
-            print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))
-            print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
-            print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
-            print(('					<input class="hidden" name="action" value="edit">'))
-            print('						<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Save</span><i class="fas fa-pen"></i></button>')
-            print('                 </form>')
-            print('                 <form class="m-0 toastForm9-wrap" id="toastForm9'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-            print(('					<input class="hidden" name="poolfile" value="'+myphpini+'">'))
-            print(('					<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
-            print(('					<input class="hidden" name="thekey" value="'+mykey+'">'))
-            print(('					<input class="hidden" name="action" value="delete">'))
-            print('						<button class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
-            print('                 </form>')
-            print('             </div>')
-            print('			</div>')
+            print('                            <label for="'+mykey+'">'+mykey+'</label>')
+            print('                            <form class="m-0 toastForm10-wrap" id="toastForm10'+'-'+str(mykeypos)+'" method="post" onsubmit="return false;">')
+            print('                                <div class="input-group mb-4">')
+            print('                                    <input class="form-control" value="'+myconfig.get(mykey)+'"" type="text" name="thevalue">')
+            print('                                    <div class="input-group-append">')
+            print('                                        <input hidden name="poolfile" value="'+myphpini+'">')
+            print('                                        <input hidden name="section" value="'+form.getvalue('section')+'">')
+            print('                                        <input hidden name="thekey" value="'+mykey+'">')
+            print('                                        <input hidden name="action" value="edit">')
+            print('                                        <button class="btn btn-outline-primary" type="submit">')
+            print('                                            <span class="sr-only">Save</span>')
+            print('                                            <i class="fas fa-pen"></i>')
+            print('                                        </button>')
+            print('                                    </form>')
+            print('                                    <form class="m-0 toastForm9-wrap" id="toastForm9'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+            print('                                        <input hidden name="poolfile" value="'+myphpini+'">')
+            print('                                        <input hidden name="section" value="'+form.getvalue('section')+'">')
+            print('                                        <input hidden name="thekey" value="'+mykey+'">')
+            print('                                        <input hidden name="action" value="delete">')
+            print('                                        <button class="btn btn-outline-danger" type="submit">')
+            print('                                            <span class="sr-only">Delete</span>')
+            print('                                            <i class="fas fa-times"></i>')
+            print('                                        </button>')
+            print('                                    </div>')
+            print('                                </div>')
+            print('                            </form>')            
             mykeypos = mykeypos + 1
 
-        print('			</div>')  # card-body end
-        print('		</div>')  # card end
+        print('                        </div> <!-- Card Body End -->') #Card End
+        cardfooter('')
 
         # New PHP Param
-        print('		<div class="card">')  # card
-        print('			<div class="card-header">')
-        print('				<h5 class="card-title mb-0"><i class="fas fa-sitemap float-right"></i> Add new pool setting</h5>')
-        print('			</div>')
-        print('			<div class="card-body">')  # card-body
+        cardheader('Add New PHP-FPM Pool Setting for '+config.sections()[mysection].upper(),'fas fa-sitemap')
+        print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
-        print('				<form class="m-0" method="post" id="toastForm20" onsubmit="return false;">')
-        print('					<div class="input-group">')
-        print('						<div class="input-group-prepend">')
-        print('							<span class="input-group-text">Key & Value</span>')
-        print('				     	</div>')
-        print('						<input type="text" aria-label="Key" placeholder="Key" name="thekey" class="form-control">')
-        print('						<input type="text" aria-label="Value" placeholder="Value" name="thevalue" class="form-control">')
-        print('						<div class="input-group-append">')
-        print(('						<input class="hidden" name="section" value="'+form.getvalue('section')+'">'))
-        print(('						<input class="hidden" name="poolfile" value="'+myphpini+'">'))
-        print(('						<input class="hidden" name="action" value="edit">'))
-        print('							<button class="btn btn-outline-primary" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button>')
-        print('						</div>')
-        print('					</div>')
-        print('				</form>')
+        print('                            <form class="m-0" method="post" id="toastForm20" onsubmit="return false;">')
+        print('                                <div class="input-group">')
+        print('                                    <div class="input-group-prepend">')
+        print('                                        <span class="input-group-text">Key & Value</span>')
+        print('                                    </div>')
+        print('                                    <input type="text" aria-label="Key" placeholder="Key" name="thekey" class="form-control">')
+        print('                                    <input type="text" aria-label="Value" placeholder="Value" name="thevalue" class="form-control">')
+        print('                                    <div class="input-group-append">')
+        print('                                        <input hidden name="section" value="'+form.getvalue('section')+'">')
+        print('                                        <input hidden name="poolfile" value="'+myphpini+'">')
+        print('                                        <input hidden name="action" value="edit">')
+        print('                                        <button class="btn btn-outline-primary" type="submit">')
+        print('                                             <span class="sr-only">Add</span>')
+        print('                                             <i class="fas fa-plus"></i>')
+        print('                                        </button>')
+        print('                                    </div>')
+        print('                                </div>')
+        print('                            </form>')
 
-        print('			</div>')  # card-body end
-        print('			<div class="card-footer footer-warning">')
-        print('				<small><strong>WARNING USE AT YOUR OWN RISK</strong>: Adding or editing pool config with invalid settings can bring down your PHP application server.</small>')
-        print('			</div>')
+        print('                        </div> <!-- Card Body End -->') #Card Body End
+        cardfooter('<strong>WARNING USE AT YOUR OWN RISK! </strong><br>Adding or modifying pool configurations with invalid settings can bring down your PHP application server.')
+
+    else:
+        print_nontoast_error('Forbidden!', 'Missing Poolfile!')
+        sys.exit(0)
+
 else:
-        commoninclude.print_forbidden()
+    print_nontoast_error('Forbidden!', 'Missing Poolfile or Section Data!')
+    sys.exit(0)
 
-print('				</div>')  # card end
+#Column End
+print('                <!-- Column End -->')
+print('                </div>')
+print('')
+print('            <!-- WHM End Row -->')
+print('            </div>')
 
-print('			</div>')  # col end
-print('		</div>')  # row end
+print_footer()
 
-print('</div>')  # main-container end
+print('        </div> <!-- Main Container End -->')
+print('')
 
-commoninclude.print_modals()
-commoninclude.print_loader()
+print_modals()
+print_loader()
 
-print('</body>')
+print('    <!-- Body End -->')
+print('    </body>')
 print('</html>')

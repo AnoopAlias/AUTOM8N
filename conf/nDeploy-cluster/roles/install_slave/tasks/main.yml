@@ -19,13 +19,15 @@
     packages:
      - csync2-nDeploy
      - unison-nDeploy
-     - "{{ webserver }}-nDeploy"
+     - nginx-nDeploy
      - python-pip
      - stunnel
      - redis
      - haproxy
      - gdnsd-nDeploy
      - MySQL-python
+     - gnusys-monitoring
+     - monit
 
 - name: Install AUTOM8N cluster slave rpm package
   yum: name={{ packages }} enablerepo={{ repo }},epel state=present

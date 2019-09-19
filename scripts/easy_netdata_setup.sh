@@ -1,6 +1,5 @@
-#/bin/bash
+#!/bin/bash
 #Author: Anoop P Alias
-
 
 yum -y install MySQL-python iproute autoconf automake curl gcc git libmnl-devel libuuid-devel lm-sensors make nc nmap-ncat pkgconfig python python-psycopg2 PyYAML zlib-devel python-pip
 
@@ -13,17 +12,23 @@ yum -y install MySQL-python iproute autoconf automake curl gcc git libmnl-devel 
 ### netdata compile from source ###
 
 ### netdata static build ###
-bash <(curl -Ss https://my-netdata.io/kickstart-static64.sh)
+curl -Ss 'https://my-netdata.io/kickstart-static64.sh' >/tmp/kickstart.sh && /bin/bash /tmp/kickstart.sh --non-interactive
 ### netdata static build ###
 
 if [ ! -f /etc/nginx/conf.d/netdata.password ]; then
 
-  echo -e '\e[93m Please set a password for user netdata below \e[0m'
+  if [ $# -ne 1 ]; then
+    echo -e '\e[93m Please set a password for user netdata below \e[0m'
+    printf "netdata:$(openssl passwd -apr1)" > /etc/nginx/conf.d/netdata.password
+  else
+    echo "netdata:$(openssl passwd -apr1 $1)" > /etc/nginx/conf.d/netdata.password
+  fi
 
-  printf "netdata:$(openssl passwd -apr1)" > /etc/nginx/conf.d/netdata.password
-  chmod 400 /etc/nginx/conf.d/netdata.password
-  chown nobody /etc/nginx/conf.d/netdata.password
 fi
+
+chmod 400 /etc/nginx/conf.d/netdata.password
+chown nobody /etc/nginx/conf.d/netdata.password
+
 
 conflineno=$(wc -l /opt/netdata/etc/netdata/netdata.conf|awk '{print $1}')
 

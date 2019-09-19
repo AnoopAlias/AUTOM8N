@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 #Author: Anoop P Alias
 
 which systemctl || exit 1
@@ -6,8 +6,17 @@ yum -y remove glances
 yum -y --enablerepo=epel install python36 python36-pip python36-devel
 pip3 install glances bottle
 
-echo -e "\e[93m Input web user password for glances user below \e[0m"
-printf "glances:$(openssl passwd -apr1)" > /etc/nginx/conf.d/glances.password
+if [ ! -f /etc/nginx/conf.d/glances.password ]; then
+
+  if [ $# -ne 1 ]; then
+    echo -e '\e[93m Please set a password for user glances below \e[0m'
+    printf "glances:$(openssl passwd -apr1)" > /etc/nginx/conf.d/glances.password
+  else
+    echo "glances:$(openssl passwd -apr1 $1)" > /etc/nginx/conf.d/glances.password
+  fi
+
+fi
+
 chmod 400 /etc/nginx/conf.d/glances.password
 chown nobody /etc/nginx/conf.d/glances.password
 

@@ -20,43 +20,6 @@ xtendweb_installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
-
-def safenginxreload():
-    nginx_status = False
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
-            nginx_status = True
-            break
-    if not nginx_status:
-        with open(os.devnull, 'w') as FNULL:
-            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
-
-
-def sighupnginx():
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-            nginxpid = myprocess.pid
-            os.kill(nginxpid, signal.SIGHUP)
-
-
 cgitb.enable()
 form = cgi.FieldStorage()
 
@@ -73,10 +36,14 @@ if form.getvalue('action'):
             the_raw_cmd = '/usr/sbin/nginx -s reload && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"nginx -s reload\"'
         else:
             the_raw_cmd = '/usr/sbin/nginx -s reload'
+            print('Reload initialized.')
     elif form.getvalue('action') == 'watcherrestart':
         the_raw_cmd = 'service ndeploy_watcher stop && /bin/rm -f /opt/nDeploy/watcher.pid && service ndeploy_watcher start'
     elif form.getvalue('action') == 'redisflush':
-        the_raw_cmd = 'redis-cli FLUSHALL'
+        if os.path.isfile(cluster_config_file):
+            the_raw_cmd = 'redis-cli FLUSHALL && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"redis-cli FLUSHALL\"'
+        else:
+            the_raw_cmd = 'redis-cli FLUSHALL'
     else:
         commoninclude.print_forbidden()
         the_raw_cmd = 'echo ""'

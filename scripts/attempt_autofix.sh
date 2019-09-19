@@ -38,6 +38,9 @@ fi
 
 echo -e '\e[93m Attempting to regenerate  nginx default conf  \e[0m'
 /opt/nDeploy/scripts/generate_default_vhost_config.py
+if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]; then
+  /opt/nDeploy/scripts/update_nginx_status_allow.py
+fi
 
 # Fixing RPM state
 if [ -f /etc/cpanel/ea4/is_ea4 ];then
