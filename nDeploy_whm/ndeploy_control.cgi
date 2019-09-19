@@ -20,6 +20,7 @@ __status__ = "Production"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
+autom8n_version_info_file = installation_path+"/conf/version.yaml"
 
 cgitb.enable()
 
@@ -80,6 +81,24 @@ print('')
 print('                <!-- Home Tab -->')
 print('                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">')
 
+# Plugin Status
+nginx_status = False
+for myprocess in psutil.process_iter():
+    # Workaround for Python 2.6
+    if platform.python_version().startswith('2.6'):
+        mycmdline = myprocess.cmdline
+    else:
+        mycmdline = myprocess.cmdline()
+    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+        nginx_status = True
+
+watcher_status="status"
+
+# Get version of Nginx and plugin
+with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
+    autom8n_version_info_yaml_parsed = yaml.safe_load(autom8n_version_info_yaml)
+autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
+
 cardheader('Welcome to '+brand+' Control','fas fa-tools')
 
 print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
@@ -123,6 +142,40 @@ print('                                <p class="small">Welcome to the '+brand+'
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 
+cardfooter('')
+
+
+
+cardheader('')
+print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
+print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
+print('                                <div class="col-md-12">')
+print('                                    <div class="p-3 border-bottom text-center">')
+print('                                        <h4 class="mb-0">Plugin Status</h4>')
+print('                                        <ul class="list-unstyled mb-0">')
+print('                                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
+
+if nginx_status:
+    print('                                            <li class="mt-2 text-success">Enabled <i class="fas fa-power-off ml-1"></i></li>')
+else:
+    print('                                            <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
+
+print('                                        </ul>')
+print('                                    </div>')
+
+if nginx_status:
+    print('                                    <form id="disable_ndeploy" class="form" onsubmit="return false;">')
+    print('                                        <button class="alert alert-light btn btn-block">Disable</button>')
+    print('                                        <input hidden name="plugin_status" value="disable">')
+else:
+    print('                                    <form id="enable_ndeploy" class="form" onsubmit="return false;">')
+    print('                                        <button class="alert alert-light btn btn-block">Enable</button>')
+    print('                                        <input hidden name="plugin_status" value="enable">')
+
+print('                                    </form>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
 print('                </div> <!-- End Home Tab -->')

@@ -90,7 +90,7 @@ print('                                <div class="col-md-4">')
 print('                                    <div class="p-3 border-bottom text-center">')
 print('                                        <h4 class="mb-0">Watcher Status</h4>')
 print('                                        <ul class="list-unstyled mb-0">')
-print('                                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n",'')+'</small></li>')
+print('                                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
 if watcher_status:
     print('                                            <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
