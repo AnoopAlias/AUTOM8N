@@ -40,7 +40,10 @@ if form.getvalue('action'):
     elif form.getvalue('action') == 'watcherrestart':
         the_raw_cmd = 'service ndeploy_watcher stop && /bin/rm -f /opt/nDeploy/watcher.pid && service ndeploy_watcher start'
     elif form.getvalue('action') == 'redisflush':
-        the_raw_cmd = 'redis-cli FLUSHALL'
+        if os.path.isfile(cluster_config_file):
+            the_raw_cmd = 'redis-cli FLUSHALL && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"redis-cli FLUSHALL\"'
+        else:
+            the_raw_cmd = 'redis-cli FLUSHALL'
     else:
         commoninclude.print_forbidden()
         the_raw_cmd = 'echo ""'
