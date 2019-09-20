@@ -21,6 +21,7 @@
      - gdnsd-nDeploy
      - MySQL-python
      - gnusys-monitoring
+     - monit
 
 - name: Setup nginx config directories on master
   file: path=/etc/nginx/{{ item }} state=directory

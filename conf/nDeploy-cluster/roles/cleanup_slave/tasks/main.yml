@@ -30,3 +30,13 @@
     path: /etc/yum/pluginconf.d/universal-hooks.conf
     regexp: '^enabled='
     line: 'enabled=0'
+
+- name: Setup monit for gdnsd
+  template:
+    src: gdnsd.conf.j2
+    dest: /etc/monit.d/gdnsd.conf
+  when: dns == "geodns"
+
+- name: Restart monit
+  service: name=monit enabled=yes state=restarted
+  when: dns == "geodns"
