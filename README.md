@@ -25,8 +25,8 @@ GPLv3
 # COMMERCIAL SUPPORT and SOFTWARE DOWNLOAD
 Packaged Software and 24x7 Product support installation support is provided via a Paid Subscription
 
-# UI,UX designed by
+# CREDITS
 https://www.stirstudiosdesign.com/
-
+https://highavailability.io/
 
 A U T O M 8 N
