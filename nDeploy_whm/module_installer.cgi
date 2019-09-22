@@ -30,14 +30,6 @@ print('<head>')
 print('</head>')
 print('<body>')
 
-#(pagespeed)   yum --enablerepo=ndeploy install nginx-nDeploy-module-pagespeed
-#(brotli)      yum --enablerepo=ndeploy install nginx-nDeploy-module-brotli
-#(geoip2)       yum --enablerepo=ndeploy install nginx-nDeploy-module-geoip2
-#(modsecurityv3) yum --enablerepo=ndeploy install nginx-nDeploy-module-modsecurity
-#(testcookie_access) yum --enablerepo=ndeploy install nginx-nDeploy-module-testcookie_access
-
-
-
 if form.getvalue('test_cookie') and \
     form.getvalue('mod_security') and \
     form.getvalue('pagespeed') and \
