@@ -480,6 +480,17 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#module-installer').submit(function() {
+        var $f = $('#module-installer');
+        var $url = "module_installer.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
 
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()
