@@ -340,7 +340,7 @@ jQuery(document).ready(function($) {
         var $f = $('#toastForm26');
         var $url = "fix_csync2.cgi?" + $f.serialize();
         $.ajax({
-            url: $url, 
+            url: $url,
             success: function(result){
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
@@ -479,7 +479,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
-
+  
     $('#module-installer').submit(function() {
         var $f = $('#module-installer');
         var $url = "module_installer.cgi?" + $f.serialize();
@@ -515,5 +515,13 @@ jQuery(document).ready(function($) {
     $('#myModal-xl').on('hidden.bs.modal', function() {
         location.reload()
     });
+
+    $('.nav a.dropdown-item').click(function (e) {
+        //get selected href
+        var href = $(this).attr('href');
+
+        // show tab for all tabs that match href
+        $('.nav a.dropdown-item[href="' + href + '"]').tab('show');
+    })
 
 });
