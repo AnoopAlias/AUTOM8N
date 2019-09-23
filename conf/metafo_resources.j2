@@ -1,4 +1,4 @@
-{% for ip in dnsmap.items() %}
+{% for ip in dnsmap.keys() %}
       {{ dnsmap[ip] }} => {
         datacenters => [ real ],
         dcmap => {
