@@ -209,9 +209,9 @@ def print_footer():
     print('            </div>')
     print('            <div class="row justify-content-center text-center">')
     if ndeploy_theme_color == 'light':
-        print('                <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+        print('                <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ", '')+' on '+nginx_version+'.</p>')
     if ndeploy_theme_color == 'dark':
-        print('                <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+        print('                <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ", '')+' on '+nginx_version+'.</p>')
     print('            </div>')
     print('')
 
