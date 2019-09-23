@@ -18,6 +18,7 @@ __status__ = "Development"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 cgitb.enable()
 
@@ -66,11 +67,20 @@ if form.getvalue('test_cookie') and \
 
     if cmd_install != "" or cmd_uninstall != "":
         if cmd_install == "" and cmd_uninstall != "":
-            procExe = subprocess.Popen("yum -y remove "+cmd_uninstall, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        elif cmd_install != "" and cmd_uninstall == "":    
-            procExe = subprocess.Popen("yum -y --enablerepo=ndeploy install "+cmd_install, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            if os.path.isfile(cluster_config_file):
+                procExe = subprocess.Popen('yum -y remove '+cmd_uninstall+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y remove '+cmd_uninstall+'\"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            else:
+                procExe = subprocess.Popen('yum -y remove '+cmd_uninstall, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        elif cmd_install != "" and cmd_uninstall == "":
+            if os.path.isfile(cluster_config_file):
+                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy install '+cmd_install+'\"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            else:
+                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         else:
-            procExe = subprocess.Popen("yum -y --enablerepo=ndeploy install "+cmd_install+";yum -y remove "+cmd_uninstall, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            if os.path.isfile(cluster_config_file):
+                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && yum -y remove '+cmd_uninstall+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy install '+cmd_install+' && yum -y remove '+cmd_uninstall+'\"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            else:
+                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && yum -y remove '+cmd_uninstall, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         
         print('<ul class="shelloutput">')
         if cmd_install != "":

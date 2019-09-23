@@ -160,10 +160,13 @@ def print_loader():
 
 # Print Header
 def print_header(title=''):
-    print('Content-Type: text/html')
     print('')
-    print('<html>')
+    print('<!doctype html>')
+    print('<html lang="en">')
     print('    <head>')
+    print('        <!-- Required meta tags -->')
+    print('        <meta charset="utf-8">')
+    print('        <meta name="viewport" content="width=device-width, initial-scale=1">')
     print('        <title>'+brand+' - '+title+'</title>')
     print('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>')
     print('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>')
@@ -206,9 +209,9 @@ def print_footer():
     print('            </div>')
     print('            <div class="row justify-content-center text-center">')
     if ndeploy_theme_color == 'light':
-        print('                <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+        print('                <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ", '')+' on '+nginx_version+'.</p>')
     if ndeploy_theme_color == 'dark':
-        print('                <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+        print('                <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ", '')+' on '+nginx_version+'.</p>')
     print('            </div>')
     print('')
 
