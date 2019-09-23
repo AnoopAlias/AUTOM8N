@@ -20,7 +20,7 @@ nginx_version_info_file = "/etc/nginx/version.yaml"
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
-    ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light") 
+    ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light")
     primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#121212")
     logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "None")
     app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
@@ -153,7 +153,7 @@ def print_header(title=''):
     print('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>')
     print('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>')
     print('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>')
-    print('        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">')
+#    print('        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">')
     print('        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">')
     print('        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">')
     print('        <script src="js.js"></script>')
@@ -172,10 +172,10 @@ def print_header(title=''):
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
-    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="ndeploy_control.cgi"><i class="fas fa-tools"></i> '+brand+'&nbsp;Control </a></div>')
+    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="ndeploy_control.cgi" data-toggle="tooltip" title="'+brand+'&nbsp;Control"><i class="fas fa-tools"></i> <span class="d-none d-lg-inline-block">'+brand+'&nbsp;Control</span></a></div>')
     if app_email != 'None':
-        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'"><i class="fas fa-envelope"></i> Support </a></div>')
-    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt"><i class="fas fa-book-open"></i> Documentation </a></div>')
+        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>')
+    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt" data-toggle="tooltip" title="Documentation"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">Documentation</span></a></div>')
     print('            </div>')
     print('        </header>')
     print('')
@@ -219,8 +219,8 @@ def cardfooter(text='Unmodified Footer Text'):
     if text != '':
         print('')
         print('                        <!-- Card Footer Start -->')
-        print('                        <div class="card-footer">')
-        print('                            <small><center>'+text+'</center></small>')
+        print('                        <div class="card-footer text-center">')
+        print('                            <small>'+text+'</small>')
         print('                        </div>')
     print('')
     print('                    <!-- Bootstrap Card End -->')
@@ -276,7 +276,7 @@ def sighupnginx():
             mycmdline = myprocess.cmdline()
         if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
             nginxpid = myprocess.pid
-            os.kill(nginxpid, signal.SIGHUP)        
+            os.kill(nginxpid, signal.SIGHUP)
 
 
 def print_modals():

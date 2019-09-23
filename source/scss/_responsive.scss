@@ -1,0 +1,136 @@
+// main: styles.scss
+
+// (max-width: 480px)
+// -------------------------
+@media (max-width: 479px) {
+
+}
+
+// (min-width: 480px) and (max-width: 767px)
+// -------------------------
+@media (min-width: 480px) and (max-width: 768px) {
+
+}
+
+// (max-width: 767px)
+// -------------------------
+
+@media only screen and (max-width: 768px) {
+	.card {
+		.align-items-center {
+			.label {
+				text-align: right;
+			}
+			[class*='col-']:nth-last-child(2) {
+				&.label {
+					margin-top: .4rem;
+				}
+			}
+		}
+		.card-body {
+			.no-gutters {
+				&.row-2-col {
+					[class*='col-'] {
+						&:nth-last-child(-n+2) {
+							border-bottom: none;
+						}
+						&:nth-child(odd) {
+							border-right: $border;
+						}
+					}
+				}
+				&.row-3-col {
+					[class*='col-'] {
+						&:nth-child(2) {
+							border-left: $border;
+							border-right: $border;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// (max-width: 991px)
+// -------------------------
+
+@media only screen and (max-width: 992px) {
+
+}
+
+// (max-width: 1199px)
+// -------------------------
+
+@media only screen and (min-width: 1199px) {
+
+}
+
+// (min-width: 767px)
+// -------------------------
+
+@media (min-width: 768px) {
+	.card {
+		.align-items-center {
+			> [class*='col-']:first-child {
+				&.label {
+					bottom: .4rem;
+				}
+			}
+		}
+		.card-body {
+			.no-gutters {
+				.alert {
+					&.alert-light {
+						border-right: none;
+					}
+				}
+				&.row-1 {
+					[class*='col-'] {
+						&:nth-child(even) {
+							border-left: $border;
+						}
+					}
+				}
+				&.row-2-col {
+					[class*='col-'] {
+						&:nth-last-child(-n+2) {
+							border-bottom: none;
+						}
+						&:nth-child(even) {
+							border-left: $border;
+						}
+					}
+				}
+				&.row-3-col {
+					[class*='col-'] {
+						&:nth-child(-n+2) {
+							border-bottom: $border;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// (min-width: 767px) and (max-width: 991px)
+// -------------------------
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+
+}
+
+// (min-width: 992px)
+// -------------------------
+
+@media only screen and (min-width: 991px) {
+
+}
+
+// (min-width: 992px) and (max-width: 1200px)
+// -------------------------
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+
+}
