@@ -23,27 +23,11 @@ plugins => {
       $include{geoip_maps}
     },
     resources => {
-      ip0 => {
-        map => auto_map,
-        service_types => [ xtendweb ],
-        dcmap => {
-          {% for host in groups['ndeploymaster'] %}{{ hostvars[host]['ansible_hostname'] }} => {{ hostvars[host]['mainip'] }},
-          {% endfor %}
-          {% for host in groups['ndeployslaves'] %}{{ hostvars[host]['ansible_hostname'] }} => {{ hostvars[host]['mainip'] }},
-          {% endfor %}
-        }
-      },
       $include{geoip_resources}
     }
   },
   metafo => {
     resources => {
-      ip0 => {
-        datacenters => [ real ],
-        dcmap => {
-          real => %geoip!ip0
-        }
-      },
       $include{metafo_resources}
     }
   }
