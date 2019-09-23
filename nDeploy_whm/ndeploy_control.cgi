@@ -27,7 +27,7 @@ form = cgi.FieldStorage()
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
-    ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light") 
+    ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light")
     primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#121212")
     logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "None")
     app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
@@ -61,17 +61,32 @@ print('            <div class="row justify-content-lg-center flex-nowrap">')
 
 print('')
 print('                <!-- Secondary Navigation -->')
-print('                <div class="col-md-3 nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
-print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>')
-print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-selected="false">Branding</a>')
-print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-selected="false">Aesthetics</a>')
-print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-selected="false">PHP&nbsp;Backends</a>')
-print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-selected="false">Netdata</a>')
-print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-selected="false">Glances</a>')
+print('                <div class="col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
+print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home">Home</a>')
+print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
+print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
+print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">PHP&nbsp;Backends</a>')
+print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
+print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
 
 print('                </div>')
 print('')
-print('                <div class="tab-content col-md-9" id="v-pills-tabContent">')
+print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
+
+print('                <!-- Secondary Mobile Navigation -->')
+print('                <div class="d-lg-none d-xl-none dropdown nav">')
+print('                     <button class="btn btn-secondary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
+print('                         Options')
+print('                     </button>')
+print('                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
+print('                         <a class="dropdown-item" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-pressed="false">Home</a>')
+print('                         <a class="dropdown-item" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-pressed="false">Branding</a>')
+print('                         <a class="dropdown-item" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-pressed="false">Aesthetics</a>')
+print('                         <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">PHP&nbsp;Backends</a>')
+print('                         <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
+print('                         <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
+print('                     </div>')
+print('                </div>')
 
 # Home Tab
 print('')
@@ -82,7 +97,7 @@ cardheader('Welcome to '+brand+' Control','fas fa-tools')
 
 print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
-print('                                <p class="small">Welcome to the '+brand+' Control Center.&nbsp;&nbsp;Here you will have control over various theming, branding, and configuration settings for this application.</p>')
+print('                                <p class="small mb-0">Welcome to the '+brand+' Control Center. Here you will have control over various theming, branding, and configuration settings for this application.</p>')
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 
@@ -156,7 +171,7 @@ print('                                            </span>')
 print('                                        </div>')
 print('                                        <input type="text" class="form-control" name="brand_link" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
 print('                                    </div>')
-print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Save Branding Options</button>')
+print('                                    <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Save Branding Options</button>')
 print('                                </form>')
 
 print('                                <form class="form w-100" id="restore_branding_defaults" method="post" onsubmit="return false;">')
@@ -231,7 +246,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="app_email" value="'+app_email+'" id="app_email" aria-describedby="app_email_desc">')
 print('                                </div>')
 
-print('                                <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Save Aesthetics Settings</button>')
+print('                                <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Save Aesthetics Settings</button>')
 print('                                </form>')
 
 print('                                <form class="form w-100" id="restore_ndeploy_control_defaults" method="post" onsubmit="return false;">')
@@ -293,9 +308,9 @@ if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
 print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
 print('                                    <input hidden class="form-control" name="netdata_pass" value="'+netdata_pass+'">')
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
-    print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Reinstall Netdata Monitoring System</button>')
+    print('                                    <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Reinstall Netdata Monitoring System</button>')
 else:
-    print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Install Netdata Monitoring System</button>')
+    print('                                    <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Install Netdata Monitoring System</button>')
 print('                                </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
@@ -336,9 +351,9 @@ if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
 print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
 print('                                    <input hidden class="form-control" name="glances_pass" value="'+glances_pass+'">')
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
-    print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Reinstall Glances Monitoring System</button>')
+    print('                                    <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Reinstall Glances Monitoring System</button>')
 else:
-    print('                                    <button class="mb-2 btn btn-outline-primary btn-block" type="submit">Install Glances Monitoring System</button>')
+    print('                                    <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Install Glances Monitoring System</button>')
 print('                                </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
