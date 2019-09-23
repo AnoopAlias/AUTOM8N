@@ -1,0 +1,8 @@
+{% for ip in dnsmap.items() %}
+      {{ dnsmap[ip] }} => {
+        datacenters => [ real ],
+        dcmap => {
+          real => %geoip!{{ dnsmap[ip] }}
+        }
+      },
+{% endfor %}
