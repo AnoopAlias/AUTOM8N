@@ -25,3 +25,13 @@
 
 - name: Restart cpanel on master
   service: name=cpanel enabled=yes state=restarted
+
+- name: Setup monit for gdnsd
+  template:
+    src: gdnsd.conf.j2
+    dest: /etc/monit.d/gdnsd.conf
+  when: dns == "geodns"
+
+- name: Restart monit
+  service: name=monit enabled=yes state=restarted
+  when: dns == "geodns"

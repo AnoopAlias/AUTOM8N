@@ -4,6 +4,8 @@ import cgi
 import cgitb
 import os
 import yaml
+import psutil
+import platform
 from commoninclude import return_label, return_prepend, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Budd P Grant"
@@ -18,6 +20,7 @@ __status__ = "Production"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
+autom8n_version_info_file = installation_path+"/conf/version.yaml"
 
 cgitb.enable()
 
@@ -61,13 +64,14 @@ print('            <div class="row justify-content-lg-center flex-nowrap">')
 
 print('')
 print('                <!-- Secondary Navigation -->')
-print('                <div class="col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
-print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home">Home</a>')
-print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
-print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
-print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">PHP&nbsp;Backends</a>')
-print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
-print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
+print('                <div class="col-md-3 nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
+print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>')
+print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-selected="false">Branding</a>')
+print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-selected="false">Aesthetics</a>')
+print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-selected="false">PHP&nbsp;Backends</a>')
+print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-selected="false">Netdata</a>')
+print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-selected="false">Glances</a>')
+print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-selected="false">Modules</a>')
 
 print('                </div>')
 print('')
@@ -93,14 +97,101 @@ print('')
 print('                <!-- Home Tab -->')
 print('                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">')
 
+# Plugin Status
+nginx_status = False
+for myprocess in psutil.process_iter():
+    # Workaround for Python 2.6
+    if platform.python_version().startswith('2.6'):
+        mycmdline = myprocess.cmdline
+    else:
+        mycmdline = myprocess.cmdline()
+    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+        nginx_status = True
+
+watcher_status="status"
+
+# Get version of Nginx and plugin
+with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
+    autom8n_version_info_yaml_parsed = yaml.safe_load(autom8n_version_info_yaml)
+autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
+
 cardheader('Welcome to '+brand+' Control','fas fa-tools')
 
-print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->') #Row Start
-print('                                <p class="small mb-0">Welcome to the '+brand+' Control Center. Here you will have control over various theming, branding, and configuration settings for this application.</p>')
+print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
+print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
+print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-infinity"></i> '+brand+' cPanel Plugin</div>')
+print('                                <div class="col-md-6">')
+print('                                    <div class="row no-gutters">')
+
+nginx_status = False
+for myprocess in psutil.process_iter():
+    # Workaround for Python 2.6
+    if platform.python_version().startswith('2.6'):
+        mycmdline = myprocess.cmdline
+    else:
+        mycmdline = myprocess.cmdline()
+    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+        nginx_status = True
+
+if nginx_status:
+    print('                                        <div class="col-3 alert alert-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                                        <div class="col-9">')
+    print('                                            <form id="disable_ndeploy" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info">Disable</button>')
+    print('                                                <input hidden name="plugin_status" value="disable">')
+else:
+    print('                                        <div class="col-3 alert alert-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                                        <div class="col-9">')
+    print('                                            <form id="enable_ndeploy" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert alert-info btn btn-info">Enable</button>')
+    print('                                                <input hidden name="plugin_status" value="enable">')
+
+print('                                            </form>')
+print('                                        </div>')
+print('                                    </div>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                                <p class="small">Welcome to the '+brand+' Control Center. Here you will have control over various theming, branding, and configuration settings for this application. You can enable and disable the application above.</p>')
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 
+cardfooter('')
+
+
+
+cardheader('')
+print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
+print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
+print('                                <div class="col-md-12">')
+print('                                    <div class="p-3 border-bottom text-center">')
+print('                                        <h4 class="mb-0">Plugin Status</h4>')
+print('                                        <ul class="list-unstyled mb-0">')
+print('                                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
+
+if nginx_status:
+    print('                                            <li class="mt-2 text-success">Enabled <i class="fas fa-power-off ml-1"></i></li>')
+else:
+    print('                                            <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
+
+print('                                        </ul>')
+print('                                    </div>')
+
+if nginx_status:
+    print('                                    <form id="disable_ndeploy" class="form" onsubmit="return false;">')
+    print('                                        <button class="alert alert-light btn btn-block">Disable</button>')
+    print('                                        <input hidden name="plugin_status" value="disable">')
+else:
+    print('                                    <form id="enable_ndeploy" class="form" onsubmit="return false;">')
+    print('                                        <button class="alert alert-light btn btn-block">Enable</button>')
+    print('                                        <input hidden name="plugin_status" value="enable">')
+
+print('                                    </form>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
 print('                </div> <!-- End Home Tab -->')
@@ -294,7 +385,7 @@ netdata_pass_hint = " Enter the password to access Netdata. "
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
 print('                                <form class="form w-100" id="easy_netdata_setup" method="post" onsubmit="return false;">')
-print('                                    <p class="small">Welcome to the Netdata Installer. Netdata is distributed, real-time, performance and health monitoring for systems and applications. Netdata provides unparalleled insights, in real-time, of everything happening on the systems it runs (including web servers, databases, applications), using highly interactive web dashboards. <em>This process can take up to a minute depending on processing power and connection speed.</em></p>')
+print('                                    <p class="small">Welcome to the Netdata Installer. Netdata is distributed, real-time, performance and health monitoring for systems and applications. Netdata provides unparalleled insights, in real-time, of everything happening on the systems it runs (including web servers, databases, applications), using highly interactive web dashboards. <em>The Netdata installation process can take up to a minute depending on processing power and connection speed.</em></p>')
 if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                                    <label class="small" for="netdata_pass">The Netdata username is <kbd>netdata</kbd>. Enter the password you wish to use to access the Netdata Monitoring System.</label>')
     print('                                    <div class="input-group mb-4">')
@@ -337,7 +428,7 @@ glances_pass_hint = " Enter the password to access Glances. "
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
 print('                                <form class="form w-100" id="easy_glances_setup" method="post" onsubmit="return false;">')
-print('                                    <p class="small">Welcome to the Glances Installer. Glances is a cross-platform system monitoring tool written in Python. <em>This process can take up to a minute depending on processing power and connection speed.</em></p>')
+print('                                    <p class="small">Welcome to the Glances Installer. Glances is a cross-platform system monitoring tool written in Python. <em>The Glances installation process can take up to a minute depending on processing power and connection speed.</em></p>')
 if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                                    <label class="small" for="glances_pass">The Glances username is <kbd>glances</kbd>. Enter the password you wish to use to access the Glances Monitoring System.</label>')
     print('                                    <div class="input-group mb-4">')
@@ -368,6 +459,132 @@ print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
 print('                </div> <!-- End Glances Tab -->')
+
+# Modules Tab
+print('')
+print('                <!-- Modules Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-modules" role="tabpanel" aria-labelledby="v-pills-modules-tab">')
+print('                <form id="module-installer" class="form" onsubmit="return false;">')
+
+cardheader(brand+' Modules Setup', 'fab fa-centos')
+test_cookie_hint = " Controls loading of nginx-nDeploy-module-testcookie_access which allows good bots in while keeping bad bots out. "
+mod_security_hint = " Controls loading of nginx-nDeploy-module-modsecurity which installs the Mod Security v3 Web Application Firewall. "
+pagespeed_hint = " Controls loading of nginx-nDeploy-module-pagespeed which delivers PageSpeed-optimized pages. "
+brotli_hint = " Controls loading of nginx-nDeploy-module-brotli which is a newer bandwidth optimization created by Google. "
+geoip2_hint = " Controls loading of nginx-nDeploy-module-geoip2 which creates variables based on the client IP address. "
+
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+
+print('                                '+return_label("Bot Mitigate Module", test_cookie_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="test_cookie" value="enabled" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="test_cookie" value="disabled" autocomplete="off"> Uninstalled')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="test_cookie" value="enabled" autocomplete="off"> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="test_cookie" value="disabled" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+print('                                    </div>')
+print('                                </div>')
+
+print('                                '+return_label("ModSecurity V3 Module", mod_security_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="mod_security" value="enabled" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="mod_security" value="disabled" autocomplete="off"> Uninstalled')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="mod_security" value="enabled" autocomplete="off"> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="mod_security" value="disabled" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+print('                                    </div>')
+print('                                </div>')
+
+print('                                '+return_label("PageSpeed Module", pagespeed_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="pagespeed" value="enabled" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="pagespeed" value="disabled" autocomplete="off"> Uninstalled')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="pagespeed" value="enabled" autocomplete="off"> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="pagespeed" value="disabled" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+print('                                    </div>')
+print('                                </div>')
+
+print('                                '+return_label("Brotli Module", brotli_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="brotli" value="enabled" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="brotli" value="disabled" autocomplete="off"> Uninstalled')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="brotli" value="enabled" autocomplete="off"> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="brotli" value="disabled" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+print('                                    </div>')
+print('                                </div>')
+
+print('                                '+return_label("Geoip2 Module", geoip2_hint))
+print('                                <div class="col-md-6">')
+print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/geoip2.load'):
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="geoip2" value="enabled" autocomplete="off" checked> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="geoip2" value="disabled" autocomplete="off"> Uninstalled')
+    print('                                        </label>')
+else:
+    print('                                        <label class="btn btn-light">')
+    print('                                            <input type="radio" name="geoip2" value="enabled" autocomplete="off"> Installed')
+    print('                                        </label>')
+    print('                                        <label class="btn btn-light active">')
+    print('                                            <input type="radio" name="geoip2" value="disabled" autocomplete="off" checked> Uninstalled')
+    print('                                        </label>')
+
+    
+print('                                    </div>')
+print('                                </div>')
+print('                                <button class="mt-2 btn btn-outline-primary btn-block" type="submit">Apply Module Selection</button>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('Note that each module increases NGINX size and processing requirements, so only install the required functionality for best performance.')
+
+print('                </form>')
+print('                </div> <!-- End Modules Tab -->')
 
 print('                <!-- Column End -->')
 print('                </div>')

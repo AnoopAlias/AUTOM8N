@@ -1,0 +1,12 @@
+{% for ip in dnsmap.keys() %}
+      {{ dnsmap[ip] }} => {
+        map => auto_map,
+        service_types => [ xtendweb ],
+        dcmap => {
+          {{ master_server|genshorthostname }} => {{ ip }},
+          {% for slave in clustermap.keys() %}
+          {{ slave|genshorthostname }} => {{ clustermap[slave]['dnsmap'][ip] }},
+          {% endfor %}
+                  }
+      },
+{% endfor %}
