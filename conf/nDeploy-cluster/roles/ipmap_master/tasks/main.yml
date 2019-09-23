@@ -13,6 +13,9 @@
 - name: Setup ipmap
   shell: bash /root/xtendweb_ipmap
 
+- name: Setup gdnsd config resources
+  shell: /opt/nDeploy/scripts/update_gdnsd_config.py
+
 - name: Setup nginx_status_allow_file
   shell: /opt/nDeploy/scripts/update_nginx_status_allow.py
 
