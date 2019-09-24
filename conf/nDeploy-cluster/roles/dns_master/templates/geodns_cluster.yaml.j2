@@ -1,6 +1,0 @@
-{% for host in groups['ndeploymaster'] %}
-{{ hostvars[host]['ansible_nodename'] }}:
-{% endfor %}
-{% for host in groups['ndeployslaves'] %}
-{{ hostvars[host]['ansible_nodename'] }}:
-{% endfor %}
