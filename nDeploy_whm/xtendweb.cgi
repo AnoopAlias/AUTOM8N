@@ -60,156 +60,164 @@ if os.path.isfile(branding_file):
 else:
     brand = "AUTOM8N"
 
-print('     <!-- Dash Widgets Start -->')
-print('     <div id="dashboard" class="row">')
+print('            <!-- Dash Widgets Start -->')
+print('            <div id="dashboard" class="row">')
 print('')
 
 # Nginx Status
-print('         <div class="col-sm-6 col-xl-3"> <!-- Dash Row Start -->')
+print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
-print('             <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                 <h4 class="mb-0">Nginx Status</h4>')
-print('                 <ul class="list-unstyled mb-0">')
-print('                     <li><small>'+nginx_version+'</small></li>')
+print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                            <h4 class="mb-0">Nginx Status</h4>')
+print('                            <ul class="list-unstyled mb-0">')
+print('                                <li><small>'+nginx_version+'</small></li>')
 if nginx_status:
-    print('                 <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
+    print('                                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print('                 <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
-print('                 </ul>')
-print('             </div>')
-print('             <form class="form" id="toastForm21" onsubmit="return false;"><input hidden name="action" value="nginxreload"><button class="btn btn-secondary btn-block mb-0">Reload</button></form>')
+    print('                                <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
+print('                            </ul>')
+print('                        </div> <!-- Card Body End -->')
+print('                        <form class="form" id="toastForm21" onsubmit="return false;">')
+print('                            <input hidden name="action" value="nginxreload">')
+print('                            <button class="btn btn-secondary btn-block mb-0">Reload</button>')
+print('                        </form>')
 cardfooter('')
-print('         </div>')
+print('                </div> <!-- Dash Item End -->')
 
 # Autom8n Version Status
-print('         <div class="col-sm-6 col-xl-3">')
+print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
-print('             <div class="card-body text-center">')
-print('                 <h4 class="mb-0">Watcher Status</h4>')
-print('                 <ul class="list-unstyled mb-0">')
-print('                     <li><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
+print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                            <h4 class="mb-0">Watcher Status</h4>')
+print('                            <ul class="list-unstyled mb-0">')
+print('                                <li><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
 if watcher_status:
-    print('                 <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
+    print('                                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print('                 <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
-print('                 </ul>')
-print('             </div>')
-print('             <form class="form" id="toastForm22" onsubmit="return false;"><input hidden name="action" value="watcherrestart"><button class="btn btn-secondary btn-block mb-0">Restart</button></form>')
+    print('                                <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
+print('                            </ul>')
+print('                        </div> <!-- Card Body End -->')
+print('                        <form class="form" id="toastForm22" onsubmit="return false;">')
+print('                            <input hidden name="action" value="watcherrestart">')
+print('                            <button class="btn btn-secondary btn-block mb-0">Restart</button>')
+print('                        </form>')
 cardfooter('')
-print('         </div>')
+print('                </div> <!-- Dash Item End -->')
 
 # Cache/Redis Status
-print('         <div class="col-sm-6 col-xl-3">')
+print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
-print('             <div class="card-body text-center">')
-print('                 <h4 class="mb-0">Clear Caches</h4>')
-print('                 <ul class="list-unstyled mb-0">')
-print('                     <li><small>Redis</small></li>')
-print('                     <li class="mt-2"><i class="fas fa-memory ml-1"></i></li>')
-print('                 </ul>')
-print('             </div>')
-print('             <form class="form" id="toastForm23" onsubmit="return false;"><input hidden name="action" value="redisflush"><button class="btn btn-secondary btn-block mb-0">Flush All</button></form>')
+print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                            <h4 class="mb-0">Clear Caches</h4>')
+print('                            <ul class="list-unstyled mb-0">')
+print('                                <li><small>Redis</small></li>')
+print('                                <li class="mt-2"><i class="fas fa-memory ml-1"></i></li>')
+print('                            </ul>')
+print('                        </div> <!-- Card Body End -->')
+print('                        <form class="form" id="toastForm23" onsubmit="return false;">')
+print('                            <input hidden name="action" value="redisflush">')
+print('                            <button class="btn btn-secondary btn-block mb-0">Flush All</button>')
+print('                        </form>')
 cardfooter('')
-print('         </div>')
+print('                </div> <!-- Dash Item End -->')
 
-# Disable Status
-print('         <div class="col-sm-6 col-xl-3">')
+# Restart Backends
+print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
-print('             <div class="card-body text-center">')
-print('                 <h4 class="mb-0">Disable Plugin</h4>')
-print('                 <ul class="list-unstyled mb-0">')
-print('                     <li><small>Disable</small></li>')
-print('                     <li class="mt-2"><i class="fas fa-times-circle ml-1"></i></li>')
-print('                 </ul>')
-print('             </div>')
-print('             <form class="form" id="toastForm23" onsubmit="return false;"><input hidden name="action" value="redisflush"><button class="btn btn-secondary btn-block mb-0">Disable</button></form>')
+print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                            <h4 class="mb-0">Restart Backends</h4>')
+print('                            <ul class="list-unstyled mb-0">')
+print('                                <li><small>ndeploy_backends</small></li>')
+print('                                <li class="mt-2"><i class="fab fa-php ml-1"></i></li>')
+print('                            </ul>')
+print('                        </div> <!-- Card Body End -->')
+print('                        <form class="form" id="restart-backends" onsubmit="return false;">')
+print('                            <input hidden name="action" value="restart_backends">')
+print('                            <button class="btn btn-secondary btn-block mb-0">Disable</button>')
+print('                        </form>')
 cardfooter('')
-print('         </div>')
-
+print('                </div> <!-- Dash Item End -->')
 print('')
-print('     <!-- WHM End Row -->')
-print('     </div>')
+print('            </div> <!-- Dash Widgets End -->')
 print('')
-
-print('     <!-- WHM Tabs Row -->')
-print('     <div class="row justify-content-lg-center flex-nowrap">')
-
+print('            <!-- WHM Tabs Row -->')
+print('            <div class="row justify-content-lg-center flex-nowrap">')
 print('')
-print('         <!-- Secondary Navigation -->')
-print('         <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
-print('             <a class="nav-link active" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab">System Health & Backup</a>')
-print('             <a class="nav-link" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster">Cluster Status</a>')
-print('             <a class="nav-link" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone">Sync GDNSD Zone</a>')
-print('             <a class="nav-link" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php">Default PHP for Autoswitch</a>')
-print('             <a class="nav-link" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos">DDOS Protection</a>')
-print('             <a class="nav-link" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm">PHP-FPM Pool Editor</a>')
-print('             <a class="nav-link" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map">Map cPanel Package to NGINX</a>')
-print('             <a class="nav-link" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit">System Resource Limit</a>')
-print('         </div>')
+print('                <!-- Secondary Navigation -->')
+print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
+print('                    <a class="nav-link active" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab">System Health & Backup</a>')
+print('                    <a class="nav-link" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster">Cluster Status</a>')
+print('                    <a class="nav-link" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone">Sync GDNSD Zone</a>')
+print('                    <a class="nav-link" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php">Default PHP for Autoswitch</a>')
+print('                    <a class="nav-link" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos">DDOS Protection</a>')
+print('                    <a class="nav-link" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm">PHP-FPM Pool Editor</a>')
+print('                    <a class="nav-link" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map">Map cPanel Package to NGINX</a>')
+print('                    <a class="nav-link" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit">System Resource Limit</a>')
+print('                </div>')
 print('')
-print('         <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
-
-print('             <!-- Secondary Mobile Navigation -->')
-print('             <div class="d-lg-none d-xl-none dropdown nav">')
-print('                 <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
-print('                     Config Menu')
-print('                 </button>')
-print('                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
-print('                     <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">System Health & Backup</a>')
-print('                     <a class="dropdown-item" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster" aria-selected="false">Cluster Status</a>')
-print('                     <a class="dropdown-item" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone" aria-selected="false">Sync GDNSD Zone</a>')
-print('                     <a class="dropdown-item" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php" aria-selected="false">Default PHP for Autoswitch</a>')
-print('                     <a class="dropdown-item" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos" aria-selected="false">DDOS Protection</a>')
-print('                     <a class="dropdown-item" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm" aria-selected="false">PHP-FPM Pool Editor</a>')
-print('                     <a class="dropdown-item" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map" aria-selected="false">Map cPanel Package to NGINX</a>')
-print('                     <a class="dropdown-item" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit" aria-selected="false">System Resource Limit</a>')
-print('                 </div>')
-print('             </div>')
+print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
+print('')
+print('                <!-- Secondary Mobile Navigation -->')
+print('                <div class="d-lg-none d-xl-none dropdown nav">')
+print('                    <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
+print('                        Config Menu')
+print('                    </button>')
+print('                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
+print('                        <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">System Health & Backup</a>')
+print('                        <a class="dropdown-item" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster" aria-selected="false">Cluster Status</a>')
+print('                        <a class="dropdown-item" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone" aria-selected="false">Sync GDNSD Zone</a>')
+print('                        <a class="dropdown-item" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php" aria-selected="false">Default PHP for Autoswitch</a>')
+print('                        <a class="dropdown-item" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos" aria-selected="false">DDOS Protection</a>')
+print('                        <a class="dropdown-item" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm" aria-selected="false">PHP-FPM Pool Editor</a>')
+print('                        <a class="dropdown-item" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map" aria-selected="false">Map cPanel Package to NGINX</a>')
+print('                        <a class="dropdown-item" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit" aria-selected="false">System Resource Limit</a>')
+print('                    </div>')
+print('                </div>')
 
 # System Tab
 print('')
-print('             <!-- System Tab -->')
-print('             <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
+print('                <!-- System Tab -->')
+print('                <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
 
 # System Health & Backup
 cardheader('System Health & Backup','fas fa-cogs')
-print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
-print('                     <div class="row no-gutters row-2-col"> <!-- Row Start -->')
+print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
+print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
-# Net Data
+# Netdata
 myhostname = socket.gethostname()
-print('                         <div class="col-md-6">')
-print('                             <a class="btn btn-block" href="https://'+myhostname+'/netdata/" target="_blank"><i class="fas fa-heartbeat"></i> Netdata <i class="fas fa-external-link-alt"></i></a>')
-print('                         </div>')
+print('                                <div class="col-md-6">')
+print('                                    <a class="btn btn-block" href="https://'+myhostname+'/netdata/" target="_blank"><i class="fas fa-heartbeat"></i> Netdata <i class="fas fa-external-link-alt"></i></a>')
+print('                                </div>')
 
 # Glances
-print('                         <div class="col-md-6">')
-print('                             <a class="btn btn-block" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>')
-print('                         </div>')
+print('                                <div class="col-md-6">')
+print('                                    <a class="btn btn-block" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>')
+print('                                </div>')
 
 # Borg Backup
-print('                         <div class="col-md-6">')
-print('                             <form class="form" method="get" action="setup_borg_backup.cgi">')
-print('                                 <button class="btn btn-block" type="submit"><i class="fas fa-database"></i> Borg Backup</button>')
-print('                             </form>')
-print('                         </div>')
+print('                                <div class="col-md-6">')
+print('                                    <form class="form" method="get" action="setup_borg_backup.cgi">')
+print('                                        <button class="btn btn-block" type="submit"><i class="fas fa-database"></i> Borg Backup</button>')
+print('                                    </form>')
+print('                                </div>')
 
 # Process Tracker
-print('                         <div class="col-md-6">')
-print('                             <form class="form" id="modalForm3" onsubmit="return false;">')
-print('                                 <button class="btn btn-block" type="submit"><i class="fas fa-bug"></i> Check Processes</button>')
-print('                             </form>')
-print('                         </div>')
-print('                     </div> <!-- Row End -->')
-print('                 </div> <!-- Card Body End -->')
+print('                                <div class="col-md-6">')
+print('                                    <form class="form" id="modalForm3" onsubmit="return false;">')
+print('                                        <button class="btn btn-block" type="submit"><i class="fas fa-bug"></i> Check Processes</button>')
+print('                                    </form>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
-print('                     </div> <!-- End System Tab -->')
+print('                </div> <!-- End System Tab -->')
 
 # Cluster Tab
 print('')
-print('                     <!-- Cluster Tab -->')
-print('                     <div class="tab-pane fade" id="v-pills-cluster" role="tabpanel" aria-labelledby="v-pills-cluster-tab">')
+print('                <!-- Cluster Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-cluster" role="tabpanel" aria-labelledby="v-pills-cluster-tab">')
 
 # Cluster Status
 if os.path.isfile(cluster_config_file):
@@ -291,12 +299,12 @@ else:
     cardheader('Cluster Unison Sync Status Disabled','fas fa-align-justify')
     cardfooter('The cluster Unison sync status is disabled so this system is not running with High Availability failover.')
 
-print('                     </div> <!-- End Cluster Tab -->')
+print('                </div> <!-- End Cluster Tab -->')
 
 # Zone Tab
 print('')
-print('                     <!-- Zone Tab -->')
-print('                     <div class="tab-pane fade" id="v-pills-zone" role="tabpanel" aria-labelledby="v-pills-zone-tab">')
+print('                <!-- Zone Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-zone" role="tabpanel" aria-labelledby="v-pills-zone-tab">')
 
 # Sync GeoDNS zone
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
@@ -323,12 +331,12 @@ else:
     cardheader('GDNSD Zone Sync Disabled','fas fa-sync')
     cardfooter('The GDNSD zone sync is disabled as this system is running with cPanel DNS.')
 
-print('                     </div> <!-- End Zone Tab -->')
+print('                </div> <!-- End Zone Tab -->')
 
 # PHP Tab
 print('')
-print('                     <!-- PHP Tab -->')
-print('                     <div class="tab-pane fade" id="v-pills-php" role="tabpanel" aria-labelledby="v-pills-php-tab">')
+print('                <!-- PHP Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-php" role="tabpanel" aria-labelledby="v-pills-php-tab">')
 
 # Set Default PHP for AutoConfig
 cardheader('Default PHP for Autoswitch','fab fa-php')
@@ -376,12 +384,12 @@ if "PHP" in backend_data_yaml_parsed:
     print('                        </div> <!-- Card Body End -->')
 cardfooter('Automatic switch to Nginx will use versions set in MultiPHP or if MultiPHP is not used the phpversion above')
 
-print('                     </div> <!-- End PHP Tab -->')
+print('                </div> <!-- End PHP Tab -->')
 
 # DOS Tab
 print('')
-print('                     <!-- DOS Tab -->')
-print('                     <div class="tab-pane fade" id="v-pills-dos" role="tabpanel" aria-labelledby="v-pills-dos-tab">')
+print('                <!-- DOS Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-dos" role="tabpanel" aria-labelledby="v-pills-dos-tab">')
 
 # DDOS Protection
 cardheader('DDOS Protection','fas fa-user-shield')
@@ -443,12 +451,12 @@ print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('Turn these settings on when you are under a DDOS Attack but remember to disable CSF or any other firewall before turning on SYNPROXY (FireHol).')
 
-print('                     </div> <!-- End DOS Tab -->')
+print('                </div> <!-- End DOS Tab -->')
 
 # PHP_FPM Tab
 print('')
-print('                     <!-- PHP_FPM Tab -->')
-print('                     <div class="tab-pane fade" id="v-pills-php_fpm" role="tabpanel" aria-labelledby="v-pills-php_fpm-tab">')
+print('                <!-- PHP_FPM Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-php_fpm" role="tabpanel" aria-labelledby="v-pills-php_fpm-tab">')
 
 # PHP-FPM Pool Editor
 phpfpmpool_hint = " Secure and non secure PHP-FPM Pools attached to cPanel users for use with Native NGINX. "
@@ -485,12 +493,12 @@ print('                            </form>')
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('Settings such as: pm.max_requests, pm.max_spare_servers, session.save_path, pm.max_children')
 
-print('                     </div> <!-- End PHP_FPM Tab -->')
+print('                </div> <!-- End PHP_FPM Tab -->')
 
 # Map Tab
 print('')
-print('                     <!-- Map Tab -->')
-print('                     <div class="tab-pane fade" id="v-pills-map" role="tabpanel" aria-labelledby="v-pills-map-tab">')
+print('                <!-- Map Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-map" role="tabpanel" aria-labelledby="v-pills-map-tab">')
 
 # Map cPanel Package to NGINX
 cardheader('Map cPanel Package to NGINX','fas fa-box-open')
@@ -554,12 +562,12 @@ print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes an Upgrade/Downgrade process.'
 )
 
-print('                     </div> <!-- End Map Tab -->')
+print('                </div> <!-- End Map Tab -->')
 
 # Limit Tab
 print('')
-print('                     <!-- Limit Tab -->')
-print('                     <div class="tab-pane fade" id="v-pills-limit" role="tabpanel" aria-labelledby="v-pills-limit-tab">')
+print('                <!-- Limit Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-limit" role="tabpanel" aria-labelledby="v-pills-limit-tab">')
 
 # System Resource Limit
 cardheader('System Resource Limit','fas fa-compress')
@@ -624,13 +632,9 @@ if not osrelease == 'CloudLinux':
 print('                        </div> <!-- Card Body End -->') #Card Body End
 cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
 
-print('                     </div> <!-- End Limit Tab -->')
-
-
-
-
-print('                 </div>')
-print('             </div>')
+print('                </div> <!-- End Limit Tab -->')
+print('                </div>')
+print('            </div> <!-- End WHM Tabs Row -->')
 
 
 
