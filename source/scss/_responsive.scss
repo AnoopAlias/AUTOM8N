@@ -16,6 +16,11 @@
 // -------------------------
 
 @media only screen and (max-width: 768px) {
+	.logo {
+		img {
+			max-width: 70%;
+		}
+	}
 	.card {
 		.align-items-center {
 			.label {
