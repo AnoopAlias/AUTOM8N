@@ -95,7 +95,7 @@ $carddarkhead:		#32383E !default;
 		}
 		.form-control,
 		.custom-select {
-			background-color: transparent;
+			background-color: $carddarkback;
 			border: $border-dark;
 			color: $white;
 		}
@@ -134,6 +134,13 @@ $carddarkhead:		#32383E !default;
 			color: $black;
 			.active {
 				color: $black;
+			}
+		}
+	}
+	#v-pills-tabContent {
+		.dropdown-menu {
+			.dropdown-item {
+				cursor: pointer;
 			}
 		}
 	}
