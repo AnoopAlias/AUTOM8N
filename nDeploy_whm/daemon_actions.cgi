@@ -17,7 +17,6 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-xtendweb_installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
