@@ -17,8 +17,11 @@
 
 @media only screen and (max-width: 768px) {
 	.logo {
-		img {
+		img.logo-url {
 			max-width: 70%;
+		}
+		span {
+			display: none;
 		}
 	}
 	.card {
