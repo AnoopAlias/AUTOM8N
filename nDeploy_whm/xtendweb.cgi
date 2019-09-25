@@ -26,6 +26,7 @@ homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 autom8n_version_info_file = installation_path+"/conf/version.yaml"
 nginx_version_info_file = "/etc/nginx/version.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
+backend_config_file = installation_path+"/conf/backends.yaml"
 
 cgitb.enable()
 print_header('Home')
@@ -43,6 +44,28 @@ for myprocess in psutil.process_iter():
         nginx_status = True
     if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
         watcher_status = True
+
+# Read in PHP Backend Status for Dash
+backend_data_yaml = open(backend_config_file, 'r')
+backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+backend_data_yaml.close()
+
+php_status = False
+php_status_dict = {}
+if "PHP" in backend_data_yaml_parsed:
+    php_backends_dict = backend_data_yaml_parsed["PHP"]
+    for php,path in list(php_backends_dict.items()):
+        for myprocess in psutil.process_iter():
+            # Workaround for Python 2.6
+            if platform.python_version().startswith('2.6'):
+                myexe = myprocess.exe
+            else:
+                myexe = myprocess.exe()
+            if path+"/usr/sbin/php-fpm" in myexe:
+                php_status_dict[php] = "ACTIVE"
+                break
+            else:
+                php_status_dict[php] = "NOT ACTIVE"
 
 # Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
@@ -125,15 +148,25 @@ print('                </div> <!-- Dash Item End -->')
 print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
 print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                            <h4 class="mb-0">Restart Backends</h4>')
+print('                            <h4 class="mb-0">PHP Backends</h4>')
 print('                            <ul class="list-unstyled mb-0">')
-print('                                <li><small>ndeploy_backends</small></li>')
-print('                                <li class="mt-2"><i class="fab fa-php ml-1"></i></li>')
+print('                                <li><small>PHP-FPM</small></li>')
+
+for service, status in list(php_status_dict.items()):
+    if status == "NOT ACTIVE":
+        php_status = "True"
+        break
+
+
+if not php_status:
+    print('                                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
+else:
+    print('                                <li class="mt-2 text-danger">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
 print('                            </ul>')
 print('                        </div> <!-- Card Body End -->')
 print('                        <form class="form" id="restart-backends" onsubmit="return false;">')
 print('                            <input hidden name="action" value="restart_backends">')
-print('                            <button class="btn btn-secondary btn-block mb-0">Disable</button>')
+print('                            <button class="btn btn-secondary btn-block mb-0">Restart</button>')
 print('                        </form>')
 cardfooter('')
 print('                </div> <!-- Dash Item End -->')
