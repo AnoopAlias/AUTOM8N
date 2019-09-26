@@ -311,6 +311,19 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#restart-backends').submit(function() {
+        var $f = $('#restart-backends');
+        var $url = "daemon_actions.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+
     $('#toastForm24').submit(function() {
         var $f = $('#toastForm24');
         var $url = "borg_restore.cgi?" + $f.serialize();
