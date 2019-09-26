@@ -168,9 +168,9 @@ def print_header(title=''):
     print('            <div class="logo">')
     print('                <h4>')
     if logo_url != 'None':
-        print('                    <a href="xtendweb.cgi"><img border="0" src="'+logo_url+'"></a>')
+        print('                    <a href="xtendweb.cgi"><img border="0" class="logo-url" src="'+logo_url+'"></a>')
     else:
-        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="48" height="48"></a>'+brand)
+        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>')
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
@@ -188,16 +188,14 @@ def print_header(title=''):
 # Print Footer
 def print_footer():
     print('')
-    print('            <!-- Footer Start -->')
-    print('            <div class="row justify-content-center">')
-    print('                <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
-    print('            </div>')
-    print('            <div class="row justify-content-center text-center">')
+    print('        <!-- Footer Start -->')
+    print('        <div id="footer" class="container text-center mt-2 mb-5">')
+    print('            <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
     if ndeploy_theme_color == 'light':
-        print('                <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+        print('        <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
     if ndeploy_theme_color == 'dark':
-        print('                <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
-    print('            </div>')
+        print('        <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+    print('        </div>')
     print('')
 
 
