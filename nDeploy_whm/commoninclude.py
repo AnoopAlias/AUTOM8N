@@ -69,7 +69,9 @@ def print_nontoast_error(thenotice, thereason):
     print('            <div class="row justify-content-center">')
     print('                <div class="col-lg-6 alert alert-danger">')
     print('                    <div class="text-center">')
-    print('                        <i class="h1 fas fa-exclamation"></i>')
+    print('                        <span class="h1">')
+    print('                            <i class="fas fa-exclamation"></i>')
+    print('                        </span>')
     print('                        <h3>'+thenotice+'</h3>')
     print('                        <h5>'+thereason+'</h5>')
     if app_email != 'None':
@@ -142,6 +144,7 @@ def print_loader():
 
 # Print Header
 def print_header(title=''):
+    print('Content-Type: text/html')
     print('')
     print('<!doctype html>')
     print('<html lang="en">')
@@ -153,7 +156,6 @@ def print_header(title=''):
     print('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>')
     print('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>')
     print('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>')
-    print('        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">')
     print('        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">')
     print('        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">')
     print('        <script src="js.js"></script>')
@@ -166,9 +168,9 @@ def print_header(title=''):
     print('            <div class="logo">')
     print('                <h4>')
     if logo_url != 'None':
-        print('                    <a href="xtendweb.cgi"><img border="0" src="'+logo_url+'"></a>')
+        print('                    <a href="xtendweb.cgi"><img border="0" class="logo-url" src="'+logo_url+'"></a>')
     else:
-        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="48" height="48"></a>'+brand)
+        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>')
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
@@ -186,16 +188,14 @@ def print_header(title=''):
 # Print Footer
 def print_footer():
     print('')
-    print('            <!-- Footer Start -->')
-    print('            <div class="row justify-content-center">')
-    print('                <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
-    print('            </div>')
-    print('            <div class="row justify-content-center text-center">')
+    print('        <!-- Footer Start -->')
+    print('        <div id="footer" class="container text-center mt-2 mb-5">')
+    print('            <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
     if ndeploy_theme_color == 'light':
-        print('                <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+        print('        <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
     if ndeploy_theme_color == 'dark':
-        print('                <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
-    print('            </div>')
+        print('        <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+    print('        </div>')
     print('')
 
 

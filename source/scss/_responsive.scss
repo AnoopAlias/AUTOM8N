@@ -16,6 +16,14 @@
 // -------------------------
 
 @media only screen and (max-width: 768px) {
+	.logo {
+		img.logo-url {
+			max-width: 70%;
+		}
+		span {
+			display: none;
+		}
+	}
 	.card {
 		.align-items-center {
 			.label {
@@ -49,6 +57,10 @@
 				}
 			}
 		}
+	}
+	.w-50 {
+		width: 100% !important;
+		justify-content: center !important;
 	}
 }
 

@@ -58,6 +58,11 @@ $carddarkhead:		#32383E !default;
 		.btn {
 			color: $white;
 			background-color: transparent;
+			&:hover,
+			&:active,
+			&:focus {
+				color: $white !important;
+			}
 		}
 	}
 	#dashboard {
@@ -90,7 +95,7 @@ $carddarkhead:		#32383E !default;
 		}
 		.form-control,
 		.custom-select {
-			background-color: transparent;
+			background-color: $carddarkback;
 			border: $border-dark;
 			color: $white;
 		}
@@ -129,6 +134,13 @@ $carddarkhead:		#32383E !default;
 			color: $black;
 			.active {
 				color: $black;
+			}
+		}
+	}
+	#v-pills-tabContent {
+		.dropdown-menu {
+			.dropdown-item {
+				cursor: pointer;
 			}
 		}
 	}
@@ -214,7 +226,13 @@ body {
 				}
 				&.btn {
 					margin-top: 0;
-					color: red;
+					&:hover,
+					&:active,
+					&:focus {
+						background-color: $ultramarine-blue;
+						border-color: $ultramarine-blue;
+						color: $white;
+					}
 				}
 			}
 			&.row-2-col {
@@ -364,9 +382,8 @@ body {
 // Typography
 // ----------------------------------------------------------------------------------------------------
 
-a,
-.btn {
-	transition: all 0.3s ease 0s;
+a {
+	text-decoration: none !important;
 }
 
 .btn-outline-primary,
@@ -424,11 +441,14 @@ a,
 .btn-light {
 	background-color: $disabled;
 	border-color: $disabled-border;
-	&.active {
-		background-color: $ultramarine-blue;
-		border-color: $ultramarine-blue;
-		color: $white;
-	}
+}
+
+.btn-light:not(:disabled):not(.disabled):active,
+.btn-light:not(:disabled):not(.disabled).active,
+.show>.btn-light.dropdown-toggle {
+	background-color: $ultramarine-blue;
+	border-color: $ultramarine-blue;
+	color: $white;
 }
 
 .btn-not-installed {
@@ -552,8 +572,7 @@ kbd {
 		color: $white;
 		position: relative;
 		top: 50%;
-		-webkit-transform: perspective(1px) translateY(-50%);
-		        transform: perspective(1px) translateY(-50%);
+		transform: perspective(1px) translateY(-50%);
 	}
 }
 
