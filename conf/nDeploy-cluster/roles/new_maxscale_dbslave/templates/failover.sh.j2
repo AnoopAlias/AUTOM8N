@@ -3,9 +3,9 @@ if [ $# -eq 1 ]
   then
     if [ $1 == master_down ]
       then
-        mysql -uroot -p{{ MYSQLPASS }} -e "SET GLOBAL READ_ONLY=0;"
-    elif [ $1 == master_up ]
+        mysql -uroot -p{{ MYSQLPASS }} -e "SET GLOBAL READ_ONLY=0;STOP SLAVE;"
+    elif [ $1 == slave_up ]
       then
-        mysql -uroot -p{{ MYSQLPASS }} -e "SET GLOBAL READ_ONLY=1;"
+        mysql -uroot -p{{ MYSQLPASS }} -e "SET GLOBAL READ_ONLY=1;;START SLAVE;"
     fi
 fi
