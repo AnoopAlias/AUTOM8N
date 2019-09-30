@@ -276,9 +276,6 @@ body {
 					&.text-danger,
 					&.text-secondary {
 						text-align: center;
-						[class*='fa'] {
-							margin-right: .2em;
-						}
 					}
 				}
 			}
@@ -342,10 +339,12 @@ body {
 					border-top: $border;
 				}
 			}
-			[class*='fa'] {
-				margin-right: .15rem;
-				text-align: left;
-				min-width: 1.6rem;
+			.btn-icon,
+			.alert {
+				[class*='fa'] {
+					min-width: 1.5rem;
+					text-align: center;
+				}
 			}
 		}
 		.form {
@@ -371,6 +370,12 @@ body {
 					.btn-not-installed {
 						margin-bottom: 0;
 					}
+				}
+			}
+			&.row-btn-group-toggle {
+				.col-md-6,
+				> .d-flex {
+					margin: .5rem 0;
 				}
 			}
 		}
@@ -426,7 +431,6 @@ a {
 }
 
 .btn-group {
-	margin: .5rem 0;
 	.btn {
 		margin-top: 0;
 		cursor: pointer;
