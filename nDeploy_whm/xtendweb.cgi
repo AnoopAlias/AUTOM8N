@@ -220,25 +220,25 @@ print('                            <div class="row no-gutters row-2-col row-no-b
 # Netdata
 myhostname = socket.gethostname()
 print('                                <div class="col-md-6">')
-print('                                    <a class="btn btn-block" href="https://'+myhostname+'/netdata/" target="_blank"><i class="fas fa-heartbeat"></i> Netdata <i class="fas fa-external-link-alt"></i></a>')
+print('                                    <a class="btn btn-block btn-icon" href="https://'+myhostname+'/netdata/" target="_blank"><i class="fas fa-heartbeat"></i> Netdata <i class="fas fa-external-link-alt"></i></a>')
 print('                                </div>')
 
 # Glances
 print('                                <div class="col-md-6">')
-print('                                    <a class="btn btn-block" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>')
+print('                                    <a class="btn btn-block btn-icon" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>')
 print('                                </div>')
 
 # Borg Backup
 print('                                <div class="col-md-6">')
 print('                                    <form class="form" method="get" action="setup_borg_backup.cgi">')
-print('                                        <button class="btn btn-block" type="submit"><i class="fas fa-database"></i> Borg Backup</button>')
+print('                                        <button class="btn btn-block btn-icon" type="submit"><i class="fas fa-database"></i> Borg Backup</button>')
 print('                                    </form>')
 print('                                </div>')
 
 # Process Tracker
 print('                                <div class="col-md-6">')
 print('                                    <form class="form" id="modalForm3" onsubmit="return false;">')
-print('                                        <button class="btn btn-block" type="submit"><i class="fas fa-bug"></i> Check Processes</button>')
+print('                                        <button class="btn btn-block btn-icon" type="submit"><i class="fas fa-bug"></i> Check Processes</button>')
 print('                                    </form>')
 print('                                </div>')
 print('                            </div> <!-- Row End -->')

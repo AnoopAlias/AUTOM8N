@@ -141,7 +141,7 @@ if form.getvalue('domain'):
         print('                <div class="col-lg-12">')
 
         # Domain Status
-        cardheader('Current Application Settings: <kbd class="p-1">'+mydomain+'</kbd>','fas fa-users-cog')
+        cardheader('Current Application Settings: <kbd class="p-1">'+mydomain+'</kbd>','far fa-lightbulb')
         cardfooter('')
 
         print('                </div> <!-- Dash End -->')
@@ -233,7 +233,7 @@ if form.getvalue('domain'):
 
         # System Tab
         print('')
-        print('                    <!-- System Tab -->')
+        print('                    <!-- Container Tab -->')
         print('                    <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
 
         # System Setup
@@ -343,7 +343,7 @@ if form.getvalue('domain'):
         print('                        <div class="card-body">  <!-- Card Body Start -->')
 
         print('                        <form class="form" method="post" id="toastForm3" onsubmit="return false;">')
-        print('                            <div class="row align-items-center">')
+        print('                            <div class="row row-btn-group-toggle">')
 
         # auth_basic
         auth_basic_hint = " Setup password for "+document_root+" in cPanel -> Files -> Directory Privacy. "
@@ -626,7 +626,7 @@ if form.getvalue('domain'):
         cardheader('Content Optimizations', 'fas fa-dumbbell')
 
         print('                        <div class="card-body">  <!-- Card Body Start -->')
-        print('                            <div class="row"> <!-- Row Start -->')
+        print('                            <div class="row row-btn-group-toggle"> <!-- Row Start -->')
 
         # set_expire_static
         set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
@@ -795,8 +795,8 @@ if form.getvalue('domain'):
 
         # Redirections
         cardheader('Redirections', 'fas fa-directions')
-        print('                        <div class="card-body">  <!-- Card Body Start -->')
-        print('                            <div class="row"> <!-- Row Start -->')
+        print('                        <div class="card-body"> <!-- Card Body Start -->')
+        print('                            <div class="row row-btn-group-toggle"> <!-- Row Start -->')
 
         # redirect_to_ssl
         redirect_to_ssl_hint = " Redirect HTTP -> HTTPS. "
@@ -1008,7 +1008,7 @@ if form.getvalue('domain'):
 
         print('                    </div><!-- Subdirectory Tab End -->')
 
-        print('                </div><!-- System Tabs End -->')
+        print('                </div><!-- Container Tabs End -->')
 
         print('            </div><!-- CP Row End -->')
 

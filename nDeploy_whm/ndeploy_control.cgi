@@ -128,7 +128,7 @@ print('                    <a class="nav-link" id="v-pills-netdata-tab" data-tog
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
 print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">Modules</a>')
 print('                </div>')
-print('') 
+print('')
 
 print('         <!-- Tabs Start -->')
 print('         <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
@@ -216,7 +216,7 @@ print('                     <div class="row ml-auto mr-auto"> <!-- Row Start -->
 print('                         <form class="form w-100" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
 
 print('                             <label class="small" for="brand">Personalize the application name for cPanel\'s and WHM\'s icon label, as well as the header of this application. <em>The brand name must contain only letters, numbers, hyphens, or underscores otherwise the brand rebuild will fail.</em></label>')
-print('                             <div class="input-group mb-4">')
+print('                             <div class="input-group">')
 print('                                 <div class="input-group-prepend">')
 print('                                     <span class="input-group-text" id="brand_desc">')
 print('                                         '+return_prepend("Brand Name", brand_hint))
@@ -226,7 +226,7 @@ print('                                 <input type="text" class="form-control" 
 print('                             </div>')
 
 print('                             <label class="small" for="brand_logo">Enter the filename of the 48x48 pixel brand icon that has been uploaded to the <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to properly brand cPanel, WHM, and this application.</label>')
-print('                             <div class="input-group mb-4">')
+print('                             <div class="input-group">')
 print('                                 <div class="input-group-prepend">')
 print('                                     <span class="input-group-text" id="brand_logo_desc">')
 print('                                         '+return_prepend("Brand Icon", brand_logo_hint))
@@ -236,7 +236,7 @@ print('                                 <input type="text" class="form-control" 
 print('                             </div>')
 
 print('                             <label class="small" for="brand_group">Enter the section you want this application to be placed in within each user\'s cPanel.</label>')
-print('                             <div class="input-group mb-4">')
+print('                             <div class="input-group">')
 print('                                 <div class="input-group-prepend">')
 print('                                     <span class="input-group-text" id="brand_group_desc">')
 print('                                         '+return_prepend("cPanel Section", brand_group_hint))
@@ -246,7 +246,7 @@ print('                                 <input type="text" class="form-control" 
 print('                             </div>')
 
 print('                             <label class="small" for="brand_anchor">Enter your brand\'s anchor text that will be used on the footer of the application.</label>')
-print('                             <div class="input-group mb-4">')
+print('                             <div class="input-group">')
 print('                                 <div class="input-group-prepend">')
 print('                                     <span class="input-group-text" id="brand_anchor_desc">')
 print('                                         '+return_prepend("Footer Anchor Text", brand_anchor_hint))
@@ -256,7 +256,7 @@ print('                                 <input type="text" class="form-control" 
 print('                             </div>')
 
 print('                             <label class="small" for="brand_link">Enter your brand\'s website link that the above anchor text will link to via the footer.</label>')
-print('                             <div class="input-group mb-4">')
+print('                             <div class="input-group">')
 print('                                 <div class="input-group-prepend">')
 print('                                     <span class="input-group-text" id="brand_link_desc">')
 print('                                         '+return_prepend("Footer Link", brand_link_hint))
@@ -264,7 +264,7 @@ print('                                     </span>')
 print('                                 </div>')
 print('                                 <input type="text" class="form-control" name="brand_link" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
 print('                             </div>')
-print('                             <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Save Branding Options</button>')
+print('                             <button class="mb-3 btn btn-outline-primary btn-block mt-4" type="submit">Save Branding Options</button>')
 print('                         </form>')
 
 print('                         <form class="form w-100" id="restore_branding_defaults" method="post" onsubmit="return false;">')
@@ -294,7 +294,7 @@ print('                     <div class="row ml-auto mr-auto"> <!-- Row Start -->
 print('                         <form class="form w-100" id="ndeploy_control_config" method="post" onsubmit="return false;">')
 
 print('                             <label class="small" for="primary_color">Enter the primary color used throughout the application. Use this to accent branding colors.</label>')
-print('                             <div class="input-group mb-4">')
+print('                             <div class="input-group">')
 print('                                 <div class="input-group-prepend">')
 print('                                     <span class="input-group-text" id="primary_color_desc">')
 print('                                         '+return_prepend("Primary Application Color", primary_color_hint))
@@ -304,7 +304,7 @@ print('                                 <input type="text" class="form-control" 
 print('                             </div>')
 
 print('                             <label class="small" for="ndeploy_theme_color">Select a theme to use with the application.</label>')
-print('                             <div class="input-group mb-4">')
+print('                             <div class="input-group">')
 print('                                 <div class="input-group-prepend">')
 print('                                     <label class="input-group-text">'+return_prepend("Theme", ndeploy_theme_color_hint)+'</label>')
 print('                                 </div>')
@@ -320,7 +320,7 @@ print('                                 </select>')
 print('                             </div>')
 
 print('                             <label class="small" for="logo_url">Enter the logo URL to use in the header instead of the default icon and brand name. Set this to <kbd>None</kbd> to disable.</label>')
-print('                             <div class="input-group mb-4">')
+print('                             <div class="input-group">')
 print('                                 <div class="input-group-prepend">')
 print('                                     <span class="input-group-text" id="logo_url_desc">')
 print('                                         '+return_prepend("Logo URL", logo_url_hint))
@@ -330,7 +330,7 @@ print('                                 <input type="text" class="form-control" 
 print('                             </div>')
 
 print('                             <label class="small" for="app_email">Enter a support email for users if they run into various issues. Set this to <kbd>None</kbd> to disable.</label>')
-print('                             <div class="input-group mb-4">')
+print('                             <div class="input-group">')
 print('                                 <div class="input-group-prepend">')
 print('                                     <span class="input-group-text" id="app_email_desc">')
 print('                                         '+return_prepend("Support E-mail", app_email_hint))
@@ -339,7 +339,7 @@ print('                                 </div>')
 print('                                 <input type="text" class="form-control" name="app_email" value="'+app_email+'" id="app_email" aria-describedby="app_email_desc">')
 print('                             </div>')
 
-print('                             <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Save Aesthetics Settings</button>')
+print('                             <button class="mb-3 btn btn-outline-primary btn-block mt-4" type="submit">Save Aesthetics Settings</button>')
 print('                         </form>')
 
 print('                         <form class="form w-100" id="restore_ndeploy_control_defaults" method="post" onsubmit="return false;">')
@@ -366,7 +366,7 @@ print('                     <div class="row ml-auto mr-auto"> <!-- Row Start -->
 print('                         <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
 print('                         <form class="form w-100" id="easy_php_setup" method="post" onsubmit="return false;">')
 print('                             <input hidden class="form-control" name="run_installer" value="enabled">')
-print('                             <button class="btn btn-outline-primary btn-block" type="submit">Install Native nGinx PHP Support</button>')
+print('                             <button class="btn btn-outline-primary btn-block mt-2" type="submit">Install Native nGinx PHP Support</button>')
 print('                         </form>')
 print('                     </div> <!-- Row End -->')
 print('                 </div> <!-- Card Body End -->')
@@ -389,7 +389,7 @@ print('                         <form class="form w-100" id="easy_netdata_setup"
 print('                             <p class="small">Welcome to the Netdata Installer. Netdata is distributed, real-time, performance and health monitoring for systems and applications. Netdata provides unparalleled insights, in real-time, of everything happening on the systems it runs (including web servers, databases, applications), using highly interactive web dashboards. <em>The Netdata installation process can take up to a minute depending on processing power and connection speed.</em></p>')
 if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                         <label class="small" for="netdata_pass">The Netdata username is <kbd>netdata</kbd>. Enter the password you wish to use to access the Netdata Monitoring System.</label>')
-    print('                         <div class="input-group mb-4">')
+    print('                         <div class="input-group">')
     print('                             <div class="input-group-prepend">')
     print('                                 <span class="input-group-text" id="netdata_pass_desc">')
     print('                                     '+return_prepend("Netdata Password", netdata_pass_hint))
@@ -400,15 +400,15 @@ if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
 print('                             <input hidden class="form-control" name="run_installer" value="enabled">')
 print('                             <input hidden class="form-control" name="netdata_pass" value="'+netdata_pass+'">')
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
-    print('                         <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Reinstall Netdata Monitoring System</button>')
+    print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Reinstall Netdata Monitoring System</button>')
 else:
-    print('                         <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Install Netdata Monitoring System</button>')
+    print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Install Netdata Monitoring System</button>')
 print('                         </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                     <form class="form w-100" id="clear_netdata_credentials" method="post" onsubmit="return false;">')
     print('                         <input hidden class="form-control" name="remove_netdata_creds" value="enabled">')
-    print('                         <button class="btn btn-outline-primary btn-block" type="submit">Remove Netdata Credentials</button>')
+    print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Remove Netdata Credentials</button>')
     print('                     </form>')
 
 print('                     </div> <!-- Row End -->')
@@ -432,7 +432,7 @@ print('                         <form class="form w-100" id="easy_glances_setup"
 print('                             <p class="small">Welcome to the Glances Installer. Glances is a cross-platform system monitoring tool written in Python. <em>The Glances installation process can take up to a minute depending on processing power and connection speed.</em></p>')
 if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                         <label class="small" for="glances_pass">The Glances username is <kbd>glances</kbd>. Enter the password you wish to use to access the Glances Monitoring System.</label>')
-    print('                         <div class="input-group mb-4">')
+    print('                         <div class="input-group">')
     print('                             <div class="input-group-prepend">')
     print('                                 <span class="input-group-text" id="glances_pass_desc">')
     print('                                     '+return_prepend("Glances Password", glances_pass_hint))
@@ -443,15 +443,15 @@ if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
 print('                             <input hidden class="form-control" name="run_installer" value="enabled">')
 print('                             <input hidden class="form-control" name="glances_pass" value="'+glances_pass+'">')
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
-    print('                         <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Reinstall Glances Monitoring System</button>')
+    print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Reinstall Glances Monitoring System</button>')
 else:
-    print('                         <button class="mb-3 btn btn-outline-primary btn-block" type="submit">Install Glances Monitoring System</button>')
+    print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Install Glances Monitoring System</button>')
 print('                         </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                     <form class="form w-100" id="clear_glances_credentials" method="post" onsubmit="return false;">')
     print('                         <input hidden class="form-control" name="remove_glances_creds" value="enabled">')
-    print('                         <button class="btn btn-outline-primary btn-block" type="submit">Remove Glances Credentials</button>')
+    print('                         <button class="btn btn-outline-primary btn-block mt-2" type="submit">Remove Glances Credentials</button>')
     print('                     </form>')
 
 print('                     </div> <!-- Row End -->')
@@ -476,10 +476,10 @@ geoip2_hint = " Controls loading of nginx-nDeploy-module-geoip2 which creates va
 passenger_hint = " Controls loading of nginx-nDeploy-module-passenger which installs Phusion Passenger web application server. "
 
 print('                     <div class="card-body"> <!-- Card Body Start -->')
-print('                         <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                         <div class="row row-btn-group-toggle"> <!-- Row Start -->')
 
 print('                             '+return_label("Bot Mitigate Module", test_cookie_hint))
-print('                             <div class="col-md-6 pr-0">')
+print('                             <div class="col-md-6">')
 print('                                 <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
     print('                                 <label class="btn btn-light active">')
@@ -499,7 +499,7 @@ print('                                 </div>')
 print('                             </div>')
 
 print('                             '+return_label("ModSecurity V3 Module", mod_security_hint))
-print('                             <div class="col-md-6 pr-0">')
+print('                             <div class="col-md-6">')
 print('                                 <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
     print('                                 <label class="btn btn-light active">')
@@ -519,7 +519,7 @@ print('                                 </div>')
 print('                             </div>')
 
 print('                             '+return_label("PageSpeed Module", pagespeed_hint))
-print('                             <div class="col-md-6 pr-0">')
+print('                             <div class="col-md-6">')
 print('                                 <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
     print('                                 <label class="btn btn-light active">')
@@ -539,7 +539,7 @@ print('                                 </div>')
 print('                             </div>')
 
 print('                             '+return_label("Brotli Module", brotli_hint))
-print('                             <div class="col-md-6 pr-0">')
+print('                             <div class="col-md-6">')
 print('                                 <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
     print('                                 <label class="btn btn-light active">')
@@ -559,7 +559,7 @@ print('                                 </div>')
 print('                             </div>')
 
 print('                             '+return_label("Geoip2 Module", geoip2_hint))
-print('                             <div class="col-md-6 pr-0">')
+print('                             <div class="col-md-6">')
 print('                                 <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/geoip2.load'):
     print('                                 <label class="btn btn-light active">')
@@ -579,7 +579,7 @@ print('                                    </div>')
 print('                                </div>')
 
 print('                                '+return_label("Passenger Module", passenger_hint))
-print('                                <div class="col-md-6 pr-0">')
+print('                                <div class="col-md-6">')
 print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/passenger.load'):
     print('                                        <label class="btn btn-light active">')
@@ -600,7 +600,9 @@ print('                                </div>')
 
 
 
-print('                                <button class="mt-2 btn btn-outline-primary btn-block" type="submit">Apply Module Selection</button>')
+print('                                <div class="col-md-12">')
+print('                                    <button class="mt-4 btn btn-outline-primary btn-block mt-2" type="submit">Apply Module Selection</button>')
+print('                                </div>')
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 
