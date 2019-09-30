@@ -215,7 +215,7 @@ print('                    <div class="tab-pane fade show active" id="v-pills-sy
 # System Health & Backup
 cardheader('System Health & Backup','fas fa-cogs')
 print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
-print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
+print('                            <div class="row no-gutters row-2-col row-no-btm-bdr"> <!-- Row Start -->')
 
 # Netdata
 myhostname = socket.gethostname()

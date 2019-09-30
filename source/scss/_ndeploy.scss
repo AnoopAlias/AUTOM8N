@@ -243,6 +243,13 @@ body {
 					text-align: left;
 				}
 			}
+			&.row-no-btm-bdr {
+				[class*='col-'] {
+					&:nth-last-child(-n+2) {
+						border-bottom: none;
+					}
+				}
+			}
 			&.row {
 				[class*='col-'] {
 					> .row {
@@ -331,14 +338,14 @@ body {
 					background-color: $ultramarine-blue;
 					color: $white;
 				}
-				[class*='fa'] {
-					margin-right: .15rem;
-					text-align: left;
-					min-width: 1.6rem;
-				}
 				&.text-info {
 					border-top: $border;
 				}
+			}
+			[class*='fa'] {
+				margin-right: .15rem;
+				text-align: left;
+				min-width: 1.6rem;
 			}
 		}
 		.form {
