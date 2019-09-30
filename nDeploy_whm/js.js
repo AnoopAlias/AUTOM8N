@@ -537,13 +537,13 @@ jQuery(document).ready(function($) {
         $('.nav a.dropdown-item[href="' + href + '"]').tab('show');
     })
 
-    $('a[role="tablist"]').on('shown.bs.tab', function (e) {
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
         localStorage.setItem('activeTab', $(e.target).attr('href'));
     });
 
     var activeTab = localStorage.getItem('activeTab');
     if(activeTab){
         $('#v-pills-tab a[href="' + activeTab + '"]').tab('show');
-    }
+	}
 
 });

@@ -66,7 +66,7 @@ def return_prepend(theoption, hint):
 
 
 def print_nontoast_error(thenotice, thereason):
-    print('            <div class="row justify-content-center">')
+    print('            <div id="footer" class="row justify-content-center">')
     print('                <div class="col-lg-6 alert alert-danger">')
     print('                    <div class="text-center">')
     print('                        <span class="h1">')
@@ -82,8 +82,7 @@ def print_nontoast_error(thenotice, thereason):
     print_footer()
     print('        </div> <!-- Main Container End -->')
     print('')
-    print('    <!-- Body End -->')
-    print('    </body>')
+    print('    </body> <!-- Body End -->')
     print('</html>')
 
 def print_forbidden():
@@ -107,7 +106,7 @@ def print_error_alert(themessage):
 
 
 def print_sys_tip(theoption, hint):
-    print('<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>')
+    print('<div class="col-md-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>')
 
 
 def print_disabled():
