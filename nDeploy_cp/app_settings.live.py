@@ -239,7 +239,7 @@ if form.getvalue('domain'):
         # System Setup
         cardheader('Application Status', 'fas fa-users-cog')
         print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
-        print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
+        print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
         # .htaccess
         if backend_category == 'PROXY':
@@ -265,7 +265,7 @@ if form.getvalue('domain'):
         print('                                <div class="col-md-6 alert"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
         print('                                <div class="col-md-6">')
         print('                                    <form class="form" method="post" id="toastForm4" onsubmit="return false;">')
-        print('                                        <button class="btn btn-block" type="submit">Reload</button>')
+        print('                                        <button class="btn btn-block text-center" type="submit">Reload</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
         print('                                    </form>')
         print('                                </div>')
@@ -274,7 +274,7 @@ if form.getvalue('domain'):
         print('                                <div class="col-md-6 alert"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
         print('                                <div class="col-md-6">')
         print('                                    <form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-        print('                                        <button class="btn btn-block" type="submit">View Log</button>')
+        print('                                        <button class="btn btn-block text-center" type="submit">View Log</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
         print('                                    </form>')
         print('                                </div>')
