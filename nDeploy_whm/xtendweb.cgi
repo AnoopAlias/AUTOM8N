@@ -190,27 +190,27 @@ print('                </div>')
 print('')
 print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
 print('')
-print('                <!-- Secondary Mobile Navigation -->')
-print('                <div class="d-lg-none d-xl-none dropdown nav">')
-print('                    <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
-print('                        Config Menu')
-print('                    </button>')
-print('                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
-print('                        <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">System Health & Backup</a>')
-print('                        <a class="dropdown-item" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster" aria-selected="false">Cluster Status</a>')
-print('                        <a class="dropdown-item" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone" aria-selected="false">Sync GDNSD Zone</a>')
-print('                        <a class="dropdown-item" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php" aria-selected="false">Default PHP for Autoswitch</a>')
-print('                        <a class="dropdown-item" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos" aria-selected="false">DDOS Protection</a>')
-print('                        <a class="dropdown-item" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm" aria-selected="false">PHP-FPM Pool Editor</a>')
-print('                        <a class="dropdown-item" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map" aria-selected="false">Map cPanel Package to NGINX</a>')
-print('                        <a class="dropdown-item" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit" aria-selected="false">System Resource Limit</a>')
+print('                    <!-- Secondary Mobile Navigation -->')
+print('                    <div class="d-lg-none d-xl-none dropdown nav">')
+print('                        <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
+print('                            Config Menu')
+print('                        </button>')
+print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
+print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">System Health & Backup</a>')
+print('                            <a class="dropdown-item" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster" aria-selected="false">Cluster Status</a>')
+print('                            <a class="dropdown-item" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone" aria-selected="false">Sync GDNSD Zone</a>')
+print('                            <a class="dropdown-item" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php" aria-selected="false">Default PHP for Autoswitch</a>')
+print('                            <a class="dropdown-item" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos" aria-selected="false">DDOS Protection</a>')
+print('                            <a class="dropdown-item" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm" aria-selected="false">PHP-FPM Pool Editor</a>')
+print('                            <a class="dropdown-item" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map" aria-selected="false">Map cPanel Package to NGINX</a>')
+print('                            <a class="dropdown-item" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit" aria-selected="false">System Resource Limit</a>')
+print('                        </div>')
 print('                    </div>')
-print('                </div>')
 
 # System Tab
 print('')
-print('                <!-- System Tab -->')
-print('                <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
+print('                    <!-- System Tab -->')
+print('                    <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
 
 # System Health & Backup
 cardheader('System Health & Backup','fas fa-cogs')
@@ -604,7 +604,7 @@ print('                <div class="tab-pane fade" id="v-pills-limit" role="tabpa
 
 # System Resource Limit
 cardheader('System Resource Limit','fas fa-compress')
-print('                 <div class="card-body"> <!-- Card Body Start -->')
+print('                    <div class="card-body"> <!-- Card Body Start -->')
 
 with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
@@ -655,19 +655,19 @@ if not osrelease == 'CloudLinux':
             print('                 <select name="unit" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print('                                        <option value="'+service+'">'+service+'</option>')
+                print('                 <option value="'+service+'">'+service+'</option>')
 
-            print('                                    </select>')
-            print('                                    <input hidden name="mode" value="service">')
-            print('                                </div>')
-            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
-            print('                            </form>')
-print('                        </div> <!-- Card Body End -->') #Card Body End
+            print('                  </select>')
+            print('                  <input hidden name="mode" value="service">')
+            print('              </div>')
+            print('              <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+            print('          </form>')
+print('                  </div> <!-- Card Body End -->')
 cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
 
-print('                </div> <!-- End Limit Tab -->')
-print('                </div>')
-print('            </div> <!-- End WHM Tabs Row -->')
+print('              </div> <!-- End Limit Tab -->')
+print('          </div>')
+print('      </div> <!-- End WHM Tabs Row -->')
 
 print_footer()
 
