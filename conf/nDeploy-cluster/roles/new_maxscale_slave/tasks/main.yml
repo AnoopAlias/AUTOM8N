@@ -49,6 +49,19 @@
     group: maxscale
     mode: 0400
 
+- name: Setup Maxscale switchover script
+  template:
+    src: failover.sh.j2
+    dest: /var/lib/maxscale/failover.sh
+  when:
+    - maxscale.stat.exists == false
+
+- file:
+    path: /var/lib/maxscale/failover.sh
+    owner: maxscale
+    group: maxscale
+    mode: 0750
+
 - name: Setup MaxScale
   template:
     src: maxscale.cnf.j2

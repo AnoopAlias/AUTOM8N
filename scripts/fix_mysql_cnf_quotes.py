@@ -19,4 +19,7 @@ if mypass.startswith('"') and mypass.endswith('"'):
     with open('/root/.my.cnf', 'wb') as configfile:
         config.write(configfile)
 else:
-    pass
+    if not mypass.startswith("'") and mypass.endswith("'"):
+        config.set('client', 'password', "'"+mypass+"'")
+        with open('/root/.my.cnf', 'wb') as configfile:
+            config.write(configfile)

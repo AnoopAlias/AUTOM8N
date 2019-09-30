@@ -19,7 +19,7 @@ persistmaxtime=3600
 #dbslave
 [server2]
 type=server
-address=127.0.0.1
+address={{ hostvars[groups['ndeploydbslave'][0]]['dbip'] }}
 port=13306
 protocol=MariaDBBackend
 ssl=required
@@ -32,13 +32,13 @@ persistmaxtime=3600
 
 [MySQL-Monitor]
 type=monitor
-module=mmmon
+module=mariadbmon
 servers=server1,server2
 user=maxscale
-passwd={{ MAXSCALEPASS }}
+password={{ MAXSCALEPASS }}
 monitor_interval=10000
 script=/var/lib/maxscale/failover.sh $EVENT
-events=master_down,master_up
+events=master_down,slave_up,new_slave
 
 [XtendWeb]
 type=service
@@ -55,14 +55,10 @@ router_options=master
 {% endif %}
 servers=server2,server1
 user=maxscale
-passwd={{ MAXSCALEPASS }}
+password={{ MAXSCALEPASS }}
 connection_timeout=600
 max_connections=1024
 auth_all_servers=false
-
-[MaxAdmin-Service]
-type=service
-router=cli
 
 [Read-Write-ListenerPort]
 type=listener
@@ -76,9 +72,3 @@ type=listener
 service=XtendWeb
 protocol=MariaDBClient
 socket=/var/lib/maxscale/maxscale_mysql.sock
-
-[MaxAdmin-Listener]
-type=listener
-service=MaxAdmin-Service
-protocol=maxscaled
-socket=default
