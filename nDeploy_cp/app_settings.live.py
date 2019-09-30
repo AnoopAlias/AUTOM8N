@@ -114,7 +114,7 @@ if form.getvalue('domain'):
         symlink_protection = yaml_parsed_profileyaml.get('symlink_protection', 'disabled')
         subdir_apps = yaml_parsed_profileyaml.get('subdir_apps', None)
 
-        # Get the human friendly name of the app template                
+        # Get the human friendly name of the app template
         if os.path.isfile(app_template_file):
             with open(app_template_file, 'r') as apptemplate_data_yaml:
                 apptemplate_data_yaml_parsed = yaml.safe_load(apptemplate_data_yaml)
@@ -142,89 +142,128 @@ if form.getvalue('domain'):
 
         # Domain Status
         cardheader('Current Application Settings: <kbd class="p-1">'+mydomain+'</kbd>','fas fa-users-cog')
-        print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
-        print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
-        print('                                <div class="col-md-4">')
-        print('                                    <div class="p-3 text-center">')
-        print('                                        <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
-        print('                                        <ul class="list-unstyled mb-0">')
-        print('                                            <li class="mt-2 text-success">Nginx</li>')
-        print('                                        </ul>')
-        print('                                    </div>')
-        print('                                </div>')
-        print('                                <div class="col-md-4">')
-        print('                                    <div class="p-3 text-center">')
-        print('                                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
-        print('                                        <ul class="list-unstyled mb-0">')
-        print('                                            <li class="mt-2 text-success">'+backend_version+'</li>')
-        print('                                        </ul>')
-        print('                                    </div>')
-        print('                                </div>')
-        print('                                <div class="col-md-4">')
-        print('                                    <div class="p-3 text-center">')
-        print('                                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
-        print('                                        <ul class="list-unstyled mb-0">')
-        print('                                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
-        print('                                        </ul>')
-        print('                                    </div>')
-        print('                                </div>')
-        print('                            </div> <!-- Row End -->')
-        print('                        </div> <!-- Card Body End -->')
         cardfooter('')
 
-        print('                <!-- Dash End -->')
+        print('                </div> <!-- Dash End -->')
+        print('')
+        print('            </div> <!-- cPanel End Dash Row -->')
+
+        print('            <!-- Dash Widgets Start -->')
+        print('            <div id="dashboard" class="row">')
+        print('')
+
+        # Nginx Status
+        print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
+        cardheader('')
+        print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+        print('                        <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
+        print('                        <ul class="list-unstyled mb-0">')
+        print('                            <li class="mt-2 text-success">Nginx</li>')
+        print('                        </ul>')
+        print('                    </div> <!-- Card Body End -->')
+        cardfooter('')
+        print('                </div> <!-- Dash Item End -->')
+
+        # Backend Status
+        print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
+        cardheader('')
+        print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+        print('                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
+        print('                        <ul class="list-unstyled mb-0">')
+        print('                            <li class="mt-2 text-success">'+backend_version+'</li>')
+        print('                        </ul>')
+        print('                    </div> <!-- Card Body End -->')
+        cardfooter('')
+        print('                </div> <!-- Dash Item End -->')
+
+        # Tamplate Status
+        print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
+        cardheader('')
+        print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+        print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
+        print('                        <ul class="list-unstyled mb-0">')
+        print('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+        print('                        </ul>')
+        print('                    </div> <!-- Card Body End -->')
+        cardfooter('')
+        print('                </div> <!-- Dash Item End -->')
+
+        print('')
+        print('            </div> <!-- Dash Widgets End -->')
+        print('')
+
+        print('            <!-- CP Tabs Row -->')
+        print('            <div class="row justify-content-lg-center flex-nowrap">')
+        print('')
+        print('                <!-- Secondary Navigation -->')
+        print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
+        print('                    <a class="nav-link active" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab">Application Status</a>')
+        print('                    <a class="nav-link" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general">General Settings</a>')
+        print('                    <a class="nav-link" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations">Content Optimizations</a>')
+        print('                    <a class="nav-link" id="v-pills-redirections-tab" data-toggle="pill" href="#v-pills-redirections" role="tab" aria-controls="v-pills-redirections">Redirections</a>')
+        print('                    <a class="nav-link" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
         print('                </div>')
         print('')
-        print('            <!-- cPanel End Dash Row -->')
-        print('            </div>')
+        print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
         print('')
-        print('            <!-- cPanel Starter Row -->')
-        print('            <div class="row">')
-        print('')
-        print('                <!-- Left Column Start-->')
-        print('                <div class="col-lg-6">')
+        print('                    <!-- Secondary Mobile Navigation -->')
+        print('                    <div class="d-lg-none d-xl-none dropdown nav">')
+        print('                        <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
+        print('                            Config Menu')
+        print('                        </button>')
+        print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
+        print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">Application Status</a>')
+        print('                            <a class="dropdown-item" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-cluster" aria-selected="false">General Settings</a>')
+        print('                            <a class="dropdown-item" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations" aria-selected="false">Content Optimizations</a>')
+        print('                            <a class="dropdown-item" id="v-pills-redirections-tab" data-toggle="pill" href="#v-redirections-php" role="tab" aria-controls="v-redirections-php" aria-selected="false">Redirections</a>')
+        print('                            <a class="dropdown-item" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory" aria-selected="false">Subdirectory Applications</a>')
+        print('                        </div>')
+        print('                    </div>')
 
-        # Ok we are done with getting the settings,now lets present it to the user
+        # System Tab
+        print('')
+        print('                    <!-- System Tab -->')
+        print('                    <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
 
         # System Setup
         cardheader('Application Status', 'fas fa-users-cog')
-        print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
+        print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
         print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
 
         # .htaccess
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
-                print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-                print('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
+                print('                        <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+                print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
         else:
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
+            print('                            <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+            print('                            <div class="col-md-6 alert text-danger"><i class="fas fa-times-circle"></i></div>')
 
         # User config reload
         nginx_log_hint = document_root + '/nginx.conf'
         print('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint))
         if os.path.isfile(nginx_log_hint):
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
-                print('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check-cicle"></i> Valid</div>')
+                print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check-cicle"></i> Valid</div>')
             else:
-                print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times-cicle"></i> Invalid/Require Reload</div>')
+                print('                        <div class="col-md-6 alert text-danger"><i class="fas fa-times-cicle"></i> Invalid/Require Reload</div>')
         else:
-            print('                                <div class="col-md-6 alert alert-secondary"><i class="fas fa-file-upload"></i> Not Present</div>')
+            print('                            <div class="col-md-6 alert text-center"><i class="fas fa-file-upload"></i> Not Present</div>')
 
         # Reload Nginx
-        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
+        print('                                <div class="col-md-6 alert"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
         print('                                <div class="col-md-6">')
         print('                                    <form class="form" method="post" id="toastForm4" onsubmit="return false;">')
-        print('                                        <button class="btn btn-block alert-info" type="submit">Reload</button>')
+        print('                                        <button class="btn btn-block" type="submit">Reload</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
         print('                                    </form>')
         print('                                </div>')
 
         # Nginx Log
-        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
+        print('                                <div class="col-md-6 alert"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
         print('                                <div class="col-md-6">')
         print('                                    <form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-        print('                                        <button class="btn btn-block alert-info" type="submit">View Log</button>')
+        print('                                        <button class="btn btn-block" type="submit">View Log</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
         print('                                    </form>')
         print('                                </div>')
@@ -233,7 +272,7 @@ if form.getvalue('domain'):
 
         # Dependencies
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
-            print('                        <div class="card-body pt-3 pb-0">  <!-- Card Body Start -->')
+            print('                        <div class="card-body pt-3 pb-0"> <!-- Card Body Start -->')
             print('                            <form class="form" id="modalForm10" onsubmit="return false;">')
             if backend_category == "RUBY":
                 dep_file = document_root + '/Gemfile'
@@ -280,8 +319,13 @@ if form.getvalue('domain'):
             print('                                </div>')
             print('                            </form>')
 
-        print('                        </div> <!-- Card Body End -->')    
+        print('                        </div> <!-- Card Body End -->')
         cardfooter('To change the upstream select a new category above.')
+
+        print('                    </div><!-- System Tab End -->')
+
+        print('                    <!-- General Setting Tab -->')
+        print('                    <div class="tab-pane fade show" id="v-pills-general" role="tabpanel" aria-labelledby="v-pills-general-tab">')
 
         # Application Settings
         cardheader('General Settings', 'fas fa-sliders-h')
@@ -409,8 +453,12 @@ if form.getvalue('domain'):
         print('                        </div> <!-- Card Body End -->')
         cardfooter('')
 
-        # Security Settings
+        print('                    </div><!-- System Tab End -->')
 
+        print('                    <!-- Security Tab -->')
+        print('                    <div class="tab-pane fade show" id="v-pills-security" role="tabpanel" aria-labelledby="v-pills-security-tab">')
+
+        # Security Settings
         cardheader('Security Settings','fas fa-shield-alt')
         print('                        <div class="card-body">  <!-- Card Body Start -->')
 
@@ -558,18 +606,12 @@ if form.getvalue('domain'):
         print('                        </div> <!-- Card Body End -->')
         cardfooter('')
 
-        #First Column End
-        print('                <!-- First Column End -->')
-        print('                </div>')
-        print('')
+        print('                    </div><!-- System Tab End -->')
 
-        #Second Column
-        print('                <!-- Second Column Start -->')
-        print('                <div class="col-lg-6">') #Right Column
-        print('')
+        print('                    <!-- Optimizations Tab -->')
+        print('                    <div class="tab-pane fade show" id="v-pills-optimizations" role="tabpanel" aria-labelledby="v-pills-optimizations-tab">')
 
         # Content Optimizations
-
         cardheader('Content Optimizations', 'fas fa-dumbbell')
 
         print('                        <div class="card-body">  <!-- Card Body Start -->')
@@ -735,8 +777,12 @@ if form.getvalue('domain'):
         print('                        </div> <!-- Card Body End -->')
         cardfooter('')
 
-        # Redirections
+        print('                    </div><!-- System Tab End -->')
 
+        print('                    <!-- Redirections Tab -->')
+        print('                    <div class="tab-pane fade show" id="v-pills-redirections" role="tabpanel" aria-labelledby="v-pills-redirections-tab">')
+
+        # Redirections
         cardheader('Redirections', 'fas fa-directions')
         print('                        <div class="card-body">  <!-- Card Body Start -->')
         print('                            <div class="row"> <!-- Row Start -->')
@@ -897,18 +943,12 @@ if form.getvalue('domain'):
         print('                        </div> <!-- Card Body End -->')
         cardfooter('')
 
-        # Save Settings
+        print('                    </div><!-- System Tab End -->')
 
-        cardheader('Save Settings')
-        print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
-        print('                            <input hidden name="domain" value="'+mydomain+'">')
-        print('                            <button class="btn btn-outline-primary btn-block " type="submit">Apply Settings to '+mydomain+'</button>')
-        print('                            </form>')
-        print('                        </div> <!-- Card Body End -->')
-        cardfooter('')
+        print('                    <!-- Subdirectory Tab -->')
+        print('                    <div class="tab-pane fade show" id="v-pills-subdirectory" role="tabpanel" aria-labelledby="v-pills-subdirectory-tab">')
 
         # Subdirectory Applications
-
         cardheader('Subdirectory Applications', 'fas fa-level-down-alt')
         print('                        <div class="card-body">  <!-- Card Body Start -->')
 
@@ -955,6 +995,21 @@ if form.getvalue('domain'):
         print('                        </div> <!-- Card Body End -->')
         cardfooter('The path entered above must follow this format <kbd>/blog</kbd>, <kbd>/us/forum</kbd>, etc.')
 
+        print('                    </div><!-- Subdirectory Tab End -->')
+
+        # Save Settings
+        cardheader('Save Settings')
+        print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
+        print('                            <input hidden name="domain" value="'+mydomain+'">')
+        print('                            <button class="btn btn-outline-primary btn-block " type="submit">Apply Settings to '+mydomain+'</button>')
+        print('                            </form>')
+        print('                        </div> <!-- Card Body End -->')
+        cardfooter('')
+
+        print('                </div><!-- System Tabs End -->')
+
+        print('            </div><!-- CP Row End -->')
+
     else:
         print_nontoast_error('Error!', 'Domain Data File IO Error!')
         sys.exit(0)
@@ -962,13 +1017,6 @@ if form.getvalue('domain'):
 else:
     print_nontoast_error('Forbidden!', 'Domain Data Missing!')
     sys.exit(0)
-
-#Second Column End
-print('                <!-- Second Column End -->')
-print('                </div>')
-print('')
-print('            <!-- cPanel End Row -->')
-print('            </div>')
 
 print_footer()
 
@@ -978,6 +1026,5 @@ print('')
 print_modals()
 print_loader()
 
-print('    <!-- Body End -->')
-print('    </body>')
+print('</body> <!-- Body End -->')
 print('</html>')

@@ -18,7 +18,7 @@ nginx_version_info_file = "/etc/nginx/version.yaml"
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
-    ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light") 
+    ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light")
     primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#121212")
     logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "None")
     app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
@@ -78,7 +78,7 @@ def return_prepend(theoption, hint):
     return result
 
 def return_sys_tip(theoption, hint):
-    result = '<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
+    result = '<div class="col-md-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
 
 
@@ -123,7 +123,7 @@ def print_error_alert(themessage):
 
 
 def print_sys_tip(theoption, hint):
-    print('<div class="col-md-6 alert alert-light" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>')
+    print('<div class="col-md-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>')
 
 
 def print_disabled():
@@ -160,6 +160,7 @@ def print_loader():
 
 # Print Header
 def print_header(title=''):
+    print('Content-Type: text/html')
     print('')
     print('<!doctype html>')
     print('<html lang="en">')
@@ -171,7 +172,6 @@ def print_header(title=''):
     print('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>')
     print('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>')
     print('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>')
-    print('        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">')
     print('        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">')
     print('        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">')
     print('        <script src="js.js"></script>')
