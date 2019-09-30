@@ -469,6 +469,7 @@ mod_security_hint = " Controls loading of nginx-nDeploy-module-modsecurity which
 pagespeed_hint = " Controls loading of nginx-nDeploy-module-pagespeed which delivers PageSpeed-optimized pages. "
 brotli_hint = " Controls loading of nginx-nDeploy-module-brotli which is a newer bandwidth optimization created by Google. "
 geoip2_hint = " Controls loading of nginx-nDeploy-module-geoip2 which creates variables based on the client IP address. "
+passenger_hint = " Controls loading of nginx-nDeploy-module-passenger which installs Phusion Passenger web application server. "
 
 print('                     <div class="card-body"> <!-- Card Body Start -->')
 print('                         <div class="row ml-auto mr-auto"> <!-- Row Start -->')
@@ -569,6 +570,27 @@ else:
     print('                                 </label>')
     print('                                 <label class="btn btn-light active">')
     print('                                     <input type="radio" name="geoip2" value="disabled" autocomplete="off" checked> Uninstalled')
+    print('                                 </label>')
+
+print('                                 </div>')
+print('                             </div>')
+
+print('                             '+return_label("Passenger Module", passenger_hint))
+print('                             <div class="col-md-6 pr-0">')
+print('                                 <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+if os.path.isfile('/etc/nginx/modules.d/passenger.load'):
+    print('                                 <label class="btn btn-light active">')
+    print('                                     <input type="radio" name="passenger" value="enabled" autocomplete="off" checked> Installed')
+    print('                                 </label>')
+    print('                                 <label class="btn btn-light">')
+    print('                                     <input type="radio" name="passenger" value="disabled" autocomplete="off"> Uninstalled')
+    print('                                 </label>')
+else:
+    print('                                 <label class="btn btn-light">')
+    print('                                     <input type="radio" name="passenger" value="enabled" autocomplete="off"> Installed')
+    print('                                 </label>')
+    print('                                 <label class="btn btn-light active">')
+    print('                                     <input type="radio" name="passenger" value="disabled" autocomplete="off" checked> Uninstalled')
     print('                                 </label>')
 
 print('                                 </div>')
