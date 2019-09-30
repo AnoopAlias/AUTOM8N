@@ -35,7 +35,8 @@ if form.getvalue('test_cookie') and \
     form.getvalue('mod_security') and \
     form.getvalue('pagespeed') and \
     form.getvalue('brotli') and \
-    form.getvalue('geoip2'):
+    form.getvalue('geoip2') and \
+    form.getvalue('passenger'):
     
     cmd_install = ""
     cmd_uninstall = ""
@@ -64,6 +65,12 @@ if form.getvalue('test_cookie') and \
         cmd_install += "nginx-nDeploy-module-geoip2 "
     elif form.getvalue('geoip2') == 'disabled' and os.path.isfile('/etc/nginx/modules.d/geoip2.load'):
         cmd_uninstall += "nginx-nDeploy-module-geoip2 "
+
+    if form.getvalue('passenger') == 'enabled' and not os.path.isfile('/etc/nginx/modules.d/passenger.load'):
+        cmd_install += "nginx-nDeploy-module-passenger "
+    elif form.getvalue('passenger') == 'disabled' and os.path.isfile('/etc/nginx/modules.d/passenger.load'):
+        cmd_uninstall += "nginx-nDeploy-module-passenger "
+
 
     if cmd_install != "" or cmd_uninstall != "":
         if cmd_install == "" and cmd_uninstall != "":
