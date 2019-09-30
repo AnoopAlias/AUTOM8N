@@ -201,8 +201,19 @@ if form.getvalue('domain'):
         print('                    <a class="nav-link" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general">General Settings</a>')
         print('                    <a class="nav-link" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations">Content Optimizations</a>')
         print('                    <a class="nav-link" id="v-pills-redirections-tab" data-toggle="pill" href="#v-pills-redirections" role="tab" aria-controls="v-pills-redirections">Redirections</a>')
-        print('                    <a class="nav-link" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
+        print('                    <a class="nav-link mb-4" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
+
+        # Save Settings
+        cardheader('')
+        print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
+        print('                            <input hidden name="domain" value="'+mydomain+'">')
+        print('                            <button class="btn btn-outline-primary btn-block " type="submit">Apply Settings</button>')
+        print('                            </form>')
+        print('                        </div> <!-- Card Body End -->')
+        cardfooter('')
+
         print('                </div>')
+
         print('')
         print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
         print('')
@@ -996,15 +1007,6 @@ if form.getvalue('domain'):
         cardfooter('The path entered above must follow this format <kbd>/blog</kbd>, <kbd>/us/forum</kbd>, etc.')
 
         print('                    </div><!-- Subdirectory Tab End -->')
-
-        # Save Settings
-        cardheader('Save Settings')
-        print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
-        print('                            <input hidden name="domain" value="'+mydomain+'">')
-        print('                            <button class="btn btn-outline-primary btn-block " type="submit">Apply Settings to '+mydomain+'</button>')
-        print('                            </form>')
-        print('                        </div> <!-- Card Body End -->')
-        cardfooter('')
 
         print('                </div><!-- System Tabs End -->')
 
