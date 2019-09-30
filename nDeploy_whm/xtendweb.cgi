@@ -245,18 +245,18 @@ print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
-print('                </div> <!-- End System Tab -->')
+print('             </div> <!-- End System Tab -->')
 
 # Cluster Tab
 print('')
-print('                <!-- Cluster Tab -->')
-print('                <div class="tab-pane fade" id="v-pills-cluster" role="tabpanel" aria-labelledby="v-pills-cluster-tab">')
+print('             <!-- Cluster Tab -->')
+print('             <div class="tab-pane fade" id="v-pills-cluster" role="tabpanel" aria-labelledby="v-pills-cluster-tab">')
 
 # Cluster Status
 if os.path.isfile(cluster_config_file):
     cardheader('Cluster Status','fas fa-align-justify')
-    print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
-    print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
+    print('             <div class="card-body p-0">  <!-- Card Body Start -->')
+    print('                 <div class="row no-gutters row-1"> <!-- Row Start -->')
 
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
@@ -281,11 +281,11 @@ if os.path.isfile(cluster_config_file):
                     break
 
             if filesync_status:
-                print('                                <div class="col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
-                print('                                <div class="col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
+                print('         <div class="col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
+                print('         <div class="col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
             else:
-                print('                                <div class="col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
-                print('                                <div class="col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
+                print('         <div class="col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
+                print('         <div class="col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
 
         filesync_status = False
         for myprocess in psutil.process_iter():
@@ -300,32 +300,32 @@ if os.path.isfile(cluster_config_file):
                 break
 
         if filesync_status:
-            print('                                <div class="col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
-            print('                                <div class="col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
+            print('             <div class="col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
+            print('             <div class="col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
         else:
-            print('                                <div class="col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
-            print('                                <div class="col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
+            print('             <div class="col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
+            print('             <div class="col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
 
-    print('                            </div> <!-- Row End -->') #Row End
-    print('                        </div> <!-- Card Body End -->') #Card Body End
+    print('                 </div> <!-- Row End -->')
+    print('             </div> <!-- Card Body End -->')
 
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body
+    print('             <div class="card-body"> <!-- Card Body Start -->')
 
-    print('                            <form class="form mb-3" id="toastForm4" onsubmit="return false;">')
-    print('                                <input hidden name="mode" value="restart">')
-    print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Soft Restart Unison Sync</button>')
-    print('                            </form>')
+    print('                 <form class="form mb-3" id="toastForm4" onsubmit="return false;">')
+    print('                     <input hidden name="mode" value="restart">')
+    print('                     <button type="submit" class="btn btn-outline-primary btn-block ">Soft Restart Unison Sync</button>')
+    print('                 </form>')
 
-    print('                            <form class="form mb-3" id="toastForm5" onsubmit="return false;">')
-    print('                                <input hidden name="mode" value="reset">')
-    print('                                <button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
-    print('                            </form>')
+    print('                 <form class="form mb-3" id="toastForm5" onsubmit="return false;">')
+    print('                     <input hidden name="mode" value="reset">')
+    print('                     <button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
+    print('                 </form>')
 
-    print('                            <form class="form" id="toastForm26" onsubmit="return false;">')
-    print('                                <input hidden name="mode" value="reset">')
-    print('                                <button type="submit" class="btn btn-outline-primary btn-block">Reset Csync2 Sync</button>')
-    print('                            </form>')
-    print('                        </div> <!-- Card Body End -->') #Card Body End
+    print('                 <form class="form" id="toastForm26" onsubmit="return false;">')
+    print('                     <input hidden name="mode" value="reset">')
+    print('                     <button type="submit" class="btn btn-outline-primary btn-block">Reset Csync2 Sync</button>')
+    print('                 </form>')
+    print('             </div> <!-- Card Body End -->')
 
     cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
 else:
@@ -342,23 +342,23 @@ print('                <div class="tab-pane fade" id="v-pills-zone" role="tabpan
 # Sync GeoDNS zone
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Sync GDNSD Zone','fas fa-sync')
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('             <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
-    print('                            <form class="form" id="toastForm7" onsubmit="return false;">')
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <label class="input-group-text">Zone</label>')
-    print('                                    </div>')
-    print('                                    <select name="user" class="custom-select">')
+    print('                 <form class="form" id="toastForm7" onsubmit="return false;">')
+    print('                     <div class="input-group">')
+    print('                         <div class="input-group-prepend">')
+    print('                             <label class="input-group-text">Zone</label>')
+    print('                         </div>')
+    print('                         <select name="user" class="custom-select">')
     user_list = os.listdir("/var/cpanel/users")
     for cpuser in sorted(user_list):
         if cpuser != 'nobody' and cpuser != 'system':
-            print('                                        <option value="'+cpuser+'">'+cpuser+'</option>')
-    print('                                    </select>')
-    print('                                </div>')
-    print('                                <button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
-    print('                            </form>')
-    print('                        </div> <!-- Card Body End -->') #Card Body End
+            print('                     <option value="'+cpuser+'">'+cpuser+'</option>')
+    print('                         </select>')
+    print('                     </div>')
+    print('                     <button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
+    print('                 </form>')
+    print('             </div> <!-- Card Body End -->')
     cardfooter('Choose a user to sync GDNSD Zones for.')
 else:
     cardheader('GDNSD Zone Sync Disabled','fas fa-sync')
@@ -373,8 +373,8 @@ print('                <div class="tab-pane fade" id="v-pills-php" role="tabpane
 
 # Set Default PHP for AutoConfig
 cardheader('Default PHP for Autoswitch','fab fa-php')
-print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
-print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
+print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
+print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
 
 # Check if we have a Preferred PHP and allow selection.
 if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
@@ -385,10 +385,10 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     myphpversion = phpversion.keys()[0]
 else:
     myphpversion = "Unset"
-print('                                <div class="col-md-6 alert"><i class="fab fa-php"></i> Default PHP</div>')
-print('                                <div class="col-md-6 alert text-success">'+myphpversion+' <i class="fa fa-check-circle"></i></div>')
-print('                            </div>')
-print('                        </div> <!-- Card Body End -->')
+print('                         <div class="col-md-6 alert"><i class="fab fa-php"></i> Default PHP</div>')
+print('                         <div class="col-md-6 alert text-success">'+myphpversion+' <i class="fa fa-check-circle"></i></div>')
+print('                     </div>')
+print('                 </div> <!-- Card Body End -->')
 
 backend_config_file = installation_path+"/conf/backends.yaml"
 backend_data_yaml = open(backend_config_file, 'r')
@@ -396,25 +396,25 @@ backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
 
 if "PHP" in backend_data_yaml_parsed:
-    print('                        <div class="card-body"> <!-- Card Body Start -->')
-    print('                            <form class="form" id="toastForm6" onsubmit="return false;">')
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <label class="input-group-text">PHP</label>')
-    print('                                    </div>')
-    print('                                    <select name="phpversion" class="custom-select">')
+    print('             <div class="card-body"> <!-- Card Body Start -->')
+    print('                 <form class="form" id="toastForm6" onsubmit="return false;">')
+    print('                     <div class="input-group">')
+    print('                         <div class="input-group-prepend">')
+    print('                             <label class="input-group-text">PHP</label>')
+    print('                         </div>')
+    print('                         <select name="phpversion" class="custom-select">')
 
     php_backends_dict = backend_data_yaml_parsed["PHP"]
     for versions_defined in list(php_backends_dict.keys()):
         if versions_defined == myphpversion:
-            print('                                        <option selected value="'+myphpversion+'">'+myphpversion+'</option>')
+            print('                     <option selected value="'+myphpversion+'">'+myphpversion+'</option>')
         else:
-            print('                                        <option value="'+versions_defined+'">'+versions_defined+'</option>')
-    print('                                    </select>')
-    print('                                </div>')
-    print('                                <button type="submit" class="btn btn-outline-primary btn-block">Set Default PHP</button>')
-    print('                            </form>')
-    print('                        </div> <!-- Card Body End -->')
+            print('                     <option value="'+versions_defined+'">'+versions_defined+'</option>')
+    print('                         </select>')
+    print('                     </div>')
+    print('                     <button type="submit" class="btn btn-outline-primary btn-block">Set Default PHP</button>')
+    print('                 </form>')
+    print('             </div> <!-- Card Body End -->')
 cardfooter('Automatic switch to Nginx will use versions set in MultiPHP or if MultiPHP is not used the phpversion above')
 
 print('                </div> <!-- End PHP Tab -->')
@@ -426,29 +426,29 @@ print('                <div class="tab-pane fade" id="v-pills-dos" role="tabpane
 
 # DDOS Protection
 cardheader('DDOS Protection','fas fa-user-shield')
-print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
-print('                            <div class="row no-gutters row-2-col row-no-btm"> <!-- Row Start -->')
-print('                                <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Nginx</div>')
-print('                                <div class="col-md-6">')
-print('                                    <div class="row no-gutters">')
+print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
+print('                     <div class="row no-gutters row-2-col row-no-btm"> <!-- Row Start -->')
+print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Nginx</div>')
+print('                         <div class="col-md-6">')
+print('                             <div class="row no-gutters">')
 
 if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
-    print('                                        <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
-    print('                                        <div class="col-9">')
-    print('                                            <form id="toastForm1" class="form" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert btn btn-secondary">Disable</button>')
-    print('                                                <input hidden name="ddos" value="disable">')
+    print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="toastForm1" class="form" onsubmit="return false;">')
+    print('                                     <button type="submit" class="alert btn btn-secondary">Disable</button>')
+    print('                                     <input hidden name="ddos" value="disable">')
 else:
-    print('                                        <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
-    print('                                        <div class="col-9">')
-    print('                                            <form id="toastForm1" class="form" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert btn btn-secondary">Enable</button>')
-    print('                                                <input hidden name="ddos" value="enable">')
+    print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="toastForm1" class="form" onsubmit="return false;">')
+    print('                                     <button type="submit" class="alert btn btn-secondary">Enable</button>')
+    print('                                     <input hidden name="ddos" value="enable">')
 
-print('                                            </form>')
-print('                                        </div>')
-print('                                    </div>')
-print('                                </div>')
+print('                                     </form>')
+print('                                 </div>')
+print('                             </div>')
+print('                         </div>')
 
 try:
     with open(os.devnull, 'w') as FNULL:
@@ -458,30 +458,30 @@ except OSError:
 else:
     with open(os.devnull, 'w') as FNULL:
         firehol_enabled = subprocess.call("systemctl is-active firehol.service", stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
-    print('                                <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> SYNPROXY</div>')
-    print('                                <div class="col-md-6">')
-    print('                                    <div class="row no-gutters">')
+    print('                     <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> SYNPROXY</div>')
+    print('                     <div class="col-md-6">')
+    print('                         <div class="row no-gutters">')
 
     if firehol_enabled == 0:
-        print('                                        <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
-        print('                                        <div class="col-9">')
-        print('                                            <form id="toastForm2" class="form" onsubmit="return false;">')
-        print('                                                <button type="submit" class="alert btn btn-secondary">Disable</button>')
-        print('                                               <input hidden name="ddos" value="disable">')
+        print('                         <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+        print('                         <div class="col-9">')
+        print('                             <form id="toastForm2" class="form" onsubmit="return false;">')
+        print('                                 <button type="submit" class="alert btn btn-secondary">Disable</button>')
+        print('                                 <input hidden name="ddos" value="disable">')
     else:
-        print('                                        <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
-        print('                                        <div class="col-9">')
-        print('                                            <form id="toastForm2" class="form" onsubmit="return false;">')
-        print('                                                <button type="submit" class="alert btn btn-secondary">Enable</button>')
-        print('                                                <input hidden name="ddos" value="enable">')
+        print('                         <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+        print('                         <div class="col-9">')
+        print('                             <form id="toastForm2" class="form" onsubmit="return false;">')
+        print('                                 <button type="submit" class="alert btn btn-secondary">Enable</button>')
+        print('                                 <input hidden name="ddos" value="enable">')
 
-    print('                                            </form>')
-    print('                                        </div>')
-    print('                                    </div>')
-    print('                                </div>')
+    print('                                 </form>')
+    print('                             </div>')
+    print('                         </div>')
+    print('                     </div>')
 
-print('                            </div> <!-- Row End -->')
-print('                        </div> <!-- Card Body End -->') #Card Body End
+print('                     </div> <!-- Row End -->')
+print('                 </div> <!-- Card Body End -->')
 cardfooter('Turn these settings on when you are under a DDOS Attack but remember to disable CSF or any other firewall before turning on SYNPROXY (FireHol).')
 
 print('                </div> <!-- End DOS Tab -->')
@@ -494,36 +494,36 @@ print('                <div class="tab-pane fade" id="v-pills-php_fpm" role="tab
 # PHP-FPM Pool Editor
 phpfpmpool_hint = " Secure and non secure PHP-FPM Pools attached to cPanel users for use with Native NGINX. "
 cardheader('PHP-FPM Pool Editor','fas fa-sitemap')
-print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-print('                            <form class="form" action="phpfpm_pool_editor.cgi" method="get">')
-print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
-print('                                        <span class="input-group-text">')
-print('                                            '+return_prepend("cPanel User", phpfpmpool_hint))
-print('                                        </span>')
-print('                                    </div>')
-print('                                    <select name="poolfile" class="custom-select">')
+print('                 <div class="card-body"> <!-- Card Body Start -->')
+print('                     <form class="form" action="phpfpm_pool_editor.cgi" method="get">')
+print('                         <div class="input-group">')
+print('                             <div class="input-group-prepend">')
+print('                                 <span class="input-group-text">')
+print('                                     '+return_prepend("cPanel User", phpfpmpool_hint))
+print('                                 </span>')
+print('                             </div>')
+print('                             <select name="poolfile" class="custom-select">')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     conf_list = os.listdir("/opt/nDeploy/secure-php-fpm.d")
     for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
-            print('                                        <option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>')
+            print('                     <option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>')
 else:
     conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
     for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
-            print('                                        <option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>')
-print('                                    </select>')
-print('                                </div>')
+            print('                     <option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>')
+print('                             </select>')
+print('                         </div>')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-    print('                                <input hidden name="section" value="1">')
+    print('                     <input hidden name="section" value="1">')
 else:
-    print('                                <input hidden name="section" value="0">')
-print('                                <button class="btn btn-outline-primary btn-block" type="submit">Edit Settings</button>')
-print('                            </form>')
-print('                        </div> <!-- Card Body End -->') #Card Body End
+    print('                     <input hidden name="section" value="0">')
+print('                         <button class="btn btn-outline-primary btn-block" type="submit">Edit Settings</button>')
+print('                     </form>')
+print('                 </div> <!-- Card Body End -->')
 cardfooter('Settings such as: pm.max_requests, pm.max_spare_servers, session.save_path, pm.max_children')
 
 print('                </div> <!-- End PHP_FPM Tab -->')
@@ -535,35 +535,35 @@ print('                <div class="tab-pane fade" id="v-pills-map" role="tabpane
 
 # Map cPanel Package to NGINX
 cardheader('Map cPanel Package to NGINX','fas fa-box-open')
-print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-print('                            <div class="row no-gutters row-1"> <!-- Row Start -->') #Row Start
-print('                                <div class="col-md-6 alert"><i class="fas fa-box"></i> NGINX -> Package</div>')
-print('                                <div class="col-md-6">')
-print('                                    <div class="row no-gutters">')
+print('                 <div class="card-body p-0"> <!-- Card Body Start -->')
+print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
+print('                         <div class="col-md-6 alert"><i class="fas fa-box"></i> NGINX -> Package</div>')
+print('                         <div class="col-md-6">')
+print('                             <div class="row no-gutters">')
 
 if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
-    print('                                        <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
-    print('                                        <div class="col-9">')
-    print('                                            <form class="form" method="post" id="toastForm16" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert btn btn-secondary">Disable</button>')
-    print('                                                <input hidden name="package_lock" value="disabled">')
-    print('                                            </form>')
-    print('                                        </div>')
-    print('                                    </div>')
+    print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form class="form" method="post" id="toastForm16" onsubmit="return false;">')
+    print('                                     <button type="submit" class="alert btn btn-secondary">Disable</button>')
+    print('                                     <input hidden name="package_lock" value="disabled">')
+    print('                                 </form>')
+    print('                             </div>')
+    print('                         </div>')
 else:
-    print('                                        <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
-    print('                                        <div class="col-9">')
-    print('                                            <form class="form" method="post" id="toastForm16" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert btn btn-secondary">Enable</button>')
-    print('                                                <input hidden name="package_lock" value="enabled">')
-    print('                                            </form>')
-    print('                                        </div>')
-    print('                                    </div>')
+    print('                         <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form class="form" method="post" id="toastForm16" onsubmit="return false;">')
+    print('                                     <button type="submit" class="alert btn btn-secondary">Enable</button>')
+    print('                                     <input hidden name="package_lock" value="enabled">')
+    print('                                 </form>')
+    print('                             </div>')
+    print('                         </div>')
 
-print('                                </div>')
-print('                            </div> <!-- Row End -->')
-print('                        </div> <!-- Card Body End -->') #Card Body End
-print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+print('                         </div>')
+print('                     </div> <!-- Row End -->')
+print('                 </div> <!-- Card Body End -->')
+print('                 <div class="card-body"> <!-- Card Body Start -->')
 
 cpanpackage_hint = " Map a NGINX configuration to an installed cPanel package. "
 
@@ -574,24 +574,24 @@ else:
     listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
 mypkgs = json.loads(listpkgs)
 
-print('                            <form class="form" action="pkg_profile.cgi" method="get">')
-print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
-print('                                        <span class="input-group-text">')
-print('                                            '+return_prepend("cPanel Package", cpanpackage_hint))
-print('                                        </span>')
-print('                                    </div>')
-print('                                    <select name="cpanelpkg" class="custom-select">')
+print('                     <form class="form" action="pkg_profile.cgi" method="get">')
+print('                         <div class="input-group">')
+print('                             <div class="input-group-prepend">')
+print('                                 <span class="input-group-text">')
+print('                                     '+return_prepend("cPanel Package", cpanpackage_hint))
+print('                                 </span>')
+print('                             </div>')
+print('                             <select name="cpanelpkg" class="custom-select">')
 
 for thepkg in sorted(mypkgs.get('package')):
     pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
-    print('                                        <option value="'+pkgname+'">'+pkgname+'</option>')
+    print('                             <option value="'+pkgname+'">'+pkgname+'</option>')
 
-print('                                    </select>')
-print('                                </div>')
-print('                                <button class="btn btn-outline-primary btn-block" type="submit">Edit Pkg</button>')
-print('                            </form>')
-print('                        </div> <!-- Card Body End -->') #Card Body End
+print('                             </select>')
+print('                         </div>')
+print('                         <button class="btn btn-outline-primary btn-block" type="submit">Edit Pkg</button>')
+print('                     </form>')
+print('                 </div> <!-- Card Body End -->')
 cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes an Upgrade/Downgrade process.'
 )
 
@@ -604,7 +604,7 @@ print('                <div class="tab-pane fade" id="v-pills-limit" role="tabpa
 
 # System Resource Limit
 cardheader('System Resource Limit','fas fa-compress')
-print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+print('                 <div class="card-body"> <!-- Card Body Start -->')
 
 with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
@@ -614,45 +614,45 @@ if not osrelease == 'CloudLinux':
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
             userlist = os.listdir("/var/cpanel/users")
-            print('                            <form class="form" action="resource_limit.cgi" method="get">')
-            print('                                <div class="input-group">')
-            print('                                    <div class="input-group-prepend">')
-            print('                                        <label class="input-group-text">User</label>')
-            print('                                    </div>')
-            print('                                    <select name="unit" class="custom-select">')
+            print('         <form class="form" action="resource_limit.cgi" method="get">')
+            print('             <div class="input-group">')
+            print('                 <div class="input-group-prepend">')
+            print('                     <label class="input-group-text">User</label>')
+            print('                 </div>')
+            print('                 <select name="unit" class="custom-select">')
 
             for cpuser in sorted(userlist):
                 if cpuser != 'nobody' and cpuser != 'system':
-                    print('                                        <option value="'+cpuser+'">'+cpuser+'</option>')
+                    print('             <option value="'+cpuser+'">'+cpuser+'</option>')
 
-            print('                                    </select>')
-            print('                                    <input hidden name="mode" value="user">')
-            print('                                </div>')
-            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
-            print('                            </form>')
+            print('                 </select>')
+            print('                 <input hidden name="mode" value="user">')
+            print('             </div>')
+            print('             <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+            print('         </form>')
 
-            print('                            <form class="form mt-4" action="resource_limit.cgi" method="get">')
-            print('                                <div class="input-group">')
-            print('                                    <div class="input-group-prepend">')
-            print('                                        <label class="input-group-text">Service</label>')
-            print('                                    </div>')
-            print('                                    <select name="unit" class="custom-select">')
+            print('         <form class="form mt-4" action="resource_limit.cgi" method="get">')
+            print('             <div class="input-group">')
+            print('                 <div class="input-group-prepend">')
+            print('                     <label class="input-group-text">Service</label>')
+            print('                 </div>')
+            print('                 <select name="unit" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print('                                        <option value="'+service+'">'+service+'</option>')
+                print('                 <option value="'+service+'">'+service+'</option>')
 
-            print('                                    </select>')
-            print('                                    <input hidden name="mode" value="service">')
-            print('                                </div>')
-            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
-            print('                            </form>')
+            print('                 </select>')
+            print('                 <input hidden name="mode" value="service">')
+            print('             </div>')
+            print('             <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+            print('         </form>')
         else:
-            print('                            <form class="form" action="resource_limit.cgi" method="get">')
-            print('                                <div class="input-group">')
-            print('                                    <div class="input-group-prepend">')
-            print('                                        <label class="input-group-text">Resource</label>')
-            print('                                    </div>')
-            print('                                    <select name="unit" class="custom-select">')
+            print('         <form class="form" action="resource_limit.cgi" method="get">')
+            print('             <div class="input-group">')
+            print('                 <div class="input-group-prepend">')
+            print('                     <label class="input-group-text">Resource</label>')
+            print('                 </div>')
+            print('                 <select name="unit" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
                 print('                                        <option value="'+service+'">'+service+'</option>')
@@ -669,24 +669,13 @@ print('                </div> <!-- End Limit Tab -->')
 print('                </div>')
 print('            </div> <!-- End WHM Tabs Row -->')
 
-
-
-
-
-
-
-
-
-
-
 print_footer()
 
-print('        </div> <!-- Main Container End -->')
+print(' </div> <!-- Main Container End -->')
 print('')
 
 print_modals()
 print_loader()
 
-print('    <!-- Body End -->')
-print('    </body>')
+print('</body> <!-- Body End -->')
 print('</html>')

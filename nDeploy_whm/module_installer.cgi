@@ -37,7 +37,7 @@ if form.getvalue('test_cookie') and \
     form.getvalue('brotli') and \
     form.getvalue('geoip2') and \
     form.getvalue('passenger'):
-    
+
     cmd_install = ""
     cmd_uninstall = ""
 
@@ -71,7 +71,6 @@ if form.getvalue('test_cookie') and \
     elif form.getvalue('passenger') == 'disabled' and os.path.isfile('/etc/nginx/modules.d/passenger.load'):
         cmd_uninstall += "nginx-nDeploy-module-passenger "
 
-
     if cmd_install != "" or cmd_uninstall != "":
         if cmd_install == "" and cmd_uninstall != "":
             if os.path.isfile(cluster_config_file):
@@ -88,7 +87,7 @@ if form.getvalue('test_cookie') and \
                 procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && yum -y remove '+cmd_uninstall+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy install '+cmd_install+' && yum -y remove '+cmd_uninstall+'\"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             else:
                 procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && yum -y remove '+cmd_uninstall, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        
+
         print('<ul class="shelloutput">')
         if cmd_install != "":
             print('    <li><b>Installing the following modules: '+cmd_install+'</b></li>')
