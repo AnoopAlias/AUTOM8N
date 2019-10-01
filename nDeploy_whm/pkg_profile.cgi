@@ -105,7 +105,7 @@ if form.getvalue('cpanelpkg'):
     print('            </div> <!-- cPanel End Dash Row -->')
 
     print('            <!-- Dash Widgets Start -->')
-    print('            <div id="dashboard" class="row">')
+    print('            <div id="dashboard" class="row flex-row">')
     print('')
 
     # Nginx Status
@@ -160,12 +160,8 @@ if form.getvalue('cpanelpkg'):
     print('                    <a class="nav-link mb-4" id="v-pills-redirections-tab" data-toggle="pill" href="#v-pills-redirections" role="tab" aria-controls="v-pills-redirections">Redirections</a>')
 
     # Save Settings
-    cardheader('')
-    print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
     print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'" form="toastForm17">')
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm17">Apply Settings</button>')
-    print('                        </div> <!-- Card Body End -->')
-    cardfooter('')
+    print('                            <button class="btn btn-primary btn-block" type="submit" form="toastForm17">Apply Settings</button>')
 
     print('                </div>')
 
