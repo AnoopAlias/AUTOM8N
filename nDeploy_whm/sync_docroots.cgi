@@ -27,7 +27,7 @@ print('<body>')
 
 if form.getvalue('user'):
     subprocess.call(installation_path+'/scripts/cluster_filesync_ensure_user.py '+form.getvalue('user'), shell=True)
-    commoninclude.print_success('GeoDNS zones synced successfully.')
+    commoninclude.print_success('Web Files synced successfully.')
 else:
     commoninclude.print_forbidden()
 
