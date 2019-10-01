@@ -54,7 +54,7 @@ php_status = False
 php_status_dict = {}
 if "PHP" in backend_data_yaml_parsed:
     php_backends_dict = backend_data_yaml_parsed["PHP"]
-    for php,path in list(php_backends_dict.items()):
+    for php, path in list(php_backends_dict.items()):
         for myprocess in psutil.process_iter():
             # Workaround for Python 2.6
             if platform.python_version().startswith('2.6'):
@@ -336,13 +336,28 @@ print('                </div> <!-- End Cluster Tab -->')
 
 # Zone Tab
 print('')
-print('                <!-- Zone Tab -->')
+print('                <!-- Sync Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-zone" role="tabpanel" aria-labelledby="v-pills-zone-tab">')
 
-# Sync GeoDNS zone
+# Sync cluster
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
-    cardheader('Sync GDNSD Zone','fas fa-sync')
+    cardheader('Sync Cluster','fas fa-sync')
     print('             <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+
+    print('                 <form class="form" id="toastForm27" onsubmit="return false;">')
+    print('                     <div class="input-group">')
+    print('                         <div class="input-group-prepend">')
+    print('                             <label class="input-group-text">Files</label>')
+    print('                         </div>')
+    print('                         <select name="user" class="custom-select">')
+    user_list = os.listdir("/var/cpanel/users")
+    for cpuser in sorted(user_list):
+        if cpuser != 'nobody' and cpuser != 'system':
+            print('                     <option value="'+cpuser+'">'+cpuser+'</option>')
+    print('                         </select>')
+    print('                     </div>')
+    print('                     <button type="submit" class="btn btn-outline-primary btn-block ">Sync web files</button>')
+    print('                 </form>')
 
     print('                 <form class="form" id="toastForm7" onsubmit="return false;">')
     print('                     <div class="input-group">')
@@ -358,13 +373,14 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('                     </div>')
     print('                     <button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
     print('                 </form>')
-    print('             </div> <!-- Card Body End -->')
-    cardfooter('Choose a user to sync GDNSD Zones for.')
-else:
-    cardheader('GDNSD Zone Sync Disabled','fas fa-sync')
-    cardfooter('The GDNSD zone sync is disabled as this system is running with cPanel DNS.')
 
-print('                </div> <!-- End Zone Tab -->')
+    print('             </div> <!-- Card Body End -->')
+    cardfooter('Choose a user to sync dns zone or web files')
+else:
+    cardheader('Cluster Sync Disabled','fas fa-sync')
+    cardfooter('Cluster Sync is only available when cluster is setup')
+
+print('                </div> <!-- End Sync Tab -->')
 
 # PHP Tab
 print('')
