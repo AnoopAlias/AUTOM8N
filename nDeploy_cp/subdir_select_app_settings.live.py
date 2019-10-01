@@ -32,13 +32,13 @@ print_header('Subdirectory Upstream Configuration')
 bcrumb('Subdirectory Upstream Configuration', 'fas fa-cogs')
 
 if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesubdir'):
-    
+
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
     mybackend = form.getvalue('backend')
     thesubdir = form.getvalue('thesubdir')
     profileyaml = installation_path + "/domain-data/" + mydomain
-    
+
     # Get data about the backends available
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
@@ -53,7 +53,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
         commoninclude.print_error_wrapper('Error: app template data file error')
         sys.exit(0)
     if os.path.isfile(profileyaml):
-        
+
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
@@ -145,31 +145,31 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
 
                 cardheader('Upstream Configuration Settings')
                 print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
-                print('                            <div class="row no-gutters"> <!-- Row Start -->')
+                print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
-                print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
-                print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>')
-        
+                print('                                <div class="col-md-6 alert"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+                print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;Active</div>')
+
                 # Backend
-                print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
-                print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
-       
+                print('                                <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
+                print('                                <div class="col-md-6 alert text-success">'+backend_version+'</div>')
+
                 # Description
-                print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
-                print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center text-center">'+apptemplate_description+'</div>')
-       
+                print('                                <div class="col-md-6 alert"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
+                print('                                <div class="col-md-6 alert text-success text-center">'+apptemplate_description+'</div>')
+
                 # .htaccess
                 if backend_category == 'PROXY' and backend_version == 'httpd':
-                    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-                    print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
+                    print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+                    print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;</div>')
                 else:
-                    print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-                    print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
-       
+                    print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+                    print('                                <div class="col-md-6 alert text-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+
                 # New Upstream
-                print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
-                print('                                <div class="d-flex w-50 alert alert-warning align-items-right justify-content-center">'+mybackend+'</div>')
-       
+                print('                                <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
+                print('                                <div class="col-md-6 alert text-warning text-center">'+mybackend+'</div>')
+
                 print('                            </div> <!-- Row End -->')
                 print('                        </div> <!-- Card Body End -->')
 
@@ -251,16 +251,16 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('                            </form>')
                 print('                        </div> <!-- Card Body End -->')
                 cardfooter('')
-       
+
         else:
-           
+
             # Ok we are done with getting the settings,now lets present it to the user
             print('            <!-- cPanel Starter Row -->')
             print('            <div class="row justify-content-lg-center">')
             print('')
             print('                <!-- Column Start -->')
             print('                <div class="col-lg-6">')
-           
+
             cardheader('Initial Upstream Configuration', 'fas fa-user-cog')
             print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
             print('                            <div class="alert alert-info text-center">')
@@ -270,23 +270,23 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('                            </div>')
 
             print('                            <form class="form" id="toastForm8" onsubmit="return false;">')
-           
+
             backends_dict = backend_data_yaml_parsed.get(mybackend)
             new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
             if os.path.isfile(user_app_template_file):
                 user_new_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(mybackend)
             else:
                 user_new_apptemplate_dict = {}
-           
+
             print('                                <div class="input-group">')
             print('                                    <div class="input-group-prepend input-group-prepend-min">')
             print('                                        <label class="input-group-text">Upstream</label>')
             print('                                    </div>')
             print('                                    <select name="backendversion" class="custom-select">')
-           
+
             for mybackend_version in backends_dict.keys():
                 print('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
-           
+
             print('                                    </select>')
             print('                                </div>')
 
@@ -295,12 +295,12 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('                                        <label class="input-group-text">Template</label>')
             print('                                    </div>')
             print('                                    <select name="apptemplate" class="custom-select">')
-           
+
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 print('                                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
             for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
                 print('                                        <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
-           
+
             print('                                    </select>')
             print('                                </div>')
 

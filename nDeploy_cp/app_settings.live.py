@@ -206,15 +206,15 @@ if form.getvalue('domain'):
         # Save Settings
         cardheader('')
         print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
-        print('                            <input hidden name="domain" value="'+mydomain+'">')
-        print('                            <button class="btn btn-outline-primary btn-block " type="submit">Apply Settings</button>')
-        print('                            </form>')
+        print('                            <input form="toastForm3" hidden name="domain" value="'+mydomain+'">')
+        print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm3">Apply Settings</button>')
         print('                        </div> <!-- Card Body End -->')
         cardfooter('')
 
         print('                </div>')
 
         print('')
+        print('                <!-- Container Tab -->')
         print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
         print('')
         print('                    <!-- Secondary Mobile Navigation -->')
@@ -224,7 +224,7 @@ if form.getvalue('domain'):
         print('                        </button>')
         print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
         print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">Application Status</a>')
-        print('                            <a class="dropdown-item" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-cluster" aria-selected="false">General Settings</a>')
+        print('                            <a class="dropdown-item" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general" aria-selected="false">General Settings</a>')
         print('                            <a class="dropdown-item" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations" aria-selected="false">Content Optimizations</a>')
         print('                            <a class="dropdown-item" id="v-pills-redirections-tab" data-toggle="pill" href="#v-redirections-php" role="tab" aria-controls="v-redirections-php" aria-selected="false">Redirections</a>')
         print('                            <a class="dropdown-item" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory" aria-selected="false">Subdirectory Applications</a>')
@@ -233,7 +233,7 @@ if form.getvalue('domain'):
 
         # System Tab
         print('')
-        print('                    <!-- Container Tab -->')
+        print('                    <!-- System Tab -->')
         print('                    <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
 
         # System Setup
@@ -307,7 +307,7 @@ if form.getvalue('domain'):
 
             print('                        </div> <!-- Card Body End -->')
 
-        print('                        <div class="card-body">  <!-- Card Body Start -->')
+        print('                        <div class="card-body"> <!-- Card Body Start -->')
 
         if settings_lock == 'enabled':
             print('                            <div class="alert alert-info mb-0 text-center">Application Server settings are locked by the administrator.</div>')
@@ -947,6 +947,7 @@ if form.getvalue('domain'):
         print('                                            </span>')
         print('                                        </div>')
         print('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">')
+        print('                                        </form>')
         print('                                    </div>')
         print('                                </div>')
 
