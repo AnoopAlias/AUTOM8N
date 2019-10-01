@@ -342,9 +342,9 @@ print('                <div class="tab-pane fade" id="v-pills-zone" role="tabpan
 # Sync cluster
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Sync Cluster','fas fa-sync')
-    print('             <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
+    print('             <div class="card-body"> <!-- Card Body Start -->')
 
-    print('                 <form class="form" id="toastForm27" onsubmit="return false;">')
+    print('                 <form class="form mb-3" id="toastForm27" onsubmit="return false;">')
     print('                     <div class="input-group">')
     print('                         <div class="input-group-prepend">')
     print('                             <label class="input-group-text">Files</label>')
