@@ -214,9 +214,9 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                    <a class="nav-link mb-4" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general">General Settings</a>')
 
                 # Save Settings
-                print('                            <input hidden name="domain" value="'+mydomain+'" form="toastForm6">')
-                print('                            <input hidden name="thesubdir" value="'+thesubdir+'" form="toastForm6">')
-                print('                            <button class="btn btn-primary btn-block" type="submit" form="toastForm6">Apply Settings</button>')
+                print('                    <input hidden name="domain" value="'+mydomain+'" form="toastForm6">')
+                print('                    <input hidden name="thesubdir" value="'+thesubdir+'" form="toastForm6">')
+                print('                    <button class="btn btn-primary btn-block" type="submit" form="toastForm6">Apply Settings</button>')
 
                 print('                </div>')
 

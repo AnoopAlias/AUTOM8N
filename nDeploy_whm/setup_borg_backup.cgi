@@ -81,14 +81,14 @@ if os.path.isdir('/etc/borgmatic'):
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
 
     print('                            <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
-    print('                                <div class="row align-items-center"> <!-- Row Start -->')
+    print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
     # system_files
     system_files_hint = " Enable to backup the cPanel system files. "
     print('                                    '+return_label("System Files", system_files_hint))
     print('                                    <div class="col-md-6">')
     print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
-    
+
     if system_files == 'enabled':
         print('                                            <label class="btn btn-light active">')
         print('                                                <input type="radio" name="system_files" value="enabled" id="BuFilesOn" autocomplete="off" checked> Enabled')
@@ -105,13 +105,13 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            </label>')
     print('                                        </div>')
     print('                                    </div>')
-    
+
     # mysql_backup
     mysql_backup_hint = " Enable MariaBackup to backup the FULL MySQL data directory. "
     print('                                    '+return_label("Maria Backup", mysql_backup_hint))
     print('                                    <div class="col-md-6">')
     print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-    
+
     if mysql_backup == 'enabled':
         print('                                            <label class="btn btn-light active">')
         print('                                                <input type="radio" name="mysql_backup" value="enabled" id="BuDataOn" autocomplete="off" checked> Enabled')
@@ -128,7 +128,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                            </label>')
     print('                                        </div>')
     print('                                    </div>')
-    
+
     # backup_path
     backup_path_hint = " The directory where the cPanel package accounts, SQL backups, and system files are stored. "
     print('                                    <div class="col-md-12">')
@@ -238,7 +238,7 @@ if os.path.isdir('/etc/borgmatic'):
                 print('                                        <form class="form toastForm13-wrap" method="post" id="toastForm13'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('                                            <input hidden name="thehomedir" value="'+path+'">')
                 print('                                            <input hidden name="action" value="delete">')
-                print('                                            <button class="btn btn-danger" type="submit">')
+                print('                                            <button class="btn btn-danger btn-sm" type="submit">')
                 print('                                                <span class="sr-only">Delete</span>')
                 print('                                                <i class="fas fa-times"></i>')
                 print('                                            </button>')
@@ -327,7 +327,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # retention
     print('                                <label class="label mt-2 mb-2">Backup Retention</label>')
-    
+
     # keep_hourly
     keep_hourly_hint = " Enter the number of hourly backups to keep. "
     print('                                <div class="input-group">')
