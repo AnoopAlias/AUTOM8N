@@ -235,8 +235,6 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                        </div>')
 
                 # Save Settings
-                print('                    <input hidden name="domain" value="'+mydomain+'" form="toastForm6">')
-                print('                    <input hidden name="thesubdir" value="'+thesubdir+'" form="toastForm6">')
                 print('                    <button class="btn btn-primary btn-block" type="submit" form="toastForm6">Apply Settings</button>')
                 print('                    </div>')
 
