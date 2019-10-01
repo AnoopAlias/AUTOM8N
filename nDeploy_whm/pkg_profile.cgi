@@ -90,73 +90,117 @@ if form.getvalue('cpanelpkg'):
         print_nontoast_error('Error!', 'Backend Configuration File Error!')
         sys.exit(0)
 
-    # Ok we are done with getting the settings, now lets present it to the user
-    print('            <!-- WHM Starter Row -->')
-    print('            <div class="row">')
+    print('            <!-- cPanel Start Dash Row -->')
+    print('            <div class="row justify-content-lg-center">')
     print('')
     print('                <!-- Dash Start -->')
-    print('                <div class="col-md-12">') #Dash Start
+    print('                <div class="col-lg-12">')
 
     # Domain Status
     cardheader('Current '+form.getvalue('cpanelpkg')+' cPanel Package Settings','fas fa-users-cog')
-    print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
-    print('                            <div class="row no-gutters row-3-col"> <!-- Row Start -->')
-    print('                                <div class="col-md-4">')
-    print('                                    <div class="p-3 text-center">')
-    print('                                        <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
-    print('                                        <ul class="list-unstyled mb-0">')
-    print('                                            <li class="mt-2 text-success">Nginx</li>')
-    print('                                        </ul>')
-    print('                                    </div>')
-    print('                                </div>')
-    print('                                <div class="col-md-4">')
-    print('                                    <div class="p-3 text-center">')
-    print('                                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
-    print('                                        <ul class="list-unstyled mb-0">')
-    print('                                            <li class="mt-2 text-success">'+backend_version+'</li>')
-    print('                                        </ul>')
-    print('                                    </div>')
-    print('                                </div>')
-    print('                                <div class="col-md-4">')
-    print('                                    <div class="p-3 text-center">')
-    print('                                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
-    print('                                        <ul class="list-unstyled mb-0">')
-    print('                                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
-    print('                                        </ul>')
-    print('                                    </div>')
-    print('                                </div>')
-    print('                            </div> <!-- Row End -->')
-    print('                        </div> <!-- Card Body End -->')
     cardfooter('')
 
-    print('                </div> <!--End Dash-->') # End Dash
-    
+    print('                </div> <!-- Dash End -->')
     print('')
-    print('            <!-- WHM End Row -->')
-    print('            </div>')
-    print('')
-    print('            <!-- WHM Starter Row -->')
-    print('            <div class="row">')
-    print('')
-    print('                <!-- Left Column -->')
-    print('                <div class="col-lg-6">') #Left Column Start
+    print('            </div> <!-- cPanel End Dash Row -->')
 
-    # Ok we are done with getting the settings, now lets present it to the user
-    cardheader('Change Upstream','fas fa-users-cog')
+    print('            <!-- Dash Widgets Start -->')
+    print('            <div id="dashboard" class="row flex-row">')
+    print('')
+
+    # Nginx Status
+    print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
+    cardheader('')
+    print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+    print('                        <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
+    print('                        <ul class="list-unstyled mb-0">')
+    print('                            <li class="mt-2 text-success">Nginx</li>')
+    print('                        </ul>')
+    print('                    </div> <!-- Card Body End -->')
+    cardfooter('')
+    print('                </div> <!-- Dash Item End -->')
+
+    # Backend Status
+    print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
+    cardheader('')
+    print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+    print('                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
+    print('                        <ul class="list-unstyled mb-0">')
+    print('                            <li class="mt-2 text-success">'+backend_version+'</li>')
+    print('                        </ul>')
+    print('                    </div> <!-- Card Body End -->')
+    cardfooter('')
+    print('                </div> <!-- Dash Item End -->')
+
+    # Tamplate Status
+    print('                <div class="col-sm-12 col-xl-4"> <!-- Dash Item Start -->')
+    cardheader('')
+    print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+    print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
+    print('                        <ul class="list-unstyled mb-0">')
+    print('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+    print('                        </ul>')
+    print('                    </div> <!-- Card Body End -->')
+    cardfooter('')
+    print('                </div> <!-- Dash Item End -->')
+
+    print('')
+    print('            </div> <!-- Dash Widgets End -->')
+    print('')
+
+    print('            <!-- CP Tabs Row -->')
+    print('            <div class="row justify-content-lg-center flex-nowrap">')
+    print('')
+    print('                <!-- Secondary Navigation -->')
+    print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
+    print('                    <a class="nav-link active" id="v-pills-upstream-tab" data-toggle="pill" href="#v-pills-upstream" role="tab" aria-controls="v-pills-upstream-tab">Change Upstream</a>')
+    print('                    <a class="nav-link" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general">General Settings</a>')
+    print('                    <a class="nav-link" id="v-pills-security-tab" data-toggle="pill" href="#v-pills-security" role="tab" aria-controls="v-pills-security">Security Settings</a>')
+    print('                    <a class="nav-link" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations">Content Optimizations</a>')
+    print('                    <a class="nav-link mb-4" id="v-pills-redirections-tab" data-toggle="pill" href="#v-pills-redirections" role="tab" aria-controls="v-pills-redirections">Redirections</a>')
+
+    # Save Settings
+    print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'" form="toastForm17">')
+    print('                            <button class="btn btn-primary btn-block" type="submit" form="toastForm17">Apply Settings</button>')
+
+    print('                </div>')
+
+    print('')
+    print('                <!-- Container Tab -->')
+    print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
+    print('')
+    print('                    <!-- Secondary Mobile Navigation -->')
+    print('                    <div class="d-lg-none d-xl-none dropdown nav">')
+    print('                        <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
+    print('                            Config Menu')
+    print('                        </button>')
+    print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
+    print('                            <a class="dropdown-item" id="v-pills-upstream-tab" data-toggle="pill" href="#v-pills-upstream" role="tab" aria-controls="v-pills-upstream-tab" aria-selected="false">Change Upstream</a>')
+    print('                            <a class="dropdown-item" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general" aria-selected="false">General Settings</a>')
+    print('                            <a class="dropdown-item" id="v-pills-security-tab" data-toggle="pill" href="#v-pills-security" role="tab" aria-controls="v-pills-security" aria-selected="false">Security Settings</a>')
+    print('                            <a class="dropdown-item" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations" aria-selected="false">Content Optimizations</a>')
+    print('                            <a class="dropdown-item" id="v-pills-redirections-tab" data-toggle="pill" href="#v-redirections-php" role="tab" aria-controls="v-redirections-php" aria-selected="false">Redirections</a>')
+    print('                        </div>')
+    print('                    </div>')
+
+    print('')
+    print('                    <!-- Upstream Tab -->')
+    print('                    <div class="tab-pane fade show active" id="v-pills-upstream" role="tabpanel" aria-labelledby="v-pills-upstream-tab">')
 
     # Current Profile Status
+    cardheader('Change Upstream','fas fa-users-cog')
     print('                        <form class="form mb-0" action="pkg_app_settings.cgi" method="get">')
-    print('                        <div class="card-body p-0">  <!-- Card Body Start -->')  # card-body
-    print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
+    print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
+    print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
     # .htaccess
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
-            print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('                                <div class="col-md-6 alert alert-success"><i class="fas fa-check-circle"></i></div>')
+            print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+            print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
     else:
-        print('                                <div class="col-md-6 alert alert-light"><i class="fas fa-file-code"></i> .htaccess</div>')
-        print('                                <div class="col-md-6 alert alert-danger"><i class="fas fa-times-circle"></i></div>')
+        print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+        print('                                <div class="col-md-6 alert text-danger"><i class="fas fa-times-circle"></i></div>')
 
     print('                            </div> <!-- Row End -->')
     print('                        </div> <!-- Card Body End -->')
@@ -170,23 +214,28 @@ if form.getvalue('cpanelpkg'):
         else:
             print('                                    <option value="'+backends_defined+'">'+backends_defined+'</option>')
     print('                                </select>')
-    
+
     #Pass on the domain name to the next stage
     print('                                <div class="input-group-append">')
     print('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
     print('                                    <button class="btn btn-outline-primary" type="submit">Select</button>')
     print('                                </div>')
     print('                            </div>')
-    print('                        </div> <!-- Card Body End -->') #Card End
+    print('                        </div> <!-- Card Body End -->')
     print('                        </form> <!-- Form End -->')
     cardfooter('To change the upstream, choose a category from above.')
-    
+
+    print('                    </div> <!-- Upstream Tab End -->')
+
+    print('')
+    print('                    <!-- General Tab -->')
+    print('                    <div class="tab-pane fade show" id="v-pills-general" role="tabpanel" aria-labelledby="v-pills-general-tab">')
 
     # General App Settings
     print('                    <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
     cardheader('General Application Settings','fas fa-sliders-h')
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    print('                            <div class="row"> <!-- Row Start -->') #Row Start
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
+    print('                            <div class="row row-btn-group-toggle"> <!-- Row Start -->')
 
     # PHPMAXCHILDREN
     print('                                <div class="col-md-12">')
@@ -331,16 +380,22 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
 
-    print('                            </div> <!-- Row End -->') #End Row
-    print('                        </div> <!-- Card Body End -->') #Card End
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
 
     cardfooter('')
 
+    print('                    </div> <!-- General Tab End -->')
+
+    print('')
+    print('                    <!-- Security Tab -->')
+    print('                    <div class="tab-pane fade show" id="v-pills-security" role="tabpanel" aria-labelledby="v-pills-security-tab">')
+
     # Security Settings
     cardheader('Security Settings','fas fa-shield-alt')
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    print('                            <div class="row"> <!-- Row Start -->') #Row Start
-    
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
+    print('                            <div class="row row-btn-group-toggle"> <!-- Row Start -->')
+
     # settings_lock
     settings_lock_hint = " Lock Application Server and Security Settings within cPanel. "
     print('                                '+return_label("Settings Lock", settings_lock_hint))
@@ -505,24 +560,20 @@ if form.getvalue('cpanelpkg'):
         print_disabled()
         print('                                <input hidden name="mod_security" value="'+mod_security+'">')
 
-    print('                            </div> <!-- Row End -->') #End Row
-    print('                        </div> <!-- Card Body End -->') #Card End
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
     cardfooter('')
 
-    #First Column End
-    print('                <!-- First Column End -->')
-    print('                </div>')
-    print('')
+    print('                    </div> <!-- Security Tab End -->')
 
-    #Second Column
-    print('                <!-- Second Column Start -->')
-    print('                <div class="col-lg-6">') #Right Column
     print('')
+    print('                    <!-- Optimizations Tab -->')
+    print('                    <div class="tab-pane fade show" id="v-pills-optimizations" role="tabpanel" aria-labelledby="v-pills-optimizations-tab">')
 
     # Content Optimizations
     cardheader('Content Optimizations','fas fa-dumbbell')
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    print('                            <div class="row"> <!-- Row Start -->') #Row Start
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
+    print('                            <div class="row row-btn-group-toggle"> <!-- Row Start -->')
 
     # set_expire_static
     set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
@@ -694,16 +745,21 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
 
-    print('                            </div> <!-- Row End -->') #End Row
-    print('                        </div> <!-- Card Body End -->') #Card End
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
 
     cardfooter('')
-    
+
+    print('                    </div> <!-- Optimizations Tab End -->')
+
+    print('')
+    print('                    <!-- Redirections Tab -->')
+    print('                    <div class="tab-pane fade show" id="v-pills-redirections" role="tabpanel" aria-labelledby="v-pills-redirections-tab">')
 
     # Redirections
     cardheader('Redirections','fas fa-directions')
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    print('                            <div class="row"> <!-- Row Start -->') #Row Start
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
+    print('                            <div class="row row-btn-group-toggle"> <!-- Row Start -->')
 
     # redirect_to_ssl
     redirect_to_ssl_hint = " Redirect HTTP -> HTTPS. "
@@ -839,37 +895,22 @@ if form.getvalue('cpanelpkg'):
     print('                                            </span>')
     print('                                        </div>')
     print('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">')
+    print('                                        </form>')
     print('                                    </div>')
     print('                                </div>')
 
-    print('                            </div> <!-- Row End -->') #End Row
-    print('                        </div> <!-- Card Body End -->') #Card End
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
     cardfooter('')
 
-    # Save settings
-    cardheader('Save cPanel Package Settings')
-    print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-    print('                            <div class="row"> <!-- Row Start -->') #Row Start
-    print('                                <div class="col-md-12">')
+    print('                    </div> <!-- Redirections Tab End -->')
 
-    # Pass on the package name to the next stage
-    print('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
-    print('                                    <button class="btn btn-outline-primary btn-block" type="submit">Save Settings</button>')
-    print('                                </div>')
-    print('                            </div> <!-- Row End -->') #End Row
-    print('                        </div> <!-- Card Body End -->') #Card End
-    cardfooter('')
-    print('                </form> <!-- Form End -->')
+    print('                </div><!-- Container Tabs End -->')
+
+    print('            </div><!-- CP Row End -->')
 else:
     print_nontoast_error('Forbidden!', 'Missing cPanel Package Data!')
     sys.exit(0)
-
-#Second Column End
-print('                <!-- Second Column End -->')
-print('                </div>')
-print('')
-print('            <!-- WHM End Row -->')
-print('            </div>')
 
 print_footer()
 

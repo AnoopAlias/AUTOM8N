@@ -86,33 +86,33 @@ if form.getvalue('domain') and form.getvalue('backend'):
 
         cardheader('Upstream Configuration')
         print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
-        print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+        print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
-        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>')
+        print('                                <div class="col-md-6 alert"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+        print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;Active</div>')
 
         # Backend
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
-        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
+        print('                                <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
+        print('                                <div class="col-md-6 alert text-success">'+backend_version+'</div>')
 
         # Description
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
-        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center text-center">'+apptemplate_description+'</div>')
+        print('                                <div class="col-md-6 alert"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
+        print('                                <div class="col-md-6 alert text-success text-center">'+apptemplate_description+'</div>')
 
         # .htaccess
         if backend_category == 'PROXY' and backend_version == 'httpd':
 
-            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-            print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
+            print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+            print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;</div>')
 
         else:
 
-            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-            print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+            print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+            print('                                <div class="col-md-6 alert text-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
 
         # New Upstream
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
-        print('                                <div class="d-flex w-50 alert alert-warning align-items-right justify-content-center">'+mybackend+'</div>')
+        print('                                <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
+        print('                                <div class="col-md-6 alert text-warning text-center">'+mybackend+'</div>')
 
         print('                            </div> <!-- Row End -->')
         print('                        </div> <!-- Card Body End -->')

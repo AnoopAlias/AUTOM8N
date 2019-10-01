@@ -492,7 +492,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
-  
+
     $('#module-installer').submit(function() {
         var $f = $('#module-installer');
         var $url = "module_installer.cgi?" + $f.serialize();
@@ -536,5 +536,14 @@ jQuery(document).ready(function($) {
         // show tab for all tabs that match href
         $('.nav a.dropdown-item[href="' + href + '"]').tab('show');
     })
+
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#v-pills-tab a[href="' + activeTab + '"]').tab('show');
+	}
 
 });
