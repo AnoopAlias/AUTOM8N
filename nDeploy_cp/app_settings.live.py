@@ -204,12 +204,8 @@ if form.getvalue('domain'):
         print('                    <a class="nav-link mb-4" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
 
         # Save Settings
-        cardheader('')
-        print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
         print('                            <input form="toastForm3" hidden name="domain" value="'+mydomain+'">')
-        print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm3">Apply Settings</button>')
-        print('                        </div> <!-- Card Body End -->')
-        cardfooter('')
+        print('                            <button class="btn btn-primary btn-block" type="submit" form="toastForm3">Apply Settings</button>')
 
         print('                </div>')
 
