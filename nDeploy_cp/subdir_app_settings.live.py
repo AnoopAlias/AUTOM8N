@@ -150,7 +150,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                <div class="col-lg-12">')
 
                 # Domain Status
-                cardheader('Current Application Settings: <kbd class="p-1">'+mydomain+'</kbd>','far fa-lightbulb')
+                cardheader('Current Application Settings: <kbd class="p-1">'+mydomain+'/'+thesubdir+'</kbd>','far fa-lightbulb')
                 cardfooter('')
 
                 print('                </div> <!-- Dash End -->')
@@ -216,9 +216,9 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # Save Settings
                 cardheader('')
                 print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
-                print('                            <input hidden name="domain" value="'+mydomain+'" form="modalForm10">')
-                print('                            <input hidden name="thesubdir" value="'+thesubdir+'" form="modalForm10">')
-                print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="modalForm10">Apply Settings</button>')
+                print('                            <input hidden name="domain" value="'+mydomain+'" form="toastForm6">')
+                print('                            <input hidden name="thesubdir" value="'+thesubdir+'" form="toastForm6">')
+                print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm6">Apply Settings</button>')
                 print('                        </div> <!-- Card Body End -->')
                 cardfooter('')
 
