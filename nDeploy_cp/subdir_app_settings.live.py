@@ -233,6 +233,11 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">Application Status</a>')
                 print('                            <a class="dropdown-item" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general" aria-selected="false">General Settings</a>')
                 print('                        </div>')
+
+                # Save Settings
+                print('                    <input hidden name="domain" value="'+mydomain+'" form="toastForm6">')
+                print('                    <input hidden name="thesubdir" value="'+thesubdir+'" form="toastForm6">')
+                print('                    <button class="btn btn-primary btn-block" type="submit" form="toastForm6">Apply Settings</button>')
                 print('                    </div>')
 
                 # System Tab

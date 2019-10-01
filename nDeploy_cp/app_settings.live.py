@@ -204,8 +204,8 @@ if form.getvalue('domain'):
         print('                    <a class="nav-link mb-4" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
 
         # Save Settings
-        print('                            <input form="toastForm3" hidden name="domain" value="'+mydomain+'">')
-        print('                            <button class="btn btn-primary btn-block" type="submit" form="toastForm3">Apply Settings</button>')
+        print('                    <input form="toastForm3" hidden name="domain" value="'+mydomain+'">')
+        print('                    <button class="btn btn-primary btn-block" type="submit" form="toastForm3">Apply Settings</button>')
 
         print('                </div>')
 
@@ -225,6 +225,10 @@ if form.getvalue('domain'):
         print('                            <a class="dropdown-item" id="v-pills-redirections-tab" data-toggle="pill" href="#v-redirections-php" role="tab" aria-controls="v-redirections-php" aria-selected="false">Redirections</a>')
         print('                            <a class="dropdown-item" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory" aria-selected="false">Subdirectory Applications</a>')
         print('                        </div>')
+
+        # Save Settings
+        print('                        <input form="toastForm3" hidden name="domain" value="'+mydomain+'">')
+        print('                        <button class="btn btn-primary btn-block mb-4" type="submit" form="toastForm3">Apply Settings</button>')
         print('                    </div>')
 
         # System Tab
