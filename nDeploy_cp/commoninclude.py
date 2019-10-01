@@ -184,15 +184,16 @@ def print_header(title=''):
     print('            <div class="logo">')
     print('                <h4>')
     if logo_url != 'None':
-        print('                    <a href="xtendweb.live.py"><img border="0" src="'+logo_url+'"></a>')
+        print('                    <a href="xtendweb.live.py"><img border="0" class="logo-url" src="'+logo_url+'"></a>')
     else:
         print('                    <a href="xtendweb.live.py"><img border="0" src="'+brand_logo+'" width="48" height="48"></a>'+brand)
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
+    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="ndeploy_control.cgi" data-toggle="tooltip" title="'+brand+'&nbsp;Control"><i class="fas fa-tools"></i> <span class="d-none d-lg-inline-block">'+brand+'&nbsp;Control</span></a></div>')
     if app_email != 'None':
-        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'"><i class="fas fa-envelope"></i> Support </a></div>')
-    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt"><i class="fas fa-book-open"></i> Documentation </a></div>')
+        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>')
+    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt" data-toggle="tooltip" title="Documentation"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">Documentation</span></a></div>')
     print('            </div>')
     print('        </header>')
     print('')
