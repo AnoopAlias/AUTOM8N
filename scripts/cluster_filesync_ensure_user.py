@@ -10,7 +10,6 @@ import os
 import sys
 import pwd
 
-
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
 __license__ = "GPL"
