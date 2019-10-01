@@ -227,7 +227,6 @@ if form.getvalue('domain'):
         print('                        </div>')
 
         # Save Settings
-        print('                        <input form="toastForm3" hidden name="domain" value="'+mydomain+'">')
         print('                        <button class="btn btn-primary btn-block mb-4" type="submit" form="toastForm3">Apply Settings</button>')
         print('                    </div>')
 
