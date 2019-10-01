@@ -41,8 +41,8 @@ if __name__ == "__main__":
                 json_parsed_userdata = json.load(userdata_stream)
             maindom_docroot = json_parsed_userdata.get(main_domain)[4]
             the_raw_cmd = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m synchronize -a "src='+maindom_docroot+'/ dest='+maindom_docroot+'/"'
-            un_cmd = subprocess.Popen(the_raw_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+            subprocess.call(the_raw_cmd, shell=True)
             for mydomain in sub_domains:
                 subdom_docroot = json_parsed_userdata.get(mydomain)[4]
                 the_raw_cmd = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m synchronize -a "src='+subdom_docroot+'/ dest='+subdom_docroot+'/"'
-                un_cmd = subprocess.Popen(the_raw_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+                subprocess.call(the_raw_cmd, shell=True)
