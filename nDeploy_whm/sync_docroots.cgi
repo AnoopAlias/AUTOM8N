@@ -26,7 +26,7 @@ print('</head>')
 print('<body>')
 
 if form.getvalue('user'):
-    subprocess.call(installation_path+'/scripts/cluster_gdnsd_ensure_user.py '+form.getvalue('user'), shell=True)
+    subprocess.call(installation_path+'/scripts/cluster_filesync_ensure_user.py '+form.getvalue('user'), shell=True)
     commoninclude.print_success('GeoDNS zones synced successfully.')
 else:
     commoninclude.print_forbidden()

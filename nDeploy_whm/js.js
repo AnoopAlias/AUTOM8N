@@ -361,6 +361,18 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#toastForm27').submit(function() {
+        var $f = $('#toastForm27');
+        var $url = "sync_docroots.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
+            }
+        });
+    });
+
     $('#ndeploy_control_branding').submit(function() {
         var $f = $('#ndeploy_control_branding');
         var $url = "save_ndeploy_branding_settings.cgi?" + $f.serialize();
