@@ -181,6 +181,10 @@ if form.getvalue('cpanelpkg'):
     print('                            <a class="dropdown-item" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations" aria-selected="false">Content Optimizations</a>')
     print('                            <a class="dropdown-item" id="v-pills-redirections-tab" data-toggle="pill" href="#v-redirections-php" role="tab" aria-controls="v-redirections-php" aria-selected="false">Redirections</a>')
     print('                        </div>')
+
+    # Save Settings
+    print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'" form="toastForm17">')
+    print('                            <button class="btn btn-primary btn-block" type="submit" form="toastForm17">Apply Settings</button>')
     print('                    </div>')
 
     print('')
