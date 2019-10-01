@@ -84,7 +84,7 @@ else:
     brand = "AUTOM8N"
 
 print('            <!-- Dash Widgets Start -->')
-print('            <div id="dashboard" class="row">')
+print('            <div id="dashboard" class="row flex-row">')
 print('')
 
 # Nginx Status

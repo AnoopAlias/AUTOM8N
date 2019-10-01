@@ -149,7 +149,7 @@ if form.getvalue('domain'):
         print('            </div> <!-- cPanel End Dash Row -->')
 
         print('            <!-- Dash Widgets Start -->')
-        print('            <div id="dashboard" class="row justify-content-lg-center">')
+        print('            <div id="dashboard" class="row flex-row">')
         print('')
 
         # Nginx Status
