@@ -141,7 +141,7 @@ if form.getvalue('domain'):
         print('                <div class="col-lg-12">')
 
         # Domain Status
-        cardheader('Current Application Settings: <kbd class="p-1">'+mydomain+'</kbd>','fas fa-users-cog')
+        cardheader('Current Application Settings: <kbd class="p-1">'+mydomain+'</kbd>','far fa-lightbulb')
         cardfooter('')
 
         print('                </div> <!-- Dash End -->')
@@ -201,9 +201,20 @@ if form.getvalue('domain'):
         print('                    <a class="nav-link" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general">General Settings</a>')
         print('                    <a class="nav-link" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations">Content Optimizations</a>')
         print('                    <a class="nav-link" id="v-pills-redirections-tab" data-toggle="pill" href="#v-pills-redirections" role="tab" aria-controls="v-pills-redirections">Redirections</a>')
-        print('                    <a class="nav-link" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
+        print('                    <a class="nav-link mb-4" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
+
+        # Save Settings
+        cardheader('')
+        print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
+        print('                            <input form="toastForm3" hidden name="domain" value="'+mydomain+'">')
+        print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm3">Apply Settings</button>')
+        print('                        </div> <!-- Card Body End -->')
+        cardfooter('')
+
         print('                </div>')
+
         print('')
+        print('                <!-- Container Tab -->')
         print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
         print('')
         print('                    <!-- Secondary Mobile Navigation -->')
@@ -213,7 +224,7 @@ if form.getvalue('domain'):
         print('                        </button>')
         print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
         print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">Application Status</a>')
-        print('                            <a class="dropdown-item" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-cluster" aria-selected="false">General Settings</a>')
+        print('                            <a class="dropdown-item" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general" aria-selected="false">General Settings</a>')
         print('                            <a class="dropdown-item" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations" aria-selected="false">Content Optimizations</a>')
         print('                            <a class="dropdown-item" id="v-pills-redirections-tab" data-toggle="pill" href="#v-redirections-php" role="tab" aria-controls="v-redirections-php" aria-selected="false">Redirections</a>')
         print('                            <a class="dropdown-item" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory" aria-selected="false">Subdirectory Applications</a>')
@@ -228,7 +239,7 @@ if form.getvalue('domain'):
         # System Setup
         cardheader('Application Status', 'fas fa-users-cog')
         print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
-        print('                            <div class="row no-gutters row-multi"> <!-- Row Start -->')
+        print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
         # .htaccess
         if backend_category == 'PROXY':
@@ -254,7 +265,7 @@ if form.getvalue('domain'):
         print('                                <div class="col-md-6 alert"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
         print('                                <div class="col-md-6">')
         print('                                    <form class="form" method="post" id="toastForm4" onsubmit="return false;">')
-        print('                                        <button class="btn btn-block" type="submit">Reload</button>')
+        print('                                        <button class="btn btn-block text-center" type="submit">Reload</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
         print('                                    </form>')
         print('                                </div>')
@@ -263,7 +274,7 @@ if form.getvalue('domain'):
         print('                                <div class="col-md-6 alert"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
         print('                                <div class="col-md-6">')
         print('                                    <form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-        print('                                        <button class="btn btn-block" type="submit">View Log</button>')
+        print('                                        <button class="btn btn-block text-center" type="submit">View Log</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
         print('                                    </form>')
         print('                                </div>')
@@ -296,7 +307,7 @@ if form.getvalue('domain'):
 
             print('                        </div> <!-- Card Body End -->')
 
-        print('                        <div class="card-body">  <!-- Card Body Start -->')
+        print('                        <div class="card-body"> <!-- Card Body Start -->')
 
         if settings_lock == 'enabled':
             print('                            <div class="alert alert-info mb-0 text-center">Application Server settings are locked by the administrator.</div>')
@@ -332,7 +343,7 @@ if form.getvalue('domain'):
         print('                        <div class="card-body">  <!-- Card Body Start -->')
 
         print('                        <form class="form" method="post" id="toastForm3" onsubmit="return false;">')
-        print('                            <div class="row align-items-center">')
+        print('                            <div class="row row-btn-group-toggle">')
 
         # auth_basic
         auth_basic_hint = " Setup password for "+document_root+" in cPanel -> Files -> Directory Privacy. "
@@ -615,7 +626,7 @@ if form.getvalue('domain'):
         cardheader('Content Optimizations', 'fas fa-dumbbell')
 
         print('                        <div class="card-body">  <!-- Card Body Start -->')
-        print('                            <div class="row"> <!-- Row Start -->')
+        print('                            <div class="row row-btn-group-toggle"> <!-- Row Start -->')
 
         # set_expire_static
         set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
@@ -784,8 +795,8 @@ if form.getvalue('domain'):
 
         # Redirections
         cardheader('Redirections', 'fas fa-directions')
-        print('                        <div class="card-body">  <!-- Card Body Start -->')
-        print('                            <div class="row"> <!-- Row Start -->')
+        print('                        <div class="card-body"> <!-- Card Body Start -->')
+        print('                            <div class="row row-btn-group-toggle"> <!-- Row Start -->')
 
         # redirect_to_ssl
         redirect_to_ssl_hint = " Redirect HTTP -> HTTPS. "
@@ -936,6 +947,7 @@ if form.getvalue('domain'):
         print('                                            </span>')
         print('                                        </div>')
         print('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">')
+        print('                                        </form>')
         print('                                    </div>')
         print('                                </div>')
 
@@ -997,16 +1009,7 @@ if form.getvalue('domain'):
 
         print('                    </div><!-- Subdirectory Tab End -->')
 
-        # Save Settings
-        cardheader('Save Settings')
-        print('                        <div class="card-body text-center">  <!-- Card Body Start -->')
-        print('                            <input hidden name="domain" value="'+mydomain+'">')
-        print('                            <button class="btn btn-outline-primary btn-block " type="submit">Apply Settings to '+mydomain+'</button>')
-        print('                            </form>')
-        print('                        </div> <!-- Card Body End -->')
-        cardfooter('')
-
-        print('                </div><!-- System Tabs End -->')
+        print('                </div><!-- Container Tabs End -->')
 
         print('            </div><!-- CP Row End -->')
 

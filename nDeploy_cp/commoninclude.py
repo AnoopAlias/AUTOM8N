@@ -86,7 +86,7 @@ def print_nontoast_error(thenotice, thereason):
     print('            <div class="row justify-content-center">')
     print('                <div class="col-lg-6 alert alert-danger">')
     print('                    <div class="text-center">')
-    print('                        <i class="h1 fas fa-exclamation"></i>')
+    print('                        <i class="fa fa-exclamation"></i>')
     print('                        <h3>'+thenotice+'</h3>')
     print('                        <h5>'+thereason+'</h5>')
     if app_email != 'None':
@@ -204,14 +204,12 @@ def print_header(title=''):
 def print_footer():
     print('')
     print('            <!-- Footer Start -->')
-    print('            <div class="row justify-content-center">')
+    print('            <div id="footer" class="container text-center mt-2 mb-5">')
     print('                <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
-    print('            </div>')
-    print('            <div class="row justify-content-center text-center">')
     if ndeploy_theme_color == 'light':
-        print('                <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ", '')+' on '+nginx_version+'.</p>')
+        print('            <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
     if ndeploy_theme_color == 'dark':
-        print('                <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ", '')+' on '+nginx_version+'.</p>')
+        print('            <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
     print('            </div>')
     print('')
 

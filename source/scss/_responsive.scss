@@ -39,9 +39,6 @@
 			.no-gutters {
 				&.row-2-col {
 					[class*='col-'] {
-						&:nth-last-child(-n+2) {
-							border-bottom: none;
-						}
 						&:nth-child(odd) {
 							border-right: $border;
 						}
@@ -106,9 +103,6 @@
 				}
 				&.row-2-col {
 					[class*='col-'] {
-						&:nth-last-child(-n+2) {
-							border-bottom: none;
-						}
 						&:nth-child(even) {
 							border-left: $border;
 						}
