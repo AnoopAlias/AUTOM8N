@@ -133,7 +133,7 @@ if form.getvalue('cpanelpkg'):
     print('                </div> <!-- Dash Item End -->')
 
     # Tamplate Status
-    print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
+    print('                <div class="col-sm-12 col-xl-4"> <!-- Dash Item Start -->')
     cardheader('')
     print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
     print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')

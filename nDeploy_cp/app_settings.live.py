@@ -149,7 +149,7 @@ if form.getvalue('domain'):
         print('            </div> <!-- cPanel End Dash Row -->')
 
         print('            <!-- Dash Widgets Start -->')
-        print('            <div id="dashboard" class="row">')
+        print('            <div id="dashboard" class="row justify-content-lg-center">')
         print('')
 
         # Nginx Status
@@ -177,7 +177,7 @@ if form.getvalue('domain'):
         print('                </div> <!-- Dash Item End -->')
 
         # Tamplate Status
-        print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
+        print('                <div class="col-sm-12 col-xl-4"> <!-- Dash Item Start -->')
         cardheader('')
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
         print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
