@@ -21,6 +21,7 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 autom8n_version_info_file = installation_path+"/conf/version.yaml"
+update_status_file = installation_path+"/conf/NDEPLOY_UPGRADE_STATUS"
 
 cgitb.enable()
 
@@ -70,12 +71,16 @@ for myprocess in psutil.process_iter():
     if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
         nginx_status = True
 
-watcher_status="status"
-
 # Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
     autom8n_version_info_yaml_parsed = yaml.safe_load(autom8n_version_info_yaml)
 autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
+
+#Get upgrade status of nDeploy
+update_status = ''
+if os.path.isfile(update_status_file):
+    with open(update_status_file, 'r') as update_status_value:
+        update_status = update_status_value.read(1)
 
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row">')
@@ -183,27 +188,34 @@ print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 4 Start --
 cardheader('')
 
 print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                            <h4 class="mb-0">Plugin Status</h4>')
+print('                            <h4 class="mb-0">Upgrade Plugin</h4>')
 print('                            <ul class="list-unstyled mb-0">')
-print('                                <li><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
+print('                                <li><small>Upgrade Status</small></li>')
 
-# Nginx Status
-if nginx_status:
-    print('                                <li class="mt-2 text-success">Enabled <i class="fas fa-power-off ml-1"></i></li>')
+# Update Status
+if update_status == '':
+    print('                                <li class="mt-2 text-danger">Status Unknown <i class="fas fa-power-off ml-1"></i></li>')
+    print('                            </ul>')
+    print('                        </div>')
+    print('                        <form id="check_upgrades" class="form" onsubmit="return false;">')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Check for Upgrades</button>')
+    print('                            <input hidden name="upgrade_control" value="check">')
+
+elif update_status == '0':
+    print('                                <li class="mt-2 text-success">Up to Date <i class="fas fa-power-off ml-1"></i></li>')
+    print('                            </ul>')
+    print('                        </div>')
+    print('                        <form id="reinstall_application" class="form" onsubmit="return false;">')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Reinstall</button>')
+    print('                            <input hidden name="upgrade_control" value="reinstall">')
+
 else:
-    print('                                <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
-
-print('                            </ul>')
-print('                        </div>')
-
-if nginx_status:
-    print('                        <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                            <button class="btn btn-secondary btn-block mb-0">Disable</button>')
-    print('                            <input hidden name="plugin_status" value="disable">')
-else:
-    print('                        <form id="enable_ndeploy" class="form" onsubmit="return false;">')
-    print('                            <button class="btn btn-secondary btn-block mb-0">Enable</button>')
-    print('                            <input hidden name="plugin_status" value="enable">')
+    print('                                <li class="mt-2 text-warning">Upgrades Available <i class="fas fa-power-off ml-1"></i></li>')
+    print('                            </ul>')
+    print('                        </div>')
+    print('                        <form id="upgrade_application" class="form" onsubmit="return false;">')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Upgrade</button>')
+    print('                            <input hidden name="upgrade_control" value="upgrade">')
 
 print('                        </form>')
 
@@ -228,7 +240,6 @@ print('                    <a class="nav-link" id="v-pills-php_backends-tab" dat
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
 print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">NGinx Mods</a>')
-print('                    <a class="nav-link" id="v-pills-upgrade-tab" data-toggle="pill" href="#v-pills-upgrade" role="tab" aria-controls="v-pills-upgrade">Upgrade</a>')
 
 print('                </div>')
 print('')
@@ -250,7 +261,6 @@ print('                     <a class="dropdown-item" id="v-pills-php_backends-ta
 print('                     <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
 print('                     <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
 print('                     <a class="dropdown-item" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-pressed="false">NGinx Mods</a>')
-print('                     <a class="dropdown-item" id="v-pills-upgrade-tab" data-toggle="pill" href="#v-pills-upgrade" role="tab" aria-controls="v-pills-upgrade" aria-pressed="false">Upgrade</a>')
 
 print('                 </div>')
 print('             </div>')
@@ -748,30 +758,6 @@ cardfooter('Note that each module increases NGINX size and processing requiremen
 
 print('                 </form>')
 print('             </div> <!-- End Modules Tab -->')
-
-# Upgrade Tab
-print('')
-print('             <!-- Upgrade Tab -->')
-print('             <div class="tab-pane fade" id="v-pills-upgrade" role="tabpanel" aria-labelledby="v-pills-upgrade-tab">')
-
-cardheader('Upgrade Application', 'fab fa-centos')
-
-print('                        <div class="card-body pb-0"> <!-- Card Body Start -->')
-print('                            <p class="small mb-0">Upgrading '+brand+' and NGINX. Use this to upgrade your version of '+brand+'.</p>')
-print('                        </div> <!-- Card Body End -->')
-print('                        <div class="card-body"> <!-- Card Body Start -->')
-print('                        <form class="form mb-3 w-100" id="upgrade" method="post" onsubmit="return false;">')
-print('                            <input hidden class="form-control" name="upgrade" value="enabled">')
-print('                            <button class="btn btn-outline-primary btn-block" type="submit">Upgrade Application</button>')
-print('                        </form>')
-print('                        </div> <!-- Card Body End -->')
-
-cardfooter('')
-
-print('                 </form>')
-print('             </div> <!-- End Upgrade Tab -->')
-
-
 
 print('         </div> <!-- Tabs End -->')
 print('')

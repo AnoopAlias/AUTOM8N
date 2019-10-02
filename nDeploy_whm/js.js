@@ -553,6 +553,42 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#check_upgrades').submit(function() {
+        var $f = $('#check_upgrades');
+        var $url = "upgrade_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result){
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#reinstall_application').submit(function() {
+        var $f = $('#reinstall_application');
+        var $url = "upgrade_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#upgrade_application').submit(function() {
+        var $f = $('#upgrade_application');
+        var $url = "upgrade_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()
     });
