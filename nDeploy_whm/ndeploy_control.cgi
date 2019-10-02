@@ -753,7 +753,7 @@ print('                                    </div>')
 print('                                </div>')
 
 print('                                <div class="col-md-12">')
-print('                                    <button class="mt-4 btn btn-outline-primary btn-block mt-2" type="submit">Apply Module Selection</button>')
+print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Apply Module Selection</button>')
 print('                                </div>')
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
