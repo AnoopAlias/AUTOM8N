@@ -128,7 +128,7 @@ print('                                <li><small>secured/insec</small></li>')
 
 # Nginx Status
 if nginx_status:
-    print('                                <li class="mt-2 text-success">Enabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                                <li class="mt-2 text-success">Coming <i class="fas fa-power-off ml-1"></i></li>')
 else:
     print('                                <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
 
@@ -137,7 +137,7 @@ print('                        </div>')
 
 if nginx_status:
     print('                        <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                            <button class="btn btn-secondary btn-block mb-0">Disable</button>')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Soon</button>')
     print('                            <input hidden name="plugin_status" value="disable">')
 else:
     print('                        <form id="enable_ndeploy" class="form" onsubmit="return false;">')
@@ -161,7 +161,7 @@ print('                                <li><small>Fix All Accounts</small></li>'
 
 # Nginx Status
 if nginx_status:
-    print('                                <li class="mt-2 text-success">Enabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                                <li class="mt-2 text-success">Coming <i class="fas fa-power-off ml-1"></i></li>')
 else:
     print('                                <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
 
@@ -170,7 +170,7 @@ print('                        </div>')
 
 if nginx_status:
     print('                        <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                            <button class="btn btn-secondary btn-block mb-0">Disable</button>')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Soon</button>')
     print('                            <input hidden name="plugin_status" value="disable">')
 else:
     print('                        <form id="enable_ndeploy" class="form" onsubmit="return false;">')
