@@ -183,7 +183,6 @@ if form.getvalue('cpanelpkg'):
     print('                        </div>')
 
     # Save Settings
-    print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'" form="toastForm17">')
     print('                            <button class="btn btn-primary btn-block" type="submit" form="toastForm17">Apply Settings</button>')
     print('                    </div>')
 
