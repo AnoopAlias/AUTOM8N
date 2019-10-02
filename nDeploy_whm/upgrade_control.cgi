@@ -20,7 +20,7 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 cgitb.enable()
-#&& ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy upgrade *nDeploy*\"
+
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
