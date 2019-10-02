@@ -311,20 +311,24 @@ if os.path.isfile(cluster_config_file):
 
     print('             <div class="card-body"> <!-- Card Body Start -->')
 
-    print('                 <form class="form mb-3" id="toastForm4" onsubmit="return false;">')
+    print('                 <form class="form" id="toastForm4" onsubmit="return false;">')
     print('                     <input hidden name="mode" value="restart">')
-    print('                     <button type="submit" class="btn btn-outline-primary btn-block ">Soft Restart Unison Sync</button>')
     print('                 </form>')
 
-    print('                 <form class="form mb-3" id="toastForm5" onsubmit="return false;">')
+    print('                 <form class="form" id="toastForm5" onsubmit="return false;">')
     print('                     <input hidden name="mode" value="reset">')
-    print('                     <button type="submit" class="btn btn-outline-primary btn-block">Hard Reset Unison Sync</button>')
     print('                 </form>')
 
     print('                 <form class="form" id="toastForm26" onsubmit="return false;">')
     print('                     <input hidden name="mode" value="reset">')
-    print('                     <button type="submit" class="btn btn-outline-primary btn-block">Reset Csync2 Sync</button>')
     print('                 </form>')
+
+    print('                 <div class="btn-group btn-block">')
+    print('                     <button type="submit" class="btn btn-outline-primary" form="toastForm4">Soft Restart</button>')
+    print('                     <button type="submit" class="btn btn-outline-primary" form="toastForm5">Hard Reset</button>')
+    print('                     <button type="submit" class="btn btn-outline-primary" form="toastForm26">Reset Csync2</button>')
+    print('                 </div>')
+
     print('             </div> <!-- Card Body End -->')
 
     cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
@@ -356,7 +360,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
             print('                     <option value="'+cpuser+'">'+cpuser+'</option>')
     print('                         </select>')
     print('                     </div>')
-    print('                     <button type="submit" class="btn btn-outline-primary btn-block ">Sync web files</button>')
+    print('                     <button type="submit" class="btn btn-outline-primary btn-block mt-4">Sync web files</button>')
     print('                 </form>')
 
     print('                 <form class="form" id="toastForm7" onsubmit="return false;">')
@@ -371,7 +375,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
             print('                     <option value="'+cpuser+'">'+cpuser+'</option>')
     print('                         </select>')
     print('                     </div>')
-    print('                     <button type="submit" class="btn btn-outline-primary btn-block ">Sync GeoDNS Zone</button>')
+    print('                     <button type="submit" class="btn btn-outline-primary btn-block mt-4">Sync GeoDNS Zone</button>')
     print('                 </form>')
 
     print('             </div> <!-- Card Body End -->')
@@ -428,7 +432,7 @@ if "PHP" in backend_data_yaml_parsed:
             print('                     <option value="'+versions_defined+'">'+versions_defined+'</option>')
     print('                         </select>')
     print('                     </div>')
-    print('                     <button type="submit" class="btn btn-outline-primary btn-block">Set Default PHP</button>')
+    print('                     <button type="submit" class="btn btn-outline-primary btn-block mt-4">Set Default PHP</button>')
     print('                 </form>')
     print('             </div> <!-- Card Body End -->')
 cardfooter('Automatic switch to Nginx will use versions set in MultiPHP or if MultiPHP is not used the phpversion above')
@@ -537,7 +541,7 @@ if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     print('                     <input hidden name="section" value="1">')
 else:
     print('                     <input hidden name="section" value="0">')
-print('                         <button class="btn btn-outline-primary btn-block" type="submit">Edit Settings</button>')
+print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Edit Settings</button>')
 print('                     </form>')
 print('                 </div> <!-- Card Body End -->')
 cardfooter('Settings such as: pm.max_requests, pm.max_spare_servers, session.save_path, pm.max_children')
@@ -605,7 +609,7 @@ for thepkg in sorted(mypkgs.get('package')):
 
 print('                             </select>')
 print('                         </div>')
-print('                         <button class="btn btn-outline-primary btn-block" type="submit">Edit Pkg</button>')
+print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Edit Pkg</button>')
 print('                     </form>')
 print('                 </div> <!-- Card Body End -->')
 cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes an Upgrade/Downgrade process.'
@@ -644,7 +648,7 @@ if not osrelease == 'CloudLinux':
             print('                 </select>')
             print('                 <input hidden name="mode" value="user">')
             print('             </div>')
-            print('             <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+            print('             <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
             print('         </form>')
 
             print('         <form class="form mt-4" action="resource_limit.cgi" method="get">')
@@ -660,7 +664,7 @@ if not osrelease == 'CloudLinux':
             print('                 </select>')
             print('                 <input hidden name="mode" value="service">')
             print('             </div>')
-            print('             <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+            print('             <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
             print('         </form>')
         else:
             print('         <form class="form" action="resource_limit.cgi" method="get">')
@@ -676,7 +680,7 @@ if not osrelease == 'CloudLinux':
             print('                  </select>')
             print('                  <input hidden name="mode" value="service">')
             print('              </div>')
-            print('              <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+            print('              <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
             print('          </form>')
 print('                  </div> <!-- Card Body End -->')
 cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
