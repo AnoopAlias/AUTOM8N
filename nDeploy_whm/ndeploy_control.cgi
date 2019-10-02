@@ -79,7 +79,7 @@ autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row">')
-print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
+print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 1 Start -->')
 
 cardheader('')
 
@@ -110,7 +110,107 @@ print('                        </form>')
 
 cardfooter('')
 
-print('                </div> <!-- Dash Item End -->')
+print('                </div> <!-- Dash Item 1 End -->')
+
+print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 2 Start -->')
+
+cardheader('')
+
+print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                            <h4 class="mb-0">PHP Mode</h4>')
+print('                            <ul class="list-unstyled mb-0">')
+print('                                <li><small>secured/insec</small></li>')
+
+# Nginx Status
+if nginx_status:
+    print('                                <li class="mt-2 text-success">Enabled <i class="fas fa-power-off ml-1"></i></li>')
+else:
+    print('                                <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
+
+print('                            </ul>')
+print('                        </div>')
+
+if nginx_status:
+    print('                        <form id="disable_ndeploy" class="form" onsubmit="return false;">')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Disable</button>')
+    print('                            <input hidden name="plugin_status" value="disable">')
+else:
+    print('                        <form id="enable_ndeploy" class="form" onsubmit="return false;">')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Enable</button>')
+    print('                            <input hidden name="plugin_status" value="enable">')
+
+print('                        </form>')
+
+cardfooter('')
+
+print('                </div> <!-- Dash Item 2 End -->')
+
+print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 3 Start -->')
+
+cardheader('')
+
+print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                            <h4 class="mb-0">AutoFix</h4>')
+print('                            <ul class="list-unstyled mb-0">')
+print('                                <li><small>Fix All Accounts</small></li>')
+
+# Nginx Status
+if nginx_status:
+    print('                                <li class="mt-2 text-success">Enabled <i class="fas fa-power-off ml-1"></i></li>')
+else:
+    print('                                <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
+
+print('                            </ul>')
+print('                        </div>')
+
+if nginx_status:
+    print('                        <form id="disable_ndeploy" class="form" onsubmit="return false;">')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Disable</button>')
+    print('                            <input hidden name="plugin_status" value="disable">')
+else:
+    print('                        <form id="enable_ndeploy" class="form" onsubmit="return false;">')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Enable</button>')
+    print('                            <input hidden name="plugin_status" value="enable">')
+
+print('                        </form>')
+
+cardfooter('')
+
+print('                </div> <!-- Dash Item 3 End -->')
+
+print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 4 Start -->')
+
+cardheader('')
+
+print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                            <h4 class="mb-0">Plugin Status</h4>')
+print('                            <ul class="list-unstyled mb-0">')
+print('                                <li><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
+
+# Nginx Status
+if nginx_status:
+    print('                                <li class="mt-2 text-success">Enabled <i class="fas fa-power-off ml-1"></i></li>')
+else:
+    print('                                <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
+
+print('                            </ul>')
+print('                        </div>')
+
+if nginx_status:
+    print('                        <form id="disable_ndeploy" class="form" onsubmit="return false;">')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Disable</button>')
+    print('                            <input hidden name="plugin_status" value="disable">')
+else:
+    print('                        <form id="enable_ndeploy" class="form" onsubmit="return false;">')
+    print('                            <button class="btn btn-secondary btn-block mb-0">Enable</button>')
+    print('                            <input hidden name="plugin_status" value="enable">')
+
+print('                        </form>')
+
+cardfooter('')
+
+print('                </div> <!-- Dash Item 4 End -->')
+
 print('')
 print('            </div> <!-- Dash Widgets End -->')
 print('')
@@ -120,13 +220,16 @@ print('            <div class="row justify-content-lg-center flex-nowrap">')
 print('')
 print('                <!-- Secondary Navigation -->')
 print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
-print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home">Home</a>')
-print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
+print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home">Administration</a>')
 print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
+print('                    <a class="nav-link" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix">AutoFix</a>')
+print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
 print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">PHP&nbsp;Backends</a>')
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
-print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">Modules</a>')
+print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">NGinx Mods</a>')
+print('                    <a class="nav-link" id="v-pills-upgrade-tab" data-toggle="pill" href="#v-pills-upgrade" role="tab" aria-controls="v-pills-upgrade">Upgrade</a>')
+
 print('                </div>')
 print('')
 
@@ -139,20 +242,23 @@ print('                 <button class="btn btn-primary btn-block dropdown-toggle
 print('                     Config Menu')
 print('                 </button>')
 print('                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
-print('                     <a class="dropdown-item" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-pressed="false">Home</a>')
-print('                     <a class="dropdown-item" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-pressed="false">Branding</a>')
+print('                     <a class="dropdown-item" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-pressed="false">Administration</a>')
 print('                     <a class="dropdown-item" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-pressed="false">Aesthetics</a>')
+print('                     <a class="dropdown-item" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix" aria-pressed="false">AutoFix</a>')
+print('                     <a class="dropdown-item" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-pressed="false">Branding</a>')
 print('                     <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">PHP&nbsp;Backends</a>')
 print('                     <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
 print('                     <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
-print('                     <a class="dropdown-item" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-pressed="false">Modules</a>')
+print('                     <a class="dropdown-item" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-pressed="false">NGinx Mods</a>')
+print('                     <a class="dropdown-item" id="v-pills-upgrade-tab" data-toggle="pill" href="#v-pills-upgrade" role="tab" aria-controls="v-pills-upgrade" aria-pressed="false">Upgrade</a>')
+
 print('                 </div>')
 print('             </div>')
 
 
 # Home Tab
 print('')
-print('                <!-- Home Tab -->')
+print('                <!-- Administration Tab -->')
 print('                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">')
 
 cardheader('Welcome to '+brand+' Control','fas fa-tools')
@@ -192,12 +298,13 @@ print('                                    </div>')
 print('                                </div>')
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
-print('                        <div class="card-body"> <!-- Card Body Start -->')
-print('                            <p class="small mb-0">Welcome to the '+brand+' Control Center. Here you will have control over various theming, branding, and configuration settings for this application. You can enable and disable the application above.</p>')
+print('                        <div class="card-body pb-0"> <!-- Card Body Start -->')
+print('                            <p class="small">Welcome to the '+brand+' Control Center. Here you will have control over various theming, branding, and configuration settings for this application. You can enable and disable the application above.</p>')
 print('                        </div> <!-- Card Body End -->')
+
 cardfooter('')
 
-print('                </div> <!-- End Home Tab -->')
+print('                </div> <!-- End Administration Tab -->')
 
 # Branding Tab
 print('')
@@ -353,6 +460,31 @@ print('                 </div> <!-- Card Body End -->')
 cardfooter('')
 
 print('             </div> <!-- End Aesthetics Tab -->')
+
+# AutoFix Tab
+print('')
+print('             <!-- AutoFix Tab -->')
+print('             <div class="tab-pane fade" id="v-pills-autofix" role="tabpanel" aria-labelledby="v-pills-autofix-tab">')
+
+cardheader('Account AutoFix Utility', 'fas fa-palette')
+
+print('                        <div class="card-body pb-0"> <!-- Card Body Start -->')
+print('                            <p class="small">This utility attempts to automatically fix all errors. This can be run if you notice nginx configuration errors, PHP errors, etc.</p>')
+print('                            <p class="small mb-0">Use <kbd>simple</kbd> to regenerate all configurations and restart the associated services. Use <kbd>force</kbd> only if a <kbd>simple</kbd> AutoFix does not fix the issue. Use <kbd>phpfpm</kbd> to repair PHP-FPM application server issues.</p>')
+print('                        </div> <!-- Card Body End -->')
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                        <form class="form mb-3 w-100" id="autofix_simple" method="post" onsubmit="return false;">')
+print('                            <div class="input-group" role="group" aria-label="AutoFix Utility">')
+print('                                <input class="btn btn-outline-primary form-control" type="submit" name="autofix_status" value="simple">')
+print('                                <input class="btn btn-outline-primary form-control" type="submit" name="autofix_status" value="force">')
+print('                                <input class="btn btn-outline-primary form-control" type="submit" name="autofix_status" value="phpfpm">')
+print('                            </div>')
+print('                        </form>')
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('')
+
+print('             </div> <!-- End AutoFix Tab -->')
 
 # PHP Installer
 print('')
@@ -598,8 +730,6 @@ else:
 print('                                    </div>')
 print('                                </div>')
 
-
-
 print('                                <div class="col-md-12">')
 print('                                    <button class="mt-4 btn btn-outline-primary btn-block mt-2" type="submit">Apply Module Selection</button>')
 print('                                </div>')
@@ -610,6 +740,30 @@ cardfooter('Note that each module increases NGINX size and processing requiremen
 
 print('                 </form>')
 print('             </div> <!-- End Modules Tab -->')
+
+# Upgrade Tab
+print('')
+print('             <!-- Upgrade Tab -->')
+print('             <div class="tab-pane fade" id="v-pills-upgrade" role="tabpanel" aria-labelledby="v-pills-upgrade-tab">')
+
+cardheader('Upgrade Application', 'fab fa-centos')
+
+print('                        <div class="card-body pb-0"> <!-- Card Body Start -->')
+print('                            <p class="small mb-0">Upgrading '+brand+' and NGINX. Use this to upgrade your version of '+brand+'.</p>')
+print('                        </div> <!-- Card Body End -->')
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                        <form class="form mb-3 w-100" id="upgrade" method="post" onsubmit="return false;">')
+print('                            <input hidden class="form-control" name="upgrade" value="enabled">')
+print('                            <button class="btn btn-outline-primary btn-block" type="submit">Upgrade Application</button>')
+print('                        </form>')
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('')
+
+print('                 </form>')
+print('             </div> <!-- End Upgrade Tab -->')
+
+
 
 print('         </div> <!-- Tabs End -->')
 print('')
