@@ -517,6 +517,42 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#autofix_simple').submit(function() {
+        var $f = $('#autofix_simple');
+        var $url = "autofix_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#autofix_force').submit(function() {
+        var $f = $('#autofix_force');
+        var $url = "autofix_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#autofix_phpfpm').submit(function() {
+        var $f = $('#autofix_phpfpm');
+        var $url = "autofix_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()
     });
