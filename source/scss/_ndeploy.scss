@@ -365,13 +365,6 @@ body {
 			margin-top: 1.5rem;
 		}
 		.row {
-			[class*='col-'] {
-				&:last-child {
-					.btn-not-installed {
-						margin-bottom: 0;
-					}
-				}
-			}
 			&.row-btn-group-toggle {
 				.col-md-6,
 				> .d-flex {
@@ -460,10 +453,6 @@ a {
 	background-color: $ultramarine-blue;
 	border-color: $ultramarine-blue;
 	color: $white;
-}
-
-.btn-not-installed {
-	margin: .5rem 0;
 }
 
 .input-group-append {
