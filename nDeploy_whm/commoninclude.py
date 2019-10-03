@@ -112,9 +112,9 @@ def print_sys_tip(theoption, hint):
 def print_disabled():
     print('                                <div class="col-md-6">')
     if app_email != 'None':
-        print('                                    <div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div>')
+        print('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div>')
     else:
-        print('                                    <div class="btn btn-light btn-block btn-not-installed" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. ">Not Installed</div>')
+        print('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. ">Not Installed</div>')
     print('                                </div>')
 
 
