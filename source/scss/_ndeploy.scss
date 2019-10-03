@@ -164,7 +164,7 @@ body {
 	}
 	img {
 		position: relative;
-		max-height: 65px;
+		max-height: 55px;
 	}
 	.logo {
 		display: inline-block;
@@ -241,13 +241,6 @@ body {
 				}
 				.btn-block {
 					text-align: left;
-				}
-			}
-			&.row-no-btm-bdr {
-				[class*='col-'] {
-					&:nth-last-child(-n+2) {
-						border-bottom: none;
-					}
 				}
 			}
 			&.row {

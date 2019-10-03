@@ -40,7 +40,7 @@
 				&.row-2-col {
 					[class*='col-'] {
 						&:nth-child(odd) {
-							border-right: $border;
+							border-right: none;
 						}
 					}
 				}
@@ -112,6 +112,13 @@
 					[class*='col-'] {
 						&:nth-child(-n+2) {
 							border-bottom: $border;
+						}
+					}
+				}
+				&.row-no-btm-bdr {
+					[class*='col-'] {
+						&:nth-last-child(-n+2) {
+							border-bottom: none;
 						}
 					}
 				}

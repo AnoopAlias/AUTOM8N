@@ -78,7 +78,7 @@ def return_prepend(theoption, hint):
     return result
 
 def return_sys_tip(theoption, hint):
-    result = '<div class="col-md-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
+    result = '<div class="col-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
 
 
@@ -201,17 +201,17 @@ def print_header(title=''):
 
 
 # Print Footer
-def print_footer():
-    print('')
-    print('            <!-- Footer Start -->')
-    print('            <div id="footer" class="container text-center mt-2 mb-5">')
-    print('                <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
-    if ndeploy_theme_color == 'light':
-        print('            <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
-    if ndeploy_theme_color == 'dark':
-        print('            <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
-    print('            </div>')
-    print('')
+#def print_footer():
+#    print('')
+#    print('            <!-- Footer Start -->')
+#    print('            <div id="footer" class="container text-center mt-2 mb-5">')
+#    print('                <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
+#    if ndeploy_theme_color == 'light':
+#        print('            <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+#    if ndeploy_theme_color == 'dark':
+#        print('            <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
+#    print('            </div>')
+#    print('')
 
 
 # Card Start

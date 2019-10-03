@@ -239,26 +239,26 @@ if form.getvalue('domain'):
         # .htaccess
         if backend_category == 'PROXY':
             if backend_version == 'httpd':
-                print('                        <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
-                print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
+                print('                        <div class="col-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+                print('                        <div class="col-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
         else:
-            print('                            <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('                            <div class="col-md-6 alert text-danger"><i class="fas fa-times-circle"></i></div>')
+            print('                            <div class="col-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+            print('                            <div class="col-6 alert text-danger"><i class="fas fa-times-circle"></i></div>')
 
         # User config reload
         nginx_log_hint = document_root + '/nginx.conf'
         print('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint))
         if os.path.isfile(nginx_log_hint):
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
-                print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check-cicle"></i> Valid</div>')
+                print('                        <div class="col-6 alert text-success"><i class="fas fa-check-cicle"></i> Valid</div>')
             else:
-                print('                        <div class="col-md-6 alert text-danger"><i class="fas fa-times-cicle"></i> Invalid/Require Reload</div>')
+                print('                        <div class="col-6 alert text-danger"><i class="fas fa-times-cicle"></i> Invalid/Require Reload</div>')
         else:
-            print('                            <div class="col-md-6 alert text-center"><i class="fas fa-file-upload"></i> Not Present</div>')
+            print('                            <div class="col-6 alert text-center"><i class="fas fa-file-upload"></i> Not Present</div>')
 
         # Reload Nginx
-        print('                                <div class="col-md-6 alert"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
-        print('                                <div class="col-md-6">')
+        print('                                <div class="col-6 alert"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
+        print('                                <div class="col-6">')
         print('                                    <form class="form" method="post" id="toastForm4" onsubmit="return false;">')
         print('                                        <button class="btn btn-block text-center" type="submit">Reload</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
@@ -266,8 +266,8 @@ if form.getvalue('domain'):
         print('                                </div>')
 
         # Nginx Log
-        print('                                <div class="col-md-6 alert"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
-        print('                                <div class="col-md-6">')
+        print('                                <div class="col-6 alert"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
+        print('                                <div class="col-6">')
         print('                                    <form class="form" method="post" id="modalForm5" onsubmit="return false;">')
         print('                                        <button class="btn btn-block text-center" type="submit">View Log</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
@@ -1002,11 +1002,11 @@ if form.getvalue('domain'):
         print('                        </div> <!-- Card Body End -->')
         cardfooter('The path entered above must follow this format <kbd>/blog</kbd>, <kbd>/us/forum</kbd>, etc.')
 
-        print('                    </div><!-- Subdirectory Tab End -->')
+        print('                    </div> <!-- Subdirectory Tab End -->')
 
-        print('                </div><!-- Container Tabs End -->')
+        print('                </div> <!-- Container Tabs End -->')
 
-        print('            </div><!-- CP Row End -->')
+        print('            </div> <!-- CP Row End -->')
 
     else:
         print_nontoast_error('Error!', 'Domain Data File IO Error!')
