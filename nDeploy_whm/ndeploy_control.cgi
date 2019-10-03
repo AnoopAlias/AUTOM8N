@@ -161,9 +161,8 @@ print('                                <li><small>Fix All Accounts</small></li>'
 print('                                <li class="mt-2">&nbsp;</li>')
 print('                            </ul>')
 print('                        </div>')
-print('                        <form>')
-print('                            <button form="autofix_simple" class="btn btn-secondary btn-block mb-0">Run Soft Fix</button>')
-print('                        </form>')
+print('                            <button form="autofix_simple" class="btn btn-secondary btn-block mb-0">AutoFix</button>')
+
 cardfooter('')
 
 print('                </div> <!-- Dash Item 3 End -->')
@@ -314,8 +313,7 @@ brand_anchor_hint = " The textual part of the link that is located in the footer
 brand_link_hint = " This is the link that is attached to the above 'Footer Anchor Text' for use on the footer of the application. "
 
 print('                 <div class="card-body"> <!-- Card Body Start -->')
-print('                     <div class="row ml-auto mr-auto"> <!-- Row Start -->')
-print('                         <form class="form w-100" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
+print('                         <form class="form" id="ndeploy_control_branding" method="post" onsubmit="return false;">')
 
 print('                             <label class="small" for="brand">Personalize the application name for cPanel\'s and WHM\'s icon label, as well as the header of this application. <em>The brand name must contain only letters, numbers, hyphens, or underscores otherwise the brand rebuild will fail.</em></label>')
 print('                             <div class="input-group">')
@@ -368,7 +366,7 @@ print('                                 <input type="text" class="form-control" 
 print('                             </div>')
 print('                         </form>')
 
-print('                         <form class="form w-100" id="restore_branding_defaults" method="post" onsubmit="return false;">')
+print('                         <form class="form" id="restore_branding_defaults" method="post" onsubmit="return false;">')
 print('                             <input hidden class="form-control" name="restore_defaults" value="enabled">')
 print('                         </form>')
 
@@ -446,7 +444,7 @@ print('                             </div>')
 
 print('                         </form>')
 
-print('                         <form class="form w-100" id="restore_ndeploy_control_defaults" method="post" onsubmit="return false;">')
+print('                         <form class="form" id="restore_ndeploy_control_defaults" method="post" onsubmit="return false;">')
 print('                             <input hidden class="form-control" name="restore_defaults" value="enabled">')
 print('                         </form>')
 
@@ -454,6 +452,7 @@ print('                         <div class="btn-group btn-block mt-3">')
 print('                             <button class="btn btn-outline-primary" type="submit" form="ndeploy_control_config">Save</button>')
 print('                             <button class="btn btn-outline-primary" type="submit" form="restore_ndeploy_control_defaults">Revert</button>')
 print('                         </div>')
+
 
 print('                 </div> <!-- Card Body End -->')
 
@@ -470,7 +469,7 @@ cardheader('Account AutoFix Utility', 'fas fa-palette')
 
 print('                        <div class="card-body pb-0"> <!-- Card Body Start -->')
 print('                            <p class="small">This utility attempts to automatically fix all errors. This can be run if you notice nginx configuration errors, PHP errors, etc.</p>')
-print('                            <p class="small mb-0">Use <kbd>simple</kbd> to regenerate all configurations and restart the associated services. Use <kbd>force</kbd> only if a <kbd>simple</kbd> AutoFix does not fix the issue. Use <kbd>phpfpm</kbd> to repair PHP-FPM application server issues.</p>')
+print('                            <p class="small mb-0">Use <kbd>simple</kbd> to regenerate all configurations and restart the associated services. Use <kbd>phpfpm</kbd> to repair PHP-FPM application server issues.</p>')
 print('                        </div> <!-- Card Body End -->')
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <form class="form" id="autofix_simple" method="post" onsubmit="return false;">')
@@ -732,7 +731,7 @@ print('                                    </div>')
 print('                                </div>')
 
 print('                                <div class="col-md-12">')
-print('                                    <button class="mt-4 btn btn-outline-primary btn-block mt-2" type="submit">Apply Module Selection</button>')
+print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Apply Module Selection</button>')
 print('                                </div>')
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
