@@ -35,6 +35,9 @@ if form.getvalue('autofix_status'):
     if form.getvalue('autofix_status') == 'simple':
         procExe = subprocess.Popen('/opt/nDeploy/scripts/attempt_autofix.sh', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         print('    <li><b>Attempting Simple AutoFix:</b></li>')
+    elif form.getvalue('autofix_status') == 'force':
+        procExe = subprocess.Popen('/opt/nDeploy/scripts/attempt_autofix.sh force', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        print('    <li><b>Attempting Forceful AutoFix:</b></li>')
     elif form.getvalue('autofix_status') == 'phpfpm':
         procExe = subprocess.Popen('/opt/nDeploy/scripts/init_backends.py autofix', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         print('    <li><b>Attempting PHP-FPM Application Server Fix:</b></li>')
