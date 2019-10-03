@@ -152,8 +152,7 @@ if form.getvalue('domain'):
         print('            <div id="dashboard" class="row flex-row">')
         print('')
 
-        # Nginx Status
-        print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
+        print('                <div class="col-sm-6 col-xl-4"> <!-- Nginx Dash Start -->')
         cardheader('')
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
         print('                        <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
@@ -162,10 +161,9 @@ if form.getvalue('domain'):
         print('                        </ul>')
         print('                    </div> <!-- Card Body End -->')
         cardfooter('')
-        print('                </div> <!-- Dash Item End -->')
+        print('                </div> <!-- Nginx Dash End -->')
 
-        # Backend Status
-        print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
+        print('                <div class="col-sm-6 col-xl-4"> <!-- Backend Dash Start -->')
         cardheader('')
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
         print('                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
@@ -174,10 +172,9 @@ if form.getvalue('domain'):
         print('                        </ul>')
         print('                    </div> <!-- Card Body End -->')
         cardfooter('')
-        print('                </div> <!-- Dash Item End -->')
+        print('                </div> <!-- Backend Dash End -->')
 
-        # Tamplate Status
-        print('                <div class="col-sm-12 col-xl-4"> <!-- Dash Item Start -->')
+        print('                <div class="col-sm-12 col-xl-4"> <!-- Tamplate Dash Start -->')
         cardheader('')
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
         print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
@@ -186,7 +183,7 @@ if form.getvalue('domain'):
         print('                        </ul>')
         print('                    </div> <!-- Card Body End -->')
         cardfooter('')
-        print('                </div> <!-- Dash Item End -->')
+        print('                </div> <!-- Tamplate Dash End -->')
 
         print('')
         print('            </div> <!-- Dash Widgets End -->')
@@ -230,7 +227,6 @@ if form.getvalue('domain'):
         print('                        <button class="btn btn-primary btn-block mb-4" type="submit" form="toastForm3">Apply Settings</button>')
         print('                    </div>')
 
-        # System Tab
         print('')
         print('                    <!-- System Tab -->')
         print('                    <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
@@ -296,7 +292,7 @@ if form.getvalue('domain'):
             print('                                <input hidden name="document_root" value="'+document_root+'">')
             print('                                <input hidden name="backend_category" value="'+backend_category+'">')
             print('                                <input hidden name="backend_version" value="'+backend_version+'">')
-            print('                                <button class="btn btn-outline-warning btn-block mb-2" data-toggle="tooltip" title="'+dep_file+'" type="submit">Install '+backend_category+' Project Deps</button>')
+            print('                                <button class="btn btn-outline-warning btn-block" data-toggle="tooltip" title="'+dep_file+'" type="submit">Install '+backend_category+' Project Deps</button>')
             print('                            </form>')
 
             if backend_category == 'PHP':
@@ -1028,5 +1024,5 @@ print('')
 print_modals()
 print_loader()
 
-print('</body> <!-- Body End -->')
+print('    </body> <!-- Body End -->')
 print('</html>')

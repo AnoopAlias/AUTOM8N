@@ -289,7 +289,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
                     print('                        <div class="card-body pt-3 pb-0">  <!-- Card Body Start -->')
-                    print('                            <form class="form mb-2" id="modalForm10" onsubmit="return false;">')
+                    print('                            <form class="form" id="modalForm10" onsubmit="return false;">')
 
                     if backend_category == "RUBY":
                         dep_file = document_root+'/'+thesubdir+'/Gemfile'

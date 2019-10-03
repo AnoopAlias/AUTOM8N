@@ -85,7 +85,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('                <div class="col-lg-8">')
 
         cardheader('Upstream Configuration')
-        print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
+        print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
         print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
         print('                                <div class="col-md-6 alert"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
@@ -102,13 +102,13 @@ if form.getvalue('domain') and form.getvalue('backend'):
         # .htaccess
         if backend_category == 'PROXY' and backend_version == 'httpd':
 
-            print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-            print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;</div>')
+            print('                            <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+            print('                            <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;</div>')
 
         else:
 
-            print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-            print('                                <div class="col-md-6 alert text-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+            print('                            <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+            print('                            <div class="col-md-6 alert text-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
 
         # New Upstream
         print('                                <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
@@ -192,7 +192,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         # Pass on the domain name to the next stage
         print('                                <input hidden name="domain" value="'+mydomain+'">')
         print('                                <input hidden name="backend" value="'+mybackend+'">')
-        print('                                <button class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Configuration</button>')
+        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Apply Upstream Configuration</button>')
         print('                            </form>')
         print('                        </div> <!-- Card Body End -->')
         cardfooter('')
