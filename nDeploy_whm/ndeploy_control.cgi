@@ -158,16 +158,10 @@ print('                        <div class="card-body text-center"> <!-- Card Bod
 print('                            <h4 class="mb-0">AutoFix</h4>')
 print('                            <ul class="list-unstyled mb-0">')
 print('                                <li><small>Fix All Accounts</small></li>')
-
-# Nginx Status
-if nginx_status:
-    print('                                <li class="mt-2 text-success">Coming <i class="fas fa-power-off ml-1"></i></li>')
-else:
-    print('                                <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
-
+print('                                <li class="mt-2">&nbsp;</li>')
 print('                            </ul>')
 print('                        </div>')
-print('                            <button form="autofix_simple" class="btn btn-secondary btn-block mb-0">Perform AutoFix</button>')
+print('                            <button form="autofix_simple" class="btn btn-secondary btn-block mb-0">AutoFix</button>')
 
 cardfooter('')
 
@@ -480,15 +474,11 @@ print('                        <div class="card-body"> <!-- Card Body Start -->'
 print('                            <form class="form" id="autofix_simple" method="post" onsubmit="return false;">')
 print('                                <input hidden class="form-control" name="autofix_status" value="simple">')
 print('                            </form>')
-print('                            <form class="form" id="autofix_force" method="post" onsubmit="return false;">')
-print('                                <input hidden class="form-control" name="autofix_status" value="force">')
-print('                            </form>')
 print('                            <form class="form" id="autofix_phpfpm" method="post" onsubmit="return false;">')
 print('                                <input hidden class="form-control" name="autofix_status" value="phpfpm">')
 print('                            </form>')
 print('                            <div class="btn-block btn-group" role="group" aria-label="AutoFix Utility">')
 print('                                <button class="btn btn-outline-primary" form="autofix_simple" type="submit">simple</button>')
-print('                                <button class="btn btn-outline-primary" form="autofix_force" type="submit">force</button>')
 print('                                <button class="btn btn-outline-primary" form="autofix_phpfpm" type="submit">phpfpm</button>')
 print('                            </div>')
 print('                        </form>')
