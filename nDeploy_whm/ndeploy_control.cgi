@@ -158,26 +158,10 @@ print('                        <div class="card-body text-center"> <!-- Card Bod
 print('                            <h4 class="mb-0">AutoFix</h4>')
 print('                            <ul class="list-unstyled mb-0">')
 print('                                <li><small>Fix All Accounts</small></li>')
-
-# Nginx Status
-if nginx_status:
-    print('                                <li class="mt-2 text-success">Coming <i class="fas fa-power-off ml-1"></i></li>')
-else:
-    print('                                <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
-
+print('                                <li class="mt-2">&nbsp;</li>')
 print('                            </ul>')
 print('                        </div>')
-
-if nginx_status:
-    print('                        <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                            <button class="btn btn-secondary btn-block mb-0">Soon</button>')
-    print('                            <input hidden name="plugin_status" value="disable">')
-else:
-    print('                        <form id="enable_ndeploy" class="form" onsubmit="return false;">')
-    print('                            <button class="btn btn-secondary btn-block mb-0">Enable</button>')
-    print('                            <input hidden name="plugin_status" value="enable">')
-
-print('                        </form>')
+print('                            <button form="autofix_simple" class="btn btn-secondary btn-block mb-0">AutoFix</button>')
 
 cardfooter('')
 
@@ -484,21 +468,17 @@ cardheader('Account AutoFix Utility', 'fas fa-palette')
 
 print('                        <div class="card-body pb-0"> <!-- Card Body Start -->')
 print('                            <p class="small">This utility attempts to automatically fix all errors. This can be run if you notice nginx configuration errors, PHP errors, etc.</p>')
-print('                            <p class="small mb-0">Use <kbd>simple</kbd> to regenerate all configurations and restart the associated services. Use <kbd>force</kbd> only if a <kbd>simple</kbd> AutoFix does not fix the issue. Use <kbd>phpfpm</kbd> to repair PHP-FPM application server issues.</p>')
+print('                            <p class="small mb-0">Use <kbd>simple</kbd> to regenerate all configurations and restart the associated services. Use <kbd>phpfpm</kbd> to repair PHP-FPM application server issues.</p>')
 print('                        </div> <!-- Card Body End -->')
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <form class="form" id="autofix_simple" method="post" onsubmit="return false;">')
 print('                                <input hidden class="form-control" name="autofix_status" value="simple">')
-print('                            </form>')
-print('                            <form class="form" id="autofix_force" method="post" onsubmit="return false;">')
-print('                                <input hidden class="form-control" name="autofix_status" value="force">')
 print('                            </form>')
 print('                            <form class="form" id="autofix_phpfpm" method="post" onsubmit="return false;">')
 print('                                <input hidden class="form-control" name="autofix_status" value="phpfpm">')
 print('                            </form>')
 print('                            <div class="btn-block btn-group" role="group" aria-label="AutoFix Utility">')
 print('                                <button class="btn btn-outline-primary" form="autofix_simple" type="submit">simple</button>')
-print('                                <button class="btn btn-outline-primary" form="autofix_force" type="submit">force</button>')
 print('                                <button class="btn btn-outline-primary" form="autofix_phpfpm" type="submit">phpfpm</button>')
 print('                            </div>')
 print('                        </form>')
