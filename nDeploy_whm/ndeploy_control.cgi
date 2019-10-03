@@ -375,6 +375,7 @@ print('                             <button class="btn btn-outline-primary" type
 print('                             <button class="btn btn-outline-primary" type="submit" form="restore_branding_defaults">Revert</button>')
 print('                         </div>')
 
+print('                     </div> <!-- Row End -->')
 print('                 </div> <!-- Card Body End -->')
 
 cardfooter('')
@@ -518,8 +519,7 @@ cardheader('Netdata Setup', 'fab fa-centos')
 netdata_pass = ""
 netdata_pass_hint = " Enter the password to access Netdata. "
 print('                 <div class="card-body"> <!-- Card Body Start -->')
-print('                     <div class="row ml-auto mr-auto"> <!-- Row Start -->')
-print('                         <form class="form w-100" id="easy_netdata_setup" method="post" onsubmit="return false;">')
+print('                         <form class="form" id="easy_netdata_setup" method="post" onsubmit="return false;">')
 print('                             <p class="small">Welcome to the Netdata Installer. Netdata is distributed, real-time, performance and health monitoring for systems and applications. Netdata provides unparalleled insights, in real-time, of everything happening on the systems it runs (including web servers, databases, applications), using highly interactive web dashboards. <em>The Netdata installation process can take up to a minute depending on processing power and connection speed.</em></p>')
 if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                         <label class="small" for="netdata_pass">The Netdata username is <kbd>netdata</kbd>. Enter the password you wish to use to access the Netdata Monitoring System.</label>')
@@ -540,7 +540,7 @@ else:
 print('                         </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
-    print('                     <form class="form w-100" id="clear_netdata_credentials" method="post" onsubmit="return false;">')
+    print('                     <form class="form" id="clear_netdata_credentials" method="post" onsubmit="return false;">')
     print('                         <input hidden class="form-control" name="remove_netdata_creds" value="enabled">')
     print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Remove Netdata Credentials</button>')
     print('                     </form>')
@@ -561,8 +561,7 @@ cardheader('Glances Setup', 'fab fa-centos')
 glances_pass = ""
 glances_pass_hint = " Enter the password to access Glances. "
 print('                 <div class="card-body"> <!-- Card Body Start -->')
-print('                     <div class="row ml-auto mr-auto"> <!-- Row Start -->')
-print('                         <form class="form w-100" id="easy_glances_setup" method="post" onsubmit="return false;">')
+print('                         <form class="form" id="easy_glances_setup" method="post" onsubmit="return false;">')
 print('                             <p class="small">Welcome to the Glances Installer. Glances is a cross-platform system monitoring tool written in Python. <em>The Glances installation process can take up to a minute depending on processing power and connection speed.</em></p>')
 if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                         <label class="small" for="glances_pass">The Glances username is <kbd>glances</kbd>. Enter the password you wish to use to access the Glances Monitoring System.</label>')
@@ -583,12 +582,11 @@ else:
 print('                         </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
-    print('                     <form class="form w-100" id="clear_glances_credentials" method="post" onsubmit="return false;">')
+    print('                     <form class="form" id="clear_glances_credentials" method="post" onsubmit="return false;">')
     print('                         <input hidden class="form-control" name="remove_glances_creds" value="enabled">')
     print('                         <button class="btn btn-outline-primary btn-block mt-2" type="submit">Remove Glances Credentials</button>')
     print('                     </form>')
 
-print('                     </div> <!-- Row End -->')
 print('                 </div> <!-- Card Body End -->')
 
 cardfooter('')
