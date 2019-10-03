@@ -213,6 +213,8 @@ def print_header(title=''):
 #    print('            </div>')
 #    print('')
 
+def print_footer():
+    return
 
 # Card Start
 def cardheader(header='Untitled Card', faicon='fas fa-cogs'):
