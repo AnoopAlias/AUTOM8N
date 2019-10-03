@@ -1024,5 +1024,5 @@ print('')
 print_modals()
 print_loader()
 
-print('</body> <!-- Body End -->')
+print('    </body> <!-- Body End -->')
 print('</html>')
