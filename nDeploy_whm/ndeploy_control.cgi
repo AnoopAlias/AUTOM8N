@@ -158,27 +158,12 @@ print('                        <div class="card-body text-center"> <!-- Card Bod
 print('                            <h4 class="mb-0">AutoFix</h4>')
 print('                            <ul class="list-unstyled mb-0">')
 print('                                <li><small>Fix All Accounts</small></li>')
-
-# Nginx Status
-if nginx_status:
-    print('                                <li class="mt-2 text-success">Coming <i class="fas fa-power-off ml-1"></i></li>')
-else:
-    print('                                <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
-
+print('                                <li class="mt-2">&nbsp;</li>')
 print('                            </ul>')
 print('                        </div>')
-
-if nginx_status:
-    print('                        <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                            <button class="btn btn-secondary btn-block mb-0">Soon</button>')
-    print('                            <input hidden name="plugin_status" value="disable">')
-else:
-    print('                        <form id="enable_ndeploy" class="form" onsubmit="return false;">')
-    print('                            <button class="btn btn-secondary btn-block mb-0">Enable</button>')
-    print('                            <input hidden name="plugin_status" value="enable">')
-
+print('                        <form>')
+print('                            <button form="autofix_simple" class="btn btn-secondary btn-block mb-0">Run Soft Fix</button>')
 print('                        </form>')
-
 cardfooter('')
 
 print('                </div> <!-- Dash Item 3 End -->')
