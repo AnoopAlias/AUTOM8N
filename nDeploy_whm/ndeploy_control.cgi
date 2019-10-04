@@ -76,11 +76,22 @@ with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
     autom8n_version_info_yaml_parsed = yaml.safe_load(autom8n_version_info_yaml)
 autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 
-#Get upgrade status of nDeploy
+# Get upgrade status of nDeploy
 update_status = ''
 if os.path.isfile(update_status_file):
     with open(update_status_file, 'r') as update_status_value:
         update_status = update_status_value.read(1)
+
+# Get PHP Chroot and Secure status
+php_chroot_status = ''
+php_secure_status = ''
+if os.path.isfile(php_secure_mode_file):
+    with open(php_secure_mode_file, 'r') as php_secure_status_value:
+        php_secure_status = php_secure_status_value.read(1)
+
+if os.path.isfile(php_chroot_mode_file):
+    with open(php_chroot_mode_file, 'r') as php_chroot_status_value:
+        php_secure_status = php_chroot_status_value.read(1)
 
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row">')
@@ -501,18 +512,8 @@ print('                                <div class="col-md-6 alert"><i class="fab
 print('                                <div class="col-md-6">')
 print('                                    <div class="row no-gutters">')
 
-nginx_status = False
-for myprocess in psutil.process_iter():
-    # Workaround for Python 2.6
-    if platform.python_version().startswith('2.6'):
-        mycmdline = myprocess.cmdline
-    else:
-        mycmdline = myprocess.cmdline()
-    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-        nginx_status = True
-
 if True:
-    print('                                        <div class="col-6 alert text-success">Single Master<i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6 alert text-success">Single Master <i class="fas fa-power-off"></i></div>')
     print('                                        <div class="col-6">')
     print('                                            <form id="multi_master" class="form" onsubmit="return false;">')
     print('                                                <button type="submit" class="alert btn btn-info">Multi-Master</button>')
@@ -523,9 +524,9 @@ else:
     print('                                            <form id="single_master" class="form" onsubmit="return false;">')
     print('                                                <button type="submit" class="alert btn btn-info">Single Master</button>')
     print('                                                <input hidden name="php_mode" value="single">')
+
 print('                                            </form>')
 print('                                        </div>')
-
 print('                                    </div>')
 print('                                </div>')
 
@@ -548,7 +549,6 @@ else:
 
 print('                                            </form>')
 print('                                        </div>')
-
 print('                                    </div>')
 print('                                </div>')
 print('                            </div> <!-- Row End -->')
