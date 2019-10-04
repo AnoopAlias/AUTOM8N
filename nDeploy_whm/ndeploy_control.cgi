@@ -495,12 +495,73 @@ print('                    <div class="tab-pane fade" id="v-pills-php_backends" 
 
 cardheader('Setup PHP Backends', 'fab fa-php')
 
+print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
+print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
+print('                                <div class="col-md-6 alert"><i class="fab fa-php"></i>PHP Mode</div>')
+print('                                <div class="col-md-6">')
+print('                                    <div class="row no-gutters">')
+
+nginx_status = False
+for myprocess in psutil.process_iter():
+    # Workaround for Python 2.6
+    if platform.python_version().startswith('2.6'):
+        mycmdline = myprocess.cmdline
+    else:
+        mycmdline = myprocess.cmdline()
+    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+        nginx_status = True
+
+if True:
+    print('                                        <div class="col-6 alert text-success">Single Master<i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="multi_master" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert btn btn-info">Multi-Master</button>')
+    print('                                                <input hidden name="php_mode" value="multi">')
+else:
+    print('                                        <div class="col-6 alert text-success">Multi-Master <i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="single_master" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert btn btn-info">Single Master</button>')
+    print('                                                <input hidden name="php_mode" value="single">')
+print('                                            </form>')
+print('                                        </div>')
+
+print('                                    </div>')
+print('                                </div>')
+
+print('                                <div class="col-md-6 alert"><i class="fab fa-php"></i>Chrooted PHP</div>')
+print('                                <div class="col-md-6">')
+print('                                    <div class="row no-gutters">')
+
+if True:
+    print('                                        <div class="col-6 alert text-danger">Disabled <i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="chroot_on" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert btn btn-info">Enable</button>')
+    print('                                                <input hidden name="chroot_mode" value="enabled">')
+else:
+    print('                                        <div class="col-6 alert text-success">Enabled <i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="chroot_off" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert btn btn-info">Disable</button>')
+    print('                                                <input hidden name="chroot_mode" value="disabled">')
+
+print('                                            </form>')
+print('                                        </div>')
+
+print('                                    </div>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
+
 print('                        <div class="card-body"> <!-- Card Body Start -->')
-print('                            <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                                <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
 print('                                <form class="form w-100" id="easy_php_setup" method="post" onsubmit="return false;">')
 print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
 print('                                    <button class="btn btn-outline-primary btn-block mt-2" type="submit">Install Native nGinx PHP Support</button>')
 print('                                </form>')
+print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 
 cardfooter('')
