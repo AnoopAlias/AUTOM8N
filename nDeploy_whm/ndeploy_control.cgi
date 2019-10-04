@@ -96,7 +96,6 @@ if os.path.isfile(php_chroot_mode_file):
     with open(php_chroot_mode_file, 'r') as php_chroot_status_value:
         php_secure_status = php_chroot_status_value.read(1)
 
-
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row">')
 print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 1 Start -->')
