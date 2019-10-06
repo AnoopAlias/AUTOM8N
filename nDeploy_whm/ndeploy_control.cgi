@@ -22,8 +22,8 @@ ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 autom8n_version_info_file = installation_path+"/conf/version.yaml"
 update_status_file = installation_path+"/conf/NDEPLOY_UPGRADE_STATUS"
-php_secure_mode_file = installation_path+"/conf/PHP_SECURE_MODE"
-php_chroot_mode_file = installation_path+"/conf/PHP_CHROOT_MODE"
+php_secure_mode_file = installation_path+"/conf/secure-php-enabled"
+php_chroot_mode_file = "/var/cpanel/feature_toggles/apachefpmjail"
 
 cgitb.enable()
 
@@ -85,16 +85,14 @@ if os.path.isfile(update_status_file):
         update_status = update_status_value.read(1)
 
 # Get PHP Chroot and Secure status
-php_chroot_status = ''
-php_secure_status = ''
+php_chroot_status = False
+php_secure_status = False
 
 if os.path.isfile(php_secure_mode_file):
-    with open(php_secure_mode_file, 'r') as php_secure_status_value:
-        php_secure_status = php_secure_status_value.read(1)
+    php_secure_status = True
 
 if os.path.isfile(php_chroot_mode_file):
-    with open(php_chroot_mode_file, 'r') as php_chroot_status_value:
-        php_secure_status = php_chroot_status_value.read(1)
+    php_chroot_status = True
 
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row">')
@@ -234,7 +232,7 @@ print('                    <a class="nav-link active" id="v-pills-home-tab" data
 print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
 print('                    <a class="nav-link" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix">AutoFix</a>')
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
-print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">PHP&nbsp;Backends</a>')
+print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">PHP Configuration</a>')
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
 print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">NGinx Mods</a>')
@@ -255,7 +253,7 @@ print('                            <a class="dropdown-item" id="v-pills-home-tab
 print('                            <a class="dropdown-item" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-pressed="false">Aesthetics</a>')
 print('                            <a class="dropdown-item" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix" aria-pressed="false">AutoFix</a>')
 print('                            <a class="dropdown-item" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-pressed="false">Branding</a>')
-print('                            <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">PHP&nbsp;Backends</a>')
+print('                            <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">PHP Configuration</a>')
 print('                            <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
 print('                            <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
 print('                            <a class="dropdown-item" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-pressed="false">NGinx Mods</a>')
@@ -502,12 +500,12 @@ cardfooter('')
 
 print('                    </div> <!-- End AutoFix Tab -->')
 
-# PHP Installer
+# PHP Configuration
 print('')
-print('                    <!-- PHP Backends Tab -->')
+print('                    <!-- PHP Configuration Tab -->')
 print('                    <div class="tab-pane fade" id="v-pills-php_backends" role="tabpanel" aria-labelledby="v-pills-php_backends-tab">')
 
-cardheader('Setup PHP Backends', 'fab fa-php')
+cardheader(brand+' PHP Configuration', 'fab fa-php')
 
 print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
 print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
@@ -515,18 +513,18 @@ print('                                <div class="col-md-6 alert"><i class="fab
 print('                                <div class="col-md-6">')
 print('                                    <div class="row no-gutters">')
 
-if True:
-    print('                                        <div class="col-6 alert text-success">Single Master <i class="fas fa-power-off"></i></div>')
-    print('                                        <div class="col-6">')
-    print('                                            <form id="multi_master" class="form" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert btn btn-info">Multi-Master</button>')
-    print('                                                <input hidden name="php_mode" value="multi">')
-else:
+if php_secure_status:
     print('                                        <div class="col-6 alert text-success">Multi-Master <i class="fas fa-power-off"></i></div>')
     print('                                        <div class="col-6">')
     print('                                            <form id="single_master" class="form" onsubmit="return false;">')
     print('                                                <button type="submit" class="alert btn btn-info">Single Master</button>')
     print('                                                <input hidden name="php_mode" value="single">')
+else:
+    print('                                        <div class="col-6 alert text-success">Single Master <i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="multi_master" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert btn btn-info">Multi-Master</button>')
+    print('                                                <input hidden name="php_mode" value="multi">')
 
 print('                                            </form>')
 print('                                        </div>')
@@ -537,18 +535,21 @@ print('                                <div class="col-md-6 alert"><i class="fab
 print('                                <div class="col-md-6">')
 print('                                    <div class="row no-gutters">')
 
-if True:
-    print('                                        <div class="col-6 alert text-danger">Disabled <i class="fas fa-power-off"></i></div>')
-    print('                                        <div class="col-6">')
-    print('                                            <form id="chroot_on" class="form" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert btn btn-info">Enable</button>')
-    print('                                                <input hidden name="chroot_mode" value="enabled">')
-else:
+if php_chroot_status and not php_secure_status:
     print('                                        <div class="col-6 alert text-success">Enabled <i class="fas fa-power-off"></i></div>')
     print('                                        <div class="col-6">')
     print('                                            <form id="chroot_off" class="form" onsubmit="return false;">')
     print('                                                <button type="submit" class="alert btn btn-info">Disable</button>')
     print('                                                <input hidden name="chroot_mode" value="disabled">')
+else:
+    print('                                        <div class="col-6 alert text-danger">Disabled <i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="chroot_on" class="form" onsubmit="return false;">')
+    if php_secure_status:
+        print('                                                <button type="submit" class="alert btn btn-info" disabled>Enable</button>')
+    else:
+        print('                                                <button type="submit" class="alert btn btn-info">Enable</button>')
+    print('                                                <input hidden name="chroot_mode" value="enabled">')
 
 print('                                            </form>')
 print('                                        </div>')
@@ -569,7 +570,7 @@ print('                        </div> <!-- Card Body End -->')
 
 cardfooter('')
 
-print('                    </div> <!-- End PHP Backends Tab -->')
+print('                    </div> <!-- End PHP Configuration Tab -->')
 
 # Netdata Tab
 print('')
