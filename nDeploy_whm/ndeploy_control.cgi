@@ -134,27 +134,22 @@ print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 2 Start --
 cardheader('')
 
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">PHP Mode</h4>')
+print('                        <h4 class="mb-0">PHP Master</h4>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li><small>secured/insec</small></li>')
+print('                            <li><small>Single or Multi-Master</small></li>')
 
-# Nginx Status
-if nginx_status:
-    print('                        <li class="mt-2 text-success">Coming <i class="fas fa-power-off ml-1"></i></li>')
+if php_secure_status:
+    print('                        <li class="mt-2 text-success">Multi-Master <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print('                        <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        <li class="mt-2 text-success">Single Master <i class="fas fa-power-off ml-1"></i></li>')
 
 print('                        </ul>')
 print('                    </div>')
 
-if nginx_status:
-    print('                <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Soon</button>')
-    print('                    <input hidden name="plugin_status" value="disable">')
+if php_secure_status:
+    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single</button>')
 else:
-    print('                    <form id="enable_ndeploy" class="form" onsubmit="return false;">')
-    print('                        <button class="btn btn-secondary btn-block mb-0">Enable</button>')
-    print('                        <input hidden name="plugin_status" value="enable">')
+    print('                    <button form="multi_master" class="btn btn-secondary btn-block mb-0">Switch to Multi</button>')
 
 print('                    </form>')
 
