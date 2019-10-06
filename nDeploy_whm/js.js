@@ -589,6 +589,54 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#multi_master').submit(function() {
+        var $f = $('#multi_master');
+        var $url = "php_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#single_master').submit(function() {
+        var $f = $('#single_master');
+        var $url = "php_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#chroot_on').submit(function() {
+        var $f = $('#chroot_on');
+        var $url = "php_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#chroot_off').submit(function() {
+        var $f = $('#chroot_off');
+        var $url = "php_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
     $('#myModal').on('hidden.bs.modal', function() {
         location.reload()
     });

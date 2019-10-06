@@ -159,6 +159,7 @@ def control_php_fpm(trigger):
                 subprocess.call(['touch /var/cpanel/feature_toggles/apachefpmjail'], shell=True)
         elif trigger == 'disable-jailphpfpm':
             silentremove('/var/cpanel/feature_toggles/apachefpmjail')
+            print('Chrooted PHP-FPM has been disabled.')
         else:
             return
 

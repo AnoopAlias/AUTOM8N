@@ -22,6 +22,8 @@ ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 autom8n_version_info_file = installation_path+"/conf/version.yaml"
 update_status_file = installation_path+"/conf/NDEPLOY_UPGRADE_STATUS"
+php_secure_mode_file = installation_path+"/conf/secure-php-enabled"
+php_chroot_mode_file = "/var/cpanel/feature_toggles/apachefpmjail"
 
 cgitb.enable()
 
@@ -76,11 +78,21 @@ with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
     autom8n_version_info_yaml_parsed = yaml.safe_load(autom8n_version_info_yaml)
 autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 
-#Get upgrade status of nDeploy
+# Get upgrade status of nDeploy
 update_status = ''
 if os.path.isfile(update_status_file):
     with open(update_status_file, 'r') as update_status_value:
         update_status = update_status_value.read(1)
+
+# Get PHP Chroot and Secure status
+php_chroot_status = False
+php_secure_status = False
+
+if os.path.isfile(php_secure_mode_file):
+    php_secure_status = True
+
+if os.path.isfile(php_chroot_mode_file):
+    php_chroot_status = True
 
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row">')
@@ -122,27 +134,22 @@ print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 2 Start --
 cardheader('')
 
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">PHP Mode</h4>')
+print('                        <h4 class="mb-0">PHP Master</h4>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li><small>secured/insec</small></li>')
+print('                            <li><small>Single or Multi-Master</small></li>')
 
-# Nginx Status
-if nginx_status:
-    print('                        <li class="mt-2 text-success">Coming <i class="fas fa-power-off ml-1"></i></li>')
+if php_secure_status:
+    print('                        <li class="mt-2 text-success">Multi-Master <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print('                        <li class="mt-2 text-danger">Disabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        <li class="mt-2 text-success">Single Master <i class="fas fa-power-off ml-1"></i></li>')
 
 print('                        </ul>')
 print('                    </div>')
 
-if nginx_status:
-    print('                <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Soon</button>')
-    print('                    <input hidden name="plugin_status" value="disable">')
+if php_secure_status:
+    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single</button>')
 else:
-    print('                    <form id="enable_ndeploy" class="form" onsubmit="return false;">')
-    print('                        <button class="btn btn-secondary btn-block mb-0">Enable</button>')
-    print('                        <input hidden name="plugin_status" value="enable">')
+    print('                    <button form="multi_master" class="btn btn-secondary btn-block mb-0">Switch to Multi</button>')
 
 print('                    </form>')
 
@@ -220,7 +227,7 @@ print('                    <a class="nav-link active" id="v-pills-home-tab" data
 print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
 print('                    <a class="nav-link" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix">AutoFix</a>')
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
-print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">PHP&nbsp;Backends</a>')
+print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">PHP Configuration</a>')
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
 print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">NGinx Mods</a>')
@@ -241,7 +248,7 @@ print('                            <a class="dropdown-item" id="v-pills-home-tab
 print('                            <a class="dropdown-item" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-pressed="false">Aesthetics</a>')
 print('                            <a class="dropdown-item" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix" aria-pressed="false">AutoFix</a>')
 print('                            <a class="dropdown-item" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-pressed="false">Branding</a>')
-print('                            <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">PHP&nbsp;Backends</a>')
+print('                            <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">PHP Configuration</a>')
 print('                            <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
 print('                            <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
 print('                            <a class="dropdown-item" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-pressed="false">NGinx Mods</a>')
@@ -317,7 +324,7 @@ print('                            <form class="form" id="ndeploy_control_brandi
 
 print('                                <label class="small" for="brand">Personalize the application name for cPanel\'s and WHM\'s icon label, as well as the header of this application. <em>The brand name must contain only letters, numbers, hyphens, or underscores otherwise the brand rebuild will fail.</em></label>')
 print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_desc">')
 print('                                            '+return_prepend("Brand Name", brand_hint))
 print('                                        </span>')
@@ -327,7 +334,7 @@ print('                                </div>')
 
 print('                                <label class="small" for="brand_logo">Enter the filename of the 48x48 pixel brand icon that has been uploaded to the <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to properly brand cPanel, WHM, and this application.</label>')
 print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_logo_desc">')
 print('                                            '+return_prepend("Brand Icon", brand_logo_hint))
 print('                                        </span>')
@@ -337,7 +344,7 @@ print('                                </div>')
 
 print('                                <label class="small" for="brand_group">Enter the section you want this application to be placed in within each user\'s cPanel.</label>')
 print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_group_desc">')
 print('                                            '+return_prepend("cPanel Section", brand_group_hint))
 print('                                        </span>')
@@ -347,7 +354,7 @@ print('                                </div>')
 
 print('                                <label class="small" for="brand_anchor">Enter your brand\'s anchor text that will be used on the footer of the application.</label>')
 print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_anchor_desc">')
 print('                                            '+return_prepend("Footer Anchor Text", brand_anchor_hint))
 print('                                        </span>')
@@ -357,7 +364,7 @@ print('                                </div>')
 
 print('                                <label class="small" for="brand_link">Enter your brand\'s website link that the above anchor text will link to via the footer.</label>')
 print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_link_desc">')
 print('                                            '+return_prepend("Footer Link", brand_link_hint))
 print('                                        </span>')
@@ -397,7 +404,7 @@ print('                            <form class="form" id="ndeploy_control_config
 
 print('                                <label class="small" for="primary_color">Enter the primary color used throughout the application. Use this to accent branding colors.</label>')
 print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="primary_color_desc">')
 print('                                            '+return_prepend("Primary Application Color", primary_color_hint))
 print('                                        </span>')
@@ -407,7 +414,7 @@ print('                                </div>')
 
 print('                                <label class="small" for="ndeploy_theme_color">Select a theme to use with the application.</label>')
 print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <label class="input-group-text">'+return_prepend("Theme", ndeploy_theme_color_hint)+'</label>')
 print('                                    </div>')
 print('                                    <select name="ndeploy_theme_color" class="custom-select">')
@@ -423,7 +430,7 @@ print('                                </div>')
 
 print('                                <label class="small" for="logo_url">Enter the logo URL to use in the header instead of the default icon and brand name. Set this to <kbd>None</kbd> to disable.</label>')
 print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="logo_url_desc">')
 print('                                            '+return_prepend("Logo URL", logo_url_hint))
 print('                                        </span>')
@@ -433,7 +440,7 @@ print('                                </div>')
 
 print('                                <label class="small" for="app_email">Enter a support email for users if they run into various issues. Set this to <kbd>None</kbd> to disable.</label>')
 print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="app_email_desc">')
 print('                                            '+return_prepend("Support E-mail", app_email_hint))
 print('                                        </span>')
@@ -488,24 +495,82 @@ cardfooter('')
 
 print('                    </div> <!-- End AutoFix Tab -->')
 
-# PHP Installer
+# PHP Configuration
 print('')
-print('                    <!-- PHP Backends Tab -->')
+print('                    <!-- PHP Configuration Tab -->')
 print('                    <div class="tab-pane fade" id="v-pills-php_backends" role="tabpanel" aria-labelledby="v-pills-php_backends-tab">')
 
-cardheader('Setup PHP Backends', 'fab fa-php')
+cardheader(brand+' PHP Configuration', 'fab fa-php')
+
+print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
+print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
+print('                                <div class="col-md-6 alert"><i class="fab fa-php"></i>PHP-FPM Master</div>')
+print('                                <div class="col-md-6">')
+print('                                    <div class="row no-gutters">')
+
+if php_secure_status:
+    print('                                        <div class="col-6 alert text-success">Multi-Master <i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="single_master" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert btn btn-info">Single Master</button>')
+    print('                                                <input hidden name="php_mode" value="single">')
+else:
+    print('                                        <div class="col-6 alert text-success">Single Master <i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="multi_master" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert btn btn-info">Multi-Master</button>')
+    print('                                                <input hidden name="php_mode" value="multi">')
+
+print('                                            </form>')
+print('                                        </div>')
+print('                                    </div>')
+print('                                </div>')
+
+print('                                <div class="col-md-6 alert"><i class="fab fa-php"></i>Chroot PHP</div>')
+print('                                <div class="col-md-6">')
+print('                                    <div class="row no-gutters">')
+
+if php_chroot_status and not php_secure_status:
+    print('                                        <div class="col-6 alert text-success">Enabled <i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="chroot_off" class="form" onsubmit="return false;">')
+    print('                                                <button type="submit" class="alert btn btn-info">Disable</button>')
+    print('                                                <input hidden name="chroot_mode" value="disabled">')
+else:
+    print('                                        <div class="col-6 alert text-danger">Disabled <i class="fas fa-power-off"></i></div>')
+    print('                                        <div class="col-6">')
+    print('                                            <form id="chroot_on" class="form" onsubmit="return false;">')
+    if php_secure_status:
+        print('                                                <button type="submit" class="alert btn btn-info" disabled>Enable</button>')
+    else:
+        print('                                                <button type="submit" class="alert btn btn-info">Enable</button>')
+    print('                                                <input hidden name="chroot_mode" value="enabled">')
+
+print('                                            </form>')
+print('                                        </div>')
+print('                                    </div>')
+print('                                </div>')
+print('                            </div> <!-- Row End -->')
+print('                        </div> <!-- Card Body End -->')
 
 print('                        <div class="card-body"> <!-- Card Body Start -->')
-print('                            <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
+print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+print('                                <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
+print('                                <p class="small"><i class="fab fa-php"></i> PHP-FPM Master allows you to choose between a <kbd>Single Master</kbd> and a <kbd>Multi-Master</kbd> PHP configuration. \'Single Master\' will run a single PHP-FPM process as root, where as \'Multi-Master\' will create individual PHP-FPM processes run under each user.</p>')
+print('                                <p class="small"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not.</p>')
+print('                                <p class="small">Please note: Chrooted PHP will only function in \'Single Master\' mode.</p>')
+
+
 print('                                <form class="form w-100" id="easy_php_setup" method="post" onsubmit="return false;">')
 print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
 print('                                    <button class="btn btn-outline-primary btn-block mt-2" type="submit">Install Native nGinx PHP Support</button>')
 print('                                </form>')
+print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 
 cardfooter('')
 
-print('                    </div> <!-- End PHP Backends Tab -->')
+print('                    </div> <!-- End PHP Configuration Tab -->')
 
 # Netdata Tab
 print('')
@@ -521,7 +586,7 @@ print('                                <p class="small">Welcome to the Netdata I
 if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                            <label class="small" for="netdata_pass">The Netdata username is <kbd>netdata</kbd>. Enter the password you wish to use to access the Netdata Monitoring System.</label>')
     print('                            <div class="input-group">')
-    print('                                <div class="input-group-prepend">')
+    print('                                <div class="input-group-prepend input-group-prepend-min">')
     print('                                    <span class="input-group-text" id="netdata_pass_desc">')
     print('                                        '+return_prepend("Netdata Password", netdata_pass_hint))
     print('                                    </span>')
@@ -562,7 +627,7 @@ print('                                <p class="small">Welcome to the Glances I
 if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                            <label class="small" for="glances_pass">The Glances username is <kbd>glances</kbd>. Enter the password you wish to use to access the Glances Monitoring System.</label>')
     print('                            <div class="input-group">')
-    print('                                <div class="input-group-prepend">')
+    print('                                <div class="input-group-prepend input-group-prepend-min">')
     print('                                    <span class="input-group-text" id="glances_pass_desc">')
     print('                                        '+return_prepend("Glances Password", glances_pass_hint))
     print('                                    </span>')
