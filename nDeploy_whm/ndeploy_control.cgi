@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import cgi
 import cgitb
@@ -95,7 +95,7 @@ if os.path.isfile(php_chroot_mode_file):
     php_chroot_status = True
 
 print('            <!-- Dash Widgets Start -->')
-print('            <div id="dashboard" class="row">')
+print('            <div id="dashboard" class="row flex-row">')
 print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 1 Start -->')
 
 cardheader('')
@@ -103,7 +103,7 @@ cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
 print('                        <h4 class="mb-0">Plugin Status</h4>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
+print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
 
 # Nginx Status
 if nginx_status:
@@ -136,7 +136,7 @@ cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
 print('                        <h4 class="mb-0">PHP Master</h4>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li><small>Single or Multi-Master</small></li>')
+print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Single or Multi-Master</small></li>')
 
 if php_secure_status:
     print('                        <li class="mt-2 text-success">Multi-Master <i class="fas fa-power-off ml-1"></i></li>')
@@ -181,7 +181,7 @@ cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
 print('                        <h4 class="mb-0">Upgrade Plugin</h4>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li><small>Upgrade Status</small></li>')
+print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Upgrade Status</small></li>')
 
 # Update Status
 if update_status == '':
@@ -240,8 +240,8 @@ print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-t
 
 print('                    <!-- Secondary Mobile Navigation -->')
 print('                    <div class="d-lg-none d-xl-none dropdown nav">')
-print('                        <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
-print('                             Config Menu')
+print('                        <button class="btn btn-primary btn-block dropdown-toggle mb-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
+print('                             Menu')
 print('                        </button>')
 print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
 print('                            <a class="dropdown-item" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-pressed="false">Home</a>')
@@ -406,7 +406,7 @@ print('                                <label class="small" for="primary_color">
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="primary_color_desc">')
-print('                                            '+return_prepend("Primary Application Color", primary_color_hint))
+print('                                            '+return_prepend("Primary Color", primary_color_hint))
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="primary_color" value="'+primary_color+'" id="primary_color" aria-describedby="primary_color_desc">')
