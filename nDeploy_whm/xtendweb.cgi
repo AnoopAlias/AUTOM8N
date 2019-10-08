@@ -394,11 +394,6 @@ else:
     print('                                        </div>')
     print('                                    </div>')
 
-    print('                                    <div class="col-md-12">')
-    print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save Master Settings</button>')
-    print('                                    </div>')
-    print('                                </div> <!-- Row End -->')
-    print('                            </form>')
 
     # slave data
     slave_hostname_hint = " Slaves FQDN "
@@ -450,7 +445,7 @@ else:
     print('                                    </div>')
 
     print('                                    <div class="col-md-12">')
-    print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save Master Settings</button>')
+    print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
     print('                                    </div>')
     print('                                </div> <!-- Row End -->')
     print('                            </form>')
