@@ -334,9 +334,9 @@ if os.path.isfile(cluster_config_file):
 
     cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
 else:
-    cardheader('Cluster Unison Sync Status Disabled','fas fa-align-justify')
+    cardheader('Setup cluster','fas fa-align-justify')
     # Get the server main IP
-    ip = get('https://api.ipify.org').text
+    myip = get('https://api.ipify.org').text
     # Display form for ndeploymaster
     print('                            <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
     print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
@@ -355,6 +355,18 @@ else:
     print('                                        </div>')
     print('                                    </div>')
 
+    master_main_ip_hint = " Masters Main IP "
+    print('                                    <div class="col-md-12">')
+    print('                                        <div class="input-group mt-2 mb-2">')
+    print('                                            <div class="input-group-prepend">')
+    print('                                                <span class="input-group-text">')
+    print('                                                    '+return_multi_input("Master Main IP", master_main_ip_hint))
+    print('                                                </span>')
+    print('                                            </div>')
+    print('                                            <input class="form-control" value="'+myip+'" type="text" name="master_main_ip">')
+    print('                                        </div>')
+    print('                                    </div>')
+
     print('                                    <div class="col-md-12">')
     print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save Master Settings</button>')
     print('                                    </div>')
@@ -364,7 +376,7 @@ else:
     # inventory = {}
     # inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[myhostname]={}
 
-    cardfooter('The cluster Unison sync status is disabled so this system is not running with High Availability failover.')
+    cardfooter('Database IP will be different from main IP only if you have a LAN link for db replication')
 
 print('                </div> <!-- End Cluster Tab -->')
 
