@@ -337,7 +337,7 @@ else:
     cardheader('Setup cluster','fas fa-align-justify')
     # Get the server main IP
     myip = get('https://api.ipify.org').text
-    myipdata = get('https://ipapi.co/'+myip+'/json/').json()
+    myipdata = get('http://ip-api.com/json/').json()
     print(myipdata)
     mysshport = "22"
     # Display form for ndeploymaster
