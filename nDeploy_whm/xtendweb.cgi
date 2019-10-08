@@ -7,11 +7,12 @@ import yaml
 import psutil
 import platform
 import socket
+from requests import get
 try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, return_prepend, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import bcrumb, return_prepend, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter, return_multi_input
 
 
 __author__ = "Anoop P Alias"
@@ -334,6 +335,35 @@ if os.path.isfile(cluster_config_file):
     cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
 else:
     cardheader('Cluster Unison Sync Status Disabled','fas fa-align-justify')
+    # Get the server main IP
+    ip = get('https://api.ipify.org').text
+    # Display form for ndeploymaster
+    print('                            <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
+    print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+    # master data
+
+    master_hostname_hint = " Masters FQDN "
+    print('                                    <div class="col-md-12">')
+    print('                                        <div class="input-group mt-2 mb-2">')
+    print('                                            <div class="input-group-prepend">')
+    print('                                                <span class="input-group-text">')
+    print('                                                    '+return_multi_input("Master server FQDN", master_hostname_hint))
+    print('                                                </span>')
+    print('                                            </div>')
+    print('                                            <input class="form-control" value="'+myhostname+'" type="text" name="master_hostname">')
+    print('                                        </div>')
+    print('                                    </div>')
+
+    print('                                    <div class="col-md-12">')
+    print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save Master Settings</button>')
+    print('                                    </div>')
+    print('                                </div> <!-- Row End -->')
+    print('                            </form>')
+
+    # inventory = {}
+    # inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[myhostname]={}
+
     cardfooter('The cluster Unison sync status is disabled so this system is not running with High Availability failover.')
 
 print('                </div> <!-- End Cluster Tab -->')
