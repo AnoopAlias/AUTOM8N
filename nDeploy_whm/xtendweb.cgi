@@ -370,6 +370,18 @@ else:
     print('                                        </div>')
     print('                                    </div>')
 
+    master_db_ip_hint = " Masters Database IP "
+    print('                                    <div class="col-md-12">')
+    print('                                        <div class="input-group mt-2 mb-2">')
+    print('                                            <div class="input-group-prepend">')
+    print('                                                <span class="input-group-text">')
+    print('                                                    '+return_multi_input("Master Database IP", master_db_ip_hint))
+    print('                                                </span>')
+    print('                                            </div>')
+    print('                                            <input class="form-control" value="'+myip+'" type="text" name="master_db_ip">')
+    print('                                        </div>')
+    print('                                    </div>')
+
     master_ssh_port_hint = " Masters ssh port "
     print('                                    <div class="col-md-12">')
     print('                                        <div class="input-group mt-2 mb-2">')
