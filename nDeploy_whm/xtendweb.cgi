@@ -437,7 +437,7 @@ else:
     print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
     print('                                                </span>')
     print('                                            </div>')
-    print('                                            <input class="form-control" value="22" type="text" name="master_ssh_port">')
+    print('                                            <input class="form-control" value="22" type="text" name="slave_ssh_port">')
     print('                                        </div>')
     print('                                    </div>')
 
