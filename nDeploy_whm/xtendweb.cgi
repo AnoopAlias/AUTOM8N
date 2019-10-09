@@ -337,7 +337,6 @@ else:
     cardheader('Setup cluster', 'fas fa-align-justify')
     # Get the server main IP
     myip = get('https://api.ipify.org').text
-    mysshport = "22"
     # Display form for ndeploymaster
     print('                            <form class="form" method="post" id="toastForm28" onsubmit="return false;">')
     print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
@@ -388,7 +387,7 @@ else:
     print('                                                    '+return_multi_input("Master ssh port", master_ssh_port_hint))
     print('                                                </span>')
     print('                                            </div>')
-    print('                                            <input class="form-control" value="'+mysshport+'" type="text" name="master_ssh_port">')
+    print('                                            <input class="form-control" value="" type="text" name="master_ssh_port">')
     print('                                        </div>')
     print('                                    </div>')
 
