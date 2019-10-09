@@ -49,6 +49,7 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['longitude'] = master_lon
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['repo'] = 'ndeploy'
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['server_id'] = 1
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_connection'] = 'local'
         # dbslave
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['ansible_port'] = form.getvalue('slave_ssh_port')
