@@ -401,7 +401,7 @@ else:
     print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
     print('                                                </span>')
     print('                                            </div>')
-    print('                                            <input class="form-control" value="slaves-FQDN" type="text" name="slave_hostname">')
+    print('                                            <input class="form-control" value="" type="text" name="slave_hostname">')
     print('                                        </div>')
     print('                                    </div>')
 
@@ -413,7 +413,7 @@ else:
     print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
     print('                                                </span>')
     print('                                            </div>')
-    print('                                            <input class="form-control" value="ip.ip.ip.ip" type="text" name="slave_main_ip">')
+    print('                                            <input class="form-control" value="" type="text" name="slave_main_ip">')
     print('                                        </div>')
     print('                                    </div>')
 
@@ -425,7 +425,7 @@ else:
     print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
     print('                                                </span>')
     print('                                            </div>')
-    print('                                            <input class="form-control" value="ip.ip.ip.ip" type="text" name="slave_db_ip">')
+    print('                                            <input class="form-control" value="" type="text" name="slave_db_ip">')
     print('                                        </div>')
     print('                                    </div>')
 
@@ -437,7 +437,7 @@ else:
     print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
     print('                                                </span>')
     print('                                            </div>')
-    print('                                            <input class="form-control" value="22" type="text" name="slave_ssh_port">')
+    print('                                            <input class="form-control" value="" type="text" name="slave_ssh_port">')
     print('                                        </div>')
     print('                                    </div>')
 
