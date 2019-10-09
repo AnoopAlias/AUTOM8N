@@ -334,14 +334,12 @@ if os.path.isfile(cluster_config_file):
 
     cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
 else:
-    cardheader('Setup cluster','fas fa-align-justify')
+    cardheader('Setup cluster', 'fas fa-align-justify')
     # Get the server main IP
     myip = get('https://api.ipify.org').text
-    myipdata = get('http://ip-api.com/json/').json()
-    print(myipdata)
     mysshport = "22"
     # Display form for ndeploymaster
-    print('                            <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
+    print('                            <form class="form" method="post" id="toastForm28" onsubmit="return false;">')
     print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
     # master data
@@ -394,7 +392,6 @@ else:
     print('                                        </div>')
     print('                                    </div>')
 
-
     # slave data
     slave_hostname_hint = " Slaves FQDN "
     print('                                    <div class="col-md-12">')
@@ -444,15 +441,13 @@ else:
     print('                                        </div>')
     print('                                    </div>')
 
+    print('                                    <input hidden name="action" value="setup">')
+
     print('                                    <div class="col-md-12">')
     print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
     print('                                    </div>')
     print('                                </div> <!-- Row End -->')
     print('                            </form>')
-
-
-    # inventory = {}
-    # inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[myhostname]={}
 
     cardfooter('Database IP will be different from main IP only if you have a LAN link for db replication')
 
