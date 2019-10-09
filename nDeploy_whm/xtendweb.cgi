@@ -28,6 +28,7 @@ autom8n_version_info_file = installation_path+"/conf/version.yaml"
 nginx_version_info_file = "/etc/nginx/version.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
+ansible_inventory_file = "/opt/nDeploy/conf/nDeploy-cluster/hosts"
 
 cgitb.enable()
 print_header('Home')
@@ -335,118 +336,123 @@ if os.path.isfile(cluster_config_file):
     cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
 else:
     cardheader('Setup cluster', 'fas fa-align-justify')
-    # Get the server main IP
-    myip = get('https://api.ipify.org').text
-    # Display form for ndeploymaster
-    print('                            <form class="form" method="post" id="toastForm28" onsubmit="return false;">')
-    print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
-    # master data
+    # If the inventory file exists
+    if os.path.isfile(ansible_inventory_file):
+        pass
+    else:
+        # Get the server main IP
+        myip = get('https://api.ipify.org').text
+        # Display form for ndeploymaster
+        print('                            <form class="form" method="post" id="toastForm28" onsubmit="return false;">')
+        print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
-    master_hostname_hint = " Masters FQDN "
-    print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group mt-2 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input("Master server FQDN", master_hostname_hint))
-    print('                                                </span>')
-    print('                                            </div>')
-    print('                                            <input class="form-control" value="'+myhostname+'" type="text" name="master_hostname">')
-    print('                                        </div>')
-    print('                                    </div>')
+        # master data
 
-    master_main_ip_hint = " Masters Main IP "
-    print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group mt-2 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input("Master Main IP", master_main_ip_hint))
-    print('                                                </span>')
-    print('                                            </div>')
-    print('                                            <input class="form-control" value="'+myip+'" type="text" name="master_main_ip">')
-    print('                                        </div>')
-    print('                                    </div>')
+        master_hostname_hint = " Masters FQDN "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master server FQDN", master_hostname_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+myhostname+'" type="text" name="master_hostname">')
+        print('                                        </div>')
+        print('                                    </div>')
 
-    master_db_ip_hint = " Masters Database IP "
-    print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group mt-2 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input("Master Database IP", master_db_ip_hint))
-    print('                                                </span>')
-    print('                                            </div>')
-    print('                                            <input class="form-control" value="'+myip+'" type="text" name="master_db_ip">')
-    print('                                        </div>')
-    print('                                    </div>')
+        master_main_ip_hint = " Masters Main IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master Main IP", master_main_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+myip+'" type="text" name="master_main_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
 
-    master_ssh_port_hint = " Masters ssh port "
-    print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group mt-2 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input("Master ssh port", master_ssh_port_hint))
-    print('                                                </span>')
-    print('                                            </div>')
-    print('                                            <input class="form-control" value="" type="text" name="master_ssh_port">')
-    print('                                        </div>')
-    print('                                    </div>')
+        master_db_ip_hint = " Masters Database IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master Database IP", master_db_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+myip+'" type="text" name="master_db_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
 
-    # slave data
-    slave_hostname_hint = " Slaves FQDN "
-    print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group mt-2 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
-    print('                                                </span>')
-    print('                                            </div>')
-    print('                                            <input class="form-control" value="" type="text" name="slave_hostname">')
-    print('                                        </div>')
-    print('                                    </div>')
+        master_ssh_port_hint = " Masters ssh port "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master ssh port", master_ssh_port_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="master_ssh_port">')
+        print('                                        </div>')
+        print('                                    </div>')
 
-    slave_main_ip_hint = " Slave Main IP "
-    print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group mt-2 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
-    print('                                                </span>')
-    print('                                            </div>')
-    print('                                            <input class="form-control" value="" type="text" name="slave_main_ip">')
-    print('                                        </div>')
-    print('                                    </div>')
+        # slave data
+        slave_hostname_hint = " Slaves FQDN "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_hostname">')
+        print('                                        </div>')
+        print('                                    </div>')
 
-    slave_db_ip_hint = " slaves Database IP "
-    print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group mt-2 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
-    print('                                                </span>')
-    print('                                            </div>')
-    print('                                            <input class="form-control" value="" type="text" name="slave_db_ip">')
-    print('                                        </div>')
-    print('                                    </div>')
+        slave_main_ip_hint = " Slave Main IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_main_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
 
-    slave_ssh_port_hint = " Slaves ssh port "
-    print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group mt-2 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
-    print('                                                </span>')
-    print('                                            </div>')
-    print('                                            <input class="form-control" value="" type="text" name="slave_ssh_port">')
-    print('                                        </div>')
-    print('                                    </div>')
+        slave_db_ip_hint = " slaves Database IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_db_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
 
-    print('                                    <input hidden name="action" value="setup">')
+        slave_ssh_port_hint = " Slaves ssh port "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_ssh_port">')
+        print('                                        </div>')
+        print('                                    </div>')
 
-    print('                                    <div class="col-md-12">')
-    print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
-    print('                                    </div>')
-    print('                                </div> <!-- Row End -->')
-    print('                            </form>')
+        print('                                    <input hidden name="action" value="setup">')
+
+        print('                                    <div class="col-md-12">')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
+        print('                                    </div>')
+        print('                                </div> <!-- Row End -->')
+        print('                            </form>')
 
     cardfooter('Database IP will be different from main IP only if you have a LAN link for db replication')
 
