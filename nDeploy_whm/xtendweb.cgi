@@ -339,7 +339,13 @@ else:
 
     # If the inventory file exists
     if os.path.isfile(ansible_inventory_file):
-        pass
+        # parse the inventory and display its contents
+        with open(ansible_inventory_file, 'r') as my_inventory:
+            ansible_inventory_file_parsed = yaml.safe_load(my_inventory)
+        master_hostname = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][0]
+        master_server_id =  ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][0]['server_id']
+        print(master_hostname)
+        print(master_server_id)
     else:
         # Get the server main IP
         myip = get('https://api.ipify.org').text
