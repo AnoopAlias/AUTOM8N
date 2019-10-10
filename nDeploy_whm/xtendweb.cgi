@@ -342,8 +342,8 @@ else:
         # parse the inventory and display its contents
         with open(ansible_inventory_file, 'r') as my_inventory:
             ansible_inventory_file_parsed = yaml.safe_load(my_inventory)
-        master_hostname = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][0]
-        master_server_id =  ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][0]['server_id']
+        master_hostname = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'].keys()[0]
+        master_server_id =  ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['server_id']
         print(master_hostname)
         print(master_server_id)
     else:
