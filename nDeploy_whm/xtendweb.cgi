@@ -342,9 +342,9 @@ else:
         # Master data
         master_hostname_hint = " Masters FQDN "
         print('                                <div class="input-group mb-2">')
-        print('                                    <div class="input-group-prepend">')
+        print('                                    <div class="input-group-prepend input-group-prepend-min input-group-prepend input-group-prepend-min-min">')
         print('                                        <span class="input-group-text">')
-        print('                                            '+return_multi_input("Master server FQDN", master_hostname_hint))
+        print('                                            '+return_multi_input("Master Node FQDN", master_hostname_hint))
         print('                                        </span>')
         print('                                    </div>')
         print('                                    <input class="form-control" value="'+myhostname+'" type="text" name="master_hostname">')
@@ -352,7 +352,7 @@ else:
 
         master_main_ip_hint = " Masters Main IP "
         print('                                <div class="input-group mb-2">')
-        print('                                    <div class="input-group-prepend">')
+        print('                                    <div class="input-group-prepend input-group-prepend-min">')
         print('                                        <span class="input-group-text">')
         print('                                            '+return_multi_input("Master Main IP", master_main_ip_hint))
         print('                                        </span>')
@@ -362,9 +362,9 @@ else:
 
         master_db_ip_hint = " Masters Database IP "
         print('                                <div class="input-group mb-2">')
-        print('                                    <div class="input-group-prepend">')
+        print('                                    <div class="input-group-prepend input-group-prepend-min">')
         print('                                        <span class="input-group-text">')
-        print('                                            '+return_multi_input("Master Database IP", master_db_ip_hint))
+        print('                                            '+return_multi_input("Master DB IP", master_db_ip_hint))
         print('                                        </span>')
         print('                                    </div>')
         print('                                    <input class="form-control" value="'+myip+'" type="text" name="master_db_ip">')
@@ -372,9 +372,9 @@ else:
 
         master_ssh_port_hint = " Masters ssh port "
         print('                                <div class="input-group mb-2">')
-        print('                                    <div class="input-group-prepend">')
+        print('                                    <div class="input-group-prepend input-group-prepend-min">')
         print('                                        <span class="input-group-text">')
-        print('                                            '+return_multi_input("Master ssh port", master_ssh_port_hint))
+        print('                                            '+return_multi_input("Master SSH Port", master_ssh_port_hint))
         print('                                        </span>')
         print('                                    </div>')
         print('                                    <input class="form-control" value="" type="text" name="master_ssh_port">')
@@ -383,9 +383,9 @@ else:
         # Slave data
         slave_hostname_hint = " Slaves FQDN "
         print('                                <div class="input-group mb-2">')
-        print('                                    <div class="input-group-prepend">')
+        print('                                    <div class="input-group-prepend input-group-prepend-min">')
         print('                                        <span class="input-group-text">')
-        print('                                            '+return_multi_input("Slave server FQDN", slave_hostname_hint))
+        print('                                            '+return_multi_input("Slave Node FQDN", slave_hostname_hint))
         print('                                        </span>')
         print('                                    </div>')
         print('                                    <input class="form-control" value="" type="text" name="slave_hostname">')
@@ -393,7 +393,7 @@ else:
 
         slave_main_ip_hint = " Slave Main IP "
         print('                                <div class="input-group mb-2">')
-        print('                                    <div class="input-group-prepend">')
+        print('                                    <div class="input-group-prepend input-group-prepend-min">')
         print('                                        <span class="input-group-text">')
         print('                                            '+return_multi_input("Slave Main IP", slave_main_ip_hint))
         print('                                        </span>')
@@ -403,9 +403,9 @@ else:
 
         slave_db_ip_hint = " slaves Database IP "
         print('                                <div class="input-group mb-2">')
-        print('                                    <div class="input-group-prepend">')
+        print('                                    <div class="input-group-prepend input-group-prepend-min">')
         print('                                        <span class="input-group-text">')
-        print('                                            '+return_multi_input("Slave Database IP", slave_db_ip_hint))
+        print('                                            '+return_multi_input("Slave DB IP", slave_db_ip_hint))
         print('                                        </span>')
         print('                                    </div>')
         print('                                    <input class="form-control" value="" type="text" name="slave_db_ip">')
@@ -413,9 +413,9 @@ else:
 
         slave_ssh_port_hint = " Slaves ssh port "
         print('                                <div class="input-group mb-2">')
-        print('                                    <div class="input-group-prepend">')
+        print('                                    <div class="input-group-prepend input-group-prepend-min">')
         print('                                        <span class="input-group-text">')
-        print('                                            '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
+        print('                                            '+return_multi_input("Slave SSH Port", slave_ssh_port_hint))
         print('                                        </span>')
         print('                                    </div>')
         print('                                    <input class="form-control" value="" type="text" name="slave_ssh_port">')
@@ -470,7 +470,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
 
     print('                 <form class="form mb-3" id="toastForm27" onsubmit="return false;">')
     print('                     <div class="input-group">')
-    print('                         <div class="input-group-prepend">')
+    print('                         <div class="input-group-prepend input-group-prepend-min">')
     print('                             <label class="input-group-text">Files</label>')
     print('                         </div>')
     print('                         <select name="user" class="custom-select">')
@@ -485,7 +485,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
 
     print('                 <form class="form" id="toastForm7" onsubmit="return false;">')
     print('                     <div class="input-group">')
-    print('                         <div class="input-group-prepend">')
+    print('                         <div class="input-group-prepend input-group-prepend-min">')
     print('                             <label class="input-group-text">Zone</label>')
     print('                         </div>')
     print('                         <select name="user" class="custom-select">')
@@ -539,7 +539,7 @@ if "PHP" in backend_data_yaml_parsed:
     print('             <div class="card-body"> <!-- Card Body Start -->')
     print('                 <form class="form" id="toastForm6" onsubmit="return false;">')
     print('                     <div class="input-group">')
-    print('                         <div class="input-group-prepend">')
+    print('                         <div class="input-group-prepend input-group-prepend-min">')
     print('                             <label class="input-group-text">PHP</label>')
     print('                         </div>')
     print('                         <select name="phpversion" class="custom-select">')
@@ -637,7 +637,7 @@ cardheader('PHP-FPM Pool Editor','fas fa-sitemap')
 print('                 <div class="card-body"> <!-- Card Body Start -->')
 print('                     <form class="form" action="phpfpm_pool_editor.cgi" method="get">')
 print('                         <div class="input-group">')
-print('                             <div class="input-group-prepend">')
+print('                             <div class="input-group-prepend input-group-prepend-min">')
 print('                                 <span class="input-group-text">')
 print('                                     '+return_prepend("cPanel User", phpfpmpool_hint))
 print('                                 </span>')
@@ -716,7 +716,7 @@ mypkgs = json.loads(listpkgs)
 
 print('                     <form class="form" action="pkg_profile.cgi" method="get">')
 print('                         <div class="input-group">')
-print('                             <div class="input-group-prepend">')
+print('                             <div class="input-group-prepend input-group-prepend-min">')
 print('                                 <span class="input-group-text">')
 print('                                     '+return_prepend("cPanel Package", cpanpackage_hint))
 print('                                 </span>')
@@ -756,7 +756,7 @@ if not osrelease == 'CloudLinux':
             userlist = os.listdir("/var/cpanel/users")
             print('         <form class="form" action="resource_limit.cgi" method="get">')
             print('             <div class="input-group">')
-            print('                 <div class="input-group-prepend">')
+            print('                 <div class="input-group-prepend input-group-prepend-min">')
             print('                     <label class="input-group-text">User</label>')
             print('                 </div>')
             print('                 <select name="unit" class="custom-select">')
@@ -773,7 +773,7 @@ if not osrelease == 'CloudLinux':
 
             print('         <form class="form mt-4" action="resource_limit.cgi" method="get">')
             print('             <div class="input-group">')
-            print('                 <div class="input-group-prepend">')
+            print('                 <div class="input-group-prepend input-group-prepend-min">')
             print('                     <label class="input-group-text">Service</label>')
             print('                 </div>')
             print('                 <select name="unit" class="custom-select">')
@@ -789,7 +789,7 @@ if not osrelease == 'CloudLinux':
         else:
             print('         <form class="form" action="resource_limit.cgi" method="get">')
             print('             <div class="input-group">')
-            print('                 <div class="input-group-prepend">')
+            print('                 <div class="input-group-prepend input-group-prepend-min">')
             print('                     <label class="input-group-text">Resource</label>')
             print('                 </div>')
             print('                 <select name="unit" class="custom-select">')
