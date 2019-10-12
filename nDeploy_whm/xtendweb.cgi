@@ -410,7 +410,7 @@ else:
         print('                                                    '+return_multi_input("Master ssh port", master_ssh_port_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_ssh_port+'" type="text" name="master_ssh_port">')
+        print('                                            <input class="form-control" value="'+str(master_ssh_port)+'" type="text" name="master_ssh_port">')
         print('                                        </div>')
         print('                                    </div>')
 
@@ -434,7 +434,7 @@ else:
         print('                                                    '+return_multi_input("Master latitude", master_lat_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_lat+'" type="text" name="master_lat">')
+        print('                                            <input class="form-control" value="'+str(master_lat)+'" type="text" name="master_lat">')
         print('                                        </div>')
         print('                                    </div>')
 
@@ -446,7 +446,7 @@ else:
         print('                                                    '+return_multi_input("Master longitude", master_lon_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_lon+'" type="text" name="master_lon">')
+        print('                                            <input class="form-control" value="'+str(master_lon)+'" type="text" name="master_lon">')
         print('                                        </div>')
         print('                                    </div>')
 
@@ -530,7 +530,7 @@ else:
         print('                                                    '+return_multi_input("Slave ssh port", dbslave_ssh_port_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+dbslave_ssh_port+'" type="text" name="dbslave_ssh_port">')
+        print('                                            <input class="form-control" value="'+str(dbslave_ssh_port)+'" type="text" name="dbslave_ssh_port">')
         print('                                        </div>')
         print('                                    </div>')
 
@@ -554,7 +554,7 @@ else:
         print('                                                    '+return_multi_input("Slave latitude", dbslave_lat_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+dbslave_lat+'" type="text" name="dbslave_lat">')
+        print('                                            <input class="form-control" value="'+str(dbslave_lat)+'" type="text" name="dbslave_lat">')
         print('                                        </div>')
         print('                                    </div>')
 
@@ -566,7 +566,7 @@ else:
         print('                                                    '+return_multi_input("Slave longitude", dbslave_lon_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+dbslave_lon+'" type="text" name="dbslave_lon">')
+        print('                                            <input class="form-control" value="'+str(dbslave_lon)+'" type="text" name="dbslave_lon">')
         print('                                        </div>')
         print('                                    </div>')
 
