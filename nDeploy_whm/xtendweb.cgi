@@ -422,7 +422,7 @@ else:
         print('                                                    '+return_multi_input("Master server id", master_server_id_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_server_id+'" type="text" name="master_server_id">')
+        print('                                            <input class="form-control" value="'+str(master_server_id)+'" type="text" name="master_server_id">')
         print('                                        </div>')
         print('                                    </div>')
 
@@ -446,7 +446,7 @@ else:
         print('                                                    '+return_multi_input("Master longitude", master_lon_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_lon+'" type="text" name="master_ssh_port">')
+        print('                                            <input class="form-control" value="'+master_lon+'" type="text" name="master_lon">')
         print('                                        </div>')
         print('                                    </div>')
 
@@ -542,7 +542,7 @@ else:
         print('                                                    '+return_multi_input("Slave server id", dbslave_server_id_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+dbslave_server_id+'" type="text" name="dbslave_server_id">')
+        print('                                            <input class="form-control" value="'+str(dbslave_server_id)+'" type="text" name="dbslave_server_id">')
         print('                                        </div>')
         print('                                    </div>')
 
@@ -566,7 +566,7 @@ else:
         print('                                                    '+return_multi_input("Slave longitude", dbslave_lon_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+dbslave_lon+'" type="text" name="dbslave_ssh_port">')
+        print('                                            <input class="form-control" value="'+dbslave_lon+'" type="text" name="dbslave_lon">')
         print('                                        </div>')
         print('                                    </div>')
 
