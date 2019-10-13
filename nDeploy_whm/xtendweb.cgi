@@ -365,7 +365,7 @@ else:
         dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
 
         # master data
-        print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
+        print('                            <form class="form" method="get" id="toastForm29" onsubmit="return false;">')
         print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
         master_hostname_hint = " Masters FQDN "
@@ -497,7 +497,7 @@ else:
         print('                            </form>')
 
         # slave data
-        print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
+        print('                            <form class="form" method="get" id="toastForm30" onsubmit="return false;">')
         print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
         dbslave_hostname_hint = " Slave FQDN "
