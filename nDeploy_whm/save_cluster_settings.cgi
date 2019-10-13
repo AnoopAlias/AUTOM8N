@@ -25,14 +25,11 @@ def check_unique_id(id):
         # parse the inventory and display its contents
         with open(ansible_inventory_file, 'r') as my_inventory:
             inventory = yaml.safe_load(my_inventory)
-    for myslave in inventory['all']['children']['ndeployslaves'].keys():
-        if inventory['all']['children']['ndeployslaves'][myslave]['server_id'] == id:
+    for myslave in inventory['all']['children']['ndeployslaves']['hosts'].keys():
+        if inventory['all']['children']['ndeployslaves']['hosts'][myslave]['server_id'] == id:
             return False
             break
     return True
-
-
-
 
 
 form = cgi.FieldStorage()
@@ -154,7 +151,7 @@ if form.getvalue('action'):
         slave_lat = slave_ipdata.get('lat')
         slave_lon = slave_ipdata.get('lon')
         # calculate slave server id
-        num_slaves = len(inventory['all']['children']['ndeployslaves'].keys())
+        num_slaves = len(inventory['all']['children']['ndeployslaves']['hosts'].keys())
         num_slaves = num_slaves + 2  # server id for master is 1 and dbslave is 2
         # check if the server id already exist,if yes we increment its value by 1
         while not check_unique_id(num_slaves):
