@@ -83,7 +83,6 @@ if form.getvalue('action'):
             # parse the inventory and display its contents
             with open(ansible_inventory_file, 'r') as my_inventory:
                 inventory = yaml.safe_load(my_inventory)
-        print(inventory)
         # master
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_port'] = form.getvalue('master_ssh_port')
@@ -96,7 +95,6 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['repo'] = form.getvalue('master_repo')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['server_id'] = form.getvalue('master_server_id')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_connection'] = 'local'
-        print(inventory)
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
         commoninclude.print_success('Master settings saved')

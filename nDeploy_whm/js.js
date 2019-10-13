@@ -386,7 +386,7 @@ jQuery(document).ready(function($) {
     });
 
     $('#toastForm29').submit(function() {
-        var $f = $('#toastForm28');
+        var $f = $('#toastForm29');
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
@@ -398,7 +398,7 @@ jQuery(document).ready(function($) {
     });
 
     $('#toastForm30').submit(function() {
-        var $f = $('#toastForm28');
+        var $f = $('#toastForm30');
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
