@@ -131,6 +131,8 @@ if form.getvalue('action'):
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
         commoninclude.print_success('DBSlave settings saved')
+else:
+    commoninclude.print_forbidden('DBSlave settings saved')
 
 print('</body>')
 print('</html>')
