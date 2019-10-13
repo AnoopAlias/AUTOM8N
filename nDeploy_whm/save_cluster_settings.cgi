@@ -20,6 +20,21 @@ ansible_inventory_file = "/opt/nDeploy/conf/nDeploy-cluster/hosts"
 cgitb.enable()
 
 
+def check_unique_id(id):
+    if os.path.isfile(ansible_inventory_file):
+        # parse the inventory and display its contents
+        with open(ansible_inventory_file, 'r') as my_inventory:
+            inventory = yaml.safe_load(my_inventory)
+    for myslave in inventory['all']['children']['ndeployslaves'].keys():
+        if inventory['all']['children']['ndeployslaves'][myslave]['server_id'] == id:
+            return False
+            break
+    return True
+
+
+
+
+
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
@@ -129,6 +144,35 @@ if form.getvalue('action'):
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
         commoninclude.print_success('DBSlave settings saved')
+    elif form.getvalue('action') == 'addadditionalslave':
+        # If the inventory file exists
+        if os.path.isfile(ansible_inventory_file):
+            # parse the inventory and display its contents
+            with open(ansible_inventory_file, 'r') as my_inventory:
+                inventory = yaml.safe_load(my_inventory)
+        slave_ipdata = get('http://ip-api.com/json/'+form.getvalue('slave_main_ip')).json()
+        slave_lat = slave_ipdata.get('lat')
+        slave_lon = slave_ipdata.get('lon')
+        # calculate slave server id
+        num_slaves = len(inventory['all']['children']['ndeployslaves'].keys())
+        num_slaves = num_slaves + 2  # server id for master is 1 and dbslave is 2
+        # check if the server id already exist,if yes we increment its value by 1
+        while not check_unique_id(num_slaves):
+            num_slaves = num_slaves + 1
+        # slave
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')] = {}
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['ansible_port'] = form.getvalue('slave_ssh_port')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['mainip'] = form.getvalue('slave_main_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['dbip'] = form.getvalue('slave_db_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['dbmode'] = 'rwsplit'
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['dns'] = 'geodns'
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['latitude'] = slave_lat
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['longitude'] = slave_lon
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['repo'] = 'ndeploy'
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['server_id'] = num_slaves
+        with open(ansible_inventory_file, 'w') as ansible_inventory:
+            yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+        commoninclude.print_success('New Slave added to cluster')
 else:
     commoninclude.print_forbidden()
 

@@ -365,7 +365,7 @@ else:
         dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
 
         # master data
-        print('                            <form class="form" method="get" id="toastForm29" onsubmit="return false;">')
+        print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
         print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
         master_hostname_hint = " Masters FQDN "
@@ -497,7 +497,7 @@ else:
         print('                            </form>')
 
         # slave data
-        print('                            <form class="form" method="get" id="toastForm30" onsubmit="return false;">')
+        print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
         print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
         dbslave_hostname_hint = " Slave FQDN "
@@ -624,6 +624,67 @@ else:
 
         print('                                    <div class="col-md-12">')
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save slave Settings</button>')
+        print('                                    </div>')
+        print('                                </div> <!-- Row End -->')
+        print('                            </form>')
+
+        # Add additional Slave
+        print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
+        print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+        # slave data
+        slave_hostname_hint = " Slaves FQDN "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_hostname">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        slave_main_ip_hint = " Slave Main IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_main_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        slave_db_ip_hint = " slaves Database IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_db_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        slave_ssh_port_hint = " Slaves ssh port "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_ssh_port">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        print('                                    <input hidden name="action" value="addadditionalslave">')
+
+        print('                                    <div class="col-md-12">')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
         print('                                    </div>')
         print('                                </div> <!-- Row End -->')
         print('                            </form>')
