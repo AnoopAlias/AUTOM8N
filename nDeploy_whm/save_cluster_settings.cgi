@@ -76,6 +76,7 @@ if form.getvalue('action'):
 
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+        commoninclude.print_success('Cluster settings saved')
     elif form.getvalue('action') == 'editmaster':
         # If the inventory file exists
         if os.path.isfile(ansible_inventory_file):
@@ -97,6 +98,7 @@ if form.getvalue('action'):
         print(inventory)
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+        commoninclude.print_success('Master settings saved')
     elif form.getvalue('action') == 'editdbslave':
         # If the inventory file exists
         if os.path.isfile(ansible_inventory_file):
@@ -127,8 +129,7 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['server_id'] = form.getvalue('dbslave_server_id')
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
-
-commoninclude.print_success('Cluster settings saved')
+        commoninclude.print_success('DBSlave settings saved')
 
 print('</body>')
 print('</html>')
