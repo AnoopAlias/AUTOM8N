@@ -132,7 +132,7 @@ if form.getvalue('action'):
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
         commoninclude.print_success('DBSlave settings saved')
 else:
-    commoninclude.print_forbidden('DBSlave settings saved')
+    commoninclude.print_forbidden('form data missing')
 
 print('</body>')
 print('</html>')
