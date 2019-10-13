@@ -5,6 +5,7 @@ import cgi
 import cgitb
 from requests import get
 import yaml
+import os
 
 
 __author__ = "Anoop P Alias"
@@ -73,6 +74,56 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['repo'] = 'ndeploy'
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['server_id'] = 2
 
+        with open(ansible_inventory_file, 'w') as ansible_inventory:
+            yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+    elif form.getvalue('action') == 'editmaster':
+        # If the inventory file exists
+        if os.path.isfile(ansible_inventory_file):
+            # parse the inventory and display its contents
+            with open(ansible_inventory_file, 'r') as my_inventory:
+                inventory = yaml.safe_load(my_inventory)
+        # master
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')] = {}
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_port'] = form.getvalue('master_ssh_port')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['mainip'] = form.getvalue('master_main_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['dbip'] = form.getvalue('master_db_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['dbmode'] = form.getvalue('master_dbmode')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['dns'] = form.getvalue('master_dns')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['latitude'] = form.getvalue('master_lat')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['longitude'] = form.getvalue('master_lon')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['repo'] = form.getvalue('master_repo')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['server_id'] = form.getvalue('master_server_id')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_connection'] = 'local'
+        with open(ansible_inventory_file, 'w') as ansible_inventory:
+            yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+    elif form.getvalue('action') == 'editdbslave':
+        # If the inventory file exists
+        if os.path.isfile(ansible_inventory_file):
+            # parse the inventory and display its contents
+            with open(ansible_inventory_file, 'r') as my_inventory:
+                inventory = yaml.safe_load(my_inventory)
+        # slave
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')] = {}
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['ansible_port'] = form.getvalue('dbslave_ssh_port')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['mainip'] = form.getvalue('dbslave_main_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['dbip'] = form.getvalue('dbslave_db_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['dbmode'] = form.getvalue('dbslave_dbmode')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['dns'] = form.getvalue('dbslave_dns')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['latitude'] = form.getvalue('dbslave_lat')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['longitude'] = form.getvalue('dbslave_lon')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['repo'] = form.getvalue('dbslave_repo')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['server_id'] = form.getvalue('dbslave_server_id')
+        # dbslave
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')] = {}
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['ansible_port'] = form.getvalue('dbslave_ssh_port')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['mainip'] = form.getvalue('dbslave_main_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['dbip'] = form.getvalue('dbslave_db_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['dbmode'] = form.getvalue('dbslave_dbmode')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['dns'] = form.getvalue('dbslave_dns')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['latitude'] = form.getvalue('dbslave_lat')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['longitude'] = form.getvalue('dbslave_lon')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['repo'] = form.getvalue('dbslave_repo')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['server_id'] = form.getvalue('dbslave_server_id')
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
 

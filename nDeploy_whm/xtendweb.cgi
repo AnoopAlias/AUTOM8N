@@ -351,6 +351,7 @@ else:
         master_lat = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['latitude']
         master_lon = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['longitude']
         master_repo = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['repo']
+        master_dns = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dns']
 
         dbslave_hostname = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'].keys()[0]
         dbslave_server_id = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['server_id']
@@ -361,9 +362,10 @@ else:
         dbslave_lat = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['latitude']
         dbslave_lon = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['longitude']
         dbslave_repo = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['repo']
+        dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
 
         # master data
-        print('                            <form class="form" method="post" id="toastForm28" onsubmit="return false;">')
+        print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
         print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
         master_hostname_hint = " Masters FQDN "
@@ -474,6 +476,18 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
+        master_dns_hint = " Master DNS server "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("DNS", master_dns_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+master_dns+'" type="text" name="master_dns">')
+        print('                                        </div>')
+        print('                                    </div>')
+
         print('                                    <input hidden name="action" value="editmaster">')
 
         print('                                    <div class="col-md-12">')
@@ -483,7 +497,7 @@ else:
         print('                            </form>')
 
         # slave data
-        print('                            <form class="form" method="post" id="toastForm28" onsubmit="return false;">')
+        print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
         print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
         dbslave_hostname_hint = " Slave FQDN "
@@ -594,7 +608,19 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
-        print('                                    <input hidden name="action" value="setup">')
+        dbslave_dns_hint = " Slave DNS server "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("DNS", dbslave_dns_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+dbslave_dns+'" type="text" name="dbslave_dns">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        print('                                    <input hidden name="action" value="editdbslave">')
 
         print('                                    <div class="col-md-12">')
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save slave Settings</button>')
