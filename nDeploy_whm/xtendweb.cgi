@@ -629,7 +629,8 @@ else:
         print('                            </form>')
 
         # Add additional Slave
-        print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
+        # print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
+        print('                            <form class="form" method="get" id="toastForm31" action="/save_cluster_settings.cgi">')
         print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
         # slave data
