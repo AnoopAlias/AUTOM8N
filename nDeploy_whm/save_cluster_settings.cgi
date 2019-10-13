@@ -83,6 +83,7 @@ if form.getvalue('action'):
             # parse the inventory and display its contents
             with open(ansible_inventory_file, 'r') as my_inventory:
                 inventory = yaml.safe_load(my_inventory)
+        print(inventory)
         # master
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_port'] = form.getvalue('master_ssh_port')
