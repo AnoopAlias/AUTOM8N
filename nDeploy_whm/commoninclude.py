@@ -85,6 +85,7 @@ def print_nontoast_error(thenotice, thereason):
     print('    </body> <!-- Body End -->')
     print('</html>')
 
+
 def print_forbidden():
     print('<i class="fas fa-exclamation"></i><p>Forbidden</p>')
 

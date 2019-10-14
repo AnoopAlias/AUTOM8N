@@ -385,6 +385,69 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#toastForm29').submit(function() {
+        var $f = $('#toastForm29');
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm30').submit(function() {
+        var $f = $('#toastForm30');
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm31').submit(function() {
+        var $f = $('#toastForm31');
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('.toastForm32-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('.toastForm33-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+
     $('#ndeploy_control_branding').submit(function() {
         var $f = $('#ndeploy_control_branding');
         var $url = "save_ndeploy_branding_settings.cgi?" + $f.serialize();

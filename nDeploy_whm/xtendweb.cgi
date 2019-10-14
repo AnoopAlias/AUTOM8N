@@ -331,12 +331,6 @@ if os.path.isfile(cluster_config_file):
     print('                     <button type="submit" class="btn btn-outline-primary" form="toastForm26">Reset Csync2</button>')
     print('                 </div>')
 
-    print('             </div> <!-- Card Body End -->')
-
-    cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
-else:
-    cardheader('Setup cluster', 'fas fa-align-justify')
-
     # If the inventory file exists
     if os.path.isfile(ansible_inventory_file):
         # parse the inventory and display its contents
@@ -351,6 +345,7 @@ else:
         master_lat = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['latitude']
         master_lon = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['longitude']
         master_repo = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['repo']
+        master_dns = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dns']
 
         dbslave_hostname = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'].keys()[0]
         dbslave_server_id = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['server_id']
@@ -361,9 +356,10 @@ else:
         dbslave_lat = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['latitude']
         dbslave_lon = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['longitude']
         dbslave_repo = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['repo']
+        dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
 
         # master data
-        print('                            <form class="form" method="post" id="toastForm28" onsubmit="return false;">')
+        print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
         print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
         master_hostname_hint = " Masters FQDN "
@@ -474,6 +470,18 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
+        master_dns_hint = " Master DNS server "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("DNS", master_dns_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+master_dns+'" type="text" name="master_dns">')
+        print('                                        </div>')
+        print('                                    </div>')
+
         print('                                    <input hidden name="action" value="editmaster">')
 
         print('                                    <div class="col-md-12">')
@@ -483,7 +491,7 @@ else:
         print('                            </form>')
 
         # slave data
-        print('                            <form class="form" method="post" id="toastForm28" onsubmit="return false;">')
+        print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
         print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
         dbslave_hostname_hint = " Slave FQDN "
@@ -498,7 +506,7 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
-        dbslave_main_ip_hint = " Masters Main IP "
+        dbslave_main_ip_hint = " Slaves Main IP "
         print('                                    <div class="col-md-12">')
         print('                                        <div class="input-group mt-2 mb-2">')
         print('                                            <div class="input-group-prepend">')
@@ -510,7 +518,7 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
-        dbslave_db_ip_hint = " Masters Database IP "
+        dbslave_db_ip_hint = " Slaves Database IP "
         print('                                    <div class="col-md-12">')
         print('                                        <div class="input-group mt-2 mb-2">')
         print('                                            <div class="input-group-prepend">')
@@ -522,7 +530,7 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
-        dbslave_ssh_port_hint = " Masters ssh port "
+        dbslave_ssh_port_hint = " Slaves ssh port "
         print('                                    <div class="col-md-12">')
         print('                                        <div class="input-group mt-2 mb-2">')
         print('                                            <div class="input-group-prepend">')
@@ -534,7 +542,7 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
-        dbslave_server_id_hint = " Masters server id "
+        dbslave_server_id_hint = " Slaves server id "
         print('                                    <div class="col-md-12">')
         print('                                        <div class="input-group mt-2 mb-2">')
         print('                                            <div class="input-group-prepend">')
@@ -546,7 +554,7 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
-        dbslave_lat_hint = " Masters server latitude "
+        dbslave_lat_hint = " Slave server latitude "
         print('                                    <div class="col-md-12">')
         print('                                        <div class="input-group mt-2 mb-2">')
         print('                                            <div class="input-group-prepend">')
@@ -558,7 +566,7 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
-        dbslave_lon_hint = " Masters severs longitude"
+        dbslave_lon_hint = " Slave sever longitude"
         print('                                    <div class="col-md-12">')
         print('                                        <div class="input-group mt-2 mb-2">')
         print('                                            <div class="input-group-prepend">')
@@ -594,10 +602,755 @@ else:
         print('                                        </div>')
         print('                                    </div>')
 
-        print('                                    <input hidden name="action" value="setup">')
+        dbslave_dns_hint = " Slave DNS server "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("DNS", dbslave_dns_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+dbslave_dns+'" type="text" name="dbslave_dns">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        print('                                    <input hidden name="action" value="editdbslave">')
 
         print('                                    <div class="col-md-12">')
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save slave Settings</button>')
+        print('                                    </div>')
+        print('                                </div> <!-- Row End -->')
+        print('                            </form>')
+
+        # Additional slaves
+        for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
+            if myslave != dbslave_hostname:
+                # Lets get all the details of this slave server and present to the user for editing
+                slave_hostname = myslave
+                slave_server_id = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['server_id']
+                slave_ssh_port = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['ansible_port']
+                slave_main_ip = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['mainip']
+                slave_db_ip = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dbip']
+                slave_dbmode = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dbmode']
+                slave_lat = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['latitude']
+                slave_lon = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['longitude']
+                slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
+                slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
+                # slave data
+                print('                            <form class="form toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+                slave_hostname_hint = " Slave FQDN "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_hostname+'" type="text" name="slave_hostname">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_main_ip_hint = " Slaves Main IP "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_main_ip+'" type="text" name="slave_main_ip">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_db_ip_hint = " Slaves Database IP "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_db_ip+'" type="text" name="slave_db_ip">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_ssh_port_hint = " Slave ssh port "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+str(slave_ssh_port)+'" type="text" name="slave_ssh_port">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_server_id_hint = "Slave server id "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave server id", slave_server_id_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+str(slave_server_id)+'" type="text" name="slave_server_id">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_lat_hint = " Slave server latitude "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave latitude", slave_lat_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+str(slave_lat)+'" type="text" name="slave_lat">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_lon_hint = " Slave sever longitude"
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave longitude", slave_lon_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+str(slave_lon)+'" type="text" name="slave_lon">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_repo_hint = " RPM repo "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("RPM repo", slave_repo_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_repo+'" type="text" name="slave_repo">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_dbmode_hint = " MaxScale Mode "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("DBMode", slave_dbmode_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_dbmode+'" type="text" name="slave_dbmode">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_dns_hint = " Slave DNS server "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("DNS", slave_dns_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_dns+'" type="text" name="slave_dns">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                print('                                    <input hidden name="action" value="editslave">')
+
+                print('                                    <div class="col-md-12">')
+                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save slave Settings</button>')
+                print('                                    </div>')
+                print('                                </div> <!-- Row End -->')
+                print('                            </form>')
+
+                # Delete the Additional Slave
+                print('                            <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+                print('                                    <input hidden name="action" value="deleteslave">')
+                print('                                    <input hidden name="slave_hostname" value="'+myslave+'">')
+                print('                                    <div class="col-md-12">')
+                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Delete this Slave</button>')
+                print('                                    </div>')
+                print('                                </div> <!-- Row End -->')
+                print('                            </form>')
+
+        # Add additional Slave
+        print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
+        print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+        # slave data
+        slave_hostname_hint = " Slaves FQDN "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_hostname">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        slave_main_ip_hint = " Slave Main IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_main_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        slave_db_ip_hint = " slaves Database IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_db_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        slave_ssh_port_hint = " Slaves ssh port "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_ssh_port">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        print('                                    <input hidden name="action" value="addadditionalslave">')
+
+        print('                                    <div class="col-md-12">')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
+        print('                                    </div>')
+        print('                                </div> <!-- Row End -->')
+        print('                            </form>')
+
+    print('             </div> <!-- Card Body End -->')
+
+    cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
+else:
+    cardheader('Setup cluster', 'fas fa-align-justify')
+
+    # If the inventory file exists
+    if os.path.isfile(ansible_inventory_file):
+        # parse the inventory and display its contents
+        with open(ansible_inventory_file, 'r') as my_inventory:
+            ansible_inventory_file_parsed = yaml.safe_load(my_inventory)
+        master_hostname = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'].keys()[0]
+        master_server_id = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['server_id']
+        master_ssh_port = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['ansible_port']
+        master_main_ip = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['mainip']
+        master_db_ip = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dbip']
+        master_dbmode = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dbmode']
+        master_lat = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['latitude']
+        master_lon = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['longitude']
+        master_repo = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['repo']
+        master_dns = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dns']
+
+        dbslave_hostname = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'].keys()[0]
+        dbslave_server_id = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['server_id']
+        dbslave_ssh_port = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['ansible_port']
+        dbslave_main_ip = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['mainip']
+        dbslave_db_ip = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dbip']
+        dbslave_dbmode = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dbmode']
+        dbslave_lat = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['latitude']
+        dbslave_lon = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['longitude']
+        dbslave_repo = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['repo']
+        dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
+
+        # master data
+        print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
+        print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+        master_hostname_hint = " Masters FQDN "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master server FQDN", master_hostname_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+master_hostname+'" type="text" name="master_hostname">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_main_ip_hint = " Masters Main IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master Main IP", master_main_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+master_main_ip+'" type="text" name="master_main_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_db_ip_hint = " Masters Database IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master Database IP", master_db_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+master_db_ip+'" type="text" name="master_db_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_ssh_port_hint = " Masters ssh port "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master ssh port", master_ssh_port_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+str(master_ssh_port)+'" type="text" name="master_ssh_port">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_server_id_hint = " Masters server id "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master server id", master_server_id_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+str(master_server_id)+'" type="text" name="master_server_id">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_lat_hint = " Masters server latitude "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master latitude", master_lat_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+str(master_lat)+'" type="text" name="master_lat">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_lon_hint = " Masters severs longitude"
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master longitude", master_lon_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+str(master_lon)+'" type="text" name="master_lon">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_repo_hint = " RPM repo "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("RPM repo", master_repo_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+master_repo+'" type="text" name="master_repo">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_dbmode_hint = " MaxScale Mode "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("DBMode", master_dbmode_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+master_dbmode+'" type="text" name="master_dbmode">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_dns_hint = " Master DNS server "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("DNS", master_dns_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+master_dns+'" type="text" name="master_dns">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        print('                                    <input hidden name="action" value="editmaster">')
+
+        print('                                    <div class="col-md-12">')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save master Settings</button>')
+        print('                                    </div>')
+        print('                                </div> <!-- Row End -->')
+        print('                            </form>')
+
+        # slave data
+        print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
+        print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+        dbslave_hostname_hint = " Slave FQDN "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave server FQDN", dbslave_hostname_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+dbslave_hostname+'" type="text" name="dbslave_hostname">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        dbslave_main_ip_hint = " Slaves Main IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Main IP", dbslave_main_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+dbslave_main_ip+'" type="text" name="dbslave_main_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        dbslave_db_ip_hint = " Slaves Database IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Database IP", dbslave_db_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+dbslave_db_ip+'" type="text" name="dbslave_db_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        dbslave_ssh_port_hint = " Slaves ssh port "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave ssh port", dbslave_ssh_port_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+str(dbslave_ssh_port)+'" type="text" name="dbslave_ssh_port">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        dbslave_server_id_hint = " Slaves server id "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave server id", dbslave_server_id_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+str(dbslave_server_id)+'" type="text" name="dbslave_server_id">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        dbslave_lat_hint = " Slave server latitude "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave latitude", dbslave_lat_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+str(dbslave_lat)+'" type="text" name="dbslave_lat">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        dbslave_lon_hint = " Slave sever longitude"
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave longitude", dbslave_lon_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+str(dbslave_lon)+'" type="text" name="dbslave_lon">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        dbslave_repo_hint = " RPM repo "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("RPM repo", dbslave_repo_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+dbslave_repo+'" type="text" name="dbslave_repo">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        dbslave_dbmode_hint = " MaxScale Mode "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("DBMode", dbslave_dbmode_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+dbslave_dbmode+'" type="text" name="dbslave_dbmode">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        dbslave_dns_hint = " Slave DNS server "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("DNS", dbslave_dns_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="'+dbslave_dns+'" type="text" name="dbslave_dns">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        print('                                    <input hidden name="action" value="editdbslave">')
+
+        print('                                    <div class="col-md-12">')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save slave Settings</button>')
+        print('                                    </div>')
+        print('                                </div> <!-- Row End -->')
+        print('                            </form>')
+
+        # Additional slaves
+        for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
+            if myslave != dbslave_hostname:
+                # Lets get all the details of this slave server and present to the user for editing
+                slave_hostname = myslave
+                slave_server_id = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['server_id']
+                slave_ssh_port = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['ansible_port']
+                slave_main_ip = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['mainip']
+                slave_db_ip = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dbip']
+                slave_dbmode = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dbmode']
+                slave_lat = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['latitude']
+                slave_lon = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['longitude']
+                slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
+                slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
+                # slave data
+                print('                            <form class="form toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+                slave_hostname_hint = " Slave FQDN "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_hostname+'" type="text" name="slave_hostname">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_main_ip_hint = " Slaves Main IP "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_main_ip+'" type="text" name="slave_main_ip">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_db_ip_hint = " Slaves Database IP "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_db_ip+'" type="text" name="slave_db_ip">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_ssh_port_hint = " Slave ssh port "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+str(slave_ssh_port)+'" type="text" name="slave_ssh_port">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_server_id_hint = "Slave server id "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave server id", slave_server_id_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+str(slave_server_id)+'" type="text" name="slave_server_id">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_lat_hint = " Slave server latitude "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave latitude", slave_lat_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+str(slave_lat)+'" type="text" name="slave_lat">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_lon_hint = " Slave sever longitude"
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Slave longitude", slave_lon_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+str(slave_lon)+'" type="text" name="slave_lon">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_repo_hint = " RPM repo "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("RPM repo", slave_repo_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_repo+'" type="text" name="slave_repo">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_dbmode_hint = " MaxScale Mode "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("DBMode", slave_dbmode_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_dbmode+'" type="text" name="slave_dbmode">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_dns_hint = " Slave DNS server "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("DNS", slave_dns_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_dns+'" type="text" name="slave_dns">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                print('                                    <input hidden name="action" value="editslave">')
+
+                print('                                    <div class="col-md-12">')
+                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save slave Settings</button>')
+                print('                                    </div>')
+                print('                                </div> <!-- Row End -->')
+                print('                            </form>')
+
+                # Delete the Additional Slave
+                print('                            <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+                print('                                    <input hidden name="action" value="deleteslave">')
+                print('                                    <input hidden name="slave_hostname" value="'+myslave+'">')
+                print('                                    <div class="col-md-12">')
+                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Delete this Slave</button>')
+                print('                                    </div>')
+                print('                                </div> <!-- Row End -->')
+                print('                            </form>')
+
+        # Add additional Slave
+        print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
+        print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+        # slave data
+        slave_hostname_hint = " Slaves FQDN "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_hostname">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        slave_main_ip_hint = " Slave Main IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_main_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        slave_db_ip_hint = " slaves Database IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_db_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        slave_ssh_port_hint = " Slaves ssh port "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="slave_ssh_port">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        print('                                    <input hidden name="action" value="addadditionalslave">')
+
+        print('                                    <div class="col-md-12">')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
         print('                                    </div>')
         print('                                </div> <!-- Row End -->')
         print('                            </form>')
