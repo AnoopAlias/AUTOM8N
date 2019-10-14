@@ -643,7 +643,7 @@ else:
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
                 # slave data
-                print('                            <form class="form" method="post" id="toastForm32" onsubmit="return false;">')
+                print('                            <form class="form toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;">')
                 print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
                 slave_hostname_hint = " Slave FQDN "
@@ -775,7 +775,7 @@ else:
                 print('                            </form>')
 
                 # Delete the Additional Slave
-                print('                            <form class="form" method="post" id="toastForm33" onsubmit="return false;">')
+                print('                            <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
                 print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
                 print('                                    <input hidden name="action" value="deleteslave">')
                 print('                                    <input hidden name="slave_hostname" value="'+myslave+'">')
