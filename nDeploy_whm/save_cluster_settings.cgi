@@ -170,6 +170,37 @@ if form.getvalue('action'):
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
         commoninclude.print_success('New Slave added to cluster')
+    elif form.getvalue('action') == 'editslave':
+        # If the inventory file exists
+        if os.path.isfile(ansible_inventory_file):
+            # parse the inventory and display its contents
+            with open(ansible_inventory_file, 'r') as my_inventory:
+                inventory = yaml.safe_load(my_inventory)
+        # slave
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')] = {}
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['ansible_port'] = form.getvalue('slave_ssh_port')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['mainip'] = form.getvalue('slave_main_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['dbip'] = form.getvalue('slave_db_ip')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['dbmode'] = form.getvalue('slave_dbmode')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['dns'] = form.getvalue('slave_dns')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['latitude'] = form.getvalue('slave_lat')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['longitude'] = form.getvalue('slave_lon')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['repo'] = form.getvalue('slave_repo')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['server_id'] = form.getvalue('slave_server_id')
+        with open(ansible_inventory_file, 'w') as ansible_inventory:
+            yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+        commoninclude.print_success('Slave settings saved')
+    elif form.getvalue('action') == 'deleteslave':
+        # If the inventory file exists
+        if os.path.isfile(ansible_inventory_file):
+            # parse the inventory and display its contents
+            with open(ansible_inventory_file, 'r') as my_inventory:
+                inventory = yaml.safe_load(my_inventory)
+        # slave
+        del inventory['all']['children']['ndeployslaves']['hosts'][form.getvalue('slave_hostname')]
+        with open(ansible_inventory_file, 'w') as ansible_inventory:
+            yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+        commoninclude.print_success('Deleted slave from cluster')
 else:
     commoninclude.print_forbidden()
 
