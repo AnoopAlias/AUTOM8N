@@ -762,7 +762,7 @@ else:
                 print('                                                    '+return_multi_input("DNS", slave_dns_hint))
                 print('                                                </span>')
                 print('                                            </div>')
-                print('                                            <input class="form-control" value="'+slave_dns+'" type="text" name="dbslave_dns">')
+                print('                                            <input class="form-control" value="'+slave_dns+'" type="text" name="slave_dns">')
                 print('                                        </div>')
                 print('                                    </div>')
 
