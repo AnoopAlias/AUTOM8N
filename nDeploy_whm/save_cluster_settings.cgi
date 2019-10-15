@@ -258,6 +258,12 @@ if form.getvalue('action'):
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
         commoninclude.print_success('IP mapping added')
+    elif form.getvalue('action') == 'deletehomedir':
+        # thehomedir
+        commoninclude.print_success('homedir removed from sync')
+    elif form.getvalue('action') == 'addhomedir':
+        # thehomedir
+        commoninclude.print_success('homedir added to sync')
 else:
     commoninclude.print_forbidden()
 
