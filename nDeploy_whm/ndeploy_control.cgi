@@ -151,8 +151,6 @@ if php_secure_status:
 else:
     print('                    <button form="multi_master" class="btn btn-secondary btn-block mb-0">Switch to Multi</button>')
 
-print('                    </form>')
-
 cardfooter('')
 
 print('                </div> <!-- Dash Item 2 End -->')
