@@ -871,7 +871,6 @@ if os.path.isfile(cluster_config_file):
             print('                            </form>')
 
             print('                            <div class="btn-group btn-block mt-3 mb-4">')
-            print('                                <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm34'+'-'+str(mykeypos)+'">Edit</button>')
             print('                                <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm35">Delete</button>')
             print('                            </div>')
 
