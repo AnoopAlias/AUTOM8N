@@ -91,6 +91,13 @@ if form.getvalue('action'):
 
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+        # create the ansible group_vars file with default data
+        if not os.path.exists('/opt/nDeploy/conf/nDeploy-cluster/group_vars'):
+            os.makedirs('/opt/nDeploy/conf/nDeploy-cluster/group_vars')
+        if not os.path.isfile('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all'):
+            mydict = {'homedir': ['home']}
+            with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'w') as group_vars_file:
+                yaml.dump(mydict, group_vars_file, default_flow_style=False)
         commoninclude.print_success('Cluster settings saved')
     elif form.getvalue('action') == 'editmaster':
         # If the inventory file exists
