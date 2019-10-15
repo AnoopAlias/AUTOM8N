@@ -862,12 +862,12 @@ if os.path.isfile(cluster_config_file):
                     master_ip_resource_actual = myip
             else:
                 master_ip_resource_actual = myip
-            # get orresponing slave IP for this master IP
+            # get corresponding slave IP for this master IP
             mykeypos = 1
             for theslave in cluster_data_yaml_parsed.keys():
                 slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip)
                 slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip)
-                # Display form for IP addree mapping
+                # Display form for IP address mapping
                 print('                            <form class="form toastForm34-wrap" method="post" id="toastForm34'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
@@ -946,18 +946,19 @@ if os.path.isfile(cluster_config_file):
                 print('                            </form>')
                 mykeypos = mykeypos + 1
 
-            # Display form for IP addree mapping
-            print('                            <form class="form" method="post" id="toastForm35" onsubmit="return false;">')
-            print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
-            print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
-            print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
-            print('                                    <input hidden name="action" value="delip">')
+            # Display form for IP address deletion
+            if master_ip_resource != 'ip0':
+                print('                            <form class="form" method="post" id="toastForm35" onsubmit="return false;">')
+                print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+                print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
+                print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
+                print('                                    <input hidden name="action" value="delip">')
 
-            print('                                    <div class="col-md-12">')
-            print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Delete '+master_ip_resource+'</button>')
-            print('                                    </div>')
-            print('                                </div> <!-- Row End -->')
-            print('                            </form>')
+                print('                                    <div class="col-md-12">')
+                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Delete '+master_ip_resource+'</button>')
+                print('                                    </div>')
+                print('                                </div> <!-- Row End -->')
+                print('                            </form>')
 
     print('             </div> <!-- Card Body End -->')
 
