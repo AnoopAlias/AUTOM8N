@@ -6,6 +6,8 @@ import cgitb
 from requests import get
 import yaml
 import os
+import sys
+import re
 
 
 __author__ = "Anoop P Alias"
@@ -258,6 +260,36 @@ if form.getvalue('action'):
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
         commoninclude.print_success('IP mapping added')
+    elif form.getvalue('action') == 'deletehomedir':
+        if form.getvalue('thehomedir'):
+            with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
+                group_vars_yaml_parsed = yaml.safe_load(group_vars_file)
+            group_vars_yaml_parsed['homedir'].remove(form.getvalue('thehomedir'))
+            with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'w') as group_vars_file:
+                yaml.dump(group_vars_yaml_parsed, group_vars_file, default_flow_style=False)
+            commoninclude.print_success('Homedir removed from sync')
+    elif form.getvalue('action') == 'addhomedir':
+        if form.getvalue('thehomedir'):
+            if form.getvalue('thehomedir').startswith('/'):
+                myhomedir_pass1 = form.getvalue('thehomedir')[1:]
+            else:
+                myhomedir_pass1 = form.getvalue('thehomedir')
+            if myhomedir_pass1.endswith('/'):
+                myhomedir = myhomedir_pass1[:-1]
+            else:
+                myhomedir = myhomedir_pass1
+            if not myhomedir:
+                commoninclude.print_error('Error: Invalid Homedir name')
+                sys.exit(0)
+            if not re.match("^[\.0-9a-zA-Z/_-]*$", myhomedir):
+                commoninclude.print_error("Error: Invalid char in Homedir name")
+                sys.exit(0)
+            with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
+                group_vars_yaml_parsed = yaml.safe_load(group_vars_file)
+            group_vars_yaml_parsed['homedir'].append(myhomedir)
+            with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'w') as group_vars_file:
+                yaml.dump(group_vars_yaml_parsed, group_vars_file, default_flow_style=False)
+            commoninclude.print_success('Homedir added to sync')
 else:
     commoninclude.print_forbidden()
 

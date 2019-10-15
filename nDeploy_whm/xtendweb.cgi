@@ -1364,7 +1364,6 @@ else:
         print('                         </div>')
         print('</div>')
 
-
         # Add additional Slave
         print('                         <div class="tab-pane fade show" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
         print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
@@ -1463,6 +1462,8 @@ else:
         print('                                </div>')
 
         print('                            </form>')
+        print('                         </div>')
+        print('                         </div>')
     else:
         # Get the server main IP
         myip = get('https://api.ipify.org').text
@@ -1556,9 +1557,6 @@ else:
 
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
         print('                            </form>')
-
-    print('                         </div>')
-    print('                         </div>')
 
     print('             </div> <!-- Card Body End -->')
 
