@@ -975,7 +975,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                            </form>')
         print('                         </div>')
-        
+
         print('                         </div>')
 
     print('             </div> <!-- Card Body End -->')
