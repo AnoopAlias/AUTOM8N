@@ -1000,7 +1000,7 @@ if os.path.isfile(cluster_config_file):
             print('                                                    '+return_multi_input("LAN_IP_"+theslave, slave_lan_ip_hint))
             print('                                                </span>')
             print('                                            </div>')
-            print('                                            <input class="form-control" value="" type="text" name='+theslave+'"_lan_ip">')
+            print('                                            <input class="form-control" value="" type="text" name="'+theslave+'_lan_ip">')
             print('                                        </div>')
             print('                                    </div>')
 
@@ -1012,7 +1012,7 @@ if os.path.isfile(cluster_config_file):
             print('                                                    '+return_multi_input("WAN_IP_"+theslave, slave_wan_ip_hint))
             print('                                                </span>')
             print('                                            </div>')
-            print('                                            <input class="form-control" value="" type="text" name='+theslave+'"_wan_ip">')
+            print('                                            <input class="form-control" value="" type="text" name="'+theslave+'_wan_ip">')
             print('                                        </div>')
             print('                                    </div>')
 
