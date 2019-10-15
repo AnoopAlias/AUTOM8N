@@ -370,8 +370,9 @@ if os.path.isfile(cluster_config_file):
         print('                 <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home-content" role="tab" aria-controls="home-content" aria-selected="true">Home Directory</a></li>')
         print('             </ul>')
 
-        # master data
         print('                     <div class="tab-content" id="clusterTabsContent">')
+
+        # master data
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
         print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
 
@@ -770,7 +771,6 @@ if os.path.isfile(cluster_config_file):
 
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
         print('                            </form>')
-
         print('                         </div>')
 
         # Display, Edit, Delete IPMapping
@@ -864,17 +864,15 @@ if os.path.isfile(cluster_config_file):
                 mykeypos = mykeypos + 1
 
             # Display form for IP address deletion
-            if master_ip_resource != 'ip0':
-                print('                            <form class="form" method="post" id="toastForm35" onsubmit="return false;">')
-                print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
-                print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
-                print('                                    <input hidden name="action" value="delip">')
-                print('                            </form>')
+            print('                            <form class="form" method="post" id="toastForm35" onsubmit="return false;">')
+            print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
+            print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
+            print('                                    <input hidden name="action" value="delip">')
+            print('                            </form>')
 
-                print('                            <div class="btn-group btn-block mt-3 mb-4">')
-                print('                                <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm34'+'-'+str(mykeypos)+'">Edit</button>')
-                print('                                <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm35">Delete</button>')
-                print('                            </div>')
+            print('                            <div class="btn-group btn-block mt-3 mb-4">')
+            print('                                <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm35">Delete</button>')
+            print('                            </div>')
 
         # Display form for IP address mapping add
         print('                            <form class="form" method="post" id="toastForm36" onsubmit="return false;">')
@@ -975,8 +973,9 @@ if os.path.isfile(cluster_config_file):
         print('                                </div>')
 
         print('                            </form>')
+        print('                         </div>')
 
-    print('                         </div>')
+        print('                         </div>')
 
     print('             </div> <!-- Card Body End -->')
 
