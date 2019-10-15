@@ -865,8 +865,8 @@ if os.path.isfile(cluster_config_file):
             # get corresponding slave IP for this master IP
             mykeypos = 1
             for theslave in cluster_data_yaml_parsed.keys():
-                slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip)
-                slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip)
+                slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip,"NULL")
+                slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip,"NULL")
                 # Display form for IP address mapping
                 print('                            <form class="form toastForm34-wrap" method="post" id="toastForm34'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
