@@ -286,11 +286,11 @@ if os.path.isfile(cluster_config_file):
                     break
 
             if filesync_status:
-                print('         <div class="col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
-                print('         <div class="col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
+                print('         <div class="col-6 col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
+                print('         <div class="col-6 col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
             else:
-                print('         <div class="col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
-                print('         <div class="col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
+                print('         <div class="col-6 col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
+                print('         <div class="col-6 col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
 
         filesync_status = False
         for myprocess in psutil.process_iter():
@@ -305,11 +305,11 @@ if os.path.isfile(cluster_config_file):
                 break
 
         if filesync_status:
-            print('             <div class="col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
-            print('             <div class="col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
+            print('             <div class="col-6 col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
+            print('             <div class="col-6 col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
         else:
-            print('             <div class="col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
-            print('             <div class="col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
+            print('             <div class="col-6 col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
+            print('             <div class="col-6 col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
 
     print('                 </div> <!-- Row End -->')
     print('             </div> <!-- Card Body End -->')
@@ -366,6 +366,7 @@ if os.path.isfile(cluster_config_file):
         print('                 <li class="nav-item"><a class="nav-link active" id="master-tab" data-toggle="tab" href="#master-content" role="tab" aria-controls="master-content" aria-selected="true">Master</a></li>')
         print('                 <li class="nav-item"><a class="nav-link" id="slave-tab" data-toggle="tab" href="#slave-content" role="tab" aria-controls="slave-content" aria-selected="true">Slaves</a></li>')
         print('                 <li class="nav-item"><a class="nav-link" id="add-tab" data-toggle="tab" href="#add-content" role="tab" aria-controls="add-content" aria-selected="true">Add Slave</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="ip-add-tab" data-toggle="tab" href="#ip-add-content" role="tab" aria-controls="ip-add-content" aria-selected="true">Add IP</a></li>')
         print('                 <li class="nav-item"><a class="nav-link" id="ip-tab" data-toggle="tab" href="#ip-content" role="tab" aria-controls="ip-content" aria-selected="true">IP Resource</a></li>')
         print('                 <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home-content" role="tab" aria-controls="home-content" aria-selected="true">Home Directory</a></li>')
         print('             </ul>')
@@ -374,7 +375,7 @@ if os.path.isfile(cluster_config_file):
 
         # master data
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
-        print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
+        print('                            <form class="form needs-validation" method="post" id="toastForm29" novalidate>')
 
         master_hostname_hint = " Masters FQDN "
         print('                                        <div class="input-group">')
@@ -383,7 +384,8 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("Master server FQDN", master_hostname_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_hostname+'" type="text" name="master_hostname">')
+        print('                                            <input class="form-control" id="validationTooltip01" value="'+master_hostname+'" type="text" name="master_hostname" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         master_main_ip_hint = " Masters Main IP "
@@ -393,7 +395,8 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("Master Main IP", master_main_ip_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_main_ip+'" type="text" name="master_main_ip">')
+        print('                                            <input class="form-control" id="validationTooltip02" value="'+master_main_ip+'" type="text" name="master_main_ip" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         master_db_ip_hint = " Masters Database IP "
@@ -403,7 +406,8 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("Master Database IP", master_db_ip_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_db_ip+'" type="text" name="master_db_ip">')
+        print('                                            <input class="form-control" id="validationTooltip03" value="'+master_db_ip+'" type="text" name="master_db_ip" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         master_ssh_port_hint = " Masters ssh port "
@@ -413,7 +417,8 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("Master ssh port", master_ssh_port_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+str(master_ssh_port)+'" type="text" name="master_ssh_port">')
+        print('                                            <input class="form-control" value="'+str(master_ssh_port)+'" type="text" name="master_ssh_port" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         master_server_id_hint = " Masters server id "
@@ -423,7 +428,8 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("Master server id", master_server_id_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+str(master_server_id)+'" type="text" name="master_server_id">')
+        print('                                            <input class="form-control" id="validationTooltip04" value="'+str(master_server_id)+'" type="text" name="master_server_id" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         master_lat_hint = " Masters server latitude "
@@ -433,7 +439,8 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("Master latitude", master_lat_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+str(master_lat)+'" type="text" name="master_lat">')
+        print('                                            <input class="form-control" id="validationTooltip05" value="'+str(master_lat)+'" type="text" name="master_lat" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         master_lon_hint = " Masters severs longitude"
@@ -443,7 +450,8 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("Master longitude", master_lon_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+str(master_lon)+'" type="text" name="master_lon">')
+        print('                                            <input class="form-control" id="validationTooltip06" value="'+str(master_lon)+'" type="text" name="master_lon" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         master_repo_hint = " RPM repo "
@@ -453,7 +461,8 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("RPM repo", master_repo_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_repo+'" type="text" name="master_repo">')
+        print('                                            <input class="form-control" id="validationTooltip07" value="'+master_repo+'" type="text" name="master_repo" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         master_dbmode_hint = " MaxScale Mode "
@@ -463,7 +472,8 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("DBMode", master_dbmode_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_dbmode+'" type="text" name="master_dbmode">')
+        print('                                            <input class="form-control" id="validationTooltip08" value="'+master_dbmode+'" type="text" name="master_dbmode" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         master_dns_hint = " Master DNS server "
@@ -473,12 +483,13 @@ if os.path.isfile(cluster_config_file):
         print('                                                    '+return_multi_input("DNS", master_dns_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_dns+'" type="text" name="master_dns">')
+        print('                                            <input class="form-control" id="validationTooltip09" value="'+master_dns+'" type="text" name="master_dns" required>')
+        print('                                            <div class="invalid-tooltip">Needs some info</div>')
         print('                                        </div>')
 
         print('                                    <input hidden name="action" value="editmaster">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save master Settings</button>')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Master Settings</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -769,7 +780,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                                    <input hidden name="action" value="addadditionalslave">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -799,11 +810,22 @@ if os.path.isfile(cluster_config_file):
                 slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip,"NULL")
                 slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip,"NULL")
                 # Display form for IP address mapping
-                print('                            <form class="form toastForm34-wrap" method="post" id="toastForm34'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                print('     <div class="accordion" id="accordionIPs">')
+                print('         <div class="card mb-0 text-white dg-dark">')
+                print('             <div class="card-header" id="heading'+'-'+str(mykeypos)+'">')
+                print('                 <h2 class="mb-0">')
+                print('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+'-'+str(mykeypos)+'" aria-expanded="false" aria-controls="collapse'+'-'+str(mykeypos)+'">')
+                print('                         IP #'+'-'+str(mykeypos)+'')
+                print('                     </button>')
+                print('                 </h2>')
+                print('             </div>')
+                print('             <div id="collapse'+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+str(mykeypos)+'" data-parent="#accordionIPs">')
+                print('                 <div class="card-body">')
+                print('                     <form class="form toastForm34-wrap" method="post" id="toastForm34'+'-'+str(mykeypos)+'" onsubmit="return false;">')
 
                 # master data
-
                 master_ip_resource_hint = " IP address resource name like ip1 "
+
                 print('                                        <div class="input-group">')
                 print('                                            <div class="input-group-prepend input-group-prepend-min">')
                 print('                                                <span class="input-group-text">')
@@ -859,8 +881,12 @@ if os.path.isfile(cluster_config_file):
                 print('                                    <input hidden name="slave_hostname" value="'+theslave+'">')
                 print('                                    <input hidden name="action" value="editip">')
 
-                print('                                        <button class="btn btn-outline-primary btn-block mt-3 mb-4" type="submit">Edit IP resource</button>')
+                print('                                    <button class="btn btn-outline-primary btn-block mt-3" type="submit">Edit IP resource</button>')
                 print('                            </form>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
                 mykeypos = mykeypos + 1
 
             # Display form for IP address deletion
@@ -868,17 +894,17 @@ if os.path.isfile(cluster_config_file):
             print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
             print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
             print('                                    <input hidden name="action" value="delip">')
+            print('                            <button class="btn btn-outline-danger btn-block mt-3 mb-4" type="submit" form="toastForm35">Delete</button>')
+
             print('                            </form>')
 
-            print('                            <div class="btn-group btn-block mt-3 mb-4">')
-            print('                                <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm35">Delete</button>')
-            print('                            </div>')
+        print('                          </div>')
 
         # Display form for IP address mapping add
+        print('                         <div class="tab-pane fade" id="ip-add-content" role="tabpanel" aria-labelledby="ip-add-tab">')
         print('                            <form class="form" method="post" id="toastForm36" onsubmit="return false;">')
 
         # master data
-
         master_ip_resource_hint = " IP address resource name like ip1 "
         print('                                        <div class="input-group">')
         print('                                            <div class="input-group-prepend input-group-prepend-min">')
@@ -923,7 +949,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                                    <input hidden name="action" value="addip">')
         print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
-        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add IP resource</button>')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Add IP Resource</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -939,7 +965,7 @@ if os.path.isfile(cluster_config_file):
             mykeypos = 1
             for path in home_dir_list:
                 print('                        <div class="input-group input-group-inline input-group-sm">')
-                print('                            <div class="input-group-prepend input-group-prepend-min">')
+                print('                            <div class="input-group-prepend">')
                 print('                                <span class="input-group-text">'+path+'</span>')
                 print('                            </div>')
                 if path not in ['home']:
@@ -1022,7 +1048,7 @@ else:
         # master data
         print('                     <div class="tab-content" id="clusterTabsContent">')
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
-        print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
+        print('                            <form class="form needs-validation" method="post" id="toastForm29" onsubmit="return false;" novalidate>')
 
         master_hostname_hint = " Masters FQDN "
         print('                                        <div class="input-group">')
@@ -1031,7 +1057,8 @@ else:
         print('                                                    '+return_multi_input("Master server FQDN", master_hostname_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_hostname+'" type="text" name="master_hostname">')
+        print('                                            <input class="form-control" id="validationTooltip01" value="'+master_hostname+'" type="text" name="master_hostname" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something here</div>')
         print('                                        </div>')
 
         master_main_ip_hint = " Masters Main IP "
@@ -1041,7 +1068,8 @@ else:
         print('                                                    '+return_multi_input("Master Main IP", master_main_ip_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_main_ip+'" type="text" name="master_main_ip">')
+        print('                                            <input class="form-control" id="validationTooltip02" value="'+master_main_ip+'" type="text" name="master_main_ip" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something here</div>')
         print('                                        </div>')
 
         master_db_ip_hint = " Masters Database IP "
@@ -1051,7 +1079,8 @@ else:
         print('                                                    '+return_multi_input("Master Database IP", master_db_ip_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_db_ip+'" type="text" name="master_db_ip">')
+        print('                                            <input class="form-control" id="validationTooltip03" value="'+master_db_ip+'" type="text" name="master_db_ip" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something here</div>')
         print('                                        </div>')
 
         master_ssh_port_hint = " Masters ssh port "
@@ -1061,7 +1090,8 @@ else:
         print('                                                    '+return_multi_input("Master ssh port", master_ssh_port_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+str(master_ssh_port)+'" type="text" name="master_ssh_port">')
+        print('                                            <input class="form-control" id="validationTooltip04" value="'+str(master_ssh_port)+'" type="text" name="master_ssh_port" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something here</div>')
         print('                                        </div>')
 
         master_server_id_hint = " Masters server id "
@@ -1071,7 +1101,8 @@ else:
         print('                                                    '+return_multi_input("Master server id", master_server_id_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+str(master_server_id)+'" type="text" name="master_server_id">')
+        print('                                            <input class="form-control" id="validationTooltip05" value="'+str(master_server_id)+'" type="text" name="master_server_id" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something here</div>')
         print('                                        </div>')
 
         master_lat_hint = " Masters server latitude "
@@ -1081,7 +1112,8 @@ else:
         print('                                                    '+return_multi_input("Master latitude", master_lat_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+str(master_lat)+'" type="text" name="master_lat">')
+        print('                                            <input class="form-control" id="validationTooltip06" value="'+str(master_lat)+'" type="text" name="master_lat" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something here</div>')
         print('                                        </div>')
 
         master_lon_hint = " Masters severs longitude"
@@ -1091,7 +1123,8 @@ else:
         print('                                                    '+return_multi_input("Master longitude", master_lon_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+str(master_lon)+'" type="text" name="master_lon">')
+        print('                                            <input class="form-control" id="validationTooltip07" value="'+str(master_lon)+'" type="text" name="master_lon" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something here</div>')
         print('                                        </div>')
 
         master_repo_hint = " RPM repo "
@@ -1101,7 +1134,8 @@ else:
         print('                                                    '+return_multi_input("RPM repo", master_repo_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_repo+'" type="text" name="master_repo">')
+        print('                                            <input class="form-control" value="'+master_repo+'" type="text" name="master_repo" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something in '+master_repo+'</div>')
         print('                                        </div>')
 
         master_dbmode_hint = " MaxScale Mode "
@@ -1111,7 +1145,8 @@ else:
         print('                                                    '+return_multi_input("DBMode", master_dbmode_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_dbmode+'" type="text" name="master_dbmode">')
+        print('                                            <input class="form-control" id="validationTooltip08" value="'+master_dbmode+'" type="text" name="master_dbmode" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something here</div>')
         print('                                        </div>')
 
         master_dns_hint = " Master DNS server "
@@ -1121,7 +1156,8 @@ else:
         print('                                                    '+return_multi_input("DNS", master_dns_hint))
         print('                                                </span>')
         print('                                            </div>')
-        print('                                            <input class="form-control" value="'+master_dns+'" type="text" name="master_dns">')
+        print('                                            <input class="form-control" value="'+master_dns+'" type="text" name="master_dns" required>')
+        print('                                            <div class="invalid-tooltip">You must enter something here</div>')
         print('                                        </div>')
 
         print('                                    <input hidden name="action" value="editmaster">')
@@ -1240,9 +1276,10 @@ else:
         print('                            </form>')
 
         # Additional slaves
-        print('<div class="accordion mt-4" id="accordionSlaves">')
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
             if myslave != dbslave_hostname:
+
+                print('<div class="accordion mt-4" id="accordionSlaves">')
 
                 # Lets get all the details of this slave server and present to the user for editing
                 slave_hostname = myslave
@@ -1386,8 +1423,9 @@ else:
                 print('</div>')
                 print('</div>')
                 print('</div>')
-        print('                         </div>')
+                print('                         </div>')
         print('</div>')
+
 
         # Add additional Slave
         print('                         <div class="tab-pane fade show" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
@@ -1453,7 +1491,7 @@ else:
             mykeypos = 1
             for path in home_dir_list:
                 print('                        <div class="input-group input-group-inline input-group-sm">')
-                print('                            <div class="input-group-prepend input-group-prepend-min">')
+                print('                            <div class="input-group-prepend">')
                 print('                                <span class="input-group-text">'+path+'</span>')
                 print('                            </div>')
                 if path not in ['home']:

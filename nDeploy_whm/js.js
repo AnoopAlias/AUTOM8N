@@ -1,5 +1,48 @@
 jQuery(document).ready(function($) {
 
+    // Upon load..
+    window.addEventListener('load', () => {
+
+      // Grab all the forms
+      var forms = document.getElementsByClassName('needs-validation');
+
+      // Iterate over each one
+      for (let form of forms) {
+
+        // Add a 'submit' event listener on each one
+        form.addEventListener('submit', (evt) => {
+
+          // check if the form input elements have the 'required' attribute
+          if (!form.checkValidity()) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            console.log('Bootstrap will handle incomplete form fields');
+          } else {
+
+              $('#toastForm29').ready(function() {
+                  var $f = $('#toastForm29');
+                  var $url = "save_cluster_settings.cgi?" + $f.serialize();
+                  $.ajax({
+                      url: $url,
+                      success: function(result) {
+                          $("#myToast").find('.toast-body').html(result)
+                          $("#myToast").toast('show');
+                      }
+                  });
+              });
+
+            evt.preventDefault();
+            console.info('All form fields are now valid...');
+          }
+
+          form.classList.add('was-validated');
+
+        });
+
+      }
+
+    });
+
     $(document).ajaxStart(function() {
         $('#loader').show();
     });
@@ -375,18 +418,6 @@ jQuery(document).ready(function($) {
 
     $('#toastForm28').submit(function() {
         var $f = $('#toastForm28');
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm29').submit(function() {
-        var $f = $('#toastForm29');
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
@@ -816,5 +847,27 @@ jQuery(document).ready(function($) {
     if(activeTab){
         $('#v-pills-tab a[href="' + activeTab + '"]').tab('show');
 	}
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        localStorage.setItem('activeTab2', $(e.target).attr('href'));
+    });
+
+    var activeTab2 = localStorage.getItem('activeTab2');
+    if(activeTab){
+        $('#clusterTabs a[href="' + activeTab2 + '"]').tab('show');
+	}
+
+    // Get saved data from sessionStorage
+    let selectedCollapse = sessionStorage.getItem('selectedCollapse');
+    if(selectedCollapse != null) {
+        $('.accordion .collapse').removeClass('show');
+        $(selectedCollapse).addClass('show');
+    }
+    //To set, which one will be opened
+    $('.accordion .btn-link').on('click', function(){
+        let target = $(this).data('target');
+        //Save data to sessionStorage
+        sessionStorage.setItem('selectedCollapse', target);
+    });
 
 });
