@@ -946,6 +946,19 @@ if os.path.isfile(cluster_config_file):
                 print('                            </form>')
                 mykeypos = mykeypos + 1
 
+            # Display form for IP addree mapping
+            print('                            <form class="form" method="post" id="toastForm35" onsubmit="return false;">')
+            print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+            print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
+            print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
+            print('                                    <input hidden name="action" value="delip">')
+
+            print('                                    <div class="col-md-12">')
+            print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Delete '+master_ip_resource+'</button>')
+            print('                                    </div>')
+            print('                                </div> <!-- Row End -->')
+            print('                            </form>')
+
     print('             </div> <!-- Card Body End -->')
 
     cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')

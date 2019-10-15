@@ -217,6 +217,20 @@ if form.getvalue('action'):
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
         commoninclude.print_success('IP mapping updated')
+    elif form.getvalue('action') == 'delip':
+        with open(cluster_config_file, 'r') as cluster_data_yaml:
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+        with open(master_config_file, 'r') as master_data_yaml:
+            master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
+        del master_data_yaml_parsed[form.getvalue('master_hostname')]['dnsmap'][form.getvalue('master_lan_ip')]
+        for theslave in cluster_data_yaml_parsed.keys():
+            del cluster_data_yaml_parsed[theslave]['dnsmap'][form.getvalue('master_lan_ip')]
+            del cluster_data_yaml_parsed[theslave]['ipmap'][form.getvalue('master_lan_ip')]
+        with open(cluster_config_file, 'w') as cluster_data_yaml:
+            yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
+        with open(master_config_file, 'w') as master_data_yaml:
+            yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
+        commoninclude.print_success('IP resource deleted')
 else:
     commoninclude.print_forbidden()
 
