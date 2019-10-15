@@ -74,14 +74,37 @@ $carddarkhead:		#32383E !default;
 			}
 		}
 	}
-	.nav-pills {
+	.nav-pills,
+	.nav-tabs {
+		color: $white;
 		.nav-link {
 			color: $white;
 			.active {
 				color: $white;
 			}
 			&.active {
-				background-color: $bg-dark2-color;
+				background-color: $carddarkback;
+			}
+		}
+	}
+	.nav-tabs {
+		border-bottom: $border-dark;
+		.nav-link {
+			background-color: $bg-dark2-color;
+			border: $border-dark;
+			&.active {
+				border-bottom-color: $carddarkback;
+			}
+		}
+	}
+	.accordion {
+		.card {
+			border: $border-dark;
+			background-color: $carddarkback;
+			.card-header {
+				.btn {
+					color: $white;
+				}
 			}
 		}
 	}
@@ -141,6 +164,15 @@ $carddarkhead:		#32383E !default;
 		.dropdown-menu {
 			.dropdown-item {
 				cursor: pointer;
+			}
+		}
+	}
+	.accordion {
+		.card {
+			.card-header {
+				.btn {
+					color: $black;
+				}
 			}
 		}
 	}
@@ -371,6 +403,27 @@ body {
 		.text-info.p-0 {
 			.btn {
 				display: block;
+			}
+		}
+	}
+}
+
+.accordion {
+	.card-header {
+		padding: .25rem .55rem;
+		.btn {
+			display: block;
+			width: 100%;
+			text-align: left;
+		}
+	}
+}
+
+.tab-pane {
+	.form {
+		&:last-child {
+			.btn {
+				@extend .mb-0;
 			}
 		}
 	}
