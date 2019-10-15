@@ -885,7 +885,7 @@ if os.path.isfile(cluster_config_file):
                 print('                                        </div>')
                 print('                                    </div>')
 
-                master_lan_ip_hint = " Masters LAN IP address "
+                master_lan_ip_hint = " Masters LAN IP "
                 print('                                    <div class="col-md-12">')
                 print('                                        <div class="input-group mt-2 mb-2">')
                 print('                                            <div class="input-group-prepend">')
@@ -897,7 +897,7 @@ if os.path.isfile(cluster_config_file):
                 print('                                        </div>')
                 print('                                    </div>')
 
-                master_wan_ip_hint = " Masters Database IP "
+                master_wan_ip_hint = " Masters WAN IP "
                 print('                                    <div class="col-md-12">')
                 print('                                        <div class="input-group mt-2 mb-2">')
                 print('                                            <div class="input-group-prepend">')
