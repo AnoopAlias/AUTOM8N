@@ -905,7 +905,7 @@ if os.path.isfile(cluster_config_file):
                 print('                                                    '+return_multi_input("Master WAN IP", master_wan_ip_hint))
                 print('                                                </span>')
                 print('                                            </div>')
-                print('                                            <input readonly class="form-control" value="'+master_ip_resource_actual+'" type="text" name="master_wan_ip">')
+                print('                                            <input class="form-control" value="'+master_ip_resource_actual+'" type="text" name="master_wan_ip" readonly>')
                 print('                                        </div>')
                 print('                                    </div>')
 
