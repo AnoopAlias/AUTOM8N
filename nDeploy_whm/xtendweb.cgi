@@ -370,8 +370,9 @@ if os.path.isfile(cluster_config_file):
         print('                 <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home-content" role="tab" aria-controls="home-content" aria-selected="true">Home Directory</a></li>')
         print('             </ul>')
 
-        # master data
         print('                     <div class="tab-content" id="clusterTabsContent">')
+
+        # master data
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
         print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
 
@@ -770,7 +771,6 @@ if os.path.isfile(cluster_config_file):
 
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
         print('                            </form>')
-
         print('                         </div>')
 
         # Display, Edit, Delete IPMapping
@@ -974,8 +974,9 @@ if os.path.isfile(cluster_config_file):
         print('                                </div>')
 
         print('                            </form>')
-
-    print('                         </div>')
+        print('                         </div>')
+        
+        print('                         </div>')
 
     print('             </div> <!-- Card Body End -->')
 
