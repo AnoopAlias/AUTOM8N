@@ -231,6 +231,20 @@ if form.getvalue('action'):
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
         commoninclude.print_success('IP resource deleted')
+    elif form.getvalue('action') == 'addip':
+        with open(cluster_config_file, 'r') as cluster_data_yaml:
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+        with open(master_config_file, 'r') as master_data_yaml:
+            master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
+        master_data_yaml_parsed[form.getvalue('master_hostname')]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue('master_ip_resource')
+        for theslave in cluster_data_yaml_parsed.keys():
+            cluster_data_yaml_parsed[theslave]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue(theslave+"_wan_ip")
+            cluster_data_yaml_parsed[theslave]['ipmap'][form.getvalue('master_lan_ip')] = form.getvalue(theslave+"_lan_ip")
+        with open(cluster_config_file, 'w') as cluster_data_yaml:
+            yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
+        with open(master_config_file, 'w') as master_data_yaml:
+            yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
+        commoninclude.print_success('IP mapping added')
 else:
     commoninclude.print_forbidden()
 

@@ -960,6 +960,70 @@ if os.path.isfile(cluster_config_file):
                 print('                                </div> <!-- Row End -->')
                 print('                            </form>')
 
+        # Display form for IP address mapping add
+        print('                            <form class="form" method="post" id="toastForm36" onsubmit="return false;">')
+        print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+        # master data
+
+        master_ip_resource_hint = " IP address resource name like ip1 "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master IP resource name", master_ip_resource_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="master_ip_resource">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_lan_ip_hint = " Masters LAN IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master LAN IP", master_lan_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="master_lan_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        for theslave in cluster_data_yaml_parsed.keys():
+            # Slave data
+            slave_lan_ip_hint = " Slaves LAN IP "
+            print('                                    <div class="col-md-12">')
+            print('                                        <div class="input-group mt-2 mb-2">')
+            print('                                            <div class="input-group-prepend">')
+            print('                                                <span class="input-group-text">')
+            print('                                                    '+return_multi_input("LAN_IP_"+theslave, slave_lan_ip_hint))
+            print('                                                </span>')
+            print('                                            </div>')
+            print('                                            <input class="form-control" value="" type="text" name='+theslave+'"_lan_ip">')
+            print('                                        </div>')
+            print('                                    </div>')
+
+            slave_wan_ip_hint = " Slaves WAN IP "
+            print('                                    <div class="col-md-12">')
+            print('                                        <div class="input-group mt-2 mb-2">')
+            print('                                            <div class="input-group-prepend">')
+            print('                                                <span class="input-group-text">')
+            print('                                                    '+return_multi_input("WAN_IP_"+theslave, slave_wan_ip_hint))
+            print('                                                </span>')
+            print('                                            </div>')
+            print('                                            <input class="form-control" value="" type="text" name='+theslave+'"_wan_ip">')
+            print('                                        </div>')
+            print('                                    </div>')
+
+        print('                                    <input hidden name="action" value="addip">')
+        print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
+        print('                                    <div class="col-md-12">')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add IP resource</button>')
+        print('                                    </div>')
+        print('                                </div> <!-- Row End -->')
+        print('                            </form>')
+
     print('             </div> <!-- Card Body End -->')
 
     cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
