@@ -203,6 +203,12 @@ if form.getvalue('action'):
         del inventory['all']['children']['ndeployslaves']['hosts'][form.getvalue('slave_hostname')]
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+        if os.path.isfile(cluster_config_file):
+            with open(cluster_config_file, 'r') as cluster_data_yaml:
+                cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+            del cluster_data_yaml_parsed[form.getvalue('slave_hostname')]
+            with open(cluster_config_file, 'w') as cluster_data_yaml:
+                yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         commoninclude.print_success('Deleted slave from cluster')
     elif form.getvalue('action') == 'editip':
         with open(cluster_config_file, 'r') as cluster_data_yaml:
