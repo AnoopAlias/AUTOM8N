@@ -817,4 +817,13 @@ jQuery(document).ready(function($) {
         $('#v-pills-tab a[href="' + activeTab + '"]').tab('show');
 	}
 
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        localStorage.setItem('activeTab2', $(e.target).attr('href'));
+    });
+
+    var activeTab2 = localStorage.getItem('activeTab2');
+    if(activeTab){
+        $('#clusterTabs a[href="' + activeTab2 + '"]').tab('show');
+	}
+
 });
