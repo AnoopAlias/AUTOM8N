@@ -16,6 +16,9 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 ansible_inventory_file = "/opt/nDeploy/conf/nDeploy-cluster/hosts"
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
+master_config_file = installation_path+"/conf/ndeploy_master.yaml"
 
 cgitb.enable()
 
@@ -88,6 +91,13 @@ if form.getvalue('action'):
 
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+        # create the ansible group_vars file with default data
+        if not os.path.exists('/opt/nDeploy/conf/nDeploy-cluster/group_vars'):
+            os.makedirs('/opt/nDeploy/conf/nDeploy-cluster/group_vars')
+        if not os.path.isfile('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all'):
+            mydict = {'homedir': ['home']}
+            with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'w') as group_vars_file:
+                yaml.dump(mydict, group_vars_file, default_flow_style=False)
         commoninclude.print_success('Cluster settings saved')
     elif form.getvalue('action') == 'editmaster':
         # If the inventory file exists
@@ -200,7 +210,54 @@ if form.getvalue('action'):
         del inventory['all']['children']['ndeployslaves']['hosts'][form.getvalue('slave_hostname')]
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
+        if os.path.isfile(cluster_config_file):
+            with open(cluster_config_file, 'r') as cluster_data_yaml:
+                cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+            cluster_data_yaml_parsed.pop([form.getvalue('slave_hostname')], None)
+            with open(cluster_config_file, 'w') as cluster_data_yaml:
+                yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         commoninclude.print_success('Deleted slave from cluster')
+    elif form.getvalue('action') == 'editip':
+        with open(cluster_config_file, 'r') as cluster_data_yaml:
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+        with open(master_config_file, 'r') as master_data_yaml:
+            master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
+        master_data_yaml_parsed[form.getvalue('master_hostname')]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue('master_ip_resource')
+        cluster_data_yaml_parsed[form.getvalue('slave_hostname')]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue('slave_wan_ip')
+        cluster_data_yaml_parsed[form.getvalue('slave_hostname')]['ipmap'][form.getvalue('master_lan_ip')] = form.getvalue('slave_lan_ip')
+        with open(cluster_config_file, 'w') as cluster_data_yaml:
+            yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
+        with open(master_config_file, 'w') as master_data_yaml:
+            yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
+        commoninclude.print_success('IP mapping updated')
+    elif form.getvalue('action') == 'delip':
+        with open(cluster_config_file, 'r') as cluster_data_yaml:
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+        with open(master_config_file, 'r') as master_data_yaml:
+            master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
+        del master_data_yaml_parsed[form.getvalue('master_hostname')]['dnsmap'][form.getvalue('master_lan_ip')]
+        for theslave in cluster_data_yaml_parsed.keys():
+            cluster_data_yaml_parsed[theslave]['dnsmap'].pop([form.getvalue('master_lan_ip')], None)
+            cluster_data_yaml_parsed[theslave]['ipmap'].pop([form.getvalue('master_lan_ip')], None)
+        with open(cluster_config_file, 'w') as cluster_data_yaml:
+            yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
+        with open(master_config_file, 'w') as master_data_yaml:
+            yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
+        commoninclude.print_success('IP resource deleted')
+    elif form.getvalue('action') == 'addip':
+        with open(cluster_config_file, 'r') as cluster_data_yaml:
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+        with open(master_config_file, 'r') as master_data_yaml:
+            master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
+        master_data_yaml_parsed[form.getvalue('master_hostname')]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue('master_ip_resource')
+        for theslave in cluster_data_yaml_parsed.keys():
+            cluster_data_yaml_parsed[theslave]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue(theslave+"_wan_ip")
+            cluster_data_yaml_parsed[theslave]['ipmap'][form.getvalue('master_lan_ip')] = form.getvalue(theslave+"_lan_ip")
+        with open(cluster_config_file, 'w') as cluster_data_yaml:
+            yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
+        with open(master_config_file, 'w') as master_data_yaml:
+            yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
+        commoninclude.print_success('IP mapping added')
 else:
     commoninclude.print_forbidden()
 

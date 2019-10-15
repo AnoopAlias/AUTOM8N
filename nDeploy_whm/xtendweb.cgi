@@ -24,6 +24,7 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
+master_config_file = installation_path+"/conf/ndeploy_master.yaml"
 autom8n_version_info_file = installation_path+"/conf/version.yaml"
 nginx_version_info_file = "/etc/nginx/version.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
@@ -262,6 +263,8 @@ if os.path.isfile(cluster_config_file):
 
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+    with open(master_config_file, 'r') as master_data_yaml:
+        master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
     with open(homedir_config_file, 'r') as homedir_data_yaml:
         homedir_data_yaml_parsed = yaml.safe_load(homedir_data_yaml)
     homedir_list = homedir_data_yaml_parsed.get('homedir')
@@ -836,6 +839,187 @@ if os.path.isfile(cluster_config_file):
 
         print('                                    <div class="col-md-12">')
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
+        print('                                    </div>')
+        print('                                </div> <!-- Row End -->')
+        print('                            </form>')
+
+        # Display, Edit, Delete IPMapping
+        master_ip_list = master_data_yaml_parsed[myhostname]['dnsmap'].keys()
+        for myip in master_ip_list:
+            master_ip_resource = master_data_yaml_parsed[myhostname]['dnsmap'].get(myip)
+            # provide public IP for Nat environment
+            if os.path.isfile('/var/cpanel/cpnat'):
+                with open('/var/cpanel/cpnat') as f:
+                    content = f.readlines()
+                content = [x.strip() for x in content]
+                if content:
+                    for line in content:
+                        internalip, externalip = line.split()
+                        if internalip == myip:
+                            master_ip_resource_actual = externalip
+                            break
+                else:
+                    master_ip_resource_actual = myip
+            else:
+                master_ip_resource_actual = myip
+            # get corresponding slave IP for this master IP
+            mykeypos = 1
+            for theslave in cluster_data_yaml_parsed.keys():
+                slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip,"NULL")
+                slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip,"NULL")
+                # Display form for IP address mapping
+                print('                            <form class="form toastForm34-wrap" method="post" id="toastForm34'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+                # master data
+
+                master_ip_resource_hint = " IP address resource name like ip1 "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Master IP resource name", master_ip_resource_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+master_ip_resource+'" type="text" name="master_ip_resource">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                master_lan_ip_hint = " Masters LAN IP "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Master LAN IP", master_lan_ip_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+myip+'" type="text" name="master_lan_ip">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                master_wan_ip_hint = " Masters WAN IP "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input("Master WAN IP", master_wan_ip_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+master_ip_resource_actual+'" type="text" name="master_wan_ip" readonly>')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                # Slave data
+
+                slave_lan_ip_hint = " Slaves LAN IP "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input(theslave, slave_lan_ip_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_mapped_web_ip+'" type="text" name="slave_lan_ip">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                slave_wan_ip_hint = " Slaves WAN IP "
+                print('                                    <div class="col-md-12">')
+                print('                                        <div class="input-group mt-2 mb-2">')
+                print('                                            <div class="input-group-prepend">')
+                print('                                                <span class="input-group-text">')
+                print('                                                    '+return_multi_input(theslave, slave_wan_ip_hint))
+                print('                                                </span>')
+                print('                                            </div>')
+                print('                                            <input class="form-control" value="'+slave_mapped_dns_ip+'" type="text" name="slave_wan_ip">')
+                print('                                        </div>')
+                print('                                    </div>')
+
+                print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
+                print('                                    <input hidden name="slave_hostname" value="'+theslave+'">')
+                print('                                    <input hidden name="action" value="editip">')
+
+                print('                                    <div class="col-md-12">')
+                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Edit IP resource</button>')
+                print('                                    </div>')
+                print('                                </div> <!-- Row End -->')
+                print('                            </form>')
+                mykeypos = mykeypos + 1
+
+            # Display form for IP address deletion
+            if master_ip_resource != 'ip0':
+                print('                            <form class="form" method="post" id="toastForm35" onsubmit="return false;">')
+                print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+                print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
+                print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
+                print('                                    <input hidden name="action" value="delip">')
+
+                print('                                    <div class="col-md-12">')
+                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Delete '+master_ip_resource+'</button>')
+                print('                                    </div>')
+                print('                                </div> <!-- Row End -->')
+                print('                            </form>')
+
+        # Display form for IP address mapping add
+        print('                            <form class="form" method="post" id="toastForm36" onsubmit="return false;">')
+        print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
+
+        # master data
+
+        master_ip_resource_hint = " IP address resource name like ip1 "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master IP resource name", master_ip_resource_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="master_ip_resource">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        master_lan_ip_hint = " Masters LAN IP "
+        print('                                    <div class="col-md-12">')
+        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                            <div class="input-group-prepend">')
+        print('                                                <span class="input-group-text">')
+        print('                                                    '+return_multi_input("Master LAN IP", master_lan_ip_hint))
+        print('                                                </span>')
+        print('                                            </div>')
+        print('                                            <input class="form-control" value="" type="text" name="master_lan_ip">')
+        print('                                        </div>')
+        print('                                    </div>')
+
+        for theslave in cluster_data_yaml_parsed.keys():
+            # Slave data
+            slave_lan_ip_hint = " Slaves LAN IP "
+            print('                                    <div class="col-md-12">')
+            print('                                        <div class="input-group mt-2 mb-2">')
+            print('                                            <div class="input-group-prepend">')
+            print('                                                <span class="input-group-text">')
+            print('                                                    '+return_multi_input("LAN_IP_"+theslave, slave_lan_ip_hint))
+            print('                                                </span>')
+            print('                                            </div>')
+            print('                                            <input class="form-control" value="" type="text" name="'+theslave+'_lan_ip">')
+            print('                                        </div>')
+            print('                                    </div>')
+
+            slave_wan_ip_hint = " Slaves WAN IP "
+            print('                                    <div class="col-md-12">')
+            print('                                        <div class="input-group mt-2 mb-2">')
+            print('                                            <div class="input-group-prepend">')
+            print('                                                <span class="input-group-text">')
+            print('                                                    '+return_multi_input("WAN_IP_"+theslave, slave_wan_ip_hint))
+            print('                                                </span>')
+            print('                                            </div>')
+            print('                                            <input class="form-control" value="" type="text" name="'+theslave+'_wan_ip">')
+            print('                                        </div>')
+            print('                                    </div>')
+
+        print('                                    <input hidden name="action" value="addip">')
+        print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
+        print('                                    <div class="col-md-12">')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add IP resource</button>')
         print('                                    </div>')
         print('                                </div> <!-- Row End -->')
         print('                            </form>')

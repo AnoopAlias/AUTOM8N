@@ -448,6 +448,44 @@ jQuery(document).ready(function($) {
     });
 
 
+    $('.toastForm34-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+
+    $('#toastForm35').submit(function() {
+        var $f = $('#toastForm35');
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm36').submit(function() {
+        var $f = $('#toastForm36');
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
     $('#ndeploy_control_branding').submit(function() {
         var $f = $('#ndeploy_control_branding');
         var $url = "save_ndeploy_branding_settings.cgi?" + $f.serialize();
