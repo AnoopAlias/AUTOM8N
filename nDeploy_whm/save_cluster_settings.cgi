@@ -16,6 +16,9 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 ansible_inventory_file = "/opt/nDeploy/conf/nDeploy-cluster/hosts"
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
+master_config_file = installation_path+"/conf/ndeploy_master.yaml"
 
 cgitb.enable()
 
@@ -201,6 +204,19 @@ if form.getvalue('action'):
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
         commoninclude.print_success('Deleted slave from cluster')
+    elif form.getvalue('action') == 'editip':
+        with open(cluster_config_file, 'r') as cluster_data_yaml:
+            cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
+        with open(master_config_file, 'r') as master_data_yaml:
+            master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
+        master_data_yaml_parsed[form.getvalue('master_hostname')]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue('master_ip_resource')
+        cluster_data_yaml_parsed[form.getvalue('slave_hostname')]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue('slave_wan_ip')
+        cluster_data_yaml_parsed[form.getvalue('slave_hostname')]['ipmap'][form.getvalue('master_lan_ip')] = form.getvalue('slave_lan_ip')
+        with open(cluster_config_file, 'w') as cluster_data_yaml:
+            yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
+        with open(master_config_file, 'w') as master_data_yaml:
+            yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
+        commoninclude.print_success('IP mapping updated')
 else:
     commoninclude.print_forbidden()
 

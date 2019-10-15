@@ -935,6 +935,8 @@ if os.path.isfile(cluster_config_file):
                 print('                                        </div>')
                 print('                                    </div>')
 
+                print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
+                print('                                    <input hidden name="slave_hostname" value="'+theslave+'">')
                 print('                                    <input hidden name="action" value="editip">')
 
                 print('                                    <div class="col-md-12">')
