@@ -1024,6 +1024,52 @@ if os.path.isfile(cluster_config_file):
         print('                                </div> <!-- Row End -->')
         print('                            </form>')
 
+        # home directories
+        with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
+            group_vars_dict = yaml.safe_load(group_vars_file)
+        home_dir_list = group_vars_dict['homedir']
+
+        if home_dir_list:
+            print('                        <div class="label label-default mb-2">Currently syncing:</div>')
+            print('                        <div class="clearfix">')
+            mykeypos = 1
+            for path in home_dir_list:
+                print('                        <div class="input-group input-group-inline input-group-sm">')
+                print('                            <div class="input-group-prepend">')
+                print('                                <span class="input-group-text">'+path+'</span>')
+                print('                            </div>')
+                if path not in ['home']:
+                    print('                        <div class="input-group-append">')
+                    print('                            <form class="form toastForm37-wrap" method="post" id="toastForm37'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                    print('                                <input hidden name="thehomedir" value="'+path+'">')
+                    print('                                <input hidden name="action" value="deletehomedir">')
+                    print('                                <button class="btn btn-danger btn-sm" type="submit">')
+                    print('                                    <span class="sr-only">Delete</span>')
+                    print('                                    <i class="fas fa-times"></i>')
+                    print('                                </button>')
+                    print('                            </form>')
+                    print('                        </div>')
+                mykeypos = mykeypos + 1
+                print('                        </div>')
+        print('                            </div>')
+        print('                            <div class="label label-default mt-2 mb-2">Add another \'home\' directory to Unison sync:</div>')
+        print('                            <form class="form" method="post" id="toastForm38" onsubmit="return false;">')
+
+        print('                                <div class="input-group mb-0">')
+        print('                                    <div class="input-group-prepend">')
+        print('                                        <span class="input-group-text">Path</span>')
+        print('                                    </div>')
+        print('                                    <input class="form-control" placeholder="home2" type="text" name="thehomedir">')
+        print('                                    <input hidden name="action" value="addhomedir">')
+        print('                                    <div class="input-group-append">')
+        print('                                        <button class="btn btn-outline-primary" type="submit">')
+        print('                                            <span class="sr-only">Add</span><i class="fas fa-plus"></i>')
+        print('                                        </button>')
+        print('                                    </div>')
+        print('                                </div>')
+
+        print('                            </form>')
+
     print('             </div> <!-- Card Body End -->')
 
     cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
@@ -1537,6 +1583,52 @@ else:
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
         print('                                    </div>')
         print('                                </div> <!-- Row End -->')
+        print('                            </form>')
+
+        # home directories
+        with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
+            group_vars_dict = yaml.safe_load(group_vars_file)
+        home_dir_list = group_vars_dict['homedir']
+
+        if home_dir_list:
+            print('                        <div class="label label-default mb-2">Currently syncing:</div>')
+            print('                        <div class="clearfix">')
+            mykeypos = 1
+            for path in home_dir_list:
+                print('                        <div class="input-group input-group-inline input-group-sm">')
+                print('                            <div class="input-group-prepend">')
+                print('                                <span class="input-group-text">'+path+'</span>')
+                print('                            </div>')
+                if path not in ['home']:
+                    print('                        <div class="input-group-append">')
+                    print('                            <form class="form toastForm37-wrap" method="post" id="toastForm37'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                    print('                                <input hidden name="thehomedir" value="'+path+'">')
+                    print('                                <input hidden name="action" value="deletehomedir">')
+                    print('                                <button class="btn btn-danger btn-sm" type="submit">')
+                    print('                                    <span class="sr-only">Delete</span>')
+                    print('                                    <i class="fas fa-times"></i>')
+                    print('                                </button>')
+                    print('                            </form>')
+                    print('                        </div>')
+                mykeypos = mykeypos + 1
+                print('                        </div>')
+        print('                            </div>')
+        print('                            <div class="label label-default mt-2 mb-2">Add another \'home\' directory to Unison sync:</div>')
+        print('                            <form class="form" method="post" id="toastForm38" onsubmit="return false;">')
+
+        print('                                <div class="input-group mb-0">')
+        print('                                    <div class="input-group-prepend">')
+        print('                                        <span class="input-group-text">Path</span>')
+        print('                                    </div>')
+        print('                                    <input class="form-control" placeholder="home2" type="text" name="thehomedir">')
+        print('                                    <input hidden name="action" value="addhomedir">')
+        print('                                    <div class="input-group-append">')
+        print('                                        <button class="btn btn-outline-primary" type="submit">')
+        print('                                            <span class="sr-only">Add</span><i class="fas fa-plus"></i>')
+        print('                                        </button>')
+        print('                                    </div>')
+        print('                                </div>')
+
         print('                            </form>')
     else:
         # Get the server main IP
