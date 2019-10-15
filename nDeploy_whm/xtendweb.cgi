@@ -737,7 +737,7 @@ if os.path.isfile(cluster_config_file):
         print('                                        </div>')
 
         slave_main_ip_hint = " Slave Main IP "
-        print('                                        <div class="input-group mt-2 mb-2">')
+        print('                                        <div class="input-group">')
         print('                                            <div class="input-group-prepend input-group-prepend-min">')
         print('                                                <span class="input-group-text">')
         print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
@@ -830,7 +830,7 @@ if os.path.isfile(cluster_config_file):
                 print('                                                    '+return_multi_input("Master WAN IP", master_wan_ip_hint))
                 print('                                                </span>')
                 print('                                            </div>')
-                print('                                            <input class="form-control" value="'+master_ip_resource_actual+'" type="text" name="master_wan_ip" readonly>')
+                print('                                            <input class="form-control" value="'+master_ip_resource_actual+'" placeholder="'+master_ip_resource_actual+'" type="text" name="master_wan_ip" readonly>')
                 print('                                        </div>')
 
                 # Slave data
