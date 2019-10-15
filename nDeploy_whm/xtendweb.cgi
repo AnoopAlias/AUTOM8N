@@ -362,6 +362,17 @@ if os.path.isfile(cluster_config_file):
         dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
 
         # master data
+        print('             <ul class="nav nav-tabs mt-4 mb-4" id="clusterTabs" role="tablist">')
+        print('                 <li class="nav-item"><a class="nav-link active" id="master-tab" data-toggle="tab" href="#master-content" role="tab" aria-controls="master-content" aria-selected="true">Master</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="slave-tab" data-toggle="tab" href="#slave-content" role="tab" aria-controls="slave-content" aria-selected="true">Slaves</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="add-tab" data-toggle="tab" href="#add-content" role="tab" aria-controls="add-content" aria-selected="true">Add Slave</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="ip-tab" data-toggle="tab" href="#ip-content" role="tab" aria-controls="ip-content" aria-selected="true">IP Resource</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home-content" role="tab" aria-controls="home-content" aria-selected="true">Home Directory</a></li>')
+        print('             </ul>')
+
+        # master data
+        print('                     <div class="tab-content" id="clusterTabsContent">')
+        print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
         print('                            <form class="form" method="post" id="toastForm29" onsubmit="return false;">')
 
         master_hostname_hint = " Masters FQDN "
@@ -468,8 +479,10 @@ if os.path.isfile(cluster_config_file):
 
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save master Settings</button>')
         print('                            </form>')
+        print('                         </div>')
 
         # slave data
+        print('                         <div class="tab-pane fade" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
 
         dbslave_hostname_hint = " Slave FQDN "
@@ -706,7 +719,10 @@ if os.path.isfile(cluster_config_file):
                 print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Delete this Slave</button>')
                 print('                            </form>')
 
+        print('                         </div>')
+
         # Add additional Slave
+        print('                         <div class="tab-pane fade" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
         print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
 
         # slave data
@@ -755,7 +771,10 @@ if os.path.isfile(cluster_config_file):
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
         print('                            </form>')
 
+        print('                         </div>')
+
         # Display, Edit, Delete IPMapping
+        print('                         <div class="tab-pane fade" id="ip-content" role="tabpanel" aria-labelledby="ip-tab">')
         master_ip_list = master_data_yaml_parsed[myhostname]['dnsmap'].keys()
         for myip in master_ip_list:
             master_ip_resource = master_data_yaml_parsed[myhostname]['dnsmap'].get(myip)
@@ -840,7 +859,7 @@ if os.path.isfile(cluster_config_file):
                 print('                                    <input hidden name="slave_hostname" value="'+theslave+'">')
                 print('                                    <input hidden name="action" value="editip">')
 
-                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Edit IP resource</button>')
+                print('                                        <button class="btn btn-outline-primary btn-block mt-3 mb-4" type="submit">Edit IP resource</button>')
                 print('                            </form>')
                 mykeypos = mykeypos + 1
 
@@ -850,9 +869,12 @@ if os.path.isfile(cluster_config_file):
                 print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
                 print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
                 print('                                    <input hidden name="action" value="delip">')
-
-                print('                                    <button class="btn btn-outline-primary btn-block mt-3" type="submit">Delete '+master_ip_resource+'</button>')
                 print('                            </form>')
+
+                print('                            <div class="btn-group btn-block mt-3 mb-4">')
+                print('                                <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm34'+'-'+str(mykeypos)+'">Edit</button>')
+                print('                                <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm35">Delete</button>')
+                print('                            </div>')
 
         # Display form for IP address mapping add
         print('                            <form class="form" method="post" id="toastForm36" onsubmit="return false;">')
@@ -905,8 +927,10 @@ if os.path.isfile(cluster_config_file):
         print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
         print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add IP resource</button>')
         print('                            </form>')
+        print('                         </div>')
 
         # home directories
+        print('                         <div class="tab-pane fade" id="home-content" role="tabpanel" aria-labelledby="home-tab">')
         with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
             group_vars_dict = yaml.safe_load(group_vars_file)
         home_dir_list = group_vars_dict['homedir']
@@ -951,6 +975,8 @@ if os.path.isfile(cluster_config_file):
         print('                                </div>')
 
         print('                            </form>')
+
+    print('                         </div>')
 
     print('             </div> <!-- Card Body End -->')
 
