@@ -601,7 +601,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                                    <input hidden name="action" value="editdbslave">')
 
-        print('                                    <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save slave Settings</button>')
+        print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
@@ -816,14 +816,14 @@ if os.path.isfile(cluster_config_file):
                 # Display form for IP address mapping
                 print('     <div class="accordion" id="accordionIPs">')
                 print('         <div class="card mb-0 text-white dg-dark">')
-                print('             <div class="card-header" id="heading'+'-'+str(mykeypos)+'">')
+                print('             <div class="card-header" id="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'">')
                 print('                 <h2 class="mb-0">')
-                print('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+'-'+str(mykeypos)+'" aria-expanded="false" aria-controls="collapse'+'-'+str(mykeypos)+'">')
-                print('                         IP #'+'-'+str(mykeypos)+'')
+                print('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" aria-expanded="false" aria-controls="collapse'+'-'+str(mykeypos)+'">')
+                print('                         '+master_ip_resource+'-'+slave_hostname+'')
                 print('                     </button>')
                 print('                 </h2>')
                 print('             </div>')
-                print('             <div id="collapse'+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+str(mykeypos)+'" data-parent="#accordionIPs">')
+                print('             <div id="collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'" data-parent="#accordionIPs">')
                 print('                 <div class="card-body">')
                 print('                     <form class="form toastForm34-wrap" method="post" id="toastForm34'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;">')
 
@@ -1280,7 +1280,7 @@ else:
 
         print('                                    <input hidden name="action" value="editdbslave">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save slave Settings</button>')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
@@ -1423,7 +1423,7 @@ else:
                 print('                                    <input hidden name="action" value="deleteslave">')
                 print('                                    <input hidden name="slave_hostname" value="'+myslave+'">')
                 print('                            </form>')
-                print('                            <div class="btn-group btn-block mt-3">')
+                print('                            <div class="btn-group btn-block mt-4">')
                 print('                                <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm32-'+str(slave_server_id)+'">Save slave Settings</button>')
                 print('                                <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm33-'+str(slave_server_id)+'">Delete this Slave</button>')
                 print('                            </div>')
