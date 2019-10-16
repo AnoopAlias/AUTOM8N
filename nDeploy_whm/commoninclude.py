@@ -202,6 +202,19 @@ def print_footer():
     return
 
 
+# Form Display
+def print_input_fn(label='Label', hint='Hint', valID='validationToolTip01', quikVar='', realVar=''):
+    print('                                        <div class="input-group">')
+    print('                                            <div class="input-group-prepend input-group-prepend-min">')
+    print('                                                <span class="input-group-text">')
+    print('                                                    '+return_multi_input(label, hint))
+    print('                                                </span>')
+    print('                                            </div>')
+    print('                                            <input class="form-control" id="'+valID+'" value="'+str(quikVar)+'" type="text" name="'+realVar+'" required>')
+    print('                                            <div class="invalid-tooltip">Needs some info</div>')
+    print('                                        </div>')
+
+
 # Card Start
 def cardheader(header='Untitled Card', faicon='fas fa-cogs'):
     print('')
