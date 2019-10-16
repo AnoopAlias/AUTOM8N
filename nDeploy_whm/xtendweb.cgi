@@ -497,8 +497,8 @@ if os.path.isfile(cluster_config_file):
         print('                         </div>')
 
         # Tab Start / Tab2 ###########################
-        # slave data which list all the slaves and their entry in hosts file
-        print('                         <div class="tab-pane fade" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
+        # slave data
+        print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
 
         dbslave_hostname_hint = " Slave FQDN "
@@ -603,12 +603,15 @@ if os.path.isfile(cluster_config_file):
 
         print('                                    <input hidden name="action" value="editdbslave">')
 
-        print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
             if myslave != dbslave_hostname:
+
+                print('<div class="accordion mt-4" id="accordionSlaves">')
+
                 # Lets get all the details of this slave server and present to the user for editing
                 slave_hostname = myslave
                 slave_server_id = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['server_id']
@@ -621,6 +624,17 @@ if os.path.isfile(cluster_config_file):
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
                 # slave data
+                print('<div class="card mb-0">')
+                print('<div class="card-header" id="heading'+str(slave_server_id)+'">')
+                print('<h2 class="mb-0">')
+                print('<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+str(slave_server_id)+'" aria-expanded="false" aria-controls="collapse'+str(slave_server_id)+'">')
+                print('Slave #'+str(slave_server_id)+'')
+                print('</button>')
+                print('</h2>')
+                print('</div>')
+
+                print('<div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves">')
+                print('<div class="card-body">')
                 print('                            <form class="form toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;">')
 
                 slave_hostname_hint = " Slave FQDN "
@@ -725,17 +739,23 @@ if os.path.isfile(cluster_config_file):
 
                 print('                                    <input hidden name="action" value="editslave">')
 
-                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save slave Settings</button>')
                 print('                            </form>')
 
                 # Delete the Additional Slave
                 print('                            <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
                 print('                                    <input hidden name="action" value="deleteslave">')
                 print('                                    <input hidden name="slave_hostname" value="'+myslave+'">')
-                print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Delete this Slave</button>')
                 print('                            </form>')
+                print('                            <div class="btn-group btn-block mt-4">')
+                print('                                <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm32-'+str(slave_server_id)+'">Save slave Settings</button>')
+                print('                                <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm33-'+str(slave_server_id)+'">Delete this Slave</button>')
+                print('                            </div>')
 
-        print('                         </div>')
+                print('</div>')
+                print('</div>')
+                print('</div>')
+                print('                         </div>')
+        print('</div>')
 
         # Tab Start / Tab3 ###########################
         # Add additional Slave
@@ -1023,6 +1043,8 @@ else:
 
     print('             <div class="card-body"> <!-- Card Body Start -->')
 
+    # Case where conf/nDeploy-cluster/hosts exists but conf/ndeploy_cluster.yaml does not exists
+    # This is when a user has setup the initial hosts file, but hasnt setup the cluster yet by running the playbook
     # If the inventory file exists
     if os.path.isfile(ansible_inventory_file):
         # parse the inventory and display its contents
@@ -1050,6 +1072,7 @@ else:
         dbslave_repo = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['repo']
         dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
 
+        # Navigation tabs start here
         print('             <ul class="nav nav-tabs mb-4" id="clusterTabs" role="tablist">')
         print('                 <li class="nav-item"><a class="nav-link active" id="master-tab" data-toggle="tab" href="#master-content" role="tab" aria-controls="master-content" aria-selected="true">Master</a></li>')
         print('                 <li class="nav-item"><a class="nav-link" id="slave-tab" data-toggle="tab" href="#slave-content" role="tab" aria-controls="slave-content" aria-selected="true">Slaves</a></li>')
@@ -1057,8 +1080,10 @@ else:
         print('                 <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home-content" role="tab" aria-controls="home-content" aria-selected="true">Home Directory</a></li>')
         print('             </ul>')
 
-        # master data
         print('                     <div class="tab-content" id="clusterTabsContent">')
+
+        # Tab Start / Tab1 ###########################
+        # Master data
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
         print('                            <form class="form needs-validation" method="post" id="toastForm29" onsubmit="return false;" novalidate>')
 
@@ -1178,6 +1203,7 @@ else:
         print('                            </form>')
         print('                        </div>')
 
+        # Tab Start / Tab2 ###########################
         # slave data
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
@@ -1438,6 +1464,7 @@ else:
                 print('                         </div>')
         print('</div>')
 
+        # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade show" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
         print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
@@ -1489,6 +1516,7 @@ else:
         print('                            </form>')
         print('                         </div>')
 
+        # Tab Start / Tab4 ###########################
         # home directories
         print('                         <div class="tab-pane fade show" id="home-content" role="tabpanel" aria-labelledby="home-tab">')
 
@@ -1537,8 +1565,13 @@ else:
 
         print('                            </form>')
         print('                         </div>')
+        # Tab ends ###########################
         print('                         </div>')
+        # Main Tab Div End ###########################
     else:
+        # Case where conf/nDeploy-cluster/hosts and conf/ndeploy_cluster.yaml does not exists
+        # This means the user hast tried to setup a cluster yet!
+        # We present before him an option to add the initial slave( setup ansible inventory )
         # Get the server main IP
         myip = get('https://api.ipify.org').text
         # Display form for ndeploymaster
