@@ -116,7 +116,7 @@ cardheader('')
 print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
 print('                            <h4 class="mb-0">Watcher Status</h4>')
 print('                            <ul class="list-unstyled mb-0">')
-print('                                <li><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
+print('                                <li><small>'+brand+' '+autom8n_version.replace("Autom8n ", '')+'</small></li>')
 if watcher_status:
     print('                                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
@@ -257,7 +257,7 @@ print('             <div class="tab-pane fade" id="v-pills-cluster" role="tabpan
 
 # Cluster Status
 if os.path.isfile(cluster_config_file):
-    cardheader('Cluster Status','fas fa-align-justify')
+    cardheader('Cluster Status', 'fas fa-align-justify')
     print('             <div class="card-body p-0">  <!-- Card Body Start -->')
     print('                 <div class="row no-gutters row-1"> <!-- Row Start -->')
 
@@ -334,6 +334,8 @@ if os.path.isfile(cluster_config_file):
     print('                     <button type="submit" class="btn btn-outline-primary" form="toastForm26">Reset Csync2</button>')
     print('                 </div>')
 
+    # This is case where conf/ndeploy_cluster.yaml and conf/nDeploy-cluster/hosts both exists
+    # This means the user has setup the ansible inventory and has successfully setup the cluster
     # If the inventory file exists
     if os.path.isfile(ansible_inventory_file):
         # parse the inventory and display its contents
@@ -361,7 +363,7 @@ if os.path.isfile(cluster_config_file):
         dbslave_repo = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['repo']
         dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
 
-        # master data
+        # Navigation tabs start here
         print('             <ul class="nav nav-tabs mt-4 mb-4" id="clusterTabs" role="tablist">')
         print('                 <li class="nav-item"><a class="nav-link active" id="master-tab" data-toggle="tab" href="#master-content" role="tab" aria-controls="master-content" aria-selected="true">Master</a></li>')
         print('                 <li class="nav-item"><a class="nav-link" id="slave-tab" data-toggle="tab" href="#slave-content" role="tab" aria-controls="slave-content" aria-selected="true">Slaves</a></li>')
@@ -495,7 +497,7 @@ if os.path.isfile(cluster_config_file):
         print('                         </div>')
 
         # Tab Start / Tab2 ###########################
-        # slave data
+        # slave data which list all the slaves and their entry in hosts file
         print('                         <div class="tab-pane fade" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
 
@@ -811,15 +813,15 @@ if os.path.isfile(cluster_config_file):
             # get corresponding slave IP for this master IP
             mykeypos = 1
             for theslave in cluster_data_yaml_parsed.keys():
-                slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip,"NULL")
-                slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip,"NULL")
+                slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip, "NULL")
+                slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip, "NULL")
                 # Display form for IP address mapping
                 print('     <div class="accordion" id="accordionIPs">')
                 print('         <div class="card mb-0 text-white dg-dark">')
                 print('             <div class="card-header" id="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'">')
                 print('                 <h2 class="mb-0">')
                 print('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" aria-expanded="false" aria-controls="collapse'+'-'+str(mykeypos)+'">')
-                print('                         '+master_ip_resource+'-'+slave_hostname+'')
+                print('                         '+master_ip_resource+'-'+theslave+'')
                 print('                     </button>')
                 print('                 </h2>')
                 print('             </div>')
@@ -892,15 +894,14 @@ if os.path.isfile(cluster_config_file):
                 print('</div>')
                 print('</div>')
                 mykeypos = mykeypos + 1
-
-            # Display form for IP address deletion
-            print('                            <form class="form toastForm35-wrap" method="post" id="toastForm35'+'-'+master_ip_resource+'" onsubmit="return false;">')
-            print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
-            print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
-            print('                                    <input hidden name="action" value="delip">')
-            print('                            <button class="btn btn-outline-danger btn-block mt-3 mb-4" type="submit" form="toastForm35">Delete</button>')
-
-            print('                            </form>')
+            if master_ip_resource != "ip0":
+                # Display form for IP address deletion
+                print('                            <form class="form toastForm35-wrap" method="post" id="toastForm35'+'-'+master_ip_resource+'" onsubmit="return false;">')
+                print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
+                print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
+                print('                                    <input hidden name="action" value="delip">')
+                print('                            <button class="btn btn-outline-danger btn-block mt-3 mb-4" type="submit" form="toastForm35">Delete</button>')
+                print('                            </form>')
 
         print('                          </div>')
 
@@ -1434,7 +1435,6 @@ else:
                 print('                         </div>')
         print('</div>')
 
-
         # Add additional Slave
         print('                         <div class="tab-pane fade show" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
         print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
@@ -1642,7 +1642,7 @@ print('                <div class="tab-pane fade" id="v-pills-zone" role="tabpan
 
 # Sync cluster
 if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
-    cardheader('Sync Cluster','fas fa-sync')
+    cardheader('Sync Cluster', 'fas fa-sync')
     print('             <div class="card-body"> <!-- Card Body Start -->')
 
     print('                 <form class="form mb-3" id="toastForm27" onsubmit="return false;">')
@@ -1678,7 +1678,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('             </div> <!-- Card Body End -->')
     cardfooter('Choose a user to sync dns zone or web files')
 else:
-    cardheader('Cluster Sync Disabled','fas fa-sync')
+    cardheader('Cluster Sync Disabled', 'fas fa-sync')
     cardfooter('Cluster Sync is only available when cluster is setup')
 
 print('                </div> <!-- End Sync Tab -->')
@@ -1689,7 +1689,7 @@ print('                <!-- PHP Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-php" role="tabpanel" aria-labelledby="v-pills-php-tab">')
 
 # Set Default PHP for AutoConfig
-cardheader('Default PHP for Autoswitch','fab fa-php')
+cardheader('Default PHP for Autoswitch', 'fab fa-php')
 print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
 print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
 
@@ -1742,7 +1742,7 @@ print('                <!-- DOS Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-dos" role="tabpanel" aria-labelledby="v-pills-dos-tab">')
 
 # DDOS Protection
-cardheader('DDOS Protection','fas fa-user-shield')
+cardheader('DDOS Protection', 'fas fa-user-shield')
 print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
 print('                     <div class="row no-gutters row-2-col row-no-btm"> <!-- Row Start -->')
 print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Nginx</div>')
@@ -1810,7 +1810,7 @@ print('                <div class="tab-pane fade" id="v-pills-php_fpm" role="tab
 
 # PHP-FPM Pool Editor
 phpfpmpool_hint = " Secure and non secure PHP-FPM Pools attached to cPanel users for use with Native NGINX. "
-cardheader('PHP-FPM Pool Editor','fas fa-sitemap')
+cardheader('PHP-FPM Pool Editor', 'fas fa-sitemap')
 print('                 <div class="card-body"> <!-- Card Body Start -->')
 print('                     <form class="form" action="phpfpm_pool_editor.cgi" method="get">')
 print('                         <div class="input-group">')
@@ -1851,7 +1851,7 @@ print('                <!-- Map Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-map" role="tabpanel" aria-labelledby="v-pills-map-tab">')
 
 # Map cPanel Package to NGINX
-cardheader('Map cPanel Package to NGINX','fas fa-box-open')
+cardheader('Map cPanel Package to NGINX', 'fas fa-box-open')
 print('                 <div class="card-body p-0"> <!-- Card Body Start -->')
 print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
 print('                         <div class="col-md-6 alert"><i class="fas fa-box"></i> NGINX -> Package</div>')
@@ -1909,8 +1909,7 @@ print('                         </div>')
 print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Edit Pkg</button>')
 print('                     </form>')
 print('                 </div> <!-- Card Body End -->')
-cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes an Upgrade/Downgrade process.'
-)
+cardfooter('This option will automatically assign NGINX Config/Settings to a cPanel Package when enabled. This will also reset any NGINX Config/Settings the user has configured if the cPanel Package undergoes an Upgrade/Downgrade process.')
 
 print('                </div> <!-- End Map Tab -->')
 
@@ -1920,7 +1919,7 @@ print('                <!-- Limit Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-limit" role="tabpanel" aria-labelledby="v-pills-limit-tab">')
 
 # System Resource Limit
-cardheader('System Resource Limit','fas fa-compress')
+cardheader('System Resource Limit', 'fas fa-compress')
 print('                    <div class="card-body"> <!-- Card Body Start -->')
 
 with open('/etc/redhat-release', 'r') as releasefile:
