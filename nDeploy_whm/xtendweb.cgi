@@ -336,9 +336,11 @@ if os.path.isfile(cluster_config_file):
 
     # This is case where conf/ndeploy_cluster.yaml and conf/nDeploy-cluster/hosts both exists
     # This means the user has setup the ansible inventory and has successfully setup the cluster
+
     # If the inventory file exists
     if os.path.isfile(ansible_inventory_file):
-        # parse the inventory and display its contents
+
+        # Parse the inventory and display its contents
         with open(ansible_inventory_file, 'r') as my_inventory:
             ansible_inventory_file_parsed = yaml.safe_load(my_inventory)
         master_hostname = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'].keys()[0]
@@ -366,11 +368,11 @@ if os.path.isfile(cluster_config_file):
         # Navigation tabs start here
         print('             <ul class="nav nav-tabs mt-4 mb-4" id="clusterTabs" role="tablist">')
         print('                 <li class="nav-item"><a class="nav-link active" id="master-tab" data-toggle="tab" href="#master-content" role="tab" aria-controls="master-content" aria-selected="true">Master</a></li>')
-        print('                 <li class="nav-item"><a class="nav-link" id="slave-tab" data-toggle="tab" href="#slave-content" role="tab" aria-controls="slave-content" aria-selected="true">Slaves</a></li>')
-        print('                 <li class="nav-item"><a class="nav-link" id="add-tab" data-toggle="tab" href="#add-content" role="tab" aria-controls="add-content" aria-selected="true">Add Slave</a></li>')
-        print('                 <li class="nav-item"><a class="nav-link" id="ip-add-tab" data-toggle="tab" href="#ip-add-content" role="tab" aria-controls="ip-add-content" aria-selected="true">Add IP</a></li>')
-        print('                 <li class="nav-item"><a class="nav-link" id="ip-tab" data-toggle="tab" href="#ip-content" role="tab" aria-controls="ip-content" aria-selected="true">IP Resource</a></li>')
-        print('                 <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home-content" role="tab" aria-controls="home-content" aria-selected="true">Home Directory</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="slave-tab" data-toggle="tab" href="#slave-content" role="tab" aria-controls="slave-content" aria-selected="false">Slaves</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="add-tab" data-toggle="tab" href="#add-content" role="tab" aria-controls="add-content" aria-selected="false">Add Slave</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="ip-add-tab" data-toggle="tab" href="#ip-add-content" role="tab" aria-controls="ip-add-content" aria-selected="false">Add IP</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="ip-tab" data-toggle="tab" href="#ip-content" role="tab" aria-controls="ip-content" aria-selected="false">IP Resource</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home-content" role="tab" aria-controls="home-content" aria-selected="false">Home Directory</a></li>')
         print('             </ul>')
 
         print('                     <div class="tab-content" id="clusterTabsContent">')
