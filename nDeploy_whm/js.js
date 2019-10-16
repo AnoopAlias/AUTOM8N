@@ -493,8 +493,9 @@ jQuery(document).ready(function($) {
     });
 
 
-    $('#toastForm35').submit(function() {
-        var $f = $('#toastForm35');
+    $('.toastForm35-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
@@ -504,6 +505,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
 
     $('#toastForm36').submit(function() {
         var $f = $('#toastForm36');
