@@ -1156,105 +1156,16 @@ else:
                 print('<div class="card-body">')
                 print('                            <form class="form toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;">')
 
-                slave_hostname_hint = " Slave FQDN "
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+slave_hostname+'" type="text" name="slave_hostname">')
-                print('                                        </div>')
-
-                slave_main_ip_hint = " Slaves Main IP "
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+slave_main_ip+'" type="text" name="slave_main_ip">')
-                print('                                        </div>')
-
-                slave_db_ip_hint = " Slaves Database IP "
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+slave_db_ip+'" type="text" name="slave_db_ip">')
-                print('                                        </div>')
-
-                slave_ssh_port_hint = " Slave ssh port "
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+str(slave_ssh_port)+'" type="text" name="slave_ssh_port">')
-                print('                                        </div>')
-
-                slave_server_id_hint = "Slave server id "
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("Slave server id", slave_server_id_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+str(slave_server_id)+'" type="text" name="slave_server_id">')
-                print('                                        </div>')
-
-                slave_lat_hint = " Slave server latitude "
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("Slave latitude", slave_lat_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+str(slave_lat)+'" type="text" name="slave_lat">')
-                print('                                        </div>')
-
-                slave_lon_hint = " Slave sever longitude"
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("Slave longitude", slave_lon_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+str(slave_lon)+'" type="text" name="slave_lon">')
-                print('                                        </div>')
-
-                slave_repo_hint = " RPM repo "
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("RPM repo", slave_repo_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+slave_repo+'" type="text" name="slave_repo">')
-                print('                                        </div>')
-
-                slave_dbmode_hint = " MaxScale Mode "
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("DBMode", slave_dbmode_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+slave_dbmode+'" type="text" name="slave_dbmode">')
-                print('                                        </div>')
-
-                slave_dns_hint = " Slave DNS server "
-                print('                                        <div class="input-group">')
-                print('                                            <div class="input-group-prepend input-group-prepend-min">')
-                print('                                                <span class="input-group-text">')
-                print('                                                    '+return_multi_input("DNS", slave_dns_hint))
-                print('                                                </span>')
-                print('                                            </div>')
-                print('                                            <input class="form-control" value="'+slave_dns+'" type="text" name="slave_dns">')
-                print('                                        </div>')
+                print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", slave_hostname, "slave_hostname")
+                print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", slave_main_ip, "slave_main_ip")
+                print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip23", slave_db_ip, "slave_db_ip")
+                print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip24", slave_ssh_port, "slave_ssh_port")
+                print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 1). ", "validationTooltip25", slave_server_id, "slave_server_id")
+                print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", "validationTooltip26", slave_lat, "slave_lat")
+                print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", "validationTooltip27", slave_lon, "slave_lon")
+                print_input_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", "validationTooltip28", slave_repo, "slave_repo")
+                print_input_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip29", slave_dbmode, "slave_dbmode")
+                print_input_fn("DNS Type", " Select desired DNS Mode for this node. ", "validationTooltip30", slave_dns, "slave_dns")
 
                 print('                                    <input hidden name="action" value="editslave">')
 
