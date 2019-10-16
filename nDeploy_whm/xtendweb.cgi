@@ -902,6 +902,9 @@ if os.path.isfile(cluster_config_file):
                 print('                                    <input hidden name="action" value="delip">')
                 print('                            <button class="btn btn-outline-danger btn-block mt-3 mb-4" type="submit" form="toastForm35">Delete '+master_ip_resource+'</button>')
                 print('                            </form>')
+            # Provide a seperation between each ip resource_
+            print('<br>')
+            print('<hr/>')
 
         print('                          </div>')
 
