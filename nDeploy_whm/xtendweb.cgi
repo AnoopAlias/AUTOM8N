@@ -1192,46 +1192,11 @@ else:
         print('                         <div class="tab-pane fade show" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
         print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
 
-        # slave data
-        slave_hostname_hint = " Slaves FQDN "
-        print('                                        <div class="input-group">')
-        print('                                            <div class="input-group-prepend input-group-prepend-min">')
-        print('                                                <span class="input-group-text">')
-        print('                                                    '+return_multi_input("Slave server FQDN", slave_hostname_hint))
-        print('                                                </span>')
-        print('                                            </div>')
-        print('                                            <input class="form-control" value="" type="text" name="slave_hostname">')
-        print('                                        </div>')
-
-        slave_main_ip_hint = " Slave Main IP "
-        print('                                        <div class="input-group">')
-        print('                                            <div class="input-group-prepend input-group-prepend-min">')
-        print('                                                <span class="input-group-text">')
-        print('                                                    '+return_multi_input("Slave Main IP", slave_main_ip_hint))
-        print('                                                </span>')
-        print('                                            </div>')
-        print('                                            <input class="form-control" value="" type="text" name="slave_main_ip">')
-        print('                                        </div>')
-
-        slave_db_ip_hint = " slaves Database IP "
-        print('                                        <div class="input-group">')
-        print('                                            <div class="input-group-prepend input-group-prepend-min">')
-        print('                                                <span class="input-group-text">')
-        print('                                                    '+return_multi_input("Slave Database IP", slave_db_ip_hint))
-        print('                                                </span>')
-        print('                                            </div>')
-        print('                                            <input class="form-control" value="" type="text" name="slave_db_ip">')
-        print('                                        </div>')
-
-        slave_ssh_port_hint = " Slaves ssh port "
-        print('                                        <div class="input-group">')
-        print('                                            <div class="input-group-prepend input-group-prepend-min">')
-        print('                                                <span class="input-group-text">')
-        print('                                                    '+return_multi_input("Slave ssh port", slave_ssh_port_hint))
-        print('                                                </span>')
-        print('                                            </div>')
-        print('                                            <input class="form-control" value="" type="text" name="slave_ssh_port">')
-        print('                                        </div>')
+        # Slave data
+        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", "", "slave_hostname")
+        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", "", "slave_main_ip")
+        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip23", "", "slave_db_ip")
+        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip24", "", "slave_ssh_port")
 
         print('                                    <input hidden name="action" value="addadditionalslave">')
 
