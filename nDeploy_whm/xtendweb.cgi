@@ -373,6 +373,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                     <div class="tab-content" id="clusterTabsContent">')
 
+        # Tab Start / Tab1 ###########################
         # master data
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
         print('                            <form class="form needs-validation" method="post" id="toastForm29" novalidate>')
@@ -493,6 +494,7 @@ if os.path.isfile(cluster_config_file):
         print('                            </form>')
         print('                         </div>')
 
+        # Tab Start / Tab2 ###########################
         # slave data
         print('                         <div class="tab-pane fade" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
@@ -733,6 +735,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                         </div>')
 
+        # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
         print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
@@ -784,6 +787,7 @@ if os.path.isfile(cluster_config_file):
         print('                            </form>')
         print('                         </div>')
 
+        # Tab Start / Tab4 ###########################
         # Display, Edit, Delete IPMapping
         print('                         <div class="tab-pane fade" id="ip-content" role="tabpanel" aria-labelledby="ip-tab">')
         master_ip_list = master_data_yaml_parsed[myhostname]['dnsmap'].keys()
@@ -821,7 +825,7 @@ if os.path.isfile(cluster_config_file):
                 print('             </div>')
                 print('             <div id="collapse'+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+str(mykeypos)+'" data-parent="#accordionIPs">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form toastForm34-wrap" method="post" id="toastForm34'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                print('                     <form class="form toastForm34-wrap" method="post" id="toastForm34'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;">')
 
                 # master data
                 master_ip_resource_hint = " IP address resource name like ip1 "
@@ -890,7 +894,7 @@ if os.path.isfile(cluster_config_file):
                 mykeypos = mykeypos + 1
 
             # Display form for IP address deletion
-            print('                            <form class="form" method="post" id="toastForm35" onsubmit="return false;">')
+            print('                            <form class="form toastForm35-wrap" method="post" id="toastForm35'+'-'+master_ip_resource+'" onsubmit="return false;">')
             print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
             print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
             print('                                    <input hidden name="action" value="delip">')
@@ -900,6 +904,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                          </div>')
 
+        # Tab Start / Tab5 ###########################
         # Display form for IP address mapping add
         print('                         <div class="tab-pane fade" id="ip-add-content" role="tabpanel" aria-labelledby="ip-add-tab">')
         print('                            <form class="form" method="post" id="toastForm36" onsubmit="return false;">')
@@ -953,6 +958,7 @@ if os.path.isfile(cluster_config_file):
         print('                            </form>')
         print('                         </div>')
 
+        # Tab Start / Tab6 ###########################
         # home directories
         print('                         <div class="tab-pane fade" id="home-content" role="tabpanel" aria-labelledby="home-tab">')
         with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
@@ -1000,8 +1006,10 @@ if os.path.isfile(cluster_config_file):
 
         print('                            </form>')
         print('                         </div>')
+        # Tabs end ###########################
 
         print('                         </div>')
+        # Main Tab Div End ###########################
 
     print('             </div> <!-- Card Body End -->')
 
