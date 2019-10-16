@@ -138,7 +138,7 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['latitude'] = form.getvalue('dbslave_lat')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['longitude'] = form.getvalue('dbslave_lon')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['repo'] = form.getvalue('dbslave_repo')
-        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['server_id'] = form.getvalue('dbslave_server_id')
+        inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['server_id'] = form.getvalue('dbslave_server_id')
         # dbslave
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['ansible_port'] = form.getvalue('dbslave_ssh_port')
