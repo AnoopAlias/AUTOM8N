@@ -75,7 +75,7 @@ def print_nontoast_error(thenotice, thereason):
     print('                        <h3>'+thenotice+'</h3>')
     print('                        <h5>'+thereason+'</h5>')
     if app_email != 'None':
-        print('                        <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
+        print('                    <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
     print('                    </div>')
     print('                </div>')
     print('            </div>')
@@ -168,9 +168,11 @@ def print_header(title=''):
     print('            <div class="logo">')
     print('                <h4>')
     if logo_url != 'None':
-        print('                    <a href="xtendweb.cgi"><img border="0" alt="XtendWeb" class="logo-url" src="'+logo_url+'"></a>')
+        print('                <a href="xtendweb.cgi"><img border="0" alt="XtendWeb" class="logo-url" src="'+logo_url+'"></a>')
+    if ndeploy_theme_color == 'dark':
+        print('                <a href="xtendweb.cgi"><img border="0" alt="" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>')
     else:
-        print('                    <a href="xtendweb.cgi"><img border="0" alt="" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>')
+        print('                <a href="xtendweb.cgi"><img border="0" alt="" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>')
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
@@ -182,7 +184,7 @@ def print_header(title=''):
     print('        </header>')
     print('')
     print('        <!-- Main Container Start -->')
-    print('        <div id="main-container" class="container">') #Main Container
+    print('        <div id="main-container" class="container">')
 
 
 # Print Footer
