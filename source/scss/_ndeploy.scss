@@ -200,6 +200,11 @@ body {
 	}
 	.logo {
 		display: inline-block;
+		img {
+			position: relative;
+			top: -1px;
+			margin-right: .5rem;
+		}
 	}
 	.help {
 		position: relative;

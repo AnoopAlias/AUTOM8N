@@ -34,13 +34,13 @@ else:
 if os.path.isfile(branding_file):
     with open(branding_file, 'r') as brand_data_file:
         yaml_parsed_brand = yaml.safe_load(brand_data_file)
-    brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
+    brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb_light.png")
     brand = yaml_parsed_brand.get("brand", "AUTOM8N")
     brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
     brand_anchor = yaml_parsed_brand.get("brand_anchor", "A U T O M 8 N")
     brand_link = yaml_parsed_brand.get("brand_link", "https://autom8n.com/")
 else:
-    brand_logo = "xtendweb.png"
+    brand_logo = "xtendweb_light.png"
     brand = "AUTOM8N"
     brand_group = "NGINX AUTOMATION"
     brand_anchor = "A U T O M 8 N"
@@ -168,15 +168,15 @@ def print_header(title=''):
     print('            <div class="logo">')
     print('                <h4>')
     if logo_url != 'None':
-        print('                    <a href="xtendweb.cgi"><img border="0" class="logo-url" src="'+logo_url+'"></a>')
+        print('                    <a href="xtendweb.cgi"><img border="0" alt="XtendWeb" class="logo-url" src="'+logo_url+'"></a>')
     else:
-        print('                    <a href="xtendweb.cgi"><img border="0" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>')
+        print('                    <a href="xtendweb.cgi"><img border="0" alt="" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>')
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
     print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="ndeploy_control.cgi" data-toggle="tooltip" title="'+brand+'&nbsp;Control"><i class="fas fa-tools"></i> <span class="d-none d-lg-inline-block">'+brand+'&nbsp;Control</span></a></div>')
     if app_email != 'None':
-        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>')
+        print('            <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>')
     print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt" data-toggle="tooltip" title="Documentation"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">Documentation</span></a></div>')
     print('            </div>')
     print('        </header>')
