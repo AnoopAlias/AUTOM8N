@@ -115,15 +115,9 @@ print('                        </ul>')
 print('                    </div>')
 
 if nginx_status:
-    print('                <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Disable</button>')
-    print('                    <input hidden name="plugin_status" value="disable">')
+    print('                    <button form="disable_ndeploy" class="btn btn-secondary btn-block mb-0">Disable</button>')
 else:
-    print('                <form id="enable_ndeploy" class="form" onsubmit="return false;">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Enable</button>')
-    print('                    <input hidden name="plugin_status" value="enable">')
-
-print('                    </form>')
+    print('                    <button form="enable_ndeploy" class="btn btn-secondary btn-block mb-0">Enable</button>')
 
 cardfooter('')
 
@@ -267,16 +261,6 @@ print('                            <div class="row no-gutters row-1"> <!-- Row S
 print('                                <div class="col-md-6 alert"><i class="fas fa-infinity"></i> '+brand+' cPanel Plugin</div>')
 print('                                <div class="col-md-6">')
 print('                                    <div class="row no-gutters">')
-
-nginx_status = False
-for myprocess in psutil.process_iter():
-    # Workaround for Python 2.6
-    if platform.python_version().startswith('2.6'):
-        mycmdline = myprocess.cmdline
-    else:
-        mycmdline = myprocess.cmdline()
-    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-        nginx_status = True
 
 if nginx_status:
     print('                                    <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
