@@ -376,8 +376,8 @@ print('                                <input hidden class="form-control" name="
 print('                            </form>')
 
 print('                            <div class="btn-group btn-block mt-3">')
-print('                                <button class="btn btn-outline-primary" type="submit" form="ndeploy_control_branding">Save</button>')
 print('                                <button class="btn btn-outline-primary" type="submit" form="restore_branding_defaults">Revert</button>')
+print('                                <button class="btn btn-outline-primary" type="submit" form="ndeploy_control_branding">Save</button>')
 print('                            </div>')
 
 print('                        </div> <!-- Card Body End -->')
@@ -453,8 +453,8 @@ print('                                <input hidden class="form-control" name="
 print('                            </form>')
 
 print('                            <div class="btn-group btn-block mt-3">')
-print('                                <button class="btn btn-outline-primary" type="submit" form="ndeploy_control_config">Save</button>')
 print('                                <button class="btn btn-outline-primary" type="submit" form="restore_ndeploy_control_defaults">Revert</button>')
+print('                                <button class="btn btn-outline-primary" type="submit" form="ndeploy_control_config">Save</button>')
 print('                            </div>')
 
 
