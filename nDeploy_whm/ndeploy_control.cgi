@@ -294,7 +294,7 @@ print('')
 print('                    <!-- Branding Tab -->')
 print('                    <div class="tab-pane fade" id="v-pills-branding" role="tabpanel" aria-labelledby="v-pills-branding-tab">')
 
-cardheader('Branding Settings','fas fa-infinity')
+cardheader('Branding Settings', 'fas fa-infinity')
 brand_hint = " Enter the textual name you want to represent this application as for whitelabeling purposes. This shows up in both WHM, cPanel, and this application. "
 brand_logo_hint = " Enter the filename of the brand icon used for this application. This file must exist in the suggested directories or rebuild will fail. "
 brand_group_hint = " cPanel creates sections for content. Enter the section title you want this application to show up in. "
@@ -334,7 +334,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_group" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
 print('                                </div>')
 
-print('                                <label class="small" for="brand_anchor">Enter your brand\'s anchor text that will be used on the footer of the application.</label>')
+print('                                <label class="small font-italic" for="brand_anchor">DISABLED: Enter your brand\'s anchor text that will be used on the footer of the application.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_anchor_desc">')
@@ -344,7 +344,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_anchor" value="'+brand_anchor+'" id="brand_anchor" aria-describedby="brand_anchor_desc">')
 print('                                </div>')
 
-print('                                <label class="small" for="brand_link">Enter your brand\'s website link that the above anchor text will link to via the footer.</label>')
+print('                                <label class="small font-italic" for="brand_link">DISABLED: Enter your brand\'s website link that the above anchor text will link to via the footer.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_link_desc">')
