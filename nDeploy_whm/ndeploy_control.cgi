@@ -596,7 +596,7 @@ print('                            </form>')
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                        <form class="form" id="clear_netdata_credentials" method="post" onsubmit="return false;">')
     print('                            <input hidden class="form-control" name="remove_netdata_creds" value="enabled">')
-    print('                            <button class="btn btn-outline-primary btn-block mt-4" type="submit">Remove Netdata Credentials</button>')
+    print('                            <button class="btn btn-outline-primary btn-block mt-2" type="submit">Remove Netdata Credentials</button>')
     print('                        </form>')
 
 print('                        </div> <!-- Card Body End -->')
