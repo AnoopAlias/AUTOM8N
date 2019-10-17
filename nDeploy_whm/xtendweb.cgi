@@ -578,26 +578,9 @@ if os.path.isfile(cluster_config_file):
         print('                         <div class="tab-pane fade" id="ip-add-content" role="tabpanel" aria-labelledby="ip-add-tab">')
         print('                            <form class="form" method="post" id="toastForm36" onsubmit="return false;">')
 
-        # master data
-        master_ip_resource_hint = " IP address resource name like ip1 "
-        print('                                        <div class="input-group">')
-        print('                                            <div class="input-group-prepend input-group-prepend-min">')
-        print('                                                <span class="input-group-text">')
-        print('                                                    '+return_multi_input("Master IP resource name", master_ip_resource_hint))
-        print('                                                </span>')
-        print('                                            </div>')
-        print('                                            <input class="form-control" value="" type="text" name="master_ip_resource">')
-        print('                                        </div>')
-
-        master_lan_ip_hint = " Masters LAN IP "
-        print('                                        <div class="input-group">')
-        print('                                            <div class="input-group-prepend input-group-prepend-min">')
-        print('                                                <span class="input-group-text">')
-        print('                                                    '+return_multi_input("Master LAN IP", master_lan_ip_hint))
-        print('                                                </span>')
-        print('                                            </div>')
-        print('                                            <input class="form-control" value="" type="text" name="master_lan_ip">')
-        print('                                        </div>')
+        # Master data
+        print_input_fn("Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", "validationToolTip31", "", "master_ip_resource")
+        print_input_fn("Master LAN IP", " Enter the Local Area Network (LAN) IP. ", "validationToolTip32", "", "master_lan_ip")
 
         for theslave in cluster_data_yaml_parsed.keys():
 
@@ -606,25 +589,8 @@ if os.path.isfile(cluster_config_file):
             print_input_fn("WAN_IP_"+theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "validationToolTip35", slave_mapped_dns_ip, "slave_wan_ip")
 
             # Slave data
-            slave_lan_ip_hint = " Slaves LAN IP "
-            print('                                        <div class="input-group">')
-            print('                                            <div class="input-group-prepend input-group-prepend-min">')
-            print('                                                <span class="input-group-text">')
-            print('                                                    '+return_multi_input("LAN_IP_"+theslave, slave_lan_ip_hint))
-            print('                                                </span>')
-            print('                                            </div>')
-            print('                                            <input class="form-control" value="" type="text" name="'+theslave+'_lan_ip">')
-            print('                                        </div>')
-
-            slave_wan_ip_hint = " Slaves WAN IP "
-            print('                                        <div class="input-group">')
-            print('                                            <div class="input-group-prepend input-group-prepend-min">')
-            print('                                                <span class="input-group-text">')
-            print('                                                    '+return_multi_input("WAN_IP_"+theslave, slave_wan_ip_hint))
-            print('                                                </span>')
-            print('                                            </div>')
-            print('                                            <input class="form-control" value="" type="text" name="'+theslave+'_wan_ip">')
-            print('                                        </div>')
+            print_input_fn("LAN_IP_"+theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "validationToolTip34", "", theslave+"_lan_ip")
+            print_input_fn("WAN_IP_"+theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "validationToolTip35", "", theslave+"_wan_ip")
 
         print('                                    <input hidden name="action" value="addip">')
         print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
