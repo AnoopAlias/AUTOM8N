@@ -186,20 +186,21 @@ def print_header(title=''):
 
 
 # Print Footer
-#def print_footer():
-#    print('')
-#    print('        <!-- Footer Start -->')
-#    print('        <div id="footer" class="container text-center mt-2 mb-5">')
-#    print('            <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
-#    if ndeploy_theme_color == 'light':
-#        print('        <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
-#    if ndeploy_theme_color == 'dark':
-#        print('        <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
-#    print('        </div>')
-#    print('')
-
 def print_footer():
     return
+
+
+# Form Display
+def print_input_fn(label='Label', hint='Hint', valID='validationToolTip01', quikVar='', realVar=''):
+    print('                                        <div class="input-group">')
+    print('                                            <div class="input-group-prepend input-group-prepend-min">')
+    print('                                                <span class="input-group-text">')
+    print('                                                    '+return_multi_input(label, hint))
+    print('                                                </span>')
+    print('                                            </div>')
+    print('                                            <input class="form-control" id="'+valID+'" value="'+str(quikVar)+'" type="text" name="'+realVar+'" required>')
+    print('                                            <div class="invalid-tooltip">Needs some info</div>')
+    print('                                        </div>')
 
 
 # Card Start
