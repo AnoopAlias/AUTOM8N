@@ -181,14 +181,14 @@ print('            <div class="row justify-content-lg-center flex-nowrap">')
 print('')
 print('                <!-- Secondary Navigation -->')
 print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
-print('                    <a class="nav-link active" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab">System Health & Backup</a>')
-print('                    <a class="nav-link" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster">Cluster Status</a>')
-print('                    <a class="nav-link" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone">Cluster Sync</a>')
-print('                    <a class="nav-link" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php">Default PHP for Autoswitch</a>')
-print('                    <a class="nav-link" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos">DDOS Protection</a>')
-print('                    <a class="nav-link" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm">PHP-FPM Pool Editor</a>')
-print('                    <a class="nav-link" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map">Package Editor</a>')
-print('                    <a class="nav-link" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit">System Resource Limit</a>')
+print('                    <a class="nav-link active" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="true">System Health & Backup</a>')
+print('                    <a class="nav-link" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster" aria-selected="false">Cluster Status</a>')
+print('                    <a class="nav-link" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone" aria-selected="false">Cluster Sync</a>')
+print('                    <a class="nav-link" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php" aria-selected="false">Default PHP for Autoswitch</a>')
+print('                    <a class="nav-link" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos" aria-selected="false">DDOS Protection</a>')
+print('                    <a class="nav-link" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm" aria-selected="false">PHP-FPM Pool Editor</a>')
+print('                    <a class="nav-link" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map" aria-selected="false">Package Editor</a>')
+print('                    <a class="nav-link" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit" aria-selected="false">System Resource Limit</a>')
 print('                </div>')
 print('')
 print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
@@ -199,7 +199,7 @@ print('                        <button class="btn btn-primary btn-block dropdown
 print('                            Config Menu')
 print('                        </button>')
 print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
-print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">System Health & Backup</a>')
+print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="true">System Health & Backup</a>')
 print('                            <a class="dropdown-item" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster" aria-selected="false">Cluster Status</a>')
 print('                            <a class="dropdown-item" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone" aria-selected="false">Sync GDNSD Zone</a>')
 print('                            <a class="dropdown-item" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php" aria-selected="false">Default PHP for Autoswitch</a>')
@@ -578,53 +578,14 @@ if os.path.isfile(cluster_config_file):
         print('                         <div class="tab-pane fade" id="ip-add-content" role="tabpanel" aria-labelledby="ip-add-tab">')
         print('                            <form class="form" method="post" id="toastForm36" onsubmit="return false;">')
 
-        # master data
-        master_ip_resource_hint = " IP address resource name like ip1 "
-        print('                                        <div class="input-group">')
-        print('                                            <div class="input-group-prepend input-group-prepend-min">')
-        print('                                                <span class="input-group-text">')
-        print('                                                    '+return_multi_input("Master IP resource name", master_ip_resource_hint))
-        print('                                                </span>')
-        print('                                            </div>')
-        print('                                            <input class="form-control" value="" type="text" name="master_ip_resource">')
-        print('                                        </div>')
-
-        master_lan_ip_hint = " Masters LAN IP "
-        print('                                        <div class="input-group">')
-        print('                                            <div class="input-group-prepend input-group-prepend-min">')
-        print('                                                <span class="input-group-text">')
-        print('                                                    '+return_multi_input("Master LAN IP", master_lan_ip_hint))
-        print('                                                </span>')
-        print('                                            </div>')
-        print('                                            <input class="form-control" value="" type="text" name="master_lan_ip">')
-        print('                                        </div>')
+        # Master data
+        print_input_fn("Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", "validationToolTip31", "", "master_ip_resource")
+        print_input_fn("Master LAN IP", " Enter the Local Area Network (LAN) IP. ", "validationToolTip32", "", "master_lan_ip")
 
         for theslave in cluster_data_yaml_parsed.keys():
-
             # Slave data
-            print_input_fn("LAN_IP_"+theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "validationToolTip34", slave_mapped_web_ip, "slave_lan_ip")
-            print_input_fn("WAN_IP_"+theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "validationToolTip35", slave_mapped_dns_ip, "slave_wan_ip")
-
-            # Slave data
-            slave_lan_ip_hint = " Slaves LAN IP "
-            print('                                        <div class="input-group">')
-            print('                                            <div class="input-group-prepend input-group-prepend-min">')
-            print('                                                <span class="input-group-text">')
-            print('                                                    '+return_multi_input("LAN_IP_"+theslave, slave_lan_ip_hint))
-            print('                                                </span>')
-            print('                                            </div>')
-            print('                                            <input class="form-control" value="" type="text" name="'+theslave+'_lan_ip">')
-            print('                                        </div>')
-
-            slave_wan_ip_hint = " Slaves WAN IP "
-            print('                                        <div class="input-group">')
-            print('                                            <div class="input-group-prepend input-group-prepend-min">')
-            print('                                                <span class="input-group-text">')
-            print('                                                    '+return_multi_input("WAN_IP_"+theslave, slave_wan_ip_hint))
-            print('                                                </span>')
-            print('                                            </div>')
-            print('                                            <input class="form-control" value="" type="text" name="'+theslave+'_wan_ip">')
-            print('                                        </div>')
+            print_input_fn("LAN_IP_"+theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "validationToolTip34", "", theslave+"_lan_ip")
+            print_input_fn("WAN_IP_"+theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "validationToolTip35", "", theslave+"_wan_ip")
 
         print('                                    <input hidden name="action" value="addip">')
         print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
