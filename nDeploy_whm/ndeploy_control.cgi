@@ -549,10 +549,9 @@ print('                        </div> <!-- Card Body End -->')
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
 print('                                <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
-print('                                <p class="small"><i class="fab fa-php"></i> PHP-FPM Master allows you to choose between a <kbd>Single Master</kbd> and a <kbd>Multi-Master</kbd> PHP configuration. \'Single Master\' will run a single PHP-FPM process as root, where as \'Multi-Master\' will create individual PHP-FPM processes run under each user.</p>')
-print('                                <p class="small"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not.</p>')
-print('                                <p class="small">Please note: Chrooted PHP will only function in \'Single Master\' mode.</p>')
-
+print('                                <p class="small"><i class="fab fa-php"></i> PHP-FPM Master allows you to choose between a <kbd>Single Master</kbd> or a <kbd>Multi-Master</kbd> PHP configuration.')
+print('                                <p class="small"><kbd>Single Master</kbd> will run a single PHP-FPM process as root, where as <kbd>Multi-Master</kbd> will create individual PHP-FPM processes run under each user. Please note that <kbd>Multi-Master</kbd> is very resource intensive, especially within a cluster.</p>')
+print('                                <p class="small"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not. This method requires the <kbd>Single Master</kbd> PHP-FPM configuration and is the preferred way to run the application.</p>')
 
 print('                                <form class="form w-100" id="easy_php_setup" method="post" onsubmit="return false;">')
 print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
