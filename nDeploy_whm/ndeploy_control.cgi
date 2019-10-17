@@ -128,22 +128,33 @@ print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 2 Start --
 cardheader('')
 
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">PHP Master</h4>')
+print('                        <h4 class="mb-0">PHP Status</h4>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Single or Multi-Master</small></li>')
 
-if php_secure_status:
-    print('                        <li class="mt-2 text-success">Multi-Master <i class="fas fa-power-off ml-1"></i></li>')
-else:
-    print('                        <li class="mt-2 text-success">Single Master <i class="fas fa-power-off ml-1"></i></li>')
-
-print('                        </ul>')
-print('                    </div>')
-
-if php_secure_status:
-    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single</button>')
-else:
-    print('                    <button form="multi_master" class="btn btn-secondary btn-block mb-0">Switch to Multi</button>')
+if php_chroot_status and php_secure_status:
+    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
+    print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        </ul>')
+    print('                    </div>')
+    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
+elif php_chroot_status and not php_secure_status:
+    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
+    print('                            <li class="mt-2 text-success">Chroot Enabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        </ul>')
+    print('                    </div>')
+    print('                    <button form="chroot_off" class="btn btn-secondary btn-block mb-0">Disable Chroot</button>')
+elif not php_chroot_status and php_secure_status:
+    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
+    print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        </ul>')
+    print('                    </div>')
+    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
+elif not php_chroot_status and not php_secure_status:
+    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
+    print('                            <li class="mt-2 text-danger">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        </ul>')
+    print('                    </div>')
+    print('                    <button form="chroot_on" class="btn btn-secondary btn-block mb-0">Enable Chroot</button>')
 
 cardfooter('')
 
