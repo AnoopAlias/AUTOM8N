@@ -202,7 +202,7 @@ def print_input_fn(label='Label', hint='Hint', valID='validationToolTip01', quik
     print('                                                </span>')
     print('                                            </div>')
     print('                                            <input class="form-control" id="'+valID+'" value="'+str(quikVar)+'" type="text" name="'+realVar+'" required>')
-    print('                                            <div class="invalid-tooltip">Needs some info</div>')
+    print('                                            <div class="invalid-tooltip">'+hint+'</div>')
     print('                                        </div>')
 
 
