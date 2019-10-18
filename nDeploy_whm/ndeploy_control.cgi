@@ -115,15 +115,9 @@ print('                        </ul>')
 print('                    </div>')
 
 if nginx_status:
-    print('                <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Disable</button>')
-    print('                    <input hidden name="plugin_status" value="disable">')
+    print('                    <button form="disable_ndeploy" class="btn btn-secondary btn-block mb-0">Disable</button>')
 else:
-    print('                <form id="enable_ndeploy" class="form" onsubmit="return false;">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Enable</button>')
-    print('                    <input hidden name="plugin_status" value="enable">')
-
-print('                    </form>')
+    print('                    <button form="enable_ndeploy" class="btn btn-secondary btn-block mb-0">Enable</button>')
 
 cardfooter('')
 
@@ -134,22 +128,33 @@ print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 2 Start --
 cardheader('')
 
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">PHP Master</h4>')
+print('                        <h4 class="mb-0">PHP Status</h4>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Single or Multi-Master</small></li>')
 
-if php_secure_status:
-    print('                        <li class="mt-2 text-success">Multi-Master <i class="fas fa-power-off ml-1"></i></li>')
-else:
-    print('                        <li class="mt-2 text-success">Single Master <i class="fas fa-power-off ml-1"></i></li>')
-
-print('                        </ul>')
-print('                    </div>')
-
-if php_secure_status:
-    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single</button>')
-else:
-    print('                    <button form="multi_master" class="btn btn-secondary btn-block mb-0">Switch to Multi</button>')
+if php_chroot_status and php_secure_status:
+    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
+    print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        </ul>')
+    print('                    </div>')
+    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
+elif php_chroot_status and not php_secure_status:
+    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
+    print('                            <li class="mt-2 text-success">Chroot Enabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        </ul>')
+    print('                    </div>')
+    print('                    <button form="chroot_off" class="btn btn-secondary btn-block mb-0">Disable Chroot</button>')
+elif not php_chroot_status and php_secure_status:
+    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
+    print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        </ul>')
+    print('                    </div>')
+    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
+elif not php_chroot_status and not php_secure_status:
+    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
+    print('                            <li class="mt-2 text-danger">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        </ul>')
+    print('                    </div>')
+    print('                    <button form="chroot_on" class="btn btn-secondary btn-block mb-0">Enable Chroot</button>')
 
 cardfooter('')
 
@@ -268,16 +273,6 @@ print('                                <div class="col-md-6 alert"><i class="fas
 print('                                <div class="col-md-6">')
 print('                                    <div class="row no-gutters">')
 
-nginx_status = False
-for myprocess in psutil.process_iter():
-    # Workaround for Python 2.6
-    if platform.python_version().startswith('2.6'):
-        mycmdline = myprocess.cmdline
-    else:
-        mycmdline = myprocess.cmdline()
-    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-        nginx_status = True
-
 if nginx_status:
     print('                                    <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
     print('                                    <div class="col-9">')
@@ -310,7 +305,7 @@ print('')
 print('                    <!-- Branding Tab -->')
 print('                    <div class="tab-pane fade" id="v-pills-branding" role="tabpanel" aria-labelledby="v-pills-branding-tab">')
 
-cardheader('Branding Settings','fas fa-infinity')
+cardheader('Branding Settings', 'fas fa-infinity')
 brand_hint = " Enter the textual name you want to represent this application as for whitelabeling purposes. This shows up in both WHM, cPanel, and this application. "
 brand_logo_hint = " Enter the filename of the brand icon used for this application. This file must exist in the suggested directories or rebuild will fail. "
 brand_group_hint = " cPanel creates sections for content. Enter the section title you want this application to show up in. "
@@ -350,7 +345,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_group" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
 print('                                </div>')
 
-print('                                <label class="small" for="brand_anchor">Enter your brand\'s anchor text that will be used on the footer of the application.</label>')
+print('                                <label class="small font-italic" for="brand_anchor">DISABLED: Enter your brand\'s anchor text that will be used on the footer of the application.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_anchor_desc">')
@@ -360,7 +355,7 @@ print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_anchor" value="'+brand_anchor+'" id="brand_anchor" aria-describedby="brand_anchor_desc">')
 print('                                </div>')
 
-print('                                <label class="small" for="brand_link">Enter your brand\'s website link that the above anchor text will link to via the footer.</label>')
+print('                                <label class="small font-italic" for="brand_link">DISABLED: Enter your brand\'s website link that the above anchor text will link to via the footer.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_link_desc">')
@@ -473,7 +468,7 @@ cardheader('Account AutoFix Utility', 'fas fa-palette')
 
 print('                        <div class="card-body pb-0"> <!-- Card Body Start -->')
 print('                            <p class="small">This utility attempts to automatically fix all errors. This can be run if you notice nginx configuration errors, PHP errors, etc.</p>')
-print('                            <p class="small mb-0">Use <kbd>simple</kbd> to regenerate all configurations and restart the associated services. Use <kbd>phpfpm</kbd> to repair PHP-FPM application server issues.</p>')
+print('                            <p class="small mb-0">Use <kbd>nginx</kbd> to regenerate all configurations and restart the associated services. Use <kbd>phpfpm</kbd> to repair PHP-FPM application server issues.</p>')
 print('                        </div> <!-- Card Body End -->')
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <form class="form" id="autofix_simple" method="post" onsubmit="return false;">')
@@ -483,7 +478,7 @@ print('                            <form class="form" id="autofix_phpfpm" method
 print('                                <input hidden class="form-control" name="autofix_status" value="phpfpm">')
 print('                            </form>')
 print('                            <div class="btn-block btn-group" role="group" aria-label="AutoFix Utility">')
-print('                                <button class="btn btn-outline-primary" form="autofix_simple" type="submit">simple</button>')
+print('                                <button class="btn btn-outline-primary" form="autofix_simple" type="submit">nginx</button>')
 print('                                <button class="btn btn-outline-primary" form="autofix_phpfpm" type="submit">phpfpm</button>')
 print('                            </div>')
 print('                            </form>')
@@ -554,10 +549,9 @@ print('                        </div> <!-- Card Body End -->')
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
 print('                                <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
-print('                                <p class="small"><i class="fab fa-php"></i> PHP-FPM Master allows you to choose between a <kbd>Single Master</kbd> and a <kbd>Multi-Master</kbd> PHP configuration. \'Single Master\' will run a single PHP-FPM process as root, where as \'Multi-Master\' will create individual PHP-FPM processes run under each user.</p>')
-print('                                <p class="small"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not.</p>')
-print('                                <p class="small">Please note: Chrooted PHP will only function in \'Single Master\' mode.</p>')
-
+print('                                <p class="small"><i class="fab fa-php"></i> PHP-FPM Master allows you to choose between a <kbd>Single Master</kbd> or a <kbd>Multi-Master</kbd> PHP configuration.')
+print('                                <p class="small"><kbd>Single Master</kbd> will run a single PHP-FPM process as root, where as <kbd>Multi-Master</kbd> will create individual PHP-FPM processes run under each user. Please note that <kbd>Multi-Master</kbd> is very resource intensive, especially within a cluster.</p>')
+print('                                <p class="small"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not. This method requires the <kbd>Single Master</kbd> PHP-FPM configuration and is the preferred way to run the application.</p>')
 
 print('                                <form class="form w-100" id="easy_php_setup" method="post" onsubmit="return false;">')
 print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
@@ -602,7 +596,7 @@ print('                            </form>')
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                        <form class="form" id="clear_netdata_credentials" method="post" onsubmit="return false;">')
     print('                            <input hidden class="form-control" name="remove_netdata_creds" value="enabled">')
-    print('                            <button class="btn btn-outline-primary btn-block mt-4" type="submit">Remove Netdata Credentials</button>')
+    print('                            <button class="btn btn-outline-primary btn-block mt-2" type="submit">Remove Netdata Credentials</button>')
     print('                        </form>')
 
 print('                        </div> <!-- Card Body End -->')
