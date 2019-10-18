@@ -19,8 +19,82 @@ jQuery(document).ready(function($) {
             console.log('Bootstrap will handle incomplete form fields');
           } else {
 
-              $('#toastForm29').ready(function() {
+              $('#toastForm28').submit(function() {
+                  var $f = $('#toastForm28');
+                  var $url = "save_cluster_settings.cgi?" + $f.serialize();
+                  $.ajax({
+                      url: $url,
+                      success: function(result) {
+                          $("#myToast").find('.toast-body').html(result)
+                          $("#myToast").toast('show');
+                      }
+                  });
+              });
+
+              $('#toastForm29').submit(function() {
                   var $f = $('#toastForm29');
+                  var $url = "save_cluster_settings.cgi?" + $f.serialize();
+                  $.ajax({
+                      url: $url,
+                      success: function(result) {
+                          $("#myToast").find('.toast-body').html(result)
+                          $("#myToast").toast('show');
+                      }
+                  });
+              });
+
+              $('#toastForm30').submit(function() {
+                  var $f = $('#toastForm30');
+                  var $url = "save_cluster_settings.cgi?" + $f.serialize();
+                  $.ajax({
+                      url: $url,
+                      success: function(result) {
+                          $("#myToast").find('.toast-body').html(result)
+                          $("#myToast").toast('show');
+                      }
+                  });
+              });
+
+              $('#toastForm31').submit(function() {
+                  var $f = $('#toastForm31');
+                  var $url = "save_cluster_settings.cgi?" + $f.serialize();
+                  $.ajax({
+                      url: $url,
+                      success: function(result) {
+                          $("#myToast").find('.toast-body').html(result)
+                          $("#myToast").toast('show');
+                      }
+                  });
+              });
+
+              $('.toastForm32-wrap').submit(function(e) {
+                  var $id = e.target.id;
+                  var $f = $('#' + $id);
+                  var $url = "save_cluster_settings.cgi?" + $f.serialize();
+                  $.ajax({
+                      url: $url,
+                      success: function(result) {
+                          $("#myToast").find('.toast-body').html(result)
+                          $("#myToast").toast('show');
+                      }
+                  });
+              });
+
+              $('.toastForm34-wrap').submit(function(e) {
+                  var $id = e.target.id;
+                  var $f = $('#' + $id);
+                  var $url = "save_cluster_settings.cgi?" + $f.serialize();
+                  $.ajax({
+                      url: $url,
+                      success: function(result) {
+                          $("#myToast").find('.toast-body').html(result)
+                          $("#myToast").toast('show');
+                      }
+                  });
+              });
+
+              $('#toastForm36').submit(function() {
+                  var $f = $('#toastForm36');
                   var $url = "save_cluster_settings.cgi?" + $f.serialize();
                   $.ajax({
                       url: $url,
@@ -56,7 +130,7 @@ jQuery(document).ready(function($) {
         cache: false
     })
     $('.toast').toast({
-        delay: 3000
+        delay: 1200
     })
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -416,55 +490,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#toastForm28').submit(function() {
-        var $f = $('#toastForm28');
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm30').submit(function() {
-        var $f = $('#toastForm30');
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm31').submit(function() {
-        var $f = $('#toastForm31');
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('.toastForm32-wrap').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
     $('.toastForm33-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
@@ -479,34 +504,9 @@ jQuery(document).ready(function($) {
     });
 
 
-    $('.toastForm34-wrap').submit(function(e) {
+    $('.toastForm35-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-
-    $('#toastForm35').submit(function() {
-        var $f = $('#toastForm35');
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm36').submit(function() {
-        var $f = $('#toastForm36');
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
@@ -868,6 +868,11 @@ jQuery(document).ready(function($) {
         let target = $(this).data('target');
         //Save data to sessionStorage
         sessionStorage.setItem('selectedCollapse', target);
+    });
+
+    // To remove spaces
+    $("#brand").keyup(function() {
+        $(this).val($(this).val().replace(/\s/g, ""));
     });
 
 });
