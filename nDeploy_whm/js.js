@@ -62,7 +62,6 @@ jQuery(document).ready(function($) {
 
     $('[data-toggle="popover"]').popover();
 
-    // DDOS Protection - Nginx
     $('#toastForm1').submit(function() {
         var $f = $('#toastForm1');
         var $url = "ddos_mitigate.cgi?" + $f.serialize();
@@ -71,27 +70,10 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#v-pills-dos .card-body').load('xtendweb.cgi #v-pills-dos .card-body > *');
             }
         });
     });
 
-	$(document).ajaxComplete(function() {
-        $('#toastForm1').submit(function() {
-            var $f = $('#toastForm1');
-            var $url = "ddos_mitigate.cgi?" + $f.serialize();
-            $.ajax({
-                url: $url,
-                success: function(result) {
-                    $("#myToast").find('.toast-body').html(result)
-                    $("#myToast").toast('show');
-                    $('#v-pills-dos .card-body').load('xtendweb.cgi #v-pills-dos .card-body > *');
-                }
-            });
-        });
-	});
-
-    // DDOS Protection - SYNPROXY
     $('#toastForm2').submit(function() {
         var $f = $('#toastForm2');
         var $url = "firehol_control.cgi?" + $f.serialize();
@@ -100,25 +82,9 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToastnohide").find('.toast-body').html(result)
                 $("#myToastnohide").toast('show');
-                $('#v-pills-dos .card-body').load('xtendweb.cgi #v-pills-dos .card-body > *');
             }
         });
     });
-
-    $(document).ajaxComplete(function() {
-        $('#toastForm2').submit(function() {
-            var $f = $('#toastForm2');
-            var $url = "ddos_mitigate.cgi?" + $f.serialize();
-            $.ajax({
-                url: $url,
-                success: function(result) {
-                    $("#myToast").find('.toast-body').html(result)
-                    $("#myToast").toast('show');
-                    $('#v-pills-dos .card-body').load('xtendweb.cgi #v-pills-dos .card-body > *');
-                }
-            });
-        });
-	});
 
     $('#toastForm3').submit(function() {
         var $f = $('#toastForm3');
@@ -200,13 +166,8 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                //$('#v-pills-php .text-success').load('xtendweb.cgi #v-pills-php .text-success');
             }
         });
-    });
-
-    $('#toastForm6 .btn').click(function() {
-        $('#v-pills-php .text-success').load('xtendweb.cgi #v-pills-php .update');
     });
 
     $('#toastForm7').submit(function() {
@@ -305,25 +266,9 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#v-pills-map .card-body.p-0').load('xtendweb.cgi #v-pills-map .card-body.p-0 > *');
             }
         });
     });
-
-    $(document).ajaxComplete(function() {
-        $('#toastForm16').submit(function() {
-            var $f = $('#toastForm16');
-            var $url = "lock_domain_data_to_package.cgi?" + $f.serialize();
-            $.ajax({
-                url: $url,
-                success: function(result) {
-                    $("#myToast").find('.toast-body').html(result)
-                    $("#myToast").toast('show');
-                    $('#v-pills-map .card-body.p-0').load('xtendweb.cgi #v-pills-map .card-body.p-0 > *');
-                }
-            });
-        });
-	});
 
     $('#toastForm17').submit(function() {
         var $f = $('#toastForm17');
@@ -333,25 +278,9 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#v-pills-tabContent').load('pkg_profile.cgi?cpanelpkg=default #v-pills-tabContent > *');
             }
         });
     });
-
-    $(document).ajaxComplete(function() {
-        $('#toastForm17').submit(function() {
-            var $f = $('#toastForm17');
-            var $url = "save_pkg_server_settings.cgi?" + $f.serialize();
-            $.ajax({
-                url: $url,
-                success: function(result) {
-                    $("#myToast").find('.toast-body').html(result)
-                    $("#myToast").toast('show');
-                    $('#v-pills-tabContent').load('pkg_profile.cgi?cpanelpkg=default #v-pills-tabContent > *');
-                }
-            });
-        });
-	});
 
     $('#toastForm18').submit(function() {
         var $f = $('#toastForm18');
@@ -499,7 +428,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Cluster Status - Slaves
     $('#toastForm30').submit(function() {
         var $f = $('#toastForm30');
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
@@ -508,25 +436,9 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#slave-content #toastForm30').load('xtendweb.cgi #toastForm30 > *');
             }
         });
     });
-
-    $(document).ajaxComplete(function() {
-        $('#toastForm30').submit(function() {
-            var $f = $('#toastForm30');
-            var $url = "save_cluster_settings.cgi?" + $f.serialize();
-            $.ajax({
-                url: $url,
-                success: function(result) {
-                    $("#myToast").find('.toast-body').html(result)
-                    $("#myToast").toast('show');
-                    $('#slave-content #toastForm30').load('xtendweb.cgi #toastForm30 > *');
-                }
-            });
-        });
-	});
 
     $('#toastForm31').submit(function() {
         var $f = $('#toastForm31');
@@ -536,12 +448,10 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#add-content #toastForm31').load('xtendweb.cgi #toastForm31 > *');
             }
         });
     });
 
-    // Cluster Status - Slaves More
     $('.toastForm32-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
@@ -551,7 +461,6 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#slave-content #toastForm32-wrap').load('xtendweb.cgi #toastForm32-wrap > *');
             }
         });
     });
@@ -569,7 +478,7 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Cluster Status - IP Resource
+
     $('.toastForm34-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
@@ -579,14 +488,13 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#ip-content #toastForm34').load('xtendweb.cgi #toastForm34 > *');
             }
         });
     });
 
-    $('.toastForm35-wrap').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
+
+    $('#toastForm35').submit(function() {
+        var $f = $('#toastForm35');
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
@@ -597,7 +505,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Cluster Status - Add IP
     $('#toastForm36').submit(function() {
         var $f = $('#toastForm36');
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
@@ -606,7 +513,6 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#ip-add-content #toastForm36').load('xtendweb.cgi #toastForm36 > *');
             }
         });
     });
@@ -621,30 +527,10 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#home-content .clearfix').load('xtendweb.cgi #home-content .clearfix > *');
-                $('#v-pills-cluster .no-gutters').load('xtendweb.cgi #v-pills-cluster .no-gutters > *');
             }
         });
     });
 
-    $(document).ajaxComplete(function() {
-        $('.toastForm37-wrap').submit(function(e) {
-            var $id = e.target.id;
-            var $f = $('#' + $id);
-            var $url = "save_cluster_settings.cgi?" + $f.serialize();
-            $.ajax({
-                url: $url,
-                success: function(result) {
-                    $("#myToast").find('.toast-body').html(result)
-                    $("#myToast").toast('show');
-                    $('#home-content .clearfix').load('xtendweb.cgi #home-content .clearfix > *');
-                    $('#v-pills-cluster .no-gutters').load('xtendweb.cgi #v-pills-cluster .no-gutters > *');
-                }
-            });
-        });
-	});
-
-    // Cluster Status - Home Directory
     $('#toastForm38').submit(function() {
         var $f = $('#toastForm38');
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
@@ -653,9 +539,6 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-                $('#home-content #toastForm38').load('xtendweb.cgi #home-content #toastForm38 > *');
-                $('#home-content .clearfix').load('xtendweb.cgi #home-content .clearfix > *');
-                $('#v-pills-cluster .no-gutters').load('xtendweb.cgi #v-pills-cluster .no-gutters > *');
             }
         });
     });
@@ -929,7 +812,7 @@ jQuery(document).ready(function($) {
     });
 
     $('#myToast').on('hidden.bs.toast', function() {
-        //location.reload()
+        location.reload()
     });
 
     $('#myToastnohide').on('hidden.bs.toast', function() {
