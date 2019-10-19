@@ -264,9 +264,11 @@ if form.getvalue('action'):
         if form.getvalue('thehomedir'):
             with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
                 group_vars_yaml_parsed = yaml.safe_load(group_vars_file)
-            group_vars_yaml_parsed['homedir'].remove(form.getvalue('thehomedir'))
+            new_homedir_list = group_vars_yaml_parsed['homedir']
+            new_homedir_list.remove(form.getvalue('thehomedir'))
+            mydict = {'homedir': new_homedir_list}
             with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'w') as group_vars_file:
-                yaml.dump(group_vars_yaml_parsed, group_vars_file, default_flow_style=False)
+                yaml.dump(mydict, group_vars_file, default_flow_style=False)
             commoninclude.print_success('Homedir removed from sync')
     elif form.getvalue('action') == 'addhomedir':
         if form.getvalue('thehomedir'):
