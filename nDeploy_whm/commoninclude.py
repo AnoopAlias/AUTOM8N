@@ -357,51 +357,47 @@ def print_modals():
     # Toast
     print('        <div class="toast fade hide" id="myToast" role="alert" aria-live="assertive" aria-atomic="true">')
     if ndeploy_theme_color == 'dark':
-        print('            <div class="toast-content bg-light text-dark">')
+        print('            <div class="toast-body bg-light text-dark">')
     if ndeploy_theme_color == 'light':
-        print('            <div class="toast-content bg-dark text-white">')
-    print('                <div class="toast-body">')
-    print('                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                        <span aria-hidden="true">&times;</span>')
-    print('                    </button>')
-    print('                </div>')
+        print('            <div class="toast-body bg-dark text-white">')
+    print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
+    print('                    <span aria-hidden="true">&times;</span>')
+    print('                </button>')
     print('            </div>')
+    print('        </div>')
 
     # Toast with long autohide
     print('        <div class="toast fade hide" id="myToastnohide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">')
     if ndeploy_theme_color == 'dark':
-        print('            <div class="toast-content bg-light text-dark">')
+        print('            <div class="toast-body bg-light text-dark">')
     if ndeploy_theme_color == 'light':
-        print('            <div class="toast-content bg-dark text-white">')
-    print('                <div class="toast-body">')
-    print('                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                        <span aria-hidden="true">&times;</span>')
-    print('                    </button>')
-    print('                </div>')
+        print('            <div class="toast-body bg-dark text-white">')
+    print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
+    print('                    <span aria-hidden="true">&times;</span>')
+    print('                </button>')
     print('            </div>')
+    print('        </div>')
 
     # Toast with no reload
     print('        <div class="toast fade hide" id="myToast-nl" role="alert" aria-live="assertive" aria-atomic="true">')
     if ndeploy_theme_color == 'dark':
-        print('            <div class="toast-content bg-light text-dark">')
+        print('            <div class="toast-body bg-light text-dark">')
     if ndeploy_theme_color == 'light':
-        print('            <div class="toast-content bg-dark text-white">')
-    print('                <div class="toast-body">')
-    print('                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                        <span aria-hidden="true">&times;</span>')
-    print('                    </button>')
-    print('                </div>')
+        print('            <div class="toast-body bg-dark text-white">')
+    print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
+    print('                    <span aria-hidden="true">&times;</span>')
+    print('                </button>')
     print('            </div>')
+    print('        </div>')
 
     # Toastback
     print('        <div class="toast fade hide" id="myToastback" role="alert" aria-live="assertive" aria-atomic="true">')
     if ndeploy_theme_color == 'dark':
-        print('            <div class="toast-content bg-light text-dark">')
+        print('            <div class="toast-body bg-light text-dark">')
     if ndeploy_theme_color == 'light':
-        print('            <div class="toast-content bg-dark text-white">')
-    print('                <div class="toast-body">')
-    print('                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                        <span aria-hidden="true">&times;</span>')
-    print('                    </button>')
-    print('                </div>')
+        print('            <div class="toast-body bg-dark text-white">')
+    print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
+    print('                    <span aria-hidden="true">&times;</span>')
+    print('                </button>')
     print('            </div>')
+    print('        </div>')
