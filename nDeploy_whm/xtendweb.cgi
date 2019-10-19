@@ -424,7 +424,7 @@ if os.path.isfile(cluster_config_file):
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
             if myslave != dbslave_hostname:
 
-                print('<div class="accordion mt-4" id="accordionSlaves">')
+                print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
 
                 # Lets get all the details of this slave server and present to the user for editing
                 slave_hostname = myslave
@@ -438,18 +438,18 @@ if os.path.isfile(cluster_config_file):
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
                 # slave data
-                print('<div class="card mb-0">')
-                print('<div class="card-header" id="heading'+str(slave_server_id)+'">')
-                print('<h2 class="mb-0">')
-                print('<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+str(slave_server_id)+'" aria-expanded="false" aria-controls="collapse'+str(slave_server_id)+'">')
-                print('Slave #'+str(slave_server_id)+'')
-                print('</button>')
-                print('</h2>')
-                print('</div>')
+                print('         <div class="card mb-0">')
+                print('             <div class="card-header" id="heading'+str(slave_server_id)+'">')
+                print('                 <h2 class="mb-0">')
+                print('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+str(slave_server_id)+'" aria-expanded="false" aria-controls="collapse'+str(slave_server_id)+'">')
+                print('                         Slave #'+str(slave_server_id)+'')
+                print('                     </button>')
+                print('                 </h2>')
+                print('             </div>')
 
-                print('<div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves">')
-                print('<div class="card-body">')
-                print('                            <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves'+str(slave_server_id)+'">')
+                print('                 <div class="card-body">')
+                print('                     <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", slave_main_ip, "slave_main_ip")
@@ -462,24 +462,24 @@ if os.path.isfile(cluster_config_file):
                 print_input_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip29", slave_dbmode, "slave_dbmode")
                 print_input_fn("DNS Type", " Select desired DNS Mode for this node. ", "validationTooltip30", slave_dns, "slave_dns")
 
-                print('                                    <input hidden name="action" value="editslave">')
+                print('                         <input hidden name="action" value="editslave">')
 
-                print('                            </form>')
+                print('                     </form>')
 
                 # Delete the Additional Slave
-                print('                            <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
-                print('                                    <input hidden name="action" value="deleteslave">')
-                print('                                    <input hidden name="slave_hostname" value="'+myslave+'">')
-                print('                            </form>')
-                print('                            <div class="btn-group btn-block mt-4">')
-                print('                                <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm32-'+str(slave_server_id)+'">Save slave Settings</button>')
-                print('                                <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm33-'+str(slave_server_id)+'">Delete this Slave</button>')
-                print('                            </div>')
+                print('                     <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                         <input hidden name="action" value="deleteslave">')
+                print('                         <input hidden name="slave_hostname" value="'+myslave+'">')
+                print('                     </form>')
+                print('                     <div class="btn-group btn-block mt-4">')
+                print('                         <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm32-'+str(slave_server_id)+'">Save slave Settings</button>')
+                print('                         <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm33-'+str(slave_server_id)+'">Delete this Slave</button>')
+                print('                     </div>')
 
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('                         </div>')
+                print('                 </div>')
+                print('             </div>')
+                print('         </div>')
+                print('     </div>')
         print('</div>')
 
         # Tab Start / Tab3 ###########################
@@ -493,9 +493,9 @@ if os.path.isfile(cluster_config_file):
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip23", "", "slave_db_ip")
         print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip24", "", "slave_ssh_port")
 
-        print('                                    <input hidden name="action" value="addadditionalslave">')
+        print('                                <input hidden name="action" value="addadditionalslave">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
+        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -526,7 +526,7 @@ if os.path.isfile(cluster_config_file):
                 slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip, "NULL")
                 slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip, "NULL")
                 # Display form for IP address mapping
-                print('     <div class="accordion" id="accordionIPs">')
+                print('     <div class="accordion" id="accordionIps-'+master_ip_resource+'-'+str(mykeypos)+'">')
                 print('         <div class="card mb-0 text-white dg-dark">')
                 print('             <div class="card-header" id="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'">')
                 print('                 <h2 class="mb-0">')
@@ -535,7 +535,7 @@ if os.path.isfile(cluster_config_file):
                 print('                     </button>')
                 print('                 </h2>')
                 print('             </div>')
-                print('             <div id="collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'" data-parent="#accordionIPs">')
+                print('             <div id="collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'" data-parent="#accordionIps-'+master_ip_resource+'-'+str(mykeypos)+'">')
                 print('                 <div class="card-body">')
                 print('                     <form class="form needs-validation toastForm34-wrap" method="post" id="toastForm34'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;" novalidate>')
 
@@ -548,28 +548,26 @@ if os.path.isfile(cluster_config_file):
                 print_input_fn(theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "validationToolTip34", slave_mapped_web_ip, "slave_lan_ip")
                 print_input_fn(theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "validationToolTip35", slave_mapped_dns_ip, "slave_wan_ip")
 
-                print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
-                print('                                    <input hidden name="slave_hostname" value="'+theslave+'">')
-                print('                                    <input hidden name="action" value="editip">')
+                print('                         <input hidden name="master_hostname" value="'+myhostname+'">')
+                print('                         <input hidden name="slave_hostname" value="'+theslave+'">')
+                print('                         <input hidden name="action" value="editip">')
 
-                print('                                    <button class="btn btn-outline-primary btn-block mt-3" type="submit">Edit IP resource</button>')
-                print('                            </form>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('</div>')
+                print('                         <button class="btn btn-outline-primary btn-block mt-3" type="submit">Edit IP resource</button>')
+                print('                     </form>')
+                print('                 </div>')
+                print('             </div>')
+                print('         </div>')
+                print('     </div>')
                 mykeypos = mykeypos + 1
             if master_ip_resource != "ip0":
                 # Display form for IP address deletion
                 print('                            <form class="form toastForm35-wrap" method="post" id="toastForm35'+'-'+master_ip_resource+'" onsubmit="return false;">')
-                print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
-                print('                                    <input hidden name="master_lan_ip" value="'+myip+'">')
-                print('                                    <input hidden name="action" value="delip">')
-                print('                            <button class="btn btn-outline-danger btn-block mt-3 mb-4" type="submit" form="toastForm35">Delete '+master_ip_resource+'</button>')
+                print('                                <input hidden name="master_hostname" value="'+myhostname+'">')
+                print('                                <input hidden name="master_lan_ip" value="'+myip+'">')
+                print('                                <input hidden name="action" value="delip">')
+                print('                                <button class="btn btn-outline-danger btn-block mt-3 mb-4" type="submit" form="toastForm35">Delete '+master_ip_resource+'</button>')
                 print('                            </form>')
             # Provide a seperation between each ip resource_
-            print('<br>')
-            print('<hr/>')
 
         print('                          </div>')
 
@@ -740,7 +738,7 @@ else:
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
             if myslave != dbslave_hostname:
 
-                print('<div class="accordion mt-4" id="accordionSlaves">')
+                print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
 
                 # Lets get all the details of this slave server and present to the user for editing
                 slave_hostname = myslave
@@ -754,18 +752,18 @@ else:
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
                 # slave data
-                print('<div class="card mb-0">')
-                print('<div class="card-header" id="heading'+str(slave_server_id)+'">')
-                print('<h2 class="mb-0">')
-                print('<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+str(slave_server_id)+'" aria-expanded="false" aria-controls="collapse'+str(slave_server_id)+'">')
-                print('Slave #'+str(slave_server_id)+'')
-                print('</button>')
-                print('</h2>')
-                print('</div>')
+                print('         <div class="card mb-0">')
+                print('             <div class="card-header" id="heading'+str(slave_server_id)+'">')
+                print('                 <h2 class="mb-0">')
+                print('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+str(slave_server_id)+'" aria-expanded="false" aria-controls="collapse'+str(slave_server_id)+'">')
+                print('                         Slave #'+str(slave_server_id)+'')
+                print('                     </button>')
+                print('                 </h2>')
+                print('             </div>')
 
-                print('<div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves">')
-                print('<div class="card-body">')
-                print('                            <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
+                print('                 <div class="card-body">')
+                print('                     <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", slave_main_ip, "slave_main_ip")
@@ -778,24 +776,24 @@ else:
                 print_input_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip29", slave_dbmode, "slave_dbmode")
                 print_input_fn("DNS Type", " Select desired DNS Mode for this node. ", "validationTooltip30", slave_dns, "slave_dns")
 
-                print('                                    <input hidden name="action" value="editslave">')
+                print('                         <input hidden name="action" value="editslave">')
 
-                print('                            </form>')
+                print('                     </form>')
 
                 # Delete the Additional Slave
-                print('                            <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
-                print('                                    <input hidden name="action" value="deleteslave">')
-                print('                                    <input hidden name="slave_hostname" value="'+myslave+'">')
-                print('                            </form>')
-                print('                            <div class="btn-group btn-block mt-4">')
-                print('                                <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm32-'+str(slave_server_id)+'">Save slave Settings</button>')
-                print('                                <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm33-'+str(slave_server_id)+'">Delete this Slave</button>')
-                print('                            </div>')
+                print('                     <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                         <input hidden name="action" value="deleteslave">')
+                print('                         <input hidden name="slave_hostname" value="'+myslave+'">')
+                print('                     </form>')
+                print('                     <div class="btn-group btn-block mt-4">')
+                print('                         <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm32-'+str(slave_server_id)+'">Save slave Settings</button>')
+                print('                         <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm33-'+str(slave_server_id)+'">Delete this Slave</button>')
+                print('                     </div>')
 
-                print('</div>')
-                print('</div>')
-                print('</div>')
-                print('                         </div>')
+                print('                 </div>')
+                print('             </div>')
+                print('         </div>')
+                print('     </div>')
         print('</div>')
 
         # Tab Start / Tab3 ###########################
