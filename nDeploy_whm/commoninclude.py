@@ -291,7 +291,10 @@ def print_modals():
     # Modal
     print('        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">')
     print('            <div class="modal-dialog modal-dialog-centered" role="document">')
-    print('                <div class="modal-content">')
+    if ndeploy_theme_color == 'dark':
+        print('                <div class="modal-content bg-dark text-white">')
+    if ndeploy_theme_color == 'light':
+        print('                <div class="modal-content bg-light text-dark">')
     print('                    <div class="modal-header">')
     print('                        <h4 class="modal-title">Command Output</h4>')
     print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
@@ -310,7 +313,10 @@ def print_modals():
     # Modal with no reload
     print('        <div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog"> ')
     print('            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
-    print('                <div class="modal-content">')
+    if ndeploy_theme_color == 'dark':
+        print('                <div class="modal-content bg-dark text-white">')
+    if ndeploy_theme_color == 'light':
+        print('                <div class="modal-content bg-light text-dark">')
     print('                    <div class="modal-header">')
     print('                        <h4 class="modal-title">Command Output</h4>')
     print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
