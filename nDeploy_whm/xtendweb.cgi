@@ -395,9 +395,9 @@ if os.path.isfile(cluster_config_file):
 
         print('                                    <input hidden name="action" value="editmaster">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Master Settings</button>')
+        print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Master Settings</button>')
         print('                            </form>')
-        print('                         </div>')
+        print('                        </div>')
 
         # Tab Start / Tab2 ###########################
         # slave data
