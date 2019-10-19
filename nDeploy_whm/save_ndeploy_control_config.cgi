@@ -80,6 +80,10 @@ if form.getvalue('ndeploy_theme_color') and \
 
         ndeploy_control_data()
 
+        # If switching to dark theme without changing primary color as well
+        if form.getvalue('ndeploy_theme_color') == "dark" and form.getvalue('primary_color') == "#121212":
+            yaml_parsed_ndeploy_control_config['primary_color'] = "#EDEDED"
+
     	with open(ndeploy_control_file, 'w+') as ndeploy_control_config:
             yaml.dump(yaml_parsed_ndeploy_control_config, ndeploy_control_config, default_flow_style=False)
 
