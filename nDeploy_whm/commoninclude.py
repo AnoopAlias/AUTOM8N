@@ -202,7 +202,7 @@ def print_input_fn(label='Label', hint='Hint', valID='validationToolTip01', quik
     print('                                                </span>')
     print('                                            </div>')
     print('                                            <input class="form-control" id="'+valID+'" value="'+str(quikVar)+'" type="text" name="'+realVar+'" required>')
-    print('                                            <div class="invalid-tooltip">Needs some info</div>')
+    print('                                            <div class="invalid-tooltip">'+hint+'</div>')
     print('                                        </div>')
 
 
@@ -350,48 +350,36 @@ def print_modals():
 
     # Toast
     print('        <div class="toast fade hide" id="myToast" role="alert" aria-live="assertive" aria-atomic="true">')
-    print('            <div class="toast-header">')
-    print('                <strong class="mr-auto">Command Output</strong>')
+    print('            <div class="toast-body">')
     print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
     print('                    <span aria-hidden="true">&times;</span>')
     print('                </button>')
-    print('            </div>')
-    print('            <div class="toast-body">')
     print('            </div>')
     print('        </div>')
 
     # Toast with long autohide
     print('        <div class="toast fade hide" id="myToastnohide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">')
-    print('            <div class="toast-header">')
-    print('                <strong class="mr-auto">Command Output</strong>')
+    print('            <div class="toast-body">')
     print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
     print('                    <span aria-hidden="true">&times;</span>')
     print('                </button>')
-    print('            </div>')
-    print('            <div class="toast-body">')
     print('            </div>')
     print('        </div>')
 
     # Toast with no reload
     print('        <div class="toast fade hide" id="myToast-nl" role="alert" aria-live="assertive" aria-atomic="true">')
-    print('            <div class="toast-header">')
-    print('                <strong class="mr-auto">Command Output</strong>')
+    print('            <div class="toast-body">')
     print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
     print('                    <span aria-hidden="true">&times;</span>')
     print('                </button>')
-    print('            </div>')
-    print('            <div class="toast-body">')
     print('            </div>')
     print('        </div>')
 
     # Toastback
     print('        <div class="toast fade hide" id="myToastback" role="alert" aria-live="assertive" aria-atomic="true">')
-    print('            <div class="toast-header">')
-    print('                <strong class="mr-auto">Command Output</strong>')
+    print('            <div class="toast-body">')
     print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
     print('                    <span aria-hidden="true">&times;</span>')
     print('                </button>')
-    print('            </div>')
-    print('            <div class="toast-body">')
     print('            </div>')
     print('        </div>')

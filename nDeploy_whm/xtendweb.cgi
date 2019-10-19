@@ -380,7 +380,7 @@ if os.path.isfile(cluster_config_file):
         # Tab Start / Tab1 ###########################
         # Master data
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
-        print('                            <form class="form needs-validation" method="post" id="toastForm29" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="toastForm29" onsubmit="return false;" novalidate>')
 
         print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", "validationToolTip01", master_hostname, "master_hostname")
         print_input_fn("Master Main IP", " Enter the master server's main IP address. ", "validationTooltip02", master_main_ip, "master_main_ip")
@@ -395,14 +395,14 @@ if os.path.isfile(cluster_config_file):
 
         print('                                    <input hidden name="action" value="editmaster">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Master Settings</button>')
+        print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Master Settings</button>')
         print('                            </form>')
-        print('                         </div>')
+        print('                        </div>')
 
         # Tab Start / Tab2 ###########################
         # slave data
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
-        print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
+        print('                            <form class="form needs-validation" method="post" id="toastForm30" onsubmit="return false;" novalidate>')
 
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip11", dbslave_hostname, "dbslave_hostname")
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip12", dbslave_main_ip, "dbslave_main_ip")
@@ -417,7 +417,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                                    <input hidden name="action" value="editdbslave">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
@@ -449,7 +449,7 @@ if os.path.isfile(cluster_config_file):
 
                 print('<div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves">')
                 print('<div class="card-body">')
-                print('                            <form class="form toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                            <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", slave_main_ip, "slave_main_ip")
@@ -485,7 +485,7 @@ if os.path.isfile(cluster_config_file):
         # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
-        print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
+        print('                            <form class="form needs-validation" method="post" id="toastForm31" onsubmit="return false;" novalidate>')
 
         # Slave data
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", "", "slave_hostname")
@@ -537,7 +537,7 @@ if os.path.isfile(cluster_config_file):
                 print('             </div>')
                 print('             <div id="collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'" data-parent="#accordionIPs">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form toastForm34-wrap" method="post" id="toastForm34'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                print('                     <form class="form needs-validation toastForm34-wrap" method="post" id="toastForm34'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;" novalidate>')
 
                 # Master data
                 print_input_fn("Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", "validationToolTip31", master_ip_resource, "master_ip_resource")
@@ -576,7 +576,7 @@ if os.path.isfile(cluster_config_file):
         # Tab Start / Tab5 ###########################
         # Display form for IP address mapping add
         print('                         <div class="tab-pane fade" id="ip-add-content" role="tabpanel" aria-labelledby="ip-add-tab">')
-        print('                            <form class="form" method="post" id="toastForm36" onsubmit="return false;">')
+        print('                            <form class="form needs-validation" method="post" id="toastForm36" onsubmit="return false;" novalidate>')
 
         # Master data
         print_input_fn("Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", "validationToolTip31", "", "master_ip_resource")
@@ -718,7 +718,7 @@ else:
         # Tab Start / Tab2 ###########################
         # slave data
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
-        print('                            <form class="form" method="post" id="toastForm30" onsubmit="return false;">')
+        print('                            <form class="form needs-validation" method="post" id="toastForm30" onsubmit="return false;" novalidate>')
 
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip11", dbslave_hostname, "dbslave_hostname")
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip12", dbslave_main_ip, "dbslave_main_ip")
@@ -765,7 +765,7 @@ else:
 
                 print('<div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves">')
                 print('<div class="card-body">')
-                print('                            <form class="form toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                            <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", slave_main_ip, "slave_main_ip")
@@ -801,7 +801,7 @@ else:
         # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade show" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
-        print('                            <form class="form" method="post" id="toastForm31" onsubmit="return false;">')
+        print('                            <form class="form needs-validation" method="post" id="toastForm31" onsubmit="return false;" novalidate>')
 
         # Slave data
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", "", "slave_hostname")
@@ -874,7 +874,7 @@ else:
         # Get the server main IP
         myip = get('https://api.ipify.org').text
         # Display form for ndeploymaster
-        print('                            <form class="form" method="post" id="toastForm28" onsubmit="return false;">')
+        print('                            <form class="form needs-validation" method="post" id="toastForm28" onsubmit="return false;" novalidate>')
 
         print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", "validationToolTip01", myhostname, "master_hostname")
         print_input_fn("Master Main IP", " Enter the master server's main IP address. ", "validationTooltip02", myip, "master_main_ip")
@@ -887,7 +887,7 @@ else:
 
         print('                                    <input hidden name="action" value="setup">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
+        print('                                    <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
         print('                            </form>')
 
     print('             </div> <!-- Card Body End -->')
