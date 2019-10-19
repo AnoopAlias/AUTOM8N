@@ -188,6 +188,10 @@ body {
 	font-family: 'Poppins', sans-serif;
 }
 
+#main-container {
+	padding-bottom: 3rem;
+}
+
 #main-header {
 	background-color: $white;
 	padding: .5rem 1rem;
@@ -414,6 +418,9 @@ body {
 }
 
 .accordion {
+	@extend .mb-4;
+	@extend .pb-4;
+	border-bottom: $border-dark;
 	.card-header {
 		padding: .25rem .55rem;
 		.btn {
@@ -421,6 +428,11 @@ body {
 			width: 100%;
 			text-align: left;
 		}
+	}
+	&:last-child {
+		@extend .mb-0;
+		@extend .pb-0;
+		border: none;
 	}
 }
 
