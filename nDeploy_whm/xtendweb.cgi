@@ -424,7 +424,7 @@ if os.path.isfile(cluster_config_file):
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
             if myslave != dbslave_hostname:
 
-                print('     <div class="accordion mt-4" id="accordionSlaves">')
+                print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
 
                 # Lets get all the details of this slave server and present to the user for editing
                 slave_hostname = myslave
@@ -447,7 +447,7 @@ if os.path.isfile(cluster_config_file):
                 print('                 </h2>')
                 print('             </div>')
 
-                print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves">')
+                print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves'+str(slave_server_id)+'">')
                 print('                 <div class="card-body">')
                 print('                     <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
