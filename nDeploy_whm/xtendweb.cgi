@@ -216,7 +216,7 @@ print('                    <!-- System Tab -->')
 print('                    <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
 
 # System Health & Backup
-cardheader('System Health & Backup','fas fa-cogs')
+cardheader('System Health & Backup', 'fas fa-cogs')
 print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
 print('                            <div class="row no-gutters row-2-col row-no-btm-bdr"> <!-- Row Start -->')
 
@@ -424,8 +424,6 @@ if os.path.isfile(cluster_config_file):
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
             if myslave != dbslave_hostname:
 
-                print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
-
                 # Lets get all the details of this slave server and present to the user for editing
                 slave_hostname = myslave
                 slave_server_id = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['server_id']
@@ -438,6 +436,7 @@ if os.path.isfile(cluster_config_file):
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
                 # slave data
+                print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
                 print('         <div class="card mb-0">')
                 print('             <div class="card-header" id="heading'+str(slave_server_id)+'">')
                 print('                 <h2 class="mb-0">')
@@ -737,9 +736,6 @@ else:
         # Additional slaves
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
             if myslave != dbslave_hostname:
-
-                print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
-
                 # Lets get all the details of this slave server and present to the user for editing
                 slave_hostname = myslave
                 slave_server_id = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['server_id']
@@ -752,6 +748,7 @@ else:
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
                 # slave data
+                print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
                 print('         <div class="card mb-0">')
                 print('             <div class="card-header" id="heading'+str(slave_server_id)+'">')
                 print('                 <h2 class="mb-0">')
