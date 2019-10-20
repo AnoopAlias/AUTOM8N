@@ -144,27 +144,27 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('                <div class="col-lg-8">')
 
                 cardheader('Upstream Configuration Settings')
-                print('                        <div class="card-body p-0">  <!-- Card Body Start -->')
-                print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
+                print('                    <div class="card-body p-0">  <!-- Card Body Start -->')
+                print('                        <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
-                print('                                <div class="col-md-6 alert"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
-                print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;Active</div>')
+                print('                            <div class="col-md-6 alert"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+                print('                            <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;Active</div>')
 
                 # Backend
-                print('                                <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
-                print('                                <div class="col-md-6 alert text-success">'+backend_version+'</div>')
+                print('                            <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
+                print('                            <div class="col-md-6 alert text-success">'+backend_version+'</div>')
 
                 # Description
-                print('                                <div class="col-md-6 alert"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
-                print('                                <div class="col-md-6 alert text-success text-center">'+apptemplate_description+'</div>')
+                print('                            <div class="col-md-6 alert"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
+                print('                            <div class="col-md-6 alert text-success text-center">'+apptemplate_description+'</div>')
 
                 # .htaccess
                 if backend_category == 'PROXY' and backend_version == 'httpd':
-                    print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-                    print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;</div>')
+                    print('                        <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+                    print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;</div>')
                 else:
-                    print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-                    print('                                <div class="col-md-6 alert text-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+                    print('                            <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+                    print('                            <div class="col-md-6 alert text-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
 
                 # New Upstream
                 print('                                <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
@@ -195,9 +195,9 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                     print('                                    <select name="backendversion" class="custom-select">')
                     for mybackend_version in backends_dict.keys():
                         if mybackend_version == backend_version:
-                            print('                                        <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                            print('                                <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>')
                         else:
-                            print('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                            print('                                <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
                     print('                                    </select>')
                     print('                                </div>')
 

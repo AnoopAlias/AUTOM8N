@@ -68,12 +68,12 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         print('            <!-- WHM Starter Row -->')
         print('            <div class="row justify-content-lg-center">')
         print('                <!-- First Column Start -->')
-        print('                <div class="col-lg-8">') #Column
+        print('                <div class="col-lg-8">')
         print('')
 
         cardheader(form.getvalue('cpanelpkg')+' cPanel Package','fas fa-box-open')
-        print('                        <div class="card-body p-0"> <!-- Card Body Start -->') #Card Body Start
-        print('                            <div class="row no-gutters"> <!-- Row Start -->') #Row Start
+        print('                    <div class="card-body p-0"> <!-- Card Body Start -->')
+        print('                        <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
         nginx_status = False
         for myprocess in psutil.process_iter():
@@ -87,100 +87,100 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
                 break
 
         if nginx_status:
-            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
-            print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;Active</div>')
+            print('                        <div class="col-md-6 alert"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+            print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;Active</div>')
         else:
-            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
-            print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Inactive</div>')
+            print('                        <div class="col-md-6 alert"><i class="fas fa-play"></i>&nbsp;Nginx</div>')
+            print('                        <div class="col-md-6 alert text-danger"><i class="fas fa-times"></i>&nbsp;Inactive</div>')
 
         # Backend
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
-        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center">'+backend_version+'</div>')
+        print('                            <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
+        print('                            <div class="col-md-6 alert text-success">'+backend_version+'</div>')
 
         # Description
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
-        print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center text-center">'+apptemplate_description+'</div>')
-        
+        print('                            <div class="col-md-6 alert"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
+        print('                            <div class="col-md-6 alert text-success">'+apptemplate_description+'</div>')
+
         # .htaccess
         if backend_category == 'PROXY' and backend_version == 'httpd':
 
-            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-            print('                                <div class="d-flex w-50 alert alert-success align-items-center justify-content-center"><i class="fas fa-check"></i>&nbsp;</div>')
-            
+            print('                        <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+            print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check"></i>&nbsp;</div>')
+
         else:
 
-            print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
-            print('                                <div class="d-flex w-50 alert alert-danger align-items-center justify-content-center"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
+            print('                        <div class="col-md-6 alert"><i class="fas fa-file-code"></i>&nbsp;Current&nbsp;.htaccess&nbsp;Status</div>')
+            print('                        <div class="col-md-6 alert text-danger"><i class="fas fa-times"></i>&nbsp;Ignored</div>')
 
         # New Upstream
-        print('                                <div class="d-flex w-50 alert alert-light align-items-center"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
-        print('                                <div class="d-flex w-50 alert alert-warning align-items-right justify-content-center">'+mybackend+'</div>')
+        print('                            <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
+        print('                            <div class="col-md-6 alert text-warning text-center">'+mybackend+'</div>')
 
-        print('                            </div> <!-- Row End -->') #End Row
-        print('                        </div> <!-- Card Body End -->') #Card Body End
-       
-        print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
-        
-        print('                            <div class="alert alert-info text-center">')
-        print('                                You selected <span class="p-2 badge badge-warning">'+mybackend+'</span> as the new upstream type <br>for the '+form.getvalue('cpanelpkg')+' package. Select the desired <br>version and template for this cPanel Package.')
-        print('                            </div>')
+        print('                        </div> <!-- Row End -->')
+        print('                    </div> <!-- Card Body End -->')
+
+        print('                    <div class="card-body"> <!-- Card Body Start -->')
+
+        print('                        <div class="alert alert-info text-center">')
+        print('                            You selected <span class="p-2 badge badge-warning">'+mybackend+'</span> as the new upstream type <br>for the '+form.getvalue('cpanelpkg')+' package. Select the desired <br>version and template for this cPanel Package.')
+        print('                        </div>')
 
         backends_dict = backend_data_yaml_parsed.get(mybackend)
         new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
-        print('                            <form class="form" method="post" id="toastForm18" onsubmit="return false;">')
+        print('                        <form class="form" method="post" id="toastForm18" onsubmit="return false;">')
 
         if mybackend == backend_category:
-            print('                            <div class="input-group">')
-            print('                                <div class="input-group-prepend input-group-prepend-min">')
-            print('                                    <label class="input-group-text">Upstream</label>')
-            print('                                </div>')
-            print('                                <select name="backendversion" class="custom-select">')
+            print('                        <div class="input-group">')
+            print('                            <div class="input-group-prepend input-group-prepend-min">')
+            print('                                <label class="input-group-text">Upstream</label>')
+            print('                            </div>')
+            print('                            <select name="backendversion" class="custom-select">')
             for mybackend_version in backends_dict.keys():
                 if mybackend_version == backend_version:
-                    print('                                    <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                    print('                        <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>')
                 else:
-                    print('                                    <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
-            print('                                </select>')
-            print('                            </div>')
+                    print('                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+            print('                            </select>')
+            print('                        </div>')
 
-            print('                            <div class="input-group">')
-            print('                                <div class="input-group-prepend input-group-prepend-min">')
-            print('                                    <label class="input-group-text">Config Template</label>')
-            print('                                </div>')
-            print('                                <select name="apptemplate" class="custom-select">')
+            print('                        <div class="input-group">')
+            print('                            <div class="input-group-prepend input-group-prepend-min">')
+            print('                                <label class="input-group-text">Config Template</label>')
+            print('                            </div>')
+            print('                            <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 if myapptemplate == apptemplate_code:
-                    print('                                    <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+                    print('                        <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
                 else:
-                    print('                                    <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
-            print('                                </select>')
-            print('                            </div>')
+                    print('                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+            print('                            </select>')
+            print('                        </div>')
         else:
-            print('                            <div class="input-group">')
-            print('                                <div class="input-group-prepend input-group-prepend-min">')
-            print('                                    <label class="input-group-text">Upstream</label>')
-            print('                                </div>')
-            print('                                <select name="backendversion" class="custom-select">')
+            print('                        <div class="input-group">')
+            print('                            <div class="input-group-prepend input-group-prepend-min">')
+            print('                                <label class="input-group-text">Upstream</label>')
+            print('                            </div>')
+            print('                            <select name="backendversion" class="custom-select">')
             for mybackend_version in backends_dict.keys():
-                print('                                    <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
-            print('                                </select>')
+                print('                            <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+            print('                            </select>')
+            print('                        </div>')
+            print('                        <div class="input-group">')
+            print('                            <div class="input-group-prepend input-group-prepend-min">')
+            print('                                <label class="input-group-text">Config template</label>')
             print('                            </div>')
-            print('                            <div class="input-group">')
-            print('                                <div class="input-group-prepend input-group-prepend-min">')
-            print('                                    <label class="input-group-text">Config template</label>')
-            print('                                </div>')
-            print('                                <select name="apptemplate" class="custom-select">')
+            print('                            <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
-                print('                                    <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
-            print('                                </select>')
-            print('                            </div>')
+                print('                            <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+            print('                            </select>')
+            print('                        </div>')
 
         # Pass on the domain name to the next stage
         print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
         print('                            <input hidden name="backend" value="'+mybackend+'">')
         print('                            <button class="btn btn-outline-primary btn-block" type="submit">Update Package</button>')
-        print('                        </form>')
-        print('                        </div> <!-- Card Body End -->') #Card End
+        print('                        </form> <!-- toastForm18 end -->')
+        print('                    </div> <!-- Card Body End -->')
         cardfooter('')
 
     else:
@@ -192,18 +192,15 @@ else:
     sys.exit(0)
 
 #Column End
-print('                <!-- Column End -->')
-print('                </div>')
+print('                        </div> <!-- Column End -->')
 print('')
-print('            <!-- WHM End Row -->')
-print('            </div>')
+print('                    </div> <!-- WHM End Row -->')
 print('')
-print('        </div> <!-- Main Container End -->')
+print('                </div> <!-- Main Container End -->')
 print('')
 
 print_modals()
 print_loader()
 
-print('    <!-- Body End -->')
-print('    </body>')
+print('    </body> <!-- Body End -->')
 print('</html>')
