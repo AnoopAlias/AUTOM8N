@@ -9,7 +9,7 @@ pip3 install glances bottle
 if [ ! -f /etc/nginx/conf.d/glances.password ]; then
 
   if [ $# -ne 1 ]; then
-    echo -e '\e[93m Please set a password for user glances below \e[0m'
+    echo -e ' Please set a password for user glances below '
     printf "glances:$(openssl passwd -apr1)" > /etc/nginx/conf.d/glances.password
   else
     echo "glances:$(openssl passwd -apr1 $1)" > /etc/nginx/conf.d/glances.password
@@ -31,4 +31,4 @@ fi
 
 nginx -s reload
 
-echo -e "\e[93m You can access glances at https://$(hostname)/glances with user: glances and password you set \e[0m"
+echo -e " You can access glances at https://$(hostname)/glances with user: glances and password you set "

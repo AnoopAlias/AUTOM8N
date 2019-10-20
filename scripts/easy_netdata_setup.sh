@@ -18,7 +18,7 @@ curl -Ss 'https://my-netdata.io/kickstart-static64.sh' >/tmp/kickstart.sh && /bi
 if [ ! -f /etc/nginx/conf.d/netdata.password ]; then
 
   if [ $# -ne 1 ]; then
-    echo -e '\e[93m Please set a password for user netdata below \e[0m'
+    echo -e ' Please set a password for user netdata below '
     printf "netdata:$(openssl passwd -apr1)" > /etc/nginx/conf.d/netdata.password
   else
     echo "netdata:$(openssl passwd -apr1 $1)" > /etc/nginx/conf.d/netdata.password
@@ -39,7 +39,9 @@ if [ ${conflineno} -lt 10 ];then
   sed -i 's/# bind to = \*/bind to = 127.0.0.1:19999/' /opt/netdata/etc/netdata/netdata.conf
 fi
 
-echo -e '\e[93m setting up nginx httpd and mysql monitoring \e[0m'
+# Setting $HOME
+export HOME=/root
+echo -e ' setting up nginx httpd and mysql monitoring '
 mysql -e "create user 'netdata'@'localhost';"
 mysql -e "grant usage on *.* to 'netdata'@'localhost' with grant option;"
 mysql -e "flush privileges;"
@@ -58,4 +60,4 @@ fi
 
 nginx -s reload
 
-echo -e "\e[93m You can access netdata at https://$(hostname)/netdata with user: netdata and password you set \e[0m"
+echo -e " You can access netdata at https://$(hostname)/netdata with user: netdata and password you set "

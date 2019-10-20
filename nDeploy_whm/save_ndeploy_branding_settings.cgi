@@ -55,7 +55,7 @@ if form.getvalue('brand_logo') and \
                 yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
         subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
-        commoninclude.print_success('The nDeploy branding configuration has been updated.')
+        commoninclude.print_success('The branding configuration has been updated.')
 
     # Create the desired config if one doesn't exist
     else:
@@ -67,7 +67,7 @@ if form.getvalue('brand_logo') and \
             yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
         subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
-        commoninclude.print_success('The nDeploy branding configuration has been created.')        
+        commoninclude.print_success('The branding configuration has been created.')
 
 else:
     commoninclude.print_forbidden()
