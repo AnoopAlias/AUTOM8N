@@ -141,33 +141,38 @@ print('                        <ul class="list-unstyled mb-0">')
 if "PHP" in backend_data_yaml_parsed:
 
     if php_chroot_status and php_secure_status:
-        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
+        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-success">On</span></small></li>')
         print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
         print('                        </ul>')
         print('                    </div>')
         print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
     elif php_chroot_status and not php_secure_status:
-        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
+        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-danger">Off</span></small></li>')
         print('                            <li class="mt-2 text-success">Chroot Enabled <i class="fas fa-power-off ml-1"></i></li>')
         print('                        </ul>')
         print('                    </div>')
         print('                    <button form="chroot_off" class="btn btn-secondary btn-block mb-0">Disable Chroot</button>')
     elif not php_chroot_status and php_secure_status:
-        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
+        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-success">On</span></small></li>')
         print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
         print('                        </ul>')
         print('                    </div>')
         print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
     elif not php_chroot_status and not php_secure_status:
-        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
+        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-danger">Off</span></small></li>')
         print('                            <li class="mt-2 text-danger">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
         print('                        </ul>')
         print('                    </div>')
         print('                    <button form="chroot_on" class="btn btn-secondary btn-block mb-0">Enable Chroot</button>')
 else:
-    print("PHP not setup")
+    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Native PHP Support</small></li>')
+    print('                            <li class="mt-2 text-danger">Not Installed <i class="fas fa-power-off ml-1"></i></li>')
     print('                        </ul>')
     print('                    </div>')
+    print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
+    print('                        <input hidden name="run_installer" value="enabled">')
+    print('                        <button class="btn btn-secondary btn-block mb-0">Install</button>')
+    print('                    </form>')
 
 cardfooter('')
 
@@ -567,10 +572,6 @@ print('                                <p class="small"><i class="fab fa-php"></
 print('                                <p class="small"><kbd>Single Master</kbd> will run a single PHP-FPM process as root, where as <kbd>Multi-Master</kbd> will create individual PHP-FPM processes run under each user. Please note that <kbd>Multi-Master</kbd> is very resource intensive, especially within a cluster.</p>')
 print('                                <p class="small"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not. This method requires the <kbd>Single Master</kbd> PHP-FPM configuration and is the preferred way to run the application.</p>')
 
-print('                                <form class="form w-100" id="easy_php_setup" method="post" onsubmit="return false;">')
-print('                                    <input hidden class="form-control" name="run_installer" value="enabled">')
-print('                                    <button class="btn btn-outline-primary btn-block mt-2" type="submit">Install Native nGinx PHP Support</button>')
-print('                                </form>')
 print('                            </div> <!-- Row End -->')
 print('                        </div> <!-- Card Body End -->')
 
