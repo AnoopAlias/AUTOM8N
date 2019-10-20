@@ -24,10 +24,17 @@ autom8n_version_info_file = installation_path+"/conf/version.yaml"
 update_status_file = installation_path+"/conf/NDEPLOY_UPGRADE_STATUS"
 php_secure_mode_file = installation_path+"/conf/secure-php-enabled"
 php_chroot_mode_file = "/var/cpanel/feature_toggles/apachefpmjail"
+backend_config_file = installation_path+"/conf/backends.yaml"
 
 cgitb.enable()
 
 form = cgi.FieldStorage()
+
+backend_config_file = installation_path+"/conf/backends.yaml"
+backend_data_yaml = open(backend_config_file, 'r')
+backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+backend_data_yaml.close()
+
 
 # nDeploy Control
 if os.path.isfile(ndeploy_control_file):
@@ -131,30 +138,36 @@ print('                    <div class="card-body text-center"> <!-- Card Body St
 print('                        <h4 class="mb-0">PHP Status</h4>')
 print('                        <ul class="list-unstyled mb-0">')
 
-if php_chroot_status and php_secure_status:
-    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
-    print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+if "PHP" in backend_data_yaml_parsed:
+
+    if php_chroot_status and php_secure_status:
+        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
+        print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+        print('                        </ul>')
+        print('                    </div>')
+        print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
+    elif php_chroot_status and not php_secure_status:
+        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
+        print('                            <li class="mt-2 text-success">Chroot Enabled <i class="fas fa-power-off ml-1"></i></li>')
+        print('                        </ul>')
+        print('                    </div>')
+        print('                    <button form="chroot_off" class="btn btn-secondary btn-block mb-0">Disable Chroot</button>')
+    elif not php_chroot_status and php_secure_status:
+        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
+        print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+        print('                        </ul>')
+        print('                    </div>')
+        print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
+    elif not php_chroot_status and not php_secure_status:
+        print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
+        print('                            <li class="mt-2 text-danger">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
+        print('                        </ul>')
+        print('                    </div>')
+        print('                    <button form="chroot_on" class="btn btn-secondary btn-block mb-0">Enable Chroot</button>')
+else:
+    print("PHP not setup")
     print('                        </ul>')
     print('                    </div>')
-    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
-elif php_chroot_status and not php_secure_status:
-    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
-    print('                            <li class="mt-2 text-success">Chroot Enabled <i class="fas fa-power-off ml-1"></i></li>')
-    print('                        </ul>')
-    print('                    </div>')
-    print('                    <button form="chroot_off" class="btn btn-secondary btn-block mb-0">Disable Chroot</button>')
-elif not php_chroot_status and php_secure_status:
-    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-success">On</span> </small></li>')
-    print('                            <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
-    print('                        </ul>')
-    print('                    </div>')
-    print('                    <button form="single_master" class="btn btn-secondary btn-block mb-0">Switch to Single Master</button>')
-elif not php_chroot_status and not php_secure_status:
-    print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-danger">Off</span> </small></li>')
-    print('                            <li class="mt-2 text-danger">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
-    print('                        </ul>')
-    print('                    </div>')
-    print('                    <button form="chroot_on" class="btn btn-secondary btn-block mb-0">Enable Chroot</button>')
 
 cardfooter('')
 
@@ -495,56 +508,57 @@ print('                    <div class="tab-pane fade" id="v-pills-php_backends" 
 
 cardheader(brand+' PHP Configuration', 'fab fa-php')
 
-print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
-print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
-print('                                <div class="col-md-6 alert"><i class="fab fa-php"></i>PHP-FPM Master</div>')
-print('                                <div class="col-md-6">')
-print('                                    <div class="row no-gutters">')
+if "PHP" in backend_data_yaml_parsed:
+    print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
+    print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
+    print('                                <div class="col-md-6 alert"><i class="fab fa-php"></i>PHP-FPM Master</div>')
+    print('                                <div class="col-md-6">')
+    print('                                    <div class="row no-gutters">')
 
-if php_secure_status:
-    print('                                        <div class="col-6 alert text-success">Multi-Master <i class="fas fa-power-off"></i></div>')
-    print('                                        <div class="col-6">')
-    print('                                            <form id="single_master" class="form" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert btn btn-info">Single Master</button>')
-    print('                                                <input hidden name="php_mode" value="single">')
-else:
-    print('                                        <div class="col-6 alert text-success">Single Master <i class="fas fa-power-off"></i></div>')
-    print('                                        <div class="col-6">')
-    print('                                            <form id="multi_master" class="form" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert btn btn-info">Multi-Master</button>')
-    print('                                                <input hidden name="php_mode" value="multi">')
-
-print('                                            </form>')
-print('                                        </div>')
-print('                                    </div>')
-print('                                </div>')
-
-print('                                <div class="col-md-6 alert"><i class="fab fa-php"></i>Chroot PHP</div>')
-print('                                <div class="col-md-6">')
-print('                                    <div class="row no-gutters">')
-
-if php_chroot_status and not php_secure_status:
-    print('                                        <div class="col-6 alert text-success">Enabled <i class="fas fa-power-off"></i></div>')
-    print('                                        <div class="col-6">')
-    print('                                            <form id="chroot_off" class="form" onsubmit="return false;">')
-    print('                                                <button type="submit" class="alert btn btn-info">Disable</button>')
-    print('                                                <input hidden name="chroot_mode" value="disabled">')
-else:
-    print('                                        <div class="col-6 alert text-danger">Disabled <i class="fas fa-power-off"></i></div>')
-    print('                                        <div class="col-6">')
-    print('                                            <form id="chroot_on" class="form" onsubmit="return false;">')
     if php_secure_status:
-        print('                                                <button type="submit" class="alert btn btn-info" disabled>Enable</button>')
+        print('                                        <div class="col-6 alert text-success">Multi-Master <i class="fas fa-power-off"></i></div>')
+        print('                                        <div class="col-6">')
+        print('                                            <form id="single_master" class="form" onsubmit="return false;">')
+        print('                                                <button type="submit" class="alert btn btn-info">Single Master</button>')
+        print('                                                <input hidden name="php_mode" value="single">')
     else:
-        print('                                                <button type="submit" class="alert btn btn-info">Enable</button>')
-    print('                                                <input hidden name="chroot_mode" value="enabled">')
+        print('                                        <div class="col-6 alert text-success">Single Master <i class="fas fa-power-off"></i></div>')
+        print('                                        <div class="col-6">')
+        print('                                            <form id="multi_master" class="form" onsubmit="return false;">')
+        print('                                                <button type="submit" class="alert btn btn-info">Multi-Master</button>')
+        print('                                                <input hidden name="php_mode" value="multi">')
 
-print('                                            </form>')
-print('                                        </div>')
-print('                                    </div>')
-print('                                </div>')
-print('                            </div> <!-- Row End -->')
-print('                        </div> <!-- Card Body End -->')
+    print('                                            </form>')
+    print('                                        </div>')
+    print('                                    </div>')
+    print('                                </div>')
+
+    print('                                <div class="col-md-6 alert"><i class="fab fa-php"></i>Chroot PHP</div>')
+    print('                                <div class="col-md-6">')
+    print('                                    <div class="row no-gutters">')
+
+    if php_chroot_status and not php_secure_status:
+        print('                                        <div class="col-6 alert text-success">Enabled <i class="fas fa-power-off"></i></div>')
+        print('                                        <div class="col-6">')
+        print('                                            <form id="chroot_off" class="form" onsubmit="return false;">')
+        print('                                                <button type="submit" class="alert btn btn-info">Disable</button>')
+        print('                                                <input hidden name="chroot_mode" value="disabled">')
+    else:
+        print('                                        <div class="col-6 alert text-danger">Disabled <i class="fas fa-power-off"></i></div>')
+        print('                                        <div class="col-6">')
+        print('                                            <form id="chroot_on" class="form" onsubmit="return false;">')
+        if php_secure_status:
+            print('                                                <button type="submit" class="alert btn btn-info" disabled>Enable</button>')
+        else:
+            print('                                                <button type="submit" class="alert btn btn-info">Enable</button>')
+        print('                                                <input hidden name="chroot_mode" value="enabled">')
+
+    print('                                            </form>')
+    print('                                        </div>')
+    print('                                    </div>')
+    print('                                </div>')
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
 
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
