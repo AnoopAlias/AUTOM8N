@@ -4,17 +4,17 @@
 function enable {
 /usr/local/cpanel/cpkeyclt
 # Generate all nginx vhost first
-echo -e '\e[93m Generating nginx vhosts \e[0m'
+echo -e ' Generating nginx vhosts '
 /opt/nDeploy/scripts/attempt_autofix.sh
 # Lets switch apache port so nginx can bind to port 80 and 443
-echo -e '\e[93m Modifying apache http and https port in cpanel \e[0m'
+echo -e ' Modifying apache http and https port in cpanel '
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_port value=0.0.0.0:9999
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:4430
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=disable_cphttpd value=1
 sed -i "s/80/9999/" /etc/chkserv.d/httpd
 service tailwatchd restart
 if [ -f /etc/cpanel/ea4/is_ea4 ];then
-	echo -e '\e[93m !!! Removing conflicting mod_evasive ea-apache24-mod_evasive ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm \e[0m'
+	echo -e ' !!! Removing conflicting mod_evasive ea-apache24-mod_evasive ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm '
 	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2 ea-apache24-mod_evasive mod_evasive
 	yum -y install ea-apache24-mod_remoteip
 	REMOTEIPINCLUDE=$'\nInclude "/etc/nginx/conf.d/httpd_mod_remoteip.include"'
@@ -23,7 +23,7 @@ if [ -f /etc/cpanel/ea4/is_ea4 ];then
 	sed -i 's/logformat_common: "%h/logformat_common: "%a/' /var/cpanel/conf/apache/local
 	rm -f /var/cpanel/conf/apache/local.cache
 fi
-echo -e '\e[93m Rebuilding Apache httpd backend configs and restarting daemons \e[0m'
+echo -e ' Rebuilding Apache httpd backend configs and restarting daemons '
 /scripts/rebuildhttpdconf
 /scripts/restartsrv httpd
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
@@ -58,14 +58,14 @@ fi
 
 function disable {
 
-echo -e '\e[93m Reverting apache http and https port in cpanel \e[0m'
+echo -e ' Reverting apache http and https port in cpanel '
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_port value=0.0.0.0:80
 /usr/local/cpanel/bin/whmapi1 set_tweaksetting key=apache_ssl_port value=0.0.0.0:443
 sed -i "s/9999/80/" /etc/chkserv.d/httpd
 
 service tailwatchd restart
 
-echo -e '\e[93m Rebuilding Apache httpd backend configs.Apache will listen on default ports!  \e[0m'
+echo -e ' Rebuilding Apache httpd backend configs.Apache will listen on default ports!  '
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 if [ ${osversion} -le 6 ];then
 	service nginx stop
