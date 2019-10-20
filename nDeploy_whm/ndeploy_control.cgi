@@ -248,7 +248,7 @@ print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-non
 print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
 print('                    <a class="nav-link" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix">AutoFix</a>')
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
-print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">PHP Configuration</a>')
+print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">Advanced PHP</a>')
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
 print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">NGinx Mods</a>')
@@ -268,7 +268,7 @@ print('                        <div class="dropdown-menu" aria-labelledby="dropd
 print('                            <a class="dropdown-item" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-pressed="false">Aesthetics</a>')
 print('                            <a class="dropdown-item" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix" aria-pressed="false">AutoFix</a>')
 print('                            <a class="dropdown-item" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-pressed="false">Branding</a>')
-print('                            <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">PHP Configuration</a>')
+print('                            <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">Advanced PHP</a>')
 print('                            <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
 print('                            <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
 print('                            <a class="dropdown-item" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-pressed="false">NGinx Mods</a>')
@@ -464,12 +464,12 @@ cardfooter('')
 
 print('                    </div> <!-- End AutoFix Tab -->')
 
-# PHP Configuration
+# Advanced PHP Configuration
 print('')
-print('                    <!-- PHP Configuration Tab -->')
+print('                    <!-- Advanced PHP Configuration Tab -->')
 print('                    <div class="tab-pane fade" id="v-pills-php_backends" role="tabpanel" aria-labelledby="v-pills-php_backends-tab">')
 
-cardheader(brand+' PHP Configuration', 'fab fa-php')
+cardheader('Advanced PHP Configuration', 'fab fa-php')
 
 if "PHP" in backend_data_yaml_parsed:
     print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
@@ -523,19 +523,24 @@ if "PHP" in backend_data_yaml_parsed:
     print('                            </div> <!-- Row End -->')
     print('                        </div> <!-- Card Body End -->')
 
-print('                        <div class="card-body"> <!-- Card Body Start -->')
-print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
-print('                                <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
-print('                                <p class="small"><i class="fab fa-php"></i> PHP-FPM Master allows you to choose between a <kbd>Single Master</kbd> or a <kbd>Multi-Master</kbd> PHP configuration.')
-print('                                <p class="small"><kbd>Single Master</kbd> will run a single PHP-FPM process as root, where as <kbd>Multi-Master</kbd> will create individual PHP-FPM processes run under each user. Please note that <kbd>Multi-Master</kbd> is very resource intensive, especially within a cluster.</p>')
-print('                                <p class="small"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not. This method requires the <kbd>Single Master</kbd> PHP-FPM configuration and is the preferred way to run the application.</p>')
-
-print('                            </div> <!-- Row End -->')
-print('                        </div> <!-- Card Body End -->')
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
+    print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+    print('                                <p class="small"><i class="fab fa-php"></i> PHP-FPM Master allows you to choose between a <kbd>Single Master</kbd> or a <kbd>Multi-Master</kbd> PHP configuration.')
+    print('                                <p class="small"><kbd>Single Master</kbd> will run a single PHP-FPM process as root, where as <kbd>Multi-Master</kbd> will create individual PHP-FPM processes run under each user. Please note that <kbd>Multi-Master</kbd> is very resource intensive, especially within a cluster.</p>')
+    print('                                <p class="small"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not. This method requires the <kbd>Single Master</kbd> PHP-FPM configuration and is the preferred way to run the application.</p>')
+    print('                                <p class="small">Welcome to the Easy PHP Installer. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
+else:
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
+    print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
+    print('                                <p class="small text-center w-100">Advanced PHP requires native PHP to be installed. <br>You can install it from the <kbd>PHP Status</kbd> widget.</p>')
+    print('                            </div> <!-- Row End -->')
+    print('                        </div> <!-- Card Body End -->')
 
 cardfooter('')
 
-print('                    </div> <!-- End PHP Configuration Tab -->')
+print('                    </div> <!-- End Advanced PHP Configuration Tab -->')
 
 # Netdata Tab
 print('')
