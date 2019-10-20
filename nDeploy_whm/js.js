@@ -132,8 +132,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast-nl").find('.toast-body').html(result)
-                $("#myToast-nl").toast('show');
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
             },
         });
     });
