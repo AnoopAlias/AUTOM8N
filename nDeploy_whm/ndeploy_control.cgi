@@ -166,6 +166,8 @@ if "PHP" in backend_data_yaml_parsed:
         print('                    <button form="chroot_on" class="btn btn-secondary btn-block mb-0">Enable Chroot</button>')
 else:
     print("PHP not setup")
+    print('                        </ul>')
+    print('                    </div>')
 
 cardfooter('')
 
