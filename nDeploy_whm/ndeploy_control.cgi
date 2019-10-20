@@ -30,6 +30,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
+# Easy PHP Installer Check
 backend_config_file = installation_path+"/conf/backends.yaml"
 backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
@@ -244,7 +245,6 @@ print('            <div class="row justify-content-lg-center flex-nowrap">')
 print('')
 print('                <!-- Secondary Navigation -->')
 print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
-print('                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home">Home</a>')
 print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
 print('                    <a class="nav-link" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix">AutoFix</a>')
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
@@ -265,7 +265,6 @@ print('                        <button class="btn btn-primary btn-block dropdown
 print('                             Menu')
 print('                        </button>')
 print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
-print('                            <a class="dropdown-item" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-pressed="false">Home</a>')
 print('                            <a class="dropdown-item" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-pressed="false">Aesthetics</a>')
 print('                            <a class="dropdown-item" id="v-pills-autofix-tab" data-toggle="pill" href="#v-pills-autofix" role="tab" aria-controls="v-pills-autofix" aria-pressed="false">AutoFix</a>')
 print('                            <a class="dropdown-item" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-pressed="false">Branding</a>')
@@ -276,47 +275,6 @@ print('                            <a class="dropdown-item" id="v-pills-modules-
 
 print('                        </div>')
 print('                    </div> <!-- End Secondary Mobile Navigation -->')
-
-
-# Home Tab
-print('')
-print('                    <!-- Administration Tab -->')
-print('                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">')
-
-cardheader('Welcome to '+brand+' Control','fas fa-tools')
-
-print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
-print('                            <div class="row no-gutters row-1"> <!-- Row Start -->')
-print('                                <div class="col-md-6 alert"><i class="fas fa-infinity"></i> '+brand+' cPanel Plugin</div>')
-print('                                <div class="col-md-6">')
-print('                                    <div class="row no-gutters">')
-
-if nginx_status:
-    print('                                    <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
-    print('                                    <div class="col-9">')
-    print('                                        <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                                        <button type="submit" class="alert btn btn-info">Disable</button>')
-    print('                                        <input hidden name="plugin_status" value="disable">')
-else:
-    print('                                    <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
-    print('                                    <div class="col-9">')
-    print('                                        <form id="enable_ndeploy" class="form" onsubmit="return false;">')
-    print('                                            <button type="submit" class="alert btn btn-info">Enable</button>')
-    print('                                            <input hidden name="plugin_status" value="enable">')
-
-print('                                            </form>')
-print('                                        </div>')
-print('                                    </div>')
-print('                                </div>')
-print('                            </div> <!-- Row End -->')
-print('                        </div> <!-- Card Body End -->')
-print('                        <div class="card-body pb-0"> <!-- Card Body Start -->')
-print('                            <p class="small">Welcome to the '+brand+' Control Center. Here you will have control over various theming, branding, and configuration settings for this application. You can enable and disable the application above.</p>')
-print('                        </div> <!-- Card Body End -->')
-
-cardfooter('')
-
-print('                    </div> <!-- End Administration Tab -->')
 
 # Branding Tab
 print('')
