@@ -39,6 +39,8 @@ if [ ${conflineno} -lt 10 ];then
   sed -i 's/# bind to = \*/bind to = 127.0.0.1:19999/' /opt/netdata/etc/netdata/netdata.conf
 fi
 
+# Setting $HOME
+export HOME=/root
 echo -e ' setting up nginx httpd and mysql monitoring '
 mysql -e "create user 'netdata'@'localhost';"
 mysql -e "grant usage on *.* to 'netdata'@'localhost' with grant option;"
