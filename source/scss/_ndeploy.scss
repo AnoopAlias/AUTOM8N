@@ -591,6 +591,21 @@ kbd {
 		border: none;
 		border-top: $border;
 	}
+	.btn-group {
+		.btn {
+			&:first-child {
+				border-bottom-right-radius: 0;
+<<<<<<< HEAD
+				border-right: 1px solid rgba(0,0,0,0.125);
+=======
+				border: 1px solid rgba(0,0,0,0.125);
+>>>>>>> 71fdb6e9dd7333ef81f1a91bef396253c1e0ab70
+			}
+			&:last-child {
+				border-bottom-left-radius: 0;
+			}
+		}
+	}
 }
 
 //
