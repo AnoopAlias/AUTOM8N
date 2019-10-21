@@ -53,22 +53,20 @@ backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
 
-php_status = False
-php_status_dict = {}
 if "PHP" in backend_data_yaml_parsed:
-    php_backends_dict = backend_data_yaml_parsed["PHP"]
-    for php, path in list(php_backends_dict.items()):
-        for myprocess in psutil.process_iter():
-            # Workaround for Python 2.6
-            if platform.python_version().startswith('2.6'):
-                myexe = myprocess.exe
-            else:
-                myexe = myprocess.exe()
-            if path+"/usr/sbin/php-fpm" in myexe:
-                php_status_dict[php] = "ACTIVE"
-                break
-            else:
-                php_status_dict[php] = "NOT ACTIVE"
+    installed_php_count = len(backend_data_yaml_parsed["PHP"].keys())
+else:
+    installed_php_count = 0
+
+running_process_count = 0
+for myprocess in psutil.process_iter():
+    # Workaround for Python 2.6
+    if platform.python_version().startswith('2.6'):
+        myexe = myprocess.cmdline
+    else:
+        myexe = myprocess.cmdline()
+    if 'php-fpm: master process (/opt/nDeploy/conf/php-fpm.conf)' in myexe:
+        running_process_count = running_process_count + 1
 
 # Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
@@ -155,13 +153,12 @@ print('                            <h4 class="mb-0">PHP Backends</h4>')
 print('                            <ul class="list-unstyled mb-0">')
 print('                                <li><small>PHP-FPM</small></li>')
 
-for service, status in list(php_status_dict.items()):
-    if status == "NOT ACTIVE":
-        php_status = "True"
-        break
+if running_process_count == installed_php_count:
+    php_status = True
+else:
+    php_status = False
 
-
-if not php_status:
+if php_status:
     print('                                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
     print('                                <li class="mt-2 text-danger">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
