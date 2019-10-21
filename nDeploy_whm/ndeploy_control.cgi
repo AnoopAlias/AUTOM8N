@@ -124,9 +124,14 @@ print('                    </div>')
 
 if nginx_status:
     print('                    <button form="disable_ndeploy" class="btn btn-secondary btn-block mb-0">Disable</button>')
+    print('                    <form id="disable_ndeploy" class="form" onsubmit="return false;">')
+    print('                        <input hidden name="plugin_status" value="disable">')
 else:
     print('                    <button form="enable_ndeploy" class="btn btn-secondary btn-block mb-0">Enable</button>')
+    print('                    <form id="enable_ndeploy" class="form" onsubmit="return false;">')
+    print('                        <input hidden name="plugin_status" value="enable">')
 
+print('                    </form>')
 cardfooter('')
 
 print('                </div> <!-- Dash Item 1 End -->')
