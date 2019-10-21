@@ -158,7 +158,7 @@ if running_process_count == installed_php_count:
 else:
     php_status = False
 
-if not php_status:
+if php_status:
     print('                                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
     print('                                <li class="mt-2 text-danger">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
