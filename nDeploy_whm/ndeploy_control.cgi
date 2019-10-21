@@ -256,7 +256,7 @@ print('            <div class="row justify-content-lg-center flex-nowrap">')
 print('')
 print('                <!-- Secondary Navigation -->')
 print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
-print('                    <a class="nav-link" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
+print('                    <a class="nav-link active" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
 print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">Advanced PHP</a>')
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
@@ -369,7 +369,7 @@ print('                    </div> <!-- End Branding Tab -->')
 # Aesthetics Tab
 print('')
 print('                    <!-- Aesthetics Tab -->')
-print('                    <div class="tab-pane fade" id="v-pills-aesthetics" role="tabpanel" aria-labelledby="v-pills-aesthetics-tab">')
+print('                    <div class="tab-pane fade show active" id="v-pills-aesthetics" role="tabpanel" aria-labelledby="v-pills-aesthetics-tab">')
 
 cardheader(brand+' Aesthetics', 'fas fa-palette')
 primary_color_hint = " This can be a HEX code, a RGB color code, or a HTML color name like ghostwhite, grey, black, etc. "
