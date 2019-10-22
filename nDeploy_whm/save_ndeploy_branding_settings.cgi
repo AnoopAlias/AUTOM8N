@@ -6,6 +6,7 @@ import cgitb
 import yaml
 import os
 import subprocess
+import re
 
 
 __author__ = "Budd P Grant"
@@ -39,31 +40,33 @@ def ndeploy_branding_data():
 
 
 if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalue('brand'):
-    # Read in branding configuration if it exists
-    if os.path.isfile(branding_file):
-        with open(branding_file, 'r') as ndeploy_control_branding_conf:
-            yaml_parsed_ndeploy_control_branding_conf = yaml.safe_load(ndeploy_control_branding_conf)
+    if not re.match("^[0-9A-Za-z_-]+$", form.getvalue('brand')):
+        # Read in branding configuration if it exists
+        if os.path.isfile(branding_file):
+            with open(branding_file, 'r') as ndeploy_control_branding_conf:
+                yaml_parsed_ndeploy_control_branding_conf = yaml.safe_load(ndeploy_control_branding_conf)
 
-        ndeploy_branding_data()
+            ndeploy_branding_data()
 
-        with open(branding_file, 'w') as ndeploy_control_branding_conf:
+            with open(branding_file, 'w') as ndeploy_control_branding_conf:
+                    yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
+
+            subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
+            commoninclude.print_success('The branding configuration has been updated.')
+
+        # Create the desired config if one doesn't exist
+        else:
+            yaml_parsed_ndeploy_control_branding_conf = {}
+
+            ndeploy_branding_data()
+
+            with open(branding_file, 'w+') as ndeploy_control_branding_conf:
                 yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
-        subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
-        commoninclude.print_success('The branding configuration has been updated.')
-
-    # Create the desired config if one doesn't exist
+            subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
+            commoninclude.print_success('The branding configuration has been created.')
     else:
-        yaml_parsed_ndeploy_control_branding_conf = {}
-
-        ndeploy_branding_data()
-
-        with open(branding_file, 'w+') as ndeploy_control_branding_conf:
-            yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
-
-        subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
-        commoninclude.print_success('The branding configuration has been created.')
-
+        commoninclude.print_forbidden()
 else:
     commoninclude.print_forbidden()
 
