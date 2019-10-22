@@ -40,7 +40,7 @@ def ndeploy_branding_data():
 
 
 if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalue('brand'):
-    if not re.match("^[0-9A-Za-z_-]+$", form.getvalue('brand')):
+    if not re.match("[0-9A-Za-z_-]+$", form.getvalue('brand')):
         # Read in branding configuration if it exists
         if os.path.isfile(branding_file):
             with open(branding_file, 'r') as ndeploy_control_branding_conf:
