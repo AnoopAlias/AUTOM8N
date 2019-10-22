@@ -31,22 +31,17 @@ print('<head>')
 print('</head>')
 print('<body>')
 
+
 def ndeploy_branding_data():
     yaml_parsed_ndeploy_control_branding_conf['brand_logo'] = form.getvalue('brand_logo')
     yaml_parsed_ndeploy_control_branding_conf['brand_group'] = form.getvalue('brand_group')
     yaml_parsed_ndeploy_control_branding_conf['brand'] = form.getvalue('brand')
-    yaml_parsed_ndeploy_control_branding_conf['brand_anchor'] = form.getvalue('brand_anchor')
-    yaml_parsed_ndeploy_control_branding_conf['brand_link'] = form.getvalue('brand_link')
 
-if form.getvalue('brand_logo') and \
-    form.getvalue('brand_group') and \
-    form.getvalue('brand') and \
-    form.getvalue('brand_anchor') and \
-    form.getvalue('brand_link'):
 
+if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalue('brand'):
     # Read in branding configuration if it exists
     if os.path.isfile(branding_file):
-    	with open(branding_file, 'r') as ndeploy_control_branding_conf:
+        with open(branding_file, 'r') as ndeploy_control_branding_conf:
             yaml_parsed_ndeploy_control_branding_conf = yaml.safe_load(ndeploy_control_branding_conf)
 
         ndeploy_branding_data()
