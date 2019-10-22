@@ -501,18 +501,14 @@ if "PHP" in backend_data_yaml_parsed:
     print('                        </div> <!-- Card Body End -->')
 
     print('                        <div class="card-body"> <!-- Card Body Start -->')
-    print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
-    print('                                <p class="small"><i class="fab fa-php"></i> PHP-FPM Master allows you to choose between a <kbd>Single Master</kbd> or a <kbd>Multi-Master</kbd> PHP configuration.')
-    print('                                <p class="small"><kbd>Single Master</kbd> will run a single PHP-FPM process as root, where as <kbd>Multi-Master</kbd> will create individual PHP-FPM processes run under each user. Please note that <kbd>Multi-Master</kbd> is very resource intensive, especially within a cluster.</p>')
-    print('                                <p class="small"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not. This method requires the <kbd>Single Master</kbd> PHP-FPM configuration and is the preferred way to run the application.</p>')
-    print('                            </div> <!-- Row End -->')
+    print('                            <p class="small"><i class="fab fa-php"></i> PHP-FPM Master allows you to choose between a <kbd>Single Master</kbd> or a <kbd>Multi-Master</kbd> PHP configuration.')
+    print('                            <p class="small"><kbd>Single Master</kbd> will run a single PHP-FPM process as root, where as <kbd>Multi-Master</kbd> will create individual PHP-FPM processes run under each user. Please note that <kbd>Multi-Master</kbd> is very resource intensive, especially within a cluster.</p>')
+    print('                            <p class="small mb-0"><i class="fab fa-php"></i> Chroot PHP allows you to choose between running PHP-FPM as chrooted using cPanel\'s VIRTFS or not. This method requires the <kbd>Single Master</kbd> PHP-FPM configuration and is the preferred way to run the application.</p>')
     print('                        </div> <!-- Card Body End -->')
 else:
     print('                        <div class="card-body"> <!-- Card Body Start -->')
-    print('                            <div class="row ml-auto mr-auto"> <!-- Row Start -->')
-    print('                                <p class="small"><strong><em>Advanced PHP requires native PHP to be installed.</em></strong></p>')
-    print('                                <p class="small">You can install it from the <kbd>PHP Status</kbd> widget above. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
-    print('                            </div> <!-- Row End -->')
+    print('                            <p class="small"><strong><em>Advanced PHP requires native PHP to be installed.</em></strong></p>')
+    print('                            <p class="small mb-0">You can install it from the <kbd>PHP Status</kbd> widget above. This will configure NGINX to use the cPanel PHP packages (EA-PHPxx-) as direct upstreams. These versions will be selectable under the \'PHP\' category when choosing an upstream. <em>This process can take between 1 to 3 minutes depending on processing power and connection speed.</em></p>')
     print('                        </div> <!-- Card Body End -->')
 
 cardfooter('')
@@ -542,18 +538,20 @@ if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                            </div>')
 print('                                <input hidden class="form-control" name="run_installer" value="enabled">')
 print('                                <input hidden class="form-control" name="netdata_pass" value="'+netdata_pass+'">')
-if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
-    print('                            <button class="btn btn-outline-primary btn-block mt-4" type="submit">Reinstall Netdata Monitoring System</button>')
-else:
-    print('                            <button class="btn btn-outline-primary btn-block mt-4" type="submit">Install Netdata Monitoring System</button>')
 print('                            </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                        <form class="form" id="clear_netdata_credentials" method="post" onsubmit="return false;">')
     print('                            <input hidden class="form-control" name="remove_netdata_creds" value="enabled">')
-    print('                            <button class="btn btn-outline-primary btn-block mt-2" type="submit">Remove Netdata Credentials</button>')
     print('                        </form>')
 
+print('                            <div class="btn-group btn-block mt-3">')
+if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
+    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="clear_netdata_credentials">Remove Credentials</button>')
+    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Reinstall Monitoring System</button>')
+else:
+    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Install Monitoring System</button>')
+print('                            </div>')
 print('                        </div> <!-- Card Body End -->')
 
 cardfooter('')
@@ -583,17 +581,20 @@ if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                            </div>')
 print('                                <input hidden class="form-control" name="run_installer" value="enabled">')
 print('                                <input hidden class="form-control" name="glances_pass" value="'+glances_pass+'">')
-if os.path.isfile('/etc/nginx/conf.d/glances.password'):
-    print('                            <button class="btn btn-outline-primary btn-block mt-4" type="submit">Reinstall Glances Monitoring System</button>')
-else:
-    print('                            <button class="btn btn-outline-primary btn-block mt-4" type="submit">Install Glances Monitoring System</button>')
 print('                            </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                        <form class="form" id="clear_glances_credentials" method="post" onsubmit="return false;">')
     print('                            <input hidden class="form-control" name="remove_glances_creds" value="enabled">')
-    print('                            <button class="btn btn-outline-primary btn-block mt-2" type="submit">Remove Glances Credentials</button>')
     print('                        </form>')
+
+print('                            <div class="btn-group btn-block mt-3">')
+if os.path.isfile('/etc/nginx/conf.d/glances.password'):
+    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="clear_glances_credentials">Remove Credentials</button>')
+    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Reinstall Monitoring System</button>')
+else:
+    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Install Monitoring System</button>')
+print('                            </div>')
 
 print('                        </div> <!-- Card Body End -->')
 
