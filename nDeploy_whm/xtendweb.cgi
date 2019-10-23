@@ -12,7 +12,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, return_prepend, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter, return_multi_input, print_input_fn
+from commoninclude import bcrumb, return_prepend, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter, return_multi_input, print_input_fn, print_select_fn
 
 
 __author__ = "Anoop P Alias"
@@ -386,9 +386,10 @@ if os.path.isfile(cluster_config_file):
         print_input_fn("Master Server ID", " Enter the master server's ID (Usually 1). ", "validationTooltip05", master_server_id, "master_server_id")
         print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", "validationTooltip06", master_lat, "master_lat")
         print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", "validationTooltip07", master_lon, "master_lon")
-        print_input_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", "validationTooltip08", master_repo, "master_repo")
-        print_input_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip09", master_dbmode, "master_dbmode")
-        print_input_fn("DNS Type", " Select desired MaxScale Mode for this node. ", "validationTooltip10", master_dns, "master_dns")
+
+        print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", master_repo, "master_repo", "ndeploy", "ndeploy-edge")
+        print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
+        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "bind", "geodns")
 
         print('                                    <input hidden name="action" value="editmaster">')
 
@@ -408,9 +409,10 @@ if os.path.isfile(cluster_config_file):
         print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 2). ", "validationTooltip15", dbslave_server_id, "dbslave_server_id")
         print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", "validationTooltip16", dbslave_lat, "dbslave_lat")
         print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", "validationTooltip17", dbslave_lon, "dbslave_lon")
-        print_input_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", "validationTooltip18", dbslave_repo, "dbslave_repo")
-        print_input_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip19", dbslave_dbmode, "dbslave_dbmode")
-        print_input_fn("DNS Type", " Select desired DNS Mode for this node. ", "validationTooltip20", dbslave_dns, "dbslave_dns")
+
+        print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", dbslave_repo, "dbslave_repo", "ndeploy", "ndeploy-edge")
+        print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
+        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
 
         print('                                    <input hidden name="action" value="editdbslave">')
 
@@ -454,9 +456,12 @@ if os.path.isfile(cluster_config_file):
                 print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 1). ", "validationTooltip25", slave_server_id, "slave_server_id")
                 print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", "validationTooltip26", slave_lat, "slave_lat")
                 print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", "validationTooltip27", slave_lon, "slave_lon")
-                print_input_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", "validationTooltip28", slave_repo, "slave_repo")
-                print_input_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip29", slave_dbmode, "slave_dbmode")
-                print_input_fn("DNS Type", " Select desired DNS Mode for this node. ", "validationTooltip30", slave_dns, "slave_dns")
+
+                print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", slave_repo, "slave_repo", "ndeploy", "ndeploy-edge")
+                print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
+                print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", slave_dns, "slave_dns", "bind", "geodns")
+
+
 
                 print('                         <input hidden name="action" value="editslave">')
 
@@ -699,9 +704,10 @@ else:
         print_input_fn("Master Server ID", " Enter the master server's ID (Usually 1). ", "validationTooltip05", master_server_id, "master_server_id")
         print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", "validationTooltip06", master_lat, "master_lat")
         print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", "validationTooltip07", master_lon, "master_lon")
-        print_input_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", "validationTooltip08", master_repo, "master_repo")
-        print_input_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip09", master_dbmode, "master_dbmode")
-        print_input_fn("DNS Type", " Select desired DNS Mode for this node. ", "validationTooltip10", master_dns, "master_dns")
+
+        print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", master_repo, "master_repo", "ndeploy", "ndeploy-edge")
+        print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
+        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "bind", "geodns")
 
         print('                                    <input hidden name="action" value="editmaster">')
 
@@ -721,9 +727,10 @@ else:
         print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 2). ", "validationTooltip15", dbslave_server_id, "dbslave_server_id")
         print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", "validationTooltip16", dbslave_lat, "dbslave_lat")
         print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", "validationTooltip17", dbslave_lon, "dbslave_lon")
-        print_input_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", "validationTooltip18", dbslave_repo, "dbslave_repo")
-        print_input_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip19", dbslave_dbmode, "dbslave_dbmode")
-        print_input_fn("DNS Type", " Select desired DNS Mode for this node. ", "validationTooltip20", dbslave_dns, "dbslave_dns")
+
+        print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", dbslave_repo, "dbslave_repo", "ndeploy", "ndeploy-edge")
+        print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
+        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
 
         print('                                    <input hidden name="action" value="editdbslave">')
 
@@ -766,9 +773,10 @@ else:
                 print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 1). ", "validationTooltip25", slave_server_id, "slave_server_id")
                 print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", "validationTooltip26", slave_lat, "slave_lat")
                 print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", "validationTooltip27", slave_lon, "slave_lon")
-                print_input_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", "validationTooltip28", slave_repo, "slave_repo")
-                print_input_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip29", slave_dbmode, "slave_dbmode")
-                print_input_fn("DNS Type", " Select desired DNS Mode for this node. ", "validationTooltip30", slave_dns, "slave_dns")
+
+                print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", slave_repo, "slave_repo", "ndeploy", "ndeploy-edge")
+                print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
+                print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", slave_dns, "slave_dns", "bind", "geodns") 
 
                 print('                         <input hidden name="action" value="editslave">')
 

@@ -153,7 +153,7 @@ if "PHP" in backend_data_yaml_parsed:
         print('                    </div>')
         print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
         print('                        <input hidden name="run_installer" value="enabled">')
-        print('                        <button class="btn btn-secondary btn-block mb-0">Install/Upgrade Native PHP</button>')
+        print('                        <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
         print('                    </form>')
     elif php_chroot_status and not php_secure_status:
         print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-danger">Off</span></small></li>')
@@ -162,7 +162,7 @@ if "PHP" in backend_data_yaml_parsed:
         print('                    </div>')
         print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
         print('                        <input hidden name="run_installer" value="enabled">')
-        print('                        <button class="btn btn-secondary btn-block mb-0">Install/Upgrade Native PHP</button>')
+        print('                        <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
         print('                    </form>')
     elif not php_chroot_status and php_secure_status:
         print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-success">On</span></small></li>')
@@ -171,7 +171,7 @@ if "PHP" in backend_data_yaml_parsed:
         print('                    </div>')
         print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
         print('                        <input hidden name="run_installer" value="enabled">')
-        print('                        <button class="btn btn-secondary btn-block mb-0">Install/Upgrade Native PHP</button>')
+        print('                        <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
         print('                    </form>')
     elif not php_chroot_status and not php_secure_status:
         print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-danger">Off</span></small></li>')
@@ -180,7 +180,7 @@ if "PHP" in backend_data_yaml_parsed:
         print('                    </div>')
         print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
         print('                        <input hidden name="run_installer" value="enabled">')
-        print('                        <button class="btn btn-secondary btn-block mb-0">Install/Upgrade Native PHP</button>')
+        print('                        <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
         print('                    </form>')
 else:
     print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Native PHP Support</small></li>')
@@ -189,7 +189,7 @@ else:
     print('                    </div>')
     print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
     print('                        <input hidden name="run_installer" value="enabled">')
-    print('                        <button class="btn btn-secondary btn-block mb-0">Install</button>')
+    print('                        <button class="btn btn-secondary btn-block mb-0">Install Native PHP</button>')
     print('                    </form>')
 
 cardfooter('')

@@ -193,17 +193,35 @@ def print_footer():
     return
 
 
-# Form Display
-def print_input_fn(label='Label', hint='Hint', valID='validationToolTip01', quikVar='', realVar=''):
+# Input Display
+def print_input_fn(label='Label', hint='Hint', inputID='validationToolTip01', inputValue='', inputName=''):
     print('                                        <div class="input-group">')
     print('                                            <div class="input-group-prepend input-group-prepend-min">')
     print('                                                <span class="input-group-text">')
     print('                                                    '+return_multi_input(label, hint))
     print('                                                </span>')
     print('                                            </div>')
-    print('                                            <input class="form-control" id="'+valID+'" value="'+str(quikVar)+'" type="text" name="'+realVar+'" required>')
+    print('                                            <input class="form-control" id="'+inputID+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>')
     print('                                            <div class="invalid-tooltip">'+hint+'</div>')
     print('                                        </div>')
+
+
+# SelectBox Display
+def print_select_fn(label='Label', hint='Hint', selectQuery='', selectName='name', *selectOptions):
+    print('                         <div class="input-group">')
+    print('                             <div class="input-group-prepend input-group-prepend-min">')
+    print('                                 <span class="input-group-text">')
+    print('                                     '+return_prepend(label, hint))
+    print('                                 </span>')
+    print('                             </div>')
+    print('                             <select name="'+selectName+'" class="custom-select">')
+    for option in selectOptions:
+        if selectQuery == option:
+            print('                             <option value="'+option+'" selected>'+option+'</option>')
+        else:
+            print('                             <option value="'+option+'">'+option+'</option>')
+    print('                             </select>')
+    print('                         </div>')
 
 
 # Card Start
