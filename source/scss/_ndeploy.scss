@@ -64,6 +64,9 @@ $carddarkhead:		#32383E !default;
 				color: $white !important;
 			}
 		}
+		.alert.text-secondary {
+			color: $gray-light !important;
+		}
 	}
 	#dashboard {
 		.btn {
