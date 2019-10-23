@@ -153,7 +153,7 @@ if "PHP" in backend_data_yaml_parsed:
         print('                    </div>')
         print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
         print('                        <input hidden name="run_installer" value="enabled">')
-        print('                        <button class="btn btn-secondary btn-block mb-0">Install/Upgrade Native PHP</button>')
+        print('                        <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
         print('                    </form>')
     elif php_chroot_status and not php_secure_status:
         print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-danger">Off</span></small></li>')
@@ -162,7 +162,7 @@ if "PHP" in backend_data_yaml_parsed:
         print('                    </div>')
         print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
         print('                        <input hidden name="run_installer" value="enabled">')
-        print('                        <button class="btn btn-secondary btn-block mb-0">Install/Upgrade Native PHP</button>')
+        print('                        <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
         print('                    </form>')
     elif not php_chroot_status and php_secure_status:
         print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-success">On</span></small></li>')
@@ -171,7 +171,7 @@ if "PHP" in backend_data_yaml_parsed:
         print('                    </div>')
         print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
         print('                        <input hidden name="run_installer" value="enabled">')
-        print('                        <button class="btn btn-secondary btn-block mb-0">Install/Upgrade Native PHP</button>')
+        print('                        <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
         print('                    </form>')
     elif not php_chroot_status and not php_secure_status:
         print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-danger">Off</span></small></li>')
@@ -180,7 +180,7 @@ if "PHP" in backend_data_yaml_parsed:
         print('                    </div>')
         print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
         print('                        <input hidden name="run_installer" value="enabled">')
-        print('                        <button class="btn btn-secondary btn-block mb-0">Install/Upgrade Native PHP</button>')
+        print('                        <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
         print('                    </form>')
 else:
     print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Native PHP Support</small></li>')
@@ -189,7 +189,7 @@ else:
     print('                    </div>')
     print('                    <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
     print('                        <input hidden name="run_installer" value="enabled">')
-    print('                        <button class="btn btn-secondary btn-block mb-0">Install</button>')
+    print('                        <button class="btn btn-secondary btn-block mb-0">Install Native PHP</button>')
     print('                    </form>')
 
 cardfooter('')
@@ -345,26 +345,6 @@ print('                                            '+return_prepend("cPanel Sect
 print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="brand_group" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
-print('                                </div>')
-
-print('                                <label class="small font-italic" for="brand_anchor">DISABLED: Enter your brand\'s anchor text that will be used on the footer of the application.</label>')
-print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend input-group-prepend-min">')
-print('                                        <span class="input-group-text" id="brand_anchor_desc">')
-print('                                            '+return_prepend("Footer Anchor Text", brand_anchor_hint))
-print('                                        </span>')
-print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="brand_anchor" value="'+brand_anchor+'" id="brand_anchor" aria-describedby="brand_anchor_desc">')
-print('                                </div>')
-
-print('                                <label class="small font-italic" for="brand_link">DISABLED: Enter your brand\'s website link that the above anchor text will link to via the footer.</label>')
-print('                                <div class="input-group">')
-print('                                    <div class="input-group-prepend input-group-prepend-min">')
-print('                                        <span class="input-group-text" id="brand_link_desc">')
-print('                                            '+return_prepend("Footer Link", brand_link_hint))
-print('                                        </span>')
-print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="brand_link" value="'+brand_link+'" id="brand_link" aria-describedby="brand_link_desc">')
 print('                                </div>')
 print('                            </form>')
 

@@ -215,7 +215,7 @@ if form.getvalue('action'):
         if os.path.isfile(cluster_config_file):
             with open(cluster_config_file, 'r') as cluster_data_yaml:
                 cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-            cluster_data_yaml_parsed.pop([form.getvalue('slave_hostname')], None)
+            cluster_data_yaml_parsed.pop(form.getvalue('slave_hostname'), None)
             with open(cluster_config_file, 'w') as cluster_data_yaml:
                 yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         commoninclude.print_success('Deleted slave from cluster')
