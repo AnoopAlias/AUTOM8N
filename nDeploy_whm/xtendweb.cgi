@@ -690,7 +690,7 @@ else:
         print('                 <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home-content" role="tab" aria-controls="home-content" aria-selected="false">Home Directory</a></li>')
         print('             </ul>')
 
-        print('                     <div class="tab-content" id="clusterTabsContent">')
+        print('             <div class="tab-content" id="clusterTabsContent">')
 
         # Tab Start / Tab1 ###########################
         # Master data
@@ -705,13 +705,13 @@ else:
         print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", "validationTooltip06", master_lat, "master_lat")
         print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", "validationTooltip07", master_lon, "master_lon")
 
-        print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", master_repo, "master_repo", "ndeploy", "ndeploy-edge")
-        print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
-        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "bind", "geodns")
+        print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", "validationTooltip28", master_repo, "master_repo", "ndeploy", "ndeploy-edge")
+        print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", "validationTooltip29", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
+        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", "validationTooltip30", master_dns, "master_dns", "bind", "geodns")
 
-        print('                                    <input hidden name="action" value="editmaster">')
+        print('                                <input hidden name="action" value="editmaster">')
 
-        print('                                    <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save master Settings</button>')
+        print('                                <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save master Settings</button>')
         print('                            </form>')
         print('                        </div>')
 
@@ -734,7 +734,7 @@ else:
 
         print('                                    <input hidden name="action" value="editdbslave">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
