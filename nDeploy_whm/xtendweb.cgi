@@ -443,7 +443,7 @@ if os.path.isfile(cluster_config_file):
                 print('                 </h2>')
                 print('             </div>')
 
-                print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves'+str(slave_server_id)+'">')
+                print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
                 print('                 <div class="card-body">')
                 print('                     <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
