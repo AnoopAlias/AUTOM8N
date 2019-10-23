@@ -955,16 +955,23 @@ print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
 print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
 
 # Check if we have a Preferred PHP and allow selection.
+print('                         <div class="col-md-6 alert"><i class="fab fa-php"></i> Default PHP</div>')
+print('                         <div class="col-md-6">')
+print('                             <div class="row no-gutters">')
 if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
     preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
     preferred_php_yaml.close()
     phpversion = preferred_php_yaml_parsed.get('PHP')
     myphpversion = phpversion.keys()[0]
+    print('                                 <div class="col-md-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
 else:
     myphpversion = "Unset"
-print('                         <div class="col-md-6 alert"><i class="fab fa-php"></i> Default PHP</div>')
-print('                         <div class="col-md-6 alert text-success">'+myphpversion+' <i class="fa fa-check-circle"></i></div>')
+    print('                                 <div class="col-md-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+
+print('                                 <div class="col-md-9 alert">'+myphpversion+'</div>')
+print('                             </div>')
+print('                         </div>')
 print('                     </div>')
 print('                 </div> <!-- Card Body End -->')
 
