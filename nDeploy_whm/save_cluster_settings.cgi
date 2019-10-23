@@ -239,8 +239,8 @@ if form.getvalue('action'):
             master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
         del master_data_yaml_parsed[form.getvalue('master_hostname')]['dnsmap'][form.getvalue('master_lan_ip')]
         for theslave in cluster_data_yaml_parsed.keys():
-            cluster_data_yaml_parsed[theslave]['dnsmap'].pop([form.getvalue('master_lan_ip')], None)
-            cluster_data_yaml_parsed[theslave]['ipmap'].pop([form.getvalue('master_lan_ip')], None)
+            cluster_data_yaml_parsed[theslave]['dnsmap'].pop(form.getvalue('master_lan_ip'), None)
+            cluster_data_yaml_parsed[theslave]['ipmap'].pop(form.getvalue('master_lan_ip'), None)
         with open(cluster_config_file, 'w') as cluster_data_yaml:
             yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         with open(master_config_file, 'w') as master_data_yaml:

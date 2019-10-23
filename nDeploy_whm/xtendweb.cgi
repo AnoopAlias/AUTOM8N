@@ -566,7 +566,7 @@ if os.path.isfile(cluster_config_file):
                 print('                                <input hidden name="master_hostname" value="'+myhostname+'">')
                 print('                                <input hidden name="master_lan_ip" value="'+myip+'">')
                 print('                                <input hidden name="action" value="delip">')
-                print('                                <button class="btn btn-outline-danger btn-block mt-3 mb-4" type="submit" form="toastForm35">Delete '+master_ip_resource+'</button>')
+                print('                                <button class="btn btn-outline-danger btn-block mt-3 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
                 print('                            </form>')
             # Provide a seperation between each ip resource_
 
@@ -776,7 +776,7 @@ else:
 
                 print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", slave_repo, "slave_repo", "ndeploy", "ndeploy-edge")
                 print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
-                print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", slave_dns, "slave_dns", "bind", "geodns") 
+                print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", slave_dns, "slave_dns", "bind", "geodns")
 
                 print('                         <input hidden name="action" value="editslave">')
 
