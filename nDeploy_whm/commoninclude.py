@@ -207,7 +207,7 @@ def print_input_fn(label='Label', hint='Hint', inputID='validationToolTip01', in
 
 
 # SelectBox Display
-def print_select_fn(label='Label', hint='Hint', selectQuery='', selectName='name', *selectOptions):
+def print_select_fn(label='Label', hint='Hint', inputID='validationToolTip01', selectQuery='', selectName='name', *selectOptions):
     print('                         <div class="input-group">')
     print('                             <div class="input-group-prepend input-group-prepend-min">')
     print('                                 <span class="input-group-text">')
@@ -217,10 +217,11 @@ def print_select_fn(label='Label', hint='Hint', selectQuery='', selectName='name
     print('                             <select name="'+selectName+'" class="custom-select">')
     for option in selectOptions:
         if selectQuery == option:
-            print('                             <option value="'+option+'" selected>'+option+'</option>')
+            print('                         <option value="'+option+'" selected>'+option+'</option>')
         else:
-            print('                             <option value="'+option+'">'+option+'</option>')
+            print('                         <option value="'+option+'">'+option+'</option>')
     print('                             </select>')
+    print('                             <div class="invalid-tooltip">'+hint+'</div>')
     print('                         </div>')
 
 
