@@ -573,67 +573,102 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#ndeploy_control_branding').submit(function(e) {
+    $(document).on('submit','#ndeploy_control_branding',function(e){
+        var $loaderId        =   '#ndeploy-control-branding-btn';
+        var $loaderText      =   'Saving...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "save_ndeploy_branding_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#v-pills-branding .card-body').load('ndeploy_control.cgi #v-pills-branding .card-body > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#restore_branding_defaults').submit(function(e) {
+    $(document).on('submit','#restore_branding_defaults',function(e){
+        var $loaderId        =   '#restore-branding-defaults-btn';
+        var $loaderText      =   'Reverting...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "restore_branding_defaults.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#v-pills-branding .card-body').load('ndeploy_control.cgi #v-pills-branding .card-body > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#ndeploy_control_config').submit(function(e) {
+    $(document).on('submit','#ndeploy_control_config',function(e){
+        var $loaderId        =   '#ndeploy-control-config-btn';
+        var $loaderText      =   'Saving...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "save_ndeploy_control_config.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
+                $('#v-pills-branding .card-body').load('ndeploy_control.cgi #v-pills-branding .card-body > *');
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
             }
         });
     });
 
-    $('#restore_ndeploy_control_defaults').submit(function(e) {
+    $(document).on('submit','#restore_ndeploy_control_defaults',function(e){
+        var $loaderId        =   '#restore-ndeploy-control-defaults-btn';
+        var $loaderText      =   'Reverting...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "restore_ndeploy_control_defaults.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
+                $('#v-pills-aesthetics .card-body').load('ndeploy_control.cgi #v-pills-aesthetics .card-body > *');
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
             }
         });
     });
 
-    $('#easy_php_setup').submit(function(e) {
+    $(document).on('submit','#easy_php_setup',function(e){
+        var $loaderId        =   '#easy-php-setup-btn';
+        var $loaderText      =   'Upgrading...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_php_setup.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
@@ -695,15 +730,15 @@ jQuery(document).ready(function($) {
     // ********************************************
 
     $(document).on('submit','#disable_ndeploy',function(e){
-        var $loaderId        =   '#pluginStatus';
+        var $loaderId        =   '#plugin-status-btn';
+        var $loaderText      =   'Saving...';
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
-        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving ...`);
-        var $loaderAll       =   $loaderDisabled + $loaderSpinner;
-
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
-        $loaderAll
         $.ajax({
             url: $url,
             success: function(result) {
@@ -715,16 +750,15 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on('submit','#enable_ndeploy',function(e){
-        var $loaderId        =   '#pluginStatus';
+        var $loaderId        =   '#plugin-status-btn';
+        var $loaderText      =   'Saving...';
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
-        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving ...`);
-        var $loaderAll       =   $loaderDisabled + $loaderSpinner;
-
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
-        $('#pluginStatus').prop("disabled", true);
-        $loaderAll
         $.ajax({
             url: $url,
             success: function(result) {
@@ -740,28 +774,41 @@ jQuery(document).ready(function($) {
     // ********************************************
 
 
-    $('#module-installer').submit(function(e) {
+    $(document).on('submit','#module_installer',function(e){
+        var $loaderId        =   '#module-installer-btn';
+        var $loaderText      =   'Saving Module Settings...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "module_installer.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#v-pills-modules .card-body').load('ndeploy_control.cgi #v-pills-modules .card-body > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#autofix_simple').submit(function(e) {
+    $(document).on('submit','#autofix_simple',function(e){
+        var $loaderId        =   '#autofix-simple-btn';
+        var $loaderText      =   'Fixing...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "autofix_control.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#dash_widget3').load('ndeploy_control.cgi #dash_widget3 > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
@@ -779,54 +826,78 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#autofix_phpfpm').submit(function(e) {
+    $(document).on('submit','#autofix_phpfpm',function(e){
+        var $loaderId        =   '#autofix-phpfpm-btn';
+        var $loaderText      =   'Fixing...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "autofix_control.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#dash_widget3').load('ndeploy_control.cgi #dash_widget3 > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#check_upgrades').submit(function(e) {
+    $(document).on('submit','#check_upgrades',function(e){
+        var $loaderId        =   '#upgrade-control-btn';
+        var $loaderText      =   'Checking...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "upgrade_control.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result){
+                $('#dash_widget4').load('ndeploy_control.cgi #dash_widget4 > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
+            }
+        });
+    });
+
+    $(document).on('submit','#reinstall_application',function(e){
+        var $loaderId        =   '#reinstall-application-btn';
+        var $loaderText      =   'Reinstalling...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "upgrade_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $('#dash_widget4').load('ndeploy_control.cgi #dash_widget4 > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
+            }
+        });
+    });
+
+    $(document).on('submit','#upgrade_application',function(e){
+        var $loaderId        =   '#upgrade-application-btn';
+        var $loaderText      =   'Upgrading...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "upgrade_control.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $('#dash_widget4').load('ndeploy_control.cgi #dash_widget4 > *');
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#reinstall_application').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "upgrade_control.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
-            }
-        });
-    });
-
-    $('#upgrade_application').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "upgrade_control.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
             }
         });
     });

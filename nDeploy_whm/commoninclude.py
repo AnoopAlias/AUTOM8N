@@ -426,4 +426,3 @@ def print_modals():
     print('                </button>')
     print('            </div>')
     print('        </div>')
-
