@@ -213,7 +213,7 @@ def print_input_fn(label='Label', hint='Hint', inputID='validationToolTip01', in
 
 
 # SelectBox Display
-def print_select_fn(label='Label', hint='Hint', inputID='validationToolTip01', selectQuery='', selectName='name', *selectOptions):
+def print_select_fn(label='Label', hint='Hint', selectQuery='', selectName='name', *selectOptions):
     print('                         <div class="input-group">')
     print('                             <div class="input-group-prepend input-group-prepend-min">')
     print('                                 <span class="input-group-text">')
@@ -426,4 +426,3 @@ def print_modals():
     print('                </button>')
     print('            </div>')
     print('        </div>')
-
