@@ -100,7 +100,7 @@ jQuery(document).ready(function($) {
         $(this).val($(this).val().replace(/\s/g, ""));
     });
 
-    // We are trying to load data continuously no matter where we are in the app, 
+    // We are trying to load data continuously no matter where we are in the app,
     // but let's not force scrolling when user is in terminal
     let termWindow = document.getElementById("terminal");
     let terminalActive = false;
@@ -111,9 +111,9 @@ jQuery(document).ready(function($) {
             $("#terminal").load('term.log');
         } else {
             $("#terminal").load('term.log');
-        }    
+        }
     },100)
-    
+
     // General Form Validatons
     window.addEventListener('load', function() {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -694,36 +694,34 @@ jQuery(document).ready(function($) {
     // **************************** Testing Section
     // ********************************************
 
-    $('#disable_ndeploy').submit(function(e) {
+    $(document).on('submit','#disable_ndeploy',function(e){
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
         $("#pluginStatus").attr("disabled", true);
-        alert ('Disabling Plugin... One sec...');
         $.ajax({
             url: $url,
             success: function(result) {
-                // $("#myToast-nl").find('.toast-body').html(result)
-                // $("#myToast-nl").toast('show');
-                alert ('Plugin Disabled... This should be a toast. Reloading page now so we can update the widget.');
-                location.reload()
+                $('#dash_widget1').load('ndeploy_control.cgi #dash_widget1 > *');
+                $("#pluginStatus").attr("disabled", false);
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#enable_ndeploy').submit(function(e) {
+    $(document).on('submit','#enable_ndeploy',function(e){
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
         $("#pluginStatus").attr("disabled", true);
-        alert ('Enabling Plugin... One sec...');
         $.ajax({
             url: $url,
             success: function(result) {
-                // $("#myToast-nl").find('.toast-body').html(result)
-                // $("#myToast-nl").toast('show');
-                alert ('Plugin Enabled... This should be a toast. Reloading page now so we can update the widget.');
-                location.reload()
+                $('#dash_widget1').load('ndeploy_control.cgi #dash_widget1 > *');
+                $("#pluginStatus").attr("disabled", false);
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
