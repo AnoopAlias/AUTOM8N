@@ -6,7 +6,7 @@ import os
 import yaml
 import psutil
 import platform
-from commoninclude import return_label, return_prepend, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, return_prepend, bcrumb, print_header, display_term, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Budd P Grant"
 __copyright__ = "Copyright Budd P Grant"
@@ -123,11 +123,11 @@ print('                        </ul>')
 print('                    </div>')
 
 if nginx_status:
-    print('                <button form="disable_ndeploy" class="btn btn-secondary btn-block mb-0">Disable</button>')
+    print('                <button id="pluginStatus" form="disable_ndeploy" class="btn btn-secondary btn-block mb-0">Disable</button>')
     print('                <form id="disable_ndeploy" class="form" onsubmit="return false;">')
     print('                    <input hidden name="plugin_status" value="disable">')
 else:
-    print('                    <button form="enable_ndeploy" class="btn btn-secondary btn-block mb-0">Enable</button>')
+    print('                    <button id="pluginStatus" form="enable_ndeploy" class="btn btn-secondary btn-block mb-0">Enable</button>')
     print('                <form id="enable_ndeploy" class="form" onsubmit="return false;">')
     print('                    <input hidden name="plugin_status" value="enable">')
 
@@ -737,10 +737,10 @@ print('                    </div> <!-- End Modules Tab -->')
 print('                </div> <!-- Tabs End -->')
 print('')
 print('            </div> <!-- WHM End Row -->')
-
-print_footer()
-
 print('        </div> <!-- Main Container End -->')
+
+display_term()
+
 print('')
 
 print_modals()
