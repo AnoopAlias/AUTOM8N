@@ -755,3 +755,31 @@ kbd {
 	position: relative;
 	top: -1px;
 }
+
+.spinner-border {
+	position: relative;
+	top: -3px;
+}
+
+//
+// Terminal Testing
+// ----------------------------------------------------------------------------------------------------
+
+#terminal {
+    display: block;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin: 0px !important;
+	height: 100px;
+	white-space: pre-line;
+    text-align: left;
+    list-style-type: none;
+    background-color: #151717;
+    color: #1E7E34;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 1rem;
+    border: 1px solid #1E7E34;
+}

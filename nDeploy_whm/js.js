@@ -695,15 +695,19 @@ jQuery(document).ready(function($) {
     // ********************************************
 
     $(document).on('submit','#disable_ndeploy',function(e){
+        var $loaderId        =   '#pluginStatus';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving ...`);
+        var $loaderAll       =   $loaderDisabled + $loaderSpinner;
+
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
-        $("#pluginStatus").attr("disabled", true);
+        $loaderAll
         $.ajax({
             url: $url,
             success: function(result) {
                 $('#dash_widget1').load('ndeploy_control.cgi #dash_widget1 > *');
-                $("#pluginStatus").attr("disabled", false);
                 $("#myToast-nl").find('.toast-body').html(result)
                 $("#myToast-nl").toast('show');
             }
@@ -711,15 +715,20 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on('submit','#enable_ndeploy',function(e){
+        var $loaderId        =   '#pluginStatus';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving ...`);
+        var $loaderAll       =   $loaderDisabled + $loaderSpinner;
+
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
-        $("#pluginStatus").attr("disabled", true);
+        $('#pluginStatus').prop("disabled", true);
+        $loaderAll
         $.ajax({
             url: $url,
             success: function(result) {
                 $('#dash_widget1').load('ndeploy_control.cgi #dash_widget1 > *');
-                $("#pluginStatus").attr("disabled", false);
                 $("#myToast-nl").find('.toast-body').html(result)
                 $("#myToast-nl").toast('show');
             }

@@ -123,11 +123,11 @@ print('                        </ul>')
 print('                    </div>')
 
 if nginx_status:
-    print('                <button id="pluginStatus" form="disable_ndeploy" data-loading-text="LOADING...<span></span>" class="btn btn-secondary btn-block mb-0">Disable</button>')
+    print('                <button id="pluginStatus" form="disable_ndeploy" class="btn btn-secondary btn-block btn-loader mb-0">Disable</button>')
     print('                <form id="disable_ndeploy" class="form" onsubmit="return false;">')
     print('                    <input hidden name="plugin_status" value="disable">')
 else:
-    print('                    <button id="pluginStatus" form="enable_ndeploy" data-loading-text="LOADING...<span></span>" class="btn btn-secondary btn-block mb-0">Enable</button>')
+    print('                    <button id="pluginStatus" form="enable_ndeploy" class="btn btn-secondary btn-block btn-loader mb-0">Enable</button>')
     print('                <form id="enable_ndeploy" class="form" onsubmit="return false;">')
     print('                    <input hidden name="plugin_status" value="enable">')
 
