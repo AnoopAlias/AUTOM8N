@@ -1,0 +1,44 @@
+*** Enabling Plugin ***
+Updating cPanel license...Done. Update succeeded.
+ Generating nginx vhosts 
+ Attempting to regenerate all nginx conf  
+ConfGen:: alphabeta
+ Attempting to fix PHP Chrooted environment  
+VirtfsJailFix:: alphabeta
+ Please set all users to JailShell for chrooted php-fpm 
+ Run "/opt/nDeploy/scripts/init_backends.py autofix" on slaves in XtendWeb cluster 
+ Attempting to regenerate  nginx default conf  
+ !!! Removing conflicting mod_evasive ea-apache24-mod_evasive ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm 
+Loaded plugins: fastestmirror, universal-hooks
+No Packages marked for removal
+Loaded plugins: fastestmirror, universal-hooks
+Loading mirror speeds from cached hostfile
+ * EA4: 185.53.12.144
+ * cpanel-addons-production-feed: 185.53.12.144
+ * cpanel-plugins: 185.53.12.144
+ * base: mirror.checkdomain.de
+ * epel: epel.mirror.far.fi
+ * extras: mirror.checkdomain.de
+ * updates: mirror.checkdomain.de
+Package ea-apache24-mod_remoteip-2.4.41-1.1.3.cpanel.x86_64 already installed and latest version
+Nothing to do
+ Attempting to restart ndeploy_watcher daemon 
+ Modifying apache http and https port in cpanel 
+--- 
+metadata: 
+  command: set_tweaksetting
+  reason: OK
+  result: 1
+  version: 1
+--- 
+metadata: 
+  command: set_tweaksetting
+  reason: OK
+  result: 1
+  version: 1
+--- 
+metadata: 
+  command: set_tweaksetting
+  reason: OK
+  result: 1
+  version: 1

@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 
     // Ajax
     $(document).ajaxStart(function() {
-        $('#loader').show();
+        //$('#loader').show();
     });
 
     $(document).ajaxStop(function() {
@@ -45,6 +45,10 @@ jQuery(document).ready(function($) {
     $('#myModal-xl').on('hidden.bs.modal', function() {
         location.reload()
     });
+
+    /*$('#myModal-xl-shell').on('hidden.bs.modal', function() {
+        location.reload()
+    });*/
 
     $('.toast').toast({
         delay: 3000
@@ -96,7 +100,21 @@ jQuery(document).ready(function($) {
         $(this).val($(this).val().replace(/\s/g, ""));
     });
 
-    // Gneral Form Validatons
+    // We are trying to load data continuously no matter where we are in the app,
+    // but let's not force scrolling when user is in terminal
+    let termWindow = document.getElementById("terminal");
+    let terminalActive = false;
+    setInterval(function(){
+        terminalActive = ($('#terminal:hover').length > 0);
+        if ( !terminalActive ) {
+            termWindow.scrollTop = termWindow.scrollHeight;
+            $("#terminal").load('term.log');
+        } else {
+            $("#terminal").load('term.log');
+        }
+    },100)
+
+    // General Form Validatons
     window.addEventListener('load', function() {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.getElementsByClassName('needs-validation');
@@ -672,31 +690,46 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#disable_ndeploy').submit(function(e) {
+    // ********************************************
+    // **************************** Testing Section
+    // ********************************************
+
+    $(document).on('submit','#disable_ndeploy',function(e){
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
+        $("#pluginStatus").attr("disabled", true);
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#dash_widget1').load('ndeploy_control.cgi #dash_widget1 > *');
+                $("#pluginStatus").attr("disabled", false);
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#enable_ndeploy').submit(function(e) {
+    $(document).on('submit','#enable_ndeploy',function(e){
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
+        $("#pluginStatus").attr("disabled", true);
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#dash_widget1').load('ndeploy_control.cgi #dash_widget1 > *');
+                $("#pluginStatus").attr("disabled", false);
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
+
+    // ********************************************
+    // *************************End Testing Section
+    // ********************************************
+
 
     $('#module-installer').submit(function(e) {
         var $id = e.target.id;

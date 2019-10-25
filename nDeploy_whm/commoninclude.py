@@ -188,7 +188,13 @@ def print_header(title=''):
     print('        <div id="main-container" class="container">')
 
 
-# Print Footer
+# Terminal Section
+def display_term():
+    print('        <div id="terminal" class="small">')
+    print('        </div>')
+
+
+# Footer Section (Currently Disabled)
 def print_footer():
     return
 
@@ -420,3 +426,4 @@ def print_modals():
     print('                </button>')
     print('            </div>')
     print('        </div>')
+

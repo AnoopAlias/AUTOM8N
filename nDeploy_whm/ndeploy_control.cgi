@@ -6,7 +6,7 @@ import os
 import yaml
 import psutil
 import platform
-from commoninclude import return_label, return_prepend, bcrumb, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, return_prepend, bcrumb, print_header, display_term, print_modals, print_loader, cardheader, cardfooter
 
 __author__ = "Budd P Grant"
 __copyright__ = "Copyright Budd P Grant"
@@ -104,7 +104,7 @@ if os.path.isfile(php_chroot_mode_file):
 
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row flex-row">')
-print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 1 Start -->')
+print('                <div id="dash_widget1" class="col-sm-6 col-xl-3"> <!-- Dash Item 1 Start -->')
 
 cardheader('')
 
@@ -123,11 +123,11 @@ print('                        </ul>')
 print('                    </div>')
 
 if nginx_status:
-    print('                <button form="disable_ndeploy" class="btn btn-secondary btn-block mb-0">Disable</button>')
+    print('                <button id="pluginStatus" form="disable_ndeploy" data-loading-text="LOADING...<span></span>" class="btn btn-secondary btn-block mb-0">Disable</button>')
     print('                <form id="disable_ndeploy" class="form" onsubmit="return false;">')
     print('                    <input hidden name="plugin_status" value="disable">')
 else:
-    print('                    <button form="enable_ndeploy" class="btn btn-secondary btn-block mb-0">Enable</button>')
+    print('                    <button id="pluginStatus" form="enable_ndeploy" data-loading-text="LOADING...<span></span>" class="btn btn-secondary btn-block mb-0">Enable</button>')
     print('                <form id="enable_ndeploy" class="form" onsubmit="return false;">')
     print('                    <input hidden name="plugin_status" value="enable">')
 
@@ -136,7 +136,7 @@ cardfooter('')
 
 print('                </div> <!-- Dash Item 1 End -->')
 
-print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 2 Start -->')
+print('                <div id="dash_widget2" class="col-sm-6 col-xl-3"> <!-- Dash Item 2 Start -->')
 
 cardheader('')
 
@@ -149,39 +149,23 @@ if "PHP" in backend_data_yaml_parsed:
     if php_chroot_status and php_secure_status:
         print('                    <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-success">On</span></small></li>')
         print('                    <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
-        print('                </ul>')
-        print('            </div>')
-        print('            <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
-        print('                <input hidden name="run_installer" value="enabled">')
-        print('                <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
-        print('            </form>')
     elif php_chroot_status and not php_secure_status:
         print('                    <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-success">On</span> / Multi-Master: <span class="text-danger">Off</span></small></li>')
         print('                    <li class="mt-2 text-success">Chroot Enabled <i class="fas fa-power-off ml-1"></i></li>')
-        print('                </ul>')
-        print('            </div>')
-        print('            <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
-        print('                <input hidden name="run_installer" value="enabled">')
-        print('                <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
-        print('            </form>')
     elif not php_chroot_status and php_secure_status:
         print('                    <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-success">On</span></small></li>')
         print('                    <li class="mt-2 text-warning">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
-        print('                </ul>')
-        print('            </div>')
-        print('            <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
-        print('                <input hidden name="run_installer" value="enabled">')
-        print('                <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
-        print('            </form>')
     elif not php_chroot_status and not php_secure_status:
         print('                    <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Chroot: <span class="text-danger">Off</span> / Multi-Master: <span class="text-danger">Off</span></small></li>')
         print('                    <li class="mt-2 text-danger">Chroot Disabled <i class="fas fa-power-off ml-1"></i></li>')
-        print('                </ul>')
-        print('            </div>')
-        print('            <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
-        print('                <input hidden name="run_installer" value="enabled">')
-        print('                <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
-        print('            </form>')
+
+    print('                </ul>')
+    print('            </div>')
+    print('            <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
+    print('                <input hidden name="run_installer" value="enabled">')
+    print('                <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
+    print('            </form>')
+
 else:
     print('                        <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Native PHP Support</small></li>')
     print('                        <li class="mt-2 text-danger">Not Installed <i class="fas fa-power-off ml-1"></i></li>')
@@ -196,7 +180,7 @@ cardfooter('')
 
 print('                </div> <!-- Dash Item 2 End -->')
 
-print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 3 Start -->')
+print('                <div id="dash_widget3" class="col-sm-6 col-xl-3"> <!-- Dash Item 3 Start -->')
 
 cardheader('')
 
@@ -224,7 +208,7 @@ cardfooter('')
 
 print('                </div> <!-- Dash Item 3 End -->')
 
-print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item 4 Start -->')
+print('                <div id="dash_widget4" class="col-sm-6 col-xl-3"> <!-- Dash Item 4 Start -->')
 
 cardheader('')
 
@@ -753,10 +737,10 @@ print('                    </div> <!-- End Modules Tab -->')
 print('                </div> <!-- Tabs End -->')
 print('')
 print('            </div> <!-- WHM End Row -->')
-
-print_footer()
-
 print('        </div> <!-- Main Container End -->')
+
+display_term()
+
 print('')
 
 print_modals()
