@@ -107,9 +107,9 @@ jQuery(document).ready(function($) {
         if ( !terminalActive ) {
             var termWindow = document.getElementById("terminal");
             termWindow.scrollTop = termWindow.scrollHeight;
-            $("#terminal").load('term.log');
+            $("#terminal .modal-body").load('term.log');
         } else {
-            $("#terminal").load('term.log');
+            $("#terminal .modal-body").load('term.log');
         }
     },1000)
 
