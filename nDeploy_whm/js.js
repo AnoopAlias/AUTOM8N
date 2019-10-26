@@ -694,16 +694,17 @@ jQuery(document).ready(function($) {
     // **************************** Testing Section
     // ********************************************
 
-    $(document).on('submit','#disable_ndeploy',function(e){
+    $(document).on('submit','#disable_ndeploy',function(e) {
         var $loaderId        =   '#pluginStatus';
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
-        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving ...`);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Disabling ...`);
         var $loaderAll       =   $loaderDisabled + $loaderSpinner;
-
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
-        $loaderAll
+        
+        $loaderAll;
+        
         $.ajax({
             url: $url,
             success: function(result) {
@@ -714,17 +715,17 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on('submit','#enable_ndeploy',function(e){
+    $(document).on('submit','#enable_ndeploy',function(e) {
         var $loaderId        =   '#pluginStatus';
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
-        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving ...`);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enabling ...`);
         var $loaderAll       =   $loaderDisabled + $loaderSpinner;
-
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
-        $('#pluginStatus').prop("disabled", true);
-        $loaderAll
+        
+        $loaderAll;
+        
         $.ajax({
             url: $url,
             success: function(result) {
