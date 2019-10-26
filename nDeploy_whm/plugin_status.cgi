@@ -38,7 +38,7 @@ if form.getvalue('plugin_status') == 'enable':
     procExe.wait()
     procExe = subprocess.Popen('echo "*** Plugin Enabled ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     procExe.wait()
-    print('Plugin Enabled!')
+    commoninclude.print_success('Plugin successfuly enabled.')
     
 elif form.getvalue('plugin_status') == 'disable':
     procExe = subprocess.Popen('echo "*** Disabling Plugin ****" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -47,7 +47,7 @@ elif form.getvalue('plugin_status') == 'disable':
     procExe.wait()
     procExe = subprocess.Popen('echo "*** Plugin Disabled ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     procExe.wait()
-    print('Plugin Disabled!')
+    commoninclude.print_success('Plugin successfully disabled...')
 
 else:
     commoninclude.print_forbidden()

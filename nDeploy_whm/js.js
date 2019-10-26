@@ -102,17 +102,16 @@ jQuery(document).ready(function($) {
 
     // We are trying to load data continuously no matter where we are in the app,
     // but let's not force scrolling when user is in terminal
-    let termWindow = document.getElementById("terminal");
-    let terminalActive = false;
     setInterval(function(){
         terminalActive = ($('#terminal:hover').length > 0);
         if ( !terminalActive ) {
+            var termWindow = document.getElementById("terminal");
             termWindow.scrollTop = termWindow.scrollHeight;
             $("#terminal").load('term.log');
         } else {
             $("#terminal").load('term.log');
         }
-    },100)
+    },1000)
 
     // General Form Validatons
     window.addEventListener('load', function() {
