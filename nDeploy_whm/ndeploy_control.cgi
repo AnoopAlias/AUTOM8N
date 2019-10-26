@@ -123,11 +123,11 @@ print('                        </ul>')
 print('                    </div>')
 
 if nginx_status:
-    print('                <button id="pluginStatus" form="disable_ndeploy" class="btn btn-secondary btn-block btn-loader mb-0">Disable</button>')
+    print('                <button id="plugin-status-btn" form="disable_ndeploy" class="btn btn-secondary btn-block btn-loader mb-0">Disable</button>')
     print('                <form id="disable_ndeploy" class="form" onsubmit="return false;">')
     print('                    <input hidden name="plugin_status" value="disable">')
 else:
-    print('                    <button id="pluginStatus" form="enable_ndeploy" class="btn btn-secondary btn-block btn-loader mb-0">Enable</button>')
+    print('                    <button id="plugin-status-btn" form="enable_ndeploy" class="btn btn-secondary btn-block btn-loader mb-0">Enable</button>')
     print('                <form id="enable_ndeploy" class="form" onsubmit="return false;">')
     print('                    <input hidden name="plugin_status" value="enable">')
 
@@ -163,7 +163,7 @@ if "PHP" in backend_data_yaml_parsed:
     print('            </div>')
     print('            <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
     print('                <input hidden name="run_installer" value="enabled">')
-    print('                <button class="btn btn-secondary btn-block mb-0">Upgrade Native PHP</button>')
+    print('                <button id="easy-php-setup-btn" class="btn btn-secondary btn-block btn-loader mb-0">Upgrade Native PHP</button>')
     print('            </form>')
 
 else:
@@ -173,7 +173,7 @@ else:
     print('                </div>')
     print('                <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
     print('                    <input hidden name="run_installer" value="enabled">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Install Native PHP</button>')
+    print('                    <button id="easy-php-setup-btn" class="btn btn-secondary btn-block btn-loader mb-0">Install Native PHP</button>')
     print('                </form>')
 
 cardfooter('')
@@ -193,8 +193,8 @@ print('                        </ul>')
 print('                    </div>')
 print('                    <div class="card-body p-0"> <!-- Card Body Start -->')
 print('                        <div class="d-flex btn-group"> <!-- Row Start -->')
-print('                            <button form="autofix_simple" class="col-sm-6 btn btn-secondary">Nginx</button>')
-print('                            <button form="autofix_phpfpm" class="col-sm-6 btn btn-secondary">PHP-FPM</button>')
+print('                            <button id="autofix-simple-btn" form="autofix_simple" class="col-sm-6 btn btn-secondary">Nginx</button>')
+print('                            <button id="autofix-phpfpm-btn" form="autofix_phpfpm" class="col-sm-6 btn btn-secondary">PHP-FPM</button>')
 print('                        </div> <!-- End Row -->')
 print('                        <form class="form" id="autofix_simple" method="post" onsubmit="return false;">')
 print('                            <input hidden name="autofix_status" value="simple">')
@@ -223,7 +223,7 @@ if update_status == '':
     print('                    </ul>')
     print('                </div>')
     print('                <form id="check_upgrades" class="form" onsubmit="return false;">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Check for Upgrades</button>')
+    print('                    <button id="upgrade-control-btn" class="btn btn-secondary btn-block mb-0">Check for Upgrades</button>')
     print('                    <input hidden name="upgrade_control" value="check">')
 
 elif update_status == '0':
@@ -231,7 +231,7 @@ elif update_status == '0':
     print('                    </ul>')
     print('                </div>')
     print('                <form id="reinstall_application" class="form" onsubmit="return false;">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Reinstall</button>')
+    print('                    <button id="reinstall-application-btn" class="btn btn-secondary btn-block mb-0">Reinstall</button>')
     print('                    <input hidden name="upgrade_control" value="reinstall">')
 
 else:
@@ -239,7 +239,7 @@ else:
     print('                    </ul>')
     print('                </div>')
     print('                <form id="upgrade_application" class="form" onsubmit="return false;">')
-    print('                    <button class="btn btn-secondary btn-block mb-0">Upgrade</button>')
+    print('                    <button id="upgrade-application-btn" class="btn btn-secondary btn-block mb-0">Upgrade</button>')
     print('                    <input hidden name="upgrade_control" value="upgrade">')
 
 print('                    </form>')
@@ -337,8 +337,8 @@ print('                                <input hidden class="form-control" name="
 print('                            </form>')
 
 print('                            <div class="btn-group btn-block mt-3">')
-print('                                <button class="btn btn-outline-primary" type="submit" form="restore_branding_defaults">Revert</button>')
-print('                                <button class="btn btn-outline-primary" type="submit" form="ndeploy_control_branding">Save</button>')
+print('                                <button id="restore-branding-defaults-btn" class="btn btn-outline-primary" type="submit" form="restore_branding_defaults">Revert</button>')
+print('                                <button id="ndeploy-control-branding-btn" class="btn btn-outline-primary" type="submit" form="ndeploy_control_branding">Save</button>')
 print('                            </div>')
 
 print('                        </div> <!-- Card Body End -->')
@@ -414,8 +414,8 @@ print('                                <input hidden class="form-control" name="
 print('                            </form>')
 
 print('                            <div class="btn-group btn-block mt-3">')
-print('                                <button class="btn btn-outline-primary" type="submit" form="restore_ndeploy_control_defaults">Revert</button>')
-print('                                <button class="btn btn-outline-primary" type="submit" form="ndeploy_control_config">Save</button>')
+print('                                <button id="restore-ndeploy-control-defaults-btn" class="btn btn-outline-primary" type="submit" form="restore_ndeploy_control_defaults">Revert</button>')
+print('                                <button id="ndeploy-control-config-btn" class="btn btn-outline-primary" type="submit" form="ndeploy_control_config">Save</button>')
 print('                            </div>')
 
 
@@ -443,13 +443,13 @@ if "PHP" in backend_data_yaml_parsed:
         print('                                <div class="col-6 alert text-success">Multi-Master <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="single_master" class="form" onsubmit="return false;">')
-        print('                                        <button type="submit" class="alert btn btn-info">Single Master</button>')
+        print('                                        <button id="single-master-btn" type="submit" class="alert btn btn-info">Single Master</button>')
         print('                                        <input hidden name="php_mode" value="single">')
     else:
         print('                                <div class="col-6 alert text-success">Single Master <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="multi_master" class="form" onsubmit="return false;">')
-        print('                                        <button type="submit" class="alert btn btn-info">Multi-Master</button>')
+        print('                                        <button id="multi-master-btn" type="submit" class="alert btn btn-info">Multi-Master</button>')
         print('                                        <input hidden name="php_mode" value="multi">')
 
     print('                                        </form>')
@@ -465,16 +465,16 @@ if "PHP" in backend_data_yaml_parsed:
         print('                                <div class="col-6 alert text-success">Enabled <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="chroot_off" class="form" onsubmit="return false;">')
-        print('                                        <button type="submit" class="alert btn btn-info">Disable</button>')
+        print('                                        <button id="chroot-off-btn" type="submit" class="alert btn btn-info">Disable</button>')
         print('                                        <input hidden name="chroot_mode" value="disabled">')
     else:
         print('                                <div class="col-6 alert text-danger">Disabled <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="chroot_on" class="form" onsubmit="return false;">')
         if php_secure_status:
-            print('                                    <button type="submit" class="alert btn btn-info" disabled>Enable</button>')
+            print('                                    <button id="chroot-on-btn" type="submit" class="alert btn btn-info" disabled>Enable</button>')
         else:
-            print('                                    <button type="submit" class="alert btn btn-info">Enable</button>')
+            print('                                    <button id="chroot-on-btn" type="submit" class="alert btn btn-info">Enable</button>')
         print('                                        <input hidden name="chroot_mode" value="enabled">')
 
     print('                                        </form>')
@@ -531,10 +531,10 @@ if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
 
 print('                            <div class="btn-group btn-block mt-3">')
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="clear_netdata_credentials">Remove Credentials</button>')
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Reinstall Monitoring System</button>')
+    print('                            <button id="clear-netdata-credentials-btn" class="btn btn-outline-primary btn-block" type="submit" form="clear_netdata_credentials">Remove Credentials</button>')
+    print('                            <button id="easy-netdata-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Reinstall Monitoring System</button>')
 else:
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Install Monitoring System</button>')
+    print('                            <button id="easy-netdata-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Install Monitoring System</button>')
 print('                            </div>')
 print('                        </div> <!-- Card Body End -->')
 
@@ -574,10 +574,10 @@ if os.path.isfile('/etc/nginx/conf.d/glances.password'):
 
 print('                            <div class="btn-group btn-block mt-3">')
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="clear_glances_credentials">Remove Credentials</button>')
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Reinstall Monitoring System</button>')
+    print('                            <button id="clear-glances-credentials-btn" class="btn btn-outline-primary btn-block" type="submit" form="clear_glances_credentials">Remove Credentials</button>')
+    print('                            <button id="easy-glances-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Reinstall Monitoring System</button>')
 else:
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Install Monitoring System</button>')
+    print('                            <button id="easy-glances-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Install Monitoring System</button>')
 print('                            </div>')
 
 print('                        </div> <!-- Card Body End -->')
@@ -590,7 +590,7 @@ print('                    </div> <!-- End Glances Tab -->')
 print('')
 print('                    <!-- Modules Tab -->')
 print('                    <div class="tab-pane fade" id="v-pills-modules" role="tabpanel" aria-labelledby="v-pills-modules-tab">')
-print('                        <form id="module-installer" class="form" onsubmit="return false;">')
+print('                        <form id="module_installer" class="form" onsubmit="return false;">')
 
 cardheader(brand+' Modules Setup', 'fab fa-centos')
 test_cookie_hint = " Controls loading of nginx-nDeploy-module-testcookie_access which allows good bots in while keeping bad bots out. "
@@ -724,7 +724,7 @@ print('                                        </div>')
 print('                                    </div>')
 
 print('                                    <div class="col-md-12">')
-print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Apply Module Selection</button>')
+print('                                        <button id="module-installer-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Apply Module Selection</button>')
 print('                                    </div>')
 print('                                </div> <!-- Row End -->')
 print('                            </div> <!-- Card Body End -->')
