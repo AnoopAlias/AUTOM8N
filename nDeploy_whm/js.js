@@ -103,9 +103,9 @@ jQuery(document).ready(function($) {
     // We are trying to load data continuously no matter where we are in the app,
     // but let's not force scrolling when user is in terminal
     setInterval(function(){
-        terminalActive = ($('#terminal:hover').length > 0);
+        terminalActive = ($('#terminal-panel:hover').length > 0);
         if ( !terminalActive ) {
-            var termWindow = document.getElementById("terminal");
+            var termWindow = document.getElementById("terminal-panel");
             termWindow.scrollTop = termWindow.scrollHeight;
             $("#terminal .modal-body").load('term.log');
         } else {

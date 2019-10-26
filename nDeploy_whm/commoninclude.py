@@ -67,7 +67,7 @@ autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 #     print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>')
 
 
-# Non-Toast Error func() for main pages 
+# Non-Toast Error func() for main pages
 def print_nontoast_error(thenotice, thereason):
     print('            <div id="footer" class="row justify-content-center">')
     print('                <div class="col-lg-6 alert alert-danger">')
@@ -227,18 +227,14 @@ def display_term():
         print('                <div class="modal-content bg-light text-dark">')
     print('                    <div class="modal-header">')
     print('                        <h4 class="modal-title">Command Output</h4>')
-    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
+    print('                        <button class="close modalMinimize"> <i class="fa fa-minus"></i> </button>')
     print('                    </div>')
-    print('                    <div class="modal-body">')
-    print('                    </div>')
-    print('                    <div class="modal-footer">')
-    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+    print('                    <div id="terminal-panel" class="modal-body">')
     print('                    </div>')
     print('                </div>')
     print('            </div>')
     print('        </div>')
+    print('        <div class="minmaxCon"></div>')
 
 
 # Footer Section (Currently Disabled)

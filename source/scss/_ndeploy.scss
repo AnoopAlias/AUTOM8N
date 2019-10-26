@@ -776,22 +776,35 @@ kbd {
  }
 
 #terminal {
-    display: block !important;
-    position: fixed !important;
-    top: auto !important;
-    bottom: 0px !important;
-    left: 0px !important;
-    right: 0px !important;
-    margin: 0px !important;
-    height: 150px !important;
-    white-space: pre-line !important;
-    text-align: left !important;
-    list-style-type: none !important;
-    background-color: #151717 !important;
-    color: #1E7E34 !important;
-    overflow-y: auto !important;
-    overflow-x: auto !important;
-    padding: 2rem !important;
-    border: 1px solid #1E7E34 !important;
-    font-family: monospace !important;
+	display: block;
+	position: fixed;
+	top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+	height: inherit;
+    z-index: 1030;
+	.modal-dialog {
+		max-width: 100%;
+		margin: 0;
+		.modal-header {
+			padding: .45rem 1.25rem;
+			h4 {
+				font-size: .9rem;
+			}
+		}
+		.modal-body {
+			white-space: pre-line;
+		    text-align: left;
+		    list-style-type: none;
+		    background-color: $black;
+		    color: $green;
+		    overflow-y: auto;
+		    overflow-x: auto;
+		    padding: 2rem;
+		    border: 1px solid $green;
+		    font-family: monospace;
+			height: 15rem;
+		}
+	}
 }
