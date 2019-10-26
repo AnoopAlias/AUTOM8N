@@ -27,6 +27,15 @@ $bg-dark2-color:	rgba(255,255,255,.125);
 $bg-light-color:	rgba(0,0,0,.03);
 
 //
+// Icons
+// ----------------------------------------------------------------------------------------------------
+
+$icon-info: "\f059";
+$icon-success: "\f058";
+$icon-error: "\f057";
+$icon-warning: "\f0eb";
+
+//
 // Theming
 // ----------------------------------------------------------------------------------------------------
 
@@ -485,7 +494,8 @@ a {
 		background-color: darken($ultramarine-blue, 5%);
 		border-color: darken($ultramarine-blue, 5%);
 	}
-	&:focus {
+	&:focus,
+	&:active {
 		color: $white;
 	}
 }
@@ -727,7 +737,12 @@ kbd {
 
 .toast {
 	z-index: 100;
-	background-color: $bg-dark;
+	background-color: transparent;
+    -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+    box-shadow: none;
+    border: none;
+    border-radius: none;
 	color: $white;
 	position: fixed;
 	top: .9em;
@@ -750,6 +765,43 @@ kbd {
 	button > span {
 		color: $white;
 	}
+	.alert {
+		position: relative;
+		&.alert-info,
+		&.alert-success,
+		&.alert-error,
+		&.alert-warning {
+			padding-left: 3rem;
+			&:before {
+				font-family: "Font Awesome 5 Free";
+				content: '';
+				position: absolute;
+				left: 1rem;
+				width: 3rem;
+				font-size: 1.2rem;
+			}
+		}
+		&.alert-info {
+			&:before {
+				content: $icon-info;
+			}
+		}
+		&.alert-success {
+			&:before {
+				content: $icon-success;
+			}
+		}
+		&.alert-error {
+			&:before {
+				content: $icon-error;
+			}
+		}
+		&.alert-warning {
+			&:before {
+				content: $icon-warning;
+			}
+		}
+	}
 }
 
 .fa-external-link-alt {
@@ -768,15 +820,6 @@ kbd {
 //
 // Terminal Testing
 // ----------------------------------------------------------------------------------------------------
-
-.toast {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-            backdrop-filter: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    border-radius: none !important;
- }
 
 #terminal {
 	display: block;
