@@ -26,10 +26,12 @@ form = cgi.FieldStorage()
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
+
+# Set current config defaults
 def ndeploy_control_data():
     yaml_parsed_ndeploy_control_config['ndeploy_theme_color'] = form.getvalue('ndeploy_theme_color')
     yaml_parsed_ndeploy_control_config['primary_color'] = form.getvalue('primary_color')
@@ -37,48 +39,62 @@ def ndeploy_control_data():
     yaml_parsed_ndeploy_control_config['app_email'] = form.getvalue('app_email')
 
 
-if form.getvalue('ndeploy_theme_color') and \
-    form.getvalue('primary_color') and \
-	form.getvalue('logo_url') and \
-	form.getvalue('app_email'):
+if form.getvalue('ndeploy_theme_color') and form.getvalue('primary_color') and form.getvalue('logo_url') and form.getvalue('app_email'):
 
     # Read in ndeploy control configuration if it exists
     if os.path.isfile(ndeploy_control_file):
+
+        # Update dict with settings from config file
         with open(ndeploy_control_file, 'r') as ndeploy_control_config:
             yaml_parsed_ndeploy_control_config = yaml.safe_load(ndeploy_control_config)
 
-        # Check if theme style selection is different from what is currently saved
-        if yaml_parsed_ndeploy_control_config['ndeploy_theme_color'] != form.getvalue('ndeploy_theme_color'):
+        # Check required components of this version are in place (ie, theming support)
+        supportTheming = yaml_parsed_ndeploy_control_config.get('ndeploy_theme_color', False)
 
-            # Check if the primary color is not being asked to be changed as well, if it is, let them make the changes
-            if yaml_parsed_ndeploy_control_config['primary_color'] == form.getvalue('primary_color'):
+        if supportTheming:
 
-                # If dark theme, default to light primary color
-                if form.getvalue('ndeploy_theme_color') == "dark":
-                    yaml_parsed_ndeploy_control_config['primary_color'] = "#EDEDED"
+            # Check if theme style selection is different from what is currently saved
+            if yaml_parsed_ndeploy_control_config['ndeploy_theme_color'] != form.getvalue('ndeploy_theme_color'):
+
+                # Check if the primary color is not being asked to be changed as well, if it is, let them make the changes
+                if yaml_parsed_ndeploy_control_config['primary_color'] == form.getvalue('primary_color'):
+
+                    # If dark theme, default to light primary color
+                    if form.getvalue('ndeploy_theme_color') == "dark" and form.getvalue('primary_color') == "#121212":
+                        yaml_parsed_ndeploy_control_config['primary_color'] = "#EDEDED"
+                    if form.getvalue('ndeploy_theme_color') == "light" and form.getvalue('primary_color') == "#EDEDED":
+                        yaml_parsed_ndeploy_control_config['primary_color'] = "#121212"
+
+                    # Set remaining aesthetics settings
+                    yaml_parsed_ndeploy_control_config['ndeploy_theme_color'] = form.getvalue('ndeploy_theme_color')
+                    yaml_parsed_ndeploy_control_config['logo_url'] = form.getvalue('logo_url')
+                    yaml_parsed_ndeploy_control_config['app_email'] = form.getvalue('app_email')
+
                 else:
-                    yaml_parsed_ndeploy_control_config['primary_color'] = "#121212"
-
-                # Set remaining aesthetics settings
-                yaml_parsed_ndeploy_control_config['ndeploy_theme_color'] = form.getvalue('ndeploy_theme_color')
-                yaml_parsed_ndeploy_control_config['logo_url'] = form.getvalue('logo_url')
-                yaml_parsed_ndeploy_control_config['app_email'] = form.getvalue('app_email')
+                    ndeploy_control_data()
 
             else:
                 ndeploy_control_data()
 
+        # Setup default settings if no theming support:
         else:
+            yaml_parsed_ndeploy_control_config = {}
             ndeploy_control_data()
+
+        # If switching to dark theme without changing primary color as well
+        if form.getvalue('ndeploy_theme_color') == "dark" and form.getvalue('primary_color') == "#121212":
+            yaml_parsed_ndeploy_control_config['primary_color'] = "#EDEDED"
+        if form.getvalue('ndeploy_theme_color') == "light" and form.getvalue('primary_color') == "#EDEDED":
+            yaml_parsed_ndeploy_control_config['primary_color'] = "#121212"
 
         with open(ndeploy_control_file, 'w') as ndeploy_control_config:
                 yaml.dump(yaml_parsed_ndeploy_control_config, ndeploy_control_config, default_flow_style=False)
 
-        commoninclude.print_success('aesthetics configuration has been updated.')
+        commoninclude.print_success('Aesthetics configuration has been updated.')
 
     # Create the desired config if one doesn't exist
     else:
         yaml_parsed_ndeploy_control_config = {}
-
         ndeploy_control_data()
 
         # If switching to dark theme without changing primary color as well
@@ -88,10 +104,10 @@ if form.getvalue('ndeploy_theme_color') and \
         with open(ndeploy_control_file, 'w+') as ndeploy_control_config:
             yaml.dump(yaml_parsed_ndeploy_control_config, ndeploy_control_config, default_flow_style=False)
 
-        commoninclude.print_success('aesthetics configuration has been created.')
+        commoninclude.print_success('Aesthetics configuration has been created.')
 
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
+print('    </body>')
 print('</html>')
