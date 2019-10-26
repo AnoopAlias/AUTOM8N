@@ -220,7 +220,7 @@ def print_header(title=''):
 # Terminal Section
 def display_term():
     print('        <div class="modal" id="terminal" tabindex="-1" role="dialog">')
-    print('            <div class="modal-dialog modal-dialog-centered" role="document">')
+    print('            <div class="modal-dialog" role="document">')
     if ndeploy_theme_color == 'dark':
         print('                <div class="modal-content bg-dark text-white">')
     if ndeploy_theme_color == 'light':
