@@ -83,8 +83,6 @@ if form.getvalue('test_cookie') and \
                 procExe = subprocess.Popen('echo "*** The following modules have been uninstalled cluster-wide: '+cmd_uninstall+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 procExe.wait()
 
-                commoninclude.print_success('The following modules have been removed cluster-wide: <br>'+cmd_uninstall)
-
             else:
 
                 procExe = subprocess.Popen('echo "*** Uninstalling the following modules: '+cmd_uninstall+' ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -94,7 +92,7 @@ if form.getvalue('test_cookie') and \
                 procExe = subprocess.Popen('echo "*** The following modules have been uninstalled cluster-wide: '+cmd_uninstall+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 procExe.wait()
 
-                commoninclude.print_success('The following modules have been removed: <br>'+cmd_uninstall)
+            commoninclude.print_success('Modules uninstalled!')
 
         elif cmd_install != "" and cmd_uninstall == "":
             if os.path.isfile(cluster_config_file):
@@ -106,8 +104,6 @@ if form.getvalue('test_cookie') and \
                 procExe = subprocess.Popen('echo "*** The following modules have been installed cluster-wide: '+cmd_install+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 procExe.wait()
 
-                commoninclude.print_success('The following modules have been added cluster-wide: <br>'+cmd_install)
-
             else:
 
                 procExe = subprocess.Popen('echo "*** Installing the following modules: '+cmd_install+' ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -117,7 +113,7 @@ if form.getvalue('test_cookie') and \
                 procExe = subprocess.Popen('echo "*** The following modules have been installed: '+cmd_install+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 procExe.wait()
 
-                commoninclude.print_success('The following modules have been added: <br>'+cmd_install)
+            commoninclude.print_success('Modules installed!')
 
         else:
             if os.path.isfile(cluster_config_file):
@@ -131,8 +127,6 @@ if form.getvalue('test_cookie') and \
                 procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy install '+cmd_install+'\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 procExe.wait()
 
-                commoninclude.print_success('The following modules have been added cluster-wide: <br>'+cmd_install+'<br>The following modules have been removed cluster-wide: <br>'+cmd_uninstall)
-
             else:
 
                 procExe = subprocess.Popen('echo "*** Uninstalling the following modules: '+cmd_uninstall+' ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -144,8 +138,8 @@ if form.getvalue('test_cookie') and \
                 procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 procExe.wait()
 
-                commoninclude.print_success('The following modules have been added: <br>'+cmd_install+'<br>The following modules have been removed: <br>'+cmd_uninstall)
-
+            commoninclude.print_success('Modules installed/uninstalled!')
+                
     else:
         commoninclude.print_warning('Nothing to do.')
 
