@@ -55,16 +55,19 @@ nginx_version = nginx_version_info_yaml_parsed.get('nginx_version')
 autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 
 
-def return_label(theoption, hint):
-    result = '<div class="d-flex w-50 justify-content-end align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
-    return result
+# Decomishioned Funcs ()
+
+# def print_sys_tip(theoption, hint):
+#     print('<div class="col-md-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>')
+# def print_forbidden_wrapper():
+#     print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>Forbidden</p></div></div>')
+# def print_error_wrapper(themessage):
+#     print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>'+themessage+'</p></div></div>')
+# def print_success_wrapper(themessage):
+#     print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>')
 
 
-def return_prepend(theoption, hint):
-    result = '<div class="d-flex w-50 align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
-    return result
-
-
+# Non-Toast Error func() for main pages 
 def print_nontoast_error(thenotice, thereason):
     print('            <div id="footer" class="row justify-content-center">')
     print('                <div class="col-lg-6 alert alert-danger">')
@@ -86,30 +89,53 @@ def print_nontoast_error(thenotice, thereason):
     print('</html>')
 
 
-def print_forbidden():
-    print('<i class="fas fa-exclamation"></i><p>Forbidden</p>')
-
-
-def print_error(themessage):
-    print('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>')
-
-
-def print_success(themessage):
-    print('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>')
-
-
+# TOASTS
+# Sucess Toast DIV
 def print_success_alert(themessage):
-    print('<div class="alert alert-success">'+themessage+'</div>')
+    print('<div class="alert alert-success"><p>'+themessage+'</p></div>')
 
 
+# Error Toast DIV
 def print_error_alert(themessage):
-    print('<div class="alert alert-danger text-left">'+themessage+'</div>')
+    print('<div class="alert alert-danger"><p>'+themessage+'</p></div>')
 
 
-def print_sys_tip(theoption, hint):
-    print('<div class="col-md-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>')
+# Warning Toast DIV
+def print_warning_alert(themessage):
+    print('<div class="alert alert-warning"><p>'+themessage+'</p></div>')
 
 
+# Info Toast DIV
+def print_info_alert(themessage):
+    print('<div class="alert alert-info"><p>'+themessage+'</p></div>')
+
+
+# Forbidden Toast with icon
+def print_forbidden():
+    print_error_alert('<i class="fas fa-exclamation"></i>Forbidden')
+
+
+# Error Toast with icon
+def print_error(themessage):
+    print_error_alert('<i class="fas fa-exclamation"></i>'+themessage)
+
+
+# Success Toast with icon
+def print_success(themessage):
+    print_success_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+
+
+# Warning Toast with icon
+def print_warning(themessage):
+    print_warning_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+
+
+# Info Toast with icon
+def print_info(themessage):
+    print_info_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+
+
+# Disabled Nginx Modules
 def print_disabled():
     print('                                <div class="col-md-6">')
     if app_email != 'None':
@@ -119,23 +145,26 @@ def print_disabled():
     print('                                </div>')
 
 
-def print_forbidden_wrapper():
-    print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>Forbidden</p></div></div>')
+# RETURNS - Helps Keeps HTML Alignment
+# Prepend Return
+def return_prepend(theoption, hint):
+    result = '<div class="d-flex w-50 align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
+    return result
 
 
-def print_error_wrapper(themessage):
-    print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>'+themessage+'</p></div></div>')
+# Label Return
+def return_label(theoption, hint):
+    result = '<div class="d-flex w-50 justify-content-end align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
+    return result
 
 
-def print_success_wrapper(themessage):
-    print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>')
-
-
+# Mutli Input Return
 def return_multi_input(theoption, hint):
     result = '<div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
 
 
+# Loader
 def print_loader():
     print('')
     print('        <div id="loader"><i class="fas fa-infinity fa-spin"></i></div>')
@@ -190,7 +219,25 @@ def print_header(title=''):
 
 # Terminal Section
 def display_term():
-    print('        <div id="terminal" class="small">')
+    print('        <div class="modal" id="terminal" tabindex="-1" role="dialog">')
+    print('            <div class="modal-dialog modal-dialog-centered" role="document">')
+    if ndeploy_theme_color == 'dark':
+        print('                <div class="modal-content bg-dark text-white">')
+    if ndeploy_theme_color == 'light':
+        print('                <div class="modal-content bg-light text-dark">')
+    print('                    <div class="modal-header">')
+    print('                        <h4 class="modal-title">Command Output</h4>')
+    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+    print('                            <span aria-hidden="true">&times;</span>')
+    print('                        </button>')
+    print('                    </div>')
+    print('                    <div class="modal-body">')
+    print('                    </div>')
+    print('                    <div class="modal-footer">')
+    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+    print('                    </div>')
+    print('                </div>')
+    print('            </div>')
     print('        </div>')
 
 
@@ -381,10 +428,7 @@ def print_modals():
 
     # Toast
     print('        <div class="toast fade hide" id="myToast" role="alert" aria-live="assertive" aria-atomic="true">')
-    if ndeploy_theme_color == 'dark':
-        print('            <div class="toast-body bg-light text-dark">')
-    if ndeploy_theme_color == 'light':
-        print('            <div class="toast-body bg-dark text-white">')
+    print('            <div class="toast-body">')
     print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
     print('                    <span aria-hidden="true">&times;</span>')
     print('                </button>')
@@ -393,22 +437,16 @@ def print_modals():
 
     # Toast with long autohide
     print('        <div class="toast fade hide" id="myToastnohide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">')
-    if ndeploy_theme_color == 'dark':
-        print('            <div class="toast-body bg-light text-dark">')
-    if ndeploy_theme_color == 'light':
-        print('            <div class="toast-body bg-dark text-white">')
+    print('            <div class="toast-body">')
     print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
     print('                    <span aria-hidden="true">&times;</span>')
     print('                </button>')
     print('            </div>')
     print('        </div>')
 
-    # Toast with no reload
+    # Toast with no reload, no tand the default for toast notifications #MyToast-nl
     print('        <div class="toast fade hide" id="myToast-nl" role="alert" aria-live="assertive" aria-atomic="true">')
-    if ndeploy_theme_color == 'dark':
-        print('            <div class="toast-body bg-light text-dark">')
-    if ndeploy_theme_color == 'light':
-        print('            <div class="toast-body bg-dark text-white">')
+    print('            <div class="toast-body">')
     print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
     print('                    <span aria-hidden="true">&times;</span>')
     print('                </button>')
@@ -417,10 +455,7 @@ def print_modals():
 
     # Toastback
     print('        <div class="toast fade hide" id="myToastback" role="alert" aria-live="assertive" aria-atomic="true">')
-    if ndeploy_theme_color == 'dark':
-        print('            <div class="toast-body bg-light text-dark">')
-    if ndeploy_theme_color == 'light':
-        print('            <div class="toast-body bg-dark text-white">')
+    print('            <div class="toast-body">')
     print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
     print('                    <span aria-hidden="true">&times;</span>')
     print('                </button>')
