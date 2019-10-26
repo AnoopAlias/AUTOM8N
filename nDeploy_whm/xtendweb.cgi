@@ -517,6 +517,8 @@ if os.path.isfile(cluster_config_file):
                         if internalip == myip:
                             master_ip_resource_actual = externalip
                             break
+                        else:
+                            master_ip_resource_actual = myip
                 else:
                     master_ip_resource_actual = myip
             else:
