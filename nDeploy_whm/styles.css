@@ -7,24 +7,24 @@
  }
 
 #terminal {
-    display: block;
-    position: fixed;
-    top: auto;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    display: block !important;
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0px !important;
+    left: 0px !important;
+    right: 0px !important;
     margin: 0px !important;
-    height: 100px;
-    white-space: pre-line;
-    text-align: left;
-    list-style-type: none;
-    background-color: #151717;
-    color: #1E7E34;
-    overflow-y: auto;
-    overflow-x: auto;
-    padding: 1rem;
-    border: 1px solid #1E7E34;
-    font-family: monospace;
+    height: 150px !important;
+    white-space: pre-line !important;
+    text-align: left !important;
+    list-style-type: none !important;
+    background-color: #151717 !important;
+    color: #1E7E34 !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    padding: 2rem !important;
+    border: 1px solid #1E7E34 !important;
+    font-family: monospace !important;
 }
 
 /*!

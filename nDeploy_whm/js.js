@@ -758,7 +758,7 @@ jQuery(document).ready(function($) {
 
     $(document).on('submit','#disable_ndeploy',function(e){
         var $loaderId        =   '#plugin-status-btn';
-        var $loaderText      =   'Saving...';
+        var $loaderText      =   'Disabling...';
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
@@ -778,7 +778,7 @@ jQuery(document).ready(function($) {
 
     $(document).on('submit','#enable_ndeploy',function(e){
         var $loaderId        =   '#plugin-status-btn';
-        var $loaderText      =   'Saving...';
+        var $loaderText      =   'Enabling...';
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
@@ -833,21 +833,8 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget3').load('ndeploy_control.cgi #dash_widget3 > *');
-                $("#myToast-nl").find('.toast-body').html(result)
-                $("#myToast-nl").toast('show');
-            }
-        });
-    });
-
-    $('#autofix_force').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "autofix_control.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $("#myToast-nl").find('.modal-body').html(result)
+                $("#myToast-nl").modal('show');
             }
         });
     });
@@ -865,8 +852,8 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget3').load('ndeploy_control.cgi #dash_widget3 > *');
-                $("#myToast-nl").find('.toast-body').html(result)
-                $("#myToast-nl").toast('show');
+                $("#myToast-nl").find('.modal-body').html(result)
+                $("#myToast-nl").modal('show');
             }
         });
     });

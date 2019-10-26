@@ -12,10 +12,11 @@ __license__ = "GPL"
 __version__ = "1.0.0"
 __maintainer__ = "Budd Grant, https://highavailability.io"
 __email__ = "ops@highavailability.io"
-__status__ = "Development"
+__status__ = "Production"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -24,30 +25,32 @@ form = cgi.FieldStorage()
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
 if form.getvalue('autofix_status'):
 
-    print('<ul class="shelloutput">')
-
     if form.getvalue('autofix_status') == 'simple':
-        procExe = subprocess.Popen('/opt/nDeploy/scripts/attempt_autofix.sh', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        print('    <li><b>Attempting Simple AutoFix:</b></li>')
-    elif form.getvalue('autofix_status') == 'phpfpm':
-        procExe = subprocess.Popen('/opt/nDeploy/scripts/init_backends.py autofix', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        print('    <li><b>Attempting PHP-FPM Application Server Fix:</b></li>')
+        procExe = subprocess.Popen('echo "*** Attempting Simple Nginx AutoFix ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/attempt_autofix.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** Nginx AutoFix Completed ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        commoninclude.print_success('Nginx AutoFix Complete!')
 
-    print('    <li>&nbsp;</li>')
-    for line in iter(procExe.stdout.readline, b''):
-        print('    <li>'+line.rstrip()+'</li>')
-    print('    <li>&nbsp;</li>')
-    print('    <li><b>AutoFix utility has completed!</b></li>')
-    print('</ul>')
+    elif form.getvalue('autofix_status') == 'phpfpm':
+        procExe = subprocess.Popen('echo "*** Attempting AutoFix of PHP Application Server ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py autofix >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** PHP Application Server AutoFix Completed ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        commoninclude.print_success('PHP-FPM AutoFix Complete!')
 
 else:
-    print('Forbidden::Mising AutoFix Data')
+    commoninclude.print_forbidden()
 
-print('</body>')
+print('    </body>')
 print('</html>')
