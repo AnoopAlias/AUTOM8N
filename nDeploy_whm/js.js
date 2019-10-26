@@ -113,6 +113,33 @@ jQuery(document).ready(function($) {
         }
     },1000)
 
+    // Toggle state for Terminal
+    var $content, $modal, $apnData, $modalCon;
+
+    $content = $(".modal-min");
+
+    $(".modalMinimize").on("click", function() {
+        $modalCon = $(this).closest("#terminal").attr("id");
+        $apnData = $(this).closest("#terminal");
+        $modal = "#" + $modalCon;
+        $($modal).toggleClass("modal-min");
+        if ($($modal).hasClass("modal-min")) {
+            $(".minmaxCon").append($apnData);
+            $(this).find("i").toggleClass('fa-minus').toggleClass('fa-clone');
+            $('#main-container').addClass('modal-minimized');
+    } else {
+            $("#main-container").append($apnData);
+            $(this).find("i").toggleClass('fa-clone').toggleClass('fa-minus');
+            $('#main-container').removeClass('modal-minimized');
+        };
+    });
+
+    $("button[data-dismiss='modal']").click(function() {
+        $(this).closest("#terminal").removeClass("modal-min");
+        $("#main-container").removeClass($apnData);
+        $(this).next('.modalMinimize').find("i").removeClass('fa fa-clone').addClass('fa fa-minus');
+    });
+
     // General Form Validatons
     window.addEventListener('load', function() {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to

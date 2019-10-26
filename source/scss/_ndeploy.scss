@@ -208,8 +208,10 @@ body {
 }
 
 #main-container {
-	//padding-bottom: 3rem;
 	padding-bottom: 20rem;
+	&.modal-minimized {
+		padding-bottom: 3rem;
+	}
 }
 
 #main-header {
@@ -790,6 +792,12 @@ kbd {
 		margin: 0;
 		.modal-header {
 			padding: .45rem 1.25rem;
+			.close {
+				padding: .75rem;
+				.fa {
+					font-size: .9rem;
+				}
+			}
 			h4 {
 				font-size: .9rem;
 			}
@@ -808,4 +816,42 @@ kbd {
 			height: 15rem;
 		}
 	}
+}
+
+.modal-min {
+	width: 250px;
+	height: 35px;
+	overflow: hidden !important;
+	@extend .p-0;
+	@extend .m-0;
+	float: left;
+	position: static !important;
+	.modal-header {
+		height: 100%;
+		width: 100%;
+		@extend .m-0;
+		padding: .45rem .6rem !important;
+	}
+	.modal-dialog,
+	.modal-content {
+		width: 100%;
+		@extend .p-0;
+		@extend .m-0;
+	}
+	.fa {
+		font-size: .9rem;
+		margin-right: .2rem;
+	}
+	.menuTab {
+		display: none;
+	}
+}
+
+.minmaxCon {
+	position: fixed;
+	height: 2rem;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 9999;
 }
