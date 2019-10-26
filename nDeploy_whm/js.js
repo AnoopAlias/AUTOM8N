@@ -673,54 +673,82 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#easy_netdata_setup').submit(function(e) {
+    $(document).on('submit','#easy_netdata_setup',function(e){
+        var $loaderId        =   '#easy-netdata-setup-btn';
+        var $loaderText      =   'Installing...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_netdata_setup.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#v-pills-netdata .card-body').load('ndeploy_control.cgi #v-pills-netdata .card-body > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#clear_netdata_credentials').submit(function(e) {
+    $(document).on('submit','#clear_netdata_credentials',function(e){
+        var $loaderId        =   '#clear-netdata-credentials-btn';
+        var $loaderText      =   'Clearing...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_netdata_setup.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#v-pills-netdata .card-body').load('ndeploy_control.cgi #v-pills-netdata .card-body > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#easy_glances_setup').submit(function(e) {
+    $(document).on('submit','#easy_glances_setup',function(e){
+        var $loaderId        =   '#easy-glances-setup-btn';
+        var $loaderText      =   'Installing...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_glances_setup.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#v-pills-glances .card-body').load('ndeploy_control.cgi #v-pills-glances .card-body > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#clear_glances_credentials').submit(function(e) {
+    $(document).on('submit','#clear_glances_credentials',function(e){
+        var $loaderId        =   '#clear-glances-credentials-btn';
+        var $loaderText      =   'Clearing...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_glances_setup.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#v-pills-glances .card-body').load('ndeploy_control.cgi #v-pills-glances .card-body > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
@@ -896,60 +924,84 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget4').load('ndeploy_control.cgi #dash_widget4 > *');
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#multi_master').submit(function(e) {
+    $(document).on('submit','#multi_master',function(e){
+        var $loaderId        =   '#multi-master-btn';
+        var $loaderText      =   'Updating...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "php_control.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#single_master').submit(function(e) {
+    $(document).on('submit','#single_master',function(e){
+        var $loaderId        =   '#single-master-btn';
+        var $loaderText      =   'Updating...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "php_control.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#chroot_on').submit(function(e) {
+    $(document).on('submit','#chroot_on',function(e){
+        var $loaderId        =   '#chroot-on-btn';
+        var $loaderText      =   'Enabling...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "php_control.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#chroot_off').submit(function(e) {
+    $(document).on('submit','#chroot_off',function(e){
+        var $loaderId        =   '#chroot-off-btn';
+        var $loaderText      =   'Disabling...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "php_control.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
