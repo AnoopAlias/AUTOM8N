@@ -144,8 +144,6 @@ jQuery(document).ready(function($) {
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "ddos_mitigate.cgi?" + $f.serialize();
-        //$('#toastForm1').load('xtendweb.cgi #toastForm1 > *');
-        //$('#v-pills-dos .card-body').load('xtendweb.cgi #v-pills-dos .card-body > *');
         $.ajax({
             url: $url,
             success: function(result) {
@@ -578,7 +576,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "save_ndeploy_branding_settings.cgi?" + $f.serialize();
@@ -598,7 +596,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "restore_branding_defaults.cgi?" + $f.serialize();
@@ -618,7 +616,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "save_ndeploy_control_config.cgi?" + $f.serialize();
@@ -638,7 +636,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "restore_ndeploy_control_defaults.cgi?" + $f.serialize();
@@ -658,7 +656,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_php_setup.cgi?" + $f.serialize();
@@ -678,7 +676,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_netdata_setup.cgi?" + $f.serialize();
@@ -698,7 +696,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_netdata_setup.cgi?" + $f.serialize();
@@ -718,7 +716,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_glances_setup.cgi?" + $f.serialize();
@@ -738,7 +736,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "easy_glances_setup.cgi?" + $f.serialize();
@@ -762,7 +760,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
@@ -782,7 +780,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
@@ -806,7 +804,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "module_installer.cgi?" + $f.serialize();
@@ -826,6 +824,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "autofix_control.cgi?" + $f.serialize();
@@ -845,6 +844,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "autofix_control.cgi?" + $f.serialize();
@@ -864,6 +864,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "upgrade_control.cgi?" + $f.serialize();
@@ -883,6 +884,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "upgrade_control.cgi?" + $f.serialize();
@@ -902,6 +904,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "upgrade_control.cgi?" + $f.serialize();
@@ -921,6 +924,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "php_control.cgi?" + $f.serialize();
@@ -941,6 +945,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "php_control.cgi?" + $f.serialize();
@@ -961,6 +966,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "php_control.cgi?" + $f.serialize();
@@ -981,6 +987,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "php_control.cgi?" + $f.serialize();
