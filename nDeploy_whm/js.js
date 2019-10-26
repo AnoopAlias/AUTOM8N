@@ -941,6 +941,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
+                $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
                 $("#myToast-nl").find('.toast-body').html(result)
                 $("#myToast-nl").toast('show');
             }
@@ -960,6 +961,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
+                $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
                 $("#myToast-nl").find('.toast-body').html(result)
                 $("#myToast-nl").toast('show');
             }
@@ -979,6 +981,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
+                $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
                 $("#myToast-nl").find('.toast-body').html(result)
                 $("#myToast-nl").toast('show');
             }
@@ -998,6 +1001,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
+                $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
                 $("#myToast-nl").find('.toast-body').html(result)
                 $("#myToast-nl").toast('show');
             }

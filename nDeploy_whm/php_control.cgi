@@ -17,20 +17,13 @@ __status__ = "Development"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 php_secure_mode_file = installation_path+"/conf/secure-php-enabled"
 php_chroot_mode_file = "/var/cpanel/feature_toggles/apachefpmjail"
 
 cgitb.enable()
 
 form = cgi.FieldStorage()
-
-def shellout(procEXE='echo "what?"', before='',after=''):
-    print('    <li><b>'+before+'</b></li>')
-    print('    <li>&nbsp;</li>')
-    for line in iter(procExe.stdout.readline, b''):
-        print('    <li>'+line.rstrip()+'</li>')
-    print('    <li>&nbsp;</li>')
-    print('    <li><b>'+after+'</b></li>')
 
 # Get PHP Chroot and Secure status
 php_chroot_status = False
@@ -45,80 +38,131 @@ if os.path.isfile(php_chroot_mode_file):
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
 if form.getvalue('php_mode') or form.getvalue('chroot_mode'):
 
     if form.getvalue('php_mode') == 'multi' and php_secure_status == False:
+
         # Start secure mode installation.
-        print('<ul class="shelloutput">')
-        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py secure-php', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Initiating Multi-Master PHP Mode (Secure PHP Mode)', 'Multi-Master PHP Mode Completed.')
-        procExe = subprocess.Popen(installation_path+'/scripts/attempt_autofix.sh', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Attempting AutoFix of Accounts', 'AutoFix Completed.')
-        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py autofix', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Attempting AutoFix of PHP Application Server.', 'PHP Application Server AutoFix Completed.')
-        print('</ul>')
+        procExe = subprocess.Popen('echo "*** Initiating Multi-Master PHP Mode ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py secure-php >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** Multi-Master PHP Mode Activated ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        procExe = subprocess.Popen('echo "*** Attempting AutoFix of Accounts ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/attempt_autofix.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** AutoFix of Accounts Completed ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        procExe = subprocess.Popen('echo "*** Attempting AutoFix of PHP Application Server ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py autofix >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** PHP Application Server AutoFix Completed ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        commoninclude.print_success('Multi-Master PHP activated!')
 
     elif form.getvalue('php_mode') == 'multi' and php_secure_status == True:
-    	# Secure mode status is already multi so this should already be disabled via nDeploy Control - This should be a modal
-        print('<ul class="shelloutput">')
-        print('    <li><b>Multi-Master PHP Mode already in plcace.</b></li>')
-        print('</ul>')
 
+    	# Secure mode status is already multi so this should already be disabled via nDeploy Control
+        commoninclude.print_warning('Multi-Master aleady active!')
+        
     if form.getvalue('php_mode') == 'single' and php_secure_status == False:
-    	# Single mode status is already single so this should already be disabled via nDeploy Control - This should be a modal
-        print('<ul class="shelloutput">')
-        print('    <li><b>Single Master PHP Mode already in place.</b></li>')
-        print('</ul>')
+
+    	# Single mode status is already single so this should already be disabled via nDeploy Control
+        commoninclude.print_warning('Single Master aleady active!')
 
     elif form.getvalue('php_mode') == 'single' and php_secure_status == True:
+
         # Start the single mode install.
-        print('<ul class="shelloutput">')
-        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py disable-secure-php', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Disabling Multi-Master PHP Mode (Secure PHP Mode) and switching to Single Master PHP Mode.', 'Single Master PHP Mode Completed.')
-        procExe = subprocess.Popen(installation_path+'/scripts/attempt_autofix.sh', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Attempting AutoFix of Accounts', 'AutoFix Completed.')
-        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py autofix', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Attempting AutoFix of PHP Application Server.', 'PHP Application Server AutoFix Completed.')
-        procExe = subprocess.Popen('service ndeploy_backends restart', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Restarting PHP Backends.', 'PHP Backends Restarted.')
-        print('</ul>')
+        procExe = subprocess.Popen('echo "*** Initiating Single Master PHP Mode ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py disable-secure-php >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** Single Master PHP Mode Activated ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        procExe = subprocess.Popen('echo "*** Attempting AutoFix of Accounts ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/attempt_autofix.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** AutoFix of Accounts Completed ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        procExe = subprocess.Popen('echo "*** Attempting AutoFix of PHP Application Server ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py autofix >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** PHP Application Server AutoFix Completed ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        procExe = subprocess.Popen('echo "*** Restarting PHP Backends ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('service ndeploy_backends restart >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** PHP Backends Restarted ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        commoninclude.print_success('Single Master PHP activated!')
 
     if form.getvalue('chroot_mode') == 'enabled' and php_secure_status == True:
+
         # Chroot only works with Single Master PHP Mode - This should be a modal
-        print('<ul class="shelloutput">')
-        print('    <li><b>Chroot configuration is only available for Single Master PHP Mode.</b></li>')
-        print('</ul>')
+        commoninclude.print_warning('Chroot requires Single Master PHP!')
 
     elif form.getvalue('chroot_mode') == 'disabled' and php_secure_status == True:
+
         # Chroot only works with Single Master PHP Mode - This should be a modal
-        print('<ul class="shelloutput">')
-        print('    <li><b>Chroot configuration is only available for Single Master PHP Mode.</b></li>')
-        print('</ul>')
+        commoninclude.print_warning('Chroot requires Single Master PHP!')
 
     elif form.getvalue('chroot_mode') == 'enabled' and php_secure_status == False:
+
         # Enabled Chroot PHP
-        print('<ul class="shelloutput">')
-        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py jailphpfpm', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Activating Chrooted PHP Mode.', 'Chrooted PHP Mode Activated.')
-        procExe = subprocess.Popen('service ndeploy_backends restart', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Restarting PHP Backends.', 'PHP Backends Restarted.')
-        print('</ul>')
+        procExe = subprocess.Popen('echo "*** Activating Chrooted PHP Mode ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py jailphpfpm >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** Chrooted PHP Mode Activated ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        procExe = subprocess.Popen('echo "*** Restarting PHP Backends ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('service ndeploy_backends restart >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** PHP Backends Restarted ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        commoninclude.print_success('Chroot PHP activated!')
 
     elif form.getvalue('chroot_mode') == 'disabled' and php_secure_status == False:
+
         # Disabled Chroot PHP
-        print('<ul class="shelloutput">')
-        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py disable-jailphpfpm', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Deactivating Chrooted PHP Mode.', 'Chrooted PHP Mode Deactivated.')
-        procExe = subprocess.Popen('service ndeploy_backends restart', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shellout(procExe, 'Restarting PHP Backends.', 'PHP Backends Restarted.')
-        print('</ul>')
+        procExe = subprocess.Popen('echo "*** Deactivating Chrooted PHP Mode ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py disable-jailphpfpm >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** Chrooted PHP Mode Deactivated ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        procExe = subprocess.Popen('echo "*** Restarting PHP Backends ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('service ndeploy_backends restart >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** PHP Backends Restarted ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        commoninclude.print_success('Chroot PHP deactivated!')
 
 else:
-    print('Forbidden::Mising PHP Mode Data')
+    commoninclude.print_forbidden()
 
-print('</body>')
+print('    </body>')
 print('</html>')

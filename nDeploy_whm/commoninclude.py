@@ -125,6 +125,16 @@ def print_success(themessage):
     print_success_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
 
 
+# Warning Toast with icon
+def print_warning(themessage):
+    print_warning_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+
+
+# Info Toast with icon
+def print_info(themessage):
+    print_info_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+
+
 # Disabled Nginx Modules
 def print_disabled():
     print('                                <div class="col-md-6">')
@@ -209,7 +219,25 @@ def print_header(title=''):
 
 # Terminal Section
 def display_term():
-    print('        <div id="terminal" class="small">')
+    print('        <div class="modal" id="terminal" tabindex="-1" role="dialog">')
+    print('            <div class="modal-dialog modal-dialog-centered" role="document">')
+    if ndeploy_theme_color == 'dark':
+        print('                <div class="modal-content bg-dark text-white">')
+    if ndeploy_theme_color == 'light':
+        print('                <div class="modal-content bg-light text-dark">')
+    print('                    <div class="modal-header">')
+    print('                        <h4 class="modal-title">Command Output</h4>')
+    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
+    print('                            <span aria-hidden="true">&times;</span>')
+    print('                        </button>')
+    print('                    </div>')
+    print('                    <div class="modal-body">')
+    print('                    </div>')
+    print('                    <div class="modal-footer">')
+    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+    print('                    </div>')
+    print('                </div>')
+    print('            </div>')
     print('        </div>')
 
 
