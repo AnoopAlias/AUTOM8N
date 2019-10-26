@@ -6,11 +6,11 @@ jQuery(document).ready(function($) {
     });
 
     $(document).ajaxStop(function() {
-        $('#loader').hide();
+        //$('#loader').hide();
     });
 
     $(document).ajaxError(function() {
-        $('#loader').hide();
+        //$('#loader').hide();
     });
 
     $.ajaxSetup({
@@ -22,9 +22,9 @@ jQuery(document).ready(function($) {
     $('[data-toggle="popover"]').popover();
 
     // Toasts & modals
-    $('#myModal').on('hidden.bs.modal', function() {
+    /*$('#myModal').on('hidden.bs.modal', function() {
         location.reload()
-    });
+    });*/
 
     $('#myToast').on('hidden.bs.toast', function() {
         location.reload()
@@ -42,11 +42,11 @@ jQuery(document).ready(function($) {
         window.history.go(-1);
     });
 
-    $('#myModal-xl').on('hidden.bs.modal', function() {
+    /*$('#myModal-xl').on('hidden.bs.modal', function() {
         location.reload()
     });
 
-    /*$('#myModal-xl-shell').on('hidden.bs.modal', function() {
+    $('#myModal-xl-shell').on('hidden.bs.modal', function() {
         location.reload()
     });*/
 
@@ -832,8 +832,8 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget3').load('ndeploy_control.cgi #dash_widget3 > *');
-                $("#myToast-nl").find('.modal-body').html(result)
-                $("#myToast-nl").modal('show');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
@@ -852,8 +852,8 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget3').load('ndeploy_control.cgi #dash_widget3 > *');
-                $("#myToast-nl").find('.modal-body').html(result)
-                $("#myToast-nl").modal('show');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
