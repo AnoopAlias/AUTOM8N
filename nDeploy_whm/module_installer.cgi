@@ -14,7 +14,7 @@ __license__ = "GPL"
 __version__ = "1.0.0"
 __maintainer__ = "Budd Grant, https://highavailability.io"
 __email__ = "ops@highavailability.io"
-__status__ = "Development"
+__status__ = "Production"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
