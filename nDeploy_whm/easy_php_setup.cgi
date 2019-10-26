@@ -18,6 +18,7 @@ __status__ = "Development"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -26,24 +27,21 @@ form = cgi.FieldStorage()
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
 if form.getvalue('run_installer') == 'enabled':
-    procExe = subprocess.Popen(installation_path+"/scripts/easy_php_setup.sh", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    
-    print('<ul class="shelloutput">')
-    print('    <li><b>Executing the Easy NGINX PHP Installer...</b></li>')
-    print('    <li>&nbsp;</li>')
-    for line in iter(procExe.stdout.readline, b''):
-        print('    <li>'+line.rstrip()+'</li>')
-    print('    <li>&nbsp;</li>')
-    print('    <li><b>Native NGINX PHP Support has been configured on this system.</b></li>')
-    print('</ul>')
+    procExe = subprocess.Popen('echo "*** Rebuilding Native PHP ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    procExe.wait()
+    procExe = subprocess.Popen(installation_path+'/scripts/easy_php_setup.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    procExe.wait()
+    procExe = subprocess.Popen('echo "*** Native PHP Support has been rebuilt ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    procExe.wait()
+    commoninclude.print_success('Native PHP Rebuilt!')
 
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
+print('    </body>')
 print('</html>')

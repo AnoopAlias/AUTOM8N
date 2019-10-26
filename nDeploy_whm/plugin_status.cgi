@@ -3,8 +3,6 @@
 import commoninclude
 import cgi
 import cgitb
-import yaml
-import os
 import subprocess
 
 
@@ -14,7 +12,7 @@ __license__ = "GPL"
 __version__ = "1.0.0"
 __maintainer__ = "Budd Grant, https://highavailability.io"
 __email__ = "ops@highavailability.io"
-__status__ = "Development"
+__status__ = "Production"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -38,7 +36,8 @@ if form.getvalue('plugin_status') == 'enable':
     procExe.wait()
     procExe = subprocess.Popen('echo "*** Plugin Enabled ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     procExe.wait()
-    print('Plugin Enabled!')
+
+    commoninclude.print_success('Plugin successfuly enabled.')
     
 elif form.getvalue('plugin_status') == 'disable':
     procExe = subprocess.Popen('echo "*** Disabling Plugin ****" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -47,7 +46,8 @@ elif form.getvalue('plugin_status') == 'disable':
     procExe.wait()
     procExe = subprocess.Popen('echo "*** Plugin Disabled ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     procExe.wait()
-    print('Plugin Disabled!')
+
+    commoninclude.print_success('Plugin successfully disabled...')
 
 else:
     commoninclude.print_forbidden()
