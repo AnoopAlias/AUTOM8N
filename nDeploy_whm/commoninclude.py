@@ -112,27 +112,27 @@ def print_info_alert(themessage):
 
 # Forbidden Toast with icon
 def print_forbidden():
-    print_error_alert('<i class="fas fa-exclamation"></i>Forbidden')
+    print_error_alert('Forbidden')
 
 
 # Error Toast with icon
 def print_error(themessage):
-    print_error_alert('<i class="fas fa-exclamation"></i>'+themessage)
+    print_error_alert(themessage)
 
 
 # Success Toast with icon
 def print_success(themessage):
-    print_success_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+    print_success_alert(themessage)
 
 
 # Warning Toast with icon
 def print_warning(themessage):
-    print_warning_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+    print_warning_alert(themessage)
 
 
 # Info Toast with icon
 def print_info(themessage):
-    print_info_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+    print_info_alert(themessage)
 
 
 # Disabled Nginx Modules
