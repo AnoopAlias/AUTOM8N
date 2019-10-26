@@ -19,6 +19,7 @@ __status__ = "Development"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -27,9 +28,9 @@ form = cgi.FieldStorage()
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
 if form.getvalue('test_cookie') and \
     form.getvalue('mod_security') and \
@@ -74,36 +75,82 @@ if form.getvalue('test_cookie') and \
     if cmd_install != "" or cmd_uninstall != "":
         if cmd_install == "" and cmd_uninstall != "":
             if os.path.isfile(cluster_config_file):
-                procExe = subprocess.Popen('yum -y remove '+cmd_uninstall+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y remove '+cmd_uninstall+'\"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+                procExe = subprocess.Popen('echo "*** Uninstalling the following modules cluster-wide: '+cmd_uninstall+' ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('yum -y remove '+cmd_uninstall+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y remove '+cmd_uninstall+'\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo "*** The following modules have been uninstalled cluster-wide: '+cmd_uninstall+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+
+                commoninclude.print_success('The following modules have been removed cluster-wide: <br>'+cmd_uninstall)
+
             else:
-                procExe = subprocess.Popen('yum -y remove '+cmd_uninstall, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+                procExe = subprocess.Popen('echo "*** Uninstalling the following modules: '+cmd_uninstall+' ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('yum -y remove '+cmd_uninstall+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo "*** The following modules have been uninstalled cluster-wide: '+cmd_uninstall+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+
+                commoninclude.print_success('The following modules have been removed: <br>'+cmd_uninstall)
+
         elif cmd_install != "" and cmd_uninstall == "":
             if os.path.isfile(cluster_config_file):
-                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy install '+cmd_install+'\"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+                procExe = subprocess.Popen('echo "*** Installing the following modules cluster-wide: '+cmd_install+' ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy install '+cmd_install+'\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo "*** The following modules have been installed cluster-wide: '+cmd_install+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+
+                commoninclude.print_success('The following modules have been added cluster-wide: <br>'+cmd_install)
+
             else:
-                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+                procExe = subprocess.Popen('echo "*** Installing the following modules: '+cmd_install+' ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo "*** The following modules have been installed: '+cmd_install+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+
+                commoninclude.print_success('The following modules have been added: <br>'+cmd_install)
+
         else:
             if os.path.isfile(cluster_config_file):
-                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && yum -y remove '+cmd_uninstall+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy install '+cmd_install+' && yum -y remove '+cmd_uninstall+'\"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            else:
-                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && yum -y remove '+cmd_uninstall, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-        print('<ul class="shelloutput">')
-        if cmd_install != "":
-            print('    <li><b>Installing the following modules: '+cmd_install+'</b></li>')
-        if cmd_uninstall != "":
-            print('    <li><b>Uninstalling the following modules: '+cmd_uninstall+'</b></li>')
-        print('    <li>&nbsp;</li>')
-        for line in iter(procExe.stdout.readline, b''):
-            print('    <li>'+line.rstrip()+'</li>')
-        print('    <li>&nbsp;</li>')
-        print('    <li><b>Module alterations have been completed!</b></li>')
-        print('</ul>')
+                procExe = subprocess.Popen('echo "*** Uninstalling the following modules cluster-wide: '+cmd_uninstall+' ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('yum -y remove '+cmd_uninstall+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y remove '+cmd_uninstall+'\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo "*** Installing the following modules cluster-wide: '+cmd_install+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy install '+cmd_install+'\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+
+                commoninclude.print_success('The following modules have been added cluster-wide: <br>'+cmd_install+'<br>The following modules have been removed cluster-wide: <br>'+cmd_uninstall)
+
+            else:
+
+                procExe = subprocess.Popen('echo "*** Uninstalling the following modules: '+cmd_uninstall+' ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('yum -y remove '+cmd_uninstall+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo "*** Installing the following modules cluster-wide: '+cmd_install+' ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('yum -y --enablerepo=ndeploy install '+cmd_install+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+
+                commoninclude.print_success('The following modules have been added: <br>'+cmd_install+'<br>The following modules have been removed: <br>'+cmd_uninstall)
+
     else:
-        print('Nothing to do.')
+        commoninclude.print_warning('Nothing to do.')
 
 else:
-    print('Forbidden::Mising Module Data')
+    commoninclude.print_forbidden()
 
-print('</body>')
+print('    </body>')
 print('</html>')
