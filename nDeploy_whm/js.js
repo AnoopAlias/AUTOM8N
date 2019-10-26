@@ -51,7 +51,7 @@ jQuery(document).ready(function($) {
     });*/
 
     $('.toast').toast({
-        delay: 3000
+        delay: 5000
     })
 
     $('.nav a.dropdown-item').click(function (e) {
