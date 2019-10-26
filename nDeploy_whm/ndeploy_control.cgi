@@ -443,13 +443,13 @@ if "PHP" in backend_data_yaml_parsed:
         print('                                <div class="col-6 alert text-success">Multi-Master <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="single_master" class="form" onsubmit="return false;">')
-        print('                                        <button type="submit" class="alert btn btn-info">Single Master</button>')
+        print('                                        <button id="single-master-btn" type="submit" class="alert btn btn-info">Single Master</button>')
         print('                                        <input hidden name="php_mode" value="single">')
     else:
         print('                                <div class="col-6 alert text-success">Single Master <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="multi_master" class="form" onsubmit="return false;">')
-        print('                                        <button type="submit" class="alert btn btn-info">Multi-Master</button>')
+        print('                                        <button id="multi-master-btn" type="submit" class="alert btn btn-info">Multi-Master</button>')
         print('                                        <input hidden name="php_mode" value="multi">')
 
     print('                                        </form>')
@@ -465,16 +465,16 @@ if "PHP" in backend_data_yaml_parsed:
         print('                                <div class="col-6 alert text-success">Enabled <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="chroot_off" class="form" onsubmit="return false;">')
-        print('                                        <button type="submit" class="alert btn btn-info">Disable</button>')
+        print('                                        <button id="chroot-off-btn" type="submit" class="alert btn btn-info">Disable</button>')
         print('                                        <input hidden name="chroot_mode" value="disabled">')
     else:
         print('                                <div class="col-6 alert text-danger">Disabled <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="chroot_on" class="form" onsubmit="return false;">')
         if php_secure_status:
-            print('                                    <button type="submit" class="alert btn btn-info" disabled>Enable</button>')
+            print('                                    <button id="chroot-on-btn" type="submit" class="alert btn btn-info" disabled>Enable</button>')
         else:
-            print('                                    <button type="submit" class="alert btn btn-info">Enable</button>')
+            print('                                    <button id="chroot-on-btn" type="submit" class="alert btn btn-info">Enable</button>')
         print('                                        <input hidden name="chroot_mode" value="enabled">')
 
     print('                                        </form>')
@@ -531,10 +531,10 @@ if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
 
 print('                            <div class="btn-group btn-block mt-3">')
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="clear_netdata_credentials">Remove Credentials</button>')
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Reinstall Monitoring System</button>')
+    print('                            <button id="clear-netdata-credentials-btn" class="btn btn-outline-primary btn-block" type="submit" form="clear_netdata_credentials">Remove Credentials</button>')
+    print('                            <button id="easy-netdata-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Reinstall Monitoring System</button>')
 else:
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Install Monitoring System</button>')
+    print('                            <button id="easy-netdata-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_netdata_setup">Install Monitoring System</button>')
 print('                            </div>')
 print('                        </div> <!-- Card Body End -->')
 
@@ -574,10 +574,10 @@ if os.path.isfile('/etc/nginx/conf.d/glances.password'):
 
 print('                            <div class="btn-group btn-block mt-3">')
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="clear_glances_credentials">Remove Credentials</button>')
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Reinstall Monitoring System</button>')
+    print('                            <button id="clear-glances-credentials-btn" class="btn btn-outline-primary btn-block" type="submit" form="clear_glances_credentials">Remove Credentials</button>')
+    print('                            <button id="easy-glances-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Reinstall Monitoring System</button>')
 else:
-    print('                            <button class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Install Monitoring System</button>')
+    print('                            <button id="easy-glances-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Install Monitoring System</button>')
 print('                            </div>')
 
 print('                        </div> <!-- Card Body End -->')
