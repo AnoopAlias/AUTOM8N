@@ -114,9 +114,7 @@ jQuery(document).ready(function($) {
     },1000)
 
     // Toggle state for Terminal
-    var $content, $modal, $apnData, $modalCon;
-
-    $content = $(".modal-min");
+    var $modal, $apnData, $modalCon;
 
     // Retrieve current state
     $('#terminal').toggleClass(localStorage.minimizeClick);
