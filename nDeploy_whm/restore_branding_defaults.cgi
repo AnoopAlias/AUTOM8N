@@ -18,6 +18,7 @@ __status__ = "Production"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 branding_file = installation_path+"/conf/branding.yaml"
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -26,20 +27,27 @@ form = cgi.FieldStorage()
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
 
 if form.getvalue('restore_defaults') == 'enabled':
-    yaml_parsed_ndeploy_control_branding_conf = {'brand': 'AUTOM8N', 'brand_logo': 'xtendweb.png', 'brand_group': 'NGINX AUTOMATION', 'brand_anchor': 'A U T O M 8 N', 'brand_link': 'https://autom8n.com/'}
+    yaml_parsed_ndeploy_control_branding_conf = {'brand': 'AUTOM8N', 'brand_logo': 'xtendweb.png', 'brand_group': 'NGINX AUTOMATION'}
     with open(branding_file, 'w') as ndeploy_control_branding_conf:
         yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
-    subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
-    commoninclude.print_success('The nDeploy branding configuration has been restored to defaults.')
+    procExe = subprocess.Popen('echo "*** Reverting to default branding configuration ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    procExe.wait()
+    procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    procExe.wait()
+    procExe = subprocess.Popen('echo "*** Branding configuration reverted ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    procExe.wait()
+            
+    commoninclude.print_success('Branding configuration restored to default')
+
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
+print('    </body>')
 print('</html>')
