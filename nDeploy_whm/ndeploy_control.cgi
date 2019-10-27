@@ -55,13 +55,13 @@ else:
 if os.path.isfile(branding_file):
     with open(branding_file, 'r') as brand_data_file:
         yaml_parsed_brand = yaml.safe_load(brand_data_file)
-    brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb_light.png")
+    brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
     brand = yaml_parsed_brand.get("brand", "AUTOM8N")
     brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
     brand_anchor = yaml_parsed_brand.get("brand_anchor", "A U T O M 8 N")
     brand_link = yaml_parsed_brand.get("brand_link", "https://autom8n.com/")
 else:
-    brand_logo = "xtendweb_light.png"
+    brand_logo = "xtendweb.png"
     brand = "AUTOM8N"
     brand_group = "NGINX AUTOMATION"
     brand_anchor = "A U T O M 8 N"
