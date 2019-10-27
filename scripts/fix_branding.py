@@ -37,9 +37,7 @@ if __name__ == "__main__":
         if not os.path.islink("/usr/local/cpanel/whostmgr/docroot/addon_plugins/"+brand_logo):
             os.symlink(installation_path+"/nDeploy_whm/"+brand_logo, "/usr/local/cpanel/whostmgr/docroot/addon_plugins/"+brand_logo)
         for line in fileinput.input(installation_path+"/nDeploy_whm/xtendweb.conf", inplace=True):
-            if line.strip().startswith('name='):
-                line = 'name='+brand_name+'\n'
-            elif line.strip().startswith('displayname='):
+            if line.strip().startswith('displayname='):
                 line = 'displayname='+brand_name+'\n'
             elif line.strip().startswith('icon='):
                 line = 'icon='+brand_logo+'\n'
