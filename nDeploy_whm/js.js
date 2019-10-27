@@ -82,7 +82,7 @@ jQuery(document).ready(function($) {
         $('#clusterTabs a[href="' + activeTab2 + '"]').tab('show');
 	}
 
-    // Get saved data from sessionStorage
+    // Accordion get saved data from sessionStorage
     let selectedCollapse = sessionStorage.getItem('selectedCollapse');
     if(selectedCollapse != null) {
         $('.accordion .collapse').removeClass('show');
@@ -96,7 +96,7 @@ jQuery(document).ready(function($) {
     });
 
     // Remove spaces
-    $("#brand").keyup(function() {
+    $(document).on('keyup','#brand',function(e){
         $(this).val($(this).val().replace(/\s/g, ""));
     });
 
@@ -104,11 +104,11 @@ jQuery(document).ready(function($) {
     // but let's not force scrolling when user is in terminal
     setInterval(function(){
         terminalActive = ($('#terminal-panel:hover').length > 0);
-        if ( !terminalActive ) {
+        if (!terminalActive){
             var termWindow = document.getElementById("terminal-panel");
             termWindow.scrollTop = termWindow.scrollHeight;
             $("#terminal .modal-body").load('term.log');
-        } else {
+        }else{
             $("#terminal .modal-body").load('term.log');
         }
     },1000)
@@ -118,19 +118,25 @@ jQuery(document).ready(function($) {
 
     $content = $(".modal-min");
 
-    $(".modalMinimize").on("click", function() {
+    // Retrieve current state
+    $('#terminal').toggleClass(localStorage.minimizeClick);
+    $('#main-container').addClass(localStorage.minimizePad);
+
+    $(document).on('click','.modalMinimize',function(e){
         $modalCon = $(this).closest("#terminal").attr("id");
         $apnData = $(this).closest("#terminal");
         $modal = "#" + $modalCon;
         $($modal).toggleClass("modal-min");
         if ($($modal).hasClass("modal-min")) {
-            $(".minmaxCon").append($apnData);
             $(this).find("i").toggleClass('fa-minus').toggleClass('fa-clone');
             $('#main-container').addClass('modal-minimized');
-    } else {
-            $("#main-container").append($apnData);
+            localStorage.minimizeClick = "modal-min";
+            localStorage.minimizePad = "modal-minimized";
+        } else {
             $(this).find("i").toggleClass('fa-clone').toggleClass('fa-minus');
             $('#main-container').removeClass('modal-minimized');
+            localStorage.minimizeClick = "";
+            localStorage.minimizePad = "";
         };
     });
 

@@ -234,7 +234,6 @@ def display_term():
     print('                </div>')
     print('            </div>')
     print('        </div>')
-    print('        <div class="minmaxCon"></div>')
 
 
 # Footer Section (Currently Disabled)

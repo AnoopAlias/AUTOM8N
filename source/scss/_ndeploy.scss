@@ -493,9 +493,6 @@ a {
 	&:focus {
 		background-color: darken($ultramarine-blue, 5%);
 		border-color: darken($ultramarine-blue, 5%);
-	}
-	&:focus,
-	&:active {
 		color: $white;
 	}
 }
@@ -837,6 +834,7 @@ kbd {
 			border: none;
 			.modal-header {
 				padding: .45rem 1.25rem;
+				border: none;
 				.close {
 					padding: .75rem;
 					.fa {
@@ -865,13 +863,12 @@ kbd {
 }
 
 .modal-min {
-	width: 250px;
-	height: 35px;
+	width: 20rem;
 	overflow: hidden !important;
 	@extend .p-0;
 	@extend .m-0;
 	float: left;
-	position: static !important;
+	z-index: 9999;
 	.modal-header {
 		height: 100%;
 		width: 100%;
@@ -883,21 +880,12 @@ kbd {
 		width: 100%;
 		@extend .p-0;
 		@extend .m-0;
+		.modal-body {
+			display: none;
+		}
 	}
 	.fa {
 		font-size: .9rem;
 		margin-right: .2rem;
 	}
-	.menuTab {
-		display: none;
-	}
-}
-
-.minmaxCon {
-	position: fixed;
-	height: 2rem;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	z-index: 9999;
 }
