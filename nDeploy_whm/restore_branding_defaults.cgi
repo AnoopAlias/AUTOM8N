@@ -31,7 +31,6 @@ print('    <head>')
 print('    </head>')
 print('    <body>')
 
-
 if form.getvalue('restore_defaults') == 'enabled':
     yaml_parsed_ndeploy_control_branding_conf = {'brand': 'AUTOM8N', 'brand_logo': 'xtendweb.png', 'brand_group': 'NGINX AUTOMATION'}
     with open(branding_file, 'w') as ndeploy_control_branding_conf:
