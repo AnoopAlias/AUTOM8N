@@ -20,6 +20,7 @@ __status__ = "Production"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 branding_file = installation_path+"/conf/branding.yaml"
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -38,7 +39,6 @@ def ndeploy_branding_data():
     yaml_parsed_ndeploy_control_branding_conf['brand_group'] = form.getvalue('brand_group')
     yaml_parsed_ndeploy_control_branding_conf['brand'] = form.getvalue('brand')
 
-
 if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalue('brand'):
     # Read in branding configuration if it exists
     if os.path.isfile(branding_file):
@@ -50,7 +50,13 @@ if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalu
         with open(branding_file, 'w') as ndeploy_control_branding_conf:
                 yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
-        subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
+        procExe = subprocess.Popen('echo "*** Updating branding configuration ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** Branding configuration updated ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+                
         commoninclude.print_success('The branding configuration has been updated.')
 
     # Create the desired config if one doesn't exist
@@ -62,8 +68,15 @@ if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalu
         with open(branding_file, 'w+') as ndeploy_control_branding_conf:
             yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
-        subprocess.call(installation_path+"/scripts/setup_brand.sh", shell=True)
+        procExe = subprocess.Popen('echo "*** Creating branding configuration ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** Branding configuration created ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
         commoninclude.print_success('The branding configuration has been created.')
+
 else:
     commoninclude.print_forbidden()
 
