@@ -1,8 +1,20 @@
 jQuery(document).ready(function($) {
 
     // Ajax
+    // Load term only when executing calls, and dont interrupt the user
+    // reading the log
     $(document).ajaxStart(function() {
         //$('#loader').show();
+        setInterval(function() {
+            terminalActive = ($('#terminal-panel:hover').length > 0);
+            if (!terminalActive) {
+                var termWindow = document.getElementById("terminal-panel");
+                termWindow.scrollTop = termWindow.scrollHeight;
+                $("#terminal .modal-body").load('term.log');
+            } else {
+                $("#terminal .modal-body").load('term.log');
+            };
+        },100)
     });
 
     $(document).ajaxStop(function() {
@@ -99,19 +111,6 @@ jQuery(document).ready(function($) {
     $(document).on('keyup','#brand',function(e){
         $(this).val($(this).val().replace(/\s/g, ""));
     });
-
-    // We are trying to load data continuously no matter where we are in the app,
-    // but let's not force scrolling when user is in terminal
-    setInterval(function(){
-        terminalActive = ($('#terminal-panel:hover').length > 0);
-        if (!terminalActive){
-            var termWindow = document.getElementById("terminal-panel");
-            termWindow.scrollTop = termWindow.scrollHeight;
-            $("#terminal .modal-body").load('term.log');
-        }else{
-            $("#terminal .modal-body").load('term.log');
-        }
-    },1000)
 
     // Toggle state for Terminal
     var $content, $modal, $apnData, $modalCon;
