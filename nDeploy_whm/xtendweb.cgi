@@ -12,7 +12,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, return_prepend, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter, return_multi_input, print_input_fn, print_select_fn
+from commoninclude import bcrumb, return_prepend, print_header, display_term, print_modals, print_loader, cardheader, cardfooter, return_multi_input, print_input_fn, print_select_fn
 
 
 __author__ = "Anoop P Alias"
@@ -1251,17 +1251,18 @@ if not osrelease == 'CloudLinux':
 print('                  </div> <!-- Card Body End -->')
 cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
 
-print('              </div> <!-- End Limit Tab -->')
-print('          </div>')
-print('      </div> <!-- End WHM Tabs Row -->')
+print('                </div> <!-- End Limit Tab -->')
+print('            </div>')
+print('        </div> <!-- End WHM Tabs Row -->')
 
-print_footer()
+print('        </div> <!-- Main Container End -->')
 
-print(' </div> <!-- Main Container End -->')
+display_term()
+
 print('')
 
 print_modals()
 print_loader()
 
-print('</body> <!-- Body End -->')
+print('    </body> <!-- Body End -->')
 print('</html>')
