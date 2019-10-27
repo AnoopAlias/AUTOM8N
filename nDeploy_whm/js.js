@@ -96,7 +96,7 @@ jQuery(document).ready(function($) {
     });
 
     // Remove spaces
-    $("#brand").keyup(function() {
+    $(document).on('keyup','#brand',function(e){
         $(this).val($(this).val().replace(/\s/g, ""));
     });
 
