@@ -493,9 +493,6 @@ a {
 	&:focus {
 		background-color: darken($ultramarine-blue, 5%);
 		border-color: darken($ultramarine-blue, 5%);
-	}
-	&:focus,
-	&:active {
 		color: $white;
 	}
 }
