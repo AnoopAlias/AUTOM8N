@@ -14,10 +14,11 @@ __license__ = "GPL"
 __version__ = "1.0.0"
 __maintainer__ = "Budd Grant, https://highavailability.io"
 __email__ = "ops@highavailability.io"
-__status__ = "Development"
+__status__ = "Production"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -26,42 +27,43 @@ form = cgi.FieldStorage()
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
-
-def shelloutput():
-    print('<ul class="shelloutput">')
-    print('    <li><b>Executing the Easy Glances Installer...</b></li>')
-    print('    <li>&nbsp;</li>')
-    for line in iter(procExe.stdout.readline, b''):
-        print('    <li>'+line.rstrip()+'</li>')
-    print('    <li>&nbsp;</li>')
-    print('    <li><b>Glances has been configured on this system.</b></li>')
-    print('</ul>')
-
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
 if form.getvalue('run_installer') == 'enabled':
 
     if os.path.isfile('/etc/nginx/conf.d/glances.password'):
-        print('<p>Previous Glances credentials detected. Reinstalling latest Glances using current credentials...</p>')
-        procExe = subprocess.Popen(installation_path+"/scripts/easy_glances_setup.sh", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shelloutput()
+
+        procExe = subprocess.Popen('echo "*** Previous Glances credentials detected. Reinstalling latest Glances using current credentials ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/easy_glances_setup.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** Glances has been reinstalled using existing credentials ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
         
+        commoninclude.print_success('Glances reinstalled!')        
+
     elif form.getvalue('glances_pass') != None:
-        print('<p>Glances is being set up using <kbd>glances::'+form.getvalue('glances_pass')+'</kbd> for credentials. Please keep this data for your records.</p>')    
-        procExe = subprocess.Popen(installation_path+"/scripts/easy_glances_setup.sh "+form.getvalue('glances_pass'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        shelloutput()
+
+        procExe = subprocess.Popen('echo "*** Glances is being set up using glances::'+form.getvalue('glances_pass')+' for credentials. Please keep this data for your records. ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen(installation_path+'/scripts/easy_glances_setup.sh '+form.getvalue('glances_pass')+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo "*** Glances has been reinstalled using existing the new credentials ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        
+        commoninclude.print_success('Glances installed!')        
 
     else:
-        print('<p>No existing Glances credentials have been detected. <br>No password has been entered into the <kbd>Glances Password</kbd> box. <br>Please try again with adequate credentials.</p>')
+        commoninclude.print_warning('Try again with credentials!')
     
 elif form.getvalue('remove_glances_creds') == 'enabled':
     os.remove('/etc/nginx/conf.d/glances.password')
-    print('<p>Glances credentials have been removed! You can now set up Glances using new credentials.</p>')
+    commoninclude.print_success('Glances credentials reset!')
 
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
+print('    </body>')
 print('</html>')
