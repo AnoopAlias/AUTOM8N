@@ -67,7 +67,7 @@ autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 #     print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>')
 
 
-# Non-Toast Error func() for main pages 
+# Non-Toast Error func() for main pages
 def print_nontoast_error(thenotice, thereason):
     print('            <div id="footer" class="row justify-content-center">')
     print('                <div class="col-lg-6 alert alert-danger">')
@@ -112,27 +112,27 @@ def print_info_alert(themessage):
 
 # Forbidden Toast with icon
 def print_forbidden():
-    print_error_alert('<i class="fas fa-exclamation"></i>Forbidden')
+    print_error_alert('Forbidden')
 
 
 # Error Toast with icon
 def print_error(themessage):
-    print_error_alert('<i class="fas fa-exclamation"></i>'+themessage)
+    print_error_alert(themessage)
 
 
 # Success Toast with icon
 def print_success(themessage):
-    print_success_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+    print_success_alert(themessage)
 
 
 # Warning Toast with icon
 def print_warning(themessage):
-    print_warning_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+    print_warning_alert(themessage)
 
 
 # Info Toast with icon
 def print_info(themessage):
-    print_info_alert('<i class="fas fa-thumbs-up"></i>'+themessage)
+    print_info_alert(themessage)
 
 
 # Disabled Nginx Modules
@@ -186,7 +186,7 @@ def print_header(title=''):
     print('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>')
     print('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>')
     print('        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">')
-    print('        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">')
+    print('        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">')
     print('        <script src="js.js"></script>')
     print('        <link rel="stylesheet" href="styles.css">')
     print('    </head>')
@@ -220,21 +220,16 @@ def print_header(title=''):
 # Terminal Section
 def display_term():
     print('        <div class="modal" id="terminal" tabindex="-1" role="dialog">')
-    print('            <div class="modal-dialog modal-dialog-centered" role="document">')
+    print('            <div class="modal-dialog" role="document">')
     if ndeploy_theme_color == 'dark':
         print('                <div class="modal-content bg-dark text-white">')
     if ndeploy_theme_color == 'light':
         print('                <div class="modal-content bg-light text-dark">')
     print('                    <div class="modal-header">')
     print('                        <h4 class="modal-title">Command Output</h4>')
-    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
+    print('                        <button class="close modalMinimize"> <i class="fa fa-minus"></i> </button>')
     print('                    </div>')
-    print('                    <div class="modal-body">')
-    print('                    </div>')
-    print('                    <div class="modal-footer">')
-    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
+    print('                    <div id="terminal-panel" class="modal-body">')
     print('                    </div>')
     print('                </div>')
     print('            </div>')

@@ -27,6 +27,15 @@ $bg-dark2-color:	rgba(255,255,255,.125);
 $bg-light-color:	rgba(0,0,0,.03);
 
 //
+// Icons
+// ----------------------------------------------------------------------------------------------------
+
+$icon-info: "\f059";
+$icon-success: "\f058";
+$icon-error: "\f057";
+$icon-warning: "\f0eb";
+
+//
 // Theming
 // ----------------------------------------------------------------------------------------------------
 
@@ -208,7 +217,10 @@ body {
 }
 
 #main-container {
-	padding-bottom: 3rem;
+	padding-bottom: 20rem;
+	&.modal-minimized {
+		padding-bottom: 3rem;
+	}
 }
 
 #main-header {
@@ -481,8 +493,6 @@ a {
 	&:focus {
 		background-color: darken($ultramarine-blue, 5%);
 		border-color: darken($ultramarine-blue, 5%);
-	}
-	&:focus {
 		color: $white;
 	}
 }
@@ -724,7 +734,12 @@ kbd {
 
 .toast {
 	z-index: 100;
-	background-color: $bg-dark;
+	background-color: transparent;
+    -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+    box-shadow: none;
+    border: none;
+    border-radius: none;
 	color: $white;
 	position: fixed;
 	top: .9em;
@@ -747,6 +762,43 @@ kbd {
 	button > span {
 		color: $white;
 	}
+	.alert {
+		position: relative;
+		&.alert-info,
+		&.alert-success,
+		&.alert-error,
+		&.alert-warning {
+			padding-left: 3rem;
+			&:before {
+				font-family: "Font Awesome 5 Free";
+				content: '';
+				position: absolute;
+				left: 1rem;
+				width: 3rem;
+				font-size: 1.2rem;
+			}
+		}
+		&.alert-info {
+			&:before {
+				content: $icon-info;
+			}
+		}
+		&.alert-success {
+			&:before {
+				content: $icon-success;
+			}
+		}
+		&.alert-error {
+			&:before {
+				content: $icon-error;
+			}
+		}
+		&.alert-warning {
+			&:before {
+				content: $icon-warning;
+			}
+		}
+	}
 }
 
 .fa-external-link-alt {
@@ -767,20 +819,73 @@ kbd {
 // ----------------------------------------------------------------------------------------------------
 
 #terminal {
-    display: block;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    margin: 0px !important;
-	height: 100px;
-	white-space: pre-line;
-    text-align: left;
-    list-style-type: none;
-    background-color: #151717;
-    color: #1E7E34;
-    overflow-y: auto;
-    overflow-x: auto;
-    padding: 1rem;
-    border: 1px solid #1E7E34;
+	display: block;
+	position: fixed;
+	top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+	height: inherit;
+    z-index: 1030;
+	.modal-dialog {
+		max-width: 100%;
+		margin: 0;
+		.modal-content {
+			border: none;
+			.modal-header {
+				padding: .45rem 1.25rem;
+				border: none;
+				.close {
+					padding: .75rem;
+					.fa {
+						font-size: .9rem;
+					}
+				}
+				h4 {
+					font-size: .9rem;
+				}
+			}
+			.modal-body {
+				white-space: pre-line;
+			    text-align: left;
+			    list-style-type: none;
+			    background-color: $black;
+			    color: $green;
+			    overflow-y: auto;
+			    overflow-x: auto;
+			    padding: 1rem;
+			    border: 1px solid $green;
+			    font-family: monospace;
+				height: 15rem;
+			}
+		}
+	}
+}
+
+.modal-min {
+	width: 20rem;
+	overflow: hidden !important;
+	@extend .p-0;
+	@extend .m-0;
+	float: left;
+	z-index: 9999;
+	.modal-header {
+		height: 100%;
+		width: 100%;
+		@extend .m-0;
+		padding: .45rem .6rem !important;
+	}
+	.modal-dialog,
+	.modal-content {
+		width: 100%;
+		@extend .p-0;
+		@extend .m-0;
+		.modal-body {
+			display: none;
+		}
+	}
+	.fa {
+		font-size: .9rem;
+		margin-right: .2rem;
+	}
 }

@@ -36,7 +36,6 @@ backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
 
-
 # nDeploy Control
 if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
@@ -58,14 +57,10 @@ if os.path.isfile(branding_file):
     brand_logo = yaml_parsed_brand.get("brand_logo", "xtendweb.png")
     brand = yaml_parsed_brand.get("brand", "AUTOM8N")
     brand_group = yaml_parsed_brand.get("brand_group", "NGINX AUTOMATION")
-    brand_anchor = yaml_parsed_brand.get("brand_anchor", "A U T O M 8 N")
-    brand_link = yaml_parsed_brand.get("brand_link", "https://autom8n.com/")
 else:
     brand_logo = "xtendweb.png"
     brand = "AUTOM8N"
     brand_group = "NGINX AUTOMATION"
-    brand_anchor = "A U T O M 8 N"
-    brand_link = "https://autom8n.com/"
 
 print_header(brand+' Control Center')
 bcrumb(brand+' Control Center','fas fa-tools')
