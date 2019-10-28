@@ -41,7 +41,7 @@ if form.getvalue('run_installer') == 'enabled':
         procExe = subprocess.Popen('echo "*** Netdata has been reinstalled using existing credentials ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
         
-        commoninclude.print_success('Netdata reinstalled!')        
+        commoninclude.print_success('Netdata reinstalled!')
         
     elif form.getvalue('netdata_pass') != None:
 
@@ -52,7 +52,7 @@ if form.getvalue('run_installer') == 'enabled':
         procExe = subprocess.Popen('echo "*** Netdata has been reinstalled using existing the new credentials ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
         
-        commoninclude.print_success('Netdata installed!')        
+        commoninclude.print_success('Netdata installed!')
 
     else:
         commoninclude.print_warning('Try again with credentials!')
