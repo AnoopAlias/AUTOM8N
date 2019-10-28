@@ -801,7 +801,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        var $loaderAnimation;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
@@ -821,7 +821,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        var $loaderAnimation;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
