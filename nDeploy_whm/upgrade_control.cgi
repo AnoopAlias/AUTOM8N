@@ -64,7 +64,7 @@ if form.getvalue('upgrade_control'):
             procExe = subprocess.Popen('yum -y --enablerepo=ndeploy reinstall *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy reinstall *nDeploy*\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
 
-            commoninclude.print_warning('Application has been reinstalled cluster-wide!')
+            commoninclude.print_success('Application has been reinstalled cluster-wide!')
 
         else:
 
@@ -73,7 +73,7 @@ if form.getvalue('upgrade_control'):
             procExe = subprocess.Popen('yum -y --enablerepo=ndeploy reinstall *nDeploy* >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
 
-            commoninclude.print_warning('Application has been reinstalled!')
+            commoninclude.print_success('Application has been reinstalled!')
 
     elif form.getvalue('upgrade_control') == 'upgrade':
         if os.path.isfile(cluster_config_file):
@@ -83,7 +83,7 @@ if form.getvalue('upgrade_control'):
             procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy upgrade *nDeploy*\" && '+installation_path+'/scripts/attempt_autofix.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
 
-            commoninclude.print_warning('Application has been upgraded cluster-wide!')
+            commoninclude.print_success('Application has been upgraded cluster-wide!')
 
         else:
 
@@ -92,7 +92,7 @@ if form.getvalue('upgrade_control'):
             procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && '+installation_path+'/scripts/attempt_autofix.sh && nginx -t && needs-restarting | grep nginx && service nginx restart >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
 
-            commoninclude.print_warning('Application has been upgraded!')
+            commoninclude.print_success('Application has been upgraded!')
 
 else:
     commoninclude.print_forbidden()
