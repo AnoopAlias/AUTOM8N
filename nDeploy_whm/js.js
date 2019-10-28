@@ -1,30 +1,35 @@
 jQuery(document).ready(function($) {
 
-    // Ajax
-    var $ajaxing = false;
-    
+    // Ajax    
     $(document).ajaxStart(function() {
-        window.$ajaxing = true;
+        $("#terminal .modal-body").load('term.log');
+        terminalUpdate = setInterval(function() {
+            terminalActive = ($('#terminal-panel:hover').length > 0);
+            if (!terminalActive) {
+                var termWindow = document.getElementById("terminal-panel");
+                termWindow.scrollTop = termWindow.scrollHeight;
+                $("#terminal .modal-body").load('term.log');
+            } else {
+                $("#terminal .modal-body").load('term.log');
+            };
+        },1000)
         //$('#loader').show();
     });
 
     $(document).ajaxStop(function() {
-        window.$ajaxing = false;
+        clearInterval(terminalUpdate);
         //$('#loader').hide();
     });
 
     $(document).ajaxSuccess(function() {
-        window.$ajaxing = false;
         //$('#loader').hide();
     });
 
     $(document).ajaxComplete(function() {
-        window.$ajaxing = false;
         //$('#loader').hide();
     });
 
     $(document).ajaxError(function() {
-        window.$ajaxing = false;        
         //$('#loader').hide();
     });
 
@@ -145,20 +150,6 @@ jQuery(document).ready(function($) {
         $("#main-container").removeClass($apnData);
         $(this).next('.modalMinimize').find("i").removeClass('fa fa-clone').addClass('fa fa-minus');
     });
-
-    // Poll for terminal updates when $ajaxing
-    do {
-        setInterval(function() {
-            terminalActive = ($('#terminal-panel:hover').length > 0);
-            if (!terminalActive) {
-                var termWindow = document.getElementById("terminal-panel");
-                termWindow.scrollTop = termWindow.scrollHeight;
-                $("#terminal .modal-body").load('term.log');
-            } else {
-                $("#terminal .modal-body").load('term.log');
-            };
-        },1000)
-    } while ($ajaxing == true);
 
     // General Form Validatons
     window.addEventListener('load', function() {
