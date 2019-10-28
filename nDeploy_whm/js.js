@@ -1,7 +1,8 @@
 jQuery(document).ready(function($) {
 
-    // Ajax    
+    // Ajax
     $(document).ajaxStart(function() {
+        // Terminal log & scroll to bottom
         $("#terminal .modal-body").load('term.log');
         terminalUpdate = setInterval(function() {
             terminalActive = ($('#terminal-panel:hover').length > 0);
@@ -82,7 +83,7 @@ jQuery(document).ready(function($) {
         $('.nav a.dropdown-item[href="' + href + '"]').tab('show');
     })
 
-    // Set active tab
+    // Set main active tab
     $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
         localStorage.setItem('activeTab', $(e.target).attr('href'));
     });
@@ -92,7 +93,7 @@ jQuery(document).ready(function($) {
         $('#v-pills-tab a[href="' + activeTab + '"]').tab('show');
 	}
 
-    // Set active inside tab
+    // Set secondary active tab
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         localStorage.setItem('activeTab2', $(e.target).attr('href'));
     });
@@ -622,6 +623,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-branding .card-body').load('ndeploy_control.cgi #v-pills-branding .card-body > *');
+                $('#main-header').load('ndeploy_control.cgi #main-header > *');
                 $("#myToast-nl").find('.toast-body').html(result)
                 $("#myToast-nl").toast('show');
             }
@@ -682,6 +684,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-aesthetics .card-body').load('ndeploy_control.cgi #v-pills-aesthetics .card-body > *');
+                $('#main-header').load('ndeploy_control.cgi #main-header > *');
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
             }
@@ -798,7 +801,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation;
+        var $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
@@ -818,7 +821,7 @@ jQuery(document).ready(function($) {
         var $loaderDisabled  =   $($loaderId).prop("disabled", true);
         var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
-        $loaderAnimation;
+        var $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "plugin_status.cgi?" + $f.serialize();
