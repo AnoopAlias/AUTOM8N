@@ -15,7 +15,7 @@ File and Database replication
 
 Configuration replication using Csync2/Ansible
 
-Multi Data Center clustering with DNS Load Balancing and automatic failover
+Multi Data Center clustering with geo-DNS Load Balancing and automatic failover
 
 
 # Licensing Model
@@ -23,9 +23,10 @@ GPLv3
 
 
 # COMMERCIAL SUPPORT and SOFTWARE DOWNLOAD
-Packaged Software and 24x7 Product support installation support is provided via a Paid Subscription
+Packaged Software and 24x7 Product support and Installation support is provided via a Paid Subscription by https://support.gnusys.net/
 
-# CREDITS
+
+# CREDIT ROLL
 https://www.stirstudiosdesign.com/
 
 https://highavailability.io/
