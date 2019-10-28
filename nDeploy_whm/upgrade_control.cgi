@@ -34,7 +34,7 @@ print('    <body>')
 
 if form.getvalue('upgrade_control'):
 
-    if True:#form.getvalue('upgrade_control') == 'check':
+    if form.getvalue('upgrade_control') == 'check':
 
         procExe = subprocess.Popen('echo -e "Checking for updates..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
@@ -58,26 +58,41 @@ if form.getvalue('upgrade_control'):
 
     elif form.getvalue('upgrade_control') == 'reinstall':
         if os.path.isfile(cluster_config_file):
-            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy reinstall *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy reinstall *nDeploy*\"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+            procExe = subprocess.Popen('echo -e "Reinstalling application cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy reinstall *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy reinstall *nDeploy*\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+
+            commoninclude.print_warning('Application has been reinstalled cluster-wide!')
+
         else:
-            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy reinstall *nDeploy*', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        print('<ul class="shelloutput">')
-        print('    <li><b>Reinstalling Application:</b></li>')
+
+            procExe = subprocess.Popen('echo -e "Reinstalling application..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy reinstall *nDeploy* >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+
+            commoninclude.print_warning('Application has been reinstalled!')
+
     elif form.getvalue('upgrade_control') == 'upgrade':
         if os.path.isfile(cluster_config_file):
-            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy upgrade *nDeploy*\" && '+installation_path+'/scripts/attempt_autofix.sh', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        else:
-            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && '+installation_path+'/scripts/attempt_autofix.sh && nginx -t && needs-restarting | grep nginx && service nginx restart', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        print('<ul class="shelloutput">')
-        print('    <li><b>Upgrading Application:</b></li>')
 
-    if form.getvalue('upgrade_control') == 'reinstall' or form.getvalue('upgrade_control') == 'upgrade':
-        print('    <li>&nbsp;</li>')
-        for line in iter(procExe.stdout.readline, b''):
-            print('    <li>'+line.rstrip()+'</li>')
-        print('    <li>&nbsp;</li>')
-        print('    <li><b>Application maintenance completed!</b></li>')
-        print('</ul>')
+            procExe = subprocess.Popen('echo -e "Upgrading application cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy upgrade *nDeploy*\" && '+installation_path+'/scripts/attempt_autofix.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+
+            commoninclude.print_warning('Application has been upgraded cluster-wide!')
+
+        else:
+
+            procExe = subprocess.Popen('echo -e "Upgrading application..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && '+installation_path+'/scripts/attempt_autofix.sh && nginx -t && needs-restarting | grep nginx && service nginx restart >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+
+            commoninclude.print_warning('Application has been upgraded!')
 
 else:
     commoninclude.print_forbidden()
