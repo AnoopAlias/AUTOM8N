@@ -5,6 +5,7 @@ import yaml
 import psutil
 import platform
 import signal
+import random
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -242,14 +243,14 @@ def print_footer():
 
 
 # Input Display
-def print_input_fn(label='Label', hint='Hint', inputID='validationToolTip01', inputValue='', inputName=''):
+def print_input_fn(label='Label', hint='Hint', inputValue='', inputName=''):
     print('                                        <div class="input-group">')
     print('                                            <div class="input-group-prepend input-group-prepend-min">')
     print('                                                <span class="input-group-text">')
     print('                                                    '+return_multi_input(label, hint))
     print('                                                </span>')
     print('                                            </div>')
-    print('                                            <input class="form-control" id="'+inputID+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>')
+    print('                                            <input class="form-control" id="validate-'+str(random.randint(0, 100000))+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>')
     print('                                            <div class="invalid-tooltip">'+hint+'</div>')
     print('                                        </div>')
 

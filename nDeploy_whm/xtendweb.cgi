@@ -379,13 +379,13 @@ if os.path.isfile(cluster_config_file):
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
         print('                            <form class="form needs-validation" method="post" id="toastForm29" onsubmit="return false;" novalidate>')
 
-        print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", "validationToolTip01", master_hostname, "master_hostname")
-        print_input_fn("Master Main IP", " Enter the master server's main IP address. ", "validationTooltip02", master_main_ip, "master_main_ip")
-        print_input_fn("Master DB IP", " Enter the master server's database IP address. ", "validationTooltip03", master_db_ip, "master_db_ip")
-        print_input_fn("Master SSH Port", " Enter the master server's SSH port. ", "validationTooltip04", master_ssh_port, "master_ssh_port")
-        print_input_fn("Master Server ID", " Enter the master server's ID (Usually 1). ", "validationTooltip05", master_server_id, "master_server_id")
-        print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", "validationTooltip06", master_lat, "master_lat")
-        print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", "validationTooltip07", master_lon, "master_lon")
+        print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", master_hostname, "master_hostname")
+        print_input_fn("Master Main IP", " Enter the master server's main IP address. ", master_main_ip, "master_main_ip")
+        print_input_fn("Master DB IP", " Enter the master server's database IP address. ", master_db_ip, "master_db_ip")
+        print_input_fn("Master SSH Port", " Enter the master server's SSH port. ", master_ssh_port, "master_ssh_port")
+        print_input_fn("Master Server ID", " Enter the master server's ID (Usually 1). ", master_server_id, "master_server_id")
+        print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", master_lat, "master_lat")
+        print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", master_lon, "master_lon")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", master_repo, "master_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
@@ -402,21 +402,21 @@ if os.path.isfile(cluster_config_file):
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form needs-validation" method="post" id="toastForm30" onsubmit="return false;" novalidate>')
 
-        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip11", dbslave_hostname, "dbslave_hostname")
-        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip12", dbslave_main_ip, "dbslave_main_ip")
-        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip13", dbslave_db_ip, "dbslave_db_ip")
-        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip14", dbslave_ssh_port, "dbslave_ssh_port")
-        print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 2). ", "validationTooltip15", dbslave_server_id, "dbslave_server_id")
-        print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", "validationTooltip16", dbslave_lat, "dbslave_lat")
-        print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", "validationTooltip17", dbslave_lon, "dbslave_lon")
+        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", dbslave_hostname, "dbslave_hostname")
+        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", dbslave_main_ip, "dbslave_main_ip")
+        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", dbslave_db_ip, "dbslave_db_ip")
+        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", dbslave_ssh_port, "dbslave_ssh_port")
+        print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 2). ", dbslave_server_id, "dbslave_server_id")
+        print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", dbslave_lat, "dbslave_lat")
+        print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", dbslave_lon, "dbslave_lon")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", dbslave_repo, "dbslave_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
         print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
 
-        print('                                    <input hidden name="action" value="editdbslave">')
+        print('                                <input hidden name="action" value="editdbslave">')
 
-        print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
@@ -449,13 +449,13 @@ if os.path.isfile(cluster_config_file):
                 print('                 <div class="card-body">')
                 print('                     <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
-                print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", slave_hostname, "slave_hostname")
-                print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", slave_main_ip, "slave_main_ip")
-                print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip23", slave_db_ip, "slave_db_ip")
-                print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip24", slave_ssh_port, "slave_ssh_port")
-                print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 1). ", "validationTooltip25", slave_server_id, "slave_server_id")
-                print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", "validationTooltip26", slave_lat, "slave_lat")
-                print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", "validationTooltip27", slave_lon, "slave_lon")
+                print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
+                print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
+                print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", slave_db_ip, "slave_db_ip")
+                print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", slave_ssh_port, "slave_ssh_port")
+                print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 1). ", slave_server_id, "slave_server_id")
+                print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", slave_lat, "slave_lat")
+                print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", slave_lon, "slave_lon")
 
                 print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", slave_repo, "slave_repo", "ndeploy", "ndeploy-edge")
                 print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
@@ -489,10 +489,10 @@ if os.path.isfile(cluster_config_file):
         print('                            <form class="form needs-validation" method="post" id="toastForm31" onsubmit="return false;" novalidate>')
 
         # Slave data
-        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", "", "slave_hostname")
-        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", "", "slave_main_ip")
-        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip23", "", "slave_db_ip")
-        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip24", "", "slave_ssh_port")
+        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
+        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "", "slave_main_ip")
+        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
+        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
 
         print('                                <input hidden name="action" value="addadditionalslave">')
 
@@ -543,13 +543,13 @@ if os.path.isfile(cluster_config_file):
                 print('                     <form class="form needs-validation toastForm34-wrap" method="post" id="toastForm34'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;" novalidate>')
 
                 # Master data
-                print_input_fn("Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", "validationToolTip31", master_ip_resource, "master_ip_resource")
-                print_input_fn("Master LAN IP", " Enter the Local Area Network (LAN) IP. ", "validationToolTip32", myip, "master_lan_ip")
-                print_input_fn("Master WAN IP", " Enter the Wide Area Network (WAN) IP. ", "validationToolTip33", master_ip_resource_actual, "master_wan_ip")
+                print_input_fn(" Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", master_ip_resource, "master_ip_resource")
+                print_input_fn(" Master LAN IP", " Enter the Local Area Network (LAN) IP. ", myip, "master_lan_ip")
+                print_input_fn(" Master WAN IP", " Enter the Wide Area Network (WAN) IP. ", master_ip_resource_actual, "master_wan_ip")
 
                 # Slave data
-                print_input_fn(theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "validationToolTip34", slave_mapped_web_ip, "slave_lan_ip")
-                print_input_fn(theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "validationToolTip35", slave_mapped_dns_ip, "slave_wan_ip")
+                print_input_fn(theslave, " Enter the slave server's Local Area Network (LAN) IP. ", slave_mapped_web_ip, "slave_lan_ip")
+                print_input_fn(theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", slave_mapped_dns_ip, "slave_wan_ip")
 
                 print('                         <input hidden name="master_hostname" value="'+myhostname+'">')
                 print('                         <input hidden name="slave_hostname" value="'+theslave+'">')
@@ -580,13 +580,13 @@ if os.path.isfile(cluster_config_file):
         print('                            <form class="form needs-validation" method="post" id="toastForm36" onsubmit="return false;" novalidate>')
 
         # Master data
-        print_input_fn("Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", "validationToolTip31", "", "master_ip_resource")
-        print_input_fn("Master LAN IP", " Enter the Local Area Network (LAN) IP. ", "validationToolTip32", "", "master_lan_ip")
+        print_input_fn("Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", "", "master_ip_resource")
+        print_input_fn("Master LAN IP", " Enter the Local Area Network (LAN) IP. ", "", "master_lan_ip")
 
         for theslave in cluster_data_yaml_parsed.keys():
             # Slave data
-            print_input_fn("LAN_IP_"+theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "validationToolTip34", "", theslave+"_lan_ip")
-            print_input_fn("WAN_IP_"+theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "validationToolTip35", "", theslave+"_wan_ip")
+            print_input_fn("LAN_IP_"+theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "", theslave+"_lan_ip")
+            print_input_fn("WAN_IP_"+theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "", theslave+"_wan_ip")
 
         print('                                    <input hidden name="action" value="addip">')
         print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
@@ -699,13 +699,13 @@ else:
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
         print('                            <form class="form needs-validation" method="post" id="toastForm29" onsubmit="return false;" novalidate>')
 
-        print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", "validationToolTip01", master_hostname, "master_hostname")
-        print_input_fn("Master Main IP", " Enter the master server's main IP address. ", "validationTooltip02", master_main_ip, "master_main_ip")
-        print_input_fn("Master DB IP", " Enter the master server's database IP address. ", "validationTooltip03", master_db_ip, "master_db_ip")
-        print_input_fn("Master SSH Port", " Enter the master server's SSH port. ", "validationTooltip04", master_ssh_port, "master_ssh_port")
-        print_input_fn("Master Server ID", " Enter the master server's ID (Usually 1). ", "validationTooltip05", master_server_id, "master_server_id")
-        print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", "validationTooltip06", master_lat, "master_lat")
-        print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", "validationTooltip07", master_lon, "master_lon")
+        print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", master_hostname, "master_hostname")
+        print_input_fn("Master Main IP", " Enter the master server's main IP address. ", master_main_ip, "master_main_ip")
+        print_input_fn("Master DB IP", " Enter the master server's database IP address. ", master_db_ip, "master_db_ip")
+        print_input_fn("Master SSH Port", " Enter the master server's SSH port. ", master_ssh_port, "master_ssh_port")
+        print_input_fn("Master Server ID", " Enter the master server's ID (Usually 1). ", master_server_id, "master_server_id")
+        print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", master_lat, "master_lat")
+        print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", master_lon, "master_lon")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", master_repo, "master_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
@@ -722,21 +722,21 @@ else:
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form needs-validation" method="post" id="toastForm30" onsubmit="return false;" novalidate>')
 
-        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip11", dbslave_hostname, "dbslave_hostname")
-        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip12", dbslave_main_ip, "dbslave_main_ip")
-        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip13", dbslave_db_ip, "dbslave_db_ip")
-        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip14", dbslave_ssh_port, "dbslave_ssh_port")
-        print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 2). ", "validationTooltip15", dbslave_server_id, "dbslave_server_id")
-        print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", "validationTooltip16", dbslave_lat, "dbslave_lat")
-        print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", "validationTooltip17", dbslave_lon, "dbslave_lon")
+        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", dbslave_hostname, "dbslave_hostname")
+        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", dbslave_main_ip, "dbslave_main_ip")
+        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", dbslave_db_ip, "dbslave_db_ip")
+        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", dbslave_ssh_port, "dbslave_ssh_port")
+        print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 2). ", dbslave_server_id, "dbslave_server_id")
+        print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", dbslave_lat, "dbslave_lat")
+        print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", dbslave_lon, "dbslave_lon")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", dbslave_repo, "dbslave_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
         print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
 
-        print('                                    <input hidden name="action" value="editdbslave">')
+        print('                                <input hidden name="action" value="editdbslave">')
 
-        print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
@@ -768,13 +768,13 @@ else:
                 print('                 <div class="card-body">')
                 print('                     <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
-                print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", slave_hostname, "slave_hostname")
-                print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", slave_main_ip, "slave_main_ip")
-                print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip23", slave_db_ip, "slave_db_ip")
-                print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip24", slave_ssh_port, "slave_ssh_port")
-                print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 1). ", "validationTooltip25", slave_server_id, "slave_server_id")
-                print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", "validationTooltip26", slave_lat, "slave_lat")
-                print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", "validationTooltip27", slave_lon, "slave_lon")
+                print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
+                print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
+                print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", slave_db_ip, "slave_db_ip")
+                print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", slave_ssh_port, "slave_ssh_port")
+                print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 1). ", slave_server_id, "slave_server_id")
+                print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", slave_lat, "slave_lat")
+                print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", slave_lon, "slave_lon")
 
                 print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", slave_repo, "slave_repo", "ndeploy", "ndeploy-edge")
                 print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
@@ -806,10 +806,10 @@ else:
         print('                            <form class="form needs-validation" method="post" id="toastForm31" onsubmit="return false;" novalidate>')
 
         # Slave data
-        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationToolTip21", "", "slave_hostname")
-        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip22", "", "slave_main_ip")
-        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip23", "", "slave_db_ip")
-        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip24", "", "slave_ssh_port")
+        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
+        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "", "slave_main_ip")
+        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
+        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
 
         print('                                    <input hidden name="action" value="addadditionalslave">')
 
@@ -878,18 +878,18 @@ else:
         # Display form for ndeploymaster
         print('                            <form class="form needs-validation" method="post" id="toastForm28" onsubmit="return false;" novalidate>')
 
-        print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", "validationToolTip01", myhostname, "master_hostname")
-        print_input_fn("Master Main IP", " Enter the master server's main IP address. ", "validationTooltip02", myip, "master_main_ip")
-        print_input_fn("Master DB IP", " Enter the master server's database IP address. ", "validationTooltip03", myip, "master_db_ip")
-        print_input_fn("Master SSH Port", " Enter the master server's SSH port. ", "validationTooltip04", "", "master_ssh_port")
-        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "validationTooltip05", "", "slave_hostname")
-        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "validationTooltip06", "", "slave_main_ip")
-        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "validationTooltip07", "", "slave_db_ip")
-        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "validationTooltip08", "", "slave_ssh_port")
+        print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", myhostname, "master_hostname")
+        print_input_fn("Master Main IP", " Enter the master server's main IP address. ", myip, "master_main_ip")
+        print_input_fn("Master DB IP", " Enter the master server's database IP address. ", myip, "master_db_ip")
+        print_input_fn("Master SSH Port", " Enter the master server's SSH port. ", "", "master_ssh_port")
+        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
+        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "", "slave_main_ip")
+        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
+        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "slave_ssh_port")
 
-        print('                                    <input hidden name="action" value="setup">')
+        print('                                <input hidden name="action" value="setup">')
 
-        print('                                    <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
+        print('                                <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
         print('                            </form>')
 
     print('             </div> <!-- Card Body End -->')
