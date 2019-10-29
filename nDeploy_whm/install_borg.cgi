@@ -12,7 +12,9 @@ __copyright__ = "Copyright Anoop P Alias"
 __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
+
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -21,35 +23,37 @@ form = cgi.FieldStorage()
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
 if form.getvalue('action'):
-    print('<ul class="list-unstyled text-left">')
     if form.getvalue('action') == 'installborg':
-        run_cmd = subprocess.Popen(installation_path+'/scripts/easy_borg_setup.sh', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print('<samp>')
-        while True:
-            line = run_cmd.stdout.readline()
-            if not line:
-                break
-            print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
-        print('</samp>')
+
+        procExe = subprocess.Popen('echo -e "Installing BORG Backup System... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        run_cmd = subprocess.Popen(installation_path+'/scripts/easy_borg_setup.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo -e "BORG Backup System installed! >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
+        commoninclude.print_success('BORG Backup Installed!')
+
     elif form.getvalue('action') == 'initrepo':
-        run_cmd = subprocess.Popen('/usr/local/bin/borgmatic --init --encryption repokey-blake2', stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-        print('<samp>')
-        while True:
-            line = run_cmd.stdout.readline()
-            if not line:
-                break
-            print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
-        print('</samp>')
+
+        procExe = subprocess.Popen('echo -e "Initializing Repo... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        run_cmd = subprocess.Popen('/usr/local/bin/borgmatic --init --encryption repokey-blake2 >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo -e "Repo Initialized... >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+
         if not os.path.isfile('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE'):
             os.mknod('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE')
+
     else:
         commoninclude.print_forbidden()
 else:
     commoninclude.print_forbidden()
-print('</body>')
+print('    </body>')
 print('</html>')
