@@ -294,14 +294,17 @@ if form.getvalue('domain'):
             print('                                <input hidden name="document_root" value="'+document_root+'">')
             print('                                <input hidden name="backend_category" value="'+backend_category+'">')
             print('                                <input hidden name="backend_version" value="'+backend_version+'">')
-            print('                                <button class="btn btn-outline-warning btn-block" data-toggle="tooltip" title="'+dep_file+'" type="submit">Install '+backend_category+' Project Deps</button>')
             print('                            </form>')
+
+            print('                            <div class="btn-group btn-block mt-1">')
+            print('                                <button class="btn btn-outline-warning btn-block" data-toggle="tooltip" title="'+dep_file+'" type="submit" form="modalForm10">Install '+backend_category+' Project Deps</button>')
 
             if backend_category == 'PHP':
                 print('                            <form class="form" id="modalForm1" onsubmit="return false;">')
-                print('                                <button class="btn btn-outline-warning btn-block" type="submit">View PHP Log</button>')
                 print('                            </form>')
+                print('                            <button class="btn btn-outline-warning btn-block" type="submit" form="modalForm1">View PHP Log</button>')
 
+            print('                            </div>')
             print('                        </div> <!-- Card Body End -->')
 
         print('                        <div class="card-body"> <!-- Card Body Start -->')
