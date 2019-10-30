@@ -6,11 +6,11 @@ jQuery(document).ready(function($) {
         $("#terminal .modal-body").load('term.log');
         terminalUpdate = setInterval(function() {
             terminalActive = ($('#terminal-panel:hover').length > 0);
-            if (!terminalActive) {
+            if(!terminalActive){
                 var termWindow = document.getElementById("terminal-panel");
                 termWindow.scrollTop = termWindow.scrollHeight;
                 $("#terminal .modal-body").load('term.log');
-            } else {
+            }else{
                 $("#terminal .modal-body").load('term.log');
             };
         },1000)
