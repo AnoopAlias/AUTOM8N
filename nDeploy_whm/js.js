@@ -1,36 +1,54 @@
 jQuery(document).ready(function($) {
 
+    // Are we in Terminal Window?
+    var terminalActive;
+    
+    // Poller
+    var terminalUpdate;
+
+    // Load last executed terminal data on reload and scroll to bottom after one second.
+    $("#terminal .modal-body").load('term.log');
+    setTimeout(function () {
+        var terminalWindow = document.getElementById("terminal-panel");
+        terminalWindow.scrollTop = terminalWindow.scrollHeight;
+        //console.log('Terminal ready after 1 second!');
+    }, 1000);
+
     // Ajax
     $(document).ajaxStart(function() {
         // Terminal log & scroll to bottom
-        $("#terminal .modal-body").load('term.log');
-        terminalUpdate = setInterval(function() {
-            terminalActive = ($('#terminal-panel:hover').length > 0);
-            if(!terminalActive){
+        window.terminalUpdate = setInterval(function() {
+            $("#terminal .modal-body").load('term.log');
+            window.terminalActive = ($('#terminal-panel:hover').length > 0);
+            if (!window.terminalActive) {
                 var termWindow = document.getElementById("terminal-panel");
                 termWindow.scrollTop = termWindow.scrollHeight;
-                $("#terminal .modal-body").load('term.log');
-            }else{
-                $("#terminal .modal-body").load('term.log');
-            };
-        },1000)
+                //console.log('Mouse not detected in Terminal');
+            } else {
+                //console.log('Mouse detected in Terminal');
+            }
+        }, 2000);
         //$('#loader').show();
     });
 
     $(document).ajaxStop(function() {
-        clearInterval(terminalUpdate);
+        clearInterval(window.terminalUpdate);
+        //console.log('aJax Stop');
         //$('#loader').hide();
     });
 
     $(document).ajaxSuccess(function() {
+        //console.log('aJax Success');
         //$('#loader').hide();
     });
 
     $(document).ajaxComplete(function() {
+        //console.log('aJax Complete');
         //$('#loader').hide();
     });
 
     $(document).ajaxError(function() {
+        //console.log('aJax Error');
         //$('#loader').hide();
     });
 
@@ -179,15 +197,40 @@ jQuery(document).ready(function($) {
     }, false);
 
     // Forms
-    $('#toastForm1').submit(function(e) {
+    $(document).on('submit','#ddos_protection_nginx_enable',function(e){
+        var $loaderId        =   '#ddos-protection-nginx-enable-btn';
+        var $loaderText      =   'Enabling...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "ddos_mitigate.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
+            },
+        });
+    });
+
+    $(document).on('submit','#ddos_protection_nginx_disable',function(e){
+        var $loaderId        =   '#ddos-protection-nginx-disable-btn';
+        var $loaderText      =   'Disabling...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "ddos_mitigate.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             },
         });
     });
@@ -283,15 +326,22 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#toastForm6').submit(function(e) {
+    $(document).on('submit','#default_php_autoswitch',function(e){
+        var $loaderId        =   '#default-php-autoswitch-btn';
+        var $loaderText      =   'Saving...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "set_default_php.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#v-pills-php .card-body > .no-gutters').load('xtendweb.cgi #v-pills-php .card-body > .no-gutters > *');
+                $($loaderId).html('Set Default PHP');
+                $("#myToast-nl").find('.toast-body').html(result);
+                $("#myToast-nl").toast('show');
             }
         });
     });
@@ -453,54 +503,83 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#toastForm21').submit(function(e) {
+    $(document).on('submit','#nginx_status',function(e){
+        var $loaderId        =   '#nginx-status-btn';
+        var $loaderText      =   'Reloading...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "daemon_actions.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#nginx_status_widget').load('xtendweb.cgi #nginx_status_widget > *');
+                $($loaderId).html('Reload');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#toastForm22').submit(function(e) {
+    $(document).on('submit','#watcher_status',function(e){
+        var $loaderId        =   '#watcher-status-btn';
+        var $loaderText      =   'Restarting...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "daemon_actions.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#watcher_status_widget').load('xtendweb.cgi #watcher_status_widget > *');
+                $($loaderId).html('Restart');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#toastForm23').submit(function(e) {
+    $(document).on('submit','#clear_caches',function(e){
+        var $loaderId        =   '#clear-caches-btn';
+        var $loaderText      =   'Flushing...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "daemon_actions.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#clear_caches_widget').load('xtendweb.cgi #clear_caches_widget > *');
+                $($loaderId).html('Flush All');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#restart-backends').submit(function(e) {
+    $(document).on('submit','#restart_backends',function(e){
+        var $loaderId        =   '#restart-backends-btn';
+        var $loaderText      =   'Restarting...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "daemon_actions.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#restart_backends_widget').load('xtendweb.cgi #restart_backends_widget > *');
+                $($loaderId).html('Restart');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
