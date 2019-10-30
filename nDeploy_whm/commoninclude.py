@@ -230,8 +230,7 @@ def display_term():
     print('                        <h4 class="modal-title">Command Output</h4>')
     print('                        <button class="close modalMinimize"> <i class="fa fa-minus"></i> </button>')
     print('                    </div>')
-    print('                    <div id="terminal-panel" class="modal-body">')
-    print('                    </div>')
+    print('                    <div id="terminal-panel" class="modal-body">Nothing to output yet!</div>')
     print('                </div>')
     print('            </div>')
     print('        </div>')
@@ -270,7 +269,6 @@ def print_select_fn(label='Label', hint='Hint', selectQuery='', selectName='name
         else:
             print('                         <option value="'+option+'">'+option+'</option>')
     print('                             </select>')
-    print('                             <div class="invalid-tooltip">'+hint+'</div>')
     print('                         </div>')
 
 
