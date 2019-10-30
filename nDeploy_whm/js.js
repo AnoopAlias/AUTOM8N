@@ -1,36 +1,54 @@
 jQuery(document).ready(function($) {
 
+    // Are we in Terminal Window?
+    var terminalActive;
+    
+    // Poller
+    var terminalUpdate;
+
+    // Load last executed terminal data on reload and scroll to bottom after one second.
+    $("#terminal .modal-body").load('term.log');
+    setTimeout(function () {
+        var terminalWindow = document.getElementById("terminal-panel");
+        terminalWindow.scrollTop = terminalWindow.scrollHeight;
+        //console.log('Terminal ready after 1 second!');
+    }, 1000);
+
     // Ajax
     $(document).ajaxStart(function() {
         // Terminal log & scroll to bottom
-        $("#terminal .modal-body").load('term.log');
-        terminalUpdate = setInterval(function() {
-            terminalActive = ($('#terminal-panel:hover').length > 0);
-            if(!terminalActive){
+        window.terminalUpdate = setInterval(function() {
+            $("#terminal .modal-body").load('term.log');
+            window.terminalActive = ($('#terminal-panel:hover').length > 0);
+            if (!window.terminalActive) {
                 var termWindow = document.getElementById("terminal-panel");
                 termWindow.scrollTop = termWindow.scrollHeight;
-                $("#terminal .modal-body").load('term.log');
-            }else{
-                $("#terminal .modal-body").load('term.log');
-            };
-        },1000)
+                //console.log('Mouse not detected in Terminal');
+            } else {
+                //console.log('Mouse detected in Terminal');
+            }
+        }, 2000);
         //$('#loader').show();
     });
 
     $(document).ajaxStop(function() {
-        clearInterval(terminalUpdate);
+        clearInterval(window.terminalUpdate);
+        //console.log('aJax Stop');
         //$('#loader').hide();
     });
 
     $(document).ajaxSuccess(function() {
+        //console.log('aJax Success');
         //$('#loader').hide();
     });
 
     $(document).ajaxComplete(function() {
+        //console.log('aJax Complete');
         //$('#loader').hide();
     });
 
     $(document).ajaxError(function() {
+        //console.log('aJax Error');
         //$('#loader').hide();
     });
 
