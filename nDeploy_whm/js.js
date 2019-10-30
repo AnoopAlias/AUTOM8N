@@ -1,37 +1,79 @@
 jQuery(document).ready(function($) {
 
+    // Are we physically in Terminal Window? Boolean
+    let terminalActive;
+    
+    // We poll with this SetInterval
+    let terminalUpdate;
+
+    // #terminal-panel
+    let terminalPanel;
+
+    // Load last executed terminal data on reload and scroll to bottom
+    // so last operation is always visible to user
+    $("#terminal .modal-body").load('term.log');
+    console.log('Terminal is now ready cause DOM is ready!');
+    setTimeout(function () {
+        window.terminalPanel = document.getElementById("terminal-panel");
+        window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
+        console.log('CALLED: Scroll to bottom after data has time to load (2secs).');
+        $('#processing').hide();
+
+    }, 2000);
+
     // Ajax
     $(document).ajaxStart(function() {
-        // Terminal log & scroll to bottom
-        $("#terminal .modal-body").load('term.log');
-        terminalUpdate = setInterval(function() {
-            terminalActive = ($('#terminal-panel:hover').length > 0);
-            if(!terminalActive){
-                var termWindow = document.getElementById("terminal-panel");
-                termWindow.scrollTop = termWindow.scrollHeight;
-                $("#terminal .modal-body").load('term.log');
-            }else{
-                $("#terminal .modal-body").load('term.log');
-            };
-        },1000)
-        //$('#loader').show();
+
+        // Terminal log & scroll to bottom polling every 2 seconds
+        $('#processing').show();
+        window.terminalUpdate = setInterval(function() {
+
+            $("#terminal .modal-body").load('term.log');
+            window.terminalActive = ($('#terminal-panel:hover').length > 0);
+
+            if ( !window.terminalActive ) {
+
+                // Scroll to bottom if not in terminal
+                window.terminalPanel = document.getElementById("terminal-panel");
+                window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
+                console.log('Mouse not detected in Terminal');
+
+            } else {
+
+                console.log('Mouse detected in Terminal');
+            }
+
+        }, 2000);
+        console.log('aJax Start');
+        //$('#processing').show();
     });
 
     $(document).ajaxStop(function() {
-        clearInterval(terminalUpdate);
-        //$('#loader').hide();
+
+        // Stop Polling 2 seconds after ajaxStop to get remaining data - setTimeout() will not work under ajaxStop
+        // setTimeout(function () {
+            clearInterval(window.terminalUpdate);
+            // window.terminalPanel = document.getElementById("terminal-panel");
+            // window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
+            console.log('AjaxStop clearInterval(Polling)!');
+            $('#processing').hide();
+            // }, 2000);
+        console.log('aJax Stop');
     });
 
     $(document).ajaxSuccess(function() {
-        //$('#loader').hide();
+        console.log('aJax Success');
+        // $('#processing').hide(); 
     });
 
     $(document).ajaxComplete(function() {
-        //$('#loader').hide();
+        console.log('aJax Complete');
+        // $('#processing').hide();
     });
 
     $(document).ajaxError(function() {
-        //$('#loader').hide();
+        console.log('aJax Error');
+        $('#processing').hide();
     });
 
     $.ajaxSetup({
