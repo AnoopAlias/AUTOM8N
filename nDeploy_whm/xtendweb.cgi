@@ -1051,15 +1051,15 @@ else:
     if firehol_enabled == 0:
         print('                         <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
         print('                         <div class="col-9">')
-        print('                             <form id="toastForm2" class="form" onsubmit="return false;">')
-        print('                                 <button type="submit" class="alert btn btn-secondary">Disable</button>')
+        print('                             <form id="ddos_protection_synproxy_disable" class="form" onsubmit="return false;">')
         print('                                 <input hidden name="ddos" value="disable">')
+        print('                                 <button id="ddos-protection-synproxy-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
     else:
         print('                         <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
         print('                         <div class="col-9">')
-        print('                             <form id="toastForm2" class="form" onsubmit="return false;">')
-        print('                                 <button type="submit" class="alert btn btn-secondary">Enable</button>')
+        print('                             <form id="ddos_protection_synproxy_enable" class="form" onsubmit="return false;">')
         print('                                 <input hidden name="ddos" value="enable">')
+        print('                                 <button id="ddos-protection-synproxy-enable" type="submit" class="alert btn btn-secondary">Enable</button>')
 
     print('                                 </form>')
     print('                             </div>')
