@@ -197,15 +197,40 @@ jQuery(document).ready(function($) {
     }, false);
 
     // Forms
-    $('#toastForm1').submit(function(e) {
+    $(document).on('submit','#ddos_protection_nginx_enable',function(e){
+        var $loaderId        =   '#ddos-protection-nginx-enable-btn';
+        var $loaderText      =   'Enabling...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "ddos_mitigate.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
+            },
+        });
+    });
+
+    $(document).on('submit','#ddos_protection_nginx_disable',function(e){
+        var $loaderId        =   '#ddos-protection-nginx-disable-btn';
+        var $loaderText      =   'Disabling...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "ddos_mitigate.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             },
         });
     });
@@ -301,15 +326,22 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#toastForm6').submit(function(e) {
+    $(document).on('submit','#default_php_autoswitch',function(e){
+        var $loaderId        =   '#default-php-autoswitch-btn';
+        var $loaderText      =   'Saving...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "set_default_php.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#v-pills-php .card-body > .no-gutters').load('xtendweb.cgi #v-pills-php .card-body > .no-gutters > *');
+                $($loaderId).html('Set Default PHP');
+                $("#myToast-nl").find('.toast-body').html(result);
+                $("#myToast-nl").toast('show');
             }
         });
     });
@@ -471,54 +503,83 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#toastForm21').submit(function(e) {
+    $(document).on('submit','#nginx_status',function(e){
+        var $loaderId        =   '#nginx-status-btn';
+        var $loaderText      =   'Reloading...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
+        $loaderAnimation;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "daemon_actions.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#nginx_status_widget').load('xtendweb.cgi #nginx_status_widget > *');
+                $($loaderId).html('Reload');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#toastForm22').submit(function(e) {
+    $(document).on('submit','#watcher_status',function(e){
+        var $loaderId        =   '#watcher-status-btn';
+        var $loaderText      =   'Restarting...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "daemon_actions.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#watcher_status_widget').load('xtendweb.cgi #watcher_status_widget > *');
+                $($loaderId).html('Restart');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#toastForm23').submit(function(e) {
+    $(document).on('submit','#clear_caches',function(e){
+        var $loaderId        =   '#clear-caches-btn';
+        var $loaderText      =   'Flushing...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "daemon_actions.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#clear_caches_widget').load('xtendweb.cgi #clear_caches_widget > *');
+                $($loaderId).html('Flush All');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#restart-backends').submit(function(e) {
+    $(document).on('submit','#restart_backends',function(e){
+        var $loaderId        =   '#restart-backends-btn';
+        var $loaderText      =   'Restarting...';
+        var $loaderDisabled  =   $($loaderId).prop("disabled", true);
+        var $loaderSpinner   =   $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $loaderAnimation =   $loaderDisabled + $loaderSpinner;
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "daemon_actions.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result)
-                $("#myToast").toast('show');
+                $('#restart_backends_widget').load('xtendweb.cgi #restart_backends_widget > *');
+                $($loaderId).html('Restart');
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
             }
         });
     });

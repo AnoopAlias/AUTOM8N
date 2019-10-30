@@ -89,69 +89,69 @@ print('            <div id="dashboard" class="row flex-row">')
 print('')
 
 # Nginx Status
-print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
+print('                <div id="nginx_status_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
-print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                            <h4 class="mb-0">Nginx Status</h4>')
-print('                            <ul class="list-unstyled mb-0">')
-print('                                <li><small>'+nginx_version+'</small></li>')
+print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                        <h4 class="mb-0">Nginx Status</h4>')
+print('                        <ul class="list-unstyled mb-0">')
+print('                            <li><small>'+nginx_version+'</small></li>')
 if nginx_status:
-    print('                                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print('                                <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
-print('                            </ul>')
-print('                        </div> <!-- Card Body End -->')
-print('                        <form class="form" id="toastForm21" onsubmit="return false;">')
-print('                            <input hidden name="action" value="nginxreload">')
-print('                            <button class="btn btn-secondary btn-block mb-0">Reload</button>')
-print('                        </form>')
+    print('                        <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
+print('                        </ul>')
+print('                    </div> <!-- Card Body End -->')
+print('                    <form class="form" id="nginx_status" onsubmit="return false;">')
+print('                        <input hidden name="action" value="nginxreload">')
+print('                        <button id="nginx-status-btn" class="btn btn-secondary btn-block mb-0">Reload</button>')
+print('                    </form>')
 cardfooter('')
 print('                </div> <!-- Dash Item End -->')
 
 # Autom8n Version Status
-print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
+print('                <div id="watcher_status_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
-print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                            <h4 class="mb-0">Watcher Status</h4>')
-print('                            <ul class="list-unstyled mb-0">')
-print('                                <li><small>'+brand+' '+autom8n_version.replace("Autom8n ", '')+'</small></li>')
+print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                        <h4 class="mb-0">Watcher Status</h4>')
+print('                        <ul class="list-unstyled mb-0">')
+print('                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n ", '')+'</small></li>')
 if watcher_status:
-    print('                                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print('                                <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
-print('                            </ul>')
-print('                        </div> <!-- Card Body End -->')
-print('                        <form class="form" id="toastForm22" onsubmit="return false;">')
-print('                            <input hidden name="action" value="watcherrestart">')
-print('                            <button class="btn btn-secondary btn-block mb-0">Restart</button>')
-print('                        </form>')
+    print('                        <li class="mt-2 text-danger">Stopped <i class="fas fa-power-off ml-1"></i></li>')
+print('                        </ul>')
+print('                    </div> <!-- Card Body End -->')
+print('                    <form class="form" id="watcher_status" onsubmit="return false;">')
+print('                        <input hidden name="action" value="watcherrestart">')
+print('                        <button id="watcher-status-btn" class="btn btn-secondary btn-block mb-0">Restart</button>')
+print('                    </form>')
 cardfooter('')
 print('                </div> <!-- Dash Item End -->')
 
 # Cache/Redis Status
-print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
+print('                <div id="clear_caches_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
-print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                            <h4 class="mb-0">Clear Caches</h4>')
-print('                            <ul class="list-unstyled mb-0">')
-print('                                <li><small>Redis</small></li>')
-print('                                <li class="mt-2"><i class="fas fa-memory ml-1"></i></li>')
-print('                            </ul>')
-print('                        </div> <!-- Card Body End -->')
-print('                        <form class="form" id="toastForm23" onsubmit="return false;">')
-print('                            <input hidden name="action" value="redisflush">')
-print('                            <button class="btn btn-secondary btn-block mb-0">Flush All</button>')
-print('                        </form>')
+print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                        <h4 class="mb-0">Clear Caches</h4>')
+print('                        <ul class="list-unstyled mb-0">')
+print('                            <li><small>Redis</small></li>')
+print('                            <li class="mt-2"><i class="fas fa-memory ml-1"></i></li>')
+print('                        </ul>')
+print('                    </div> <!-- Card Body End -->')
+print('                    <form class="form" id="clear_caches" onsubmit="return false;">')
+print('                        <input hidden name="action" value="redisflush">')
+print('                        <button id="clear-caches-btn" class="btn btn-secondary btn-block mb-0">Flush All</button>')
+print('                    </form>')
 cardfooter('')
 print('                </div> <!-- Dash Item End -->')
 
 # Restart Backends
-print('                <div class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
+print('                <div id="restart_backends_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
-print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                            <h4 class="mb-0">PHP Backends</h4>')
-print('                            <ul class="list-unstyled mb-0">')
-print('                                <li><small>PHP-FPM</small></li>')
+print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
+print('                        <h4 class="mb-0">PHP Backends</h4>')
+print('                        <ul class="list-unstyled mb-0">')
+print('                            <li><small>PHP-FPM</small></li>')
 
 if running_process_count == installed_php_count:
     php_status = True
@@ -159,15 +159,15 @@ else:
     php_status = False
 
 if php_status:
-    print('                                <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print('                                <li class="mt-2 text-danger">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
-print('                            </ul>')
-print('                        </div> <!-- Card Body End -->')
-print('                        <form class="form" id="restart-backends" onsubmit="return false;">')
-print('                            <input hidden name="action" value="restart_backends">')
-print('                            <button class="btn btn-secondary btn-block mb-0">Restart</button>')
-print('                        </form>')
+    print('                        <li class="mt-2 text-danger">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
+print('                        </ul>')
+print('                    </div> <!-- Card Body End -->')
+print('                    <form class="form" id="restart_backends" onsubmit="return false;">')
+print('                        <input hidden name="action" value="restart_backends">')
+print('                        <button id="restart-backends-btn" class="btn btn-secondary btn-block mb-0">Restart</button>')
+print('                    </form>')
 cardfooter('')
 print('                </div> <!-- Dash Item End -->')
 print('')
@@ -555,7 +555,7 @@ if os.path.isfile(cluster_config_file):
                 print('                         <input hidden name="slave_hostname" value="'+theslave+'">')
                 print('                         <input hidden name="action" value="editip">')
 
-                print('                         <button class="btn btn-outline-primary btn-block mt-3" type="submit">Edit IP resource</button>')
+                print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Edit IP resource</button>')
                 print('                     </form>')
                 print('                 </div>')
                 print('             </div>')
@@ -568,7 +568,7 @@ if os.path.isfile(cluster_config_file):
                 print('                                <input hidden name="master_hostname" value="'+myhostname+'">')
                 print('                                <input hidden name="master_lan_ip" value="'+myip+'">')
                 print('                                <input hidden name="action" value="delip">')
-                print('                                <button class="btn btn-outline-danger btn-block mt-3 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
+                print('                                <button class="btn btn-outline-danger btn-block mt-4 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
                 print('                            </form>')
             # Provide a seperation between each ip resource_
 
@@ -713,7 +713,7 @@ else:
 
         print('                                <input hidden name="action" value="editmaster">')
 
-        print('                                <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save master Settings</button>')
+        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save master Settings</button>')
         print('                            </form>')
         print('                        </div>')
 
@@ -735,9 +735,8 @@ else:
         print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
 
         print('                                <input hidden name="action" value="editdbslave">')
-
-        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
+        print('                            <button class="btn btn-outline-primary btn-block mt-4" type="submit" id="toastForm30">Save Slave Settings</button>')
 
         # Additional slaves
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
@@ -813,7 +812,7 @@ else:
 
         print('                                    <input hidden name="action" value="addadditionalslave">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Add New Slave</button>')
+        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -889,7 +888,7 @@ else:
 
         print('                                <input hidden name="action" value="setup">')
 
-        print('                                <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save cluster Settings</button>')
+        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save cluster Settings</button>')
         print('                            </form>')
 
     print('             </div> <!-- Card Body End -->')
@@ -984,7 +983,7 @@ backend_data_yaml.close()
 
 if "PHP" in backend_data_yaml_parsed:
     print('             <div class="card-body"> <!-- Card Body Start -->')
-    print('                 <form class="form" id="toastForm6" onsubmit="return false;">')
+    print('                 <form class="form" id="default_php_autoswitch" onsubmit="return false;">')
     print('                     <div class="input-group">')
     print('                         <div class="input-group-prepend input-group-prepend-min">')
     print('                             <label class="input-group-text">PHP</label>')
@@ -999,7 +998,7 @@ if "PHP" in backend_data_yaml_parsed:
             print('                     <option value="'+versions_defined+'">'+versions_defined+'</option>')
     print('                         </select>')
     print('                     </div>')
-    print('                     <button type="submit" class="btn btn-outline-primary btn-block mt-4">Set Default PHP</button>')
+    print('                     <button id="default-php-autoswitch-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Set Default PHP</button>')
     print('                 </form>')
     print('             </div> <!-- Card Body End -->')
 cardfooter('Automatic switch to Nginx will use versions set in MultiPHP or if MultiPHP is not used the phpversion above')
@@ -1022,15 +1021,15 @@ print('                             <div class="row no-gutters">')
 if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
     print('                             <div class="col-9">')
-    print('                                 <form id="toastForm1" class="form" onsubmit="return false;">')
-    print('                                     <button type="submit" class="alert btn btn-secondary">Disable</button>')
+    print('                                 <form id="ddos_protection_nginx_disable" class="form" onsubmit="return false;">')
     print('                                     <input hidden name="ddos" value="disable">')
+    print('                                     <button id="ddos-protection-nginx-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
 else:
     print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
     print('                             <div class="col-9">')
-    print('                                 <form id="toastForm1" class="form" onsubmit="return false;">')
-    print('                                     <button type="submit" class="alert btn btn-secondary">Enable</button>')
+    print('                                 <form id="ddos_protection_nginx_enable" class="form" onsubmit="return false;">')
     print('                                     <input hidden name="ddos" value="enable">')
+    print('                                     <button id="ddos-protection-nginx-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
 
 print('                                     </form>')
 print('                                 </div>')
