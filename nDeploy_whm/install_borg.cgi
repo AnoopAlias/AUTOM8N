@@ -37,7 +37,7 @@ if form.getvalue('action'):
         procExe = subprocess.Popen('echo -e "BorgBackup System installed! >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
 
-        commoninclude.print_success('BORG Backup Installed!')
+        commoninclude.print_success('BorgBackup Installed!')
 
     elif form.getvalue('action') == 'initrepo':
 
@@ -47,6 +47,8 @@ if form.getvalue('action'):
         procExe.wait()
         procExe = subprocess.Popen('echo -e "Repo Initialized... >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
+
+        commoninclude.print_success('Repo initialized!')
 
         if not os.path.isfile('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE'):
             os.mknod('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE')
