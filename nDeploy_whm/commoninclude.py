@@ -227,7 +227,7 @@ def display_term():
     if ndeploy_theme_color == 'light':
         print('                <div class="modal-content bg-light text-dark">')
     print('                    <div class="modal-header">')
-    print('                        <h4 class="modal-title">Command Output</h4>')
+    print('                        <h4 class="modal-title">Command Output <span id="processing">- Processing: <i class="fas fa-spinner fa-spin"></i></span></h4>')
     print('                        <button class="close modalMinimize"> <i class="fa fa-minus"></i> </button>')
     print('                    </div>')
     print('                    <div id="terminal-panel" class="modal-body">Nothing to output yet!</div>')
