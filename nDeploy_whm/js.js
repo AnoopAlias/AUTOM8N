@@ -1091,46 +1091,38 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Still to be converted
-
-    /*$('#toastForm3').submit(function(e) {
+    $(document).on('submit','#check_process',function(e){
+        var $loaderId        =   '#check_process_btn';
+        var $loaderText      =   'Checking...';
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "abnormal_process_detector.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
+                $('#v-pills-system .card-body > .no-gutters').load('xtendweb.cgi #v-pills-system .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result);
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#modalForm3').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "abnormal_process_detector.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
-            }
-        });
-    });
+    // Still left to convert
 
-    $('#modalForm4').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "install_borg.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
-            }
-        });
-    });*/
+    // $('#modalForm4').submit(function(e) {
+        // var $id = e.target.id;
+        // var $f = $('#' + $id);
+        // var $url = "install_borg.cgi?" + $f.serialize();
+        // $.ajax({
+            // url: $url,
+            // success: function(result) {
+                // $("#myModal-xl").find('.modal-body').html(result)
+                // $("#myModal-xl").modal('show');
+            // }
+        // });
+    // });
 
     $('#modalForm5').submit(function(e) {
         var $id = e.target.id;
