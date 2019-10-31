@@ -5,7 +5,7 @@ jQuery(document).ready(function($) {
 
     // #terminal-panel
     var terminalPanel;
- 
+
     var prevAjaxCall = "";
     // Poll for file changes using ajax
     setInterval(function() {
@@ -189,7 +189,6 @@ jQuery(document).ready(function($) {
                     event.preventDefault();
                     event.stopPropagation();
                 } else {
-                    //var $f = $('#toastForm30');
                     var $url = "save_cluster_settings.cgi?" + $(form).serialize();
                     $.ajax({
                         url: $url,
@@ -273,58 +272,6 @@ jQuery(document).ready(function($) {
                 $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
                 $("#myToast-nl").find('.toast-body').html(result);
                 $("#myToast-nl").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm3').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "abnormal_process_detector.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#modalForm3').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "abnormal_process_detector.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
-            }
-        });
-    });
-
-    $('#modalForm4').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "install_borg.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
-            }
-        });
-    });
-
-    $('#modalForm5').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "install_borg.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
             }
         });
     });
@@ -423,85 +370,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('.toastForm9-wrap').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        console.log($id);
-        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('.toastForm10-wrap').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm11').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_backup_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm12').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('.toastForm13-wrap').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm14').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
     $(document).on("submit","#package_lock_disable",function(e){
         var $loaderId        =   "#package-lock-disable-btn";
         var $loaderText      =   "Disabling...";
@@ -536,58 +404,6 @@ jQuery(document).ready(function($) {
                 $($loaderId).html('Disable');
                 $("#myToast-nl").find(".toast-body").html(result);
                 $("#myToast-nl").toast("show");
-            }
-        });
-    });
-
-    $('#toastForm17').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_pkg_server_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm18').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_pkg_app_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToastback").find('.toast-body').html(result)
-                $("#myToastback").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm19').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_resource_limit.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm20').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
             }
         });
     });
@@ -664,32 +480,6 @@ jQuery(document).ready(function($) {
                 $($loaderId).html('Restart');
                 $("#myToast-nl").find('.toast-body').html(result);
                 $("#myToast-nl").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm24').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "borg_restore.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('.toastForm25-wrap').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "borg_restore.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
             }
         });
     });
@@ -1297,6 +1087,217 @@ jQuery(document).ready(function($) {
                 $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
                 $("#myToast-nl").find('.toast-body').html(result);
                 $("#myToast-nl").toast('show');
+            }
+        });
+    });
+
+    // Still to be converted
+
+    /*$('#toastForm3').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "abnormal_process_detector.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#modalForm3').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "abnormal_process_detector.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('#modalForm4').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "install_borg.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });*/
+
+    $('#modalForm5').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "install_borg.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
+
+    $('.toastForm9-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        console.log($id);
+        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('.toastForm10-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm11').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_backup_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm12').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('.toastForm13-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm14').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm17').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_pkg_server_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm18').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_pkg_app_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToastback").find('.toast-body').html(result)
+                $("#myToastback").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm19').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_resource_limit.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm20').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm24').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "borg_restore.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('.toastForm25-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "borg_restore.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result);
+                $("#myToast").toast('show');
             }
         });
     });
