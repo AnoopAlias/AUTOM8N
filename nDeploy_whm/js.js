@@ -5,9 +5,8 @@ jQuery(document).ready(function($) {
 
     // #terminal-panel
     var terminalPanel;
-
+ 
     var prevAjaxCall = "";
-
     // Poll for file changes using ajax
     setInterval(function() {
         var ajax = new XMLHttpRequest();
@@ -35,7 +34,7 @@ jQuery(document).ready(function($) {
     // Ajax
     $(document).ajaxStart(function() {
         $('#processing').show();
-        //$('#processing').show();
+        // console.log('aJax Start');
     });
 
     $(document).ajaxStop(function() {
@@ -49,6 +48,11 @@ jQuery(document).ready(function($) {
 
     $(document).ajaxComplete(function() {
         // $('#processing').hide();
+        // console.log('aJax Success');
+    });
+
+    $(document).ajaxComplete(function() {
+        // console.log('aJax Complete');
     });
 
     $(document).ajaxError(function() {
