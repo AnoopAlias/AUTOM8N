@@ -14,11 +14,11 @@ jQuery(document).ready(function($) {
             if (ajax.readyState == 4) {
                 if (ajax.responseText != prevAjaxCall) {
                     $("#terminal .modal-body").load('term.log');
-                    terminalActive = ($('#terminal-panel:hover').length > 0);
-                    if ( !terminalActive ) {
+                    window.terminalActive = ($('#terminal-panel:hover').length > 0);
+                    if ( !window.terminalActive ) {
                         // Scroll to bottom if not in terminal
-                        terminalPanel = document.getElementById("terminal-panel");
-                        terminalPanel.scrollTop = terminalPanel.scrollHeight;
+                        window.terminalPanel = document.getElementById("terminal-panel");
+                        window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
                         // console.log('Mouse not detected in Terminal');
                     } else {
                         // console.log('Mouse detected in Terminal');
@@ -863,10 +863,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // ********************************************
-    // **************************** Testing Section
-    // ********************************************
-
     $(document).on('submit','#disable_ndeploy',function(e){
         var $loaderId        =   '#plugin-status-btn';
         var $loaderText      =   'Disabling...';
@@ -902,10 +898,6 @@ jQuery(document).ready(function($) {
             }
         });
     });
-
-    // ********************************************
-    // *************************End Testing Section
-    // ********************************************
 
     $(document).on('submit','#module_installer',function(e){
         var $loaderId        =   '#module-installer-btn';
@@ -1111,18 +1103,18 @@ jQuery(document).ready(function($) {
 
     // Still left to convert
 
-    // $('#modalForm4').submit(function(e) {
-        // var $id = e.target.id;
-        // var $f = $('#' + $id);
-        // var $url = "install_borg.cgi?" + $f.serialize();
-        // $.ajax({
-            // url: $url,
-            // success: function(result) {
-                // $("#myModal-xl").find('.modal-body').html(result)
-                // $("#myModal-xl").modal('show');
-            // }
-        // });
-    // });
+    $('#modalForm4').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "install_borg.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myModal-xl").find('.modal-body').html(result)
+                $("#myModal-xl").modal('show');
+            }
+        });
+    });
 
     $('#modalForm5').submit(function(e) {
         var $id = e.target.id;
