@@ -30,22 +30,22 @@ print('    <body>')
 if form.getvalue('action'):
     if form.getvalue('action') == 'installborg':
 
-        procExe = subprocess.Popen('echo -e "Installing BorgBackup System... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe = subprocess.Popen('echo -e "Installing BorgBackup System..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
         procExe = subprocess.Popen(installation_path+'/scripts/easy_borg_setup.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
-        procExe = subprocess.Popen('echo -e "BorgBackup System installed! >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe = subprocess.Popen('echo -e "BorgBackup System installed!" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
 
         commoninclude.print_success('BorgBackup Installed!')
 
     elif form.getvalue('action') == 'initrepo':
 
-        procExe = subprocess.Popen('echo -e "Initializing Repo... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe = subprocess.Popen('echo -e "Initializing Repo..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
         procExe = subprocess.Popen('/usr/local/bin/borgmatic --init --encryption repokey-blake2 >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
-        procExe = subprocess.Popen('echo -e "Repo Initialized... >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe = subprocess.Popen('echo -e "Repo Initialized..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
 
         commoninclude.print_success('Repo initialized!')
