@@ -1,78 +1,58 @@
 jQuery(document).ready(function($) {
 
-    // Are we physically in Terminal Window? Boolean
-    let terminalActive;
-    
-    // We poll with this SetInterval
-    let terminalUpdate;
+    // Are we physically in Terminal Window?
+    var terminalActive;
 
     // #terminal-panel
-    let terminalPanel;
-
-    // Load last executed terminal data on reload and scroll to bottom
-    // so last operation is always visible to user
-    $("#terminal .modal-body").load('term.log');
-    console.log('Terminal is now ready cause DOM is ready!');
-    setTimeout(function () {
-        window.terminalPanel = document.getElementById("terminal-panel");
-        window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
-        console.log('CALLED: Scroll to bottom after data has time to load (2secs).');
-        $('#processing').hide();
-
-    }, 2000);
+    var terminalPanel;
+    
+    var prevAjaxCall = "";
+    
+    // Poll for file changes using ajax
+    setInterval(function() {
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState == 4) {
+                if (ajax.responseText != prevAjaxCall) {
+                    $("#terminal .modal-body").load('term.log');
+                    terminalActive = ($('#terminal-panel:hover').length > 0);
+                    if ( !terminalActive ) {
+                        // Scroll to bottom if not in terminal
+                        terminalPanel = document.getElementById("terminal-panel");
+                        terminalPanel.scrollTop = terminalPanel.scrollHeight;
+                        // console.log('Mouse not detected in Terminal');
+                    } else {
+                        // console.log('Mouse detected in Terminal');
+                    }
+                    prevAjaxCall = ajax.responseText;
+                }
+            }
+        };
+        ajax.open("POST", "term.log", true);
+        ajax.send();
+    }, 1000);
 
     // Ajax
     $(document).ajaxStart(function() {
-
-        // Terminal log & scroll to bottom polling every 2 seconds
         $('#processing').show();
-        window.terminalUpdate = setInterval(function() {
-
-            $("#terminal .modal-body").load('term.log');
-            window.terminalActive = ($('#terminal-panel:hover').length > 0);
-
-            if ( !window.terminalActive ) {
-
-                // Scroll to bottom if not in terminal
-                window.terminalPanel = document.getElementById("terminal-panel");
-                window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
-                console.log('Mouse not detected in Terminal');
-
-            } else {
-
-                console.log('Mouse detected in Terminal');
-            }
-
-        }, 2000);
-        console.log('aJax Start');
-        //$('#processing').show();
+        // console.log('aJax Start');
     });
 
     $(document).ajaxStop(function() {
-
-        // Stop Polling 2 seconds after ajaxStop to get remaining data - setTimeout() will not work under ajaxStop
-        // setTimeout(function () {
-            clearInterval(window.terminalUpdate);
-            // window.terminalPanel = document.getElementById("terminal-panel");
-            // window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
-            console.log('AjaxStop clearInterval(Polling)!');
-            $('#processing').hide();
-            // }, 2000);
-        console.log('aJax Stop');
+        $('#processing').hide();
+        // console.log('aJax Stop');
     });
 
     $(document).ajaxSuccess(function() {
-        console.log('aJax Success');
-        // $('#processing').hide(); 
+        // console.log('aJax Success');
     });
 
     $(document).ajaxComplete(function() {
-        console.log('aJax Complete');
-        // $('#processing').hide();
+        // console.log('aJax Complete');
     });
 
     $(document).ajaxError(function() {
-        console.log('aJax Error');
+        // console.log('aJax Error');
         $('#processing').hide();
     });
 
