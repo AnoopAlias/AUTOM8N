@@ -33,12 +33,12 @@ jQuery(document).ready(function($) {
 
     // Ajax
     $(document).ajaxStart(function() {
-        $('#processing').show();
+        $('#processing').delay(1000).fadeIn(1000).show(0);
         // console.log('aJax Start');
     });
 
     $(document).ajaxStop(function() {
-        $('#processing').hide();
+        $('#processing').delay(1000).fadeOut(1000).hide(0);
         // console.log('aJax Stop');
     });
 
