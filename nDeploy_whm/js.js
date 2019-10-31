@@ -5,9 +5,8 @@ jQuery(document).ready(function($) {
 
     // #terminal-panel
     var terminalPanel;
-    
+ 
     var prevAjaxCall = "";
-    
     // Poll for file changes using ajax
     setInterval(function() {
         var ajax = new XMLHttpRequest();
@@ -44,6 +43,11 @@ jQuery(document).ready(function($) {
     });
 
     $(document).ajaxSuccess(function() {
+        // $('#processing').hide();
+    });
+
+    $(document).ajaxComplete(function() {
+        // $('#processing').hide();
         // console.log('aJax Success');
     });
 
@@ -325,28 +329,59 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#toastForm4').submit(function(e) {
+    $(document).on('submit','#cluster_soft_restart',function(e){
+        var $loaderId        =   "#cluster-soft-restart-btn";
+        var $loaderText      =   "Resetting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "fix_unison.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
+                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
+                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
             }
         });
     });
 
-    $('#toastForm5').submit(function(e) {
+    $(document).on('submit','#cluster_hard_reset',function(e){
+        var $loaderId        =   "#cluster-hard-reset-btn";
+        var $loaderText      =   "Resetting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "fix_unison.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
+                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
+                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on('submit','#cluster_csync2_reset',function(e){
+        var $loaderId        =   "#cluster-csync2-reset-btn";
+        var $loaderText      =   "Resetting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "fix_csync2.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result){
+                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
+                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
             }
         });
     });
@@ -370,14 +405,19 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#toastForm7').submit(function(e) {
+    $(document).on("submit","#sync_geodns_zone",function(e){
+        var $loaderId        =   "#sync-geodns-zone-btn";
+        var $loaderText      =   "Syncing...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
-        var $f = $('#' + $id);
+        var $f = $("#" + $id);
         var $url = "sync_gdnsd_zone.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast-nl").find('.toast-body').html(result);
+                $('#v-pills-zone #sync_geodns_zone').load('xtendweb.cgi #v-pills-zone #sync_geodns_zone > *');
+                $("#myToast-nl").find('.toast-body').html(result);;
                 $("#myToast-nl").toast('show');
             }
         });
@@ -462,15 +502,40 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#toastForm16').submit(function(e) {
+    $(document).on("submit","#package_lock_disable",function(e){
+        var $loaderId        =   "#package-lock-disable-btn";
+        var $loaderText      =   "Disabling...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
-        var $f = $('#' + $id);
+        var $f = $("#" + $id);
         var $url = "lock_domain_data_to_package.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
+                $("#v-pills-map .card-body > .no-gutters").load("xtendweb.cgi #v-pills-map .card-body > .no-gutters > *");
+                $($loaderId).html('Enable');
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit","#package_lock_enable",function(e){
+        var $loaderId        =   "#package-lock-enable-btn";
+        var $loaderText      =   "Enabling...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "lock_domain_data_to_package.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-map .card-body > .no-gutters").load("xtendweb.cgi #v-pills-map .card-body > .no-gutters > *");
+                $($loaderId).html('Disable');
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
             }
         });
     });
@@ -629,99 +694,236 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('#toastForm26').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "fix_csync2.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result){
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm27').submit(function(e) {
+    $(document).on("submit","#sync_web_files",function(e){
+        var $loaderId        =   "#sync-web-files-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "sync_docroots.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
+                $('#v-pills-zone #sync_web_files').load('xtendweb.cgi #v-pills-zone #sync_web_files > *');
                 $("#myToast-nl").find('.toast-body').html(result);
                 $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('.toastForm33-wrap').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('.toastForm35-wrap').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('.toastForm37-wrap').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm38').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_cluster_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $(document).on('submit','#ndeploy_control_branding',function(e){
-        var $loaderId        =   '#ndeploy-control-branding-btn';
-        var $loaderText      =   'Saving...';
+    $(document).on("submit","#cluster_setup",function(e){
+        var $loaderId        =   "#cluster-setup-btn";
+        var $loaderText      =   "Saving...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit",".delete_cluster_settings_directory",function(e){
+        var $loaderId        =   "#delete-cluster-settings-directory-btn";
+        $($loaderId).prop("disabled", true);
+        var $id = e.target.id;
         var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#home-content").load("xtendweb.cgi #home-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit","#save_cluster_settings_directory",function(e){
+        var $loaderId        =   "#save-cluster-settings-directory-btn";
+        var $loaderText      =   "Adding...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#home-content").load("xtendweb.cgi #home-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit","#save_cluster_settings_master",function(e){
+        var $loaderId        =   "#save-cluster-settings-master-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#master-content").load("xtendweb.cgi #master-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit","#save_cluster_settings_slave",function(e){
+        var $loaderId        =   "#save-cluster-settings-slave-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#slave-content").load("xtendweb.cgi #slave-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit",".edit_ip_resource",function(e){
+        var $loaderId        =   "#edit-ip-resource-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#ip-content").load("xtendweb.cgi #ip-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit",".add_ip",function(e){
+        var $loaderId        =   "#add-ip-btn";
+        var $loaderText      =   "Adding...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#ip-add-content").load("xtendweb.cgi #ip-add-content > *");
+                $("#ip-content").load("xtendweb.cgi #ip-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit",".delete_ip",function(e){
+        var $loaderId        =   "#delete-ip-btn";
+        var $loaderText      =   "Deleting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#ip-content").load("xtendweb.cgi #ip-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit","#save_cluster_settings_slave_add",function(e){
+        var $loaderId        =   "#save-cluster-settings-slave-add-btn";
+        var $loaderText      =   "Adding...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#add-content").load("xtendweb.cgi #add-content > *");
+                $("#slave-content").load("xtendweb.cgi #slave-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit",".save_cluster_settings_slave_add",function(e){
+        var $loaderId        =   "#save-cluster-settings-slave-add-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#slave-content").load("xtendweb.cgi #slave-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit",".delete_cluster_settings_slave",function(e){
+        var $loaderId        =   "#delete-cluster-settings-slave-btn";
+        var $loaderText      =   "Deleting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#slave-content").load("xtendweb.cgi #slave-content > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
+            }
+        });
+    });
+
+    $(document).on("submit","#ndeploy_control_branding",function(e){
+        var $loaderId        =   "#ndeploy-control-branding-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
         var $url = "save_ndeploy_branding_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $('#v-pills-branding .card-body').load('ndeploy_control.cgi #v-pills-branding .card-body > *');
-                $('#main-header').load('ndeploy_control.cgi #main-header > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $("#v-pills-branding .card-body").load("ndeploy_control.cgi #v-pills-branding .card-body > *");
+                $("#main-header").load("ndeploy_control.cgi #main-header > *");
+                $("#myToast-nl").find(".toast-body").html(result);
+                $("#myToast-nl").toast("show");
             }
         });
     });

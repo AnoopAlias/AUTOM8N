@@ -313,22 +313,22 @@ if os.path.isfile(cluster_config_file):
 
     print('             <div class="card-body"> <!-- Card Body Start -->')
 
-    print('                 <form class="form" id="toastForm4" onsubmit="return false;">')
+    print('                 <form class="form" id="cluster_soft_restart" onsubmit="return false;">')
     print('                     <input hidden name="mode" value="restart">')
     print('                 </form>')
 
-    print('                 <form class="form" id="toastForm5" onsubmit="return false;">')
+    print('                 <form class="form" id="cluster_hard_reset" onsubmit="return false;">')
     print('                     <input hidden name="mode" value="reset">')
     print('                 </form>')
 
-    print('                 <form class="form" id="toastForm26" onsubmit="return false;">')
+    print('                 <form class="form" id="cluster_csync2_reset" onsubmit="return false;">')
     print('                     <input hidden name="mode" value="reset">')
     print('                 </form>')
 
-    print('                 <div class="btn-group btn-block">')
-    print('                     <button type="submit" class="btn btn-outline-primary" form="toastForm4">Soft Restart</button>')
-    print('                     <button type="submit" class="btn btn-outline-primary" form="toastForm5">Hard Reset</button>')
-    print('                     <button type="submit" class="btn btn-outline-primary" form="toastForm26">Reset Csync2</button>')
+    print('                 <div id="cluster-reset-btns" class="btn-group btn-block">')
+    print('                     <button id="cluster-soft-restart-btn" type="submit" class="btn btn-outline-primary" form="cluster_soft_restart">Soft Restart</button>')
+    print('                     <button id="cluster-hard-reset-btn" type="submit" class="btn btn-outline-primary" form="cluster_hard_reset">Hard Reset</button>')
+    print('                     <button id="cluster-csync2-reset-btn" type="submit" class="btn btn-outline-primary" form="cluster_csync2_reset">Reset Csync2</button>')
     print('                 </div>')
 
     # This is case where conf/ndeploy_cluster.yaml and conf/nDeploy-cluster/hosts both exists
@@ -377,7 +377,7 @@ if os.path.isfile(cluster_config_file):
         # Tab Start / Tab1 ###########################
         # Master data
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
-        print('                            <form class="form needs-validation" method="post" id="toastForm29" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_master" onsubmit="return false;" novalidate>')
 
         print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", master_hostname, "master_hostname")
         print_input_fn("Master Main IP", " Enter the master server's main IP address. ", master_main_ip, "master_main_ip")
@@ -391,16 +391,16 @@ if os.path.isfile(cluster_config_file):
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
         print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "bind", "geodns")
 
-        print('                                    <input hidden name="action" value="editmaster">')
+        print('                                <input hidden name="action" value="editmaster">')
 
-        print('                                    <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Master Settings</button>')
+        print('                                <button id="save-cluster-settings-master-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Master Settings</button>')
         print('                            </form>')
         print('                        </div>')
 
         # Tab Start / Tab2 ###########################
         # slave data
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
-        print('                            <form class="form needs-validation" method="post" id="toastForm30" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave" onsubmit="return false;" novalidate>')
 
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", dbslave_hostname, "dbslave_hostname")
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", dbslave_main_ip, "dbslave_main_ip")
@@ -416,7 +416,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                                <input hidden name="action" value="editdbslave">')
 
-        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
@@ -447,7 +447,7 @@ if os.path.isfile(cluster_config_file):
 
                 print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print('                     <form class="form needs-validation save_cluster_settings_slave_add" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
@@ -468,13 +468,13 @@ if os.path.isfile(cluster_config_file):
                 print('                     </form>')
 
                 # Delete the Additional Slave
-                print('                     <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                     <form class="form delete_cluster_settings_slave" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
                 print('                         <input hidden name="action" value="deleteslave">')
                 print('                         <input hidden name="slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm32-'+str(slave_server_id)+'">Save slave Settings</button>')
-                print('                         <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm33-'+str(slave_server_id)+'">Delete this Slave</button>')
+                print('                         <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save slave Settings</button>')
+                print('                         <button id="delete-cluster-settings-slave-btn" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete this Slave</button>')
                 print('                     </div>')
 
                 print('                 </div>')
@@ -486,7 +486,7 @@ if os.path.isfile(cluster_config_file):
         # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
-        print('                            <form class="form needs-validation" method="post" id="toastForm31" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add" onsubmit="return false;" novalidate>')
 
         # Slave data
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
@@ -496,7 +496,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                                <input hidden name="action" value="addadditionalslave">')
 
-        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
+        print('                                <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -540,7 +540,7 @@ if os.path.isfile(cluster_config_file):
                 print('             </div>')
                 print('             <div id="collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'" data-parent="#accordionIps-'+master_ip_resource+'-'+str(mykeypos)+'">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation toastForm34-wrap" method="post" id="toastForm34'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;" novalidate>')
+                print('                     <form class="form needs-validation edit_ip_resource" method="post" id="edit_ip_resource'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;" novalidate>')
 
                 # Master data
                 print_input_fn(" Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", master_ip_resource, "master_ip_resource")
@@ -555,7 +555,7 @@ if os.path.isfile(cluster_config_file):
                 print('                         <input hidden name="slave_hostname" value="'+theslave+'">')
                 print('                         <input hidden name="action" value="editip">')
 
-                print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Edit IP resource</button>')
+                print('                         <button id="edit-ip-resource-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Edit IP resource</button>')
                 print('                     </form>')
                 print('                 </div>')
                 print('             </div>')
@@ -564,11 +564,11 @@ if os.path.isfile(cluster_config_file):
                 mykeypos = mykeypos + 1
             if master_ip_resource != "ip0":
                 # Display form for IP address deletion
-                print('                            <form class="form toastForm35-wrap" method="post" id="toastForm35'+'-'+master_ip_resource+'" onsubmit="return false;">')
+                print('                            <form class="form delete_ip" method="post" id="delete_ip'+'-'+master_ip_resource+'" onsubmit="return false;">')
                 print('                                <input hidden name="master_hostname" value="'+myhostname+'">')
                 print('                                <input hidden name="master_lan_ip" value="'+myip+'">')
                 print('                                <input hidden name="action" value="delip">')
-                print('                                <button class="btn btn-outline-danger btn-block mt-4 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
+                print('                                <button id="delete-ip-btn" class="btn btn-outline-danger btn-block mt-4 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
                 print('                            </form>')
             # Provide a seperation between each ip resource_
 
@@ -577,7 +577,7 @@ if os.path.isfile(cluster_config_file):
         # Tab Start / Tab5 ###########################
         # Display form for IP address mapping add
         print('                         <div class="tab-pane fade" id="ip-add-content" role="tabpanel" aria-labelledby="ip-add-tab">')
-        print('                            <form class="form needs-validation" method="post" id="toastForm36" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="add_ip" onsubmit="return false;" novalidate>')
 
         # Master data
         print_input_fn("Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", "", "master_ip_resource")
@@ -588,9 +588,9 @@ if os.path.isfile(cluster_config_file):
             print_input_fn("LAN_IP_"+theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "", theslave+"_lan_ip")
             print_input_fn("WAN_IP_"+theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "", theslave+"_wan_ip")
 
-        print('                                    <input hidden name="action" value="addip">')
-        print('                                    <input hidden name="master_hostname" value="'+myhostname+'">')
-        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Add IP Resource</button>')
+        print('                                <input hidden name="action" value="addip">')
+        print('                                <input hidden name="master_hostname" value="'+myhostname+'">')
+        print('                                <button id="add-ip-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add IP Resource</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -612,10 +612,10 @@ if os.path.isfile(cluster_config_file):
                 print('                            </div>')
                 if path not in ['home']:
                     print('                        <div class="input-group-append">')
-                    print('                            <form class="form toastForm37-wrap" method="post" id="toastForm37'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                    print('                            <form class="form delete_cluster_settings_directory" method="post" id="delete_cluster_settings_directory'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                     print('                                <input hidden name="thehomedir" value="'+path+'">')
                     print('                                <input hidden name="action" value="deletehomedir">')
-                    print('                                <button class="btn btn-danger btn-sm" type="submit">')
+                    print('                                <button id="delete-cluster-settings-directory-btn" class="btn btn-danger btn-sm" type="submit">')
                     print('                                    <span class="sr-only">Delete</span>')
                     print('                                    <i class="fas fa-times"></i>')
                     print('                                </button>')
@@ -625,7 +625,7 @@ if os.path.isfile(cluster_config_file):
                 print('                        </div>')
         print('                            </div>')
         print('                            <div class="label label-default mt-2 mb-2">Add another \'home\' directory to Unison sync:</div>')
-        print('                            <form class="form" method="post" id="toastForm38" onsubmit="return false;">')
+        print('                            <form class="form" method="post" id="save_cluster_settings_directory" onsubmit="return false;">')
 
         print('                                <div class="input-group mb-0">')
         print('                                    <div class="input-group-prepend input-group-prepend-min">')
@@ -634,7 +634,7 @@ if os.path.isfile(cluster_config_file):
         print('                                    <input class="form-control" placeholder="home2" type="text" name="thehomedir">')
         print('                                    <input hidden name="action" value="addhomedir">')
         print('                                    <div class="input-group-append">')
-        print('                                        <button class="btn btn-outline-primary" type="submit">')
+        print('                                        <button id="save-cluster-settings-directory-btn" class="btn btn-outline-primary" type="submit">')
         print('                                            <span class="sr-only">Add</span><i class="fas fa-plus"></i>')
         print('                                        </button>')
         print('                                    </div>')
@@ -697,7 +697,7 @@ else:
         # Tab Start / Tab1 ###########################
         # Master data
         print('                         <div class="tab-pane fade show active" id="master-content" role="tabpanel" aria-labelledby="master-tab">')
-        print('                            <form class="form needs-validation" method="post" id="toastForm29" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_master" onsubmit="return false;" novalidate>')
 
         print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", master_hostname, "master_hostname")
         print_input_fn("Master Main IP", " Enter the master server's main IP address. ", master_main_ip, "master_main_ip")
@@ -713,14 +713,14 @@ else:
 
         print('                                <input hidden name="action" value="editmaster">')
 
-        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save master Settings</button>')
+        print('                                <button id="save-cluster-settings-master-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save master Settings</button>')
         print('                            </form>')
         print('                        </div>')
 
         # Tab Start / Tab2 ###########################
         # slave data
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
-        print('                            <form class="form needs-validation" method="post" id="toastForm30" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave" onsubmit="return false;" novalidate>')
 
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", dbslave_hostname, "dbslave_hostname")
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", dbslave_main_ip, "dbslave_main_ip")
@@ -735,8 +735,8 @@ else:
         print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
 
         print('                                <input hidden name="action" value="editdbslave">')
+        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
-        print('                            <button class="btn btn-outline-primary btn-block mt-4" type="submit" id="toastForm30">Save Slave Settings</button>')
 
         # Additional slaves
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
@@ -765,7 +765,7 @@ else:
 
                 print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation toastForm32-wrap" method="post" id="toastForm32-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print('                     <form class="form needs-validation save_cluster_settings_slave_add" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
@@ -784,13 +784,13 @@ else:
                 print('                     </form>')
 
                 # Delete the Additional Slave
-                print('                     <form class="form toastForm33-wrap" method="post" id="toastForm33-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                     <form class="form delete_cluster_settings_slave" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
                 print('                         <input hidden name="action" value="deleteslave">')
                 print('                         <input hidden name="slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button class="btn btn-outline-primary btn-block" type="submit" form="toastForm32-'+str(slave_server_id)+'">Save slave Settings</button>')
-                print('                         <button class="btn btn-outline-danger btn-block" type="submit" form="toastForm33-'+str(slave_server_id)+'">Delete this Slave</button>')
+                print('                         <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave-'+str(slave_server_id)+'">Save slave Settings</button>')
+                print('                         <button id="delete-cluster-settings-slave-btn" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete this Slave</button>')
                 print('                     </div>')
 
                 print('                 </div>')
@@ -802,7 +802,7 @@ else:
         # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade show" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
-        print('                            <form class="form needs-validation" method="post" id="toastForm31" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add" onsubmit="return false;" novalidate>')
 
         # Slave data
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
@@ -810,9 +810,9 @@ else:
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
         print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
 
-        print('                                    <input hidden name="action" value="addadditionalslave">')
+        print('                                <input hidden name="action" value="addadditionalslave">')
 
-        print('                                        <button class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
+        print('                                <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -835,10 +835,10 @@ else:
                 print('                            </div>')
                 if path not in ['home']:
                     print('                        <div class="input-group-append">')
-                    print('                            <form class="form toastForm37-wrap" method="post" id="toastForm37'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                    print('                            <form class="form delete_cluster_settings_directory" method="post" id="delete_cluster_settings_directory'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                     print('                                <input hidden name="thehomedir" value="'+path+'">')
                     print('                                <input hidden name="action" value="deletehomedir">')
-                    print('                                <button class="btn btn-danger btn-sm" type="submit">')
+                    print('                                <button id="delete-cluster-settings-directory-btn" class="btn btn-danger btn-sm" type="submit">')
                     print('                                    <span class="sr-only">Delete</span>')
                     print('                                    <i class="fas fa-times"></i>')
                     print('                                </button>')
@@ -848,7 +848,7 @@ else:
                 print('                        </div>')
         print('                            </div>')
         print('                            <div class="label label-default mt-2 mb-2">Add another \'home\' directory to Unison sync:</div>')
-        print('                            <form class="form" method="post" id="toastForm38" onsubmit="return false;">')
+        print('                            <form class="form" method="post" id="save_cluster_settings_directory" onsubmit="return false;">')
 
         print('                                <div class="input-group mb-0">')
         print('                                    <div class="input-group-prepend input-group-prepend-min">')
@@ -857,7 +857,7 @@ else:
         print('                                    <input class="form-control" placeholder="home2" type="text" name="thehomedir">')
         print('                                    <input hidden name="action" value="addhomedir">')
         print('                                    <div class="input-group-append">')
-        print('                                        <button class="btn btn-outline-primary" type="submit">')
+        print('                                        <button id="save-cluster-settings-directory-btn" class="btn btn-outline-primary" type="submit">')
         print('                                            <span class="sr-only">Add</span><i class="fas fa-plus"></i>')
         print('                                        </button>')
         print('                                    </div>')
@@ -875,7 +875,7 @@ else:
         # Get the server main IP
         myip = get('https://api.ipify.org').text
         # Display form for ndeploymaster
-        print('                            <form class="form needs-validation" method="post" id="toastForm28" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="cluster_setup" onsubmit="return false;" novalidate>')
 
         print_input_fn("Master Node FQDN", " Enter the master server's fully qualified domain name. ", myhostname, "master_hostname")
         print_input_fn("Master Main IP", " Enter the master server's main IP address. ", myip, "master_main_ip")
@@ -888,7 +888,7 @@ else:
 
         print('                                <input hidden name="action" value="setup">')
 
-        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Save cluster Settings</button>')
+        print('                                <button id="cluster-setup-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save cluster Settings</button>')
         print('                            </form>')
 
     print('             </div> <!-- Card Body End -->')
@@ -907,7 +907,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardheader('Sync Cluster', 'fas fa-sync')
     print('             <div class="card-body"> <!-- Card Body Start -->')
 
-    print('                 <form class="form mb-3" id="toastForm27" onsubmit="return false;">')
+    print('                 <form class="form mb-3" id="sync_web_files" onsubmit="return false;">')
     print('                     <div class="input-group">')
     print('                         <div class="input-group-prepend input-group-prepend-min">')
     print('                             <label class="input-group-text">Files</label>')
@@ -919,10 +919,10 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
             print('                     <option value="'+cpuser+'">'+cpuser+'</option>')
     print('                         </select>')
     print('                     </div>')
-    print('                     <button type="submit" class="btn btn-outline-primary btn-block mt-4">Sync web files</button>')
+    print('                     <button id="sync-web-files-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Sync web files</button>')
     print('                 </form>')
 
-    print('                 <form class="form" id="toastForm7" onsubmit="return false;">')
+    print('                 <form class="form" id="sync_geodns_zone" onsubmit="return false;">')
     print('                     <div class="input-group">')
     print('                         <div class="input-group-prepend input-group-prepend-min">')
     print('                             <label class="input-group-text">Zone</label>')
@@ -934,7 +934,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
             print('                     <option value="'+cpuser+'">'+cpuser+'</option>')
     print('                         </select>')
     print('                     </div>')
-    print('                     <button type="submit" class="btn btn-outline-primary btn-block mt-4">Sync GeoDNS Zone</button>')
+    print('                     <button id="sync-geodns-zone-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Sync GeoDNS Zone</button>')
     print('                 </form>')
 
     print('             </div> <!-- Card Body End -->')
@@ -1059,7 +1059,7 @@ else:
         print('                         <div class="col-9">')
         print('                             <form id="ddos_protection_synproxy_enable" class="form" onsubmit="return false;">')
         print('                                 <input hidden name="ddos" value="enable">')
-        print('                                 <button id="ddos-protection-synproxy-enable" type="submit" class="alert btn btn-secondary">Enable</button>')
+        print('                                 <button id="ddos-protection-synproxy-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
 
     print('                                 </form>')
     print('                             </div>')
@@ -1130,18 +1130,18 @@ print('                             <div class="row no-gutters">')
 if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
     print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
     print('                             <div class="col-9">')
-    print('                                 <form class="form" method="post" id="toastForm16" onsubmit="return false;">')
-    print('                                     <button type="submit" class="alert btn btn-secondary">Disable</button>')
+    print('                                 <form class="form" method="post" id="package_lock_disable" onsubmit="return false;">')
     print('                                     <input hidden name="package_lock" value="disabled">')
+    print('                                     <button id="package-lock-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
     print('                                 </form>')
     print('                             </div>')
     print('                         </div>')
 else:
     print('                         <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
     print('                             <div class="col-9">')
-    print('                                 <form class="form" method="post" id="toastForm16" onsubmit="return false;">')
-    print('                                     <button type="submit" class="alert btn btn-secondary">Enable</button>')
+    print('                                 <form class="form" method="post" id="package_lock_enable" onsubmit="return false;">')
     print('                                     <input hidden name="package_lock" value="enabled">')
+    print('                                     <button id="package-lock-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
     print('                                 </form>')
     print('                             </div>')
     print('                         </div>')
