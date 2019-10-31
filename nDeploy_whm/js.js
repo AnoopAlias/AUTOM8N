@@ -14,11 +14,11 @@ jQuery(document).ready(function($) {
             if (ajax.readyState == 4) {
                 if (ajax.responseText != prevAjaxCall) {
                     $("#terminal .modal-body").load('term.log');
-                    terminalActive = ($('#terminal-panel:hover').length > 0);
-                    if ( !terminalActive ) {
+                    window.terminalActive = ($('#terminal-panel:hover').length > 0);
+                    if ( !window.terminalActive ) {
                         // Scroll to bottom if not in terminal
-                        terminalPanel = document.getElementById("terminal-panel");
-                        terminalPanel.scrollTop = terminalPanel.scrollHeight;
+                        window.terminalPanel = document.getElementById("terminal-panel");
+                        window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
                         // console.log('Mouse not detected in Terminal');
                     } else {
                         // console.log('Mouse detected in Terminal');
@@ -33,12 +33,12 @@ jQuery(document).ready(function($) {
 
     // Ajax
     $(document).ajaxStart(function() {
-        $('#processing').show();
+        $('#processing').delay(1000).fadeIn(1000).show(0);
         // console.log('aJax Start');
     });
 
     $(document).ajaxStop(function() {
-        $('#processing').hide();
+        $('#processing').delay(1000).fadeOut(1000).hide(0);
         // console.log('aJax Stop');
     });
 
@@ -863,10 +863,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // ********************************************
-    // **************************** Testing Section
-    // ********************************************
-
     $(document).on('submit','#disable_ndeploy',function(e){
         var $loaderId        =   '#plugin-status-btn';
         var $loaderText      =   'Disabling...';
@@ -902,10 +898,6 @@ jQuery(document).ready(function($) {
             }
         });
     });
-
-    // ********************************************
-    // *************************End Testing Section
-    // ********************************************
 
     $(document).on('submit','#module_installer',function(e){
         var $loaderId        =   '#module-installer-btn';
@@ -1091,46 +1083,43 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Still to be converted
-
-    /*$('#toastForm3').submit(function(e) {
+    $(document).on('submit','#check_process',function(e){
+        var $loaderId        =   '#check_process_btn';
+        var $loaderText      =   'Checking...';
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "abnormal_process_detector.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
+                $('#v-pills-system .card-body > .no-gutters').load('xtendweb.cgi #v-pills-system .card-body > .no-gutters > *');
+                $("#myToast-nl").find('.toast-body').html(result);
+                $("#myToast-nl").toast('show');
             }
         });
     });
 
-    $('#modalForm3').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "abnormal_process_detector.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
-            }
-        });
-    });
-
-    $('#modalForm4').submit(function(e) {
+    $(document).on('submit','#install_borg',function(e){
+        var $loaderId        =   '#install_borg_btn';
+        var $loaderText      =   'Installing...';
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "install_borg.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $("#myToast-nl").find('.toast-body').html(result);
+                $("#myToast-nl").toast('show');
+                location.reload()
             }
         });
-    });*/
+    });
+
+    // Still left to convert
 
     $('#modalForm5').submit(function(e) {
         var $id = e.target.id;

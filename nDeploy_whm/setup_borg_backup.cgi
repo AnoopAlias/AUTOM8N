@@ -28,8 +28,8 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print_header('Borg Backup Configuration')
-bcrumb('Borg Backup Configuration', 'fas fa-database')
+print_header('BorgBackup Configuration')
+bcrumb('BorgBackup Configuration', 'fas fa-database')
 
 if os.path.isdir('/etc/borgmatic'):
 
@@ -408,12 +408,12 @@ if os.path.isdir('/etc/borgmatic'):
     cardfooter('Keep your encryption passphrase in a safe place as losing it would make data recovery impossible on a server crash. <br>Repositories must be either a local folder: <kbd>/mnt/backup</kbd> or a SSH URI: <kbd>ssh://user@backupserver.com:22/home/user/backup</kbd>')
 
 else:
-    cardheader('Install and Setup Borg/Borgomatic')
-    print('                        <div class="card-body text-center"> <!-- Card Body Start -->')
-    print('                            <p>Install and setup Borg/Borgmatic</p>')
-    print('                            <form class="form" id="modalForm4" onsubmit="return false;">')
+    cardheader('Install and Setup BorgBackup')
+    print('                        <div class="card-body text-center p-4"> <!-- Card Body Start -->')
+    print('                            <p>BorgBackup (short: Borg) is a deduplicating backup program. Optionally, it supports compression and authenticated encryption. The main goal of Borg is to provide an efficient and secure way to backup data. The data deduplication technique used makes Borg suitable for daily backups since only changes are stored. The authenticated encryption technique makes it suitable for backups to not fully trusted targets. <em>Would you like to install and setup BorgBackup?</em></p>')
+    print('                            <form class="form" id="install_borg" onsubmit="return false;">')
     print('                                <input hidden name="action" value="installborg">')
-    print('                                <button class="btn btn-primary">Install</button>')
+    print('                                <button id="install_borg_btn" class="btn btn-outline-primary btn-block">Install</button>')
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->')
     cardfooter('')
@@ -432,7 +432,6 @@ display_term()
 print('')
 
 print_modals()
-print_loader()
 
 print('    </body> <!-- Body End -->')
 print('</html>')

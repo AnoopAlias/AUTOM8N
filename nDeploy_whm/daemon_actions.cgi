@@ -38,16 +38,20 @@ if form.getvalue('action'):
 
             procExe = subprocess.Popen('echo -e "Reloading NGINX cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-            procExe = subprocess.Popen('/usr/sbin/nginx -s reload && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"nginx -s reload\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('/usr/sbin/nginx -s reload && service nginx status && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"nginx -s reload && service nginx status\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('echo -e "NGINX reload initialized cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
     
-            commoninclude.print_success('Nginx reload initialized cluster-wide!')
+            commoninclude.print_success('NGINX reload initialized cluster-wide!')
 
         else:
 
-            procExe = subprocess.Popen('echo -e "Reloading NGINX cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('echo -e "Reloading NGINX..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-            procExe = subprocess.Popen('/usr/sbin/nginx -s reload >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('/usr/sbin/nginx -s reload && service nginx status >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('echo -e "NGINX reload initialized..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
     
             commoninclude.print_success('Nginx reload initialized!')
@@ -56,7 +60,9 @@ if form.getvalue('action'):
 
         procExe = subprocess.Popen('echo -e "Reloading Watcher..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
-        procExe = subprocess.Popen('service ndeploy_watcher stop && /bin/rm -f /opt/nDeploy/watcher.pid && service ndeploy_watcher start >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe = subprocess.Popen('service ndeploy_watcher stop && /bin/rm -f /opt/nDeploy/watcher.pid && service ndeploy_watcher start && service ndeploy_watcher status >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe.wait()
+        procExe = subprocess.Popen('echo -e "Watcher reload initialized..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
 
         commoninclude.print_success('Watcher reload initialized!')
@@ -64,18 +70,22 @@ if form.getvalue('action'):
     elif form.getvalue('action') == 'redisflush':
         if os.path.isfile(cluster_config_file):
 
-            procExe = subprocess.Popen('echo -e "Flushing Redis cache cluster-wide... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('echo -e "Flushing Redis cache cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-            procExe = subprocess.Popen('redis-cli FLUSHALL && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"redis-cli FLUSHALL\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('/usr/bin/redis-cli FLUSHALL && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"/usr/bin/redis-cli FLUSHALL\" && service redis status >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('echo -e "Redis cache flushed cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
     
-            commoninclude.print_success('Redis Cache flushed cluster-wide!')
+            commoninclude.print_success('Redis cache flushed cluster-wide!')
 
         else:
 
-            procExe = subprocess.Popen('echo -e "Flushing Redis cache cluster-wide... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('echo -e "Flushing Redis cache..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-            procExe = subprocess.Popen('redis-cli FLUSHALL >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('/usr/bin/redis-cli FLUSHALL && service redis status >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('echo -e "Redis cache flushed..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
     
             commoninclude.print_success('Redis Cache flushed!')
@@ -108,18 +118,22 @@ if form.getvalue('action'):
 
         if os.path.isfile(cluster_config_file):
 
-            procExe = subprocess.Popen('echo -e "Restarting application backends cluster-wide... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('echo -e "Restarting application backends cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
             procExe = subprocess.Popen('service ndeploy_backends restart && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"service ndeploy_backends restart\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('echo -e "Application Backends restarted cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
     
             commoninclude.print_success('Application Backends restarted cluster-wide!')
 
         else:
 
-            procExe = subprocess.Popen('echo -e "Restarting application backends... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('echo -e "Restarting application backends..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-            procExe = subprocess.Popen('service ndeploy_backends restart >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('service ndeploy_backends restart && service ndeploy_backends status >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe.wait()
+            procExe = subprocess.Popen('echo -e "Application Backends restarted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
     
             commoninclude.print_success('Application Backends restarted!')
