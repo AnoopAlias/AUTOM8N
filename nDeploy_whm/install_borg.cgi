@@ -30,11 +30,11 @@ print('    <body>')
 if form.getvalue('action'):
     if form.getvalue('action') == 'installborg':
 
-        procExe = subprocess.Popen('echo -e "Installing BORG Backup System... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe = subprocess.Popen('echo -e "Installing BorgBackup System... > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
         run_cmd = subprocess.Popen(installation_path+'/scripts/easy_borg_setup.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
-        procExe = subprocess.Popen('echo -e "BORG Backup System installed! >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe = subprocess.Popen('echo -e "BorgBackup System installed! >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
 
         commoninclude.print_success('BORG Backup Installed!')

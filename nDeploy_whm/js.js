@@ -1101,20 +1101,25 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Still left to convert
-
-    $('#modalForm4').submit(function(e) {
+    $(document).on('submit','#install_borg',function(e){
+        var $loaderId        =   '#install_borg_btn';
+        var $loaderText      =   'Installing...';
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "install_borg.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $("#myToast-nl").find('.toast-body').html(result);
+                $("#myToast-nl").toast('show');
+                location.reload()
             }
         });
     });
+
+    // Still left to convert
 
     $('#modalForm5').submit(function(e) {
         var $id = e.target.id;
