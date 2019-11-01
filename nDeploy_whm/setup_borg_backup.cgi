@@ -102,7 +102,7 @@ if os.path.isdir('/etc/borgmatic'):
     cardheader('Borg Backup Settings', 'fas fa-database')
     print('                        <div class="card-body"> <!-- Card Body Start -->')
 
-    print('                            <form class="form" method="post" id="toastForm11" onsubmit="return false;">')
+    print('                            <form class="form" method="post" id="save_backup_settings" onsubmit="return false;">')
     print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
     # system_files
@@ -164,7 +164,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                        </div>')
     print('                                    </div>')
     print('                                    <div class="col-md-12">')
-    print('                                        <button class="btn btn-outline-primary btn-block mt-3" type="submit">Save Backup Settings</button>')
+    print('                                        <button id="save_backup_settings_btn" class="btn btn-outline-primary btn-block mt-3" type="submit">Save Backup Settings</button>')
     print('                                    </div>')
     print('                                </div> <!-- Row End -->')
     print('                            </form>')
@@ -262,10 +262,10 @@ if os.path.isdir('/etc/borgmatic'):
             print('                            </div>')
             if path not in ['/home', backup_path]:
                 print('                        <div class="input-group-append">')
-                print('                            <form class="form toastForm13-wrap" method="post" id="toastForm13'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                print('                            <form class="form borg-rm-dir-wrap" method="post" id="borg_rm_dir-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('                                <input hidden name="thehomedir" value="'+path+'">')
                 print('                                <input hidden name="action" value="delete">')
-                print('                                <button class="btn btn-danger btn-sm" type="submit">')
+                print('                                <button id="borg_rm_dir_btn-'+str(mykeypos)+'" class="btn btn-danger btn-sm" type="submit">')
                 print('                                    <span class="sr-only">Delete</span>')
                 print('                                    <i class="fas fa-times"></i>')
                 print('                                </button>')
@@ -275,7 +275,7 @@ if os.path.isdir('/etc/borgmatic'):
             print('                        </div>')
     print('                            </div>')
     print('                            <div class="label label-default mt-2 mb-2">Add another \'home\' directory to backup:</div>')
-    print('                            <form class="form" method="post" id="toastForm14" onsubmit="return false;">')
+    print('                            <form class="form" method="post" id="borg_add_dir" onsubmit="return false;">')
 
     print('                                <div class="input-group mb-0">')
     print('                                    <div class="input-group-prepend">')
@@ -284,7 +284,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                    <input class="form-control" placeholder="/home2" type="text" name="thehomedir">')
     print('                                    <input hidden name="action" value="add">')
     print('                                    <div class="input-group-append">')
-    print('                                        <button class="btn btn-outline-primary" type="submit">')
+    print('                                        <button id="borg_add_dir_btn" class="btn btn-outline-primary" type="submit">')
     print('                                            <span class="sr-only">Add</span><i class="fas fa-plus"></i>')
     print('                                        </button>')
     print('                                    </div>')
