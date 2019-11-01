@@ -203,6 +203,18 @@ jQuery(document).ready(function($) {
         });
     }, false);
 
+    // Toasts
+    $.toast = function(c) {
+        $("#toast-container").length || ($("#toasts-holder").prepend('<div id="toast-container" aria-live="polite" aria-atomic="true"></div>'), $("#toast-container").append('<div id="toast-holder"></div>'), $("#toasts-holder").on("hidden.bs.toast", ".toast", function() {
+            $(this).remove();
+        }));
+        e = c.autohide || "true",
+        f = c.delay || 5000;
+        a = '<div class="toast toast-new" role="alert" aria-live="assertive" data-autohide="'+e+'" aria-atomic="true" data-delay="'+f+'"></div>';
+        $("#toast-holder").append(a);
+        $("#toast-holder .toast:last").toast("show");
+    };
+
     // Forms
     $(document).on("submit","#ddos_protection_nginx_enable",function(e){
         var $loaderId        =   "#ddos-protection-nginx-enable-btn";
@@ -216,8 +228,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#v-pills-dos .card-body > .no-gutters").load("xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -234,8 +249,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -252,8 +270,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -270,8 +291,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -289,8 +313,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
                 $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -308,8 +335,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
                 $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -327,8 +357,11 @@ jQuery(document).ready(function($) {
             success: function(result){
                 $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
                 $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -346,8 +379,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#v-pills-php .card-body > .no-gutters').load('xtendweb.cgi #v-pills-php .card-body > .no-gutters > *');
                 $($loaderId).html('Set Default PHP');
-                $("#myToast-nl").find('.toast-body').html(result);;
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -364,8 +400,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-zone #sync_geodns_zone').load('xtendweb.cgi #v-pills-zone #sync_geodns_zone > *');
-                $("#myToast-nl").find('.toast-body').html(result);;
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -383,8 +422,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#v-pills-map .card-body > .no-gutters").load("xtendweb.cgi #v-pills-map .card-body > .no-gutters > *");
                 $($loaderId).html('Enable');
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -402,8 +444,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#v-pills-map .card-body > .no-gutters").load("xtendweb.cgi #v-pills-map .card-body > .no-gutters > *");
                 $($loaderId).html('Disable');
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -421,8 +466,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#nginx_status_widget').load('xtendweb.cgi #nginx_status_widget > *');
                 $($loaderId).html('Reload');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -440,8 +488,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#watcher_status_widget').load('xtendweb.cgi #watcher_status_widget > *');
                 $($loaderId).html('Restart');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -459,8 +510,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#clear_caches_widget').load('xtendweb.cgi #clear_caches_widget > *');
                 $($loaderId).html('Flush All');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -478,8 +532,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#restart_backends_widget').load('xtendweb.cgi #restart_backends_widget > *');
                 $($loaderId).html('Restart');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -496,8 +553,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-zone #sync_web_files').load('xtendweb.cgi #v-pills-zone #sync_web_files > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -513,8 +573,11 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -529,8 +592,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#home-content").load("xtendweb.cgi #home-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -547,8 +613,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#home-content").load("xtendweb.cgi #home-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -565,8 +634,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#master-content").load("xtendweb.cgi #master-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -583,8 +655,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#slave-content").load("xtendweb.cgi #slave-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -601,8 +676,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#ip-content").load("xtendweb.cgi #ip-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -620,8 +698,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#ip-add-content").load("xtendweb.cgi #ip-add-content > *");
                 $("#ip-content").load("xtendweb.cgi #ip-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -638,8 +719,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#ip-content").load("xtendweb.cgi #ip-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -657,8 +741,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#add-content").load("xtendweb.cgi #add-content > *");
                 $("#slave-content").load("xtendweb.cgi #slave-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -675,8 +762,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#slave-content").load("xtendweb.cgi #slave-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -693,8 +783,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#slave-content").load("xtendweb.cgi #slave-content > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -712,8 +805,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $("#v-pills-branding .card-body").load("ndeploy_control.cgi #v-pills-branding .card-body > *");
                 $("#main-header").load("ndeploy_control.cgi #main-header > *");
-                $("#myToast-nl").find(".toast-body").html(result);
-                $("#myToast-nl").toast("show");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -730,8 +826,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-branding .card-body').load('ndeploy_control.cgi #v-pills-branding .card-body > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -748,8 +847,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-branding .card-body').load('ndeploy_control.cgi #v-pills-branding .card-body > *');
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -767,8 +869,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#v-pills-aesthetics .card-body').load('ndeploy_control.cgi #v-pills-aesthetics .card-body > *');
                 $('#main-header').load('ndeploy_control.cgi #main-header > *');
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -785,8 +890,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -803,8 +911,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-netdata .card-body').load('ndeploy_control.cgi #v-pills-netdata .card-body > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -821,8 +932,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-netdata .card-body').load('ndeploy_control.cgi #v-pills-netdata .card-body > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -839,8 +953,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-glances .card-body').load('ndeploy_control.cgi #v-pills-glances .card-body > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -857,8 +974,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-glances .card-body').load('ndeploy_control.cgi #v-pills-glances .card-body > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -875,8 +995,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget1').load('ndeploy_control.cgi #dash_widget1 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -893,8 +1016,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget1').load('ndeploy_control.cgi #dash_widget1 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -911,26 +1037,32 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-modules .card-body').load('ndeploy_control.cgi #v-pills-modules .card-body > *');
-                $("#myToast-nl").find('.toast-body').html(result);;
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
 
     $(document).on('submit','#autofix_simple',function(e){
-        var $loaderId        =   '#autofix-simple-btn';
-        var $loaderText      =   'Fixing...';
+        var $loaderId        =   "#autofix-simple-btn";
+        var $loaderText      =   "Fixing...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
-        var $f = $('#' + $id);
+        var $f = $("#" + $id);
         var $url = "autofix_control.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $('#dash_widget3').load('ndeploy_control.cgi #dash_widget3 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $("#dash_widget3").load("ndeploy_control.cgi #dash_widget3 > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -947,8 +1079,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget3').load('ndeploy_control.cgi #dash_widget3 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast('show').html(result);
+                $(".toast").removeClass('toast-new');
             }
         });
     });
@@ -965,8 +1100,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result){
                 $('#dash_widget4').load('ndeploy_control.cgi #dash_widget4 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -983,8 +1121,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget4').load('ndeploy_control.cgi #dash_widget4 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -1001,8 +1142,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#dash_widget4').load('ndeploy_control.cgi #dash_widget4 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -1020,8 +1164,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
                 $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -1039,8 +1186,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
                 $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -1058,8 +1208,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
                 $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -1077,8 +1230,11 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#v-pills-php_backends .card-body > .no-gutters').load('ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *');
                 $('#dash_widget2').load('ndeploy_control.cgi #dash_widget2 > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -1095,8 +1251,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-system .card-body > .no-gutters').load('xtendweb.cgi #v-pills-system .card-body > .no-gutters > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -1113,8 +1272,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#main-container').load('setup_borg_backup.cgi #main-container > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -1130,8 +1292,11 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
                 location.reload();
             }
         });
@@ -1152,8 +1317,11 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
                 location.reload();
             }
         });
@@ -1174,8 +1342,11 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
                 location.reload();
             }
         });
@@ -1193,8 +1364,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-settings .card-body').load('setup_borg_backup.cgi #v-pills-settings .card-body > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
@@ -1211,8 +1385,11 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $('#v-pills-settings .card-body').load('setup_borg_backup.cgi #v-pills-settings .card-body > *');
-                $("#myToast-nl").find('.toast-body').html(result);
-                $("#myToast-nl").toast('show');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
             }
         });
     });
