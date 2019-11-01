@@ -1139,7 +1139,7 @@ jQuery(document).ready(function($) {
 
     $(document).on('submit','#borg_add_dir',function(e){
         var $loaderId        =   '#borg_add_dir_btn';
-        var $loaderText      =   '';
+        var $loaderText      =   'Adding...';
         $($loaderId).prop("disabled", true);
         if ($loaderText != '') {
             $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>` + $loaderText);
@@ -1181,21 +1181,43 @@ jQuery(document).ready(function($) {
         });
     });
 
-
-    // Still left to convert
-
-    $('#modalForm5').submit(function(e) {
+    $(document).on('submit','#init_repo',function(e){
+        var $loaderId        =   '#init_repo_btn';
+        var $loaderText      =   'Initializing...';
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "install_borg.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#myModal-xl").find('.modal-body').html(result)
-                $("#myModal-xl").modal('show');
+                $('#v-pills-settings .card-body').load('setup_borg_backup.cgi #v-pills-settings .card-body > *');
+                $("#myToast-nl").find('.toast-body').html(result);
+                $("#myToast-nl").toast('show');
             }
         });
     });
+
+    $(document).on('submit','#save_borg_settings',function(e){
+        var $loaderId        =   '#save_borg_settings_btn';
+        var $loaderText      =   'Saving...';
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $('#v-pills-settings .card-body').load('setup_borg_backup.cgi #v-pills-settings .card-body > *');
+                $("#myToast-nl").find('.toast-body').html(result);
+                $("#myToast-nl").toast('show');
+            }
+        });
+    });
+
+    // Still left to convert
 
     $('.toastForm9-wrap').submit(function(e) {
         var $id = e.target.id;
@@ -1215,19 +1237,6 @@ jQuery(document).ready(function($) {
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $("#myToast").find('.toast-body').html(result);
-                $("#myToast").toast('show');
-            }
-        });
-    });
-
-    $('#toastForm12').submit(function(e) {
-        var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
