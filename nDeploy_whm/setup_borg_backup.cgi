@@ -400,8 +400,8 @@ if os.path.isdir('/etc/borgmatic'):
     print('                            </form>')
 
     print('                            <div class="btn-group btn-block mt-2">')
-    print('                                <button class="btn btn-outline-primary" type="submit" form="toastForm12">Init Repo</button>')
-    print('                                <button class="btn btn-outline-primary" type="submit" form="modalForm5">Save Settings</button>')
+    print('                                <button class="btn btn-outline-primary" type="submit" form="toastForm12">Save Settings</button>')
+    print('                                <button class="btn btn-outline-primary" type="submit" form="modalForm5">Init Repo</button>')
     print('                            </div>')
 
     print('                        </div> <!-- Card Body End -->')
