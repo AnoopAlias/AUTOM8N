@@ -503,7 +503,85 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#toastForm28').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast-nl").find('.toast-body').html(result)
+                $("#myToast-nl").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm29').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result){
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm30').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result){
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm31').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result){
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('.toastForm32-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
     $('.toastForm33-wrap').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('.toastForm34-wrap').submit(function(e) {
         var $id = e.target.id;
         var $f = $('#' + $id);
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
@@ -523,6 +601,19 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
+                $("#myToast").find('.toast-body').html(result)
+                $("#myToast").toast('show');
+            }
+        });
+    });
+
+    $('#toastForm36').submit(function(e) {
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result){
                 $("#myToast").find('.toast-body').html(result)
                 $("#myToast").toast('show');
             }
