@@ -301,7 +301,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     cardheader('Borg Settings', 'fas fa-database')
     print('                        <div class="card-body"> <!-- Card Body Start -->')
-    print('                            <form class="form input-group-prepend-min" method="post" id="toastForm12" onsubmit="return false;"> ')
+    print('                            <form class="form input-group-prepend-min" method="post" id="save_borg_settings" onsubmit="return false;"> ')
 
     # repositories
     repositories_hint = " Eg: user@backupserver:sourcehostname.borg "
@@ -395,13 +395,13 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                </div>')
 
     print('                            </form>')
-    print('                            <form class="form" id="modalForm5" onsubmit="return false;">')
+    print('                            <form class="form" id="init_repo" onsubmit="return false;">')
     print('                                <input hidden name="action" value="initrepo">')
     print('                            </form>')
 
     print('                            <div class="btn-group btn-block mt-2">')
-    print('                                <button class="btn btn-outline-primary" type="submit" form="toastForm12">Init Repo</button>')
-    print('                                <button class="btn btn-outline-primary" type="submit" form="modalForm5">Save Settings</button>')
+    print('                                <button id="init_repo_btn" class="btn btn-outline-primary" type="submit" form="init_repo">Init Repo</button>')
+    print('                                <button id="save_borg_settings_btn" class="btn btn-outline-primary" type="submit" form="save_borg_settings">Save Settings</button>')
     print('                            </div>')
 
     print('                        </div> <!-- Card Body End -->')
