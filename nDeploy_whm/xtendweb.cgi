@@ -12,7 +12,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, return_prepend, print_header, display_term, print_modals, print_loader, cardheader, cardfooter, return_multi_input, print_input_fn, print_select_fn
+from commoninclude import bcrumb, return_prepend, print_header, display_term, print_modals,cardheader, cardfooter, print_input_fn, print_select_fn
 
 
 __author__ = "Anoop P Alias"
@@ -237,8 +237,8 @@ print('                                </div>')
 
 # Process Tracker
 print('                                <div class="col-md-6">')
-print('                                    <form class="form" id="modalForm3" onsubmit="return false;">')
-print('                                        <button class="btn btn-block btn-icon" type="submit"><i class="fas fa-bug"></i> Check Processes</button>')
+print('                                    <form class="form" id="check_process" onsubmit="return false;">')
+print('                                        <button id="check_process_btn" class="btn btn-block btn-icon" type="submit"><i class="fas fa-bug"></i> Check Processes</button>')
 print('                                    </form>')
 print('                                </div>')
 print('                            </div> <!-- Row End -->')
@@ -1261,7 +1261,6 @@ display_term()
 print('')
 
 print_modals()
-print_loader()
 
 print('    </body> <!-- Body End -->')
 print('</html>')

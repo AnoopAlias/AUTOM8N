@@ -25,51 +25,14 @@ borgmatic_config_file = "/etc/borgmatic/config.yaml"
 
 cgitb.enable()
 
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
-
-def safenginxreload():
-    nginx_status = False
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
-            nginx_status = True
-            break
-    if not nginx_status:
-        with open(os.devnull, 'w') as FNULL:
-            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
-
-
-def sighupnginx():
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-            nginxpid = myprocess.pid
-            os.kill(nginxpid, signal.SIGHUP)
-
-
 form = cgi.FieldStorage()
 
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
 with open(borgmatic_config_file, 'r') as borgmatic_conf:
     yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_conf)
@@ -141,15 +104,16 @@ if form.getvalue('thehomedir'):
             if myhomedir not in backup_dir_list:
                 backup_dir_list.append(myhomedir)
             yaml_parsed_borgmaticyaml['location']['source_directories'] = backup_dir_list
+            commoninclude.print_success('Directory Added!')
+
         elif form.getvalue('action') == "delete":
             backup_dir_list.remove(form.getvalue('thehomedir'))
             yaml_parsed_borgmaticyaml['location']['source_directories'] = backup_dir_list
+            commoninclude.print_success('Directory Removed!')
 
 with open(borgmatic_config_file, 'w') as borgmatic_conf:
     yaml.dump(yaml_parsed_borgmaticyaml, borgmatic_conf, default_flow_style=False)
 os.chmod(borgmatic_config_file, 0o640)
 
-commoninclude.print_success('Borgmatic settings saved')
-
-print('</body>')
+print('    </body>')
 print('</html>')

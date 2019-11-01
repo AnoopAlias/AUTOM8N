@@ -36,14 +36,10 @@ if form.getvalue('restore_defaults') == 'enabled':
     with open(branding_file, 'w') as ndeploy_control_branding_conf:
         yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
-    procExe = subprocess.Popen('echo "*** Reverting to default branding configuration ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    procExe.wait()
-    procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    procExe.wait()
-    procExe = subprocess.Popen('echo "*** Branding configuration reverted ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     procExe.wait()
             
-    commoninclude.print_success('Branding configuration restored to default')
+    commoninclude.print_success('Branding configuration has been reverted to default.')
 
 else:
     commoninclude.print_forbidden()

@@ -22,9 +22,9 @@ form = cgi.FieldStorage()
 print('Content-Type: text/html')
 print('')
 print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print('    <head>')
+print('    </head>')
+print('    <body>')
 
 malware = False
 user_list = os.listdir("/var/cpanel/users")
@@ -46,6 +46,9 @@ for myprocess in psutil.process_iter():
         if not myexe.endswith(("/usr/libexec/openssh/sftp-server")) and (myexe.startswith(("/usr/bin/perl", "/home")) or myexe == '/'):
             malware = True
             if not os.path.isfile('/opt/nDeploy/conf/disable_autokill_malware'):
+                
+                # We should build this out more with more detections, then we can
+                # add it to Term along with current toast setup. - Budd
                 subprocess.call('killall -9 -u '+myusername, shell=True)
                 print('STATUS: <kbd>killed</kbd><br>')
             print('PID: <kbd>'+str(mypid)+'</kbd><br>')
@@ -54,7 +57,7 @@ for myprocess in psutil.process_iter():
             print('EXE: <kbd>'+myexe+'</kbd>')
             print('<hr>')
 if not malware:
-    commoninclude.print_success('No suspicious processes found')
+    commoninclude.print_success('No suspicious processes found!')
 
-print('</body>')
+print('    </body>')
 print('</html>')
