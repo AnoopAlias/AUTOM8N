@@ -41,11 +41,7 @@ if form.getvalue('action'):
 
     elif form.getvalue('action') == 'initrepo':
 
-        procExe = subprocess.Popen('echo -e "Initializing Repo..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen('/usr/local/bin/borgmatic --init --encryption repokey-blake2 >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen('echo -e "Repo Initialized..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        procExe = subprocess.Popen('/usr/local/bin/borgmatic --init --encryption repokey-blake2', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
 
         commoninclude.print_success('Repo initialized!')
@@ -57,5 +53,6 @@ if form.getvalue('action'):
         commoninclude.print_forbidden()
 else:
     commoninclude.print_forbidden()
+
 print('    </body>')
 print('</html>')

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo -e '\n<strong>Rebuilding nDeploy Brand for WHM & cPanel:</strong>'
 echo -e '\n<em><strong>Uninstalling previous version from cPanel...</strong></em>'
 /usr/local/cpanel/scripts/uninstall_plugin /opt/nDeploy/nDeploy_cp
 
