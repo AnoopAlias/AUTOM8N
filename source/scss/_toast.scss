@@ -1,0 +1,79 @@
+// main: styles.scss
+
+#toasts-holder {
+	z-index: 100;
+	position: absolute;
+	top: .9em;
+	right: .9em;
+	width: 20rem;
+	#toast-holder {
+		.toast {
+			background-color: transparent;
+		    -webkit-backdrop-filter: none;
+		            backdrop-filter: none;
+		    box-shadow: none;
+		    border: none;
+		    border-radius: none;
+			color: $white;
+			position: fixed;
+			min-width: 20rem;
+			max-width: 20rem;
+			.toast-header {
+				background-color: lighten($bg-dark, 5%);
+				color: $white;
+			}
+			.fas {
+				display: inline-block;
+				float: left;
+				margin-right: .5rem;
+				bottom: .5rem;
+			}
+			p:last-child {
+				margin-bottom: 0;
+			}
+			button > span {
+				color: $white;
+			}
+			.alert {
+				box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,.1);
+			    -webkit-backdrop-filter: blur(10px);
+			    backdrop-filter: blur(10px);
+				position: relative;
+				&.alert-info,
+				&.alert-success,
+				&.alert-error,
+				&.alert-warning {
+					padding-left: 3rem;
+					&:before {
+						font-family: "Font Awesome 5 Free";
+						content: '';
+						position: absolute;
+						left: 1rem;
+						width: 3rem;
+						font-size: 1.2rem;
+					}
+				}
+				&.alert-info {
+					&:before {
+						content: $icon-info;
+					}
+				}
+				&.alert-success {
+					&:before {
+						content: $icon-success;
+					}
+				}
+				&.alert-error {
+					&:before {
+						content: $icon-error;
+					}
+				}
+				&.alert-warning {
+					&:before {
+						content: $icon-warning;
+					}
+				}
+			}
+		}
+	}
+}
