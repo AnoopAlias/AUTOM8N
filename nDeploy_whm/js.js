@@ -85,10 +85,6 @@ jQuery(document).ready(function($) {
         window.history.go(-1);
     });
 
-    $('.toast').toast({
-        delay: 5000
-    });
-
     $('.nav a.dropdown-item').click(function (e) {
         //get selected href
         var href = $(this).attr('href');
@@ -368,7 +364,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-php .card-body > .no-gutters').load('xtendweb.cgi #v-pills-php .card-body > .no-gutters > *");
+                $("#v-pills-php .card-body > .no-gutters").load("xtendweb.cgi #v-pills-php .card-body > .no-gutters > *");
                 $($loaderId).html("Set Default PHP");
                 $.toast({
                     autohide: 'true',
@@ -573,9 +569,11 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".delete_cluster_settings_directory",function(e){
+    $(document).on("submit","form[id^='delete_cluster_settings_directory-']",function(e){
         var $loaderId        =   "#delete-cluster-settings-directory-btn";
+        var $loaderText      =   "Deleting...";
         $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_cluster_settings.cgi?" + $f.serialize();
@@ -1297,48 +1295,40 @@ jQuery(document).ready(function($) {
         var $loaderId        =   "#borg_add_dir_btn";
         var $loaderText      =   "Adding...";
         $($loaderId).prop("disabled", true);
-        if ($loaderText != '') {
-            $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>` + $loaderText);
-        } else {
-            $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`);
-        }
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
+                $("#v-pills-additional .card-body").load("setup_borg_backup.cgi #v-pills-additional .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
-                location.reload();
             }
         });
     });
 
     $(document).on("submit","form[id^='borg_rm_dir-']",function(e){
         var $loaderId        =   $(this).find('button');
-        var $loaderText      =   '';
+        var $loaderText      =   "Deleting...";
         $($loaderId).prop("disabled", true);
-        if ($loaderText != '') {
-            $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>` + $loaderText);
-        } else {
-            $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`);
-        }
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_borgmatic_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
+                $("#v-pills-additional .card-body").load("setup_borg_backup.cgi #v-pills-additional .card-body > *");
                 $.toast({
-                    autohide: 'true',
+                    autohide: 'true'
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
-                location.reload();
             }
         });
     });
@@ -1376,6 +1366,48 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#v-pills-settings .card-body").load("setup_borg_backup.cgi #v-pills-settings .card-body > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit","#borg_unmount_restore_point",function(e){
+        var $loaderId        =   "#borg-unmount-restore-point-btn";
+        var $loaderText      =   "Unmounting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "borg_restore.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#borg-restore-points").load("setup_borg_backup.cgi #borg-restore-points > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit",".borg_mount_restore_point",function(e){
+        var $loaderId        =   "#borg-mount-restore-point-btn";
+        var $loaderText      =   "Mounting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "borg_restore.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#borg-restore-points").load("setup_borg_backup.cgi #borg-restore-points > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1472,38 +1504,6 @@ jQuery(document).ready(function($) {
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $.toast({
-                    autohide: 'true',
-                });
-                $(".toast-new").toast("show").html(result);
-                $(".toast").removeClass("toast-new");
-            }
-        });
-    });
-
-    $("#toastForm24").submit(function(e) {
-        var $id = e.target.id;
-        var $f = $("#" + $id);
-        var $url = "borg_restore.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $.toast({
-                    autohide: 'true',
-                });
-                $(".toast-new").toast("show").html(result);
-                $(".toast").removeClass("toast-new");
-            }
-        });
-    });
-
-    $(".toastForm25-wrap").submit(function(e) {
-        var $id = e.target.id;
-        var $f = $("#" + $id);
-        var $url = "borg_restore.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
