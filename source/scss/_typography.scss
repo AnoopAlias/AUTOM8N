@@ -1,0 +1,153 @@
+// main: styles.scss
+
+a {
+	text-decoration: none !important;
+}
+
+.btn-outline-primary,
+.btn-outline-default {
+	border-color: $ultramarine-blue;
+	color: $ultramarine-blue;
+	&:hover,
+	&:active,
+	&:focus {
+		background-color: darken($ultramarine-blue, 5%);
+		border-color: darken($ultramarine-blue, 5%);
+		color: $white;
+	}
+}
+
+.nav-pills {
+	.nav-link {
+		cursor: pointer;
+		&.active {
+			background-color: $secondary;
+		}
+	}
+}
+
+#v-pills-tabContent {
+	.dropdown-menu {
+		.dropdown-item {
+			cursor: pointer;
+		}
+	}
+}
+
+.btn-group {
+	.btn {
+		margin-top: 0;
+		cursor: pointer;
+	}
+}
+
+.input-group-prepend-min {
+	.input-group-text {
+		min-width: 11rem;
+	}
+}
+
+.input-group-inline {
+	width: inherit;
+	float: left;
+	margin: 0 1rem 1rem 0;
+}
+
+.btn-light {
+	background-color: $disabled;
+	border-color: $disabled-border;
+}
+
+.btn-light:not(:disabled):not(.disabled):active,
+.btn-light:not(:disabled):not(.disabled).active,
+.show>.btn-light.dropdown-toggle {
+	background-color: $ultramarine-blue;
+	border-color: $ultramarine-blue;
+	color: $white;
+}
+
+.input-group-append {
+	> form {
+		display: inherit;
+	}
+	.toastForm9-wrap {
+		margin-left: -1px !important;
+		.btn {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+	}
+}
+
+.input-group-inline {
+	.input-group-append {
+		margin-left: 0;
+		.form {
+			&:not(:only-child):first-child {
+				.btn {
+					border-radius: 0;
+				}
+			}
+			&:not(:only-child):last-child {
+				.btn {
+					border-top-left-radius: 0;
+					border-bottom-left-radius: 0;
+					margin-left: -1px;
+				}
+			}
+			&:only-child {
+				.btn {
+					border-top-left-radius: 0;
+					border-bottom-left-radius: 0;
+					margin-left: 1px;
+				}
+			}
+		}
+	}
+}
+
+.btn-ajax,
+.btn-ajax-slow {
+	.spinner-grow {
+		position: relative;
+		top: -0.2rem;
+		margin-right: 0.5rem;
+	}
+}
+
+h6.label-default {
+	font-weight: bold;
+	text-transform: uppercase;
+	margin-top: 2rem;
+	&:first-child {
+		margin-top: 1rem;
+	}
+}
+
+kbd {
+	position: relative;
+	top: -1px;
+}
+
+#dashboard {
+	.form {
+		margin-bottom: 0;
+	}
+	.btn {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		border: none;
+		border-top: $border;
+	}
+	.btn-group {
+		.btn {
+			&:first-child {
+				border-bottom-right-radius: 0;
+				border-right: 1px solid rgba(0,0,0,0.125);
+			}
+			&:last-child {
+				border-bottom-left-radius: 0;
+			}
+		}
+	}
+}

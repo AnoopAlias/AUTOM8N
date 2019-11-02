@@ -4,7 +4,13 @@
 @import '../bootstrap/scss/bootstrap';
 
 // Base-theme overrides.
-@import 'ndeploy';
+@import 'colors';
+@import 'general';
+@import 'card';
+@import 'theme';
+@import 'typography';
 @import 'toast';
 @import 'terminal';
+@import 'misc';
+@import 'removed';
 @import 'responsive';

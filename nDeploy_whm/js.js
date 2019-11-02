@@ -815,6 +815,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#v-pills-branding .card-body").load("ndeploy_control.cgi #v-pills-branding .card-body > *");
+                $("#main-header").load("ndeploy_control.cgi #main-header > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -835,7 +836,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-branding .card-body").load("ndeploy_control.cgi #v-pills-branding .card-body > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
@@ -856,8 +857,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-aesthetics .card-body").load("ndeploy_control.cgi #v-pills-aesthetics .card-body > *");
-                $("#main-header").load("ndeploy_control.cgi #main-header > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
