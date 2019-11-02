@@ -86,7 +86,7 @@ jQuery(document).ready(function($) {
     });
 
     $('.toast').toast({
-        delay: 5000;
+        delay: 5000
     });
 
     $('.nav a.dropdown-item').click(function (e) {
@@ -880,7 +880,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#dash_widget2").load("ndeploy_control.cgi #dash_widget2 > *");
+                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -985,7 +985,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#dash_widget1").load("ndeploy_control.cgi #dash_widget1 > *");
+                $("#plugin_status_widget").load("ndeploy_control.cgi #plugin_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1006,7 +1006,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#dash_widget1").load("ndeploy_control.cgi #dash_widget1 > *");
+                $("#plugin_status_widget").load("ndeploy_control.cgi #plugin_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1048,7 +1048,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#dash_widget3").load("ndeploy_control.cgi #dash_widget3 > *");
+                $("#fix_all_widget").load("ndeploy_control.cgi #fix_all_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1069,7 +1069,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#dash_widget3").load("ndeploy_control.cgi #dash_widget3 > *");
+                $("#fix_all_widget").load("ndeploy_control.cgi #fix_all_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1090,7 +1090,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result){
-                $("#dash_widget4").load("ndeploy_control.cgi #dash_widget4 > *");
+                $("#plugin_upgrade_widget").load("ndeploy_control.cgi #plugin_upgrade_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1111,7 +1111,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#dash_widget4").load("ndeploy_control.cgi #dash_widget4 > *");
+                $("#plugin_upgrade_widget").load("ndeploy_control.cgi #plugin_upgrade_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1132,7 +1132,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#dash_widget4").load("ndeploy_control.cgi #dash_widget4 > *");
+                $("#plugin_upgrade_widget").load("ndeploy_control.cgi #plugin_upgrade_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1154,7 +1154,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#v-pills-php_backends .card-body > .no-gutters").load("ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *");
-                $("#dash_widget2").load("ndeploy_control.cgi #dash_widget2 > *");
+                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1176,7 +1176,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#v-pills-php_backends .card-body > .no-gutters").load("ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *");
-                $("#dash_widget2").load("ndeploy_control.cgi #dash_widget2 > *");
+                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1198,7 +1198,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#v-pills-php_backends .card-body > .no-gutters").load("ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *");
-                $("#dash_widget2").load("ndeploy_control.cgi #dash_widget2 > *");
+                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1220,7 +1220,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#v-pills-php_backends .card-body > .no-gutters").load("ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *");
-                $("#dash_widget2").load("ndeploy_control.cgi #dash_widget2 > *");
+                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });

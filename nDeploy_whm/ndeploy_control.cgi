@@ -99,7 +99,7 @@ if os.path.isfile(php_chroot_mode_file):
 
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row flex-row">')
-print('                <div id="dash_widget1" class="col-sm-6 col-xl-3"> <!-- Dash Item 1 Start -->')
+print('                <div id="plugin_status_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item 1 Start -->')
 
 cardheader('')
 
@@ -131,7 +131,7 @@ cardfooter('')
 
 print('                </div> <!-- Dash Item 1 End -->')
 
-print('                <div id="dash_widget2" class="col-sm-6 col-xl-3"> <!-- Dash Item 2 Start -->')
+print('                <div id="php_status_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item 2 Start -->')
 
 cardheader('')
 
@@ -175,7 +175,7 @@ cardfooter('')
 
 print('                </div> <!-- Dash Item 3 End -->')
 
-print('                <div id="dash_widget3" class="col-sm-6 col-xl-3"> <!-- Dash Item 3 Start -->')
+print('                <div id="fix_all_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item 3 Start -->')
 
 cardheader('')
 
@@ -201,7 +201,7 @@ cardfooter('')
 
 print('                </div> <!-- Dash Item 3 End -->')
 
-print('                <div id="dash_widget4" class="col-sm-6 col-xl-3"> <!-- Dash Item 4 Start -->')
+print('                <div id="plugin_upgrade_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item 4 Start -->')
 
 cardheader('')
 
