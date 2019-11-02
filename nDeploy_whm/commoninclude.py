@@ -91,24 +91,36 @@ def print_nontoast_error(thenotice, thereason):
 
 
 # TOASTS
+def print_close_button():
+    print('<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+
+
 # Sucess Toast DIV
 def print_success_alert(themessage):
-    print('<div class="alert alert-success"><p>'+themessage+'</p></div>')
+    print('<div class="alert alert-success">')
+    print_close_button()
+    print('<p>'+themessage+'</p></div>')
 
 
 # Error Toast DIV
 def print_error_alert(themessage):
-    print('<div class="alert alert-danger"><p>'+themessage+'</p></div>')
+    print('<div class="alert alert-danger">')
+    print_close_button()
+    print('<p>'+themessage+'</p></div>')
 
 
 # Warning Toast DIV
 def print_warning_alert(themessage):
-    print('<div class="alert alert-warning"><p>'+themessage+'</p></div>')
+    print('<div class="alert alert-warning">')
+    print_close_button()
+    print('<p>'+themessage+'</p></div>')
 
 
 # Info Toast DIV
 def print_info_alert(themessage):
-    print('<div class="alert alert-info"><p>'+themessage+'</p></div>')
+    print('<div class="alert alert-info">')
+    print_close_button()
+    print('<p>'+themessage+'</p></div>')
 
 
 # Forbidden Toast with icon
@@ -418,53 +430,4 @@ def print_modals():
     print('                    </div>')
     print('                </div>')
     print('            </div>')
-    print('        </div>')
-
-    # Toast Positions Wrapper Start
-    print('')
-    print('        <!-- Position Toasts -->')
-    print('        <div id="toasts-holder" aria-live="polite" aria-atomic="true">')
-    print('            <div id="toast-holder">')
-    print('')
-
-    # Toast
-    print('                <div class="toast fade hide" id="myToast" role="alert" aria-live="assertive" aria-atomic="true">')
-    print('                    <div class="toast-body">')
-    print('                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                </div>')
-
-    # Toast with long autohide
-    print('                <div class="toast fade hide" id="myToastnohide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">')
-    print('                    <div class="toast-body">')
-    print('                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                </div>')
-
-    # Toast with no reload, no tand the default for toast notifications #MyToast-nl
-    print('                <div class="toast fade hide" id="myToast-nl" role="alert" aria-live="assertive" aria-atomic="true">')
-    print('                    <div class="toast-body">')
-    print('                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                </div>')
-
-    # Toastback
-    print('                <div class="toast fade hide" id="myToastback" role="alert" aria-live="assertive" aria-atomic="true">')
-    print('                    <div class="toast-body">')
-    print('                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                </div>')
-
-    # Toast Positions Wrapper End
-    print('            </div>')
-    print('')
-    print('        <!-- End Position Wrapper -->')
     print('        </div>')
