@@ -102,6 +102,17 @@
 			}
 		}
 	}
+	#terminal {
+		.modal-dialog {
+			.modal-content {
+				.modal-header {
+					.close {
+						color: $white;
+					}
+				}
+			}
+		}
+	}
 }
 
 .ndeploy-theme-light {
@@ -151,6 +162,17 @@
 			.card-header {
 				.btn {
 					color: $black;
+				}
+			}
+		}
+	}
+	#terminal {
+		.modal-dialog {
+			.modal-content {
+				.modal-header {
+					.close {
+						color: $black;
+					}
 				}
 			}
 		}

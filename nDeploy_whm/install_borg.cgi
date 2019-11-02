@@ -5,6 +5,7 @@ import cgi
 import cgitb
 import subprocess
 import os
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -20,12 +21,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 if form.getvalue('action'):
     if form.getvalue('action') == 'installborg':
@@ -54,5 +50,4 @@ if form.getvalue('action'):
 else:
     commoninclude.print_forbidden()
 
-print('    </body>')
-print('</html>')
+print_simple_footer()

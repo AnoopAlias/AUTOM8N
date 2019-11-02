@@ -7,7 +7,7 @@ import psutil
 import platform
 import yaml
 import sys
-from commoninclude import print_nontoast_error, bcrumb, print_header, display_term, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_footer, display_term, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -195,15 +195,5 @@ else:
 print('                        </div> <!-- Column End -->')
 print('')
 print('                    </div> <!-- WHM End Row -->')
-print('')
-print('                </div> <!-- Main Container End -->')
 
-display_term()
-
-print('')
-
-print_modals()
-print_loader()
-
-print('    </body> <!-- Body End -->')
-print('</html>')
+print_footer()

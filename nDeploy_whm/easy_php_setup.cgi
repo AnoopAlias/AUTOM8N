@@ -4,6 +4,7 @@ import commoninclude
 import cgi
 import cgitb
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Budd P Grant"
@@ -22,12 +23,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 if form.getvalue('run_installer') == 'enabled':
     procExe = subprocess.Popen('echo "*** Rebuilding Native PHP ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -41,5 +37,4 @@ if form.getvalue('run_installer') == 'enabled':
 else:
     commoninclude.print_forbidden()
 
-print('    </body>')
-print('</html>')
+print_simple_footer()

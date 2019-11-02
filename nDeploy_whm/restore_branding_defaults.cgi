@@ -5,6 +5,7 @@ import cgi
 import cgitb
 import yaml
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Budd P Grant"
@@ -24,12 +25,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 if form.getvalue('restore_defaults') == 'enabled':
     yaml_parsed_ndeploy_control_branding_conf = {'brand': 'AUTOM8N', 'brand_logo': 'xtendweb.png', 'brand_group': 'NGINX AUTOMATION'}
@@ -38,11 +34,10 @@ if form.getvalue('restore_defaults') == 'enabled':
 
     procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     procExe.wait()
-            
+
     commoninclude.print_success('Branding configuration has been reverted to default.')
 
 else:
     commoninclude.print_forbidden()
 
-print('    </body>')
-print('</html>')
+print_simple_footer()

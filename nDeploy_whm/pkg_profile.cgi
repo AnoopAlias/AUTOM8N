@@ -6,7 +6,7 @@ import os
 import shutil
 import yaml
 import sys
-from commoninclude import print_nontoast_error, return_label, return_prepend, print_disabled, bcrumb, print_header, display_term, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, return_label, return_prepend, print_disabled, bcrumb, print_header, print_footer, display_term, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -916,15 +916,4 @@ else:
     print_nontoast_error('Forbidden!', 'Missing cPanel Package Data!')
     sys.exit(0)
 
-print('        </div> <!-- Main Container End -->')
-
-display_term()
-
-print('')
-
-print_modals()
-print_loader()
-
-print('    <!-- Body End -->')
-print('    </body>')
-print('</html>')
+print_footer()

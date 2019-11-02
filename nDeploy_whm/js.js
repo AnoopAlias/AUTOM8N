@@ -298,8 +298,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
-                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -320,8 +320,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
-                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -342,8 +342,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result){
-                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
-                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -570,7 +570,7 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on("submit","form[id^='delete_cluster_settings_directory-']",function(e){
-        var $loaderId        =   "#delete-cluster-settings-directory-btn";
+        var $loaderId        =   $(this).find('button');
         var $loaderText      =   "Deleting...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -581,6 +581,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#home-content").load("xtendweb.cgi #home-content > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -602,6 +603,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#home-content").load("xtendweb.cgi #home-content > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1428,7 +1430,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                window.location.reload();
+                //window.location.reload();
+                $("#main-container").load("pkg_profile.cgi?cpanelpkg=default #main-container > *");
                 $.toast({
                     autohide: 'true',
                 });

@@ -5,6 +5,7 @@ import cgi
 import cgitb
 import os
 import yaml
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -28,12 +29,7 @@ def silentremove(filename):
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
 
 if form.getvalue('phpversion'):
     backend_config_file = installation_path+"/conf/backends.yaml"
@@ -52,5 +48,4 @@ if form.getvalue('phpversion'):
 else:
         commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

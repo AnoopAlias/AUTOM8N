@@ -9,6 +9,8 @@ import os
 import platform
 import signal
 import yaml
+from commoninclude import print_simple_header, print_simple_footer
+
 
 
 __author__ = "Anoop P Alias"
@@ -25,12 +27,7 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 cgitb.enable()
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 if form.getvalue('action'):
     if form.getvalue('action') == 'nginxreload':
@@ -42,7 +39,7 @@ if form.getvalue('action'):
             procExe.wait()
             procExe = subprocess.Popen('echo -e "NGINX reload initialized cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-    
+
             commoninclude.print_success('NGINX reload initialized cluster-wide!')
 
         else:
@@ -53,7 +50,7 @@ if form.getvalue('action'):
             procExe.wait()
             procExe = subprocess.Popen('echo -e "NGINX reload initialized..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-    
+
             commoninclude.print_success('Nginx reload initialized!')
 
     elif form.getvalue('action') == 'watcherrestart':
@@ -76,7 +73,7 @@ if form.getvalue('action'):
             procExe.wait()
             procExe = subprocess.Popen('echo -e "Redis cache flushed cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-    
+
             commoninclude.print_success('Redis cache flushed cluster-wide!')
 
         else:
@@ -87,7 +84,7 @@ if form.getvalue('action'):
             procExe.wait()
             procExe = subprocess.Popen('echo -e "Redis cache flushed..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-    
+
             commoninclude.print_success('Redis Cache flushed!')
 
     elif form.getvalue('action') == 'restart_backends':
@@ -95,7 +92,7 @@ if form.getvalue('action'):
         backend_data_yaml = open(backend_config_file, 'r')
         backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
         backend_data_yaml.close()
-        
+
         php_status_dict = {}
         if "PHP" in backend_data_yaml_parsed:
             php_backends_dict = backend_data_yaml_parsed["PHP"]
@@ -111,7 +108,7 @@ if form.getvalue('action'):
                         break
                     else:
                         php_status_dict[php] = "NOT ACTIVE"
-            
+
             for service,status in list(php_status_dict.items()):
                 if status == "NOT ACTIVE":
                     commoninclude.print_warning(service+' was flagged as '+status+'.<br>')
@@ -124,7 +121,7 @@ if form.getvalue('action'):
             procExe.wait()
             procExe = subprocess.Popen('echo -e "Application Backends restarted cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-    
+
             commoninclude.print_success('Application Backends restarted cluster-wide!')
 
         else:
@@ -135,7 +132,7 @@ if form.getvalue('action'):
             procExe.wait()
             procExe = subprocess.Popen('echo -e "Application Backends restarted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-    
+
             commoninclude.print_success('Application Backends restarted!')
 
     else:
@@ -144,5 +141,4 @@ if form.getvalue('action'):
 else:
     commoninclude.print_forbidden()
 
-print('    </body>')
-print('</html>')
+print_simple_footer()

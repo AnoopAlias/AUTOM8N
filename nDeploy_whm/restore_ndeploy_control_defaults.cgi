@@ -5,6 +5,7 @@ import cgi
 import cgitb
 import yaml
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Budd P Grant"
@@ -23,12 +24,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
 
 if form.getvalue('restore_defaults') == 'enabled':
     yaml_parsed_restore_ndeploy_control_conf = {'ndeploy_theme_color': 'light', 'primary_color': '#121212', 'logo_url': 'None', 'app_email': 'None'}
@@ -39,5 +35,4 @@ if form.getvalue('restore_defaults') == 'enabled':
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

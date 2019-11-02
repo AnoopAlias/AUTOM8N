@@ -6,6 +6,7 @@ import cgitb
 import yaml
 import os
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Budd P Grant"
@@ -24,12 +25,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 if form.getvalue('run_installer') == 'enabled':
 
@@ -41,8 +37,8 @@ if form.getvalue('run_installer') == 'enabled':
         procExe.wait()
         procExe = subprocess.Popen('echo "*** Glances has been reinstalled using existing credentials ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
-        
-        commoninclude.print_success('Glances reinstalled!')        
+
+        commoninclude.print_success('Glances reinstalled!')
 
     elif form.getvalue('glances_pass') != None:
 
@@ -52,12 +48,12 @@ if form.getvalue('run_installer') == 'enabled':
         procExe.wait()
         procExe = subprocess.Popen('echo "*** Glances has been reinstalled using existing the new credentials ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         procExe.wait()
-        
-        commoninclude.print_success('Glances installed!')        
+
+        commoninclude.print_success('Glances installed!')
 
     else:
         commoninclude.print_warning('Try again with credentials!')
-    
+
 elif form.getvalue('remove_glances_creds') == 'enabled':
     os.remove('/etc/nginx/conf.d/glances.password')
     commoninclude.print_success('Glances credentials reset!')
@@ -65,5 +61,4 @@ elif form.getvalue('remove_glances_creds') == 'enabled':
 else:
     commoninclude.print_forbidden()
 
-print('    </body>')
-print('</html>')
+print_simple_footer()

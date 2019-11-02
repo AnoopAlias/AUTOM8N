@@ -6,6 +6,8 @@ import subprocess
 import cgi
 import os
 import yaml
+from commoninclude import print_simple_header, print_simple_footer
+
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -21,12 +23,7 @@ borgmatic_config_file = "/etc/borgmatic/config.yaml"
 cgitb.enable()
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
 
 if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
     # We will retrive the borg repo details from borgmatic config
@@ -65,5 +62,5 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
     print('</samp>')
 else:
     commoninclude.print_forbidden()
-print('</body>')
-print('</html>')
+
+print_simple_footer()

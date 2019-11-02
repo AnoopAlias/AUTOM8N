@@ -6,6 +6,7 @@ import cgitb
 import yaml
 import os
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Budd P Grant"
@@ -25,12 +26,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 if form.getvalue('test_cookie') and \
     form.getvalue('mod_security') and \
@@ -139,12 +135,11 @@ if form.getvalue('test_cookie') and \
                 procExe.wait()
 
             commoninclude.print_success('Modules installed/uninstalled!')
-                
+
     else:
         commoninclude.print_warning('Nothing to do.')
 
 else:
     commoninclude.print_forbidden()
 
-print('    </body>')
-print('</html>')
+print_simple_footer()
