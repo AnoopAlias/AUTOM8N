@@ -953,7 +953,7 @@ print('                <div class="tab-pane fade" id="v-pills-php" role="tabpane
 # Set Default PHP for AutoConfig
 cardheader('Default PHP for Autoswitch', 'fab fa-php')
 print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
-print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
+print('                     <div id="autoswitch-php-status" class="row no-gutters row-1"> <!-- Row Start -->')
 
 # Check if we have a Preferred PHP and allow selection.
 print('                         <div class="col-md-6 alert"><i class="fab fa-php"></i> Default PHP</div>')

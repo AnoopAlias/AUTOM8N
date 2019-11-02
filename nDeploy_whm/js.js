@@ -258,7 +258,7 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
                 $.toast({
-                    autohide: 'true',
+                    autohide: 'false',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
@@ -364,8 +364,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-php .card-body > .no-gutters").load("xtendweb.cgi #v-pills-php .card-body > .no-gutters > *");
-                $($loaderId).html("Set Default PHP");
+                $("#autoswitch-php-status").load("xtendweb.cgi #autoswitch-php-status > *");
+                $("#default_php_autoswitch").load("xtendweb.cgi #default_php_autoswitch > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1430,8 +1430,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                //window.location.reload();
-                $("#main-container").load("pkg_profile.cgi?cpanelpkg=default #main-container > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });

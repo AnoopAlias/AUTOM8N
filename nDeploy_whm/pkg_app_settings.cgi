@@ -178,7 +178,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         # Pass on the domain name to the next stage
         print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
         print('                            <input hidden name="backend" value="'+mybackend+'">')
-        print('                            <button id="save-pkg-app-settings-btn" class="btn btn-outline-primary btn-block" type="submit">Update Package</button>')
+        print('                            <button id="save-pkg-app-settings-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Update Package</button>')
         print('                        </form> <!-- save_pkg_app_settings end -->')
         print('                    </div> <!-- Card Body End -->')
         cardfooter('')
