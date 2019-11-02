@@ -1,0 +1,74 @@
+// main: styles.scss
+
+#terminal {
+	display: block;
+	position: fixed;
+	top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+	height: inherit;
+    z-index: 1030;
+	.modal-dialog {
+		max-width: 100%;
+		margin: 0;
+		.modal-content {
+			.modal-header {
+				padding: .45rem 1.25rem;
+				border: none;
+				.close {
+					outline: none;
+					padding: .75rem;
+					color: $white;
+					.fa {
+						font-size: .9rem;
+					}
+				}
+				h4 {
+					font-size: .9rem;
+				}
+			}
+			.modal-body {
+				white-space: pre-line;
+			    text-align: left;
+			    list-style-type: none;
+			    background-color: $black;
+			    color: $green;
+			    overflow-y: auto;
+			    overflow-x: auto;
+			    padding: 1rem;
+			    border: 1px solid $green;
+			    font-family: monospace;
+				height: 15rem;
+			}
+		}
+	}
+}
+
+.modal-min {
+	width: 20rem;
+	overflow: hidden !important;
+	@extend .p-0;
+	@extend .m-0;
+	float: left;
+	z-index: 9999;
+	.modal-header {
+		height: 100%;
+		width: 100%;
+		@extend .m-0;
+		padding: .45rem .6rem !important;
+	}
+	.modal-dialog,
+	.modal-content {
+		width: 100%;
+		@extend .p-0;
+		@extend .m-0;
+		.modal-body {
+			display: none;
+		}
+	}
+	.fa {
+		font-size: .9rem;
+		margin-right: .2rem;
+	}
+}
