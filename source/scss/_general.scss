@@ -1,0 +1,81 @@
+// main: styles.scss
+
+body {
+	background-color: $porcelain;
+	color: $port-gore;
+	font-family: 'Poppins', sans-serif;
+}
+
+#main-container {
+	padding-bottom: 20rem;
+	&.modal-minimized {
+		padding-bottom: 3rem;
+	}
+}
+
+#main-header {
+	background-color: $white;
+	padding: .5rem 1rem;
+	h4 {
+		margin: 0;
+	}
+	img {
+		position: relative;
+		max-height: 55px;
+	}
+	.logo {
+		display: inline-block;
+		img {
+			position: relative;
+			top: -1px;
+			margin-right: .5rem;
+		}
+	}
+	.help {
+		position: relative;
+		z-index: 1;
+		.fas {
+			margin-left: .3rem;
+			position: relative;
+			top: 1px;
+		}
+	}
+}
+
+.breadcrumb {
+	background-color: transparent;
+	padding: 1.5rem 0 1.2rem;
+	margin: 0;
+	.fas {
+		margin-right: 5px;
+	}
+}
+
+.accordion {
+	@extend .mb-4;
+	@extend .pb-4;
+	border-bottom: $border-dark;
+	.card-header {
+		padding: .25rem .55rem;
+		.btn {
+			display: block;
+			width: 100%;
+			text-align: left;
+		}
+	}
+	&:last-child {
+		@extend .mb-0;
+		@extend .pb-0;
+		border: none;
+	}
+}
+
+.tab-pane {
+	.form {
+		&:last-child {
+			.btn {
+				@extend .mb-0;
+			}
+		}
+	}
+}

@@ -1,0 +1,47 @@
+// main: styles.scss
+
+//
+// Colors
+// ----------------------------------------------------------------------------------------------------
+
+$porcelain:			#F1F1F8 !default;
+$tory-blue: 		#354987 !default;
+$ultramarine-blue:	#25AAE1 !default;
+$black-pearl:		#1F2230 !default;
+$midnight-express:	#232938 !default;
+$port-gore:			#3D4366 !default;
+$gray-light:		#777777 !default;
+$gray-lighter:		#EEEEEE !default;
+$disabled:			#E9ECEF !default;
+$disabled-border:	#CED4DA !default;
+$bg-dark:			#343A40 !default;
+
+$white:				#FFFFFF !default;
+$black:				#151717 !default;
+$green:				#1E7E34 !default;
+
+$border:			1px solid rgba(0,0,0,.125);
+$border-dark:		1px solid rgba(255,255,255,.125);
+$bg-dark-color:		rgba(0,0,0,.125);
+$bg-dark2-color:	rgba(255,255,255,.125);
+$bg-light-color:	rgba(0,0,0,.03);
+
+//
+// Icons
+// ----------------------------------------------------------------------------------------------------
+
+$icon-info: "\f059";
+$icon-success: "\f058";
+$icon-error: "\f057";
+$icon-warning: "\f0eb";
+
+//
+// Theming
+// ----------------------------------------------------------------------------------------------------
+
+$bodydark:			#1C1E1F !default;
+$bodylight:			#F1F1F8 !default;
+$cardlightback:		#F8F9FA !default;
+$cardlighthead:		#F0F1F2 !default;
+$carddarkback:		#343A40 !default;
+$carddarkhead:		#32383E !default;
