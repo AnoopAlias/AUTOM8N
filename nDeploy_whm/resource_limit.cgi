@@ -122,7 +122,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
 
     print('                                <input hidden name="mode" value="'+form.getvalue('mode')+'">')
     print('                                <input hidden name="unit" value="'+form.getvalue('unit')+'">')
-    print('                                <button id="set-resource-limit-btn" class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+    print('                                <button id="set-resource-limit-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End
     cardfooter('Set the desired resource percentages for '+myservice)
