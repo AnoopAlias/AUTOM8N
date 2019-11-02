@@ -121,13 +121,13 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
 
         print('                    <div class="card-body"> <!-- Card Body Start -->')
 
-        print('                        <div class="alert alert-info text-center">')
+        print('                        <div class="alert alert-info text-center mb-4">')
         print('                            You selected <span class="p-2 badge badge-warning">'+mybackend+'</span> as the new upstream type <br>for the '+form.getvalue('cpanelpkg')+' package. Select the desired <br>version and template for this cPanel Package.')
         print('                        </div>')
 
         backends_dict = backend_data_yaml_parsed.get(mybackend)
         new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
-        print('                        <form class="form" method="post" id="toastForm18" onsubmit="return false;">')
+        print('                        <form class="form" method="post" id="save_pkg_app_settings" onsubmit="return false;">')
 
         if mybackend == backend_category:
             print('                        <div class="input-group">')
@@ -178,8 +178,8 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         # Pass on the domain name to the next stage
         print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
         print('                            <input hidden name="backend" value="'+mybackend+'">')
-        print('                            <button class="btn btn-outline-primary btn-block" type="submit">Update Package</button>')
-        print('                        </form> <!-- toastForm18 end -->')
+        print('                            <button id="save-pkg-app-settings-btn" class="btn btn-outline-primary btn-block" type="submit">Update Package</button>')
+        print('                        </form> <!-- save_pkg_app_settings end -->')
         print('                    </div> <!-- Card Body End -->')
         cardfooter('')
 

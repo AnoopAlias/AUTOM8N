@@ -1417,9 +1417,52 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Still left to convert
+    $(document).on("submit","#cpanel_pkg_profile",function(e){
+        var $loaderId        =   "#cpanel-pkg-profile-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_pkg_server_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                window.location.reload();
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
 
-    $(".toastForm9-wrap").submit(function(e) {
+    $(document).on("submit",".php_fpm_pool_editor_save",function(e){
+        var $loaderId        =   "#php-fpm-pool-editor-save-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit",".php_fpm_pool_editor_delete",function(e){
+        var $loaderId        =   "#php-fpm-pool-editor-save-btn";
+        var $loaderText      =   "Deleting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         console.log($id);
@@ -1436,7 +1479,11 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(".toastForm10-wrap").submit(function(e) {
+    $(document).on("submit","#add_php_pool_setting",function(e){
+        var $loaderId        =   "#add-php-pool-setting-btn";
+        var $loaderText      =   "Adding...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
@@ -1452,29 +1499,18 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $("#toastForm17").submit(function(e) {
-        var $id = e.target.id;
-        var $f = $("#" + $id);
-        var $url = "save_pkg_server_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $.toast({
-                    autohide: 'true',
-                });
-                $(".toast-new").toast("show").html(result);
-                $(".toast").removeClass("toast-new");
-            }
-        });
-    });
-
-    $("#toastForm18").submit(function(e) {
+    $(document).on("submit","#save_pkg_app_settings",function(e){
+        var $loaderId        =   "#save-pkg-app-settings-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_pkg_app_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
+                window.history.go(-1);
                 $.toast({
                     autohide: 'true',
                 });
@@ -1484,29 +1520,18 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $("#toastForm19").submit(function(e) {
+    $(document).on("submit","#set_resource_limit",function(e){
+        var $loaderId        =   "#set-resource-limit-btn";
+        var $loaderText      =   "Setting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_resource_limit.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $.toast({
-                    autohide: 'true',
-                });
-                $(".toast-new").toast("show").html(result);
-                $(".toast").removeClass("toast-new");
-            }
-        });
-    });
-
-    $("#toastForm20").submit(function(e) {
-        var $id = e.target.id;
-        var $f = $("#" + $id);
-        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
+                window.history.go(-1);
                 $.toast({
                     autohide: 'true',
                 });
