@@ -160,8 +160,7 @@ if form.getvalue('cpanelpkg'):
     print('                    <a class="nav-link mb-4" id="v-pills-redirections-tab" data-toggle="pill" href="#v-pills-redirections" role="tab" aria-controls="v-pills-redirections">Redirections</a>')
 
     # Save Settings
-    print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'" form="toastForm17">')
-    print('                            <button class="btn btn-primary btn-block" type="submit" form="toastForm17">Apply Settings</button>')
+    print('                    <button id="cpanel-pkg-profile-btn" class="btn btn-primary btn-block" type="submit" form="cpanel_pkg_profile">Apply Settings</button>')
 
     print('                </div>')
 
@@ -172,7 +171,7 @@ if form.getvalue('cpanelpkg'):
     print('                    <!-- Secondary Mobile Navigation -->')
     print('                    <div class="d-lg-none d-xl-none dropdown nav">')
     print('                        <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
-    print('                            Config Menu')
+    print('                            Menu')
     print('                        </button>')
     print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
     print('                            <a class="dropdown-item" id="v-pills-upstream-tab" data-toggle="pill" href="#v-pills-upstream" role="tab" aria-controls="v-pills-upstream-tab" aria-selected="false">Change Upstream</a>')
@@ -183,7 +182,7 @@ if form.getvalue('cpanelpkg'):
     print('                        </div>')
 
     # Save Settings
-    print('                            <button class="mb-3 btn btn-primary btn-block" type="submit" form="toastForm17">Apply Settings</button>')
+    print('                        <button id="cpanel-pkg-profile-btn" class="mb-3 btn btn-primary btn-block" type="submit" form="cpanel_pkg_profile">Apply Settings</button>')
     print('                    </div>')
 
     print('')
@@ -235,7 +234,9 @@ if form.getvalue('cpanelpkg'):
     print('                    <div class="tab-pane fade show" id="v-pills-general" role="tabpanel" aria-labelledby="v-pills-general-tab">')
 
     # General App Settings
-    print('                    <form class="form" id="toastForm17" onsubmit="return false;" method="post"> <!-- Form Start -->')
+    print('                    <form class="form" id="cpanel_pkg_profile" onsubmit="return false;" method="post"> <!-- Form Start -->')
+    print('                        <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'" form="cpanel_pkg_profile">')
+
     cardheader('General Application Settings','fas fa-sliders-h')
     print('                        <div class="card-body"> <!-- Card Body Start -->')
     print('                            <div class="row row-btn-group-toggle"> <!-- Row Start -->')
@@ -890,7 +891,7 @@ if form.getvalue('cpanelpkg'):
     # Redirect URL
     redirecturl_hint = " A Valid URL, Eg: https://mynewurl.tld "
 
-    print('                                <div class="col-md-12">')
+    print('                                <div class="col-md-12 mt-3">')
     print('                                    <div class="input-group btn-group mb-0">')
     print('                                        <div class="input-group-prepend">')
     print('                                            <span class="input-group-text">')
