@@ -431,8 +431,3 @@ def print_modals():
     print('                </div>')
     print('            </div>')
     print('        </div>')
-
-    # Toast Positions Wrapper Start
-    print('')
-    print('        <!-- Position Toasts -->')
-    print('        <div id="toasts-holder" aria-live="polite" aria-atomic="true"></div>')
