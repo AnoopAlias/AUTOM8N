@@ -5,6 +5,7 @@ import cgi
 import cgitb
 import os
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Budd P Grant"
@@ -25,12 +26,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 if form.getvalue('upgrade_control'):
 
@@ -49,10 +45,10 @@ if form.getvalue('upgrade_control'):
 
         if update_status == '0':
             commoninclude.print_success('You are up to date!')
-        
+
         elif update_status == '1':
             commoninclude.print_success('Upgrades Available!')
-        
+
         else:
             commoninclude.print_warning('Issue checking for updates!')
 
@@ -97,5 +93,4 @@ if form.getvalue('upgrade_control'):
 else:
     commoninclude.print_forbidden()
 
-print('    </body>')
-print('</html>')
+print_simple_footer()

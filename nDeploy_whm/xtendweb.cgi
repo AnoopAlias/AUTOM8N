@@ -12,7 +12,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, return_prepend, print_header, display_term, print_modals,cardheader, cardfooter, print_input_fn, print_select_fn
+from commoninclude import bcrumb, return_prepend, print_header, print_footer, display_term, cardheader, cardfooter, print_input_fn, print_select_fn
 
 
 __author__ = "Anoop P Alias"
@@ -256,7 +256,7 @@ print('             <div class="tab-pane fade" id="v-pills-cluster" role="tabpan
 if os.path.isfile(cluster_config_file):
     cardheader('Cluster Status', 'fas fa-align-justify')
     print('             <div class="card-body p-0">  <!-- Card Body Start -->')
-    print('                 <div class="row no-gutters row-1"> <!-- Row Start -->')
+    print('                 <div id="cluster-status-info" class="row no-gutters row-1"> <!-- Row Start -->')
 
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
@@ -953,7 +953,7 @@ print('                <div class="tab-pane fade" id="v-pills-php" role="tabpane
 # Set Default PHP for AutoConfig
 cardheader('Default PHP for Autoswitch', 'fab fa-php')
 print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
-print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
+print('                     <div id="autoswitch-php-status" class="row no-gutters row-1"> <!-- Row Start -->')
 
 # Check if we have a Preferred PHP and allow selection.
 print('                         <div class="col-md-6 alert"><i class="fab fa-php"></i> Default PHP</div>')
@@ -1254,13 +1254,4 @@ print('                </div> <!-- End Limit Tab -->')
 print('            </div>')
 print('        </div> <!-- End WHM Tabs Row -->')
 
-print('        </div> <!-- Main Container End -->')
-
-display_term()
-
-print('')
-
-print_modals()
-
-print('    </body> <!-- Body End -->')
-print('</html>')
+print_footer()

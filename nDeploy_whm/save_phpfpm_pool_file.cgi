@@ -7,6 +7,8 @@ import os
 import configparser
 import codecs
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
+
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -24,12 +26,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
 
 if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('section') and form.getvalue('action'):
     myphpini = form.getvalue('poolfile')
@@ -68,5 +65,4 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

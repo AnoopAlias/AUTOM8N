@@ -5,6 +5,7 @@ import cgi
 import cgitb
 import os
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Budd P Grant"
@@ -35,12 +36,7 @@ if os.path.isfile(php_secure_mode_file):
 if os.path.isfile(php_chroot_mode_file):
     php_chroot_status = True
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 if form.getvalue('php_mode') or form.getvalue('chroot_mode'):
 
@@ -74,7 +70,7 @@ if form.getvalue('php_mode') or form.getvalue('chroot_mode'):
 
     	# Secure mode status is already multi so this should already be disabled via nDeploy Control
         commoninclude.print_warning('Multi-Master aleady active!')
-        
+
     if form.getvalue('php_mode') == 'single' and php_secure_status == False:
 
     	# Single mode status is already single so this should already be disabled via nDeploy Control
@@ -164,5 +160,4 @@ if form.getvalue('php_mode') or form.getvalue('chroot_mode'):
 else:
     commoninclude.print_forbidden()
 
-print('    </body>')
-print('</html>')
+print_simple_footer()

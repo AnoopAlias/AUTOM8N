@@ -7,7 +7,7 @@ import psutil
 import platform
 import yaml
 import sys
-from commoninclude import print_nontoast_error, bcrumb, print_header, display_term, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_footer, display_term, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -178,7 +178,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         # Pass on the domain name to the next stage
         print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
         print('                            <input hidden name="backend" value="'+mybackend+'">')
-        print('                            <button id="save-pkg-app-settings-btn" class="btn btn-outline-primary btn-block" type="submit">Update Package</button>')
+        print('                            <button id="save-pkg-app-settings-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Update Package</button>')
         print('                        </form> <!-- save_pkg_app_settings end -->')
         print('                    </div> <!-- Card Body End -->')
         cardfooter('')
@@ -195,15 +195,5 @@ else:
 print('                        </div> <!-- Column End -->')
 print('')
 print('                    </div> <!-- WHM End Row -->')
-print('')
-print('                </div> <!-- Main Container End -->')
 
-display_term()
-
-print('')
-
-print_modals()
-print_loader()
-
-print('    </body> <!-- Body End -->')
-print('</html>')
+print_footer()

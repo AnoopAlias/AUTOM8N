@@ -7,6 +7,7 @@ import yaml
 import os
 import subprocess
 import re
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Budd P Grant"
@@ -26,13 +27,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
-
+print_simple_header()
 
 def ndeploy_branding_data():
     yaml_parsed_ndeploy_control_branding_conf['brand_logo'] = form.getvalue('brand_logo')
@@ -51,7 +46,7 @@ if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalu
                 yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
         procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
-                
+
         commoninclude.print_success('The branding configuration has been updated.')
 
     # Create the desired config if one doesn't exist
@@ -71,5 +66,4 @@ if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalu
 else:
     commoninclude.print_forbidden()
 
-print('    </body>')
-print('</html>')
+print_simple_footer()

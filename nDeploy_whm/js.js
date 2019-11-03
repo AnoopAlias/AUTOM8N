@@ -258,7 +258,7 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
                 $.toast({
-                    autohide: 'true',
+                    autohide: 'false',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
@@ -298,8 +298,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
-                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -320,8 +320,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
-                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -342,8 +342,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result){
-                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
-                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -364,8 +364,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-php .card-body > .no-gutters").load("xtendweb.cgi #v-pills-php .card-body > .no-gutters > *");
-                $($loaderId).html("Set Default PHP");
+                $("#autoswitch-php-status").load("xtendweb.cgi #autoswitch-php-status > *");
+                $("#default_php_autoswitch").load("xtendweb.cgi #default_php_autoswitch > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -570,7 +570,7 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on("submit","form[id^='delete_cluster_settings_directory-']",function(e){
-        var $loaderId        =   "#delete-cluster-settings-directory-btn";
+        var $loaderId        =   $(this).find('button');
         var $loaderText      =   "Deleting...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -581,6 +581,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#home-content").load("xtendweb.cgi #home-content > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -602,6 +603,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#home-content").load("xtendweb.cgi #home-content > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
                 $.toast({
                     autohide: 'true',
                 });

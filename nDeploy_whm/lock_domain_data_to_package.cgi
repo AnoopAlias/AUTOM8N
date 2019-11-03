@@ -5,6 +5,7 @@ import cgi
 import cgitb
 import subprocess
 import os
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -19,12 +20,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
 
 if form.getvalue('package_lock'):
     if form.getvalue('package_lock') == 'enabled':
@@ -36,5 +32,4 @@ if form.getvalue('package_lock'):
 else:
         commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

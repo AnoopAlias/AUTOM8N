@@ -248,11 +248,6 @@ def display_term():
     print('        </div>')
 
 
-# Footer Section (Currently Disabled)
-def print_footer():
-    return
-
-
 # Input Display
 def print_input_fn(label='Label', hint='Hint', inputValue='', inputName=''):
     print('                                        <div class="input-group">')
@@ -264,6 +259,33 @@ def print_input_fn(label='Label', hint='Hint', inputValue='', inputName=''):
     print('                                            <input class="form-control" id="validate-'+str(random.randint(0, 100000))+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>')
     print('                                            <div class="invalid-tooltip">'+hint+'</div>')
     print('                                        </div>')
+
+
+# Footer Section
+def print_footer():
+    print('        </div> <!-- Main Container End -->')
+    display_term()
+    print_modals()
+    print('    </body> <!-- Body End -->')
+    print('</html>')
+
+
+# Simple Header
+def print_simple_header():
+    print('Content-Type: text/html')
+    print('')
+    print('<html>')
+    print('<head>')
+    print('<meta charset="utf-8">')
+    print('<meta name="viewport" content="width=device-width, initial-scale=1">')
+    print('</head>')
+    print('<body>')
+
+
+# Simple Footer
+def print_simple_footer():
+    print('</body>')
+    print('</html>')
 
 
 # SelectBox Display
