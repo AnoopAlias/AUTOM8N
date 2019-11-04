@@ -1189,7 +1189,7 @@ print('                <div class="tab-pane fade" id="v-pills-limit" role="tabpa
 
 # System Resource Limit
 cardheader('System Resource Limit', 'fas fa-compress')
-print('                    <div class="card-body"> <!-- Card Body Start -->')
+print('                        <div class="card-body"> <!-- Card Body Start -->')
 
 with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
@@ -1199,55 +1199,55 @@ if not osrelease == 'CloudLinux':
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
             userlist = os.listdir("/var/cpanel/users")
-            print('         <form class="form" action="resource_limit.cgi" method="get">')
-            print('             <div class="input-group">')
-            print('                 <div class="input-group-prepend input-group-prepend-min">')
-            print('                     <label class="input-group-text">User</label>')
-            print('                 </div>')
-            print('                 <select name="unit" class="custom-select">')
+            print('                            <form class="form" action="resource_limit.cgi" method="get">')
+            print('                                <div class="input-group">')
+            print('                                    <div class="input-group-prepend input-group-prepend-min">')
+            print('                                        <label class="input-group-text">User</label>')
+            print('                                    </div>')
+            print('                                    <select name="unit" class="custom-select">')
 
             for cpuser in sorted(userlist):
                 if cpuser != 'nobody' and cpuser != 'system':
-                    print('             <option value="'+cpuser+'">'+cpuser+'</option>')
+                    print('                                        <option value="'+cpuser+'">'+cpuser+'</option>')
 
-            print('                 </select>')
-            print('                 <input hidden name="mode" value="user">')
-            print('             </div>')
-            print('             <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
-            print('         </form>')
+            print('                                    </select>')
+            print('                                    <input hidden name="mode" value="user">')
+            print('                                </div>')
+            print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
+            print('                            </form>')
 
-            print('         <form class="form mt-4" action="resource_limit.cgi" method="get">')
-            print('             <div class="input-group">')
-            print('                 <div class="input-group-prepend input-group-prepend-min">')
-            print('                     <label class="input-group-text">Service</label>')
-            print('                 </div>')
-            print('                 <select name="unit" class="custom-select">')
+            print('                            <form class="form mt-4" action="resource_limit.cgi" method="get">')
+            print('                                <div class="input-group">')
+            print('                                    <div class="input-group-prepend input-group-prepend-min">')
+            print('                                        <label class="input-group-text">Service</label>')
+            print('                                    </div>')
+            print('                                    <select name="unit" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print('                 <option value="'+service+'">'+service+'</option>')
+                print('                                        <option value="'+service+'">'+service+'</option>')
 
-            print('                 </select>')
-            print('                 <input hidden name="mode" value="service">')
-            print('             </div>')
-            print('             <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
-            print('         </form>')
+            print('                                    </select>')
+            print('                                    <input hidden name="mode" value="service">')
+            print('                               </div>')
+            print('                               <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
+            print('                           </form>')
         else:
-            print('         <form class="form" action="resource_limit.cgi" method="get">')
-            print('             <div class="input-group">')
-            print('                 <div class="input-group-prepend input-group-prepend-min">')
-            print('                     <label class="input-group-text">Resource</label>')
-            print('                 </div>')
-            print('                 <select name="unit" class="custom-select">')
+            print('                           <form class="form" action="resource_limit.cgi" method="get">')
+            print('                               <div class="input-group">')
+            print('                                   <div class="input-group-prepend input-group-prepend-min">')
+            print('                                       <label class="input-group-text">Resource</label>')
+            print('                                   </div>')
+            print('                                   <select name="unit" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print('                 <option value="'+service+'">'+service+'</option>')
+                print('                                       <option value="'+service+'">'+service+'</option>')
 
-            print('                  </select>')
-            print('                  <input hidden name="mode" value="service">')
-            print('              </div>')
-            print('              <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
-            print('          </form>')
-print('                  </div> <!-- Card Body End -->')
+            print('                                   </select>')
+            print('                                   <input hidden name="mode" value="service">')
+            print('                               </div>')
+            print('                               <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
+            print('                           </form>')
+print('                        </div> <!-- Card Body End -->')
 cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
 
 print('                </div> <!-- End Limit Tab -->')
