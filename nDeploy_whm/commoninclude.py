@@ -56,18 +56,6 @@ nginx_version = nginx_version_info_yaml_parsed.get('nginx_version')
 autom8n_version = autom8n_version_info_yaml_parsed.get('autom8n_version')
 
 
-# Decomishioned Funcs ()
-
-# def print_sys_tip(theoption, hint):
-#     print('<div class="col-md-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>')
-# def print_forbidden_wrapper():
-#     print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>Forbidden</p></div></div>')
-# def print_error_wrapper(themessage):
-#     print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>'+themessage+'</p></div></div>')
-# def print_success_wrapper(themessage):
-#     print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>')
-
-
 # Non-Toast Error func() for main pages
 def print_nontoast_error(thenotice, thereason):
     print('            <div id="footer" class="row justify-content-center">')
@@ -242,14 +230,15 @@ def display_term():
     print('                        <h4 class="modal-title">Command Output <span id="processing">- Processing: <i class="fas fa-spinner fa-spin"></i></span></h4>')
     print('                        <button class="close modalMinimize"> <i class="fa fa-minus"></i> </button>')
     print('                    </div>')
-    print('                    <div id="terminal-panel" class="modal-body">Nothing to output yet!</div>')
+    print('                    <div id="terminal-panel" class="modal-body">Retrieving last terminal function executed...</div>')
     print('                </div>')
     print('            </div>')
     print('        </div>')
 
 
 # Input Display
-def print_input_fn(label='Label', hint='Hint', inputValue='', inputName=''):
+# 
+def print_input_fn(label='Label', hint='Hint', inputValue='', inputName='', buttonID='', hiddenName='', hiddenValue=''):
     print('                                        <div class="input-group">')
     print('                                            <div class="input-group-prepend input-group-prepend-min">')
     print('                                                <span class="input-group-text">')
@@ -257,6 +246,15 @@ def print_input_fn(label='Label', hint='Hint', inputValue='', inputName=''):
     print('                                                </span>')
     print('                                            </div>')
     print('                                            <input class="form-control" id="validate-'+str(random.randint(0, 100000))+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>')
+
+    if buttonID:
+        print('                                            <input hidden name="'+hiddenName+'" value="'+hiddenValue+'">')
+        print('                                            <div class="input-group-append">')
+        print('                                                <button id="'+buttonID+'" class="btn btn-outline-primary" type="submit">')
+        print('                                                    <span class="sr-only">'+hiddenValue+'</span><i class="fas fa-plus"></i>')
+        print('                                                </button>')
+        print('                                            </div>')
+
     print('                                            <div class="invalid-tooltip">'+hint+'</div>')
     print('                                        </div>')
 
@@ -275,16 +273,16 @@ def print_simple_header():
     print('Content-Type: text/html')
     print('')
     print('<html>')
-    print('<head>')
-    print('<meta charset="utf-8">')
-    print('<meta name="viewport" content="width=device-width, initial-scale=1">')
-    print('</head>')
-    print('<body>')
+    print('    <head>')
+    print('    <meta charset="utf-8">')
+    print('    <meta name="viewport" content="width=device-width, initial-scale=1">')
+    print('    </head>')
+    print('    <body>')
 
 
 # Simple Footer
 def print_simple_footer():
-    print('</body>')
+    print('    </body>')
     print('</html>')
 
 
