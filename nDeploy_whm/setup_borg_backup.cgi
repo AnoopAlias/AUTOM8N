@@ -102,7 +102,7 @@ if os.path.isdir('/etc/borgmatic'):
     cardheader('Borg Backup Settings', 'fas fa-database')
     print('                        <div id="borg-backup-settings" class="card-body"> <!-- Card Body Start -->')
 
-    print('                            <form class="form" method="post" id="save_backup_settings" onsubmit="return false;">')
+    print('                            <form class="form needs-validation" method="post" id="save_backup_settings" onsubmit="return false;" novalidate>')
     print('                                <div class="row align-items-center row-btn-group-toggle"> <!-- Row Start -->')
 
     # system_files
@@ -245,33 +245,37 @@ if os.path.isdir('/etc/borgmatic'):
     backup_dir_list = yaml_parsed_borgmaticyaml['location']['source_directories']
 
     if backup_dir_list:
-        print('                        <div class="label label-default mb-2">Currently backing up:</div>')
-        print('                        <div class="clearfix">')
+        print('                            <div class="label label-default mb-2">Currently backing up:</div>')
+        print('                            <div class="clearfix">')
         mykeypos = 1
         for path in backup_dir_list:
-            print('                        <div class="input-group input-group-inline input-group-sm">')
-            print('                            <div class="input-group-prepend">')
-            print('                                <span class="input-group-text">'+path+'</span>')
-            print('                            </div>')
+            print('                                <div class="input-group input-group-inline input-group-sm">')
+            print('                                    <div class="input-group-prepend">')
+            print('                                        <span class="input-group-text">'+path+'</span>')
+            print('                                    </div>')
             if path not in ['/home', backup_path]:
-                print('                        <div class="input-group-append">')
-                print('                            <form class="form borg-rm-dir-wrap" method="post" id="borg_rm_dir-'+str(mykeypos)+'" onsubmit="return false;">')
-                print('                                <input hidden name="thehomedir" value="'+path+'">')
-                print('                                <input hidden name="action" value="delete">')
-                print('                                <button id="borg_rm_dir_btn-'+str(mykeypos)+'" class="btn btn-danger btn-sm" type="submit">')
-                print('                                    <span class="sr-only">Delete</span>')
-                print('                                    <i class="fas fa-times"></i>')
-                print('                                </button>')
-                print('                            </form>')
-                print('                        </div>')
+                print('                                    <div class="input-group-append">')
+                print('                                        <form class="form borg-rm-dir-wrap" method="post" id="borg_rm_dir-'+str(mykeypos)+'" onsubmit="return false;">')
+                print('                                            <input hidden name="thehomedir" value="'+path+'">')
+                print('                                            <input hidden name="action" value="delete">')
+                print('                                            <button id="borg_rm_dir_btn-'+str(mykeypos)+'" class="btn btn-danger btn-sm" type="submit">')
+                print('                                                <span class="sr-only">Delete</span>')
+                print('                                                <i class="fas fa-times"></i>')
+                print('                                            </button>')
+                print('                                        </form>')
+                print('                                    </div>')
             mykeypos = mykeypos + 1
-            print('                        </div>')
+            print('                                </div>')
     print('                            </div>')
     print('                            <div class="label label-default mt-2 mb-2">Add another \'home\' directory to backup:</div>')
-    print('                            <form class="form" method="post" id="borg_add_dir" onsubmit="return false;">')
+    print('                            <form class="form needs-validation" method="post" id="borg_add_dir" onsubmit="return false;" novalidate>')
+    print('                                <div>')
+    print('                                    <div>')
 
-    print_input_fn("Path", " An additional /home directory to backup. IE: /home2, /home3, /home4, etc. ", "/home2", "thehomedir", "borg_add_dir_btn", "action", "add")
+    print_input_fn("Path", " An additional /home directory to backup. Eg: /home2, /home3, /home4, etc. ", "/home2", "thehomedir", "borg_add_dir_btn", "action", "add")
 
+    print('                                    </div>')
+    print('                                </div>')
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->')
     cardfooter('Configure additional \'home\' directories that you would like to backup.')
@@ -283,100 +287,40 @@ if os.path.isdir('/etc/borgmatic'):
 
     cardheader('Borg Settings', 'fas fa-database')
     print('                        <div class="card-body"> <!-- Card Body Start -->')
-    print('                            <form class="form input-group-prepend-min" method="post" id="save_borg_settings" onsubmit="return false;" novalidate> ')
+    print('                            <div>')
+    print('                                <div>')
+    print('                                    <form class="form needs-validation input-group-prepend-min" method="post" id="save_borg_settings" onsubmit="return false;" novalidate> ')
 
-    # repositories
-    repositories_hint = " Eg: user@backupserver:sourcehostname.borg "
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("Repositories", repositories_hint))
-    print('                                        </span>')
-    print('                                    </div>')
-    print('                                    <input class="form-control" value="'+yaml_parsed_borgmaticyaml['location']['repositories'][0]+'" type="text" name="repositories">')
+    # Repositories
+    print_input_fn("Repositories", " Eg: user@backupserver:sourcehostname.borg ", yaml_parsed_borgmaticyaml['location']['repositories'][0], "repositories")
+    
+    # SSH Command
+    print_input_fn("SSH Command", " Enter additional options for SSH. ", yaml_parsed_borgmaticyaml['storage']['ssh_command'], "ssh_command")
+
+    # Encryption Passphrase
+    print_input_fn("Passphrase", " Enter your passphrase used to encrypt the backup. ", yaml_parsed_borgmaticyaml['storage']['encryption_passphrase'], "encryption_passphrase")
+
+    # Remote Rate Limit
+    print_input_fn("Remote Rate Limit", " Set the network upload rate limit in KB/s. ", str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit']), "remote_rate_limit")
+
+    # Retention
+    print('                                        <label class="label mt-2 mb-2">Backup Retention</label>')
+
+    # Keep Hourly
+    print_input_fn("Hourly Keep", " Enter the number of hourly backups to keep. ", str(yaml_parsed_borgmaticyaml['retention']['keep_hourly']), "keep_hourly")
+
+    # Keep Daily
+    print_input_fn("Daily Keep", " Enter the number of daily backups to keep. ", str(yaml_parsed_borgmaticyaml['retention']['keep_daily']), "keep_daily")
+
+    # Keep Weekly
+    print_input_fn("Weekly Keep", " Enter the number of weekly backups to keep. ", str(yaml_parsed_borgmaticyaml['retention']['keep_weekly']), "keep_weekly")
+
+    # Keep Monthly
+    print_input_fn("Monthly Keep", " Enter the number of monthly backups to keep. ", str(yaml_parsed_borgmaticyaml['retention']['keep_monthly']), "keep_monthly")
+
+    print('                                    </form>')
     print('                                </div>')
-
-    # ssh_command
-    ssh_command_hint = " Enter additional options for SSH. "
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("SSH Command", ssh_command_hint))
-    print('                                        </span>')
-    print('                                    </div>')
-    print('                                    <input class="form-control" value="'+yaml_parsed_borgmaticyaml['storage']['ssh_command']+'" type="text" name="ssh_command">')
-    print('                                </div>')
-
-    # encryption_passphrase
-    encryption_passphrase_hint = " Enter your passphrase used to encrypt the backup. "
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("Passphrase", encryption_passphrase_hint))
-    print('                                        </span>')
-    print('                                    </div>')
-    print('                                    <input class="form-control" value="'+yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']+'" type="text" name="encryption_passphrase">')
-    print('                                </div>')
-
-    # remote_rate_limit
-    remote_rate_limit_hint = " Set the network upload rate limit in KB/s. "
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("Remote Rate Limit", remote_rate_limit_hint))
-    print('                                        </span>')
-    print('                                    </div>')
-    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['storage']['remote_rate_limit'])+'" type="text" name="remote_rate_limit">')
-    print('                                </div>')
-
-    # retention
-    print('                                <label class="label mt-2 mb-2">Backup Retention</label>')
-
-    # keep_hourly
-    keep_hourly_hint = " Enter the number of hourly backups to keep. "
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("Hourly Keep", keep_hourly_hint))
-    print('                                        </span>')
-    print('                                    </div>')
-    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_hourly'])+'" type="text" name="keep_hourly">')
-    print('                                </div>')
-
-    # keep_daily
-    keep_daily_hint = " Enter the number of daily backups to keep. "
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("Daily Keep", keep_daily_hint))
-    print('                                        </span>')
-    print('                                    </div>')
-    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_daily'])+'" type="text" name="keep_daily">')
-    print('                                </div>')
-
-    # keep_weekly
-    keep_weekly_hint = " Enter the number of weekly backups to keep. "
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("Weekly Keep", keep_weekly_hint))
-    print('                                        </span>')
-    print('                                    </div>')
-    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_weekly'])+'" type="text" name="keep_weekly">')
-    print('                                </div>')
-
-    # keep_monthly
-    keep_monthly_hint = " Enter the number of monthly backups to keep. "
-    print('                                <div class="input-group">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">')
-    print('                                            '+return_multi_input("Monthly Keep", keep_monthly_hint))
-    print('                                        </span>')
-    print('                                    </div>')
-    print('                                    <input class="form-control" value="'+str(yaml_parsed_borgmaticyaml['retention']['keep_monthly'])+'" type="text" name="keep_monthly">')
-    print('                                </div>')
-
-    print('                            </form>')
+    print('                            </div>')
     print('                            <form class="form" id="init_repo" onsubmit="return false;">')
     print('                                <input hidden name="action" value="initrepo">')
     print('                            </form>')
@@ -388,6 +332,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     print('                        </div> <!-- Card Body End -->')
     cardfooter('Keep your encryption passphrase in a safe place as losing it would make data recovery impossible on a server crash. <br>Repositories must be either a local folder: <kbd>/mnt/backup</kbd> or a SSH URI: <kbd>ssh://user@backupserver.com:22/home/user/backup</kbd>')
+    print('                    </div> <!-- Settings Tab End -->')
 
 else:
     cardheader('Install and Setup BorgBackup')
@@ -400,11 +345,10 @@ else:
     print('                        </div> <!-- Card Body End -->')
     cardfooter('')
 
-    print('                    </div> <!-- Settings Tab End -->')
-
-    print('                </div><!-- Container Tabs End -->')
-    print('            </div><!-- WHM Row End -->')
-
-print('            </div>')
+print('')
+print('                </div><!-- Container Tabs End -->')
+print('')
+print('            </div><!-- WHM Row End -->')
+print('')
 
 print_footer()

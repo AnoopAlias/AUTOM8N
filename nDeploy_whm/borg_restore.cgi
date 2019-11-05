@@ -65,7 +65,7 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
             procExe = subprocess.Popen('echo -e "Restore point '+form.getvalue('restorepoint')+' mounted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
     
-            commoninclude.print_success('Restore Point Unmounted!')
+            commoninclude.print_success('Restore Point Mounted!')
 
         else:
             commoninclude.print_forbidden()
