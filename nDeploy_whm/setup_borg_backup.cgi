@@ -152,11 +152,11 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                    </div>')
 
     # backup_path
-    print('                                    <div class="col-md-12">')
+    print('                                    <div class="col-md-12 mt-2">')
     print_input_fn("PkgAccount Backup Path", " The directory where the cPanel package accounts, SQL backups, and system files are stored. ", backup_path, "backup_path")
     print('                                    </div>')
     print('                                    <div class="col-md-12">')
-    print('                                        <button id="save_backup_settings_btn" class="btn btn-outline-primary btn-block mt-3" type="submit">Save Backup Settings</button>')
+    print('                                        <button id="save_backup_settings_btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Backup Settings</button>')
     print('                                    </div>')
     print('                                </div> <!-- Row End -->')
     print('                            </form>')
@@ -293,7 +293,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # Repositories
     print_input_fn("Repositories", " Eg: user@backupserver:sourcehostname.borg ", yaml_parsed_borgmaticyaml['location']['repositories'][0], "repositories")
-    
+
     # SSH Command
     print_input_fn("SSH Command", " Enter additional options for SSH. ", yaml_parsed_borgmaticyaml['storage']['ssh_command'], "ssh_command")
 
