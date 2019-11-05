@@ -237,7 +237,8 @@ def display_term():
 
 
 # Input Display
-def print_input_fn(label='Label', hint='Hint', inputValue='', inputName=''):
+# 
+def print_input_fn(label='Label', hint='Hint', inputValue='', inputName='', buttonID='', hiddenName='', hiddenValue=''):
     print('                                        <div class="input-group">')
     print('                                            <div class="input-group-prepend input-group-prepend-min">')
     print('                                                <span class="input-group-text">')
@@ -245,6 +246,15 @@ def print_input_fn(label='Label', hint='Hint', inputValue='', inputName=''):
     print('                                                </span>')
     print('                                            </div>')
     print('                                            <input class="form-control" id="validate-'+str(random.randint(0, 100000))+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>')
+
+    if buttonID:
+        print('                                            <input hidden name="'+hiddenName+'" value="'+hiddenValue+'">')
+        print('                                            <div class="input-group-append">')
+        print('                                                <button id="'+buttonID+'" class="btn btn-outline-primary" type="submit">')
+        print('                                                    <span class="sr-only">'+hiddenValue+'</span><i class="fas fa-plus"></i>')
+        print('                                                </button>')
+        print('                                            </div>')
+
     print('                                            <div class="invalid-tooltip">'+hint+'</div>')
     print('                                        </div>')
 

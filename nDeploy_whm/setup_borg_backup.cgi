@@ -12,7 +12,7 @@ import jinja2
 import codecs
 import sys
 import json
-from commoninclude import return_label, return_multi_input, bcrumb, print_header, print_footer, display_term, cardheader, cardfooter
+from commoninclude import print_input_fn, return_label, return_multi_input, bcrumb, print_header, print_footer, display_term, cardheader, cardfooter
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -152,16 +152,8 @@ if os.path.isdir('/etc/borgmatic'):
     print('                                    </div>')
 
     # backup_path
-    backup_path_hint = " The directory where the cPanel package accounts, SQL backups, and system files are stored. "
     print('                                    <div class="col-md-12">')
-    print('                                        <div class="input-group mt-2 mb-2">')
-    print('                                            <div class="input-group-prepend">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input("PKGacct Backup Path", backup_path_hint))
-    print('                                                </span>')
-    print('                                            </div>')
-    print('                                            <input class="form-control" value="'+backup_path+'" type="text" name="backup_path">')
-    print('                                        </div>')
+    print_input_fn("PkgAccount Backup Path", " The directory where the cPanel package accounts, SQL backups, and system files are stored. ", backup_path, "backup_path")
     print('                                    </div>')
     print('                                    <div class="col-md-12">')
     print('                                        <button id="save_backup_settings_btn" class="btn btn-outline-primary btn-block mt-3" type="submit">Save Backup Settings</button>')
@@ -278,18 +270,7 @@ if os.path.isdir('/etc/borgmatic'):
     print('                            <div class="label label-default mt-2 mb-2">Add another \'home\' directory to backup:</div>')
     print('                            <form class="form" method="post" id="borg_add_dir" onsubmit="return false;">')
 
-    print('                                <div class="input-group mb-0">')
-    print('                                    <div class="input-group-prepend">')
-    print('                                        <span class="input-group-text">Path</span>')
-    print('                                    </div>')
-    print('                                    <input class="form-control" placeholder="/home2" type="text" name="thehomedir">')
-    print('                                    <input hidden name="action" value="add">')
-    print('                                    <div class="input-group-append">')
-    print('                                        <button id="borg_add_dir_btn" class="btn btn-outline-primary" type="submit">')
-    print('                                            <span class="sr-only">Add</span><i class="fas fa-plus"></i>')
-    print('                                        </button>')
-    print('                                    </div>')
-    print('                                </div>')
+    print_input_fn("Path", " An additional /home directory to backup. IE: /home2, /home3, /home4, etc. ", "/home2", "thehomedir", "borg_add_dir_btn", "action", "add")
 
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->')
