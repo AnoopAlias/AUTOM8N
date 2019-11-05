@@ -48,11 +48,23 @@ jQuery(document).ready(function($) {
 
     $(document).ajaxComplete(function() {
         // $('#processing').hide();
-        // console.log('aJax Success');
-    });
 
-    $(document).ajaxComplete(function() {
-        // console.log('aJax Complete');
+        // This was added here as well to fire again after an ajax call
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener(
+                "submit",
+                function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add("was-validated");
+                },
+                false
+            );
+        });
     });
 
     $(document).ajaxError(function() {
@@ -163,28 +175,24 @@ jQuery(document).ready(function($) {
     });
 
     // General Form Validatons
-    window.addEventListener(
-        "load",
-        function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName("needs-validation");
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener(
-                    "submit",
-                    function (event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add("was-validated");
-                    },
-                    false
-                );
-            });
-        },
-        false
-    );
+    $(window).on('load',function(){
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener(
+                "submit",
+                function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add("was-validated");
+                },
+                false
+            );
+        });
+     });
 
     // Toasts
     $.toast = function(c) {
@@ -672,7 +680,7 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".add_ip",function(e){
+    $(document).on("submit","#add_ip",function(e){
         var $loaderId        =   "#add-ip-btn";
         var $loaderText      =   "Adding...";
         $($loaderId).prop("disabled", true);
@@ -715,8 +723,8 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit","#save_cluster_settings_slave_add",function(e){
-        var $loaderId        =   "#save-cluster-settings-slave-add-btn";
+    $(document).on("submit","#save_cluster_settings_addi_slave_add",function(e){
+        var $loaderId        =   "#save-cluster-settings-addi-slave-add-btn";
         var $loaderText      =   "Adding...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -748,6 +756,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
+                $("#add-content").load("xtendweb.cgi #add-content > *");
                 $("#slave-content").load("xtendweb.cgi #slave-content > *");
                 $.toast({
                     autohide: 'true',
