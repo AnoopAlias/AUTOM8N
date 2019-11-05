@@ -486,7 +486,7 @@ if os.path.isfile(cluster_config_file):
         # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
-        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_addi_slave_add" onsubmit="return false;" novalidate>')
 
         # Slave data
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
@@ -496,7 +496,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                                <input hidden name="action" value="addadditionalslave">')
 
-        print('                                <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
+        print('                                <button id="save-cluster-settings-addi-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -802,7 +802,7 @@ else:
         # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade show" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
-        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_addi_slave_add" onsubmit="return false;" novalidate>')
 
         # Slave data
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
@@ -812,7 +812,7 @@ else:
 
         print('                                <input hidden name="action" value="addadditionalslave">')
 
-        print('                                <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
+        print('                                <button id="save-cluster-settings-slave-addi-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
