@@ -93,25 +93,30 @@ if form.getvalue('action'):
         backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
         backend_data_yaml.close()
 
-        php_status_dict = {}
-        if "PHP" in backend_data_yaml_parsed:
-            php_backends_dict = backend_data_yaml_parsed["PHP"]
-            for php,path in list(php_backends_dict.items()):
-                for myprocess in psutil.process_iter():
-                    # Workaround for Python 2.6
-                    if platform.python_version().startswith('2.6'):
-                        myexe = myprocess.exe
-                    else:
-                        myexe = myprocess.exe()
-                    if path+"/usr/sbin/php-fpm" in myexe:
-                        php_status_dict[php] = "ACTIVE"
-                        break
-                    else:
-                        php_status_dict[php] = "NOT ACTIVE"
-
-            for service,status in list(php_status_dict.items()):
-                if status == "NOT ACTIVE":
-                    commoninclude.print_warning(service+' was flagged as '+status+'.<br>')
+        # This check only detects single master php processes and produces irrelavant data in multi-master mode
+        output = ""
+        if not os.path.isfile(cluster_config_file):
+            php_status_dict = {}
+            if "PHP" in backend_data_yaml_parsed:
+                php_backends_dict = backend_data_yaml_parsed["PHP"]
+                for php,path in list(php_backends_dict.items()):
+                    for myprocess in psutil.process_iter():
+                        # Workaround for Python 2.6
+                        if platform.python_version().startswith('2.6'):
+                            myexe = myprocess.exe
+                        else:
+                            myexe = myprocess.exe()
+                        if path+"/usr/sbin/php-fpm" in myexe:
+                            php_status_dict[php] = "ACTIVE"
+                            break
+                        else:
+                            php_status_dict[php] = "NOT ACTIVE"
+    
+                for service,status in list(php_status_dict.items()):
+                    if status == "NOT ACTIVE":
+                        output = output + service+', '
+                if output:
+                    output = output[:-2] + ' detected down. '
 
         if os.path.isfile(cluster_config_file):
 
@@ -119,10 +124,10 @@ if form.getvalue('action'):
             procExe.wait()
             procExe = subprocess.Popen('service ndeploy_backends restart && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"service ndeploy_backends restart\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-            procExe = subprocess.Popen('echo -e "Application Backends restarted cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('echo -e "'+output+'Application backends restarted cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
 
-            commoninclude.print_success('Application Backends restarted cluster-wide!')
+            commoninclude.print_success(output+'Application backends restarted cluster-wide!')
 
         else:
 
@@ -130,10 +135,10 @@ if form.getvalue('action'):
             procExe.wait()
             procExe = subprocess.Popen('service ndeploy_backends restart && service ndeploy_backends status >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-            procExe = subprocess.Popen('echo -e "Application Backends restarted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('echo -e "'+output+'Application backends restarted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
 
-            commoninclude.print_success('Application Backends restarted!')
+            commoninclude.print_success(output+'Application backends restarted!')
 
     else:
         commoninclude.print_forbidden()
