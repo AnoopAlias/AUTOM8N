@@ -30,6 +30,7 @@ nginx_version_info_file = "/etc/nginx/version.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 ansible_inventory_file = "/opt/nDeploy/conf/nDeploy-cluster/hosts"
+php_secure_mode_file = installation_path+"/conf/secure-php-enabled"
 
 cgitb.enable()
 print_header('Home')
@@ -48,25 +49,28 @@ for myprocess in psutil.process_iter():
     if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
         watcher_status = True
 
+
 # Read in PHP Backend Status for Dash
 backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
 
-if "PHP" in backend_data_yaml_parsed:
-    installed_php_count = len(backend_data_yaml_parsed["PHP"].keys())
-else:
-    installed_php_count = 0
-
-running_process_count = 0
-for myprocess in psutil.process_iter():
-    # Workaround for Python 2.6
-    if platform.python_version().startswith('2.6'):
-        myexe = myprocess.cmdline
+if not os.path.isfile(php_secure_mode_file):
+    if "PHP" in backend_data_yaml_parsed:
+        installed_php_count = len(backend_data_yaml_parsed["PHP"].keys())
     else:
-        myexe = myprocess.cmdline()
-    if 'php-fpm: master process (/opt/nDeploy/conf/php-fpm.conf)' in myexe:
-        running_process_count = running_process_count + 1
+        installed_php_count = 0
+    
+    running_process_count = 0
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            myexe = myprocess.cmdline
+        else:
+            myexe = myprocess.cmdline()
+        if 'php-fpm: master process (/opt/nDeploy/conf/php-fpm.conf)' in myexe:
+            running_process_count = running_process_count + 1
+
 
 # Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
@@ -151,17 +155,29 @@ cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
 print('                        <h4 class="mb-0">PHP Backends</h4>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li><small>PHP-FPM</small></li>')
 
-if running_process_count == installed_php_count:
-    php_status = True
+# Add real status to PHP Backend widget
+livePHPStatus = get('http://localhost/pingphpfpm')
+if livePHPStatus.status_code == 502:
+    print('                            <li><small>PHP-FPM Status: <span class="text-danger">'+str(livePHPStatus.status_code)+'</span></small></li>')
+elif livePHPStatus.status_code == 200:
+    print('                            <li><small>PHP-FPM Status: <span class="text-success">'+str(livePHPStatus.status_code)+'</span></small></li>')
 else:
-    php_status = False
+    print('                            <li><small>PHP-FPM Status: <span class="text-info">'+str(livePHPStatus.status_code)+'</span></small></li>')
 
-if php_status:
-    print('                        <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
+if not os.path.isfile(php_secure_mode_file):
+    if running_process_count == installed_php_count:
+        php_status = True
+    else:
+        php_status = False
+    
+    if php_status:
+        print('                        <li class="mt-2 text-success">Single Master <i class="fas fa-power-off ml-1"></i></li>')
+    else:
+        print('                        <li class="mt-2 text-warning">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print('                        <li class="mt-2 text-danger">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        <li class="mt-2 text-success">Multi-Master <i class="fas fa-power-off ml-1"></i></li>')
+
 print('                        </ul>')
 print('                    </div> <!-- Card Body End -->')
 print('                    <form class="form" id="restart_backends" onsubmit="return false;">')

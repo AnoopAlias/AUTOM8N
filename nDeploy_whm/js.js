@@ -262,7 +262,7 @@ jQuery(document).ready(function($) {
             success: function(result) {
                 $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
                 $.toast({
-                    autohide: 'false',
+                    autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
