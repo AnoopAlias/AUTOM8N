@@ -6,7 +6,7 @@ import os
 import yaml
 import psutil
 import platform
-from commoninclude import return_label, return_prepend, bcrumb, print_header, display_term, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import return_label, return_prepend, bcrumb, print_header, print_footer, display_term, cardheader, cardfooter
 
 __author__ = "Budd P Grant"
 __copyright__ = "Copyright Budd P Grant"
@@ -730,14 +730,5 @@ print('                    </div> <!-- End Modules Tab -->')
 print('                </div> <!-- Tabs End -->')
 print('')
 print('            </div> <!-- WHM End Row -->')
-print('        </div> <!-- Main Container End -->')
 
-display_term()
-
-print('')
-
-print_modals()
-print_loader()
-
-print('    </body> <!-- Body End -->')
-print('</html>')
+print_footer()

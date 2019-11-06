@@ -8,6 +8,7 @@ import yaml
 import os
 import sys
 import re
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -39,13 +40,7 @@ def check_unique_id(id):
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
-
+print_simple_header()
 
 if form.getvalue('action'):
     if form.getvalue('action') == "setup":
@@ -295,5 +290,4 @@ if form.getvalue('action'):
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

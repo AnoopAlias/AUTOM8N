@@ -4,6 +4,7 @@ import commoninclude
 import cgi
 import cgitb
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Budd P Grant"
@@ -22,12 +23,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 if form.getvalue('plugin_status') == 'enable':
     procExe = subprocess.Popen('echo "*** Enabling Plugin ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -38,7 +34,7 @@ if form.getvalue('plugin_status') == 'enable':
     procExe.wait()
 
     commoninclude.print_success('Plugin successfuly enabled.')
-    
+
 elif form.getvalue('plugin_status') == 'disable':
     procExe = subprocess.Popen('echo "*** Disabling Plugin ****" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     procExe.wait()
@@ -52,5 +48,4 @@ elif form.getvalue('plugin_status') == 'disable':
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

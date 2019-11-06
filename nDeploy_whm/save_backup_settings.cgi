@@ -13,6 +13,8 @@ import jinja2
 import codecs
 import sys
 import re
+from commoninclude import print_simple_header, print_simple_footer
+
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -28,12 +30,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
 
 if form.getvalue('system_files') and form.getvalue('mysql_backup'):
     system_files = form.getvalue('system_files')
@@ -94,5 +91,4 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

@@ -11,6 +11,7 @@ import psutil
 import signal
 import sys
 import re
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -27,12 +28,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 with open(borgmatic_config_file, 'r') as borgmatic_conf:
     yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_conf)
@@ -172,5 +168,4 @@ with open(borgmatic_config_file, 'w') as borgmatic_conf:
     yaml.dump(yaml_parsed_borgmaticyaml, borgmatic_conf, default_flow_style=False)
 os.chmod(borgmatic_config_file, 0o640)
 
-print('    </body>')
-print('</html>')
+print_simple_footer()

@@ -6,7 +6,7 @@ import os
 import configparser
 import codecs
 import sys
-from commoninclude import print_nontoast_error, bcrumb, print_header, display_term, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_footer, display_term, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -45,7 +45,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         mykeypos = 1
         for mykey in myconfig.keys():
             print('                            <label for="'+mykey+'">'+mykey+'</label>')
-            print('                            <form class="m-0 toastForm10-wrap" id="toastForm10'+'-'+str(mykeypos)+'" method="post" onsubmit="return false;">')
+            print('                            <form class="m-0 php_fpm_pool_editor_save" id="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" method="post" onsubmit="return false;">')
             print('                                <div class="input-group mb-4">')
             print('                                    <input class="form-control" value="'+myconfig.get(mykey)+'"" type="text" name="thevalue">')
             print('                                    <div class="input-group-append">')
@@ -53,23 +53,23 @@ if form.getvalue('poolfile') and form.getvalue('section'):
             print('                                        <input hidden name="section" value="'+form.getvalue('section')+'">')
             print('                                        <input hidden name="thekey" value="'+mykey+'">')
             print('                                        <input hidden name="action" value="edit">')
-            print('                                        <button class="btn btn-outline-primary" type="submit">')
+            print('                                        <button id="php-fpm-pool-editor-save" class="btn btn-outline-primary" type="submit">')
             print('                                            <span class="sr-only">Save</span>')
             print('                                            <i class="fas fa-pen"></i>')
             print('                                        </button>')
             print('                                    </form>')
-            print('                                    <form class="m-0 toastForm9-wrap" id="toastForm9'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
+            print('                                    <form class="m-0 php_fpm_pool_editor_delete" id="php_fpm_pool_editor_delete'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
             print('                                        <input hidden name="poolfile" value="'+myphpini+'">')
             print('                                        <input hidden name="section" value="'+form.getvalue('section')+'">')
             print('                                        <input hidden name="thekey" value="'+mykey+'">')
             print('                                        <input hidden name="action" value="delete">')
-            print('                                        <button class="btn btn-outline-danger" type="submit">')
+            print('                                        <button id="php-fpm-pool-editor-delete-btn" class="btn btn-outline-danger" type="submit">')
             print('                                            <span class="sr-only">Delete</span>')
             print('                                            <i class="fas fa-times"></i>')
             print('                                        </button>')
             print('                                    </div>')
             print('                                </div>')
-            print('                            </form>')            
+            print('                            </form>')
             mykeypos = mykeypos + 1
 
         print('                        </div> <!-- Card Body End -->') #Card End
@@ -79,7 +79,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         cardheader('Add New PHP-FPM Pool Setting for '+config.sections()[mysection].upper(),'fas fa-sitemap')
         print('                        <div class="card-body"> <!-- Card Body Start -->') #Card Body Start
 
-        print('                            <form class="m-0" method="post" id="toastForm20" onsubmit="return false;">')
+        print('                            <form class="m-0" method="post" id="add_php_pool_setting" onsubmit="return false;">')
         print('                                <div class="input-group">')
         print('                                    <div class="input-group-prepend">')
         print('                                        <span class="input-group-text">Key & Value</span>')
@@ -90,7 +90,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('                                        <input hidden name="section" value="'+form.getvalue('section')+'">')
         print('                                        <input hidden name="poolfile" value="'+myphpini+'">')
         print('                                        <input hidden name="action" value="edit">')
-        print('                                        <button class="btn btn-outline-primary" type="submit">')
+        print('                                        <button id="add-php-pool-setting-btn" class="btn btn-outline-primary" type="submit">')
         print('                                             <span class="sr-only">Add</span>')
         print('                                             <i class="fas fa-plus"></i>')
         print('                                        </button>')
@@ -116,15 +116,4 @@ print('')
 print('            <!-- WHM End Row -->')
 print('            </div>')
 
-print('        </div> <!-- Main Container End -->')
-
-display_term()
-
-print('')
-
-print_modals()
-print_loader()
-
-print('    <!-- Body End -->')
-print('    </body>')
-print('</html>')
+print_footer()

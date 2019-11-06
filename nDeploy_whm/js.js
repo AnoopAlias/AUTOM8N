@@ -48,11 +48,23 @@ jQuery(document).ready(function($) {
 
     $(document).ajaxComplete(function() {
         // $('#processing').hide();
-        // console.log('aJax Success');
-    });
 
-    $(document).ajaxComplete(function() {
-        // console.log('aJax Complete');
+        // This was added here as well to fire again after an ajax call
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener(
+                "submit",
+                function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add("was-validated");
+                },
+                false
+            );
+        });
     });
 
     $(document).ajaxError(function() {
@@ -163,32 +175,24 @@ jQuery(document).ready(function($) {
     });
 
     // General Form Validatons
-    window.addEventListener("load", function() {
+    $(window).on('load',function(){
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.getElementsByClassName("needs-validation");
         // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener("submit", function(event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else {
-                    var $url = "save_cluster_settings.cgi?" + $(form).serialize();
-                    $.ajax({
-                        url: $url,
-                        success: function(result) {
-                            $.toast({
-                                autohide: 'true',
-                            });
-                            $(".toast-new").toast("show").html(result);
-                            $(".toast").removeClass("toast-new");
-                        }
-                    });
-                }
-                form.classList.add("was-validated");
-            }, false);
+        var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener(
+                "submit",
+                function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add("was-validated");
+                },
+                false
+            );
         });
-    }, false);
+     });
 
     // Toasts
     $.toast = function(c) {
@@ -298,8 +302,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
-                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -320,8 +324,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
-                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -342,8 +346,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result){
-                $("#v-pills-cluster .card-body .no-gutters").load("xtendweb.cgi #v-pills-cluster .card-body .no-gutters > *");
-                $("#v-pills-cluster .card-body #cluster-reset-btns").load("xtendweb.cgi #v-pills-cluster .card-body #cluster-reset-btns > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -364,8 +368,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-php .card-body > .no-gutters").load("xtendweb.cgi #v-pills-php .card-body > .no-gutters > *");
-                $($loaderId).html("Set Default PHP");
+                $("#autoswitch-php-status").load("xtendweb.cgi #autoswitch-php-status > *");
+                $("#default_php_autoswitch").load("xtendweb.cgi #default_php_autoswitch > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -570,7 +574,7 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on("submit","form[id^='delete_cluster_settings_directory-']",function(e){
-        var $loaderId        =   "#delete-cluster-settings-directory-btn";
+        var $loaderId        =   $(this).find('button');
         var $loaderText      =   "Deleting...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -581,6 +585,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#home-content").load("xtendweb.cgi #home-content > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -602,6 +607,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#home-content").load("xtendweb.cgi #home-content > *");
+                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -674,7 +680,7 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".add_ip",function(e){
+    $(document).on("submit","#add_ip",function(e){
         var $loaderId        =   "#add-ip-btn";
         var $loaderText      =   "Adding...";
         $($loaderId).prop("disabled", true);
@@ -717,8 +723,8 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit","#save_cluster_settings_slave_add",function(e){
-        var $loaderId        =   "#save-cluster-settings-slave-add-btn";
+    $(document).on("submit","#save_cluster_settings_addi_slave_add",function(e){
+        var $loaderId        =   "#save-cluster-settings-addi-slave-add-btn";
         var $loaderText      =   "Adding...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -750,6 +756,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
+                $("#add-content").load("xtendweb.cgi #add-content > *");
                 $("#slave-content").load("xtendweb.cgi #slave-content > *");
                 $.toast({
                     autohide: 'true',
@@ -815,6 +822,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#v-pills-branding .card-body").load("ndeploy_control.cgi #v-pills-branding .card-body > *");
+                $("#main-header").load("ndeploy_control.cgi #main-header > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -835,7 +843,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-branding .card-body").load("ndeploy_control.cgi #v-pills-branding .card-body > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
@@ -856,8 +864,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-aesthetics .card-body").load("ndeploy_control.cgi #v-pills-aesthetics .card-body > *");
-                $("#main-header").load("ndeploy_control.cgi #main-header > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
@@ -1417,9 +1424,52 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Still left to convert
+    $(document).on("submit","#cpanel_pkg_profile",function(e){
+        var $loaderId        =   "#cpanel-pkg-profile-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_pkg_server_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                window.location.reload();
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
 
-    $(".toastForm9-wrap").submit(function(e) {
+    $(document).on("submit",".php_fpm_pool_editor_save",function(e){
+        var $loaderId        =   "#php-fpm-pool-editor-save-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit",".php_fpm_pool_editor_delete",function(e){
+        var $loaderId        =   "#php-fpm-pool-editor-save-btn";
+        var $loaderText      =   "Deleting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         console.log($id);
@@ -1436,7 +1486,11 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(".toastForm10-wrap").submit(function(e) {
+    $(document).on("submit","#add_php_pool_setting",function(e){
+        var $loaderId        =   "#add-php-pool-setting-btn";
+        var $loaderText      =   "Adding...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
@@ -1452,29 +1506,18 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $("#toastForm17").submit(function(e) {
-        var $id = e.target.id;
-        var $f = $("#" + $id);
-        var $url = "save_pkg_server_settings.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
-                $.toast({
-                    autohide: 'true',
-                });
-                $(".toast-new").toast("show").html(result);
-                $(".toast").removeClass("toast-new");
-            }
-        });
-    });
-
-    $("#toastForm18").submit(function(e) {
+    $(document).on("submit","#save_pkg_app_settings",function(e){
+        var $loaderId        =   "#save-pkg-app-settings-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_pkg_app_settings.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
+                window.history.go(-1);
                 $.toast({
                     autohide: 'true',
                 });
@@ -1484,29 +1527,18 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $("#toastForm19").submit(function(e) {
+    $(document).on("submit","#set_resource_limit",function(e){
+        var $loaderId        =   "#set-resource-limit-btn";
+        var $loaderText      =   "Setting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
         var $f = $("#" + $id);
         var $url = "save_resource_limit.cgi?" + $f.serialize();
         $.ajax({
             url: $url,
             success: function(result) {
-                $.toast({
-                    autohide: 'true',
-                });
-                $(".toast-new").toast("show").html(result);
-                $(".toast").removeClass("toast-new");
-            }
-        });
-    });
-
-    $("#toastForm20").submit(function(e) {
-        var $id = e.target.id;
-        var $f = $("#" + $id);
-        var $url = "save_phpfpm_pool_file.cgi?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
+                window.history.go(-1);
                 $.toast({
                     autohide: 'true',
                 });

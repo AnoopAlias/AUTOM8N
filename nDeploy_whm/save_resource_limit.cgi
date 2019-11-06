@@ -7,6 +7,8 @@ import cgi
 import psutil
 import os
 import yaml
+from commoninclude import print_simple_header, print_simple_footer
+
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -22,12 +24,7 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 cgitb.enable()
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
 
 if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and form.getvalue('memory') and form.getvalue('blockio'):
     if form.getvalue('mode') == 'service':
@@ -268,5 +265,4 @@ if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and 
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

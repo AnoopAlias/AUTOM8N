@@ -1,0 +1,180 @@
+// main: styles.scss
+
+.ndeploy-theme-dark {
+	background-color: $bodydark;
+	#main-header {
+		background-color: darken($bodydark, 1.5%);
+		.logo h4 {
+			color: $white;
+		}
+	}
+	.card {
+		.card-header,
+		.card-footer {
+			background-color: $bg-dark-color;
+		}
+	}
+	.no-gutters {
+		.btn {
+			color: $white;
+			background-color: transparent;
+			&:hover,
+			&:active,
+			&:focus {
+				color: $white !important;
+			}
+		}
+		.alert.text-secondary {
+			color: $gray-light !important;
+		}
+	}
+	#dashboard {
+		.btn {
+			color: $white;
+			background-color: $bg-dark-color;
+			&:hover {
+				background-color: $primary;
+			}
+		}
+	}
+	.nav-pills,
+	.nav-tabs {
+		color: $white;
+		.nav-link {
+			color: $white;
+			.active {
+				color: $white;
+			}
+			&.active {
+				background-color: $carddarkback;
+			}
+		}
+	}
+	.nav-tabs {
+		border-bottom: $border-dark;
+		.nav-link {
+			background-color: $bg-dark2-color;
+			border: $border-dark;
+			&.active {
+				border-bottom-color: $carddarkback;
+			}
+		}
+	}
+	.accordion {
+		.card {
+			border: $border-dark;
+			background-color: $carddarkback;
+			.card-header {
+				.btn {
+					color: $white;
+				}
+			}
+		}
+	}
+	.input-group {
+		.input-group-prepend {
+			.input-group-text {
+				color: $white;
+				background-color: $bg-dark2-color;
+				border: $border-dark;
+			}
+		}
+		.form-control,
+		.custom-select {
+			background-color: $carddarkback;
+			border: $border-dark;
+			color: $white;
+		}
+		.custom-select {
+			background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E")
+		}
+	}
+	.nav {
+		.dropdown-menu {
+			background-color: $carddarkback;
+			a {
+				color: $white;
+			}
+			.dropdown-item {
+				&:hover {
+					background-color: $gray-700;
+				}
+			}
+		}
+	}
+	#terminal {
+		.modal-dialog {
+			.modal-content {
+				.modal-header {
+					.close {
+						color: $white;
+					}
+				}
+			}
+		}
+	}
+}
+
+.ndeploy-theme-light {
+	background-color: $bodylight;
+	#main-header {
+		background-color: $white;
+	}
+	button.close {
+	    color: $black;
+	}
+	.no-gutters {
+		.btn {
+			color: $black;
+			background-color: transparent;
+		}
+	}
+	#dashboard {
+		.btn {
+			color: $black;
+			background-color: $bg-light-color;
+			&:hover {
+				background-color: $primary;
+				color: $white;
+			}
+		}
+	}
+	.bg-light {
+		background-color: $white !important;
+	}
+	.nav-pills {
+		.nav-link {
+			color: $black;
+			.active {
+				color: $black;
+			}
+		}
+	}
+	#v-pills-tabContent {
+		.dropdown-menu {
+			.dropdown-item {
+				cursor: pointer;
+			}
+		}
+	}
+	.accordion {
+		.card {
+			.card-header {
+				.btn {
+					color: $black;
+				}
+			}
+		}
+	}
+	#terminal {
+		.modal-dialog {
+			.modal-content {
+				.modal-header {
+					.close {
+						color: $black;
+					}
+				}
+			}
+		}
+	}
+}

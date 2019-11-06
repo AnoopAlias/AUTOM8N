@@ -5,7 +5,7 @@ import cgi
 import subprocess
 import yaml
 import sys
-from commoninclude import print_nontoast_error, bcrumb, print_header, display_term, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import print_nontoast_error, bcrumb, print_header, print_footer, display_term, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -43,7 +43,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
             print('                                    <li>BlockIOWeight = nolimit</li>')
         else:
             print('                                    <li>BlockIOWeight = '+myio.rstrip()+'</li>')
-        if int(mycpu) == 18446744073709551615:                                
+        if int(mycpu) == 18446744073709551615:
             print('                                    <li>CPUShares = nolimit</li>')
         else:
             print('                                    <li>CPUShares = '+mycpu.rstrip()+'</li>')
@@ -88,7 +88,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
             print('                            </div>')
 
     # Set Limits
-    print('                            <form class="form" method="post" id="toastForm19" onsubmit="return false;">')
+    print('                            <form class="form" method="post" id="set_resource_limit" onsubmit="return false;">')
 
     print('                                <div class="input-group">')
     print('                                    <div class="input-group-prepend input-group-prepend-min">')
@@ -122,7 +122,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
 
     print('                                <input hidden name="mode" value="'+form.getvalue('mode')+'">')
     print('                                <input hidden name="unit" value="'+form.getvalue('unit')+'">')
-    print('                                <button class="btn btn-outline-primary btn-block" type="submit">Set Limit</button>')
+    print('                                <button id="set-resource-limit-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End
     cardfooter('Set the desired resource percentages for '+myservice)
@@ -146,15 +146,4 @@ print('')
 print('            <!-- WHM End Row -->')
 print('            </div>')
 
-print('        </div> <!-- Main Container End -->')
-
-display_term()
-
-print('')
-
-print_modals()
-print_loader()
-
-print('    <!-- Body End -->')
-print('    </body>')
-print('</html>')
+print_footer()

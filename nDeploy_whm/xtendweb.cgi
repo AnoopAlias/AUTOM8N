@@ -12,7 +12,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, return_prepend, print_header, display_term, print_modals,cardheader, cardfooter, print_input_fn, print_select_fn
+from commoninclude import bcrumb, return_prepend, print_header, print_footer, display_term, cardheader, cardfooter, print_input_fn, print_select_fn
 
 
 __author__ = "Anoop P Alias"
@@ -30,6 +30,7 @@ nginx_version_info_file = "/etc/nginx/version.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
 ansible_inventory_file = "/opt/nDeploy/conf/nDeploy-cluster/hosts"
+php_secure_mode_file = installation_path+"/conf/secure-php-enabled"
 
 cgitb.enable()
 print_header('Home')
@@ -48,25 +49,28 @@ for myprocess in psutil.process_iter():
     if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
         watcher_status = True
 
+
 # Read in PHP Backend Status for Dash
 backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
 
-if "PHP" in backend_data_yaml_parsed:
-    installed_php_count = len(backend_data_yaml_parsed["PHP"].keys())
-else:
-    installed_php_count = 0
-
-running_process_count = 0
-for myprocess in psutil.process_iter():
-    # Workaround for Python 2.6
-    if platform.python_version().startswith('2.6'):
-        myexe = myprocess.cmdline
+if not os.path.isfile(php_secure_mode_file):
+    if "PHP" in backend_data_yaml_parsed:
+        installed_php_count = len(backend_data_yaml_parsed["PHP"].keys())
     else:
-        myexe = myprocess.cmdline()
-    if 'php-fpm: master process (/opt/nDeploy/conf/php-fpm.conf)' in myexe:
-        running_process_count = running_process_count + 1
+        installed_php_count = 0
+    
+    running_process_count = 0
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            myexe = myprocess.cmdline
+        else:
+            myexe = myprocess.cmdline()
+        if 'php-fpm: master process (/opt/nDeploy/conf/php-fpm.conf)' in myexe:
+            running_process_count = running_process_count + 1
+
 
 # Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
@@ -151,17 +155,29 @@ cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
 print('                        <h4 class="mb-0">PHP Backends</h4>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li><small>PHP-FPM</small></li>')
 
-if running_process_count == installed_php_count:
-    php_status = True
+# Add real status to PHP Backend widget
+livePHPStatus = get('http://localhost/pingphpfpm')
+if livePHPStatus.status_code == 502:
+    print('                            <li><small>PHP-FPM Status: <span class="text-danger">'+str(livePHPStatus.status_code)+'</span></small></li>')
+elif livePHPStatus.status_code == 200:
+    print('                            <li><small>PHP-FPM Status: <span class="text-success">'+str(livePHPStatus.status_code)+'</span></small></li>')
 else:
-    php_status = False
+    print('                            <li><small>PHP-FPM Status: <span class="text-info">'+str(livePHPStatus.status_code)+'</span></small></li>')
 
-if php_status:
-    print('                        <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
+if not os.path.isfile(php_secure_mode_file):
+    if running_process_count == installed_php_count:
+        php_status = True
+    else:
+        php_status = False
+    
+    if php_status:
+        print('                        <li class="mt-2 text-success">Single Master <i class="fas fa-power-off ml-1"></i></li>')
+    else:
+        print('                        <li class="mt-2 text-warning">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
 else:
-    print('                        <li class="mt-2 text-danger">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
+    print('                        <li class="mt-2 text-success">Multi-Master <i class="fas fa-power-off ml-1"></i></li>')
+
 print('                        </ul>')
 print('                    </div> <!-- Card Body End -->')
 print('                    <form class="form" id="restart_backends" onsubmit="return false;">')
@@ -256,7 +272,7 @@ print('             <div class="tab-pane fade" id="v-pills-cluster" role="tabpan
 if os.path.isfile(cluster_config_file):
     cardheader('Cluster Status', 'fas fa-align-justify')
     print('             <div class="card-body p-0">  <!-- Card Body Start -->')
-    print('                 <div class="row no-gutters row-1"> <!-- Row Start -->')
+    print('                 <div id="cluster-status-info" class="row no-gutters row-1"> <!-- Row Start -->')
 
     with open(cluster_config_file, 'r') as cluster_data_yaml:
         cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
@@ -486,7 +502,7 @@ if os.path.isfile(cluster_config_file):
         # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
-        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_addi_slave_add" onsubmit="return false;" novalidate>')
 
         # Slave data
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
@@ -496,7 +512,7 @@ if os.path.isfile(cluster_config_file):
 
         print('                                <input hidden name="action" value="addadditionalslave">')
 
-        print('                                <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
+        print('                                <button id="save-cluster-settings-addi-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -802,7 +818,7 @@ else:
         # Tab Start / Tab3 ###########################
         # Add additional Slave
         print('                         <div class="tab-pane fade show" id="add-content" role="tabpanel" aria-labelledby="add-tab">')
-        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add" onsubmit="return false;" novalidate>')
+        print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_addi_slave_add" onsubmit="return false;" novalidate>')
 
         # Slave data
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
@@ -812,7 +828,7 @@ else:
 
         print('                                <input hidden name="action" value="addadditionalslave">')
 
-        print('                                <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
+        print('                                <button id="save-cluster-settings-slave-addi-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
@@ -953,7 +969,7 @@ print('                <div class="tab-pane fade" id="v-pills-php" role="tabpane
 # Set Default PHP for AutoConfig
 cardheader('Default PHP for Autoswitch', 'fab fa-php')
 print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
-print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
+print('                     <div id="autoswitch-php-status" class="row no-gutters row-1"> <!-- Row Start -->')
 
 # Check if we have a Preferred PHP and allow selection.
 print('                         <div class="col-md-6 alert"><i class="fab fa-php"></i> Default PHP</div>')
@@ -1189,7 +1205,7 @@ print('                <div class="tab-pane fade" id="v-pills-limit" role="tabpa
 
 # System Resource Limit
 cardheader('System Resource Limit', 'fas fa-compress')
-print('                    <div class="card-body"> <!-- Card Body Start -->')
+print('                        <div class="card-body"> <!-- Card Body Start -->')
 
 with open('/etc/redhat-release', 'r') as releasefile:
     osrelease = releasefile.read().split(' ')[0]
@@ -1199,68 +1215,59 @@ if not osrelease == 'CloudLinux':
         # Next sub-section start here
         if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
             userlist = os.listdir("/var/cpanel/users")
-            print('         <form class="form" action="resource_limit.cgi" method="get">')
-            print('             <div class="input-group">')
-            print('                 <div class="input-group-prepend input-group-prepend-min">')
-            print('                     <label class="input-group-text">User</label>')
-            print('                 </div>')
-            print('                 <select name="unit" class="custom-select">')
+            print('                            <form class="form" action="resource_limit.cgi" method="get">')
+            print('                                <div class="input-group">')
+            print('                                    <div class="input-group-prepend input-group-prepend-min">')
+            print('                                        <label class="input-group-text">User</label>')
+            print('                                    </div>')
+            print('                                    <select name="unit" class="custom-select">')
 
             for cpuser in sorted(userlist):
                 if cpuser != 'nobody' and cpuser != 'system':
-                    print('             <option value="'+cpuser+'">'+cpuser+'</option>')
+                    print('                                        <option value="'+cpuser+'">'+cpuser+'</option>')
 
-            print('                 </select>')
-            print('                 <input hidden name="mode" value="user">')
-            print('             </div>')
-            print('             <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
-            print('         </form>')
+            print('                                    </select>')
+            print('                                    <input hidden name="mode" value="user">')
+            print('                                </div>')
+            print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
+            print('                            </form>')
 
-            print('         <form class="form mt-4" action="resource_limit.cgi" method="get">')
-            print('             <div class="input-group">')
-            print('                 <div class="input-group-prepend input-group-prepend-min">')
-            print('                     <label class="input-group-text">Service</label>')
-            print('                 </div>')
-            print('                 <select name="unit" class="custom-select">')
+            print('                            <form class="form mt-4" action="resource_limit.cgi" method="get">')
+            print('                                <div class="input-group">')
+            print('                                    <div class="input-group-prepend input-group-prepend-min">')
+            print('                                        <label class="input-group-text">Service</label>')
+            print('                                    </div>')
+            print('                                    <select name="unit" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print('                 <option value="'+service+'">'+service+'</option>')
+                print('                                        <option value="'+service+'">'+service+'</option>')
 
-            print('                 </select>')
-            print('                 <input hidden name="mode" value="service">')
-            print('             </div>')
-            print('             <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
-            print('         </form>')
+            print('                                    </select>')
+            print('                                    <input hidden name="mode" value="service">')
+            print('                               </div>')
+            print('                               <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
+            print('                           </form>')
         else:
-            print('         <form class="form" action="resource_limit.cgi" method="get">')
-            print('             <div class="input-group">')
-            print('                 <div class="input-group-prepend input-group-prepend-min">')
-            print('                     <label class="input-group-text">Resource</label>')
-            print('                 </div>')
-            print('                 <select name="unit" class="custom-select">')
+            print('                           <form class="form" action="resource_limit.cgi" method="get">')
+            print('                               <div class="input-group">')
+            print('                                   <div class="input-group-prepend input-group-prepend-min">')
+            print('                                       <label class="input-group-text">Resource</label>')
+            print('                                   </div>')
+            print('                                   <select name="unit" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print('                 <option value="'+service+'">'+service+'</option>')
+                print('                                       <option value="'+service+'">'+service+'</option>')
 
-            print('                  </select>')
-            print('                  <input hidden name="mode" value="service">')
-            print('              </div>')
-            print('              <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
-            print('          </form>')
-print('                  </div> <!-- Card Body End -->')
+            print('                                   </select>')
+            print('                                   <input hidden name="mode" value="service">')
+            print('                               </div>')
+            print('                               <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
+            print('                           </form>')
+print('                        </div> <!-- Card Body End -->')
 cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
 
 print('                </div> <!-- End Limit Tab -->')
 print('            </div>')
 print('        </div> <!-- End WHM Tabs Row -->')
 
-print('        </div> <!-- Main Container End -->')
-
-display_term()
-
-print('')
-
-print_modals()
-
-print('    </body> <!-- Body End -->')
-print('</html>')
+print_footer()

@@ -7,6 +7,7 @@ import psutil
 import platform
 import os
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -19,12 +20,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('    <head>')
-print('    </head>')
-print('    <body>')
+print_simple_header()
 
 malware = False
 user_list = os.listdir("/var/cpanel/users")
@@ -46,7 +42,7 @@ for myprocess in psutil.process_iter():
         if not myexe.endswith(("/usr/libexec/openssh/sftp-server")) and (myexe.startswith(("/usr/bin/perl", "/home")) or myexe == '/'):
             malware = True
             if not os.path.isfile('/opt/nDeploy/conf/disable_autokill_malware'):
-                
+
                 # We should build this out more with more detections, then we can
                 # add it to Term along with current toast setup. - Budd
                 subprocess.call('killall -9 -u '+myusername, shell=True)
@@ -59,5 +55,4 @@ for myprocess in psutil.process_iter():
 if not malware:
     commoninclude.print_success('No suspicious processes found!')
 
-print('    </body>')
-print('</html>')
+print_simple_footer()
