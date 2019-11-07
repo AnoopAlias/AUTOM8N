@@ -118,19 +118,6 @@ if form.getvalue('action'):
                 if output:
                     output = output[:-2] + ' detected down. '
 
-        if os.path.isfile(cluster_config_file):
-
-            procExe = subprocess.Popen('echo -e "Restarting application backends cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            procExe.wait()
-            procExe = subprocess.Popen('service ndeploy_backends restart && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"service ndeploy_backends restart\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            procExe.wait()
-            procExe = subprocess.Popen('echo -e "'+output+'Application backends restarted cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            procExe.wait()
-
-            commoninclude.print_success(output+'Application backends restarted cluster-wide!')
-
-        else:
-
             procExe = subprocess.Popen('echo -e "Restarting application backends..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
             procExe = subprocess.Popen('service ndeploy_backends restart && service ndeploy_backends status >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -139,6 +126,9 @@ if form.getvalue('action'):
             procExe.wait()
 
             commoninclude.print_success(output+'Application backends restarted!')
+
+        else: 
+            commoninclude.print_warning('Cannot restart PHP Backends in socket mode.')
 
     else:
         commoninclude.print_forbidden()

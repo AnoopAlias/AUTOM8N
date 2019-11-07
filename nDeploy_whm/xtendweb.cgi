@@ -182,7 +182,10 @@ print('                        </ul>')
 print('                    </div> <!-- Card Body End -->')
 print('                    <form class="form" id="restart_backends" onsubmit="return false;">')
 print('                        <input hidden name="action" value="restart_backends">')
-print('                        <button id="restart-backends-btn" class="btn btn-secondary btn-block mb-0">Restart</button>')
+if os.path.isfile(php_secure_mode_file):
+    print('                        <button id="restart-backends-btn" class="btn btn-secondary btn-block mb-0" disabled>Restart</button>')
+else:
+    print('                        <button id="restart-backends-btn" class="btn btn-secondary btn-block mb-0">Restart</button>')
 print('                    </form>')
 cardfooter('')
 print('                </div> <!-- Dash Item End -->')

@@ -31,6 +31,30 @@ jQuery(document).ready(function($) {
         ajax.send();
     }, 1000);
 
+    // General Form Validatons
+    function formValidations(){
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener(
+                "submit",
+                function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add("was-validated");
+                },
+                false
+            );
+        });
+    }
+
+    $(window).on('load',function(){
+        formValidations();
+    });
+
     // Ajax
     $(document).ajaxStart(function() {
         $("#processing").delay(1000).fadeIn(1000).show(0);
@@ -49,22 +73,7 @@ jQuery(document).ready(function($) {
     $(document).ajaxComplete(function() {
         // $('#processing').hide();
 
-        // This was added here as well to fire again after an ajax call
-        var forms = document.getElementsByClassName("needs-validation");
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function (form) {
-            form.addEventListener(
-                "submit",
-                function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add("was-validated");
-                },
-                false
-            );
-        });
+        formValidations();
     });
 
     $(document).ajaxError(function() {
@@ -173,26 +182,6 @@ jQuery(document).ready(function($) {
         $("#main-container").removeClass($apnData);
         $(this).next(".modalMinimize").find("i").removeClass("fa fa-clone").addClass("fa fa-minus");
     });
-
-    // General Form Validatons
-    $(window).on('load',function(){
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName("needs-validation");
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function (form) {
-            form.addEventListener(
-                "submit",
-                function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add("was-validated");
-                },
-                false
-            );
-        });
-     });
 
     // Toasts
     $.toast = function(c) {
