@@ -23,6 +23,7 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
 whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+php_secure_mode_file = installation_path+"/conf/secure-php-enabled"
 
 cgitb.enable()
 form = cgi.FieldStorage()
@@ -89,13 +90,13 @@ if form.getvalue('action'):
 
     elif form.getvalue('action') == 'restart_backends':
 
-        backend_data_yaml = open(backend_config_file, 'r')
-        backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
-        backend_data_yaml.close()
-
-        # This check only detects single master php processes and produces irrelavant data in multi-master mode
-        output = ""
-        if not os.path.isfile(cluster_config_file):
+        # If not a multi-master PHP setup
+        if not os.path.isfile(php_secure_mode_file):
+            # This check only detects single master php processes and produces irrelavant data in multi-master mode
+            backend_data_yaml = open(backend_config_file, 'r')
+            backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+            backend_data_yaml.close()
+            output = ""
             php_status_dict = {}
             if "PHP" in backend_data_yaml_parsed:
                 php_backends_dict = backend_data_yaml_parsed["PHP"]
@@ -111,24 +112,59 @@ if form.getvalue('action'):
                             break
                         else:
                             php_status_dict[php] = "NOT ACTIVE"
-    
+
                 for service,status in list(php_status_dict.items()):
                     if status == "NOT ACTIVE":
                         output = output + service+', '
                 if output:
                     output = output[:-2] + ' detected down. '
 
-            procExe = subprocess.Popen('echo -e "Restarting application backends..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            procExe.wait()
-            procExe = subprocess.Popen('service ndeploy_backends restart && service ndeploy_backends status >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            procExe.wait()
-            procExe = subprocess.Popen('echo -e "'+output+'Application backends restarted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            procExe.wait()
+            if os.path.isfile(cluster_config_file):
+    
+                procExe = subprocess.Popen('echo -e "Restarting single master application backends cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('service ndeploy_backends restart && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"service ndeploy_backends restart\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo -e "'+output+'Single master PHP backends restarted cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+    
+                commoninclude.print_success(output+'Single master PHP backends restarted cluster-wide!')
+    
+            else:
+    
+                procExe = subprocess.Popen('echo -e "Restarting single master application backends..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('service ndeploy_backends restart && service ndeploy_backends status >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo -e "'+output+'Single master PHP backends restarted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+    
+                commoninclude.print_success(output+'Single master PHP backends restarted!')
+        
+        # If multi-master PHP setup
+        else:
 
-            commoninclude.print_success(output+'Application backends restarted!')
-
-        else: 
-            commoninclude.print_warning('Cannot restart PHP Backends in socket mode.')
+            if os.path.isfile(cluster_config_file):
+    
+                procExe = subprocess.Popen('echo -e "Restarting multi-master application backends cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('killall -9 php-fpm && /scripts/restartsrv apache_php_fpm && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"killall -9 php-fpm && /scripts/restartsrv apache_php_fpm\" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo -e "Multi-master PHP backends restarted cluster-wide..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+    
+                commoninclude.print_success('Multi-Master PHP backends restarted cluster-wide!')
+    
+            else:
+    
+                procExe = subprocess.Popen('echo -e "Restarting multi-master application backends..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('killall -9 php-fpm && /scripts/restartsrv apache_php_fpm >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+                procExe = subprocess.Popen('echo -e "Multi-master PHP backends restarted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                procExe.wait()
+    
+                commoninclude.print_success('Multi-Master PHP backends restarted!')
 
     else:
         commoninclude.print_forbidden()
