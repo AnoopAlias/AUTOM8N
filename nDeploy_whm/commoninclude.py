@@ -22,12 +22,12 @@ if os.path.isfile(ndeploy_control_file):
     with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
         yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
     ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light")
-    primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#121212")
+    primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#177EAB")
     logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "None")
     app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
 else:
     ndeploy_theme_color = "light"
-    primary_color = "#121212"
+    primary_color = "#177EAB"
     logo_url = "None"
     app_email = "None"
 
@@ -198,12 +198,12 @@ def print_header(title=''):
     print('            <div class="logo">')
     print('                <h4>')
     if logo_url != 'None':
-        print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+'" class="logo-url" src="'+logo_url+'"></a>')
+        print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" class="logo-url" src="'+logo_url+'"></a>')
     else:
         if ndeploy_theme_color == 'dark':
-            print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+'" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>')
+            print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>')
         else:
-            print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+'" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>')
+            print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>')
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
@@ -228,7 +228,7 @@ def display_term():
         print('                <div class="modal-content bg-light text-dark">')
     print('                    <div class="modal-header">')
     print('                        <h4 class="modal-title">Command Output <span id="processing">- Processing: <i class="fas fa-spinner fa-spin"></i></span></h4>')
-    print('                        <button class="close modalMinimize"> <i class="fa fa-minus"></i> </button>')
+    print('                        <button class="close modalMinimize"> <i class="fa fa-minus"><span class="sr-only">Close</span></i> </button>')
     print('                    </div>')
     print('                    <div id="terminal-panel" class="modal-body">Retrieving last terminal function executed...</div>')
     print('                </div>')
@@ -237,7 +237,7 @@ def display_term():
 
 
 # Input Display
-# 
+#
 def print_input_fn(label='Label', hint='Hint', inputValue='', inputName='', buttonID='', hiddenName='', hiddenValue=''):
     print('                                        <div class="input-group">')
     print('                                            <div class="input-group-prepend input-group-prepend-min">')
@@ -314,7 +314,7 @@ def cardheader(header='Untitled Card', faicon='fas fa-cogs'):
         print('                    <div class="card mb-4 text-dark bg-'+ndeploy_theme_color+'">')
     if header != '':
         print('                        <div class="card-header">')
-        print('                            <h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>')
+        print('                            <h3 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h3>')
         print('                        </div>')
     print('')
 
