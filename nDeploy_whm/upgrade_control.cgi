@@ -76,7 +76,7 @@ if form.getvalue('upgrade_control'):
 
             procExe = subprocess.Popen('echo -e "Upgrading application cluster-wide..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy upgrade *nDeploy*\" && '+installation_path+'/scripts/attempt_autofix.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy upgrade *nDeploy*\" && '+installation_path+'/scripts/attempt_autofix.sh && '+installation_path+'/scripts/check_for_updates.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
 
             commoninclude.print_success('Application has been upgraded cluster-wide!')
@@ -85,7 +85,7 @@ if form.getvalue('upgrade_control'):
 
             procExe = subprocess.Popen('echo -e "Upgrading application..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
-            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && '+installation_path+'/scripts/attempt_autofix.sh && nginx -t && needs-restarting | grep nginx && service nginx restart >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            procExe = subprocess.Popen('yum -y --enablerepo=ndeploy upgrade *nDeploy* && '+installation_path+'/scripts/attempt_autofix.sh && nginx -t && needs-restarting | grep nginx && service nginx restart && '+installation_path+'/scripts/check_for_updates.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procExe.wait()
 
             commoninclude.print_success('Application has been upgraded!')
