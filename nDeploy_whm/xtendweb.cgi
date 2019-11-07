@@ -903,7 +903,7 @@ else:
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "", "slave_main_ip")
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
-        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "slave_ssh_port")
+        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
 
         print('                                <input hidden name="action" value="setup">')
 
