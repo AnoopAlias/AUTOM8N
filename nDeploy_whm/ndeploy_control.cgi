@@ -97,6 +97,8 @@ if os.path.isfile(php_secure_mode_file):
 if os.path.isfile(php_chroot_mode_file):
     php_chroot_status = True
 
+print('            <h1 class="sr-only">AUTOM8N Control Center</h1>')
+
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row flex-row">')
 print('                <div id="plugin_status_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item 1 Start -->')
@@ -104,7 +106,7 @@ print('                <div id="plugin_status_widget" class="col-sm-6 col-xl-3">
 cardheader('')
 
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">Plugin Status</h4>')
+print('                        <h2 class="mb-0">Plugin Status</h2>')
 print('                        <ul class="list-unstyled mb-0">')
 print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
 
@@ -120,11 +122,13 @@ print('                    </div>')
 if nginx_status:
     print('                <button id="plugin-status-btn" form="disable_ndeploy" class="btn btn-secondary btn-block btn-loader mb-0">Disable</button>')
     print('                <form id="disable_ndeploy" class="form" onsubmit="return false;">')
-    print('                    <input hidden name="plugin_status" value="disable">')
+    print('                    <label hidden for="plugin_status_disable">Plugin Status Disable</label>')
+    print('                    <input hidden name="plugin_status" id="plugin_status_disable" value="disable">')
 else:
     print('                    <button id="plugin-status-btn" form="enable_ndeploy" class="btn btn-secondary btn-block btn-loader mb-0">Enable</button>')
     print('                <form id="enable_ndeploy" class="form" onsubmit="return false;">')
-    print('                    <input hidden name="plugin_status" value="enable">')
+    print('                    <label hidden for="plugin_status_enable">Plugin Status Enable</label>')
+    print('                    <input hidden name="plugin_status" id="plugin_status_enable" value="enable">')
 
 print('                    </form>')
 cardfooter('')
@@ -136,7 +140,7 @@ print('                <div id="php_status_widget" class="col-sm-6 col-xl-3"> <!
 cardheader('')
 
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">PHP Status</h4>')
+print('                        <h2 class="mb-0">PHP Status</h2>')
 print('                        <ul class="list-unstyled mb-0">')
 
 if "PHP" in backend_data_yaml_parsed:
@@ -157,7 +161,8 @@ if "PHP" in backend_data_yaml_parsed:
     print('                    </ul>')
     print('                </div>')
     print('                <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
-    print('                    <input hidden name="run_installer" value="enabled">')
+    print('                    <label hidden for="upgrade_native_php">Upgrade Native PHP</label>')
+    print('                    <input hidden name="run_installer" id="upgrade_native_php" value="enabled">')
     print('                    <button id="easy-php-setup-btn" class="btn btn-secondary btn-block btn-loader mb-0">Upgrade Native PHP</button>')
     print('                </form>')
 
@@ -167,7 +172,8 @@ else:
     print('                </ul>')
     print('                </div>')
     print('                <form class="form" id="easy_php_setup" method="post" onsubmit="return false;">')
-    print('                    <input hidden name="run_installer" value="enabled">')
+    print('                    <label hidden for="install_native_php">Install Native PHP</label>')
+    print('                    <input hidden name="run_installer" id="install_native_php" value="enabled">')
     print('                    <button id="easy-php-setup-btn" class="btn btn-secondary btn-block btn-loader mb-0">Install Native PHP</button>')
     print('                </form>')
 
@@ -180,7 +186,7 @@ print('                <div id="fix_all_widget" class="col-sm-6 col-xl-3"> <!-- 
 cardheader('')
 
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">AutoFix</h4>')
+print('                        <h2 class="mb-0">AutoFix</h2>')
 print('                        <ul class="list-unstyled mb-0">')
 print('                            <li><small>Fix All Accounts</small></li>')
 print('                            <li class="mt-2">&nbsp;</li>')
@@ -191,10 +197,12 @@ print('                        <button id="autofix-simple-btn" form="autofix_sim
 print('                        <button id="autofix-phpfpm-btn" form="autofix_phpfpm" class="col-sm-6 btn btn-secondary">PHP-FPM</button>')
 print('                    </div>')
 print('                    <form class="form" id="autofix_simple" method="post" onsubmit="return false;">')
-print('                        <input hidden name="autofix_status" value="simple">')
+print('                        <label hidden for="autofix_status_simple">Autofix Status Simple</label>')
+print('                        <input hidden name="autofix_status" id="autofix_status_simple" value="simple">')
 print('                    </form>')
 print('                    <form class="form" id="autofix_phpfpm" method="post" onsubmit="return false;">')
-print('                        <input hidden name="autofix_status" value="phpfpm">')
+print('                        <label hidden for="autofix_status_phpfpm">Autofix Status PHPFPM</label>')
+print('                        <input hidden name="autofix_status" id="autofix_status_phpfpm" value="phpfpm">')
 print('                    </form>')
 
 cardfooter('')
@@ -206,7 +214,7 @@ print('                <div id="plugin_upgrade_widget" class="col-sm-6 col-xl-3"
 cardheader('')
 
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">Upgrade Plugin</h4>')
+print('                        <h2 class="mb-0">Upgrade Plugin</h2>')
 print('                        <ul class="list-unstyled mb-0">')
 print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>Upgrade Status</small></li>')
 
@@ -216,23 +224,26 @@ if update_status == '':
     print('                    </ul>')
     print('                </div>')
     print('                <form id="check_upgrades" class="form" onsubmit="return false;">')
+    print('                    <label hidden for="upgrade_control_enable">Upgrade Control Enable</label>')
+    print('                    <input hidden name="upgrade_control" id="upgrade_control_enable" value="check">')
     print('                    <button id="upgrade-control-btn" class="btn btn-secondary btn-block mb-0">Check for Upgrades</button>')
-    print('                    <input hidden name="upgrade_control" value="check">')
 
 elif update_status == '0':
     print('                        <li class="mt-2 text-success">Up to Date <i class="fas fa-power-off ml-1"></i></li>')
     print('                    </ul>')
     print('                </div>')
     print('                <form id="reinstall_application" class="form" onsubmit="return false;">')
+    print('                    <label hidden for="upgrade_control_reinstall">Upgrade Control Reinstall</label>')
+    print('                    <input hidden name="upgrade_control" id="upgrade_control_reinstall" value="reinstall">')
     print('                    <button id="reinstall-application-btn" class="btn btn-secondary btn-block mb-0">Reinstall</button>')
-    print('                    <input hidden name="upgrade_control" value="reinstall">')
 
 else:
     print('                        <li class="mt-2 text-warning">Upgrades Available <i class="fas fa-power-off ml-1"></i></li>')
     print('                    </ul>')
     print('                </div>')
     print('                <form id="upgrade_application" class="form" onsubmit="return false;">')
-    print('                    <input hidden name="upgrade_control" value="upgrade">')
+    print('                    <label hidden for="upgrade_control_upgrade">Upgrade Control Upgrade</label>')
+    print('                    <input hidden name="upgrade_control" id="upgrade_control_upgrade" value="upgrade">')
     print('                    <button id="upgrade-application-btn" class="btn btn-secondary btn-block mb-0">Upgrade</button>')
 
 print('                    </form>')
@@ -326,7 +337,8 @@ print('                                </div>')
 print('                            </form>')
 
 print('                            <form class="form" id="restore_branding_defaults" method="post" onsubmit="return false;">')
-print('                                <input hidden class="form-control" name="restore_defaults" value="enabled">')
+print('                                <label hidden for="restore_defaults_enabled">Restore Defaults</label>')
+print('                                <input hidden class="form-control" id="restore_defaults_enabled" name="restore_defaults" value="enabled">')
 print('                            </form>')
 
 print('                            <div class="btn-group btn-block mt-3">')
@@ -367,9 +379,9 @@ print('                                </div>')
 print('                                <label class="small" for="ndeploy_theme_color">Select a theme to use with the application.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
-print('                                        <label class="input-group-text">'+return_prepend("Theme", ndeploy_theme_color_hint)+'</label>')
+print('                                        <span class="input-group-text">'+return_prepend("Theme", ndeploy_theme_color_hint)+'</span>')
 print('                                    </div>')
-print('                                    <select name="ndeploy_theme_color" class="custom-select">')
+print('                                    <select name="ndeploy_theme_color" id="ndeploy_theme_color" class="custom-select">')
 
 bootstrap_colors = ['light', 'dark']
 for color in bootstrap_colors:
@@ -403,7 +415,8 @@ print('                                </div>')
 print('                            </form>')
 
 print('                            <form class="form" id="restore_ndeploy_control_defaults" method="post" onsubmit="return false;">')
-print('                                <input hidden class="form-control" name="restore_defaults" value="enabled">')
+print('                                <label hidden for="restore_defaults">Restore Defaults</label>')
+print('                                <input hidden class="form-control" id="restore_defaults" name="restore_defaults" value="enabled">')
 print('                            </form>')
 
 print('                            <div class="btn-group btn-block mt-3">')
@@ -436,14 +449,16 @@ if "PHP" in backend_data_yaml_parsed:
         print('                                <div class="col-6 alert text-success">Multi-Master <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="single_master" class="form" onsubmit="return false;">')
+        print('                                        <label hidden for="php_mode_single">PHP Mode Single</label>')
+        print('                                        <input hidden name="php_mode" id="php_mode_single" value="single">')
         print('                                        <button id="single-master-btn" type="submit" class="alert btn btn-info">Single Master</button>')
-        print('                                        <input hidden name="php_mode" value="single">')
     else:
         print('                                <div class="col-6 alert text-success">Single Master <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="multi_master" class="form" onsubmit="return false;">')
+        print('                                        <label hidden for="php_mode_multi">PHP Mode Multi-Master</label>')
+        print('                                        <input hidden name="php_mode" id="php_mode_multi" value="multi">')
         print('                                        <button id="multi-master-btn" type="submit" class="alert btn btn-info">Multi-Master</button>')
-        print('                                        <input hidden name="php_mode" value="multi">')
 
     print('                                        </form>')
     print('                                    </div>')
@@ -464,11 +479,12 @@ if "PHP" in backend_data_yaml_parsed:
         print('                                <div class="col-6 alert text-danger">Disabled <i class="fas fa-power-off"></i></div>')
         print('                                <div class="col-6">')
         print('                                    <form id="chroot_on" class="form" onsubmit="return false;">')
+        print('                                        <label hidden for="chroot_mode_enable">Chroot Mode Enabled</label>')
+        print('                                        <input hidden name="chroot_mode" id="chroot_mode_enable" value="enabled">')
         if php_secure_status:
             print('                                    <button id="chroot-on-btn" type="submit" class="alert btn btn-info" disabled>Enable</button>')
         else:
             print('                                    <button id="chroot-on-btn" type="submit" class="alert btn btn-info">Enable</button>')
-        print('                                        <input hidden name="chroot_mode" value="enabled">')
 
     print('                                        </form>')
     print('                                    </div>')
@@ -513,13 +529,16 @@ if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                                </div>')
     print('                                <input type="text" class="form-control" name="netdata_pass" value="'+netdata_pass+'" id="netdata_pass" aria-describedby="netdata_pass_desc">')
     print('                            </div>')
-print('                                <input hidden class="form-control" name="run_installer" value="enabled">')
-print('                                <input hidden class="form-control" name="netdata_pass" value="'+netdata_pass+'">')
+print('                                <label hidden for="install_netdata">Install Netdata</label>')
+print('                                <input hidden class="form-control" name="run_installer" id="install_netdata" value="enabled">')
+print('                                <label hidden for="netdata_pass2">Netdata Password</label>')
+print('                                <input hidden class="form-control" name="netdata_pass" id="netdata_pass2" value="'+netdata_pass+'">')
 print('                            </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                        <form class="form" id="clear_netdata_credentials" method="post" onsubmit="return false;">')
-    print('                            <input hidden class="form-control" name="remove_netdata_creds" value="enabled">')
+    print('                            <label hidden for="remove_netdata_creds_enable">Remove Netdata Creds Enabled</label>')
+    print('                            <input hidden class="form-control" name="remove_netdata_creds" id="remove_netdata_creds_enable" value="enabled">')
     print('                        </form>')
 
 print('                            <div class="btn-group btn-block mt-3">')
@@ -556,13 +575,16 @@ if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                                </div>')
     print('                                <input type="text" class="form-control" name="glances_pass" value="'+glances_pass+'" id="glances_pass" aria-describedby="glances_pass_desc">')
     print('                            </div>')
-print('                                <input hidden class="form-control" name="run_installer" value="enabled">')
-print('                                <input hidden class="form-control" name="glances_pass" value="'+glances_pass+'">')
+print('                                <label hidden for="install_glances">Install Glances</label>')
+print('                                <input hidden class="form-control" name="run_installer" id="install_glances" value="enabled">')
+print('                                <label hidden for="glances_pass2">Glances Pass</label>')
+print('                                <input hidden class="form-control" name="glances_pass" id="glances_pass2" value="'+glances_pass+'">')
 print('                            </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                        <form class="form" id="clear_glances_credentials" method="post" onsubmit="return false;">')
-    print('                            <input hidden class="form-control" name="remove_glances_creds" value="enabled">')
+    print('                            <label hidden for="remove_glances_creds">Remove Glances</label>')
+    print('                            <input hidden class="form-control" name="remove_glances_creds" id="remove_glances_creds" value="enabled">')
     print('                        </form>')
 
 print('                            <div class="btn-group btn-block mt-3">')
