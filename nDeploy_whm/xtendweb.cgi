@@ -60,7 +60,7 @@ if not os.path.isfile(php_secure_mode_file):
         installed_php_count = len(backend_data_yaml_parsed["PHP"].keys())
     else:
         installed_php_count = 0
-    
+
     running_process_count = 0
     for myprocess in psutil.process_iter():
         # Workaround for Python 2.6
@@ -88,6 +88,8 @@ if os.path.isfile(branding_file):
 else:
     brand = "AUTOM8N"
 
+print('            <h1 class="sr-only">AUTOM8N Configuration Center</h1>')
+
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row flex-row">')
 print('')
@@ -96,7 +98,7 @@ print('')
 print('                <div id="nginx_status_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">Nginx Status</h4>')
+print('                        <h2 class="mb-0">Nginx Status</h2>')
 print('                        <ul class="list-unstyled mb-0">')
 print('                            <li><small>'+nginx_version+'</small></li>')
 if nginx_status:
@@ -106,7 +108,8 @@ else:
 print('                        </ul>')
 print('                    </div> <!-- Card Body End -->')
 print('                    <form class="form" id="nginx_status" onsubmit="return false;">')
-print('                        <input hidden name="action" value="nginxreload">')
+print('                        <label hidden for="nginx_reload">Nginx Reload</label>')
+print('                        <input hidden name="action" id="nginx_reload" value="nginxreload">')
 print('                        <button id="nginx-status-btn" class="btn btn-secondary btn-block mb-0">Reload</button>')
 print('                    </form>')
 cardfooter('')
@@ -116,7 +119,7 @@ print('                </div> <!-- Dash Item End -->')
 print('                <div id="watcher_status_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">Watcher Status</h4>')
+print('                        <h2 class="mb-0">Watcher Status</h2>')
 print('                        <ul class="list-unstyled mb-0">')
 print('                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n ", '')+'</small></li>')
 if watcher_status:
@@ -126,7 +129,8 @@ else:
 print('                        </ul>')
 print('                    </div> <!-- Card Body End -->')
 print('                    <form class="form" id="watcher_status" onsubmit="return false;">')
-print('                        <input hidden name="action" value="watcherrestart">')
+print('                        <label hidden for="watcher_restart">Watcher Restart</label>')
+print('                        <input hidden name="action" id="watcher_restart" value="watcherrestart">')
 print('                        <button id="watcher-status-btn" class="btn btn-secondary btn-block mb-0">Restart</button>')
 print('                    </form>')
 cardfooter('')
@@ -136,14 +140,15 @@ print('                </div> <!-- Dash Item End -->')
 print('                <div id="clear_caches_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">Clear Caches</h4>')
+print('                        <h2 class="mb-0">Clear Caches</h2>')
 print('                        <ul class="list-unstyled mb-0">')
 print('                            <li><small>Redis</small></li>')
 print('                            <li class="mt-2"><i class="fas fa-memory ml-1"></i></li>')
 print('                        </ul>')
 print('                    </div> <!-- Card Body End -->')
 print('                    <form class="form" id="clear_caches" onsubmit="return false;">')
-print('                        <input hidden name="action" value="redisflush">')
+print('                        <label hidden for="redis_flush">Redis Flush</label>')
+print('                        <input hidden name="action" id="redis_flush" value="redisflush">')
 print('                        <button id="clear-caches-btn" class="btn btn-secondary btn-block mb-0">Flush All</button>')
 print('                    </form>')
 cardfooter('')
@@ -153,7 +158,7 @@ print('                </div> <!-- Dash Item End -->')
 print('                <div id="restart_backends_widget" class="col-sm-6 col-xl-3"> <!-- Dash Item Start -->')
 cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-print('                        <h4 class="mb-0">PHP Backends</h4>')
+print('                        <h2 class="mb-0">PHP Backends</h2>')
 print('                        <ul class="list-unstyled mb-0">')
 
 # Add real status to PHP Backend widget
@@ -170,7 +175,7 @@ if not os.path.isfile(php_secure_mode_file):
         php_status = True
     else:
         php_status = False
-    
+
     if php_status:
         print('                        <li class="mt-2 text-success">Single Master <i class="fas fa-power-off ml-1"></i></li>')
     else:
@@ -330,15 +335,18 @@ if os.path.isfile(cluster_config_file):
     print('             <div class="card-body"> <!-- Card Body Start -->')
 
     print('                 <form class="form" id="cluster_soft_restart" onsubmit="return false;">')
-    print('                     <input hidden name="mode" value="restart">')
+    print('                     <label hidden for="cluster_soft_restart2">Cluster Soft Restart</label>')
+    print('                     <input hidden name="mode" id="cluster_soft_restart2" value="restart">')
     print('                 </form>')
 
     print('                 <form class="form" id="cluster_hard_reset" onsubmit="return false;">')
-    print('                     <input hidden name="mode" value="reset">')
+    print('                     <label hidden for="cluster_hard_reset2">Cluster Hard Reset</label>')
+    print('                     <input hidden name="mode" id="cluster_hard_reset2" value="reset">')
     print('                 </form>')
 
     print('                 <form class="form" id="cluster_csync2_reset" onsubmit="return false;">')
-    print('                     <input hidden name="mode" value="reset">')
+    print('                     <label hidden for="cluster_csync2_reset2">Cluster Csync2 Reset</label>')
+    print('                     <input hidden name="mode" id="cluster_csync2_reset2" value="reset">')
     print('                 </form>')
 
     print('                 <div id="cluster-reset-btns" class="btn-group btn-block">')
@@ -407,7 +415,8 @@ if os.path.isfile(cluster_config_file):
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
         print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "bind", "geodns")
 
-        print('                                <input hidden name="action" value="editmaster">')
+        print('                                <label hidden for="cluster_edit_master">Cluster Edit Master</label>')
+        print('                                <input hidden name="action" id="cluster_edit_master" value="editmaster">')
 
         print('                                <button id="save-cluster-settings-master-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Master Settings</button>')
         print('                            </form>')
@@ -430,7 +439,8 @@ if os.path.isfile(cluster_config_file):
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
         print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
 
-        print('                                <input hidden name="action" value="editdbslave">')
+        print('                                <label hidden for="cluster_edit_db_slave">Cluster Edit DB Slave</label>')
+        print('                                <input hidden name="action" id="cluster_edit_db_slave" value="editdbslave">')
 
         print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
@@ -479,14 +489,17 @@ if os.path.isfile(cluster_config_file):
 
 
 
-                print('                         <input hidden name="action" value="editslave">')
+                print('                         <label hidden for="cluster_edit_slave">Cluster Edit Slave</label>')
+                print('                         <input hidden name="action" id="cluster_edit_slave" value="editslave">')
 
                 print('                     </form>')
 
                 # Delete the Additional Slave
                 print('                     <form class="form delete_cluster_settings_slave" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
-                print('                         <input hidden name="action" value="deleteslave">')
-                print('                         <input hidden name="slave_hostname" value="'+myslave+'">')
+                print('                         <label hidden for="cluster_delete_slave">Cluster Delete Slave</label>')
+                print('                         <input hidden name="action" id="cluster_delete_slave" value="deleteslave">')
+                print('                         <label hidden for="cluster_slave_hostname">Cluster Save Hostname</label>')
+                print('                         <input hidden name="slave_hostname" id="cluster_slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
                 print('                         <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save slave Settings</button>')
@@ -510,7 +523,8 @@ if os.path.isfile(cluster_config_file):
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
         print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
 
-        print('                                <input hidden name="action" value="addadditionalslave">')
+        print('                                <label hidden for="cluster_add_additional_slave">Cluster Add Additional Slave</label>')
+        print('                                <input hidden name="action" id="cluster_add_additional_slave" value="addadditionalslave">')
 
         print('                                <button id="save-cluster-settings-addi-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
@@ -567,9 +581,12 @@ if os.path.isfile(cluster_config_file):
                 print_input_fn(theslave, " Enter the slave server's Local Area Network (LAN) IP. ", slave_mapped_web_ip, "slave_lan_ip")
                 print_input_fn(theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", slave_mapped_dns_ip, "slave_wan_ip")
 
-                print('                         <input hidden name="master_hostname" value="'+myhostname+'">')
-                print('                         <input hidden name="slave_hostname" value="'+theslave+'">')
-                print('                         <input hidden name="action" value="editip">')
+                print('                         <label hidden for="cluster_master_hostname">Master Host Name</label>')
+                print('                         <input hidden name="master_hostname" id="cluster_master_hostname" value="'+myhostname+'">')
+                print('                         <label hidden for="cluster_slave_hostname">Slave Host Name</label>')
+                print('                         <input hidden name="slave_hostname" id="cluster_slave_hostname" value="'+theslave+'">')
+                print('                         <label hidden for="cluster_edit_ip">Edit IP</label>')
+                print('                         <input hidden name="action" id="cluster_edit_ip" value="editip">')
 
                 print('                         <button id="edit-ip-resource-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Edit IP resource</button>')
                 print('                     </form>')
@@ -581,9 +598,12 @@ if os.path.isfile(cluster_config_file):
             if master_ip_resource != "ip0":
                 # Display form for IP address deletion
                 print('                            <form class="form delete_ip" method="post" id="delete_ip'+'-'+master_ip_resource+'" onsubmit="return false;">')
-                print('                                <input hidden name="master_hostname" value="'+myhostname+'">')
-                print('                                <input hidden name="master_lan_ip" value="'+myip+'">')
-                print('                                <input hidden name="action" value="delip">')
+                print('                                <label hidden for="cluster_delete_ip_master_hostname">Delete Master Hostname IP</label>')
+                print('                                <input hidden name="master_hostname" id="cluster_delete_ip_master_hostname" value="'+myhostname+'">')
+                print('                                <label hidden for="cluster_delete_master_lan_ip">Delete Master LAN IP</label>')
+                print('                                <input hidden name="master_lan_ip" id="cluster_delete_master_lan_ip" value="'+myip+'">')
+                print('                                <label hidden for="cluster_delete_ip">Cluster Delete IP</label>')
+                print('                                <input hidden name="action" id="cluster_delete_ip" value="delip">')
                 print('                                <button id="delete-ip-btn" class="btn btn-outline-danger btn-block mt-4 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
                 print('                            </form>')
             # Provide a seperation between each ip resource_
@@ -604,8 +624,10 @@ if os.path.isfile(cluster_config_file):
             print_input_fn("LAN_IP_"+theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "", theslave+"_lan_ip")
             print_input_fn("WAN_IP_"+theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "", theslave+"_wan_ip")
 
-        print('                                <input hidden name="action" value="addip">')
-        print('                                <input hidden name="master_hostname" value="'+myhostname+'">')
+        print('                                <label hidden for="cluster_add_ip">Cluster Add IP</label>')
+        print('                                <input hidden name="action" id="cluster_add_ip" value="addip">')
+        print('                                <label hidden for="cluster_add_master_hostname">Cluster Add Master Hostname</label>')
+        print('                                <input hidden name="master_hostname" id="cluster_add_master_hostname" value="'+myhostname+'">')
         print('                                <button id="add-ip-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add IP Resource</button>')
         print('                            </form>')
         print('                         </div>')
@@ -629,8 +651,10 @@ if os.path.isfile(cluster_config_file):
                 if path not in ['home']:
                     print('                        <div class="input-group-append">')
                     print('                            <form class="form delete_cluster_settings_directory" method="post" id="delete_cluster_settings_directory'+'-'+str(mykeypos)+'" onsubmit="return false;">')
-                    print('                                <input hidden name="thehomedir" value="'+path+'">')
-                    print('                                <input hidden name="action" value="deletehomedir">')
+                    print('                                <label hidden for="cluster_the_home_dir">Cluster Home Directory</label>')
+                    print('                                <input hidden name="thehomedir" id="cluster_the_home_dir" value="'+path+'">')
+                    print('                                <label hidden for="cluster_delete_home_dir">Cluster Delete Home Directory</label>')
+                    print('                                <input hidden name="action" id="cluster_delete_home_dir" value="deletehomedir">')
                     print('                                <button id="delete-cluster-settings-directory-btn" class="btn btn-danger btn-sm" type="submit">')
                     print('                                    <span class="sr-only">Delete</span>')
                     print('                                    <i class="fas fa-times"></i>')
@@ -647,8 +671,10 @@ if os.path.isfile(cluster_config_file):
         print('                                    <div class="input-group-prepend input-group-prepend-min">')
         print('                                        <span class="input-group-text">Path</span>')
         print('                                    </div>')
-        print('                                    <input class="form-control" placeholder="home2" type="text" name="thehomedir">')
-        print('                                    <input hidden name="action" value="addhomedir">')
+        print('                                    <label hidden for="cluster_save_home_dir">Cluster Save Home Directory</label>')
+        print('                                    <input class="form-control" id="cluster_save_home_dir" placeholder="home2" type="text" name="thehomedir">')
+        print('                                    <label hidden for="cluster_add_home_dir">Cluster Add Home Directory</label>')
+        print('                                    <input hidden name="action" id="cluster_add_home_dir" value="addhomedir">')
         print('                                    <div class="input-group-append">')
         print('                                        <button id="save-cluster-settings-directory-btn" class="btn btn-outline-primary" type="submit">')
         print('                                            <span class="sr-only">Add</span><i class="fas fa-plus"></i>')
@@ -727,7 +753,8 @@ else:
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
         print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "bind", "geodns")
 
-        print('                                <input hidden name="action" value="editmaster">')
+        print('                                <label hidden for="cluster_settings_save_master">Cluster Settings Save Master</label>')
+        print('                                <input hidden name="action" id="cluster_settings_save_master" value="editmaster">')
 
         print('                                <button id="save-cluster-settings-master-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save master Settings</button>')
         print('                            </form>')
@@ -750,7 +777,8 @@ else:
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
         print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
 
-        print('                                <input hidden name="action" value="editdbslave">')
+        print('                                <label hidden for="cluster_settings_save_slave_db">Cluster Settings Save Slave</label>')
+        print('                                <input hidden name="action" id="cluster_settings_save_slave_db" value="editdbslave">')
         print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
         print('                            </form>')
 
@@ -795,14 +823,17 @@ else:
                 print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
                 print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", slave_dns, "slave_dns", "bind", "geodns")
 
-                print('                         <input hidden name="action" value="editslave">')
+                print('                         <label hidden for="cluster_settings_edit_slave_add">Cluster Settings Slave Add</label>')
+                print('                         <input hidden name="action" id="cluster_settings_edit_slave_add" value="editslave">')
 
                 print('                     </form>')
 
                 # Delete the Additional Slave
                 print('                     <form class="form delete_cluster_settings_slave" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
-                print('                         <input hidden name="action" value="deleteslave">')
-                print('                         <input hidden name="slave_hostname" value="'+myslave+'">')
+                print('                         <label hidden for="cluster_settings_delete_slave">Cluster Delete Slave</label>')
+                print('                         <input hidden name="action" id="cluster_settings_delete_slave" value="deleteslave">')
+                print('                         <label hidden for="cluster_settings_delete_slave_hostname">Cluster Delete Slave Hostname</label>')
+                print('                         <input hidden name="slave_hostname" id="cluster_settings_delete_slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
                 print('                         <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave-'+str(slave_server_id)+'">Save slave Settings</button>')
@@ -826,7 +857,8 @@ else:
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
         print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
 
-        print('                                <input hidden name="action" value="addadditionalslave">')
+        print('                                <label hidden for="cluster_settings_addi_slave_add">Cluster Settings Add Additional Slave</label>')
+        print('                                <input hidden name="action" id="cluster_settings_addi_slave_add" value="addadditionalslave">')
 
         print('                                <button id="save-cluster-settings-slave-addi-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
@@ -852,8 +884,10 @@ else:
                 if path not in ['home']:
                     print('                        <div class="input-group-append">')
                     print('                            <form class="form delete_cluster_settings_directory" method="post" id="delete_cluster_settings_directory'+'-'+str(mykeypos)+'" onsubmit="return false;">')
-                    print('                                <input hidden name="thehomedir" value="'+path+'">')
-                    print('                                <input hidden name="action" value="deletehomedir">')
+                    print('                                <label hidden for="cluster_settings_dir">Cluster Settings Home Directory</label>')
+                    print('                                <input hidden name="thehomedir" id="cluster_settings_dir" value="'+path+'">')
+                    print('                                <label hidden for="cluster_settings_dir_delete">Cluster Settings Delete Home Directory</label>')
+                    print('                                <input hidden name="action" id="cluster_settings_dir_delete" value="deletehomedir">')
                     print('                                <button id="delete-cluster-settings-directory-btn" class="btn btn-danger btn-sm" type="submit">')
                     print('                                    <span class="sr-only">Delete</span>')
                     print('                                    <i class="fas fa-times"></i>')
@@ -870,8 +904,10 @@ else:
         print('                                    <div class="input-group-prepend input-group-prepend-min">')
         print('                                        <span class="input-group-text">Path</span>')
         print('                                    </div>')
-        print('                                    <input class="form-control" placeholder="home2" type="text" name="thehomedir">')
-        print('                                    <input hidden name="action" value="addhomedir">')
+        print('                                    <label hidden for="cluster_save_settings_dir">Cluster Save Settings Home Directory</label>')
+        print('                                    <input class="form-control" id="cluster_save_settings_dir" placeholder="home2" type="text" name="thehomedir">')
+        print('                                    <label hidden for="cluster_add_settings_dir">Cluster Add Settings Home Directory</label>')
+        print('                                    <input hidden name="action" id="cluster_add_settings_dir" value="addhomedir">')
         print('                                    <div class="input-group-append">')
         print('                                        <button id="save-cluster-settings-directory-btn" class="btn btn-outline-primary" type="submit">')
         print('                                            <span class="sr-only">Add</span><i class="fas fa-plus"></i>')
@@ -902,7 +938,8 @@ else:
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
         print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
 
-        print('                                <input hidden name="action" value="setup">')
+        print('                                <label hidden for="cluster_setup2">Cluster Setup</label>')
+        print('                                <input hidden name="action" id="cluster_setup2" value="setup">')
 
         print('                                <button id="cluster-setup-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save cluster Settings</button>')
         print('                            </form>')
@@ -926,9 +963,9 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('                 <form class="form mb-3" id="sync_web_files" onsubmit="return false;">')
     print('                     <div class="input-group">')
     print('                         <div class="input-group-prepend input-group-prepend-min">')
-    print('                             <label class="input-group-text">Files</label>')
+    print('                             <label for="sync_web_files_select" class="input-group-text">Files</label>')
     print('                         </div>')
-    print('                         <select name="user" class="custom-select">')
+    print('                         <select name="user" id="sync_web_files_select" class="custom-select">')
     user_list = os.listdir("/var/cpanel/users")
     for cpuser in sorted(user_list):
         if cpuser != 'nobody' and cpuser != 'system':
@@ -941,9 +978,9 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('                 <form class="form" id="sync_geodns_zone" onsubmit="return false;">')
     print('                     <div class="input-group">')
     print('                         <div class="input-group-prepend input-group-prepend-min">')
-    print('                             <label class="input-group-text">Zone</label>')
+    print('                             <label for="sync_geodns_zone_select" class="input-group-text">Zone</label>')
     print('                         </div>')
-    print('                         <select name="user" class="custom-select">')
+    print('                         <select name="user" id="sync_geodns_zone_select" class="custom-select">')
     user_list = os.listdir("/var/cpanel/users")
     for cpuser in sorted(user_list):
         if cpuser != 'nobody' and cpuser != 'system':
@@ -981,10 +1018,10 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml.close()
     phpversion = preferred_php_yaml_parsed.get('PHP')
     myphpversion = phpversion.keys()[0]
-    print('                                 <div class="col-md-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                             <div class="col-md-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
 else:
     myphpversion = "Unset"
-    print('                                 <div class="col-md-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                             <div class="col-md-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
 
 print('                                 <div class="col-md-9 alert">'+myphpversion+'</div>')
 print('                             </div>')
@@ -1002,9 +1039,9 @@ if "PHP" in backend_data_yaml_parsed:
     print('                 <form class="form" id="default_php_autoswitch" onsubmit="return false;">')
     print('                     <div class="input-group">')
     print('                         <div class="input-group-prepend input-group-prepend-min">')
-    print('                             <label class="input-group-text">PHP</label>')
+    print('                             <label for="default_php_autoswitch_select" class="input-group-text">PHP</label>')
     print('                         </div>')
-    print('                         <select name="phpversion" class="custom-select">')
+    print('                         <select name="phpversion" id="default_php_autoswitch_select" class="custom-select">')
 
     php_backends_dict = backend_data_yaml_parsed["PHP"]
     for versions_defined in list(php_backends_dict.keys()):
@@ -1038,13 +1075,15 @@ if os.path.isfile('/etc/nginx/conf.d/dos_mitigate_systemwide.enabled'):
     print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
     print('                             <div class="col-9">')
     print('                                 <form id="ddos_protection_nginx_disable" class="form" onsubmit="return false;">')
-    print('                                     <input hidden name="ddos" value="disable">')
+    print('                                     <label hidden for="nginx_ddos_disabled">DDOS Disabled</label>')
+    print('                                     <input hidden name="ddos" id="nginx_ddos_disabled" value="disable">')
     print('                                     <button id="ddos-protection-nginx-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
 else:
     print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
     print('                             <div class="col-9">')
     print('                                 <form id="ddos_protection_nginx_enable" class="form" onsubmit="return false;">')
-    print('                                     <input hidden name="ddos" value="enable">')
+    print('                                     <label hidden for="nginx_ddos_enabled">DDOS Enabled</label>')
+    print('                                     <input hidden name="ddos" id="nginx_ddos_enabled" value="enable">')
     print('                                     <button id="ddos-protection-nginx-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
 
 print('                                     </form>')
@@ -1068,13 +1107,15 @@ else:
         print('                         <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
         print('                         <div class="col-9">')
         print('                             <form id="ddos_protection_synproxy_disable" class="form" onsubmit="return false;">')
-        print('                                 <input hidden name="ddos" value="disable">')
+        print('                                 <label hidden for="synproxy_ddos_disabled">DDOS Disabled</label>')
+        print('                                 <input hidden name="ddos" id="synproxy_ddos_disabled" value="disable">')
         print('                                 <button id="ddos-protection-synproxy-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
     else:
         print('                         <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
         print('                         <div class="col-9">')
         print('                             <form id="ddos_protection_synproxy_enable" class="form" onsubmit="return false;">')
-        print('                                 <input hidden name="ddos" value="enable">')
+        print('                                 <label hidden for="synproxy_ddos_enabled">DDOS Enabled</label>')
+        print('                                 <input hidden name="ddos" id="synproxy_ddos_enabled" value="enable">')
         print('                                 <button id="ddos-protection-synproxy-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
 
     print('                                 </form>')
@@ -1100,11 +1141,11 @@ print('                 <div class="card-body"> <!-- Card Body Start -->')
 print('                     <form class="form" action="phpfpm_pool_editor.cgi" method="get">')
 print('                         <div class="input-group">')
 print('                             <div class="input-group-prepend input-group-prepend-min">')
-print('                                 <span class="input-group-text">')
+print('                                 <label for="phpfpm_pool_editor" class="input-group-text">')
 print('                                     '+return_prepend("cPanel User", phpfpmpool_hint))
-print('                                 </span>')
+print('                                 </label>')
 print('                             </div>')
-print('                             <select name="poolfile" class="custom-select">')
+print('                             <select name="poolfile" id="phpfpm_pool_editor" class="custom-select">')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     conf_list = os.listdir("/opt/nDeploy/secure-php-fpm.d")
     for filename in sorted(conf_list):
@@ -1120,9 +1161,11 @@ else:
 print('                             </select>')
 print('                         </div>')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
-    print('                     <input hidden name="section" value="1">')
+    print('                     <label hidden for="phpfpm_pool_editor_on">Phpfpm Pool Editor Enabled</label>')
+    print('                     <input hidden name="section" id="phpfpm_pool_editor_on" value="1">')
 else:
-    print('                     <input hidden name="section" value="0">')
+    print('                     <label hidden for="phpfpm_pool_editor_off">Phpfpm Pool Editor Disabled</label>')
+    print('                     <input hidden name="section" id="phpfpm_pool_editor_off" value="0">')
 print('                         <button class="btn btn-outline-primary btn-block mt-4" type="submit">Edit Settings</button>')
 print('                     </form>')
 print('                 </div> <!-- Card Body End -->')
@@ -1147,7 +1190,8 @@ if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
     print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
     print('                             <div class="col-9">')
     print('                                 <form class="form" method="post" id="package_lock_disable" onsubmit="return false;">')
-    print('                                     <input hidden name="package_lock" value="disabled">')
+    print('                                     <label hidden for="lock_domaindata_to_package">Lock Domaindata To Package</label>')
+    print('                                     <input hidden name="package_lock" id="lock_domaindata_to_package" value="disabled">')
     print('                                     <button id="package-lock-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
     print('                                 </form>')
     print('                             </div>')
@@ -1156,7 +1200,8 @@ else:
     print('                         <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
     print('                             <div class="col-9">')
     print('                                 <form class="form" method="post" id="package_lock_enable" onsubmit="return false;">')
-    print('                                     <input hidden name="package_lock" value="enabled">')
+    print('                                     <label hidden for="lock_domaindata_to_package">Lock Domaindata To Package</label>')
+    print('                                     <input hidden name="package_lock" id="lock_domaindata_to_package" value="enabled">')
     print('                                     <button id="package-lock-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
     print('                                 </form>')
     print('                             </div>')
@@ -1179,11 +1224,11 @@ mypkgs = json.loads(listpkgs)
 print('                     <form class="form" action="pkg_profile.cgi" method="get">')
 print('                         <div class="input-group">')
 print('                             <div class="input-group-prepend input-group-prepend-min">')
-print('                                 <span class="input-group-text">')
+print('                                 <label for="connect_cpanel_nginx" class="input-group-text">')
 print('                                     '+return_prepend("cPanel Package", cpanpackage_hint))
-print('                                 </span>')
+print('                                 </label>')
 print('                             </div>')
-print('                             <select name="cpanelpkg" class="custom-select">')
+print('                             <select name="cpanelpkg" id="connect_cpanel_nginx" class="custom-select">')
 
 for thepkg in sorted(mypkgs.get('package')):
     pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
@@ -1218,16 +1263,17 @@ if not osrelease == 'CloudLinux':
             print('                            <form class="form" action="resource_limit.cgi" method="get">')
             print('                                <div class="input-group">')
             print('                                    <div class="input-group-prepend input-group-prepend-min">')
-            print('                                        <label class="input-group-text">User</label>')
+            print('                                        <label for="set_user_resource" class="input-group-text">User</label>')
             print('                                    </div>')
-            print('                                    <select name="unit" class="custom-select">')
+            print('                                    <select name="unit" id="set_user_resource" class="custom-select">')
 
             for cpuser in sorted(userlist):
                 if cpuser != 'nobody' and cpuser != 'system':
-                    print('                                        <option value="'+cpuser+'">'+cpuser+'</option>')
+                    print('                                <option value="'+cpuser+'">'+cpuser+'</option>')
 
             print('                                    </select>')
-            print('                                    <input hidden name="mode" value="user">')
+            print('                                    <label hidden for="set_user_resource_limit">Set User Resource Limit</label>')
+            print('                                    <input hidden name="mode" id="set_user_resource_limit" value="user">')
             print('                                </div>')
             print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
             print('                            </form>')
@@ -1235,15 +1281,16 @@ if not osrelease == 'CloudLinux':
             print('                            <form class="form mt-4" action="resource_limit.cgi" method="get">')
             print('                                <div class="input-group">')
             print('                                    <div class="input-group-prepend input-group-prepend-min">')
-            print('                                        <label class="input-group-text">Service</label>')
+            print('                                        <label for="resource_limit_select" class="input-group-text">Service</label>')
             print('                                    </div>')
-            print('                                    <select name="unit" class="custom-select">')
+            print('                                    <select name="unit" id="resource_limit_select" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
                 print('                                        <option value="'+service+'">'+service+'</option>')
 
             print('                                    </select>')
-            print('                                    <input hidden name="mode" value="service">')
+            print('                                    <label hidden for="set_resource_limit">Set Resource Limit</label>')
+            print('                                    <input hidden name="mode" id="set_resource_limit" value="service">')
             print('                               </div>')
             print('                               <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
             print('                           </form>')
@@ -1251,15 +1298,16 @@ if not osrelease == 'CloudLinux':
             print('                           <form class="form" action="resource_limit.cgi" method="get">')
             print('                               <div class="input-group">')
             print('                                   <div class="input-group-prepend input-group-prepend-min">')
-            print('                                       <label class="input-group-text">Resource</label>')
+            print('                                       <label for="resource_limit_select" class="input-group-text">Resource</label>')
             print('                                   </div>')
-            print('                                   <select name="unit" class="custom-select">')
+            print('                                   <select name="unit" id="resource_limit_select" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
                 print('                                       <option value="'+service+'">'+service+'</option>')
 
             print('                                   </select>')
-            print('                                   <input hidden name="mode" value="service">')
+            print('                                   <label hidden for="set_resource_limit">Set Resource Limit</label>')
+            print('                                   <input hidden name="mode" id="set_resource_limit" value="service">')
             print('                               </div>')
             print('                               <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
             print('                           </form>')
