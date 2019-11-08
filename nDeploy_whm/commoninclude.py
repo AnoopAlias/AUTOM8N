@@ -161,7 +161,7 @@ def return_label(theoption, hint):
 
 # Mutli Input Return
 def return_multi_input(theoption, hint):
-    result = '<div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
+    result = '<label class="input-group-text" data-toggle="tooltip" title="'+hint+'">'+theoption+'</label>'
     return result
 
 
@@ -241,9 +241,7 @@ def display_term():
 def print_input_fn(label='Label', hint='Hint', inputValue='', inputName='', buttonID='', hiddenName='', hiddenValue=''):
     print('                                        <div class="input-group">')
     print('                                            <div class="input-group-prepend input-group-prepend-min">')
-    print('                                                <span class="input-group-text">')
-    print('                                                    '+return_multi_input(label, hint))
-    print('                                                </span>')
+    print('                                                '+return_multi_input(label, hint))
     print('                                            </div>')
     print('                                            <input class="form-control" id="validate-'+str(random.randint(0, 100000))+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>')
 
