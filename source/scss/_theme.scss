@@ -113,6 +113,24 @@
 			}
 		}
 	}
+	h1 {
+		color: $white;
+	}
+	.text-success {
+		color: $green-dk !important;
+	}
+	.text-danger {
+		color: $danger-dk !important;
+	}
+	.btn-outline-primary {
+		color: $primary-btn-dk;
+	}
+	.btn-light:not(:disabled):not(.disabled):active,
+	.btn-light:not(:disabled):not(.disabled).active,
+	.show>.btn-light.dropdown-toggle {
+		background-color: $btn-light-dk;
+		border-color: $btn-light-dk;
+	}
 }
 
 .ndeploy-theme-light {
@@ -176,5 +194,20 @@
 				}
 			}
 		}
+	}
+	.text-success {
+		color: $green-lt !important;
+	}
+	.text-warning {
+		color: $warning-lt !important;
+	}
+	.btn-outline-primary {
+		color: $primary-btn-lt;
+	}
+	.btn-light:not(:disabled):not(.disabled):active,
+	.btn-light:not(:disabled):not(.disabled).active,
+	.show>.btn-light.dropdown-toggle {
+		background-color: $btn-light-lt;
+		border-color: $btn-light-lt;
 	}
 }
