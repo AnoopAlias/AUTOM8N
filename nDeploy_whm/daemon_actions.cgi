@@ -12,7 +12,6 @@ import yaml
 from commoninclude import print_simple_header, print_simple_footer
 
 
-
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
 __license__ = "GPL"
