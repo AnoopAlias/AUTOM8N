@@ -241,7 +241,7 @@ def print_input_fn(label='Label', hint='Hint', inputValue='', inputName='', butt
     validateRandom = str(random.randint(0, 100000))
     print('                                        <div class="input-group">')
     print('                                            <div class="input-group-prepend input-group-prepend-min">')
-    print('                                                <label for="validate-'+validateRandom+'" class="input-group-text" data-toggle="tooltip" title="'+hint+'">'+label+'</label>'
+    print('                                                <label for="validate-'+validateRandom+'" class="input-group-text" data-toggle="tooltip" title="'+hint+'">'+label+'</label>')
     print('                                            </div>')
     print('                                            <input class="form-control" id="validate-'+validateRandom+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>')
 
