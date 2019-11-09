@@ -286,13 +286,12 @@ def print_simple_footer():
 
 # SelectBox Display
 def print_select_fn(label='Label', hint='Hint', selectQuery='', selectName='name', *selectOptions):
+    validateRandom = str(random.randint(0, 100000))
     print('                         <div class="input-group">')
     print('                             <div class="input-group-prepend input-group-prepend-min">')
-    print('                                 <span class="input-group-text">')
-    print('                                     '+return_prepend(label, hint))
-    print('                                 </span>')
+    print('                                 <label for="validate-'+validateRandom+'" class="input-group-text" data-toggle="tooltip" title="'+hint+'">'+label+'</label>')
     print('                             </div>')
-    print('                             <select name="'+selectName+'" class="custom-select">')
+    print('                             <select id="validate-'+validateRandom+'" name="'+selectName+'" class="custom-select">')
     for option in selectOptions:
         if selectQuery == option:
             print('                         <option value="'+option+'" selected>'+option+'</option>')
