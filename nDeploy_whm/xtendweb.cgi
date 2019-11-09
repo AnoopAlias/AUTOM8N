@@ -186,12 +186,8 @@ else:
 print('                        </ul>')
 print('                    </div> <!-- Card Body End -->')
 print('                    <form class="form" id="restart_backends" onsubmit="return false;">')
-print('                        <label hidden for="restart_backends_ndeploy">Restart Backends</label>')
-print('                        <input hidden name="action" id="restart_backends_ndeploy" value="restart_backends">')
-if os.path.isfile(php_secure_mode_file):
-    print('                    <button id="restart-backends-btn" class="btn btn-secondary btn-block mb-0" disabled>Restart</button>')
-else:
-    print('                    <button id="restart-backends-btn" class="btn btn-secondary btn-block mb-0">Restart</button>')
+print('                        <input hidden name="action" value="restart_backends">')
+print('                        <button id="restart-backends-btn" class="btn btn-secondary btn-block mb-0">Restart</button>')
 print('                    </form>')
 cardfooter('')
 print('                </div> <!-- Dash Item End -->')
@@ -940,7 +936,7 @@ else:
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "", "slave_main_ip")
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
-        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "slave_ssh_port")
+        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
 
         print('                                <label hidden for="cluster_setup2">Cluster Setup</label>')
         print('                                <input hidden name="action" id="cluster_setup2" value="setup">')

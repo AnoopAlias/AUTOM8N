@@ -875,6 +875,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
+                $("#v-pills-php_backends .card-body").load("ndeploy_control.cgi #v-pills-php_backends .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
