@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Prevent multiple execution
+[ "${FLOCKER}" != "$0" ] && exec env FLOCKER="$0" flock -en "$0" "$0" "$@" || :
+
 ##Attempt to re-generate all nginx config
 /bin/touch /opt/nDeploy/conf/skip_nginx_reload
 /bin/touch /opt/nDeploy/conf/skip_php-fpm_reload
