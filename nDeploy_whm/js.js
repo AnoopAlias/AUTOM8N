@@ -556,6 +556,7 @@ jQuery(document).ready(function($) {
                 $.toast({
                     autohide: 'true',
                 });
+                $("#v-pills-cluster .card-body").load("xtendweb.cgi #v-pills-cluster .card-body > *");
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
             }
@@ -734,8 +735,8 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".save_cluster_settings_slave_add",function(e){
-        var $loaderId        =   "#save-cluster-settings-slave-add-btn";
+    $(document).on("submit","form[id^='save_cluster_settings_slave_add-']",function(e){
+        var $loaderId        =   $(this).find('button');
         var $loaderText      =   "Saving...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -756,8 +757,8 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".delete_cluster_settings_slave",function(e){
-        var $loaderId        =   "#delete-cluster-settings-slave-btn";
+    $(document).on("submit","form[id^='delete_cluster_settings_slave-']",function(e){
+        var $loaderId        =   $(this).find('button');
         var $loaderText      =   "Deleting...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
