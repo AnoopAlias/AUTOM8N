@@ -474,7 +474,7 @@ if os.path.isfile(cluster_config_file):
 
                 print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation save_cluster_settings_slave_add" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print('                     <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
@@ -503,8 +503,8 @@ if os.path.isfile(cluster_config_file):
                 print('                         <input hidden name="slave_hostname" id="cluster_slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save slave Settings</button>')
-                print('                         <button id="delete-cluster-settings-slave-btn" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete this Slave</button>')
+                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save slave Settings</button>')
+                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete this Slave</button>')
                 print('                     </div>')
 
                 print('                 </div>')
@@ -810,7 +810,7 @@ else:
 
                 print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation save_cluster_settings_slave_add" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print('                     <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
@@ -830,15 +830,15 @@ else:
                 print('                     </form>')
 
                 # Delete the Additional Slave
-                print('                     <form class="form delete_cluster_settings_slave" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                     <form class="form" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
                 print('                         <label hidden for="cluster_settings_delete_slave">Cluster Delete Slave</label>')
                 print('                         <input hidden name="action" id="cluster_settings_delete_slave" value="deleteslave">')
                 print('                         <label hidden for="cluster_settings_delete_slave_hostname">Cluster Delete Slave Hostname</label>')
                 print('                         <input hidden name="slave_hostname" id="cluster_settings_delete_slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave-'+str(slave_server_id)+'">Save slave Settings</button>')
-                print('                         <button id="delete-cluster-settings-slave-btn" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete this Slave</button>')
+                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save slave Settings</button>')
+                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete this Slave</button>')
                 print('                     </div>')
 
                 print('                 </div>')
@@ -861,7 +861,7 @@ else:
         print('                                <label hidden for="cluster_settings_addi_slave_add">Cluster Settings Add Additional Slave</label>')
         print('                                <input hidden name="action" id="cluster_settings_addi_slave_add" value="addadditionalslave">')
 
-        print('                                <button id="save-cluster-settings-slave-addi-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
+        print('                                <button id="save-cluster-settings-addi-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 
