@@ -443,7 +443,7 @@ if os.path.isfile(cluster_config_file):
         print('                                <label hidden for="cluster_edit_db_slave">Cluster Edit DB Slave</label>')
         print('                                <input hidden name="action" id="cluster_edit_db_slave" value="editdbslave">')
 
-        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save DBSlave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
@@ -780,7 +780,7 @@ else:
 
         print('                                <label hidden for="cluster_settings_save_slave_db">Cluster Settings Save Slave</label>')
         print('                                <input hidden name="action" id="cluster_settings_save_slave_db" value="editdbslave">')
-        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save DBSlave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
