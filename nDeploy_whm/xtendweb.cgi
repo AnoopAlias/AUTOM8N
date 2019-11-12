@@ -503,8 +503,8 @@ if os.path.isfile(cluster_config_file):
                 print('                         <input hidden name="slave_hostname" id="cluster_slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave '+str(slave_server_id)+' Settings</button>')
-                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave '+str(slave_server_id)+'</button>')
+                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave Settings</button>')
+                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave</button>')
                 print('                     </div>')
 
                 print('                 </div>')
@@ -837,8 +837,8 @@ else:
                 print('                         <input hidden name="slave_hostname" id="cluster_settings_delete_slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave '+str(slave_server_id)+' Settings</button>')
-                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave '+str(slave_server_id)+'</button>')
+                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave Settings</button>')
+                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave</button>')
                 print('                     </div>')
 
                 print('                 </div>')
