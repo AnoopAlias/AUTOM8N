@@ -736,8 +736,9 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on("submit","form[id^='save_cluster_settings_slave_add-']",function(e){
-        var $loaderId        =   $(this).find('button');
-        var $loaderText      =   "Saving...";
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#save-cluster-settings-slave-add-btn-'+$formId.split('-')[1];
+        var $loaderText      =   "Updating Slave "+$formId.split('-')[1]+"...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
@@ -758,8 +759,9 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on("submit","form[id^='delete_cluster_settings_slave-']",function(e){
-        var $loaderId        =   $(this).find('button');
-        var $loaderText      =   "Deleting...";
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#delete-cluster-settings-slave-btn-'+$formId.split('-')[1];
+        var $loaderText      =   "Deleting Slave "+$formId.split('-')[1]+"...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
