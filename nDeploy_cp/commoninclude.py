@@ -181,12 +181,12 @@ def print_header(title=''):
     print('            <div class="logo">')
     print('                <h4>')
     if logo_url != 'None':
-        print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+'" class="logo-url" src="'+logo_url+'"></a>')
+        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+'" class="logo-url" src="'+logo_url+'"></a>')
     else:
         if ndeploy_theme_color == 'dark':
-            print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+'" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>')
+            print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+'" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>')
         else:
-            print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+'" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>')
+            print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+'" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>')
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
