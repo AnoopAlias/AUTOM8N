@@ -1,6 +1,9 @@
 #!/bin/bash
 # Author: Anoop P Alias
 
+# Prevent multiple execution
+[ "${FLOCKER}" != "$0" ] && exec env FLOCKER="$0" flock -en "$0" "$0" "$@" || :
+
 function enable {
 /usr/local/cpanel/cpkeyclt
 # Generate all nginx vhost first
