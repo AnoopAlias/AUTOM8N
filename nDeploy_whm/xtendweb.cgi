@@ -428,13 +428,13 @@ if os.path.isfile(cluster_config_file):
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave" onsubmit="return false;" novalidate>')
 
-        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", dbslave_hostname, "dbslave_hostname")
-        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", dbslave_main_ip, "dbslave_main_ip")
-        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", dbslave_db_ip, "dbslave_db_ip")
-        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", dbslave_ssh_port, "dbslave_ssh_port")
-        print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 2). ", dbslave_server_id, "dbslave_server_id")
-        print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", dbslave_lat, "dbslave_lat")
-        print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", dbslave_lon, "dbslave_lon")
+        print_input_fn("DBSlave Node FQDN", " Enter the slave server's fully qualified domain name. ", dbslave_hostname, "dbslave_hostname")
+        print_input_fn("DBSlave Main IP", " Enter the slave server's main IP address. ", dbslave_main_ip, "dbslave_main_ip")
+        print_input_fn("DBSlave DB IP", " Enter the slave server's database IP address. ", dbslave_db_ip, "dbslave_db_ip")
+        print_input_fn("DBSlave SSH Port", " Enter the slave server's SSH port. ", dbslave_ssh_port, "dbslave_ssh_port")
+        print_input_fn("DBSlave Server ID", " Enter the slave server's ID (Usually 2). ", dbslave_server_id, "dbslave_server_id")
+        print_input_fn("DBSlave Latitude", " Enter the slave server's latitude coordinate. ", dbslave_lat, "dbslave_lat")
+        print_input_fn("DBSlave Longitude", " Enter the slave server's longitude coordinate. ", dbslave_lon, "dbslave_lon")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", dbslave_repo, "dbslave_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
@@ -443,7 +443,7 @@ if os.path.isfile(cluster_config_file):
         print('                                <label hidden for="cluster_edit_db_slave">Cluster Edit DB Slave</label>')
         print('                                <input hidden name="action" id="cluster_edit_db_slave" value="editdbslave">')
 
-        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save DBSlave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
@@ -474,7 +474,7 @@ if os.path.isfile(cluster_config_file):
 
                 print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation save_cluster_settings_slave_add" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print('                     <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
@@ -503,8 +503,8 @@ if os.path.isfile(cluster_config_file):
                 print('                         <input hidden name="slave_hostname" id="cluster_slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save slave Settings</button>')
-                print('                         <button id="delete-cluster-settings-slave-btn" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete this Slave</button>')
+                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave Settings</button>')
+                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave</button>')
                 print('                     </div>')
 
                 print('                 </div>')
@@ -766,13 +766,13 @@ else:
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave" onsubmit="return false;" novalidate>')
 
-        print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", dbslave_hostname, "dbslave_hostname")
-        print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", dbslave_main_ip, "dbslave_main_ip")
-        print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", dbslave_db_ip, "dbslave_db_ip")
-        print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", dbslave_ssh_port, "dbslave_ssh_port")
-        print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 2). ", dbslave_server_id, "dbslave_server_id")
-        print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", dbslave_lat, "dbslave_lat")
-        print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", dbslave_lon, "dbslave_lon")
+        print_input_fn("DBSlave Node FQDN", " Enter the slave server's fully qualified domain name. ", dbslave_hostname, "dbslave_hostname")
+        print_input_fn("DBSlave Main IP", " Enter the slave server's main IP address. ", dbslave_main_ip, "dbslave_main_ip")
+        print_input_fn("DBSlave DB IP", " Enter the slave server's database IP address. ", dbslave_db_ip, "dbslave_db_ip")
+        print_input_fn("DBSlave SSH Port", " Enter the slave server's SSH port. ", dbslave_ssh_port, "dbslave_ssh_port")
+        print_input_fn("DBSlave Server ID", " Enter the slave server's ID (Usually 2). ", dbslave_server_id, "dbslave_server_id")
+        print_input_fn("DBSlave Latitude", " Enter the slave server's latitude coordinate. ", dbslave_lat, "dbslave_lat")
+        print_input_fn("DBSlave Longitude", " Enter the slave server's longitude coordinate. ", dbslave_lon, "dbslave_lon")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", dbslave_repo, "dbslave_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
@@ -780,7 +780,7 @@ else:
 
         print('                                <label hidden for="cluster_settings_save_slave_db">Cluster Settings Save Slave</label>')
         print('                                <input hidden name="action" id="cluster_settings_save_slave_db" value="editdbslave">')
-        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save Slave Settings</button>')
+        print('                                <button id="save-cluster-settings-slave-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Save DBSlave Settings</button>')
         print('                            </form>')
 
         # Additional slaves
@@ -810,7 +810,7 @@ else:
 
                 print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation save_cluster_settings_slave_add" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print('                     <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
@@ -830,15 +830,15 @@ else:
                 print('                     </form>')
 
                 # Delete the Additional Slave
-                print('                     <form class="form delete_cluster_settings_slave" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print('                     <form class="form" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
                 print('                         <label hidden for="cluster_settings_delete_slave">Cluster Delete Slave</label>')
                 print('                         <input hidden name="action" id="cluster_settings_delete_slave" value="deleteslave">')
                 print('                         <label hidden for="cluster_settings_delete_slave_hostname">Cluster Delete Slave Hostname</label>')
                 print('                         <input hidden name="slave_hostname" id="cluster_settings_delete_slave_hostname" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button id="save-cluster-settings-slave-add-btn" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave-'+str(slave_server_id)+'">Save slave Settings</button>')
-                print('                         <button id="delete-cluster-settings-slave-btn" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete this Slave</button>')
+                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave Settings</button>')
+                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave</button>')
                 print('                     </div>')
 
                 print('                 </div>')
@@ -861,7 +861,7 @@ else:
         print('                                <label hidden for="cluster_settings_addi_slave_add">Cluster Settings Add Additional Slave</label>')
         print('                                <input hidden name="action" id="cluster_settings_addi_slave_add" value="addadditionalslave">')
 
-        print('                                <button id="save-cluster-settings-slave-addi-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
+        print('                                <button id="save-cluster-settings-addi-slave-add-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add New Slave</button>')
         print('                            </form>')
         print('                         </div>')
 

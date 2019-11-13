@@ -90,6 +90,8 @@ if form.getvalue('cpanelpkg'):
         print_nontoast_error('Error!', 'Backend Configuration File Error!')
         sys.exit(0)
 
+    print('            <h1 class="sr-only">AUTOM8N Edit cPanel Package</h1>')
+
     print('            <!-- cPanel Start Dash Row -->')
     print('            <div class="row justify-content-lg-center">')
     print('')
@@ -198,28 +200,30 @@ if form.getvalue('cpanelpkg'):
     # .htaccess
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
-            print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
-            print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
+            print('                        <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+            print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
     else:
-        print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
-        print('                                <div class="col-md-6 alert text-danger"><i class="fas fa-times-circle"></i></div>')
+        print('                            <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+        print('                            <div class="col-md-6 alert text-danger"><i class="fas fa-times-circle"></i></div>')
 
     print('                            </div> <!-- Row End -->')
     print('                        </div> <!-- Card Body End -->')
 
-    print('                        <div class="card-body"> <!-- Card Body Start -->')  # card-body
+    print('                        <div class="card-body"> <!-- Card Body Start -->')
     print('                            <div class="input-group">')
-    print('                                <select name="backend" class="custom-select">')
+    print('                                <label hidden for="select_pkg_app_settings">Select Upstream Package</label>')
+    print('                                <select name="backend" id="select_pkg_app_settings" class="custom-select">')
     for backends_defined in backend_data_yaml_parsed.keys():
         if backends_defined == backend_category:
-            print('                                    <option selected value="'+backends_defined+'">'+backends_defined+'</option>')
+            print('                            <option selected value="'+backends_defined+'">'+backends_defined+'</option>')
         else:
-            print('                                    <option value="'+backends_defined+'">'+backends_defined+'</option>')
+            print('                            <option value="'+backends_defined+'">'+backends_defined+'</option>')
     print('                                </select>')
 
     #Pass on the domain name to the next stage
     print('                                <div class="input-group-append">')
-    print('                                    <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
+    print('                                    <label hidden for="select_pkg_app_settings2">Select Upstream Package</label>')
+    print('                                    <input hidden id="select_pkg_app_settings2" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
     print('                                    <button class="btn btn-outline-primary" type="submit">Select</button>')
     print('                                </div>')
     print('                            </div>')

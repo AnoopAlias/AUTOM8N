@@ -556,6 +556,7 @@ jQuery(document).ready(function($) {
                 $.toast({
                     autohide: 'true',
                 });
+                $("#v-pills-cluster .card-body").load("xtendweb.cgi #v-pills-cluster .card-body > *");
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
             }
@@ -734,9 +735,10 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".save_cluster_settings_slave_add",function(e){
-        var $loaderId        =   "#save-cluster-settings-slave-add-btn";
-        var $loaderText      =   "Saving...";
+    $(document).on("submit","form[id^='save_cluster_settings_slave_add-']",function(e){
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#save-cluster-settings-slave-add-btn-'+$formId.split('-')[1];
+        var $loaderText      =   "Updating Slave";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
@@ -756,9 +758,10 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".delete_cluster_settings_slave",function(e){
-        var $loaderId        =   "#delete-cluster-settings-slave-btn";
-        var $loaderText      =   "Deleting...";
+    $(document).on("submit","form[id^='delete_cluster_settings_slave-']",function(e){
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#delete-cluster-settings-slave-btn-'+$formId.split('-')[1];
+        var $loaderText      =   "Deleting Slave";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
@@ -1435,8 +1438,9 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".php_fpm_pool_editor_save",function(e){
-        var $loaderId        =   "#php-fpm-pool-editor-save-btn";
+    $(document).on("submit","form[id^='php_fpm_pool_editor_save-']",function(e){
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#php-fpm-pool-editor-save-btn-'+$formId.split('-')[1];
         var $loaderText      =   "Saving...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -1446,6 +1450,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
@@ -1455,8 +1460,9 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".php_fpm_pool_editor_delete",function(e){
-        var $loaderId        =   "#php-fpm-pool-editor-save-btn";
+    $(document).on("submit","form[id^='php_fpm_pool_editor_delete-']",function(e){
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#php-fpm-pool-editor-delete-btn-'+$formId.split('-')[1];
         var $loaderText      =   "Deleting...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -1467,6 +1473,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
@@ -1487,6 +1494,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });

@@ -127,7 +127,8 @@
 	}
 	.btn-light:not(:disabled):not(.disabled):active,
 	.btn-light:not(:disabled):not(.disabled).active,
-	.show>.btn-light.dropdown-toggle {
+	.show>.btn-light.dropdown-toggle,
+	.btn-primary {
 		background-color: $btn-light-dk;
 		border-color: $btn-light-dk;
 	}
@@ -206,7 +207,8 @@
 	}
 	.btn-light:not(:disabled):not(.disabled):active,
 	.btn-light:not(:disabled):not(.disabled).active,
-	.show>.btn-light.dropdown-toggle {
+	.show>.btn-light.dropdown-toggle,
+	.btn-primary {
 		background-color: $btn-light-lt;
 		border-color: $btn-light-lt;
 	}
