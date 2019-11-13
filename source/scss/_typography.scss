@@ -74,19 +74,6 @@ h3 {
 	color: $white;
 }
 
-.input-group-append {
-	> form {
-		display: inherit;
-	}
-	.toastForm9-wrap {
-		margin-left: -1px !important;
-		.btn {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-	}
-}
-
 .input-group-inline {
 	.input-group-append {
 		margin-left: 0;

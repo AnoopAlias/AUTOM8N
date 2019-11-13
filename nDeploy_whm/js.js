@@ -1438,8 +1438,9 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".php_fpm_pool_editor_save",function(e){
-        var $loaderId        =   "#php-fpm-pool-editor-save-btn";
+    $(document).on("submit","form[id^='php_fpm_pool_editor_save-']",function(e){
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#php-fpm-pool-editor-save-btn-'+$formId.split('-')[1];
         var $loaderText      =   "Saving...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -1449,6 +1450,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
@@ -1458,8 +1460,9 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".php_fpm_pool_editor_delete",function(e){
-        var $loaderId        =   "#php-fpm-pool-editor-save-btn";
+    $(document).on("submit","form[id^='php_fpm_pool_editor_delete-']",function(e){
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#php-fpm-pool-editor-delete-btn-'+$formId.split('-')[1];
         var $loaderText      =   "Deleting...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -1470,6 +1473,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
@@ -1490,6 +1494,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
