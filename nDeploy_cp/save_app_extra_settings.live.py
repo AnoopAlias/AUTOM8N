@@ -7,6 +7,8 @@ import cgi
 import cgitb
 import sys
 import re
+from commoninclude import print_simple_header, print_simple_footer
+
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
@@ -23,12 +25,9 @@ cgitb.enable()
 commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+
+print_simple_header()
+
 
 # Get the domain name
 if 'domain' in form.keys():
@@ -294,5 +293,4 @@ with open(profileyaml, 'w') as yaml_file:
     yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
 commoninclude.print_success('Server settings saved')
 
-print('</body>')
-print('</html>')
+print_simple_footer()

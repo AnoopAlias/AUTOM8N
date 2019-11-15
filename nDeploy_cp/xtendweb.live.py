@@ -7,7 +7,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import close_cpanel_liveapisock, print_header, bcrumb, cardheader, cardfooter, print_footer, print_modals, print_loader
+from commoninclude import close_cpanel_liveapisock, print_header, bcrumb, cardheader, cardfooter, print_footer
 
 
 __author__ = "Anoop P Alias"
@@ -107,14 +107,3 @@ print('            <!-- cPanel End Row -->')
 print('            </div>')
 
 print_footer()
-
-print('        <!-- Main Container End -->')
-print('        </div>')
-print('')
-
-print_modals()
-print_loader()
-
-print('    <!-- Body End -->')
-print('    </body>')
-print('</html>')

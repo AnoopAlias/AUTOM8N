@@ -8,7 +8,7 @@ import cgitb
 import sys
 import psutil
 import platform
-from commoninclude import close_cpanel_liveapisock, bcrumb, print_nontoast_error, return_prepend, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import close_cpanel_liveapisock, bcrumb, print_nontoast_error, return_prepend, print_header, print_footer, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -214,13 +214,3 @@ print('            <!-- cPanel End Row -->')
 print('            </div>')
 
 print_footer()
-
-print('        </div> <!-- Main Container End -->')
-print('')
-
-print_modals()
-print_loader()
-
-print('    <!-- Body End -->')
-print('    </body>')
-print('</html>')

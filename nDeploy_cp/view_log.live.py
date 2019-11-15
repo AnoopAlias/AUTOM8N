@@ -5,6 +5,7 @@ import os
 import cgi
 import cgitb
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -26,12 +27,7 @@ commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
 
 php_log = cpanelhome+"/logs/php_error_log"
 if os.path.isfile(php_log):
@@ -45,7 +41,5 @@ if os.path.isfile(php_log):
         print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
     print('</ul>')
 else:
-    commoninclude.print_error('PHP log file is not present')
 
-print('</body>')
-print('</html>')
+print_simple_footer()

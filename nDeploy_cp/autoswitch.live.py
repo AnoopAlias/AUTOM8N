@@ -5,6 +5,7 @@ import os
 import cgi
 import cgitb
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -25,12 +26,8 @@ commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
+
 
 switch_cmd = '/opt/nDeploy/scripts/auto_config.py '+cpaneluser+' setconfig'
 myswitcher = subprocess.Popen(switch_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
@@ -42,5 +39,4 @@ while True:
     print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
 print('</ul>')
 
-print('</body>')
-print('</html>')
+print_simple_footer()
