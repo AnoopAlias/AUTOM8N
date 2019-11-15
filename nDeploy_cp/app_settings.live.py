@@ -251,7 +251,7 @@ if form.getvalue('domain'):
         print('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint))
         if os.path.isfile(nginx_log_hint):
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
-                print('                        <div class="col-6 alert text-success"><i class="fas fa-check-cicle"></i> Valid</div>')
+                print('                        <div class="col-6 alert text-success"><i class="fa fa-check-circle"></i> Valid</div>')
             else:
                 print('                        <div class="col-6 alert text-danger"><i class="fas fa-times-cicle"></i> Invalid/Require Reload</div>')
         else:
