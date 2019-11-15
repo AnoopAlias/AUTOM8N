@@ -88,22 +88,7 @@ jQuery(document).ready(function($) {
 
     $('[data-toggle="popover"]').popover();
 
-    // Toasts & modals
-    $("#myModal").on("hidden.bs.modal", function() {
-        location.reload();
-    });
-
-    $("#myToast").on("hidden.bs.toast", function() {
-        location.reload();
-    });
-
-    $("#myModalback").on("hidden.bs.modal", function() {
-        window.history.go(-1);
-    });
-
-    $("#myToastback").on("hidden.bs.toast", function() {
-        window.history.go(-1);
-    });
+    //window.history.go(-1);
 
     $('.nav a.dropdown-item').click(function (e) {
         //get selected href
