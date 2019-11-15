@@ -162,7 +162,7 @@ if form.getvalue('cpanelpkg'):
     print('                    <a class="nav-link mb-4" id="v-pills-redirections-tab" data-toggle="pill" href="#v-pills-redirections" role="tab" aria-controls="v-pills-redirections">Redirections</a>')
 
     # Save Settings
-    print('                    <button id="cpanel-pkg-profile-btn" class="btn btn-primary btn-block" type="submit" form="cpanel_pkg_profile">Apply Settings</button>')
+    print('                    <button class="btn btn-primary btn-block cpanel-pkg-profile-btn" type="submit" form="cpanel_pkg_profile">Apply Settings</button>')
 
     print('                </div>')
 
@@ -184,7 +184,7 @@ if form.getvalue('cpanelpkg'):
     print('                        </div>')
 
     # Save Settings
-    print('                        <button id="cpanel-pkg-profile-btn" class="mb-3 btn btn-primary btn-block" type="submit" form="cpanel_pkg_profile">Apply Settings</button>')
+    print('                        <button class="mb-3 btn btn-primary btn-block cpanel-pkg-profile-btn" type="submit" form="cpanel_pkg_profile">Apply Settings</button>')
     print('                    </div>')
 
     print('')

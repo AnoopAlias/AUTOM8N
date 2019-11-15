@@ -1402,7 +1402,7 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on("submit","#cpanel_pkg_profile",function(e){
-        var $loaderId        =   "#cpanel-pkg-profile-btn";
+        var $loaderId        =   ".cpanel-pkg-profile-btn";
         var $loaderText      =   "Saving...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
