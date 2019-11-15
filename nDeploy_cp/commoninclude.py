@@ -184,12 +184,6 @@ def return_multi_input(theoption, hint):
     return result
 
 
-def print_loader():
-    print('')
-    print('        <div id="loader"><i class="fas fa-infinity fa-spin"></i></div>')
-    print('')
-
-
 # Print Header
 def print_header(title=''):
     print('Content-Type: text/html')
@@ -232,7 +226,7 @@ def print_header(title=''):
     print('        </header>')
     print('')
     print('        <!-- Main Container Start -->')
-    print('        <div id="main-container" class="container">') #Main Container
+    print('        <div id="main-container" class="container">')
 
 
 # Terminal Section

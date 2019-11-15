@@ -78,7 +78,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('                                <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>')
                 print('                                <p class="m-0 pt-1">Select the version and template for this upstream below.')
                 print('                            </div>')
-                print('                            <form class="form" method="post" id="toastForm8" onsubmit="return false;">')
+                print('                            <form class="form" method="post" id="subdirectory_set_backend" onsubmit="return false;">')
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
                 if os.path.isfile(user_app_template_file):
@@ -180,7 +180,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('                                <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>')
                 print('                                <p class="m-0 pt-1">Select the version and template for this upstream below.')
                 print('                            </div>')
-                print('                            <form class="form" method="post" id="toastForm8" onsubmit="return false;">')
+                print('                            <form class="form" method="post" id="subdirectory_set_backend" onsubmit="return false;">')
                 backends_dict = backend_data_yaml_parsed.get(mybackend)
                 new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
                 if os.path.isfile(user_app_template_file):
@@ -247,7 +247,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                 print('                                <input hidden name="domain" value="'+mydomain+'">')
                 print('                                <input hidden name="backend" value="'+mybackend+'">')
                 print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
-                print('                                <button class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Configuration</button>')
+                print('                                <button id="subdirectory-set-backend-btn" class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Configuration</button>')
                 print('                            </form>')
                 print('                        </div> <!-- Card Body End -->')
                 cardfooter('')
@@ -269,7 +269,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('                                <p class="m-0 pt-1">Select the version and template for this upstream below.')
             print('                            </div>')
 
-            print('                            <form class="form" id="toastForm8" onsubmit="return false;">')
+            print('                            <form class="form" id="subdirectory_set_backend" onsubmit="return false;">')
 
             backends_dict = backend_data_yaml_parsed.get(mybackend)
             new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
@@ -308,7 +308,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             print('                                <input hidden name="domain" value="'+mydomain+'">')
             print('                                <input hidden name="backend" value="'+mybackend+'">')
             print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
-            print('                                <button class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Configuration</button>')
+            print('                                <button id="subdirectory-set-backend-btn" class="btn btn-outline-primary btn-block" type="submit">Apply Upstream Configuration</button>')
             print('                            </form>')
             print('                        </div> <!-- Card Body End -->')
             cardfooter('')

@@ -70,9 +70,9 @@ print('                        <div class="card-body">  <!-- Card Body Start -->
 if settings_lock == 'enabled':
     print('                        <div class="text-center alert alert-info">Application Server settings are locked by the administrator</div>')
 else:
-    print('                            <form class="form mb-3" method="post" id="toastForm9" onsubmit="return false;">')
-    print('                                <button class="btn btn-outline-primary btn-block " type="submit">Auto Switch To Nginx</button>')
+    print('                            <form class="form mb-3" method="post" id="auto_switch_nginx" onsubmit="return false;">')
     print('                                <input hidden name="cpaneluser" value="'+cpaneluser+'">')
+    print('                                <button id="auto-switch-nginx-btn" class="btn btn-outline-primary btn-block " type="submit">Auto Switch To Nginx</button>')
     print('                            </form>')
 
 print('                            <form class="form" action="app_settings.live.py" method="get">')

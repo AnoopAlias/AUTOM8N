@@ -1,5 +1,8 @@
 jQuery(document).ready(function($){
 
+    // Full URL for ajax load including params
+    var $urlparam      = window.location.href;
+
 	// Are we physically in Terminal Window?
     var terminalActive;
 
@@ -179,95 +182,216 @@ jQuery(document).ready(function($){
         $("#toast-holder .toast:last").toast("show");
     };
 
-    $('#modalForm1').submit(function() {
-        var $f = $('#modalForm1');
-        var $url = "view_log.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myModal-xl").find('.modal-body').html(result)
-            $("#myModal-xl").modal('show');
-        }});
-    });
-
-    $('#toastForm2').submit(function() {
-        var $f = $('#toastForm2');
-        var $url = "save_app_settings.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myToastback").find('.toast-body').html(result)
-            $("#myToastback").toast('show');
-        }});
-    });
-
-    $('#toastForm3').submit(function() {
-        var $f = $('#toastForm3');
-        var $url = "save_app_extra_settings.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myToast").find('.toast-body').html(result)
-            $("#myToast").toast('show');
-        }});
-    });
-
-    $('#toastForm4').submit(function() {
-        var $f = $('#toastForm4');
-        var $url = "reload_config.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myToast").find('.toast-body').html(result)
-            $("#myToast").toast('show');
-        }});
-    });
-
-    $('#modalForm5').submit(function() {
-        var $f = $('#modalForm5');
-        var $url = "view_nginx_log.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myModal-xl").find('.modal-body').html(result)
-            $("#myModal-xl").modal('show');
-        }});
-    });
-
-    $('#toastForm6').submit(function() {
-        var $f = $('#toastForm6');
-        var $url = "save_app_extra_settings.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myToast").find('.toast-body').html(result)
-            $("#myToast").toast('show');
-        }});
-    });
-
-    $('.toastForm7-wrap').submit(function(e) {
+    // Forms
+    $(document).on("submit","#app_backend_settings",function(e){
+        var $loaderId        =   ".app-backend-settings-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
         var $id = e.target.id;
-        var $f = $('#' + $id);
-        var $url = "subdir_delete.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myToast").find('.toast-body').html(result)
-            $("#myToast").toast('show');
-        }});
+        var $f = $("#" + $id);
+        var $url = "save_app_extra_settings.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                window.location.reload();
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
     });
 
-    $('#toastForm8').submit(function() {
-        var $f = $('#toastForm8');
-        var $url = "subdir_save_app_settings.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myToastback").find('.toast-body').html(result)
-            $("#myToastback").toast('show');
-        }});
+    $(document).on("submit","#reload_nginx",function(e){
+        var $loaderId        =   "#reload-nginx-btn";
+        var $loaderText      =   "Reloading...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "reload_config.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
     });
 
-    $('#toastForm9').submit(function() {
-        var $f = $('#toastForm9');
-        var $url = "autoswitch.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myToast-nl").find('.toast-body').html(result)
-            $("#myToast-nl").toast('show');
-        }});
+    $(document).on("submit","#view_nginx_log",function(e){
+        var $loaderId        =   "#view-nginx-log-btn";
+        var $loaderText      =   "Loading...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "view_nginx_log.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
+                $.toast({
+                    autohide: 'false',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
     });
 
-    $('#modalForm10').submit(function() {
-        var $f = $('#modalForm10');
+    $(document).on("submit","#dependency_installer",function(e){
+        var $loaderId        =   "#dependency-installer-btn";
+        var $loaderText      =   "Installing...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
         var $url = "dependency_installer.live.py?" + $f.serialize();
-        $.ajax({url: $url, success: function(result){
-            $("#myModal").find('.modal-body').html(result)
-            $("#myModal").modal('show');
-        }});
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-system .card-body > .btn-group").load(($urlparam) + " #v-pills-system .card-body > .btn-group > *");
+                $.toast({
+                    autohide: 'false',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit","#view_php_log",function(e){
+        var $loaderId        =   "#view-php-log-btn";
+        var $loaderText      =   "Loading...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "view_log.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-system .card-body > .btn-group").load(($urlparam) + " #v-pills-system .card-body > .btn-group > *");
+                $.toast({
+                    autohide: 'false',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit","#set_upstream_configuration",function(e){
+        var $loaderId        =   "#set-upstream-configuration-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_app_settings.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#upstream-confi-settings").load(($urlparam) + " #upstream-confi-settings > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit","form[id^='subdirectory_delete-']",function(e){
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#subdirectory-delete-btn-'+$formId.split('-')[1];
+        var $loaderText      =   "Deleting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "subdir_delete.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#subdirectory-panel").load(($urlparam) + " #subdirectory-panel > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit","#subdirectory_set_backend",function(e){
+        var $loaderId        =   "#subdirectory-set-backend-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "subdir_save_app_settings.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                window.history.go(-1);
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit","#save_subdirectory_app_settings",function(e){
+        var $loaderId        =   "#save-subdirectory-app-settings-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_app_extra_settings.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                window.location.reload();
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit","#auto_switch_nginx",function(e){
+        var $loaderId        =   "#auto-switch-nginx-btn";
+        var $loaderText      =   "Saving...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "autoswitch.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $(".card-body").load(($urlparam) + " .card-body > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
     });
 
 });
