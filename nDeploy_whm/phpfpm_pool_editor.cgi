@@ -46,7 +46,7 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         for mykey in myconfig.keys():
             print('                            <label for="'+mykey+'">'+mykey+'</label>')
             print('                            <div class="input-group mb-4">')
-            print('                                <input class="form-control" id="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" value="'+myconfig.get(mykey)+'" type="text" name="thevalue">')
+            print('                                <input class="form-control" form="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" value="'+myconfig.get(mykey)+'" type="text" name="thevalue">')
             print('                                <form class="form m-0" id="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" method="post" onsubmit="return false;">')
             print('                                    <input hidden name="poolfile" value="'+myphpini+'">')
             print('                                    <input hidden name="section" value="'+form.getvalue('section')+'">')
