@@ -499,8 +499,8 @@ if os.path.isfile(cluster_config_file):
                 print('                     <form class="form delete_cluster_settings_slave" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
                 print('                         <label hidden for="cluster_delete_slave">Cluster Delete Slave</label>')
                 print('                         <input hidden name="action" id="cluster_delete_slave" value="deleteslave">')
-                print('                         <label hidden for="cluster_slave_hostname">Cluster Save Hostname</label>')
-                print('                         <input hidden name="slave_hostname" id="cluster_slave_hostname" value="'+myslave+'">')
+                print('                         <label hidden for="cluster_slave_hostname2">Cluster Save Hostname</label>')
+                print('                         <input hidden name="slave_hostname" id="cluster_slave_hostname2" value="'+myslave+'">')
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
                 print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave Settings</button>')
@@ -571,7 +571,7 @@ if os.path.isfile(cluster_config_file):
                 print('             </div>')
                 print('             <div id="collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'" data-parent="#accordionIps-'+master_ip_resource+'-'+str(mykeypos)+'">')
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation edit_ip_resource" method="post" id="edit_ip_resource'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;" novalidate>')
+                print('                     <form class="form needs-validation" method="post" id="edit_ip_resource'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;" novalidate>')
 
                 # Master data
                 print_input_fn(" Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", master_ip_resource, "master_ip_resource")
@@ -589,7 +589,7 @@ if os.path.isfile(cluster_config_file):
                 print('                         <label hidden for="cluster_edit_ip">Edit IP</label>')
                 print('                         <input hidden name="action" id="cluster_edit_ip" value="editip">')
 
-                print('                         <button id="edit-ip-resource-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Edit IP resource</button>')
+                print('                         <button id="edit-ip-resource'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="btn btn-outline-primary btn-block mt-4" type="submit">Edit IP resource</button>')
                 print('                     </form>')
                 print('                 </div>')
                 print('             </div>')
@@ -598,14 +598,14 @@ if os.path.isfile(cluster_config_file):
                 mykeypos = mykeypos + 1
             if master_ip_resource != "ip0":
                 # Display form for IP address deletion
-                print('                            <form class="form delete_ip" method="post" id="delete_ip'+'-'+master_ip_resource+'" onsubmit="return false;">')
+                print('                            <form class="form" method="post" id="delete_ip'+'-'+master_ip_resource+'" onsubmit="return false;">')
                 print('                                <label hidden for="cluster_delete_ip_master_hostname">Delete Master Hostname IP</label>')
                 print('                                <input hidden name="master_hostname" id="cluster_delete_ip_master_hostname" value="'+myhostname+'">')
                 print('                                <label hidden for="cluster_delete_master_lan_ip">Delete Master LAN IP</label>')
                 print('                                <input hidden name="master_lan_ip" id="cluster_delete_master_lan_ip" value="'+myip+'">')
                 print('                                <label hidden for="cluster_delete_ip">Cluster Delete IP</label>')
                 print('                                <input hidden name="action" id="cluster_delete_ip" value="delip">')
-                print('                                <button id="delete-ip-btn" class="btn btn-outline-danger btn-block mt-4 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
+                print('                                <button id="delete-ip-btn'+'-'+master_ip_resource+'" class="btn btn-outline-danger btn-block mt-4 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
                 print('                            </form>')
             # Provide a seperation between each ip resource_
 
