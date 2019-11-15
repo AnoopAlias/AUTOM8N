@@ -162,13 +162,6 @@ def return_multi_input(theoption, hint):
     return result
 
 
-# Loader
-def print_loader():
-    print('')
-    print('        <div id="loader"><i class="fas fa-infinity fa-spin"></i></div>')
-    print('')
-
-
 # Print Header
 def print_header(title=''):
     print('Content-Type: text/html')
@@ -258,7 +251,6 @@ def print_input_fn(label='Label', hint='Hint', inputValue='', inputName='', butt
 def print_footer():
     print('        </div> <!-- Main Container End -->')
     display_term()
-    print_modals()
     print('    </body> <!-- Body End -->')
     print('</html>')
 
@@ -376,72 +368,3 @@ def sighupnginx():
         if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
             nginxpid = myprocess.pid
             os.kill(nginxpid, signal.SIGHUP)
-
-
-def print_modals():
-
-    # Modal
-    print('        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">')
-    print('            <div class="modal-dialog modal-dialog-centered" role="document">')
-    if ndeploy_theme_color == 'dark':
-        print('                <div class="modal-content bg-dark text-white">')
-    if ndeploy_theme_color == 'light':
-        print('                <div class="modal-content bg-light text-dark">')
-    print('                    <div class="modal-header">')
-    print('                        <h4 class="modal-title">Command Output</h4>')
-    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                    <div class="modal-body">')
-    print('                    </div>')
-    print('                    <div class="modal-footer">')
-    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
-    print('                    </div>')
-    print('                </div>')
-    print('            </div>')
-    print('        </div>')
-
-    # Modal with no reload
-    print('        <div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog"> ')
-    print('            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
-    if ndeploy_theme_color == 'dark':
-        print('                <div class="modal-content bg-dark text-white">')
-    if ndeploy_theme_color == 'light':
-        print('                <div class="modal-content bg-light text-dark">')
-    print('                    <div class="modal-header">')
-    print('                        <h4 class="modal-title">Command Output</h4>')
-    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                    <div class="modal-body">')
-    print('                    </div>')
-    print('                    <div class="modal-footer">')
-    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
-    print('                    </div>')
-    print('                </div>')
-    print('            </div>')
-    print('        </div>')
-
-    # Modal Large Width
-    print('        <div class="modal fade" id="myModal-xl" tabindex="-1" role="dialog">')
-    print('            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
-    if ndeploy_theme_color == 'dark':
-        print('                <div class="modal-content bg-dark text-white">')
-    if ndeploy_theme_color == 'light':
-        print('                <div class="modal-content bg-light text-dark">')
-    print('                    <div class="modal-header">')
-    print('                        <h4 class="modal-title">Command Output</h4>')
-    print('                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                    <div class="modal-body">')
-    print('                    </div>')
-    print('                    <div class="modal-footer">')
-    print('                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
-    print('                    </div>')
-    print('                </div>')
-    print('            </div>')
-    print('        </div>')
