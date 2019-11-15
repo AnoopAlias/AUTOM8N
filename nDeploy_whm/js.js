@@ -72,7 +72,6 @@ jQuery(document).ready(function($) {
 
     $(document).ajaxComplete(function() {
         // $('#processing').hide();
-
         formValidations();
     });
 
@@ -89,22 +88,7 @@ jQuery(document).ready(function($) {
 
     $('[data-toggle="popover"]').popover();
 
-    // Toasts & modals
-    $("#myModal").on("hidden.bs.modal", function() {
-        location.reload();
-    });
-
-    $("#myToast").on("hidden.bs.toast", function() {
-        location.reload();
-    });
-
-    $("#myModalback").on("hidden.bs.modal", function() {
-        window.history.go(-1);
-    });
-
-    $("#myToastback").on("hidden.bs.toast", function() {
-        window.history.go(-1);
-    });
+    //window.history.go(-1);
 
     $('.nav a.dropdown-item').click(function (e) {
         //get selected href
@@ -649,8 +633,8 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".edit_ip_resource",function(e){
-        var $loaderId        =   "#edit-ip-resource-btn";
+    $(document).on("submit","form[id^='edit_ip_resource-']",function(e){
+        var $loaderId        =   $(this).find('button');
         var $loaderText      =   "Saving...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
@@ -692,8 +676,8 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(document).on("submit",".delete_ip",function(e){
-        var $loaderId        =   "#delete-ip-btn";
+    $(document).on("submit","form[id^='delete_ip-']",function(e){
+        var $loaderId        =   $(this).find('button');
         var $loaderText      =   "Deleting...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
