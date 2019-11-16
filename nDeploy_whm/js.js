@@ -865,7 +865,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#php_status_widget").load(($urlparam) + " #php_status_widget > *");
-                $("#v-pills-php_backends .card-body").load(($urlparam) + " #v-pills-php_backends .card-body > *");
+                $("#v-pills-php_backends .card-body > .no-gutters").load(($urlparam) + " #v-pills-php_backends .card-body > .no-gutters > *");
                 $.toast({
                     autohide: 'true',
                 });
