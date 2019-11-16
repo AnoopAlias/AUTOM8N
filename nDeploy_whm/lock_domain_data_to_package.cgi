@@ -20,6 +20,13 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
+# Define a function to silently remove files
+def silentremove(filename):
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
+
 print_simple_header()
 
 if form.getvalue('package_lock'):
@@ -27,7 +34,7 @@ if form.getvalue('package_lock'):
         subprocess.call('touch '+installation_path+'/conf/lock_domaindata_to_package', shell=True)
         commoninclude.print_success('NGINX settings will change with cPanel Package Upgrades/Downgrades')
     elif form.getvalue('package_lock') == 'disabled':
-        commoninclude.silentremove(installation_path+'/conf/lock_domaindata_to_package')
+        silentremove(installation_path+'/conf/lock_domaindata_to_package')
         commoninclude.print_success('NGINX settings will be preserved throughout cPanel Package Changes')
 else:
         commoninclude.print_forbidden()

@@ -3,7 +3,6 @@
 import commoninclude
 import cgi
 import cgitb
-import os
 import yaml
 from commoninclude import print_simple_header, print_simple_footer
 
@@ -17,15 +16,6 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 cgitb.enable()
-
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
 
 form = cgi.FieldStorage()
 

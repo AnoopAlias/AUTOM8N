@@ -330,13 +330,6 @@ def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-infinity"):
     print('')
 
 
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
 def safenginxreload():
     nginx_status = False
     for myprocess in psutil.process_iter():
