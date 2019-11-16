@@ -5,6 +5,7 @@ import os
 import cgi
 import cgitb
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -24,12 +25,7 @@ cpanelhome = os.environ["HOME"]
 commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
 
 nginx_log = cpanelhome+"/logs/nginx.log"
 if os.path.isfile(nginx_log):
@@ -45,5 +41,4 @@ if os.path.isfile(nginx_log):
 else:
     commoninclude.print_error('NGINX log file is not present')
 
-print('</body>')
-print('</html>')
+print_simple_footer()

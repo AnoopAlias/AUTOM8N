@@ -79,44 +79,79 @@ def return_sys_tip(theoption, hint):
     return result
 
 
+# Non-Toast Error func() for main pages
 def print_nontoast_error(thenotice, thereason):
-    print('            <div class="row justify-content-center">')
+    print('            <div id="footer" class="row justify-content-center">')
     print('                <div class="col-lg-6 alert alert-danger">')
     print('                    <div class="text-center">')
-    print('                        <i class="fa fa-exclamation"></i>')
+    print('                        <span class="h1">')
+    print('                            <i class="fas fa-exclamation"></i>')
+    print('                        </span>')
     print('                        <h3>'+thenotice+'</h3>')
     print('                        <h5>'+thereason+'</h5>')
     if app_email != 'None':
-        print('                        <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
+        print('                    <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
     print('                    </div>')
     print('                </div>')
     print('            </div>')
-    print_footer()
-    print('        </div> <!-- Main Container End -->')
-    print('')
-    print('    <!-- Body End -->')
-    print('    </body>')
-    print('</html>')
 
 
-def print_forbidden():
-    print('<i class="fas fa-exclamation"></i><p>Forbidden</p>')
+# TOASTS
+def print_close_button():
+    print('<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
 
 
-def print_error(themessage):
-    print('<i class="fas fa-exclamation"></i><p>'+themessage+'</p>')
-
-
-def print_success(themessage):
-    print('<i class="fas fa-thumbs-up"></i><p>'+themessage+'</p>')
-
-
+# Sucess Toast DIV
 def print_success_alert(themessage):
-    print('<div class="alert alert-success">'+themessage+'</div>')
+    print('<div class="alert alert-success">')
+    print_close_button()
+    print('<p>'+themessage+'</p></div>')
 
 
+# Error Toast DIV
 def print_error_alert(themessage):
-    print('<div class="alert alert-danger text-left">'+themessage+'</div>')
+    print('<div class="alert alert-danger">')
+    print_close_button()
+    print('<p>'+themessage+'</p></div>')
+
+
+# Warning Toast DIV
+def print_warning_alert(themessage):
+    print('<div class="alert alert-warning">')
+    print_close_button()
+    print('<p>'+themessage+'</p></div>')
+
+
+# Info Toast DIV
+def print_info_alert(themessage):
+    print('<div class="alert alert-info">')
+    print_close_button()
+    print('<p>'+themessage+'</p></div>')
+
+
+# Forbidden Toast with icon
+def print_forbidden():
+    print_error_alert('Forbidden')
+
+
+# Error Toast with icon
+def print_error(themessage):
+    print_error_alert(themessage)
+
+
+# Success Toast with icon
+def print_success(themessage):
+    print_success_alert(themessage)
+
+
+# Warning Toast with icon
+def print_warning(themessage):
+    print_warning_alert(themessage)
+
+
+# Info Toast with icon
+def print_info(themessage):
+    print_info_alert(themessage)
 
 
 def print_sys_tip(theoption, hint):
@@ -147,12 +182,6 @@ def print_success_wrapper(themessage):
 def return_multi_input(theoption, hint):
     result = '<div class="label label-default" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
-
-
-def print_loader():
-    print('')
-    print('        <div id="loader"><i class="fas fa-infinity fa-spin"></i></div>')
-    print('')
 
 
 # Print Header
@@ -197,24 +226,52 @@ def print_header(title=''):
     print('        </header>')
     print('')
     print('        <!-- Main Container Start -->')
-    print('        <div id="main-container" class="container">') #Main Container
+    print('        <div id="main-container" class="container">')
 
 
-# Print Footer
-#def print_footer():
-#    print('')
-#    print('            <!-- Footer Start -->')
-#    print('            <div id="footer" class="container text-center mt-2 mb-5">')
-#    print('                <a style="color:'+primary_color+'" href="'+brand_link+'" target="_blank">'+brand_anchor+'</a>')
-#    if ndeploy_theme_color == 'light':
-#        print('            <p class="text-dark small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
-#    if ndeploy_theme_color == 'dark':
-#        print('            <p class="text-light small">We are running '+brand+' version '+autom8n_version.replace("Autom8n ",'')+' on '+nginx_version+'.</p>')
-#    print('            </div>')
-#    print('')
+# Terminal Section
+def display_term():
+    print('        <div class="modal" id="terminal" tabindex="-1" role="dialog">')
+    print('            <div class="modal-dialog" role="document">')
+    if ndeploy_theme_color == 'dark':
+        print('                <div class="modal-content bg-dark text-white">')
+    if ndeploy_theme_color == 'light':
+        print('                <div class="modal-content bg-light text-dark">')
+    print('                    <div class="modal-header">')
+    print('                        <h4 class="modal-title">Command Output <span id="processing">- Processing: <i class="fas fa-spinner fa-spin"></i></span></h4>')
+    print('                        <button class="close modalMinimize"> <i class="fa fa-minus"><span class="sr-only">Close</span></i> </button>')
+    print('                    </div>')
+    print('                    <div id="terminal-panel" class="modal-body">Retrieving last terminal function executed...</div>')
+    print('                </div>')
+    print('            </div>')
+    print('        </div>')
 
+
+# Footer Section
 def print_footer():
-    return
+    print('        </div> <!-- Main Container End -->')
+    display_term()
+    print('    </body> <!-- Body End -->')
+    print('</html>')
+
+
+# Simple Header
+def print_simple_header():
+    print('Content-Type: text/html')
+    print('')
+    print('<html>')
+    print('    <head>')
+    print('    <meta charset="utf-8">')
+    print('    <meta name="viewport" content="width=device-width, initial-scale=1">')
+    print('    </head>')
+    print('    <body>')
+
+
+# Simple Footer
+def print_simple_footer():
+    print('    </body>')
+    print('</html>')
+
 
 # Card Start
 def cardheader(header='Untitled Card', faicon='fas fa-cogs'):
@@ -259,111 +316,3 @@ def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-infinity"):
     print('                </ol>')
     print('            </nav>')
     print('')
-
-
-def print_modals():
-
-    # Modal
-    print('        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">')
-    print('            <div class="modal-dialog modal-dialog-centered" role="document">')
-    print('                <div class="modal-content">')
-    print('                    <div class="modal-header">')
-    print('                        <h4 class="modal-title">Command Output</h4>')
-    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                    <div class="modal-body">')
-    print('                    </div>')
-    print('                    <div class="modal-footer">')
-    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
-    print('                    </div>')
-    print('                </div>')
-    print('            </div>')
-    print('        </div>')
-
-    # Modal with no reload
-    print('        <div class="modal fade" id="myModal-nl" tabindex="-1" role="dialog"> ')
-    print('            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
-    print('                <div class="modal-content">')
-    print('                    <div class="modal-header">')
-    print('                        <h4 class="modal-title">Command Output</h4>')
-    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                    <div class="modal-body">')
-    print('                    </div>')
-    print('                    <div class="modal-footer">')
-    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
-    print('                    </div>')
-    print('                </div>')
-    print('            </div>')
-    print('        </div>')
-
-    # Modal Large Width
-    print('        <div class="modal fade" id="myModal-xl" tabindex="-1" role="dialog">')
-    print('            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">')
-    print('                <div class="modal-content">')
-    print('                    <div class="modal-header">')
-    print('                        <h4 class="modal-title">Command Output</h4>')
-    print('                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">')
-    print('                            <span aria-hidden="true">&times;</span>')
-    print('                        </button>')
-    print('                    </div>')
-    print('                    <div class="modal-body">')
-    print('                    </div>')
-    print('                    <div class="modal-footer">')
-    print('                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>')
-    print('                    </div>')
-    print('                </div>')
-    print('            </div>')
-    print('        </div>')
-
-    # Toast
-    print('        <div class="toast fade hide" id="myToast" role="alert" aria-live="assertive" aria-atomic="true">')
-    print('            <div class="toast-header">')
-    print('                <strong class="mr-auto">Command Output</strong>')
-    print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                    <span aria-hidden="true">&times;</span>')
-    print('                </button>')
-    print('            </div>')
-    print('            <div class="toast-body">')
-    print('            </div>')
-    print('        </div>')
-
-    # Toast with long autohide
-    print('        <div class="toast fade hide" id="myToastnohide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">')
-    print('            <div class="toast-header">')
-    print('                <strong class="mr-auto">Command Output</strong>')
-    print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                    <span aria-hidden="true">&times;</span>')
-    print('                </button>')
-    print('            </div>')
-    print('            <div class="toast-body">')
-    print('            </div>')
-    print('        </div>')
-
-    # Toast with no reload
-    print('        <div class="toast fade hide" id="myToast-nl" role="alert" aria-live="assertive" aria-atomic="true">')
-    print('            <div class="toast-header">')
-    print('                <strong class="mr-auto">Command Output</strong>')
-    print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                    <span aria-hidden="true">&times;</span>')
-    print('                </button>')
-    print('            </div>')
-    print('            <div class="toast-body">')
-    print('            </div>')
-    print('        </div>')
-
-    # Toastback
-    print('        <div class="toast fade hide" id="myToastback" role="alert" aria-live="assertive" aria-atomic="true">')
-    print('            <div class="toast-header">')
-    print('                <strong class="mr-auto">Command Output</strong>')
-    print('                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">')
-    print('                    <span aria-hidden="true">&times;</span>')
-    print('                </button>')
-    print('            </div>')
-    print('            <div class="toast-body">')
-    print('            </div>')
-    print('        </div>')

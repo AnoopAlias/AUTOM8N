@@ -1,5 +1,8 @@
 jQuery(document).ready(function($) {
 
+    // Full URL for ajax load including params
+    var $urlparam      = window.location.href;
+
     // Are we physically in Terminal Window?
     var terminalActive;
 
@@ -191,7 +194,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-dos .card-body > .no-gutters").load("xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *");
+                $("#v-pills-dos .card-body > .no-gutters").load(($urlparam) + " #v-pills-dos .card-body > .no-gutters > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -212,7 +215,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
+                $("#v-pills-dos .card-body > .no-gutters").load(($urlparam) + " #v-pills-dos .card-body > .no-gutters > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -233,7 +236,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $('#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *');
+                $("#v-pills-dos .card-body > .no-gutters").load(($urlparam) + " #v-pills-dos .card-body > .no-gutters > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -254,7 +257,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-dos .card-body > .no-gutters').load('xtendweb.cgi #v-pills-dos .card-body > .no-gutters > *");
+                $("#v-pills-dos .card-body > .no-gutters").load(($urlparam) + " #v-pills-dos .card-body > .no-gutters > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -275,8 +278,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
-                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
+                $("#cluster-status-info").load(($urlparam) + " #cluster-status-info > *");
+                $("#cluster-reset-btns").load(($urlparam) + " #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -297,8 +300,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
-                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
+                $("#cluster-status-info").load(($urlparam) + " #cluster-status-info > *");
+                $("#cluster-reset-btns").load(($urlparam) + " #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -319,8 +322,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result){
-                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
-                $("#cluster-reset-btns").load("xtendweb.cgi #cluster-reset-btns > *");
+                $("#cluster-status-info").load(($urlparam) + " #cluster-status-info > *");
+                $("#cluster-reset-btns").load(($urlparam) + " #cluster-reset-btns > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -341,8 +344,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#autoswitch-php-status").load("xtendweb.cgi #autoswitch-php-status > *");
-                $("#default_php_autoswitch").load("xtendweb.cgi #default_php_autoswitch > *");
+                $("#autoswitch-php-status").load(($urlparam) + " #autoswitch-php-status > *");
+                $("#default_php_autoswitch").load(($urlparam) + " #default_php_autoswitch > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -363,7 +366,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $('#v-pills-zone #sync_geodns_zone').load('xtendweb.cgi #v-pills-zone #sync_geodns_zone > *');
+                $("#v-pills-zone #sync_geodns_zone").load(($urlparam) + " #v-pills-zone #sync_geodns_zone > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -384,7 +387,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-map .card-body > .no-gutters").load("xtendweb.cgi #v-pills-map .card-body > .no-gutters > *");
+                $("#v-pills-map .card-body > .no-gutters").load(($urlparam) + " #v-pills-map .card-body > .no-gutters > *");
                 $($loaderId).html('Enable');
                 $.toast({
                     autohide: 'true',
@@ -406,7 +409,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-map .card-body > .no-gutters").load("xtendweb.cgi #v-pills-map .card-body > .no-gutters > *");
+                $("#v-pills-map .card-body > .no-gutters").load(($urlparam) + " #v-pills-map .card-body > .no-gutters > *");
                 $($loaderId).html('Disable');
                 $.toast({
                     autohide: 'true',
@@ -428,7 +431,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#nginx_status_widget").load("xtendweb.cgi #nginx_status_widget > *");
+                $("#nginx_status_widget").load(($urlparam) + " #nginx_status_widget > *");
                 $($loaderId).html("Reload");
                 $.toast({
                     autohide: 'true',
@@ -450,7 +453,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#watcher_status_widget").load("xtendweb.cgi #watcher_status_widget > *");
+                $("#watcher_status_widget").load(($urlparam) + " #watcher_status_widget > *");
                 $($loaderId).html("Restart");
                 $.toast({
                     autohide: 'true',
@@ -472,7 +475,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $('#clear_caches_widget').load('xtendweb.cgi #clear_caches_widget > *');
+                $("#clear_caches_widget").load(($urlparam) + " #clear_caches_widget > *");
                 $($loaderId).html('Flush All');
                 $.toast({
                     autohide: 'true',
@@ -494,7 +497,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#restart_backends_widget").load("xtendweb.cgi #restart_backends_widget > *");
+                $("#restart_backends_widget").load(($urlparam) + " #restart_backends_widget > *");
                 $($loaderId).html("Restart");
                 $.toast({
                     autohide: 'true',
@@ -516,7 +519,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $('#v-pills-zone #sync_web_files').load('xtendweb.cgi #v-pills-zone #sync_web_files > *');
+                $("#v-pills-zone #sync_web_files").load(($urlparam) + "#v-pills-zone #sync_web_files > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -540,7 +543,7 @@ jQuery(document).ready(function($) {
                 $.toast({
                     autohide: 'true',
                 });
-                $("#v-pills-cluster .card-body").load("xtendweb.cgi #v-pills-cluster .card-body > *");
+                $("#v-pills-cluster .card-body").load(($urlparam) + " #v-pills-cluster .card-body > *");
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
             }
@@ -558,8 +561,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#home-content").load("xtendweb.cgi #home-content > *");
-                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#home-content").load(($urlparam) + " #home-content > *");
+                $("#cluster-status-info").load(($urlparam) + " #cluster-status-info > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -580,8 +583,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#home-content").load("xtendweb.cgi #home-content > *");
-                $("#cluster-status-info").load("xtendweb.cgi #cluster-status-info > *");
+                $("#home-content").load(($urlparam) + " #home-content > *");
+                $("#cluster-status-info").load(($urlparam) + " #cluster-status-info > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -602,7 +605,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#master-content").load("xtendweb.cgi #master-content > *");
+                $("#master-content").load(($urlparam) + " #master-content > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -623,7 +626,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#slave-content").load("xtendweb.cgi #slave-content > *");
+                $("#slave-content").load(($urlparam) + " #slave-content > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -644,7 +647,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#ip-content").load("xtendweb.cgi #ip-content > *");
+                $("#ip-content").load(($urlparam) + " #ip-content > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -665,8 +668,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#ip-add-content").load("xtendweb.cgi #ip-add-content > *");
-                $("#ip-content").load("xtendweb.cgi #ip-content > *");
+                $("#ip-add-content").load(($urlparam) + " #ip-add-content > *");
+                $("#ip-content").load(($urlparam) + " #ip-content > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -687,7 +690,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#ip-content").load("xtendweb.cgi #ip-content > *");
+                $("#ip-content").load(($urlparam) + " #ip-content > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -708,8 +711,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#add-content").load("xtendweb.cgi #add-content > *");
-                $("#slave-content").load("xtendweb.cgi #slave-content > *");
+                $("#add-content").load(($urlparam) + " #add-content > *");
+                $("#slave-content").load(($urlparam) + " #slave-content > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -731,8 +734,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#add-content").load("xtendweb.cgi #add-content > *");
-                $("#slave-content").load("xtendweb.cgi #slave-content > *");
+                $("#add-content").load(($urlparam) + " #add-content > *");
+                $("#slave-content").load(($urlparam) + " #slave-content > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -754,7 +757,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#slave-content").load("xtendweb.cgi #slave-content > *");
+                $("#slave-content").load(($urlparam) + " #slave-content > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -775,8 +778,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-branding .card-body").load("ndeploy_control.cgi #v-pills-branding .card-body > *");
-                $("#main-header").load("ndeploy_control.cgi #main-header > *");
+                $("#v-pills-branding .card-body").load(($urlparam) + " #v-pills-branding .card-body > *");
+                $("#main-header").load(($urlparam) + " #main-header > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -797,8 +800,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-branding .card-body").load("ndeploy_control.cgi #v-pills-branding .card-body > *");
-                $("#main-header").load("ndeploy_control.cgi #main-header > *");
+                $("#v-pills-branding .card-body").load(($urlparam) + " #v-pills-branding .card-body > *");
+                $("#main-header").load(($urlparam) + " #main-header > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -861,8 +864,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
-                $("#v-pills-php_backends .card-body").load("ndeploy_control.cgi #v-pills-php_backends .card-body > *");
+                $("#php_status_widget").load(($urlparam) + " #php_status_widget > *");
+                $("#v-pills-php_backends .card-body > .no-gutters").load(($urlparam) + " #v-pills-php_backends .card-body > .no-gutters > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -883,7 +886,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-netdata .card-body").load("ndeploy_control.cgi #v-pills-netdata .card-body > *");
+                $("#v-pills-netdata .card-body").load(($urlparam) + " #v-pills-netdata .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -904,7 +907,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-netdata .card-body").load("ndeploy_control.cgi #v-pills-netdata .card-body > *");
+                $("#v-pills-netdata .card-body").load(($urlparam) + " #v-pills-netdata .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -925,7 +928,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-glances .card-body").load("ndeploy_control.cgi #v-pills-glances .card-body > *");
+                $("#v-pills-glances .card-body").load(($urlparam) + " #v-pills-glances .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -946,7 +949,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-glances .card-body").load("ndeploy_control.cgi #v-pills-glances .card-body > *");
+                $("#v-pills-glances .card-body").load(($urlparam) + " #v-pills-glances .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -967,7 +970,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#plugin_status_widget").load("ndeploy_control.cgi #plugin_status_widget > *");
+                $("#plugin_status_widget").load(($urlparam) + " #plugin_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -988,7 +991,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#plugin_status_widget").load("ndeploy_control.cgi #plugin_status_widget > *");
+                $("#plugin_status_widget").load(($urlparam) + " #plugin_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1009,7 +1012,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-modules .card-body").load("ndeploy_control.cgi #v-pills-modules .card-body > *");
+                $("#v-pills-modules .card-body").load(($urlparam) + " #v-pills-modules .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1030,7 +1033,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#fix_all_widget").load("ndeploy_control.cgi #fix_all_widget > *");
+                $("#fix_all_widget").load(($urlparam) + " #fix_all_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1051,7 +1054,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#fix_all_widget").load("ndeploy_control.cgi #fix_all_widget > *");
+                $("#fix_all_widget").load(($urlparam) + " #fix_all_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1072,7 +1075,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result){
-                $("#plugin_upgrade_widget").load("ndeploy_control.cgi #plugin_upgrade_widget > *");
+                $("#plugin_upgrade_widget").load(($urlparam) + " #plugin_upgrade_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1093,7 +1096,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#plugin_upgrade_widget").load("ndeploy_control.cgi #plugin_upgrade_widget > *");
+                $("#plugin_upgrade_widget").load(($urlparam) + " #plugin_upgrade_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1114,7 +1117,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#plugin_upgrade_widget").load("ndeploy_control.cgi #plugin_upgrade_widget > *");
+                $("#plugin_upgrade_widget").load(($urlparam) + " #plugin_upgrade_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1135,8 +1138,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-php_backends .card-body > .no-gutters").load("ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *");
-                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
+                $("#v-pills-php_backends .card-body > .no-gutters").load(($urlparam) + " #v-pills-php_backends .card-body > .no-gutters > *");
+                $("#php_status_widget").load(($urlparam) + " #php_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1157,8 +1160,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-php_backends .card-body > .no-gutters").load("ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *");
-                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
+                $("#v-pills-php_backends .card-body > .no-gutters").load(($urlparam) + " #v-pills-php_backends .card-body > .no-gutters > *");
+                $("#php_status_widget").load(($urlparam) + " #php_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1179,8 +1182,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-php_backends .card-body > .no-gutters").load("ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *");
-                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
+                $("#v-pills-php_backends .card-body > .no-gutters").load(($urlparam) + " #v-pills-php_backends .card-body > .no-gutters > *");
+                $("#php_status_widget").load(($urlparam) + " #php_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1201,8 +1204,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-php_backends .card-body > .no-gutters").load("ndeploy_control.cgi #v-pills-php_backends .card-body > .no-gutters > *");
-                $("#php_status_widget").load("ndeploy_control.cgi #php_status_widget > *");
+                $("#v-pills-php_backends .card-body > .no-gutters").load(($urlparam) + " #v-pills-php_backends .card-body > .no-gutters > *");
+                $("#php_status_widget").load(($urlparam) + " #php_status_widget > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1223,7 +1226,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-system .card-body > .no-gutters").load("xtendweb.cgi #v-pills-system .card-body > .no-gutters > *");
+                $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1244,7 +1247,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#main-container").load("setup_borg_backup.cgi #main-container > *");
+                $("#main-container").load(($urlparam) + " #main-container > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1286,7 +1289,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-additional .card-body").load("setup_borg_backup.cgi #v-pills-additional .card-body > *");
+                $("#v-pills-additional .card-body").load(($urlparam) + " #v-pills-additional .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1307,7 +1310,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-additional .card-body").load("setup_borg_backup.cgi #v-pills-additional .card-body > *");
+                $("#v-pills-additional .card-body").load(($urlparam) + " #v-pills-additional .card-body > *");
                 $.toast({
                     autohide: 'true'
                 });
@@ -1328,7 +1331,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-settings .card-body").load("setup_borg_backup.cgi #v-pills-settings .card-body > *");
+                $("#v-pills-settings .card-body").load(($urlparam) + " #v-pills-settings .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1349,7 +1352,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-settings .card-body").load("setup_borg_backup.cgi #v-pills-settings .card-body > *");
+                $("#v-pills-settings .card-body").load(($urlparam) + " #v-pills-settings .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1370,7 +1373,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#borg-restore-points").load("setup_borg_backup.cgi #borg-restore-points > *");
+                $("#borg-restore-points").load(($urlparam) + " #borg-restore-points > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1391,7 +1394,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#borg-restore-points").load("setup_borg_backup.cgi #borg-restore-points > *");
+                $("#borg-restore-points").load(($urlparam) + " #borg-restore-points > *");
                 $.toast({
                     autohide: 'true',
                 });
@@ -1402,7 +1405,7 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on("submit","#cpanel_pkg_profile",function(e){
-        var $loaderId        =   "#cpanel-pkg-profile-btn";
+        var $loaderId        =   ".cpanel-pkg-profile-btn";
         var $loaderText      =   "Saving...";
         $($loaderId).prop("disabled", true);
         $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);

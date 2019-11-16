@@ -5,6 +5,7 @@ import os
 import cgi
 import cgitb
 import subprocess
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -24,12 +25,8 @@ commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
+
 
 if form.getvalue('domain') and form.getvalue('backend_category') and form.getvalue('backend_version') and form.getvalue('document_root'):
     mydomain = form.getvalue('domain')
@@ -137,5 +134,4 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

@@ -7,7 +7,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import close_cpanel_liveapisock, print_header, bcrumb, cardheader, cardfooter, print_footer, print_modals, print_loader
+from commoninclude import close_cpanel_liveapisock, print_header, bcrumb, cardheader, cardfooter, print_footer
 
 
 __author__ = "Anoop P Alias"
@@ -70,9 +70,9 @@ print('                        <div class="card-body">  <!-- Card Body Start -->
 if settings_lock == 'enabled':
     print('                        <div class="text-center alert alert-info">Application Server settings are locked by the administrator</div>')
 else:
-    print('                            <form class="form mb-3" method="post" id="toastForm9" onsubmit="return false;">')
-    print('                                <button class="btn btn-outline-primary btn-block " type="submit">Auto Switch To Nginx</button>')
+    print('                            <form class="form mb-3" method="post" id="auto_switch_nginx" onsubmit="return false;">')
     print('                                <input hidden name="cpaneluser" value="'+cpaneluser+'">')
+    print('                                <button id="auto-switch-nginx-btn" class="btn btn-outline-primary btn-block " type="submit">Auto Switch To Nginx</button>')
     print('                            </form>')
 
 print('                            <form class="form" action="app_settings.live.py" method="get">')
@@ -107,14 +107,3 @@ print('            <!-- cPanel End Row -->')
 print('            </div>')
 
 print_footer()
-
-print('        <!-- Main Container End -->')
-print('        </div>')
-print('')
-
-print_modals()
-print_loader()
-
-print('    <!-- Body End -->')
-print('    </body>')
-print('</html>')

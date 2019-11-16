@@ -5,6 +5,7 @@ import os
 import yaml
 import cgi
 import cgitb
+from commoninclude import print_simple_header, print_simple_footer
 
 
 __author__ = "Anoop P Alias"
@@ -22,12 +23,8 @@ commoninclude.close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
 
-print('Content-Type: text/html')
-print('')
-print('<html>')
-print('<head>')
-print('</head>')
-print('<body>')
+print_simple_header()
+
 
 if form.getvalue('domain') and form.getvalue('thesubdir'):
     # Get the domain name from form data
@@ -52,5 +49,4 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 else:
     commoninclude.print_forbidden()
 
-print('</body>')
-print('</html>')
+print_simple_footer()

@@ -11,7 +11,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import close_cpanel_liveapisock, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_prepend, return_label, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import close_cpanel_liveapisock, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_prepend, return_label, print_header, print_footer, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -214,9 +214,9 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                    <a class="nav-link mb-4" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general">General Settings</a>')
 
                 # Save Settings
-                print('                    <input hidden name="domain" value="'+mydomain+'" form="toastForm6">')
-                print('                    <input hidden name="thesubdir" value="'+thesubdir+'" form="toastForm6">')
-                print('                    <button class="btn btn-primary btn-block" type="submit" form="toastForm6">Apply Settings</button>')
+                print('                    <input hidden name="domain" value="'+mydomain+'" form="save_subdirectory_app_settings">')
+                print('                    <input hidden name="thesubdir" value="'+thesubdir+'" form="save_subdirectory_app_settings">')
+                print('                    <button id="save-subdirectory-app-settings-btn" class="btn btn-primary btn-block" type="submit" form="save_subdirectory_app_settings">Apply Settings</button>')
 
                 print('                </div>')
 
@@ -227,7 +227,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                    <!-- Secondary Mobile Navigation -->')
                 print('                    <div class="d-lg-none d-xl-none dropdown nav">')
                 print('                        <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
-                print('                            Config Menu')
+                print('                            Menu')
                 print('                        </button>')
                 print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
                 print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">Application Status</a>')
@@ -235,7 +235,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                        </div>')
 
                 # Save Settings
-                print('                    <button class="btn btn-primary btn-block" type="submit" form="toastForm6">Apply Settings</button>')
+                print('                    <button id="save-subdirectory-app-settings-btn" class="btn btn-primary btn-block" type="submit" form="save_subdirectory_app_settings">Apply Settings</button>')
                 print('                    </div>')
 
                 # System Tab
@@ -250,38 +250,38 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 # .htaccess
                 if backend_category == 'PROXY':
                     if backend_version == 'httpd':
-                        print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
-                        print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
+                        print('                        <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+                        print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
                 else:
-                    print('                                <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
-                    print('                                <div class="col-md-6 alert text-danger"><i class="fas fa-times-circle"></i></div>')
+                    print('                            <div class="col-md-6 alert"><i class="fas fa-file-code"></i> .htaccess</div>')
+                    print('                            <div class="col-md-6 alert text-danger"><i class="fas fa-times-circle"></i></div>')
 
                 # User config reload
                 nginx_log_hint = document_root+"/"+thesubdir+"/nginx.conf"
                 print('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint))
                 if os.path.isfile(nginx_log_hint):
                     if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
-                        print('                                <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
+                        print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
                     else:
-                        print('                                <div class="col-md-6 alert text-danger"><i class="fas fa-times-circle"></i> Invalid/Require Reload</div>')
+                        print('                        <div class="col-md-6 alert text-danger"><i class="fas fa-times-circle"></i> Invalid/Require Reload</div>')
                 else:
-                    print('                                <div class="col-md-6 alert text-center"><i class="fas fa-file-upload"></i> Not Present</div>')
+                    print('                            <div class="col-md-6 alert text-center"><i class="fas fa-file-upload"></i> Not Present</div>')
 
                 # Reload Nginx
                 print('                                <div class="col-md-6 alert"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
                 print('                                <div class="col-md-6">')
-                print('                                    <form class="form" method="post" id="toastForm4" onsubmit="return false;">')
-                print('                                        <button class="btn btn-block text-center" type="submit">Reload</button>')
+                print('                                    <form class="form" method="post" id="reload_nginx" onsubmit="return false;">')
                 print('                                        <input hidden name="domain" value="'+mydomain+'">')
+                print('                                        <button id="reload-nginx-btn" class="btn btn-block text-center" type="submit">Reload</button>')
                 print('                                    </form>')
                 print('                                </div>')
 
                 # Nginx Log
                 print('                                <div class="col-md-6 alert"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
                 print('                                <div class="col-md-6">')
-                print('                                    <form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-                print('                                        <button class="btn btn-block text-center" type="submit">View Log</button>')
+                print('                                    <form class="form" method="post" id="view_nginx_log" onsubmit="return false;">')
                 print('                                        <input hidden name="domain" value="'+mydomain+'">')
+                print('                                        <button id="view-nginx-log-btn" class="btn btn-block text-center" type="submit">View Log</button>')
                 print('                                    </form>')
                 print('                                </div>')
                 print('                            </div> <!-- Row End -->')
@@ -289,7 +289,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
                     print('                        <div class="card-body pt-3 pb-0">  <!-- Card Body Start -->')
-                    print('                            <form class="form" id="modalForm10" onsubmit="return false;">')
+                    print('                            <form class="form" id="dependency_installer" onsubmit="return false;">')
 
                     if backend_category == "RUBY":
                         dep_file = document_root+'/'+thesubdir+'/Gemfile'
@@ -306,12 +306,12 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                     print('                            </form>')
 
                     print('                            <div class="btn-group btn-block mt-1">')
-                    print('                                <button class="btn btn-outline-warning btn-block" data-toggle="tooltip" data-placement="top" title="'+dep_file+'" type="submit" form="modalForm10">Install '+backend_category+' Project Deps</button>')
+                    print('                                <button id="dependency-installer-btn" class="btn btn-outline-warning btn-block" data-toggle="tooltip" data-placement="top" title="'+dep_file+'" type="submit" form="dependency_installer">Install '+backend_category+' Project Deps</button>')
 
                     if backend_category == 'PHP':
-                        print('                            <form class="form" id="modalForm1" onsubmit="return false;">')
+                        print('                            <form class="form" id="view_php_log" onsubmit="return false;">')
                         print('                            </form>')
-                        print('                            <button class="btn btn-outline-warning btn-block" type="submit" form="modalForm1">View PHP Log</button>')
+                        print('                            <button id="view-php-log-btn" class="btn btn-outline-warning btn-block" type="submit" form="view_php_log">View PHP Log</button>')
 
                     print('                            </div>')
                     print('                        </div> <!-- Card Body End -->')
@@ -350,7 +350,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 cardheader('General Settings', 'fas fa-sliders-h')
                 print('                        <div class="card-body"> <!-- Card Body Start -->')
-                print('                            <form class="form" id="toastForm6" onsubmit="return false;">')
+                print('                            <form class="form" id="save_subdirectory_app_settings" onsubmit="return false;">')
                 print('                                <div class="row row-btn-group-toggle">')
 
                 # auth_basic
@@ -549,13 +549,3 @@ print('            <!-- cPanel End Row -->')
 print('            </div>')
 
 print_footer()
-
-print('        </div> <!-- Main Container End -->')
-print('')
-
-print_modals()
-print_loader()
-
-print('    <!-- Body End -->')
-print('    </body>')
-print('</html>')

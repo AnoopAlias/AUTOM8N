@@ -68,11 +68,6 @@ def print_nontoast_error(thenotice, thereason):
     print('                    </div>')
     print('                </div>')
     print('            </div>')
-    print_footer()
-    print('        </div> <!-- Main Container End -->')
-    print('')
-    print('    </body> <!-- Body End -->')
-    print('</html>')
 
 
 # TOASTS

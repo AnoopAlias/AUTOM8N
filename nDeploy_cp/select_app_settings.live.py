@@ -8,7 +8,7 @@ import cgitb
 import sys
 import psutil
 import platform
-from commoninclude import close_cpanel_liveapisock, bcrumb, print_nontoast_error, return_prepend, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import close_cpanel_liveapisock, bcrumb, print_nontoast_error, return_prepend, print_header, print_footer, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -82,7 +82,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('')
 
         print('                <!-- Column Start -->')
-        print('                <div class="col-lg-8">')
+        print('                <div id="upstream-confi-settings" class="col-lg-8">')
 
         cardheader('Upstream Configuration')
         print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
@@ -125,7 +125,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('                                <p class="m-0 pt-1">Select the version and template for this upstream below.')
         print('                            </div>')
 
-        print('                            <form class="form" method="post" id="toastForm2" onsubmit="return false;">')
+        print('                            <form class="form" method="post" id="set_upstream_configuration" onsubmit="return false;">')
         backends_dict = backend_data_yaml_parsed.get(mybackend)
         new_apptemplate_dict = apptemplate_data_yaml_parsed.get(mybackend)
 
@@ -154,15 +154,15 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('                                    <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 if myapptemplate == apptemplate_code:
-                    print('                                        <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+                    print('                                <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
                 else:
-                    print('                                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+                    print('                                <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
             if user_new_apptemplate_dict:
                 for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
                     if user_myapptemplate == apptemplate_code:
-                        print('                                        <option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+                        print('                            <option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
                     else:
-                        print('                                        <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+                        print('                            <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
             print('                                    </select>')
             print('                                </div>')
         else:
@@ -192,7 +192,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         # Pass on the domain name to the next stage
         print('                                <input hidden name="domain" value="'+mydomain+'">')
         print('                                <input hidden name="backend" value="'+mybackend+'">')
-        print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Apply Upstream Configuration</button>')
+        print('                                <button id="set-upstream-configuration-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Apply Upstream Configuration</button>')
         print('                            </form>')
         print('                        </div> <!-- Card Body End -->')
         cardfooter('')
@@ -214,13 +214,3 @@ print('            <!-- cPanel End Row -->')
 print('            </div>')
 
 print_footer()
-
-print('        </div> <!-- Main Container End -->')
-print('')
-
-print_modals()
-print_loader()
-
-print('    <!-- Body End -->')
-print('    </body>')
-print('</html>')

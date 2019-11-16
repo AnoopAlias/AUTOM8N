@@ -9,7 +9,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import close_cpanel_liveapisock, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_prepend, return_label, print_header, print_footer, print_modals, print_loader, cardheader, cardfooter
+from commoninclude import close_cpanel_liveapisock, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_prepend, return_label, print_header, print_footer, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -152,7 +152,7 @@ if form.getvalue('domain'):
         print('            <div id="dashboard" class="row flex-row">')
         print('')
 
-        print('                <div class="col-sm-6 col-xl-4"> <!-- Nginx Dash Start -->')
+        print('                <div id="nginx_status_widget" class="col-sm-6 col-xl-4"> <!-- Nginx Dash Start -->')
         cardheader('')
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
         print('                        <h4 class="mb-0"><i class="fas fa-play"></i> Running</h4>')
@@ -163,7 +163,7 @@ if form.getvalue('domain'):
         cardfooter('')
         print('                </div> <!-- Nginx Dash End -->')
 
-        print('                <div class="col-sm-6 col-xl-4"> <!-- Backend Dash Start -->')
+        print('                <div id="backend_upstream_widget" class="col-sm-6 col-xl-4"> <!-- Backend Dash Start -->')
         cardheader('')
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
         print('                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
@@ -174,7 +174,7 @@ if form.getvalue('domain'):
         cardfooter('')
         print('                </div> <!-- Backend Dash End -->')
 
-        print('                <div class="col-sm-12 col-xl-4"> <!-- Tamplate Dash Start -->')
+        print('                <div id="app_template_widget" class="col-sm-12 col-xl-4"> <!-- Tamplate Dash Start -->')
         cardheader('')
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
         print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
@@ -190,7 +190,7 @@ if form.getvalue('domain'):
         print('')
 
         print('            <!-- CP Tabs Row -->')
-        print('            <div class="row justify-content-lg-center flex-nowrap">')
+        print('            <div id="primary-tabs" class="row justify-content-lg-center flex-nowrap">')
         print('')
         print('                <!-- Secondary Navigation -->')
         print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
@@ -202,8 +202,7 @@ if form.getvalue('domain'):
         print('                    <a class="nav-link mb-4" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
 
         # Save Settings
-        print('                    <input form="toastForm3" hidden name="domain" value="'+mydomain+'">')
-        print('                    <button class="btn btn-primary btn-block" type="submit" form="toastForm3">Apply Settings</button>')
+        print('                    <button class="btn btn-primary btn-block app-backend-settings-btn" type="submit" form="app_backend_settings">Apply Settings</button>')
 
         print('                </div>')
 
@@ -214,7 +213,7 @@ if form.getvalue('domain'):
         print('                    <!-- Secondary Mobile Navigation -->')
         print('                    <div class="d-lg-none d-xl-none dropdown nav">')
         print('                        <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
-        print('                            Config Menu')
+        print('                            Menu')
         print('                        </button>')
         print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
         print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">Application Status</a>')
@@ -226,7 +225,7 @@ if form.getvalue('domain'):
         print('                        </div>')
 
         # Save Settings
-        print('                        <button class="btn btn-primary btn-block mb-4" type="submit" form="toastForm3">Apply Settings</button>')
+        print('                        <button class="btn btn-primary btn-block mb-4 app-backend-settings-btn" type="submit" form="app_backend_settings">Apply Settings</button>')
         print('                    </div>')
 
         print('')
@@ -252,7 +251,7 @@ if form.getvalue('domain'):
         print('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint))
         if os.path.isfile(nginx_log_hint):
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
-                print('                        <div class="col-6 alert text-success"><i class="fas fa-check-cicle"></i> Valid</div>')
+                print('                        <div class="col-6 alert text-success"><i class="fa fa-check-circle"></i> Valid</div>')
             else:
                 print('                        <div class="col-6 alert text-danger"><i class="fas fa-times-cicle"></i> Invalid/Require Reload</div>')
         else:
@@ -261,17 +260,17 @@ if form.getvalue('domain'):
         # Reload Nginx
         print('                                <div class="col-6 alert"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
         print('                                <div class="col-6">')
-        print('                                    <form class="form" method="post" id="toastForm4" onsubmit="return false;">')
-        print('                                        <button class="btn btn-block text-center" type="submit">Reload</button>')
+        print('                                    <form class="form" method="post" id="reload_nginx" onsubmit="return false;">')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
+        print('                                        <button id="reload-nginx-btn" class="btn btn-block text-center" type="submit">Reload</button>')
         print('                                    </form>')
         print('                                </div>')
 
         # Nginx Log
         print('                                <div class="col-6 alert"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
         print('                                <div class="col-6">')
-        print('                                    <form class="form" method="post" id="modalForm5" onsubmit="return false;">')
-        print('                                        <button class="btn btn-block text-center" type="submit">View Log</button>')
+        print('                                    <form class="form" method="post" id="view_nginx_log" onsubmit="return false;">')
+        print('                                        <button id="view-nginx-log-btn" class="btn btn-block text-center" type="submit">View Log</button>')
         print('                                        <input hidden name="domain" value="'+mydomain+'">')
         print('                                    </form>')
         print('                                </div>')
@@ -281,7 +280,7 @@ if form.getvalue('domain'):
         # Dependencies
         if backend_category == 'RUBY' or backend_category == 'PYTHON' or backend_category == 'NODEJS' or backend_category == 'PHP':
             print('                        <div class="card-body pt-3 pb-0"> <!-- Card Body Start -->')
-            print('                            <form class="form" id="modalForm10" onsubmit="return false;">')
+            print('                            <form class="form" id="dependency_installer" onsubmit="return false;">')
             if backend_category == "RUBY":
                 dep_file = document_root + '/Gemfile'
             elif backend_category == "NODEJS":
@@ -297,12 +296,11 @@ if form.getvalue('domain'):
             print('                            </form>')
 
             print('                            <div class="btn-group btn-block mt-1">')
-            print('                                <button class="btn btn-outline-warning btn-block" data-toggle="tooltip" title="'+dep_file+'" type="submit" form="modalForm10">Install '+backend_category+' Project Deps</button>')
+            print('                                <button id="dependency-installer-btn" class="btn btn-outline-warning btn-block" data-toggle="tooltip" title="'+dep_file+'" type="submit" form="dependency_installer">Install '+backend_category+' Project Deps</button>')
 
             if backend_category == 'PHP':
-                print('                            <form class="form" id="modalForm1" onsubmit="return false;">')
-                print('                            </form>')
-                print('                            <button class="btn btn-outline-warning btn-block" type="submit" form="modalForm1">View PHP Log</button>')
+                print('                            <form class="form" id="view_php_log" onsubmit="return false;"></form>')
+                print('                            <button id="view-php-log-btn" class="btn btn-outline-warning btn-block" type="submit" form="view_php_log">View PHP Log</button>')
 
             print('                            </div>')
             print('                        </div> <!-- Card Body End -->')
@@ -342,7 +340,8 @@ if form.getvalue('domain'):
         cardheader('General Settings', 'fas fa-sliders-h')
         print('                        <div class="card-body">  <!-- Card Body Start -->')
 
-        print('                        <form class="form" method="post" id="toastForm3" onsubmit="return false;">')
+        print('                        <form class="form" method="post" id="app_backend_settings" onsubmit="return false;">')
+        print('                            <input form="app_backend_settings" hidden name="domain" value="'+mydomain+'">')
         print('                            <div class="row row-btn-group-toggle">')
 
         # auth_basic
@@ -962,7 +961,7 @@ if form.getvalue('domain'):
 
         # Subdirectory Applications
         cardheader('Subdirectory Applications', 'fas fa-level-down-alt')
-        print('                        <div class="card-body">  <!-- Card Body Start -->')
+        print('                        <div id="subdirectory-panel" class="card-body">  <!-- Card Body Start -->')
 
         # Get the currently configured subdirectory
         if subdir_apps:
@@ -976,17 +975,17 @@ if form.getvalue('domain'):
                 print('                                    </span>')
                 print('                                </div>')
                 print('                                <div class="input-group-append">')
-                print('                                    <form class="form" method="get" action="subdir_app_settings.live.py">')
-                print('                                        <button class="btn btn-outline-primary" type="submit"><span class="sr-only">Edit</span><i class="fas fa-pen"></i></button>')
+                print('                                    <form class="form" method="get" id="subdirectory_edit'+'-'+str(mykeypos)+'" action="subdir_app_settings.live.py">')
                 print('                                        <input hidden name="domain" value="'+mydomain+'">')
                 print('                                        <input hidden name="thesubdir" value="'+thesubdir+'">')
                 print('                                    </form>')
 
-                print('                                    <form class="form toastForm7-wrap" method="post" id="toastForm7'+'-'+str(mykeypos)+'" onsubmit="return false;">')
-                print('                                        <button class="btn btn-outline-danger " type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+                print('                                    <form class="form" method="post" id="subdirectory_delete'+'-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('                                        <input hidden name="domain" value="'+mydomain+'">')
                 print('                                        <input hidden name="thesubdir" value="'+thesubdir+'">')
                 print('                                    </form>')
+                print('                                    <button id="subdirectory-edit-btn'+'-'+str(mykeypos)+'" form="subdirectory_edit'+'-'+str(mykeypos)+'" class="btn btn-outline-primary" type="submit"><span class="sr-only">Edit</span><i class="fas fa-pen"></i></button>')
+                print('                                    <button id="subdirectory-delete-btn'+'-'+str(mykeypos)+'" form="subdirectory_delete'+'-'+str(mykeypos)+'" class="btn btn-outline-danger " type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
                 print('                                </div>')
                 print('                            </div>')
                 mykeypos = mykeypos + 1
@@ -1022,12 +1021,3 @@ else:
     sys.exit(0)
 
 print_footer()
-
-print('        </div> <!-- Main Container End -->')
-print('')
-
-print_modals()
-print_loader()
-
-print('    </body> <!-- Body End -->')
-print('</html>')
