@@ -3,6 +3,9 @@
 import commoninclude
 import cgitb
 import subprocess
+import psutil
+import platform
+import signal
 import os
 import cgi
 from commoninclude import print_simple_header, print_simple_footer
