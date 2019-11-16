@@ -21,12 +21,23 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
+def sighupnginx():
+    for myprocess in psutil.process_iter():
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+            nginxpid = myprocess.pid
+            os.kill(nginxpid, signal.SIGHUP)
+
 print_simple_header()
 
 if form.getvalue('ddos'):
     if form.getvalue('ddos') == 'enable':
         os.rename("/etc/nginx/conf.d/dos_mitigate_systemwide.disabled", "/etc/nginx/conf.d/dos_mitigate_systemwide.enabled")
-        commoninclude.sighupnginx()
+        sighupnginx()
         # Do this clusterwide if we are on a cluster
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.disabled /etc/nginx/conf.d/dos_mitigate_systemwide.enabled && nginx -s reload\"'
@@ -42,7 +53,7 @@ if form.getvalue('ddos'):
             print('</ul>')
     elif form.getvalue('ddos') == 'disable':
         os.rename("/etc/nginx/conf.d/dos_mitigate_systemwide.enabled", "/etc/nginx/conf.d/dos_mitigate_systemwide.disabled")
-        commoninclude.sighupnginx()
+        sighupnginx()
         # Do this clusterwide if we are on a cluster
         if os.path.isfile(cluster_config_file):
             the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"mv /etc/nginx/conf.d/dos_mitigate_systemwide.enabled /etc/nginx/conf.d/dos_mitigate_systemwide.disabled && nginx -s reload\"'

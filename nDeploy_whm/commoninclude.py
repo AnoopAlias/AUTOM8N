@@ -328,31 +328,3 @@ def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-infinity"):
     print('                </ol>')
     print('            </nav>')
     print('')
-
-
-def safenginxreload():
-    nginx_status = False
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
-            nginx_status = True
-            break
-    if not nginx_status:
-        with open(os.devnull, 'w') as FNULL:
-            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
-
-
-def sighupnginx():
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-            nginxpid = myprocess.pid
-            os.kill(nginxpid, signal.SIGHUP)
