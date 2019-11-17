@@ -223,11 +223,14 @@ def display_term():
 
 # Terminal Call with pre/post output
 # Adding a preEcho clears terminal window
-def terminal_call(runCmd='', preEcho='', postEcho=''):
+def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment=''):
     if preEcho:
         procExe = subprocess.Popen('echo -e "<em>$(date) [$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if runCmd != '':
-        procExe = subprocess.Popen(runCmd+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        if shellEnvironment != '':
+            procExe = subprocess.Popen(runCmd+' >> '+whm_terminal_log, env=shellEnvironment, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        else:
+            procExe = subprocess.Popen(runCmd+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if postEcho:
         procExe = subprocess.Popen('echo -e "\n<em>$(date) [$(hostname)] -> <strong>'+postEcho+'</strong></em>" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
 

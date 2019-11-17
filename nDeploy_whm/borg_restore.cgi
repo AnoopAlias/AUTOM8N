@@ -38,7 +38,7 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
         the_raw_cmd_orig = 'borg umount /root/borg_restore_point'# >> '+whm_terminal_log
         the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
 
-        terminal_call(the_raw_cmd, 'Unmounting restore point...', 'Restore point unmounted!')
+        terminal_call(the_raw_cmd, 'Unmounting restore point...', 'Restore point unmounted!', my_env)
         print_success('Restore Point Unmounted!')
 
     elif form.getvalue('action') == 'mount':
@@ -50,7 +50,7 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
             the_raw_cmd_orig = 'borg mount '+borg_repo+'::'+form.getvalue('restorepoint')+' /root/borg_restore_point'# >> '+whm_terminal_log
             the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
 
-            terminal_call(the_raw_cmd, 'Mounting restore point: '+form.getvalue('restorepoint')+'...', 'Restore point '+form.getvalue('restorepoint')+' mounted!')
+            terminal_call(the_raw_cmd, 'Mounting restore point: '+form.getvalue('restorepoint')+'...', 'Restore point '+form.getvalue('restorepoint')+' mounted!', my_env)
             print_success('Restore Point Mounted!')
 
         else:
