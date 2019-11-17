@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 import os
+import subprocess
 import yaml
 import random
+
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -12,6 +14,7 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 autom8n_version_info_file = installation_path+"/conf/version.yaml"
 nginx_version_info_file = "/etc/nginx/version.yaml"
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 
 # nDeploy Control
@@ -216,6 +219,17 @@ def display_term():
     print('                </div>')
     print('            </div>')
     print('        </div>')
+
+
+# Terminal Call with pre/post output
+# Adding a preEcho clears terminal window
+def terminal_call(runCmd='', preEcho='', postEcho=''):
+    if preEcho:
+        procExe = subprocess.Popen('echo -e "<em>$(date) [$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+    if runCmd != '':
+        procExe = subprocess.Popen(runCmd+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+    if postEcho:
+        procExe = subprocess.Popen('echo -e "\n<em>$(date) [$(hostname)] -> <strong>'+postEcho+'</strong></em>" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
 
 
 # Input Display
