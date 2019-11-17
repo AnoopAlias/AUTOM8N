@@ -14,7 +14,6 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 borgmatic_config_file = "/etc/borgmatic/config.yaml"
 
 cgitb.enable()
@@ -35,7 +34,7 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
     my_env["LANG"] = 'en_US.UTF-8'
     if form.getvalue('action') == 'umount':
 
-        the_raw_cmd_orig = 'borg umount /root/borg_restore_point'# >> '+whm_terminal_log
+        the_raw_cmd_orig = 'borg umount /root/borg_restore_point'
         the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
 
         terminal_call(the_raw_cmd, 'Unmounting restore point...', 'Restore point unmounted!', my_env)
@@ -47,7 +46,7 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
             with open('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE', 'w') as restore_point_conf:
                 yaml.dump(restore_point_dict, restore_point_conf, default_flow_style=False)
 
-            the_raw_cmd_orig = 'borg mount '+borg_repo+'::'+form.getvalue('restorepoint')+' /root/borg_restore_point'# >> '+whm_terminal_log
+            the_raw_cmd_orig = 'borg mount '+borg_repo+'::'+form.getvalue('restorepoint')+' /root/borg_restore_point'
             the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
 
             terminal_call(the_raw_cmd, 'Mounting restore point: '+form.getvalue('restorepoint')+'...', 'Restore point '+form.getvalue('restorepoint')+' mounted!', my_env)
