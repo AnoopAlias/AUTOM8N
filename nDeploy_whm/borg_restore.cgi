@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
-import commoninclude
 import cgitb
-import subprocess
 import cgi
 import os
 import yaml
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -40,14 +38,8 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
         the_raw_cmd_orig = 'borg umount /root/borg_restore_point >> '+whm_terminal_log
         the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
 
-        procExe = subprocess.Popen('echo -e "Unmounting restore point..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen(the_raw_cmd, env=my_env, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen('echo -e "Restore point unmounted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-
-        commoninclude.print_success('Restore Point Unmounted!')
+        terminal_call(the_raw_cmd, 'Unmounting restore point...', 'Restore point unmounted!')
+        print_success('Restore Point Unmounted!')
 
     elif form.getvalue('action') == 'mount':
         if form.getvalue('restorepoint'):
@@ -58,24 +50,18 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
             the_raw_cmd_orig = 'borg mount '+borg_repo+'::'+form.getvalue('restorepoint')+' /root/borg_restore_point >> '+whm_terminal_log
             the_raw_cmd = the_raw_cmd_orig.decode('utf-8')
 
-            procExe = subprocess.Popen('echo -e "Mounting restore point: '+form.getvalue('restorepoint')+'" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            procExe.wait()
-            procExe = subprocess.Popen(the_raw_cmd, env=my_env, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            procExe.wait()
-            procExe = subprocess.Popen('echo -e "Restore point '+form.getvalue('restorepoint')+' mounted..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            procExe.wait()
-    
-            commoninclude.print_success('Restore Point Mounted!')
+            terminal_call(the_raw_cmd, 'Mounting restore point: '+form.getvalue('restorepoint')+'...', 'Restore point '+form.getvalue('restorepoint')+' mounted!')
+            print_success('Restore Point Mounted!')
 
         else:
-            commoninclude.print_forbidden()
+            print_forbidden()
             print_simple_footer()
             exit(0)
     else:
-        commoninclude.print_forbidden()
+        print_forbidden()
         print_simple_footer()
         exit(0)
 
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 print_simple_footer()
