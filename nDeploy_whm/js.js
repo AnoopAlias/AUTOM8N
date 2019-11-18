@@ -778,8 +778,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-branding .card-body").load(($urlparam) + " #v-pills-branding .card-body > *");
-                $("#main-header").load(($urlparam) + " #main-header > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
@@ -800,8 +799,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-branding .card-body").load(($urlparam) + " #v-pills-branding .card-body > *");
-                $("#main-header").load(($urlparam) + " #main-header > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
