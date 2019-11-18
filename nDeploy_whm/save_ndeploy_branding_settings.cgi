@@ -1,13 +1,10 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import yaml
 import os
-import subprocess
-import re
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
 __author__ = "Budd P Grant"
@@ -21,7 +18,6 @@ __status__ = "Production"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 branding_file = installation_path+"/conf/branding.yaml"
-whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -45,9 +41,8 @@ if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalu
         with open(branding_file, 'w') as ndeploy_control_branding_conf:
                 yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
-        procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
-
-        commoninclude.print_success('The branding configuration has been updated.')
+        terminal_call(installation_path+'/scripts/setup_brand.sh', 'Updating branding configuration...', 'Branding configuration updated!')
+        print_success('The branding configuration has been updated.')
 
     # Create the desired config if one doesn't exist
     else:
@@ -58,12 +53,10 @@ if form.getvalue('brand_logo') and form.getvalue('brand_group') and form.getvalu
         with open(branding_file, 'w+') as ndeploy_control_branding_conf:
             yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
-        procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-
-        commoninclude.print_success('The branding configuration has been created.')
+        terminal_call(installation_path+'/scripts/setup_brand.sh', 'Creating branding configuration...', 'Branding configuration created!')
+        print_success('The branding configuration has been created.')
 
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()
