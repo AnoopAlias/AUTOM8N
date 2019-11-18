@@ -1,14 +1,13 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
-from requests import get
 import yaml
 import os
 import sys
 import re
-from commoninclude import print_simple_header, print_simple_footer
+from requests import get
+from commoninclude import print_simple_header, print_simple_footer, print_success, print_error, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -25,18 +24,18 @@ master_config_file = installation_path+"/conf/ndeploy_master.yaml"
 
 cgitb.enable()
 
-
 def check_unique_id(id):
     if os.path.isfile(ansible_inventory_file):
-        # parse the inventory and display its contents
+
+        # Parse the inventory and display its contents
         with open(ansible_inventory_file, 'r') as my_inventory:
             inventory = yaml.safe_load(my_inventory)
+
     for myslave in inventory['all']['children']['ndeployslaves']['hosts'].keys():
         if inventory['all']['children']['ndeployslaves']['hosts'][myslave]['server_id'] == id:
             return False
             break
     return True
-
 
 form = cgi.FieldStorage()
 
@@ -51,7 +50,8 @@ if form.getvalue('action'):
         slave_lat = slave_ipdata.get('lat')
         slave_lon = slave_ipdata.get('lon')
         inventory = {}
-        # master
+
+        # Master
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_port'] = form.getvalue('master_ssh_port')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['mainip'] = form.getvalue('master_main_ip')
@@ -63,7 +63,8 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['repo'] = 'ndeploy'
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['server_id'] = 1
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_connection'] = 'local'
-        # dbslave
+
+        # DBSlave
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['ansible_port'] = form.getvalue('slave_ssh_port')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['mainip'] = form.getvalue('slave_main_ip')
@@ -74,7 +75,8 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['longitude'] = slave_lon
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['repo'] = 'ndeploy'
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['server_id'] = 2
-        # slave
+
+        # Slave
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['ansible_port'] = form.getvalue('slave_ssh_port')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['mainip'] = form.getvalue('slave_main_ip')
@@ -88,21 +90,26 @@ if form.getvalue('action'):
 
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
-        # create the ansible group_vars file with default data
+
+        # Create the ansible group_vars file with default data
         if not os.path.exists('/opt/nDeploy/conf/nDeploy-cluster/group_vars'):
             os.makedirs('/opt/nDeploy/conf/nDeploy-cluster/group_vars')
         if not os.path.isfile('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all'):
             mydict = {'homedir': ['home']}
             with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'w') as group_vars_file:
                 yaml.dump(mydict, group_vars_file, default_flow_style=False)
-        commoninclude.print_success('Cluster settings saved')
+        print_success('Cluster settings saved!')
+
     elif form.getvalue('action') == 'editmaster':
+
         # If the inventory file exists
         if os.path.isfile(ansible_inventory_file):
-            # parse the inventory and display its contents
+
+            # Parse the inventory and display its contents
             with open(ansible_inventory_file, 'r') as my_inventory:
                 inventory = yaml.safe_load(my_inventory)
-        # master
+
+        # Master
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_port'] = form.getvalue('master_ssh_port')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['mainip'] = form.getvalue('master_main_ip')
@@ -116,14 +123,18 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploymaster', {}).setdefault('hosts', {})[form.getvalue('master_hostname')]['ansible_connection'] = 'local'
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
-        commoninclude.print_success('Master settings saved')
+        print_success('Master settings saved!')
+
     elif form.getvalue('action') == 'editdbslave':
+
         # If the inventory file exists
         if os.path.isfile(ansible_inventory_file):
-            # parse the inventory and display its contents
+
+            # Parse the inventory and display its contents
             with open(ansible_inventory_file, 'r') as my_inventory:
                 inventory = yaml.safe_load(my_inventory)
-        # slave
+
+        # Slave
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['ansible_port'] = form.getvalue('dbslave_ssh_port')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['mainip'] = form.getvalue('dbslave_main_ip')
@@ -134,7 +145,8 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['longitude'] = form.getvalue('dbslave_lon')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['repo'] = form.getvalue('dbslave_repo')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['server_id'] = form.getvalue('dbslave_server_id')
-        # dbslave
+
+        # DBSlave
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['ansible_port'] = form.getvalue('dbslave_ssh_port')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['mainip'] = form.getvalue('dbslave_main_ip')
@@ -147,23 +159,29 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeploydbslave', {}).setdefault('hosts', {})[form.getvalue('dbslave_hostname')]['server_id'] = form.getvalue('dbslave_server_id')
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
-        commoninclude.print_success('DBSlave settings saved')
+        print_success('DBSlave settings saved!')
+
     elif form.getvalue('action') == 'addadditionalslave':
+
         # If the inventory file exists
         if os.path.isfile(ansible_inventory_file):
-            # parse the inventory and display its contents
+
+            # Parse the inventory and display its contents
             with open(ansible_inventory_file, 'r') as my_inventory:
                 inventory = yaml.safe_load(my_inventory)
         slave_ipdata = get('http://ip-api.com/json/'+form.getvalue('slave_main_ip')).json()
         slave_lat = slave_ipdata.get('lat')
         slave_lon = slave_ipdata.get('lon')
-        # calculate slave server id
+
+        # Calculate slave server id
         num_slaves = len(inventory['all']['children']['ndeployslaves']['hosts'].keys())
-        num_slaves = num_slaves + 2  # server id for master is 1 and dbslave is 2
-        # check if the server id already exist,if yes we increment its value by 1
+        num_slaves = num_slaves + 2  # Server id for master is 1 and dbslave is 2
+
+        # Check if the server id already exist, if yes we increment its value by 1
         while not check_unique_id(num_slaves):
             num_slaves = num_slaves + 1
-        # slave
+
+        # Slave
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['ansible_port'] = form.getvalue('slave_ssh_port')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['mainip'] = form.getvalue('slave_main_ip')
@@ -176,14 +194,18 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['server_id'] = num_slaves
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
-        commoninclude.print_success('New Slave added to cluster')
+        print_success('New slave added to cluster!')
+
     elif form.getvalue('action') == 'editslave':
+
         # If the inventory file exists
         if os.path.isfile(ansible_inventory_file):
-            # parse the inventory and display its contents
+
+            # Parse the inventory and display its contents
             with open(ansible_inventory_file, 'r') as my_inventory:
                 inventory = yaml.safe_load(my_inventory)
-        # slave
+
+        # Slave
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')] = {}
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['ansible_port'] = form.getvalue('slave_ssh_port')
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['mainip'] = form.getvalue('slave_main_ip')
@@ -196,14 +218,18 @@ if form.getvalue('action'):
         inventory.setdefault('all', {}).setdefault('children', {}).setdefault('ndeployslaves', {}).setdefault('hosts', {})[form.getvalue('slave_hostname')]['server_id'] = form.getvalue('slave_server_id')
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
-        commoninclude.print_success('Slave settings saved')
+        print_success('Slave settings saved!')
+
     elif form.getvalue('action') == 'deleteslave':
+
         # If the inventory file exists
         if os.path.isfile(ansible_inventory_file):
-            # parse the inventory and display its contents
+
+            # Parse the inventory and display its contents
             with open(ansible_inventory_file, 'r') as my_inventory:
                 inventory = yaml.safe_load(my_inventory)
-        # slave
+
+        # Slave
         del inventory['all']['children']['ndeployslaves']['hosts'][form.getvalue('slave_hostname')]
         with open(ansible_inventory_file, 'w') as ansible_inventory:
             yaml.dump(inventory, ansible_inventory, default_flow_style=False)
@@ -213,8 +239,10 @@ if form.getvalue('action'):
             cluster_data_yaml_parsed.pop(form.getvalue('slave_hostname'), None)
             with open(cluster_config_file, 'w') as cluster_data_yaml:
                 yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
-        commoninclude.print_success('Deleted slave from cluster')
+        print_success('Deleted slave from cluster!')
+
     elif form.getvalue('action') == 'editip':
+
         with open(cluster_config_file, 'r') as cluster_data_yaml:
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
         with open(master_config_file, 'r') as master_data_yaml:
@@ -226,8 +254,10 @@ if form.getvalue('action'):
             yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
-        commoninclude.print_success('IP mapping updated')
+        print_success('IP mapping updated!')
+
     elif form.getvalue('action') == 'delip':
+
         with open(cluster_config_file, 'r') as cluster_data_yaml:
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
         with open(master_config_file, 'r') as master_data_yaml:
@@ -240,8 +270,10 @@ if form.getvalue('action'):
             yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
-        commoninclude.print_success('IP resource deleted')
+        print_success('IP resource deleted!')
+
     elif form.getvalue('action') == 'addip':
+
         with open(cluster_config_file, 'r') as cluster_data_yaml:
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
         with open(master_config_file, 'r') as master_data_yaml:
@@ -254,8 +286,10 @@ if form.getvalue('action'):
             yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
-        commoninclude.print_success('IP mapping added')
+        print_success('IP mapping added!')
+
     elif form.getvalue('action') == 'deletehomedir':
+
         if form.getvalue('thehomedir'):
             with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
                 group_vars_yaml_parsed = yaml.safe_load(group_vars_file)
@@ -264,8 +298,10 @@ if form.getvalue('action'):
             mydict = {'homedir': new_homedir_list}
             with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'w') as group_vars_file:
                 yaml.dump(mydict, group_vars_file, default_flow_style=False)
-            commoninclude.print_success('Homedir removed from sync')
+            print_success('Home directory removed from sync!')
+
     elif form.getvalue('action') == 'addhomedir':
+
         if form.getvalue('thehomedir'):
             if form.getvalue('thehomedir').startswith('/'):
                 myhomedir_pass1 = form.getvalue('thehomedir')[1:]
@@ -276,18 +312,19 @@ if form.getvalue('action'):
             else:
                 myhomedir = myhomedir_pass1
             if not myhomedir:
-                commoninclude.print_error('Error: Invalid Homedir name')
+                print_error('Error: Invalid home directory name!')
                 sys.exit(0)
             if not re.match("^[\.0-9a-zA-Z/_-]*$", myhomedir):
-                commoninclude.print_error("Error: Invalid char in Homedir name")
+                print_error("Error: Invalid character in home directory name!")
                 sys.exit(0)
             with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
                 group_vars_yaml_parsed = yaml.safe_load(group_vars_file)
             group_vars_yaml_parsed['homedir'].append(myhomedir)
             with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'w') as group_vars_file:
                 yaml.dump(group_vars_yaml_parsed, group_vars_file, default_flow_style=False)
-            commoninclude.print_success('Homedir added to sync')
+            print_success('Home directory added to sync!')
+
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()
