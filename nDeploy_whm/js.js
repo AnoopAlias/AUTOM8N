@@ -778,12 +778,12 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
@@ -799,12 +799,12 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
@@ -820,12 +820,12 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
@@ -841,12 +841,12 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
@@ -1413,12 +1413,12 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
@@ -1435,12 +1435,12 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
@@ -1458,12 +1458,12 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
@@ -1479,12 +1479,12 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                window.location.reload();
                 $.toast({
                     autohide: 'true',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
