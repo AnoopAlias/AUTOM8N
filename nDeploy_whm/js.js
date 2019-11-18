@@ -1271,7 +1271,7 @@ jQuery(document).ready(function($) {
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
-                location.reload();
+                window.location.reload();
             }
         });
     });
