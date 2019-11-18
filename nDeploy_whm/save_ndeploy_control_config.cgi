@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import yaml
 import os
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer print_success, print_forbidden
 
 
 __author__ = "Budd P Grant"
@@ -87,7 +86,7 @@ if form.getvalue('ndeploy_theme_color') and \
         with open(ndeploy_control_file, 'w') as ndeploy_control_config:
                 yaml.dump(yaml_parsed_ndeploy_control_config, ndeploy_control_config, default_flow_style=False)
 
-        commoninclude.print_success('Aesthetics configuration has been updated.')
+        print_success('Aesthetics configuration has been updated!')
 
     # Create the desired config if one doesn't exist
     else:
@@ -101,9 +100,9 @@ if form.getvalue('ndeploy_theme_color') and \
         with open(ndeploy_control_file, 'w+') as ndeploy_control_config:
             yaml.dump(yaml_parsed_ndeploy_control_config, ndeploy_control_config, default_flow_style=False)
 
-        commoninclude.print_success('Aesthetics configuration has been created.')
+        print_success('Aesthetics configuration has created!')
 
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()
