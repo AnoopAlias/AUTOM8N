@@ -1,11 +1,9 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import yaml
-import subprocess
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
 __author__ = "Budd P Grant"
@@ -19,7 +17,6 @@ __status__ = "Production"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 branding_file = installation_path+"/conf/branding.yaml"
-whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -32,12 +29,10 @@ if form.getvalue('restore_defaults') == 'enabled':
     with open(branding_file, 'w') as ndeploy_control_branding_conf:
         yaml.dump(yaml_parsed_ndeploy_control_branding_conf, ndeploy_control_branding_conf, default_flow_style=False)
 
-    procExe = subprocess.Popen(installation_path+'/scripts/setup_brand.sh > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    procExe.wait()
-
-    commoninclude.print_success('Branding configuration has been reverted to default.')
+    terminal_call(installation_path+'/scripts/setup_brand.sh', 'Reverting branding to defaults...', 'Branding has been reverted to default!')
+    print_success('Branding has been reverted to default!')
 
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()
