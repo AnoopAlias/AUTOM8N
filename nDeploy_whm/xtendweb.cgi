@@ -12,7 +12,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, return_prepend, print_header, print_footer, display_term, cardheader, cardfooter, print_input_fn, print_select_fn
+from commoninclude import bcrumb, return_prepend, print_header, print_footer, cardheader, cardfooter, print_input_fn, print_select_fn
 
 
 __author__ = "Anoop P Alias"
