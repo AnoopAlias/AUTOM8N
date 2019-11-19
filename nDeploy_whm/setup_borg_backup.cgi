@@ -5,14 +5,11 @@ import cgitb
 import subprocess
 import os
 import yaml
-import platform
-import psutil
-import signal
 import jinja2
 import codecs
-import sys
 import json
-from commoninclude import print_input_fn, return_label, return_multi_input, bcrumb, print_header, print_footer, display_term, cardheader, cardfooter
+from commoninclude import print_input_fn, return_label, bcrumb, print_header, print_footer, cardheader, cardfooter
+
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
