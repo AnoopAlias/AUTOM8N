@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
-import commoninclude
 import cgitb
 import subprocess
 import cgi
 import psutil
 import os
 import yaml
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, print_success, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -17,9 +16,7 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-xtendweb_installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
-
 
 cgitb.enable()
 form = cgi.FieldStorage()
@@ -261,8 +258,8 @@ if form.getvalue('mode') and form.getvalue('unit') and form.getvalue('cpu') and 
                     subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl set-property '+myservice+' MemoryAccounting=yes"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
                     subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl daemon-reload"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
 
-    commoninclude.print_success('Resource limits saved')
+    print_success('Resource limits saved!')
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()

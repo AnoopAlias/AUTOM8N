@@ -12,7 +12,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from commoninclude import bcrumb, return_prepend, print_header, print_footer, display_term, cardheader, cardfooter, print_input_fn, print_select_fn
+from commoninclude import bcrumb, return_prepend, print_header, print_footer, cardheader, cardfooter, print_input_fn, print_select_fn
 
 
 __author__ = "Anoop P Alias"
@@ -395,6 +395,7 @@ if os.path.isfile(cluster_config_file):
         print('                 <li class="nav-item"><a class="nav-link" id="ip-add-tab" data-toggle="tab" href="#ip-add-content" role="tab" aria-controls="ip-add-content" aria-selected="false">Add IP</a></li>')
         print('                 <li class="nav-item"><a class="nav-link" id="ip-tab" data-toggle="tab" href="#ip-content" role="tab" aria-controls="ip-content" aria-selected="false">IP Resource</a></li>')
         print('                 <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home-content" role="tab" aria-controls="home-content" aria-selected="false">Home Directory</a></li>')
+        print('                 <li class="nav-item"><a class="nav-link" id="playbook-tab" data-toggle="tab" href="#playbook-content" role="tab" aria-controls="playbook-content" aria-selected="false">Deploy</a></li>')
         print('             </ul>')
 
         print('                     <div class="tab-content" id="clusterTabsContent">')
@@ -424,7 +425,7 @@ if os.path.isfile(cluster_config_file):
         print('                        </div>')
 
         # Tab Start / Tab2 ###########################
-        # slave data
+        # DBSlave data
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave" onsubmit="return false;" novalidate>')
 
@@ -461,7 +462,8 @@ if os.path.isfile(cluster_config_file):
                 slave_lon = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['longitude']
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
-                # slave data
+
+                # Slave data
                 print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
                 print('         <div class="card mb-0">')
                 print('             <div class="card-header" id="heading'+str(slave_server_id)+'">')
@@ -537,7 +539,8 @@ if os.path.isfile(cluster_config_file):
         master_ip_list = master_data_yaml_parsed[myhostname]['dnsmap'].keys()
         for myip in master_ip_list:
             master_ip_resource = master_data_yaml_parsed[myhostname]['dnsmap'].get(myip)
-            # provide public IP for Nat environment
+
+            # Provide public IP for Nat environment
             if os.path.isfile('/var/cpanel/cpnat'):
                 with open('/var/cpanel/cpnat') as f:
                     content = f.readlines()
@@ -554,11 +557,13 @@ if os.path.isfile(cluster_config_file):
                     master_ip_resource_actual = myip
             else:
                 master_ip_resource_actual = myip
-            # get corresponding slave IP for this master IP
+
+            # Get corresponding slave IP for this master IP
             mykeypos = 1
             for theslave in cluster_data_yaml_parsed.keys():
                 slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip, "NULL")
                 slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip, "NULL")
+
                 # Display form for IP address mapping
                 print('     <div class="accordion" id="accordionIps-'+master_ip_resource+'-'+str(mykeypos)+'">')
                 print('         <div class="card mb-0 text-white dg-dark">')
@@ -597,6 +602,7 @@ if os.path.isfile(cluster_config_file):
                 print('     </div>')
                 mykeypos = mykeypos + 1
             if master_ip_resource != "ip0":
+
                 # Display form for IP address deletion
                 print('                            <form class="form" method="post" id="delete_ip'+'-'+master_ip_resource+'" onsubmit="return false;">')
                 print('                                <label hidden for="cluster_delete_ip_master_hostname">Delete Master Hostname IP</label>')
@@ -607,6 +613,7 @@ if os.path.isfile(cluster_config_file):
                 print('                                <input hidden name="action" id="cluster_delete_ip" value="delip">')
                 print('                                <button id="delete-ip-btn'+'-'+master_ip_resource+'" class="btn btn-outline-danger btn-block mt-4 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
                 print('                            </form>')
+
             # Provide a seperation between each ip resource_
 
         print('                          </div>')
@@ -621,6 +628,7 @@ if os.path.isfile(cluster_config_file):
         print_input_fn("Master LAN IP", " Enter the Local Area Network (LAN) IP. ", "", "master_lan_ip")
 
         for theslave in cluster_data_yaml_parsed.keys():
+
             # Slave data
             print_input_fn("LAN_IP_"+theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "", theslave+"_lan_ip")
             print_input_fn("WAN_IP_"+theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", "", theslave+"_wan_ip")
@@ -634,7 +642,7 @@ if os.path.isfile(cluster_config_file):
         print('                         </div>')
 
         # Tab Start / Tab6 ###########################
-        # home directories
+        # Home directories
         print('                         <div class="tab-pane fade" id="home-content" role="tabpanel" aria-labelledby="home-tab">')
         with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
             group_vars_dict = yaml.safe_load(group_vars_file)
@@ -685,9 +693,24 @@ if os.path.isfile(cluster_config_file):
 
         print('                            </form>')
         print('                         </div>')
-        # Tabs end ###########################
 
+        # Tab Start / Tab7 ###########################
+        # Run the playbook
+        print('                         <div class="tab-pane fade" id="playbook-content" role="tabpanel" aria-labelledby="run-playbook">')
+        print('                            <form class="form" method="post" id="deploy_playbook" onsubmit="return false;">')
+
+        print('                                <label hidden for="deploy_cluster">Run the Playbook and Deploy the Cluster</label>')
+        print('                                <input hidden name="action" id="deploy_cluster" value="releasethekraken">')
+
+        print('                                <button id="run-playbook-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Run the Playbook and Deploy the Cluster</button>')
+        print('                            </form>')
         print('                         </div>')
+
+
+
+        # Tabs end ###########################
+        print('                         </div>')
+
         # Main Tab Div End ###########################
 
     print('             </div> <!-- Card Body End -->')
@@ -702,7 +725,8 @@ else:
     # This is when a user has setup the initial hosts file, but hasnt setup the cluster yet by running the playbook
     # If the inventory file exists
     if os.path.isfile(ansible_inventory_file):
-        # parse the inventory and display its contents
+
+        # Parse the inventory and display its contents
         with open(ansible_inventory_file, 'r') as my_inventory:
             ansible_inventory_file_parsed = yaml.safe_load(my_inventory)
         master_hostname = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'].keys()[0]
@@ -762,7 +786,7 @@ else:
         print('                        </div>')
 
         # Tab Start / Tab2 ###########################
-        # slave data
+        # Slave data
         print('                         <div class="tab-pane fade show" id="slave-content" role="tabpanel" aria-labelledby="slave-tab">')
         print('                            <form class="form needs-validation" method="post" id="save_cluster_settings_slave" onsubmit="return false;" novalidate>')
 
@@ -786,6 +810,7 @@ else:
         # Additional slaves
         for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
             if myslave != dbslave_hostname:
+
                 # Lets get all the details of this slave server and present to the user for editing
                 slave_hostname = myslave
                 slave_server_id = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['server_id']
@@ -797,7 +822,7 @@ else:
                 slave_lon = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['longitude']
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
-                # slave data
+                # Slave data
                 print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
                 print('         <div class="card mb-0">')
                 print('             <div class="card-header" id="heading'+str(slave_server_id)+'">')
@@ -866,7 +891,7 @@ else:
         print('                         </div>')
 
         # Tab Start / Tab4 ###########################
-        # home directories
+        # Home directories
         print('                         <div class="tab-pane fade show" id="home-content" role="tabpanel" aria-labelledby="home-tab">')
 
         with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'r') as group_vars_file:
@@ -918,15 +943,19 @@ else:
 
         print('                            </form>')
         print('                         </div>')
+
         # Tab ends ###########################
         print('                         </div>')
         # Main Tab Div End ###########################
+
     else:
+
         # Case where conf/nDeploy-cluster/hosts and conf/ndeploy_cluster.yaml does not exists
         # This means the user hast tried to setup a cluster yet!
         # We present before him an option to add the initial slave( setup ansible inventory )
         # Get the server main IP
         myip = get('https://api.ipify.org').text
+
         # Display form for ndeploymaster
         print('                            <form class="form needs-validation" method="post" id="cluster_setup" onsubmit="return false;" novalidate>')
 

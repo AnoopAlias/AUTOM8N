@@ -1,13 +1,11 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import os
 import configparser
 import codecs
-import subprocess
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -20,7 +18,6 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 default_domain_data_file = installation_path+'/conf/domain_data_default.yaml'
 app_template_file = installation_path+"/conf/apptemplates.yaml"
 backend_config_file = installation_path+"/conf/backends.yaml"
-
 
 cgitb.enable()
 
@@ -42,13 +39,20 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
                 with codecs.open(myphpini, 'w', encoding='utf8') as f:
                     config.write(f)
                 if os.path.isfile('/opt/nDeploy/conf/secure-php-enabled'):
-                    p = subprocess.Popen("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
+
+                    terminal_call('kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk "{print $2}")', 'Saving PHP-FPM pool settings...', 'PHP-FPM pool settings saved!')
+
                 else:
-                    p = subprocess.Popen('service ndeploy_backends restart', shell=True)
-                commoninclude.print_success('PHP-FPM pool settings saved')
+
+                    terminal_call('service ndeploy_backends restart', 'Saving PHP-FPM pool settings...', 'PHP-FPM pool settings saved!')
+
+                print_success('PHP-FPM pool settings saved!')
+
         else:
-            commoninclude.print_forbidden()
+            print_forbidden()
+
     elif form.getvalue('action') == 'delete':
+
         if os.path.isfile(myphpini):
             config = configparser.ConfigParser()
             config.readfp(codecs.open(myphpini, 'r', 'utf8'))
@@ -58,11 +62,16 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
             with codecs.open(myphpini, 'w', encoding='utf8') as f:
                 config.write(f)
             if os.path.isfile('/opt/nDeploy/conf/secure-php-enabled'):
-                q = subprocess.Popen("kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk '{print $2}')", shell=True)
+
+                terminal_call('kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk "{print $2}")', 'Saving PHP-FPM pool settings...', 'PHP-FPM pool settings saved!')
+
             else:
-                q = subprocess.Popen('service ndeploy_backends restart', shell=True)
-            commoninclude.print_success('PHP-FPM pool settings saved')
+            
+                terminal_call('service ndeploy_backends restart', 'Saving PHP-FPM pool settings...', 'PHP-FPM pool settings saved!')
+
+            print_success('PHP-FPM pool settings saved!')
+
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()

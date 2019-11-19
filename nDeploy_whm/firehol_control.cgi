@@ -1,14 +1,10 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import subprocess
 import os
-import platform
-import psutil
-import signal
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_error, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -30,30 +26,29 @@ if form.getvalue('ddos'):
         with open(os.devnull, 'w') as FNULL:
             subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
     except OSError:
-        commoninclude.print_error('iptables not compatible')
+        print_error('IPtables not compatible!')
     else:
         if form.getvalue('ddos') == 'enable':
 
             if os.path.isfile('/opt/nDeploy/conf/XTENDWEB_FIREHOL_SETUP_LOCK_DO_NOT_REMOVE'):
-                subprocess.call('sysctl -w net/ipv4/tcp_syncookies=1', shell=True)
-                subprocess.call('sysctl -w net/ipv4/tcp_timestamps=1', shell=True)
-                subprocess.call('sysctl -w net/netfilter/nf_conntrack_tcp_loose=0', shell=True)
-                subprocess.call('sysctl -w net/netfilter/nf_conntrack_max=2000000', shell=True)
-                subprocess.call('echo 2000000 > /sys/module/nf_conntrack/parameters/hashsize', shell=True)
-                subprocess.call(['systemctl', 'restart', 'firehol.service'])
-                commoninclude.print_success('SYNPROXY DDOS Mitigation is now enabled')
+                terminal_call('sysctl -w net/ipv4/tcp_syncookies=1', 'Enabling SYNPROXY DDOS Mitigation')
+                terminal_call('sysctl -w net/ipv4/tcp_timestamps=1')
+                terminal_call('sysctl -w net/netfilter/nf_conntrack_tcp_loose=0')
+                terminal_call('sysctl -w net/netfilter/nf_conntrack_max=2000000')
+                terminal_call('echo 2000000 > /sys/module/nf_conntrack/parameters/hashsize')
+                terminal_call('systemctl restart firehol.service','','SYNPROXY DDOS Mitigation is now enabled!')
+                print_success('SYNPROXY DDOS Mitigation is now enabled!')
             else:
-                commoninclude.print_error('FireHol firewall not installed! <br>To install, see the <a target="_blank" href="help.txt">docs</a>.')
+                print_error('FireHol Firewall not installed! <br>To install, see the <a target="_blank" href="help.txt">docs</a>.')
 
         elif form.getvalue('ddos') == 'disable':
 
             if os.path.isfile('/opt/nDeploy/conf/XTENDWEB_FIREHOL_SETUP_LOCK_DO_NOT_REMOVE'):
-                subprocess.call(['systemctl', 'stop', 'firehol.service'])
-                commoninclude.print_success('SYNPROXY DDOS Mitigation is now disabled')
+                terminal_call('systemctl stop firehol.service', 'Disabling SYNPROXY DDOS Mitigation...', 'SYNPROXY DDOS Mitigation is now disabled!')
+                print_success('SYNPROXY DDOS Mitigation is now disabled!')
             else:
-                commoninclude.print_error('FireHol firewall not installed! <br>To install, see the <a target="_blank" href="help.txt">docs</a>.')
-                
+                print_error('FireHol Firewall not installed! <br>To install, see the <a target="_blank" href="help.txt">docs</a>.')
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()

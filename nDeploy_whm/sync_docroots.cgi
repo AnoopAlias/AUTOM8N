@@ -1,10 +1,8 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
-import subprocess
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -22,9 +20,9 @@ form = cgi.FieldStorage()
 print_simple_header()
 
 if form.getvalue('user'):
-    subprocess.call(installation_path+'/scripts/cluster_filesync_ensure_user.py '+form.getvalue('user'), shell=True)
-    commoninclude.print_success('Web Files synced successfully.')
+    terminal_call(installation_path+'/scripts/cluster_filesync_ensure_user.py '+form.getvalue('user'), 'Syncing web files...', 'Web files synchronization complete!')
+    print_success('Web files synchronization complete!')
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()

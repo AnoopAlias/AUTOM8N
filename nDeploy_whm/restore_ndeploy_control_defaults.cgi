@@ -1,11 +1,9 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
 import yaml
-import subprocess
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, print_success, print_forbidden
 
 
 __author__ = "Budd P Grant"
@@ -31,8 +29,8 @@ if form.getvalue('restore_defaults') == 'enabled':
     with open(ndeploy_control_file, 'w') as ndeploy_control_conf:
         yaml.dump(yaml_parsed_restore_ndeploy_control_conf, ndeploy_control_conf, default_flow_style=False)
 
-    commoninclude.print_success('The nDeploy aesthetics configuration has been restored to defaults.')
+    print_success('The nDeploy aesthetics configuration has been restored to defaults.')
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()

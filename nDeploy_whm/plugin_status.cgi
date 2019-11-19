@@ -1,10 +1,8 @@
 #!/bin/python
 
-import commoninclude
 import cgi
 import cgitb
-import subprocess
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
 __author__ = "Budd P Grant"
@@ -17,7 +15,6 @@ __status__ = "Production"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -26,26 +23,14 @@ form = cgi.FieldStorage()
 print_simple_header()
 
 if form.getvalue('plugin_status') == 'enable':
-    procExe = subprocess.Popen('echo "*** Enabling Plugin ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    procExe.wait()
-    procExe = subprocess.Popen(installation_path+'/scripts/cpanel-nDeploy-setup.sh enable >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    procExe.wait()
-    procExe = subprocess.Popen('echo "*** Plugin Enabled ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    procExe.wait()
-
-    commoninclude.print_success('Plugin successfuly enabled.')
+    terminal_call(installation_path+'/scripts/cpanel-nDeploy-setup.sh enable', 'Enabling Plugin...', 'Plugin Enabled!')
+    print_success('Plugin successfuly enabled!')
 
 elif form.getvalue('plugin_status') == 'disable':
-    procExe = subprocess.Popen('echo "*** Disabling Plugin ****" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    procExe.wait()
-    procExe = subprocess.Popen(installation_path+'/scripts/cpanel-nDeploy-setup.sh disable >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    procExe.wait()
-    procExe = subprocess.Popen('echo "*** Plugin Disabled ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    procExe.wait()
-
-    commoninclude.print_success('Plugin successfully disabled...')
+    terminal_call(installation_path+'/scripts/cpanel-nDeploy-setup.sh disable', 'Disabling Plugin...', 'Plugin Disabled!')
+    print_success('Plugin successfully disabled...')
 
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()
