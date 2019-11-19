@@ -7,7 +7,7 @@ import os
 import sys
 import re
 from requests import get
-from commoninclude import print_simple_header, print_simple_footer, print_success, print_error, print_forbidden
+from commoninclude import print_simple_header, print_simple_footer, print_success, print_error, print_forbidden, terminal_call
 
 
 __author__ = "Anoop P Alias"
@@ -323,6 +323,11 @@ if form.getvalue('action'):
             with open('/opt/nDeploy/conf/nDeploy-cluster/group_vars/all', 'w') as group_vars_file:
                 yaml.dump(group_vars_yaml_parsed, group_vars_file, default_flow_style=False)
             print_success('Home directory added to sync!')
+
+    elif form.getvalue('action') == 'releasethekraken':
+        
+        terminal_call('/usr/bin/ansible-playbook '+installation_path+'/conf/nDeploy-cluster/hosts '+installation_path+'/conf/nDeploy-cluster/cluster.yml', 'Running cluster setup playbook...', 'Cluster setup playbook completed!')
+        print_success('Cluster setup playbook completed!')
 
 else:
     print_forbidden()

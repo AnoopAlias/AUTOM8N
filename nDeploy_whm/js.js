@@ -594,6 +594,27 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $(document).on("submit","#deploy_playbook",function(e){
+        var $loaderId        =   "#run-playbook-btn";
+        var $loaderText      =   "Executing Cluster Setup Playbook...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_cluster_settings.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#playbook-content").load(($urlparam) + " #playbook-content > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
     $(document).on("submit","#save_cluster_settings_master",function(e){
         var $loaderId        =   "#save-cluster-settings-master-btn";
         var $loaderText      =   "Saving...";
