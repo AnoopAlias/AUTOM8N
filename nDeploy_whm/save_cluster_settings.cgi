@@ -326,7 +326,7 @@ if form.getvalue('action'):
 
     elif form.getvalue('action') == 'releasethekraken':
         
-        terminal_call('/usr/bin/ansible-playbook '+installation_path+'/conf/nDeploy-cluster/hosts '+installation_path+'/conf/nDeploy-cluster/cluster.yml', 'Running cluster setup playbook...', 'Cluster setup playbook completed!')
+        terminal_call('/usr/bin/ansible-playbook -i '+installation_path+'/conf/nDeploy-cluster/hosts '+installation_path+'/conf/nDeploy-cluster/cluster.yml', 'Running cluster setup playbook...', 'Cluster setup playbook completed!')
         print_success('Cluster setup playbook completed!')
 
 else:
