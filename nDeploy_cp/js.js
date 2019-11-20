@@ -9,14 +9,17 @@ jQuery(document).ready(function($){
     // #terminal-panel
     var terminalPanel;
 
-    var prevAjaxCall = "";
+    // Pull userdata from terminal class so each user has a terminal window
+    const pullUserDataName = document.getElementById('terminal-panel').classList[1];
+
     // Poll for file changes using ajax
+    var prevAjaxCall = "";
     setInterval(function() {
         var ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function() {
             if (ajax.readyState == 4) {
                 if (ajax.responseText != prevAjaxCall) {
-                    $("#terminal .modal-body").load('term.log');
+                    $("#terminal .modal-body").load(pullUserDataName+'-term.log');
                     window.terminalActive = ($('#terminal-panel:hover').length > 0);
                     if ( !window.terminalActive ) {
                         // Scroll to bottom if not in terminal
@@ -30,7 +33,7 @@ jQuery(document).ready(function($){
                 }
             }
         };
-        ajax.open("POST", "term.log", true);
+        ajax.open("POST", pullUserDataName+'-term.log', true);
         ajax.send();
     }, 1000);
 

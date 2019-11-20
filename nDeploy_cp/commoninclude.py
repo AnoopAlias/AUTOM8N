@@ -3,6 +3,8 @@
 import os
 import yaml
 import socket
+import os
+import subprocess
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -241,10 +243,29 @@ def display_term():
     print('                        <h4 class="modal-title">Command Output <span id="processing">- Processing: <i class="fas fa-spinner fa-spin"></i></span></h4>')
     print('                        <button class="close modalMinimize"> <i class="fa fa-minus"><span class="sr-only">Close</span></i> </button>')
     print('                    </div>')
-    print('                    <div id="terminal-panel" class="modal-body">Retrieving last terminal function executed...</div>')
+    print('                    <div id="terminal-panel" class="modal-body '+cpaneluser+'">Retrieving last terminal function executed...</div>')
     print('                </div>')
     print('            </div>')
     print('        </div>')
+
+
+# OS Environment Pull
+cpaneluser = os.environ["USER"]
+cpanel_terminal_log = installation_path+'/nDeploy_cp/'+cpaneluser+'term.log'
+
+
+# Terminal Call with pre/post output
+# Adding a preEcho clears terminal window
+def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment=''):
+    if preEcho:
+        procExe = subprocess.Popen('echo -e "<em>$(date) [$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+    if runCmd != '':
+        if shellEnvironment != '':
+            procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, env=shellEnvironment, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        else:
+            procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+    if postEcho:
+        procExe = subprocess.Popen('echo -e "\n<em>$(date) [$(hostname)] -> <strong>'+postEcho+'</strong></em>" >> '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
 
 
 # Footer Section
