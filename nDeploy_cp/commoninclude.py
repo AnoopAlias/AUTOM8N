@@ -5,6 +5,7 @@ import yaml
 import socket
 import os
 import subprocess
+import time
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -233,6 +234,10 @@ def print_header(title=''):
 
 # Terminal Section
 def display_term():
+    cpaneluser = os.environ["USER"]
+    cpanelhome = os.environ["HOME"]
+    cpanel_terminal_log = cpanelhome+'/logs/'+cpaneluser+'-term.log'
+
     print('        <div class="modal" id="terminal" tabindex="-1" role="dialog">')
     print('            <div class="modal-dialog" role="document">')
     if ndeploy_theme_color == 'dark':
@@ -243,29 +248,35 @@ def display_term():
     print('                        <h4 class="modal-title">Command Output <span id="processing">- Processing: <i class="fas fa-spinner fa-spin"></i></span></h4>')
     print('                        <button class="close modalMinimize"> <i class="fa fa-minus"><span class="sr-only">Close</span></i> </button>')
     print('                    </div>')
-    print('                    <div id="terminal-panel" class="modal-body '+cpaneluser+'">Retrieving last terminal function executed...</div>')
+    print('                    <div id="terminal-panel" class="modal-body">')
+    if os.path.isfile(cpanel_terminal_log):
+        with open(cpanel_terminal_log, 'r') as term_log:
+            for line in term_log:
+                print(line.rstrip('\n'))
+    else:
+        print('Retrieving last terminal function executed...')
+    print('                    </div>')
     print('                </div>')
     print('            </div>')
     print('        </div>')
 
 
-# OS Environment Pull
-cpaneluser = os.environ["USER"]
-cpanel_terminal_log = installation_path+'/nDeploy_cp/'+cpaneluser+'term.log'
-
-
 # Terminal Call with pre/post output
 # Adding a preEcho clears terminal window
 def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment=''):
+    cpaneluser = os.environ["USER"]
+    cpanelhome = os.environ["HOME"]
+    cpanel_terminal_log = cpanelhome+'/logs/'+cpaneluser+'-term.log'
+
     if preEcho:
-        procExe = subprocess.Popen('echo -e "<em>$(date) [$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        procExe = subprocess.Popen('echo -e "<em>$(date) ['+cpaneluser+'@$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if runCmd != '':
         if shellEnvironment != '':
             procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, env=shellEnvironment, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
         else:
             procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if postEcho:
-        procExe = subprocess.Popen('echo -e "\n<em>$(date) [$(hostname)] -> <strong>'+postEcho+'</strong></em>" >> '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        procExe = subprocess.Popen('echo -e "\n<em>$(date) ['+cpaneluser+'@$(hostname)] -> <strong>'+postEcho+'</strong></em>" >> '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
 
 
 # Footer Section

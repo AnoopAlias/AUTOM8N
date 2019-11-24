@@ -22,11 +22,6 @@ cgitb.enable()
 close_cpanel_liveapisock()
 
 cpaneluser = os.environ["USER"]
-
-# Create terminal log file for user
-if not os.path.isfile(installation_path+'/nDeploy_cp/'+cpaneluser+'-term.log'):
-    os.mknod(installation_path+'/nDeploy_cp/'+cpaneluser+'-term.log')
-
 cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
 with open(cpuserdatajson, 'r') as cpaneluser_data_stream:
     json_parsed_cpaneluser = json.load(cpaneluser_data_stream)
