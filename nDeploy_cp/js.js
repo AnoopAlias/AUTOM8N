@@ -1,38 +1,8 @@
 jQuery(document).ready(function($){
 
+    $("#processing").delay(1000).fadeOut(1000).hide(0);
     // Full URL for ajax load including params
     var $urlparam      = window.location.href;
-
-	// Are we physically in Terminal Window?
-    var terminalActive;
-
-    // #terminal-panel
-    var terminalPanel;
-
-    var prevAjaxCall = "";
-    // Poll for file changes using ajax
-    setInterval(function() {
-        var ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
-            if (ajax.readyState == 4) {
-                if (ajax.responseText != prevAjaxCall) {
-                    $("#terminal .modal-body").load('term.log');
-                    window.terminalActive = ($('#terminal-panel:hover').length > 0);
-                    if ( !window.terminalActive ) {
-                        // Scroll to bottom if not in terminal
-                        window.terminalPanel = document.getElementById("terminal-panel");
-                        window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
-                        // console.log('Mouse not detected in Terminal');
-                    } else {
-                        // console.log('Mouse detected in Terminal');
-                    }
-                    prevAjaxCall = ajax.responseText;
-                }
-            }
-        };
-        ajax.open("POST", "term.log", true);
-        ajax.send();
-    }, 1000);
 
     // General Form Validatons
     function formValidations(){
@@ -80,7 +50,7 @@ jQuery(document).ready(function($){
 
     $(document).ajaxError(function() {
         // console.log('aJax Error');
-        $("#processing").hide();
+        // $("#processing").hide();
     });
 
     $.ajaxSetup({
@@ -278,12 +248,12 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-system .card-body > .btn-group").load(($urlparam) + " #v-pills-system .card-body > .btn-group > *");
                 $.toast({
                     autohide: 'false',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
