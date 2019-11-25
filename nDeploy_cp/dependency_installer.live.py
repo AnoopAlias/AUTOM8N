@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
-import commoninclude
 import os
 import cgi
 import cgitb
 import subprocess
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, terminal_call, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -14,124 +13,84 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
-installation_path = "/opt/nDeploy"  # Absolute Installation Path
-app_template_file = installation_path+"/conf/apptemplates.yaml"
-backend_config_file = installation_path+"/conf/backends.yaml"
-
-
 cgitb.enable()
 
-commoninclude.close_cpanel_liveapisock()
+close_cpanel_liveapisock()
 form = cgi.FieldStorage()
 
-
 print_simple_header()
-
 
 if form.getvalue('domain') and form.getvalue('backend_category') and form.getvalue('backend_version') and form.getvalue('document_root'):
     mydomain = form.getvalue('domain')
     mybackend = form.getvalue('backend_category')
     mybackendversion = form.getvalue('backend_version')
     mydocroot = form.getvalue('document_root')
-    print('<p class="text-left">Project root: <kbd>'+mydocroot+'</<kbd></p>')
+    terminal_call('','Project root: '+mydocroot,'')
+
     if mybackend == 'RUBY':
+
         if os.path.isfile(mydocroot+'/Gemfile'):
+
             if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
                 install_cmd = '/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'
-                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
-                print('<ul class="list-unstyled text-left">')
-                while True:
-                    line = myinstaller.stdout.readline()
-                    if not line:
-                        break
-                    print('<li class="mb-1">'+line+'</li>')
-                print('</ul>')
-                print('<div class="alert alert-info">')
-                print('<p>If the install failed run the following command in your shell to proceed with manual installation:<p>')
-                print('<ul class="list-unstyled text-left">')
-                print('<li class="mb-1">cd '+mydocroot+'</li>')
-                print('<li class="mb-1">/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle</li>')
-                print('</ul>')
-                print('</div>')
+                terminal_call(install_cmd, 'Installing Ruby project dependencies','Ruby project dependencies install complete!','',mydocroot)
+                terminal_call('','','If the install failed, run the following command in your shell to proceed with manual installation: <kbd>cd '+mydocroot+';/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle</kbd>')
+                print_success('Ruby project dependencies install complete!')
             else:
-                commoninclude.print_error('bundler command not found')
+                print_error('Bundler command not found!')
+
         else:
-            commoninclude.print_error_alert('<p>Gemfile not found for <span class="badge badge-warning">RUBY</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>' + mydocroot + '/Gemfile</kbd></li></ul>')
+            terminal_call('','','Gemfile not found for <kbd>RUBY</kbd> project. Specify project dependencies in: '+mydocroot+'/Gemfile')
+            print_error('Gemfile not found!')
+
     elif mybackend == 'NODEJS':
+
         if os.path.isfile(mydocroot+'/package.json'):
             if os.path.isfile('/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm'):
                 install_cmd = '/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm -q install --production'
                 my_env = os.environ.copy()
                 my_env["PATH"] = "/usr/local/nvm/versions/node/"+mybackendversion+"/bin:"+my_env["PATH"]
-                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=my_env, shell=True, universal_newlines=True)
-                print('<ul class="list-unstyled text-left">')
-                while True:
-                    line = myinstaller.stdout.readline()
-                    if not line:
-                        break
-                    print('<li class="mb-1">'+line+'</li>')
-                print('</ul>')
-                print('<div class="alert alert-info">')
-                print('<p>If the install failed run the following command in your shell to proceed with manual installation:<p>')
-                print('<ul class="list list-unstyled mb-0">')
-                print('<li>export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH"</li>')
-                print('<li>cd '+mydocroot+'<li>')
-                print('<li>npm install --production</li>')
-                print('</ul>')
-                print('</div>')
+                terminal_call(install_cmd, 'Installing NodeJS project dependencies','NodeJS project dependencies install complete!', my_env, mydocroot)
+                terminal_call('','','If the install failed, run the following command in your shell to proceed with manual installation: <kbd>export PATH="/usr/local/nvm/versions/node/'+mybackendversion+'/bin:$PATH";cd '+mydocroot+';npm install --production</kbd>')
+                print_success('NodeJS project dependencies install complete!')
             else:
-                commoninclude.print_error('npm command not found')
+                print_error('NPM command not found!')
+
         else:
-            commoninclude.print_error_alert('<p>package.json not found for <span class="badge badge-warning">NODEJS</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:<li></li><kbd>'+mydocroot+'/package.json</kbd></li></ul>')
+            terminal_call('','','Package.json not found for <kbd>NODEJS</kbd> project. Specify project dependencies in: '+mydocroot+'/package.json')
+            print_error('Package.json not found!')
+
     elif mybackend == 'PYTHON':
+
         if os.path.isfile(mydocroot+'/requirements.txt'):
             if os.path.isfile('/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip'):
                 install_cmd = '/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip install --user -r requirements.txt'
-                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
-                print('<ul class="list-unstyled text-left">')
-                while True:
-                    line = myinstaller.stdout.readline()
-                    if not line:
-                        break
-                    print('<li class="mb-1">'+line+'</li>')
-                print('</ul>')
-                print('<div class="alert alert-info">')
-                print('<p>If the install failed run the following command in your shell to proceed with manual installation:</p>')
-                print('<ul class="list list-unstyled mb-0">')
-                print('<li>export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH"</li>')
-                print('<li>cd '+mydocroot+'</li>')
-                print('<li>pip install --user -r requirements.txt</li>')
-                print('</ul>')
-                print('</div>')
+                terminal_call(install_cmd, 'Installing Python project dependencies','Python project dependencies install complete!','', mydocroot)
+                terminal_call('','','If the install failed, run the following command in your shell to proceed with manual installation: <kbd>export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH";cd '+mydocroot+';pip install --user -r requirements.txt</kbd>')
+                print_success('Python project dependencies install complete!')
             else:
-                commoninclude.print_error('pip command not found')
+                print_error('PIP command not found!')
+
         else:
-            commoninclude.print_error_alert('<p>requirements.txt not found for <span class="badge badge-warning">PYTHON</span> project</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/requirements.txt</kbd><li></ul>')
+            terminal_call('','','Requirements.txt not found for <kbd>PYTHON</kbd> project. Specify project dependencies in: '+mydocroot+'/requirements.txt')
+            print_error('Requirements.txt not found!')
+
     elif mybackend == 'PHP':
+
         if os.path.isfile(mydocroot+'/composer.json'):
             if os.path.isfile('/opt/cpanel/composer/bin/composer'):
                 install_cmd = '/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install'
-                myinstaller = subprocess.Popen(install_cmd, cwd=mydocroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
-                print('<ul class="list-unstyled text-left">')
-                while True:
-                    line = myinstaller.stdout.readline()
-                    if not line:
-                        break
-                    print('<br>'+line)
-                print('</ul>')
-                print('<div class="alert alert-info">')
-                print('<p>If the install failed run the following command in your shell to proceed with manual installation:</p>')
-                print('<ul class="list list-unstyled mb-0">')
-                print('<li>export PATH="$PATH:/opt/cpanel/composer/bin"</li>')
-                print('<li>cd '+mydocroot+'</li>')
-                print('<li>/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install</li>')
-                print('</ul>')
-                print('</div>')
+                terminal_call(install_cmd, 'Installing PHP project dependencies','PHP project dependencies install complete!','', mydocroot)
+                terminal_call('','','If the install failed, run the following command in your shell to proceed with manual installation: <kbd>export PATH="$PATH:/opt/cpanel/composer/bin";cd '+mydocroot+';/usr/local/bin/php -d allow_url_fopen=1 -d detect_unicode=0 /opt/cpanel/composer/bin/composer install</kbd>','',mydocroot)
+                print_success('PHP project dependencies install complete!')
             else:
-                commoninclude.print_error('composer command not found')
+                print_error('Composer command not found!')
+
         else:
-            commoninclude.print_error_alert('<p>composer.json not found for <span class="badge badge-warning">PHP</span> project.</p><ul class="list list-unstyled mb-0"><li>Specify project dependencies in:</li><li><kbd>'+mydocroot+'/composer.json</kbd></li></ul>')
+            terminal_call('','','Composer.json not found for <kbd>PHP</kbd> project. Specify project dependencies in: '+mydocroot+'/composer.json')
+            print_error('Composer.json not found!')
+
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()

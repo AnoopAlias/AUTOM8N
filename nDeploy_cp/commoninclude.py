@@ -254,6 +254,7 @@ def display_term():
             for line in term_log:
                 print(line.rstrip('\n'))
     else:
+        
         print('Retrieving last terminal function executed...')
     print('                    </div>')
     print('                </div>')
@@ -263,7 +264,7 @@ def display_term():
 
 # Terminal Call with pre/post output
 # Adding a preEcho clears terminal window
-def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment=''):
+def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment='', documentRoot=''):
     cpaneluser = os.environ["USER"]
     cpanelhome = os.environ["HOME"]
     cpanel_terminal_log = cpanelhome+'/logs/'+cpaneluser+'-term.log'
@@ -271,8 +272,12 @@ def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment=''):
     if preEcho:
         procExe = subprocess.Popen('echo -e "<em>$(date) ['+cpaneluser+'@$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if runCmd != '':
-        if shellEnvironment != '':
+        if shellEnvironment != '' and documentRoot != '':
+            procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, env=shellEnvironment, cwd=documentRoot, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        elif shellEnvironment != '':
             procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, env=shellEnvironment, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        elif documentRoot != '':
+            procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, cwd=documentRoot, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
         else:
             procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if postEcho:
