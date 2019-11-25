@@ -5,7 +5,7 @@ import cgi
 import cgitb
 import time
 
-from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, terminal_call, print_success
+from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, terminal_call, print_success, print_info
 
 
 __author__ = "Anoop P Alias"
@@ -14,21 +14,23 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
-installation_path = "/opt/nDeploy"  # Absolute Installation Path
+cpanelhome = os.environ["HOME"]
+php_log = cpanelhome+"/logs/php_error_log"
 
 cgitb.enable()
 
-cpanelhome = os.environ["HOME"]
 close_cpanel_liveapisock()
 
 form = cgi.FieldStorage()
 
 print_simple_header()
 
-php_log = cpanelhome+"/logs/php_error_log"
+
 if os.path.isfile(php_log):
-    terminal_call('/usr/bin/tail -10 '+php_log, 'Showing last ten entries of '+cpanelhome+'/logs/php_error_log', 'PHP Log dump completed!')
-    print_success('PHP Log has been written to terminal!')
-    time.sleep(1)
+    print_success('The PHP log has been written to the terminal!')
+    terminal_call('/usr/bin/tail -100 '+php_log, 'Showing last 100 entries of '+cpanelhome+'/logs/php_error_log', 'PHP log dump completed!')
+else:
+    print_info('No PHP log file detected!')
+    terminal_call('ls '+cpanelhome+'/logs/', 'Showing contents of '+cpanelhome+'/logs/', 'No PHP log file detected!')
 
 print_simple_footer()

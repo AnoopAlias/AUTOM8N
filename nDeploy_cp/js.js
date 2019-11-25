@@ -227,7 +227,8 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-system .card-body > .btn-group").load(($urlparam) + " #v-pills-system .card-body > .btn-group > *");
+                // $("#v-pills-system .card-body > .btn-group").load(($urlparam) + " #v-pills-system .card-body > .btn-group > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'false',
                 });
