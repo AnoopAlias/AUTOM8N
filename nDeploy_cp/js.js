@@ -270,7 +270,7 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#upstream-confi-settings").load(($urlparam) + " #upstream-confi-settings > *");
+                window.history.back();
                 $.toast({
                     autohide: 'true',
                 });
