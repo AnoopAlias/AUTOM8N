@@ -254,8 +254,11 @@ def display_term():
             for line in term_log:
 
                 # Remove installation directory reference from cPanel end
-                if '/opt/nDeploy/lock/' in line:
-                    line = line.replace('/opt/nDeploy/lock/','')
+                if installation_path+'/lock/' in line:
+                    line = line.replace(installation_path+'/lock/','')
+                elif installation_path in line:
+                    line = line.replace(installation_path+'/','')
+
                 print('                        '+line.rstrip('\n'))
 
     else:
