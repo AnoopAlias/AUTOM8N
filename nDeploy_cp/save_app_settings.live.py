@@ -60,7 +60,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
             yaml_parsed_profileyaml['pagespeed'] = 'disabled'
             yaml_parsed_profileyaml['mod_security'] = 'disabled'
             terminal_call('','Note: Turned off pagespeed and mod_security options as they are incompatible with Full Page cache. The cache will not work if you turn on these options!')
-        if '5029' in myapptemplate:
+        if '5029' in myapptemplate or 'w3tc' in myapptemplate:
             yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
             yaml_parsed_profileyaml['gzip'] = 'disabled'
             yaml_parsed_profileyaml['brotli'] = 'disabled'
