@@ -252,7 +252,15 @@ def display_term():
     if os.path.isfile(cpanel_terminal_log):
         with open(cpanel_terminal_log, 'r') as term_log:
             for line in term_log:
-                print(line.rstrip('\n'))
+
+                # Remove installation directory reference from cPanel end
+                if installation_path+'/lock/' in line:
+                    line = line.replace(installation_path+'/lock/','')
+                elif installation_path in line:
+                    line = line.replace(installation_path+'/','')
+
+                print('                        '+line.rstrip('\n'))
+
     else:
         
         print('Retrieving last terminal function executed...')
