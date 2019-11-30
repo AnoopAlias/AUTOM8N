@@ -108,6 +108,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 cardfooter('Select the upstream category to use with this application.')
 
             else:
+
                 # We get the current app settings for the subdir
                 the_subdir_dict = subdir_apps_dict.get(thesubdir)
                 backend_category = the_subdir_dict.get('backend_category')
@@ -202,9 +203,6 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('')
 
                 # Ok we are done with getting the settings,now lets present it to the user
-
-
-
                 print('            <!-- CP Tabs Row -->')
                 print('            <div class="row justify-content-lg-center flex-nowrap">')
                 print('')
@@ -217,13 +215,13 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                    <input hidden name="domain" value="'+mydomain+'" form="save_subdirectory_app_settings">')
                 print('                    <input hidden name="thesubdir" value="'+thesubdir+'" form="save_subdirectory_app_settings">')
                 print('                    <button id="save-subdirectory-app-settings-btn" class="btn btn-primary btn-block" type="submit" form="save_subdirectory_app_settings">Apply Settings</button>')
-
                 print('                </div>')
 
                 print('')
                 print('                <!-- Container Tab -->')
                 print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
                 print('')
+
                 print('                    <!-- Secondary Mobile Navigation -->')
                 print('                    <div class="d-lg-none d-xl-none dropdown nav">')
                 print('                        <button class="btn btn-primary btn-block dropdown-toggle mb-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">')
@@ -338,10 +336,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                            </form>')
                 print('                        </div> <!-- Card Body End -->')
                 cardfooter('Select the upstream category to use with this application.')
-
                 print('                    </div><!-- System Tab End -->')
-
-
 
                 # General Tab
                 print('')
@@ -524,7 +519,6 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('                                </div>')
 
             # Pass on the domain and subdirectory to the next stage
-
             print('                                <input hidden name="domain" value="'+mydomain+'">')
             print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
             print('                                <button class="btn btn-outline-primary btn-block" type="submit">Confirm Upstream</button>')
@@ -539,7 +533,6 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 else:
     print_nontoast_error('Forbidden!', 'Domain Data Missing!')
     sys.exit(0)
-
 
 # Column End
 print('                <!-- Column End -->')
