@@ -252,7 +252,12 @@ def display_term():
     if os.path.isfile(cpanel_terminal_log):
         with open(cpanel_terminal_log, 'r') as term_log:
             for line in term_log:
+
+                # Remove installation directory reference from cPanel end
+                if '/opt/nDeploy/lock/' in line:
+                    line = line.replace('/opt/nDeploy/lock/','')
                 print('                        '+line.rstrip('\n'))
+
     else:
         
         print('Retrieving last terminal function executed...')
