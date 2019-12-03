@@ -37,9 +37,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
     mybackend = form.getvalue('backend')
     profileyaml = installation_path + "/domain-data/" + mydomain
 
-
     # Get data about the backends available
-
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
@@ -204,7 +202,6 @@ if form.getvalue('domain') and form.getvalue('backend'):
 else:
     print_nontoast_error('Forbidden!', 'Domain Data Missing!')
     sys.exit(0)
-
 
 # Column End
 print('                <!-- Column End -->')

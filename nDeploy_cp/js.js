@@ -237,7 +237,8 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
+                // $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'false',
                 });
@@ -301,7 +302,7 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#upstream-confi-settings").load(($urlparam) + " #upstream-confi-settings > *");
+                window.history.back();
                 $.toast({
                     autohide: 'true',
                 });
