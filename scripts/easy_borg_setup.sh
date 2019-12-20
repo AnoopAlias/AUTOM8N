@@ -1,7 +1,8 @@
 #/bin/bash
 #Author: Anoop P Alias
 
-yum --enablerepo=epel -y install borgbackup python36 python36-pip MariaDB-backup
+yum --enablerepo=epel -y install borgbackup python36 python36-pip
+yum --enablerepo=epel -y install MariaDB-backup
 pip3.6 install borgmatic
 mkdir /etc/borgmatic
 chmod 750 /etc/borgmatic

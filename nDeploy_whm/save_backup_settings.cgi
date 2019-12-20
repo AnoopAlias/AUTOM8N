@@ -1,19 +1,14 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
-import subprocess
 import os
 import yaml
-import platform
-import psutil
-import signal
 import jinja2
 import codecs
 import sys
 import re
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, print_success, print_error, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -52,10 +47,10 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
             else:
                 backup_path = backup_path_pass1
             if not backup_path:
-                commoninclude.print_error('Error: Invalid backup_path')
+                print_error('Error: Invalid backup_path')
                 sys.exit(0)
             if not re.match("^[\.0-9a-zA-Z/_-]*$", backup_path):
-                commoninclude.print_error("Error: Invalid char in backup_path")
+                print_error("Error: Invalid char in backup_path")
                 sys.exit(0)
             yaml_parsed_backupyaml['backup_path'] = backup_path
         else:
@@ -85,10 +80,10 @@ if form.getvalue('system_files') and form.getvalue('mysql_backup'):
         with codecs.open('/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh', 'w', 'utf-8') as borgmatic_hook_myscript:
             borgmatic_hook_myscript.write(borgmatic_hook_script)
         os.chmod("/opt/nDeploy/scripts/borgmatic_cpanel_backup_hook.sh", 0o755)
-        commoninclude.print_success('Backup settings saved')
+        print_success('Backup settings saved')
     else:
-        commoninclude.print_error('Backup config error')
+        print_error('Backup config error')
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()

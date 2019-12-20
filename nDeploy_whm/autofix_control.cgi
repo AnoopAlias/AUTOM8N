@@ -1,10 +1,8 @@
 #!/bin/python
 
-import commoninclude
 import cgi
 import cgitb
-import subprocess
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
 __author__ = "Budd P Grant"
@@ -17,7 +15,6 @@ __status__ = "Production"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -28,24 +25,14 @@ print_simple_header()
 if form.getvalue('autofix_status'):
 
     if form.getvalue('autofix_status') == 'simple':
-        procExe = subprocess.Popen('echo "*** Attempting Simple Nginx AutoFix ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen(installation_path+'/scripts/attempt_autofix.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen('echo "*** Nginx AutoFix Completed ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        commoninclude.print_success('Nginx AutoFix Complete!')
+        terminal_call(installation_path+'/scripts/attempt_autofix.sh', 'Attempting Nginx AutoFix...', 'Nginx AutoFix Completed!')
+        print_success('Nginx AutoFix Complete!')
 
     elif form.getvalue('autofix_status') == 'phpfpm':
-        procExe = subprocess.Popen('echo "*** Attempting AutoFix of PHP Application Server ***" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen(installation_path+'/scripts/init_backends.py autofix >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen('echo "*** PHP Application Server AutoFix Completed ***" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        commoninclude.print_success('PHP-FPM AutoFix Complete!')
+        terminal_call(installation_path+'/scripts/init_backends.py autofix', 'Attempting AutoFix of PHP Application Server...', 'PHP Application Server AutoFix Completed!')
+        print_success('PHP-FPM AutoFix Complete!')
 
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()

@@ -1,10 +1,8 @@
 #!/usr/bin/python
 
-import commoninclude
 import cgi
 import cgitb
-import subprocess
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -14,7 +12,6 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
-whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 cgitb.enable()
 
@@ -25,18 +22,12 @@ print_simple_header()
 if form.getvalue('mode'):
     if form.getvalue('mode') == 'reset':
 
-        procExe = subprocess.Popen('echo -e "Initiating Csync2 Hard Reset..." > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen(installation_path+'/scripts/fix_csync2_configsync.sh >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-        procExe = subprocess.Popen('echo -e "Csync2 Hard Reset Complete..." >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        procExe.wait()
-
-        commoninclude.print_success('Csync2 Hard Reset Completed!')
+        terminal_call(installation_path+'/scripts/fix_csync2_configsync.sh', 'Initiating Csync2 Hard Reset...', 'Csync2 Hard Reset Complete!')
+        print_success('Csync2 Hard Reset Completed!')
 
     else:
-        commoninclude.print_forbidden()
+        print_forbidden()
 else:
-    commoninclude.print_forbidden()
+    print_forbidden()
 
 print_simple_footer()

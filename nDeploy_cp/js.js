@@ -1,9 +1,10 @@
 jQuery(document).ready(function($){
 
+    $("#processing").delay(1000).fadeOut(1000).hide(0);
     // Full URL for ajax load including params
     var $urlparam      = window.location.href;
 
-	// Are we physically in Terminal Window?
+    // Are we physically in Terminal Window?
     var terminalActive;
 
     // #terminal-panel
@@ -16,7 +17,7 @@ jQuery(document).ready(function($){
         ajax.onreadystatechange = function() {
             if (ajax.readyState == 4) {
                 if (ajax.responseText != prevAjaxCall) {
-                    $("#terminal .modal-body").load('term.log');
+                    $("#terminal .modal-body").load('view_log.live.py');
                     window.terminalActive = ($('#terminal-panel:hover').length > 0);
                     if ( !window.terminalActive ) {
                         // Scroll to bottom if not in terminal
@@ -80,7 +81,7 @@ jQuery(document).ready(function($){
 
     $(document).ajaxError(function() {
         // console.log('aJax Error');
-        $("#processing").hide();
+        // $("#processing").hide();
     });
 
     $.ajaxSetup({
@@ -236,7 +237,8 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
+                // $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'false',
                 });
@@ -257,7 +259,8 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-system .card-body > .btn-group").load(($urlparam) + " #v-pills-system .card-body > .btn-group > *");
+                // $("#v-pills-system .card-body > .btn-group").load(($urlparam) + " #v-pills-system .card-body > .btn-group > *");
+                window.location.reload();
                 $.toast({
                     autohide: 'false',
                 });
@@ -278,12 +281,12 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-system .card-body > .btn-group").load(($urlparam) + " #v-pills-system .card-body > .btn-group > *");
                 $.toast({
                     autohide: 'false',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });
@@ -299,7 +302,7 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#upstream-confi-settings").load(($urlparam) + " #upstream-confi-settings > *");
+                window.history.back();
                 $.toast({
                     autohide: 'true',
                 });

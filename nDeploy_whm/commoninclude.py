@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import os
+import subprocess
 import yaml
-import psutil
-import platform
-import signal
 import random
+
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -15,6 +14,7 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 autom8n_version_info_file = installation_path+"/conf/version.yaml"
 nginx_version_info_file = "/etc/nginx/version.yaml"
+whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
 
 # nDeploy Control
@@ -221,6 +221,20 @@ def display_term():
     print('        </div>')
 
 
+# Terminal Call with pre/post output
+# Adding a preEcho clears terminal window
+def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment=''):
+    if preEcho:
+        procExe = subprocess.Popen('echo -e "<em>$(date) [$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+    if runCmd != '':
+        if shellEnvironment != '':
+            procExe = subprocess.Popen(runCmd+' >> '+whm_terminal_log, env=shellEnvironment, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        else:
+            procExe = subprocess.Popen(runCmd+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+    if postEcho:
+        procExe = subprocess.Popen('echo -e "\n<em>$(date) [$(hostname)] -> <strong>'+postEcho+'</strong></em>" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+
+
 # Input Display
 def print_input_fn(label='Label', hint='Hint', inputValue='', inputName='', buttonID='', hiddenName='', hiddenValue=''):
     validateRandom = str(random.randint(0, 100000))
@@ -328,38 +342,3 @@ def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-infinity"):
     print('                </ol>')
     print('            </nav>')
     print('')
-
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
-def safenginxreload():
-    nginx_status = False
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if '/usr/sbin/nginx' in mycmdline and 'reload' in mycmdline:
-            nginx_status = True
-            break
-    if not nginx_status:
-        with open(os.devnull, 'w') as FNULL:
-            subprocess.Popen(['/usr/sbin/nginx', '-s', 'reload'], stdout=FNULL, stderr=subprocess.STDOUT)
-
-
-def sighupnginx():
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-            nginxpid = myprocess.pid
-            os.kill(nginxpid, signal.SIGHUP)
