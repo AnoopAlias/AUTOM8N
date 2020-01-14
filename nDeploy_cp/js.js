@@ -4,37 +4,6 @@ jQuery(document).ready(function($){
     // Full URL for ajax load including params
     var $urlparam      = window.location.href;
 
-    // Are we physically in Terminal Window?
-    var terminalActive;
-
-    // #terminal-panel
-    var terminalPanel;
-
-    var prevAjaxCall = "";
-    // Poll for file changes using ajax
-    setInterval(function() {
-        var ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
-            if (ajax.readyState == 4) {
-                if (ajax.responseText != prevAjaxCall) {
-                    $("#terminal .modal-body").load('view_log.live.py');
-                    window.terminalActive = ($('#terminal-panel:hover').length > 0);
-                    if ( !window.terminalActive ) {
-                        // Scroll to bottom if not in terminal
-                        window.terminalPanel = document.getElementById("terminal-panel");
-                        window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
-                        // console.log('Mouse not detected in Terminal');
-                    } else {
-                        // console.log('Mouse detected in Terminal');
-                    }
-                    prevAjaxCall = ajax.responseText;
-                }
-            }
-        };
-        ajax.open("POST", "term.log", true);
-        ajax.send();
-    }, 1000);
-
     // General Form Validatons
     function formValidations(){
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
