@@ -36,9 +36,9 @@ if form.getvalue('domain'):
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        
+
         # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
-        time.sleep(2)       
+        time.sleep(2)
         print_success('Nginx configuration successfully reloaded!')
     else:
         print_error('Domain-data file I/O error!')
