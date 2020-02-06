@@ -3,9 +3,7 @@
 import os
 import yaml
 import socket
-import os
 import subprocess
-import time
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
