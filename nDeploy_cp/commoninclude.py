@@ -77,6 +77,7 @@ def return_prepend(theoption, hint):
     result = '<div class="d-flex w-50 align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
 
+
 def return_sys_tip(theoption, hint):
     result = '<div class="col-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
@@ -262,7 +263,7 @@ def display_term():
                 print('                        '+line.rstrip('\n'))
 
     else:
-        
+
         print('Retrieving last terminal function executed...')
     print('                    </div>')
     print('                </div>')
