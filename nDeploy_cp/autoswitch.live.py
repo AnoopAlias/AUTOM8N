@@ -4,8 +4,7 @@ import commoninclude
 import os
 import cgi
 import cgitb
-import subprocess
-from commoninclude import print_simple_header, print_simple_footer
+from commoninclude import print_simple_header, print_simple_footer, terminal_call
 
 
 __author__ = "Anoop P Alias"
@@ -30,13 +29,5 @@ print_simple_header()
 
 
 switch_cmd = '/opt/nDeploy/scripts/auto_config.py '+cpaneluser+' setconfig'
-myswitcher = subprocess.Popen(switch_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
-print('<ul class="list-unstyled text-left">')
-while True:
-    line = myswitcher.stdout.readline()
-    if not line:
-        break
-    print('<li class="mb-2"><samp>'+line+'</samp></li><hr>')
-print('</ul>')
-
+terminal_call(switch_cmd)
 print_simple_footer()

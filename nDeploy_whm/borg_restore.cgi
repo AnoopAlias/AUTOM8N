@@ -29,8 +29,10 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
         yaml_parsed_borgmaticyaml = yaml.safe_load(borgmatic_config_file_stream)
     borg_repo = yaml_parsed_borgmaticyaml['location']['repositories'][0]
     encryption_passphrase = yaml_parsed_borgmaticyaml['storage']['encryption_passphrase']
+    ssh_command = yaml_parsed_borgmaticyaml['storage']['ssh_command']
     my_env = os.environ.copy()
     my_env["BORG_PASSPHRASE"] = encryption_passphrase
+    my_env["BORG_RSH"] = ssh_command
     my_env["LANG"] = 'en_US.UTF-8'
     if form.getvalue('action') == 'umount':
 

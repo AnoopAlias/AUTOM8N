@@ -366,12 +366,12 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $(".card-body").load(($urlparam) + " .card-body > *");
                 $.toast({
-                    autohide: 'true',
+                    autohide: 'false',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });

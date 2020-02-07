@@ -3,9 +3,7 @@
 import os
 import yaml
 import socket
-import os
 import subprocess
-import time
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -76,6 +74,7 @@ def return_label(theoption, hint):
 def return_prepend(theoption, hint):
     result = '<div class="d-flex w-50 align-items-center" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
     return result
+
 
 def return_sys_tip(theoption, hint):
     result = '<div class="col-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'
@@ -252,17 +251,13 @@ def display_term():
     if os.path.isfile(cpanel_terminal_log):
         with open(cpanel_terminal_log, 'r') as term_log:
             for line in term_log:
-
                 # Remove installation directory reference from cPanel end
                 if installation_path+'/lock/' in line:
                     line = line.replace(installation_path+'/lock/','')
                 elif installation_path in line:
                     line = line.replace(installation_path+'/','')
-
                 print('                        '+line.rstrip('\n'))
-
     else:
-        
         print('Retrieving last terminal function executed...')
     print('                    </div>')
     print('                </div>')
@@ -276,7 +271,6 @@ def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment='', docum
     cpaneluser = os.environ["USER"]
     cpanelhome = os.environ["HOME"]
     cpanel_terminal_log = cpanelhome+'/logs/'+cpaneluser+'-term.log'
-
     if preEcho:
         procExe = subprocess.Popen('echo -e "<em>$(date) ['+cpaneluser+'@$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if runCmd != '':
