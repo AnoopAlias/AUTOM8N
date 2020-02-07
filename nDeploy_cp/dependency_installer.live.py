@@ -3,7 +3,6 @@
 import os
 import cgi
 import cgitb
-import subprocess
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, terminal_call, print_forbidden
 
 
@@ -57,8 +56,8 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print_error('NPM command not found!')
 
         else:
-            terminal_call('','','Package.json not found for <kbd>NODEJS</kbd> project. Specify project dependencies in: '+mydocroot+'/package.json')
-            print_error('Package.json not found!')
+            terminal_call('','','package.json not found for <kbd>NODEJS</kbd> project. Specify project dependencies in: '+mydocroot+'/package.json')
+            print_error('package.json not found!')
 
     elif mybackend == 'PYTHON':
 
@@ -72,8 +71,8 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print_error('PIP command not found!')
 
         else:
-            terminal_call('','','Requirements.txt not found for <kbd>PYTHON</kbd> project. Specify project dependencies in: '+mydocroot+'/requirements.txt')
-            print_error('Requirements.txt not found!')
+            terminal_call('','','requirements.txt not found for <kbd>PYTHON</kbd> project. Specify project dependencies in: '+mydocroot+'/requirements.txt')
+            print_error('requirements.txt not found!')
 
     elif mybackend == 'PHP':
 
@@ -87,8 +86,8 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
                 print_error('Composer command not found!')
 
         else:
-            terminal_call('','','Composer.json not found for <kbd>PHP</kbd> project. Specify project dependencies in: '+mydocroot+'/composer.json')
-            print_error('Composer.json not found!')
+            terminal_call('','','composer.json not found for <kbd>PHP</kbd> project. Specify project dependencies in: '+mydocroot+'/composer.json')
+            print_error('composer.json not found!')
 
 else:
     print_forbidden()

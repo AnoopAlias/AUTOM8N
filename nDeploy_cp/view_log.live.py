@@ -3,7 +3,6 @@
 import os
 import cgi
 import cgitb
-import time
 
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, terminal_call, print_success, print_info
 

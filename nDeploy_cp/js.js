@@ -4,6 +4,15 @@ jQuery(document).ready(function($){
     // Full URL for ajax load including params
     var $urlparam      = window.location.href;
 
+    // #terminal-panel
+    var terminalPanel;
+
+    // Force terminal scroll to bottom
+    function termBottom() {
+        window.terminalPanel = document.getElementById("terminal-panel");
+        window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
+    }
+
     // General Form Validatons
     function formValidations(){
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -26,6 +35,7 @@ jQuery(document).ready(function($){
 
     $(window).on('load',function(){
         formValidations();
+        termBottom();
     });
 
     // Ajax
@@ -356,12 +366,12 @@ jQuery(document).ready(function($){
         $.ajax({
             url: $url,
             success: function(result) {
-                $(".card-body").load(($urlparam) + " .card-body > *");
                 $.toast({
-                    autohide: 'true',
+                    autohide: 'false',
                 });
                 $(".toast-new").toast("show").html(result);
                 $(".toast").removeClass("toast-new");
+                window.location.reload();
             }
         });
     });

@@ -34,6 +34,12 @@ jQuery(document).ready(function($) {
         ajax.send();
     }, 1000);
 
+    // Force terminal scroll to bottom
+    function termBottom() {
+        window.terminalPanel = document.getElementById("terminal-panel");
+        window.terminalPanel.scrollTop = window.terminalPanel.scrollHeight;
+    }
+
     // General Form Validatons
     function formValidations(){
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -66,6 +72,7 @@ jQuery(document).ready(function($) {
 
     $(document).ajaxStop(function() {
         $("#processing").delay(1000).fadeOut(1000).hide(0);
+        termBottom();
         // console.log('aJax Stop');
     });
 
