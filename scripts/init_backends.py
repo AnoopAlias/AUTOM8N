@@ -76,6 +76,13 @@ def control_php_fpm(trigger):
                     except OSError:
                         break
         elif trigger == "reload":
+            conf_list = os.listdir("/var/cpanel/users")
+            for user in conf_list:
+                try:
+                    pwd.getpwnam(user)
+                except KeyError:
+                    silentremove("/opt/nDeploy/php-fpm.d/"+user+".conf")
+                    silentremove("/opt/nDeploy/secure-php-fpm.d/"+user+".conf")
             for path in list(php_backends_dict.values()):
                 php_fpm_pid = path+"/var/run/php-fpm.pid"
                 if os.path.isfile(path+"/sbin/php-fpm"):
