@@ -132,12 +132,10 @@ jQuery(document).ready(function($){
         $modal = "#" + $modalCon;
         $($modal).toggleClass("modal-min");
         if ($($modal).hasClass("modal-min")) {
-            $(this).find("i").toggleClass("fa-minus").toggleClass("fa-clone");
             $("#main-container").addClass("modal-minimized");
             localStorage.minimizeClick = "modal-min";
             localStorage.minimizePad = "modal-minimized";
         } else {
-            $(this).find("i").toggleClass("fa-clone").toggleClass("fa-minus");
             $("#main-container").removeClass("modal-minimized");
             localStorage.minimizeClick = "";
             localStorage.minimizePad = "";
@@ -147,7 +145,6 @@ jQuery(document).ready(function($){
     $("button[data-dismiss='modal']").click(function() {
         $(this).closest("#terminal").removeClass("modal-min");
         $("#main-container").removeClass($apnData);
-        $(this).next(".modalMinimize").find("i").removeClass("fa fa-clone").addClass("fa fa-minus");
     });
 
     // Toasts
