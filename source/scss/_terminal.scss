@@ -21,6 +21,9 @@
 					padding: .75rem;
 					.fa {
 						font-size: .9rem;
+						&:before {
+							content: "\f068";
+						}
 					}
 				}
 				h4 {
@@ -39,6 +42,21 @@
 			    border: 1px solid $green;
 			    font-family: monospace;
 				height: 15rem;
+			}
+		}
+	}
+	&.modal-min {
+		.modal-dialog {
+			.modal-content {
+				.modal-header {
+					.close {
+						.fa {
+							&:before {
+								content: "\f24d";
+							}
+						}
+					}
+				}
 			}
 		}
 	}
