@@ -489,7 +489,7 @@ set $connection_value "upgrade";
 proxy_set_header Upgrade $upgrade_value;
 proxy_set_header Connection $connection_value;
 
-proxy_pass   http://127.0.0.1:$cpport;
+proxy_pass   http://127.0.0.1:$cpproxy_port;
 }
 }
 {% endif %}
