@@ -20,13 +20,13 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 app_template_file = installation_path+"/conf/apptemplates.yaml"
+backend_config_file = installation_path+"/conf/backends.yaml"
+
 cpaneluser = os.environ["USER"]
 user_app_template_file = installation_path+"/conf/"+cpaneluser+"_apptemplates.yaml"
-backend_config_file = installation_path+"/conf/backends.yaml"
 
 cgitb.enable()
 close_cpanel_liveapisock()
-
 form = cgi.FieldStorage()
 
 print_header('Manual Configuration')
@@ -46,7 +46,6 @@ if form.getvalue('domain'):
     if os.path.isfile(backend_config_file):
         with open(backend_config_file, 'r') as backend_data_yaml:
             backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
-    cpaneluser = os.environ["USER"]
 
     # Settings Lock
     if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
