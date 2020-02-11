@@ -62,11 +62,11 @@ def print_domain_stacks(mydomain, mydomainvisual):
     profileyaml = installation_path + "/domain-data/" + mydomain
 
     if os.path.isfile(profileyaml):
-        
+
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        
+
         # App Settings
         backend_category = yaml_parsed_profileyaml.get('backend_category')
         backend_version = yaml_parsed_profileyaml.get('backend_version')
@@ -106,8 +106,8 @@ def print_domain_stacks(mydomain, mydomainvisual):
             print('                        <div class="col-6 alert text-success"><i class="fas fa-check-circle"></i> .htaccess</div>')
     else:
         print('                            <div class="col-6 alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
-    
-    print('                                 <div class="col-md-6 alert d-flex align-items-center text-center justify-content-center"> Template: '+apptemplate_description+'</div>')
+
+    print('                                 <div class="col-md-6 alert d-flex align-items-center text-center justify-content-center"> Configuration: '+apptemplate_description+'</div>')
     print('                             </div>')
     print('                         </div>')
     print('                     </div>')
