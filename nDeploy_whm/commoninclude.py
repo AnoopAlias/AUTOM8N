@@ -304,9 +304,9 @@ def cardheader(header='Untitled Card', faicon='fas fa-cogs'):
     print('')
     print('                    <!-- Bootstrap Card Start for '+header+' -->')
     if ndeploy_theme_color == 'dark':
-        print('                    <div class="card mb-4 text-white bg-'+ndeploy_theme_color+'">')
+        print('                    <div class="card mb-4 text-white bg-'+ndeploy_theme_color+' shadow-sm">')
     if ndeploy_theme_color == 'light':
-        print('                    <div class="card mb-4 text-dark bg-'+ndeploy_theme_color+'">')
+        print('                    <div class="card mb-4 text-dark bg-'+ndeploy_theme_color+' shadow-sm">')
     if header != '':
         print('                        <div class="card-header">')
         print('                            <h3 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h3>')
