@@ -104,15 +104,8 @@ def print_domain_stacks(mydomain, mydomainvisual):
         if backend_version == 'httpd':
             print('                        <div class="alert text-success"><i class="fas fa-check-circle"></i> .htaccess</div>')
     else:
-<<<<<<< HEAD
-        print('                            <div class="col-6 alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
-
-    print('                                 <div class="col-md-6 alert d-flex align-items-center text-center justify-content-center"> Configuration: '+apptemplate_description+'</div>')
-    print('                             </div>')
-=======
         print('                            <div class="alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
 
->>>>>>> 234e6835961da178b776ae18ac774236fe2e2195
     print('                         </div>')
     print('                                 <div class="col-md-12 alert d-flex align-items-center text-center justify-content-center template"> Template: '+apptemplate_description+'</div>')
     print('                     </div>')
