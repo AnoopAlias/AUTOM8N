@@ -66,6 +66,12 @@ h3 {
 	border-color: $disabled-border;
 }
 
+.btn-nb {
+	border: none;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+
 .btn-light:not(:disabled):not(.disabled):active,
 .btn-light:not(:disabled):not(.disabled).active,
 .show>.btn-light.dropdown-toggle {

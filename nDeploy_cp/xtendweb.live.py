@@ -98,26 +98,31 @@ def print_domain_stacks(mydomain, mydomainvisual):
     print('                     <div id="'+mydomainvisual+'-stack-status" class="row no-gutters row-1"> <!-- Row Start -->')
 
     # Htaccess quick show
-    print('                         <div class="col-md-6 alert d-flex align-items-center text-center justify-content-center">Upstream: '+backend_category+'</div>')
-    print('                         <div class="col-md-6">')
-    print('                             <div class="row no-gutters">')
+    print('                         <div class="col-8 alert text-left">Upstream: '+backend_category+'</div>')
+    print('                         <div class="col-4">')
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
-            print('                        <div class="col-6 alert text-success"><i class="fas fa-check-circle"></i> .htaccess</div>')
+            print('                        <div class="alert text-success"><i class="fas fa-check-circle"></i> .htaccess</div>')
     else:
+<<<<<<< HEAD
         print('                            <div class="col-6 alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
 
     print('                                 <div class="col-md-6 alert d-flex align-items-center text-center justify-content-center"> Configuration: '+apptemplate_description+'</div>')
     print('                             </div>')
+=======
+        print('                            <div class="alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
+
+>>>>>>> 234e6835961da178b776ae18ac774236fe2e2195
     print('                         </div>')
+    print('                                 <div class="col-md-12 alert d-flex align-items-center text-center justify-content-center template"> Template: '+apptemplate_description+'</div>')
     print('                     </div>')
     print('                 </div> <!-- Card Body End -->')
 
-    print('                        <div class="card-body">  <!-- Card Body Start -->')
+    print('                        <div>  <!-- Card Body Start -->')
     print('                            <form class="form" action="app_settings.live.py" method="get">')
-    print('                                <div class="input-group mb-1">')
+    print('                                <div class="input-group">')
     print('                                    <input hidden name="domain" value="'+mydomain+'">')
-    print('                                        <button class="btn btn-outline-warning btn-block" type="submit">Configure</button>')
+    print('                                    <button class="btn btn-outline-warning btn-block btn-nb" type="submit">Configure</button>')
     print('                                </div>')
     print('                            </form>')
 
@@ -141,7 +146,7 @@ print('                        <div class="card-body">  <!-- Card Body Start -->
 if settings_lock == 'enabled':
     print('                        <div class="text-center alert alert-info">Application Server settings are locked by the administrator</div>')
 else:
-    print('                            <form class="form mb-3" method="post" id="auto_switch_nginx" onsubmit="return false;">')
+    print('                            <form class="form" method="post" id="auto_switch_nginx" onsubmit="return false;">')
     print('                                <input hidden name="cpaneluser" value="'+cpaneluser+'">')
     print('                                <button id="auto-switch-nginx-btn" class="btn btn-outline-primary btn-block" type="submit">Auto Switch To Nginx</button>')
     print('                            </form>')
