@@ -113,9 +113,9 @@ def print_domain_stacks(mydomain, mydomainvisual):
 
     print('                        <div>  <!-- Card Body Start -->')
     print('                            <form class="form" action="app_settings.live.py" method="get">')
-    print('                                <div class="input-group mb-1">')
+    print('                                <div class="input-group">')
     print('                                    <input hidden name="domain" value="'+mydomain+'">')
-    print('                                        <button class="btn btn-outline-warning btn-block" type="submit">Configure</button>')
+    print('                                    <button class="btn btn-outline-warning btn-block btn-nb" type="submit">Configure</button>')
     print('                                </div>')
     print('                            </form>')
 
