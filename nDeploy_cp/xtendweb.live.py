@@ -62,11 +62,11 @@ def print_domain_stacks(mydomain, mydomainvisual):
     profileyaml = installation_path + "/domain-data/" + mydomain
 
     if os.path.isfile(profileyaml):
-        
+
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        
+
         # App Settings
         backend_category = yaml_parsed_profileyaml.get('backend_category')
         backend_version = yaml_parsed_profileyaml.get('backend_version')
@@ -98,26 +98,24 @@ def print_domain_stacks(mydomain, mydomainvisual):
     print('                     <div id="'+mydomainvisual+'-stack-status" class="row no-gutters row-1"> <!-- Row Start -->')
 
     # Htaccess quick show
-    print('                         <div class="col-md-6 alert d-flex align-items-center text-center justify-content-center">Upstream: '+backend_category+'</div>')
-    print('                         <div class="col-md-6">')
-    print('                             <div class="row no-gutters">')
+    print('                         <div class="col-8 alert text-left">Upstream: '+backend_category+'</div>')
+    print('                         <div class="col-4">')
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
-            print('                        <div class="col-6 alert text-success"><i class="fas fa-check-circle"></i> .htaccess</div>')
+            print('                        <div class="alert text-success"><i class="fas fa-check-circle"></i> .htaccess</div>')
     else:
-        print('                            <div class="col-6 alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
-    
-    print('                                 <div class="col-md-6 alert d-flex align-items-center text-center justify-content-center"> Template: '+apptemplate_description+'</div>')
-    print('                             </div>')
+        print('                            <div class="alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
+
     print('                         </div>')
+    print('                                 <div class="col-md-12 alert d-flex align-items-center text-center justify-content-center template"> Template: '+apptemplate_description+'</div>')
     print('                     </div>')
     print('                 </div> <!-- Card Body End -->')
 
-    print('                        <div class="card-body">  <!-- Card Body Start -->')
+    print('                        <div>  <!-- Card Body Start -->')
     print('                            <form class="form" action="app_settings.live.py" method="get">')
-    print('                                <div class="input-group mb-1">')
+    print('                                <div class="input-group">')
     print('                                    <input hidden name="domain" value="'+mydomain+'">')
-    print('                                        <button class="btn btn-outline-warning btn-block" type="submit">Configure</button>')
+    print('                                    <button class="btn btn-outline-warning btn-block btn-nb" type="submit">Configure</button>')
     print('                                </div>')
     print('                            </form>')
 
@@ -141,7 +139,7 @@ print('                        <div class="card-body">  <!-- Card Body Start -->
 if settings_lock == 'enabled':
     print('                        <div class="text-center alert alert-info">Application Server settings are locked by the administrator</div>')
 else:
-    print('                            <form class="form mb-3" method="post" id="auto_switch_nginx" onsubmit="return false;">')
+    print('                            <form class="form" method="post" id="auto_switch_nginx" onsubmit="return false;">')
     print('                                <input hidden name="cpaneluser" value="'+cpaneluser+'">')
     print('                                <button id="auto-switch-nginx-btn" class="btn btn-outline-primary btn-block" type="submit">Auto Switch To Nginx</button>')
     print('                            </form>')
