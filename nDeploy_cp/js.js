@@ -154,7 +154,7 @@ jQuery(document).ready(function($){
         }));
         e = c.autohide || "true",
         f = c.delay || 5000;
-        a = '<div class="toast toast-new" role="alert" aria-live="assertive" data-autohide="'+e+'" aria-atomic="true" data-delay="'+f+'"></div>';
+        a = '<div class="toast shadow toast-new" role="alert" aria-live="assertive" data-autohide="'+e+'" aria-atomic="true" data-delay="'+f+'"></div>';
         $("#toast-holder").append(a);
         $("#toast-holder .toast:last").toast("show");
     };
