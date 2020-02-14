@@ -571,7 +571,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             if proxy_to_master == 'disabled':
                 apptemplateVars["APPSERVERIP"] = remote_domain_ipv4
             else:
-                app_template = templateEnv.get_template('1010.j2')
+                app_template = templateEnv.get_template('proxy_to_master.j2')
             cluster_generated_app_config = app_template.render(apptemplateVars)
             with codecs.open(cluster_app_config_out, "w", 'utf-8') as confout:
                 confout.write(cluster_generated_app_config)
