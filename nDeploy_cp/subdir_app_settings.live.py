@@ -190,7 +190,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                <div class="col-sm-6 col-xl-4"> <!-- Dash Item Start -->')
                 cardheader('')
                 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-                print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
+                print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Configuration</h4>')
                 print('                        <ul class="list-unstyled mb-0">')
                 print('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
                 print('                        </ul>')
