@@ -176,7 +176,7 @@ if form.getvalue('domain'):
         print('                <div id="app_template_widget" class="col-sm-12 col-xl-4"> <!-- Tamplate Dash Start -->')
         cardheader('')
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
-        print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
+        print('                        <h4 class="mb-0"><i class="fas fa-cog"></i>Configuration</h4>')
         print('                        <ul class="list-unstyled mb-0">')
         print('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
         print('                        </ul>')
