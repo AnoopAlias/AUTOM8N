@@ -150,7 +150,7 @@ print('                        </div> <!-- Card Body End -->')
 cardfooter('')
 
 
-# Auto Switch To Nginx
+# Cluster manual file sync
 if os.path.isfile(cluster_config_file):
     cardheader('Cluster Manual File Sync','fa fa-refresh')
     print('                        <div class="card-body">  <!-- Card Body Start -->')
