@@ -152,7 +152,7 @@ cardfooter('')
 
 # Auto Switch To Nginx
 if os.path.isfile(cluster_config_file):
-    cardheader('Cluster Manual File Sync','fas fa-refresh')
+    cardheader('Cluster Manual File Sync','fa fa-refresh')
     print('                        <div class="card-body">  <!-- Card Body Start -->')
     print('                            <form class="form" method="post" id="cluster_file_sync" onsubmit="return false;">')
     print('                                <button id="cluster-file-sync-btn" class="btn btn-outline-primary btn-block" type="submit">Sync Files</button>')
