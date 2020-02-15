@@ -109,7 +109,7 @@ def print_domain_stacks(mydomain, mydomainvisual):
         print('                            <div class="alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
 
     print('                         </div>')
-    print('                                 <div class="col-md-12 alert d-flex align-items-center text-center justify-content-center template"> Template: '+apptemplate_description+'</div>')
+    print('                                 <div class="col-md-12 alert d-flex align-items-center text-center justify-content-center template"> Configuration: '+apptemplate_description+'</div>')
     print('                     </div>')
     print('                 </div> <!-- Card Body End -->')
 
