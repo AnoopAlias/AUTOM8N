@@ -147,7 +147,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
 
             print('                                <div class="input-group">')
             print('                                    <div class="input-group-prepend input-group-prepend-min">')
-            print('                                        <label class="input-group-text">Template</label>')
+            print('                                        <label class="input-group-text">Configuration</label>')
             print('                                    </div>')
             print('                                    <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
