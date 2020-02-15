@@ -22,6 +22,8 @@ close_cpanel_liveapisock()
 
 print_simple_header()
 
+# Setup SSH keys
+terminal_call(installation_path+'/scripts/cluster_user_ssh_keyadd.sh')
 # Try loading the main userdata cache file
 cpuserdatajson = "/var/cpanel/userdata/" + cpaneluser + "/main.cache"
 if os.path.isfile(cpuserdatajson):
