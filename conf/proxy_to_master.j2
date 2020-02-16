@@ -1,0 +1,8 @@
+#Proxy to Master node of this cluster
+
+root {{ DOCUMENTROOT }};
+
+location / {
+access_log  off;
+proxy_pass   $scheme://{{ APPSERVERIP }}:$nginxport;
+}

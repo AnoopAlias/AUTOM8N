@@ -94,7 +94,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('                                <div class="col-md-6 alert text-success">'+backend_version+'</div>')
 
         # Description
-        print('                                <div class="col-md-6 alert"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
+        print('                                <div class="col-md-6 alert"><i class="fas fa-cog"></i>&nbsp;Current Configuration</div>')
         print('                                <div class="col-md-6 alert text-success text-center">'+apptemplate_description+'</div>')
 
         # .htaccess
@@ -120,7 +120,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('                            <div class="alert alert-info text-center">')
         print('                                <p class="m-0 pb-1">You selected <span class="badge badge-warning">'+mybackend+'</span> as the new upstream type for:</p>')
         print('                                <kbd class="m-1">'+mydomain+'</kbd>')
-        print('                                <p class="m-0 pt-1">Select the version and template for this upstream below.')
+        print('                                <p class="m-0 pt-1">Select the version and configuration for this upstream below.')
         print('                            </div>')
 
         print('                            <form class="form" method="post" id="set_upstream_configuration" onsubmit="return false;">')
@@ -147,7 +147,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
 
             print('                                <div class="input-group">')
             print('                                    <div class="input-group-prepend input-group-prepend-min">')
-            print('                                        <label class="input-group-text">Template</label>')
+            print('                                        <label class="input-group-text">Configuration</label>')
             print('                                    </div>')
             print('                                    <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
@@ -176,7 +176,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
 
             print('                                <div class="input-group">')
             print('                                    <div class="input-group-prepend input-group-prepend-min">')
-            print('                                        <label class="input-group-text">Template</label>')
+            print('                                        <label class="input-group-text">Configuration</label>')
             print('                                    </div>')
             print('                                    <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):

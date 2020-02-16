@@ -373,4 +373,25 @@ jQuery(document).ready(function($){
         });
     });
 
+    $(document).on("submit","#cluster_file_sync",function(e){
+        var $loaderId        =   "#cluster-file-sync-btn";
+        var $loaderText      =   "Syncing...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "cluster_filesync.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $.toast({
+                    autohide: 'false',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+                window.location.reload();
+            }
+        });
+    });
+
 });

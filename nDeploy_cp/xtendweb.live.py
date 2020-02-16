@@ -20,6 +20,7 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 app_template_file = installation_path+"/conf/apptemplates.yaml"
 cpaneluser = os.environ["USER"]
 user_app_template_file = installation_path+"/conf/"+cpaneluser+"_apptemplates.yaml"
+cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 
 cgitb.enable()
@@ -56,6 +57,7 @@ else:
 with open(TEMPLATE_FILE, 'r') as templatefile_data_stream:
     yaml_parsed_templatefile = yaml.safe_load(templatefile_data_stream)
 settings_lock = yaml_parsed_templatefile.get('settings_lock', 'disabled')
+
 
 # Print domain and all the fixins.
 def print_domain_stacks(mydomain, mydomainvisual):
@@ -107,7 +109,7 @@ def print_domain_stacks(mydomain, mydomainvisual):
         print('                            <div class="alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
 
     print('                         </div>')
-    print('                                 <div class="col-md-12 alert d-flex align-items-center text-center justify-content-center template"> Template: '+apptemplate_description+'</div>')
+    print('                                 <div class="col-md-12 alert d-flex align-items-center text-center justify-content-center template"> Configuration: '+apptemplate_description+'</div>')
     print('                     </div>')
     print('                 </div> <!-- Card Body End -->')
 
@@ -146,6 +148,18 @@ else:
 
 print('                        </div> <!-- Card Body End -->')
 cardfooter('')
+
+
+# Cluster manual file sync
+if os.path.isfile(cluster_config_file):
+    cardheader('Cluster Manual File Sync','fas fa-sync')
+    print('                        <div class="card-body">  <!-- Card Body Start -->')
+    print('                            <form class="form" method="post" id="cluster_file_sync" onsubmit="return false;">')
+    print('                                <button id="cluster-file-sync-btn" class="btn btn-outline-primary btn-block" type="submit">Sync Files</button>')
+    print('                            </form>')
+    print('                        </div> <!-- Card Body End -->')
+    cardfooter('')
+
 
 print_domain_stacks(main_domain, main_domain)
 
