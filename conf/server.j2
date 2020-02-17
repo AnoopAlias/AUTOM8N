@@ -461,31 +461,7 @@ listen    {{ CPANELIP }}:80 ;
 {% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
-server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
-# Allow "Well-Known URIs" as per RFC 5785
-location ~* ^/.well-known/ {
-{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
-allow all;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-}
-# cPanel internal DCV checks
-location ~* ^/[0-9]+\..+\.cpaneldcv$ {
-{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
-allow all;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-}
-# Comodo
-location ~* "^/[A-F0-9]{32}\.txt$" {
-{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
-allow all;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-}
-location / {
-return 301 https://$host$request_uri;
-}
-}
 {% if SSL %}
-server {
 listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% if IPVSIX %}
 listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
@@ -495,39 +471,11 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
 ssl_stapling on;
 {% endif %}
-server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
-# Allow "Well-Known URIs" as per RFC 5785
-location ~* ^/.well-known/ {
-{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
-allow all;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-}
-# cPanel internal DCV checks
-location ~* ^/[0-9]+\..+\.cpaneldcv$ {
-{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
-allow all;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-}
-# Comodo
-location ~* "^/[A-F0-9]{32}\.txt$" {
-{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
-allow all;
-proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
-}
-location / {
-set $upgrade_value "";
-set $connection_value "";
-
-if ($http_upgrade ~* ^websocket$) {
-set $upgrade_value $http_upgrade;
-set $connection_value "upgrade";
-}
-proxy_set_header Upgrade $upgrade_value;
-proxy_set_header Connection $connection_value;
-
-proxy_pass   http://127.0.0.1:$cpproxy_port;
-}
-}
 {% endif %}
+server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
+location / {
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+}
 {% endif %}
 ################### Proxy Subdomains ###################
