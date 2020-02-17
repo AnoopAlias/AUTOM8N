@@ -462,6 +462,24 @@ listen    {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
 location / {
 return 301 https://$host$request_uri;
 }
@@ -478,6 +496,24 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 ssl_stapling on;
 {% endif %}
 server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+# cPanel internal DCV checks
+location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+# Comodo
+location ~* "^/[A-F0-9]{32}\.txt$" {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
+allow all;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
 location / {
 set $upgrade_value "";
 set $connection_value "";
