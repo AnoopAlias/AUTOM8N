@@ -142,11 +142,6 @@ jQuery(document).ready(function($){
         }
     });
 
-    $("button[data-dismiss='modal']").click(function() {
-        $(this).closest("#terminal").removeClass("modal-min");
-        $("#main-container").removeClass($apnData);
-    });
-
     // Toasts
     $.toast = function(c) {
         $("#toasts-holder").length || ($("body").append('<div id="toasts-holder" aria-live="polite" aria-atomic="true"></div>'), $("#toasts-holder").append('<div id="toast-holder"></div>'), $("body").on("hidden.bs.toast", ".toast", function() {
