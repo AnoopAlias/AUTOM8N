@@ -123,7 +123,14 @@ jQuery(document).ready(function($){
     var $modal, $apnData, $modalCon;
 
     // Retrieve current state
-    $("#terminal").toggleClass(localStorage.minimizeClick);
+
+    if (localStorage.setItem("minimizeClick", null)) {
+        $("#terminal").toggleClass(localStorage.minimizeClick);
+    } else {
+        $("#main-container").addClass("modal-minimized");
+        $("#terminal").addClass("modal-min");
+    };
+
     $("#main-container").addClass(localStorage.minimizePad);
 
     $(document).on("click",".modalMinimize",function(e){
@@ -140,6 +147,11 @@ jQuery(document).ready(function($){
             localStorage.minimizeClick = "";
             localStorage.minimizePad = "";
         }
+    });
+
+    $("button[data-dismiss='modal']").click(function() {
+        $(this).closest("#terminal").removeClass("modal-min");
+        $("#main-container").removeClass($apnData);
     });
 
     // Toasts
