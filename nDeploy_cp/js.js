@@ -124,8 +124,7 @@ jQuery(document).ready(function($){
 
     // Retrieve current state
 
-    if (localStorage.getItem("minimizeClick" == null )) {
-        // $("#terminal").toggleClass(localStorage.minimizeClick);
+    if (localStorage.getItem("minimizeClick") == null) {
         localStorage.setItem("minimizeClick", "minimized")
         $("#main-container").addClass("modal-minimized");
         $("#terminal").addClass("modal-min");
