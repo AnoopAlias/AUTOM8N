@@ -120,32 +120,37 @@ jQuery(document).ready(function($){
     });
 
     // Toggle state for Terminal
-    var $modal, $apnData, $modalCon;
+    var $modal, $modalCon, $apnData;
 
     // Retrieve current state
 
-    if (localStorage.setItem("minimizeClick", null)) {
-        $("#terminal").toggleClass(localStorage.minimizeClick);
-    } else {
+    if (localStorage.getItem("minimizeClick" == null )) {
+        // $("#terminal").toggleClass(localStorage.minimizeClick);
+        localStorage.setItem("minimizeClick", "minimized")
         $("#main-container").addClass("modal-minimized");
         $("#terminal").addClass("modal-min");
-    };
-
-    $("#main-container").addClass(localStorage.minimizePad);
+    } else {
+        localStorage.getItem("minimizeClick")
+        if (localStorage.getItem("minimizeClick") == "minimized") {
+          $("#main-container").addClass("modal-minimized");
+          $("#terminal").addClass("modal-min");
+        } else {
+          $("#main-container").removeClass("modal-minimized");
+          $("#terminal").removeClass("modal-min");
+        }
+        }
 
     $(document).on("click",".modalMinimize",function(e){
         $modalCon = $(this).closest("#terminal").attr("id");
-        $apnData = $(this).closest("#terminal");
         $modal = "#" + $modalCon;
+        $apnData = $(this).closest("#terminal");
         $($modal).toggleClass("modal-min");
         if ($($modal).hasClass("modal-min")) {
             $("#main-container").addClass("modal-minimized");
-            localStorage.minimizeClick = "modal-min";
-            localStorage.minimizePad = "modal-minimized";
+            localStorage.minimizeClick = "minimized";
         } else {
             $("#main-container").removeClass("modal-minimized");
-            localStorage.minimizeClick = "";
-            localStorage.minimizePad = "";
+            localStorage.minimizeClick = "maximized";
         }
     });
 
