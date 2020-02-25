@@ -44,11 +44,15 @@ if os.path.isfile(ndeploy_control_file):
     primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#121212")
     logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "None")
     app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
+    cpanel_documentation_link = yaml_parsed_ndeploy_control_settings.get("cpanel_documentation_link", "None")
+    whm_documentation_link = yaml_parsed_ndeploy_control_settings.get("whm_documentation_link", "None")
 else:
     ndeploy_theme_color = "light"
     primary_color = "#121212"
     logo_url = "None"
     app_email = "None"
+    cpanel_documentation_link = "None"
+    whm_documentation_link = "None"
 
 # Branding Support
 if os.path.isfile(branding_file):
@@ -362,6 +366,8 @@ primary_color_hint = " This can be a HEX code, a RGB color code, or a HTML color
 ndeploy_theme_color_hint = " Choose between a light or dark theme. "
 logo_url_hint = " This is the logo URL used in the header. "
 app_email_hint = " Enter the email address this application will use when users hit a bind. This email will show up at useful times. "
+cpanel_documentation_link_hint = " Enter the cPanel documentation link for the application. "
+whm_documentation_link_hint = " Enter the WHM documentation link for the application. "
 
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <form class="form" id="ndeploy_control_config" method="post" onsubmit="return false;">')
@@ -411,6 +417,27 @@ print('                                        </span>')
 print('                                    </div>')
 print('                                    <input type="text" class="form-control" name="app_email" value="'+app_email+'" id="app_email" aria-describedby="app_email_desc">')
 print('                                </div>')
+
+print('                                <label class="small" for="cpanel_documentation_link">Enter a support email for users if they run into various issues. Set this to <kbd>None</kbd> to disable.</label>')
+print('                                <div class="input-group">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
+print('                                        <span class="input-group-text" id="cpanel_documentation_link_desc">')
+print('                                            '+return_prepend("cPanel Docs", cpanel_documentation_link_hint))
+print('                                        </span>')
+print('                                    </div>')
+print('                                    <input type="text" class="form-control" name="cpanel_documentation_link" value="'+cpanel_documentation_link+'" id="cpanel_documentation_link" aria-describedby="cpanel_documentation_link_desc">')
+print('                                </div>')
+
+print('                                <label class="small" for="whm_documentation_link">Enter a support email for users if they run into various issues. Set this to <kbd>None</kbd> to disable.</label>')
+print('                                <div class="input-group">')
+print('                                    <div class="input-group-prepend input-group-prepend-min">')
+print('                                        <span class="input-group-text" id="whm_documentation_link_desc">')
+print('                                            '+return_prepend("WHM Docs", whm_documentation_link_hint))
+print('                                        </span>')
+print('                                    </div>')
+print('                                    <input type="text" class="form-control" name="whm_documentation_link" value="'+whm_documentation_link+'" id="whm_documentation_link" aria-describedby="whm_documentation_link_desc">')
+print('                                </div>')
+
 
 print('                            </form>')
 
