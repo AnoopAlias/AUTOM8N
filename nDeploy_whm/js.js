@@ -146,26 +146,38 @@ jQuery(document).ready(function($) {
         $(this).val($(this).val().replace(/\s/g, ""));
     });
 
+
     // Toggle state for Terminal
-    var $modal, $apnData, $modalCon;
+    var $modal, $modalCon, $apnData;
 
     // Retrieve current state
-    $("#terminal").toggleClass(localStorage.minimizeClick);
-    $("#main-container").addClass(localStorage.minimizePad);
+
+    if (localStorage.getItem("minimizeClick") == null) {
+        localStorage.setItem("minimizeClick", "minimized")
+        $("#main-container").addClass("modal-minimized");
+        $("#terminal").addClass("modal-min");
+    } else {
+        localStorage.getItem("minimizeClick")
+        if (localStorage.getItem("minimizeClick") == "minimized") {
+          $("#main-container").addClass("modal-minimized");
+          $("#terminal").addClass("modal-min");
+        } else {
+          $("#main-container").removeClass("modal-minimized");
+          $("#terminal").removeClass("modal-min");
+        }
+        }
 
     $(document).on("click",".modalMinimize",function(e){
         $modalCon = $(this).closest("#terminal").attr("id");
-        $apnData = $(this).closest("#terminal");
         $modal = "#" + $modalCon;
+        $apnData = $(this).closest("#terminal");
         $($modal).toggleClass("modal-min");
         if ($($modal).hasClass("modal-min")) {
             $("#main-container").addClass("modal-minimized");
-            localStorage.minimizeClick = "modal-min";
-            localStorage.minimizePad = "modal-minimized";
+            localStorage.minimizeClick = "minimized";
         } else {
             $("#main-container").removeClass("modal-minimized");
-            localStorage.minimizeClick = "";
-            localStorage.minimizePad = "";
+            localStorage.minimizeClick = "maximized";
         }
     });
 
@@ -173,6 +185,7 @@ jQuery(document).ready(function($) {
         $(this).closest("#terminal").removeClass("modal-min");
         $("#main-container").removeClass($apnData);
     });
+
 
     // Toasts
     $.toast = function(c) {

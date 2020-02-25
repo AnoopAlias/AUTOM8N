@@ -23,11 +23,16 @@ if os.path.isfile(ndeploy_control_file):
     primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#121212")
     logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "None")
     app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
+    cpanel_documentation_link = yaml_parsed_ndeploy_control_settings.get("cpanel_documentation_link", "None")
+    whm_documentation_link = yaml_parsed_ndeploy_control_settings.get("whm_documentation_link", "None")
+    
 else:
     ndeploy_theme_color = "light"
     primary_color = "#121212"
     logo_url = "None"
     app_email = "None"
+    cpanel_documentation_link = "None"
+    whm_documentation_link = "None"
 
 
 # Branding Support
@@ -223,7 +228,10 @@ def print_header(title=''):
     print('            <div class="d-flex">')
     if app_email != 'None':
         print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>')
-    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt" data-toggle="tooltip" title="Documentation"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">Documentation</span></a></div>')
+    if cpanel_documentation_link != 'None':
+        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="'+cpanel_documentation_link+'" data-toggle="tooltip" title="cPanel Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">cPanel Docs</span></a></div>')
+    else:
+        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt" data-toggle="tooltip" title="cPanel Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">cPanel Docs</span></a></div>')
     print('            </div>')
     print('        </header>')
     print('')
