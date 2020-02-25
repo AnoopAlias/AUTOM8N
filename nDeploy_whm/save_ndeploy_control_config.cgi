@@ -31,11 +31,15 @@ def ndeploy_control_data():
     yaml_parsed_ndeploy_control_config['primary_color'] = form.getvalue('primary_color')
     yaml_parsed_ndeploy_control_config['logo_url'] = form.getvalue('logo_url')
     yaml_parsed_ndeploy_control_config['app_email'] = form.getvalue('app_email')
+    yaml_parsed_ndeploy_control_config['cpanel_documentation_link'] = form.getvalue('cpanel_documentation_link')
+    yaml_parsed_ndeploy_control_config['whm_documentation_link'] = form.getvalue('whm_documentation_link')
 
 if form.getvalue('ndeploy_theme_color') and \
     form.getvalue('primary_color') and \
 	form.getvalue('logo_url') and \
-	form.getvalue('app_email'):
+	form.getvalue('app_email') and \
+	form.getvalue('cpanel_documentation_link') and \
+	form.getvalue('whm_documentation_link'):
 
     # Read in ndeploy control configuration if it exists
     if os.path.isfile(ndeploy_control_file):
@@ -65,6 +69,8 @@ if form.getvalue('ndeploy_theme_color') and \
                     yaml_parsed_ndeploy_control_config['ndeploy_theme_color'] = form.getvalue('ndeploy_theme_color')
                     yaml_parsed_ndeploy_control_config['logo_url'] = form.getvalue('logo_url')
                     yaml_parsed_ndeploy_control_config['app_email'] = form.getvalue('app_email')
+                    yaml_parsed_ndeploy_control_config['cpanel_documentation_link'] = form.getvalue('cpanel_documentation_link')
+                    yaml_parsed_ndeploy_control_config['whm_documentation_link'] = form.getvalue('whm_documentation_link')
 
                 else:
                     ndeploy_control_data()
