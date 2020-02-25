@@ -25,7 +25,7 @@ form = cgi.FieldStorage()
 print_simple_header()
 
 if form.getvalue('restore_defaults') == 'enabled':
-    yaml_parsed_restore_ndeploy_control_conf = {'ndeploy_theme_color': 'light', 'primary_color': '#121212', 'logo_url': 'None', 'app_email': 'None'}
+    yaml_parsed_restore_ndeploy_control_conf = {'ndeploy_theme_color': 'light', 'primary_color': '#121212', 'logo_url': 'None', 'app_email': 'None', 'cpanel_documentation_link': 'None', 'whm_documentation_link': 'None'}
     with open(ndeploy_control_file, 'w') as ndeploy_control_conf:
         yaml.dump(yaml_parsed_restore_ndeploy_control_conf, ndeploy_control_conf, default_flow_style=False)
 
