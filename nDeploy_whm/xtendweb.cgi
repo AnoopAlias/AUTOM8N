@@ -44,7 +44,7 @@ for myprocess in psutil.process_iter():
         mycmdline = myprocess.cmdline
     else:
         mycmdline = myprocess.cmdline()
-    if '/usr/sbin/nginx' in mycmdline:
+    if '/usr/sbin/nginx' in mycmdlineor or 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
         nginx_status = True
     if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
         watcher_status = True
