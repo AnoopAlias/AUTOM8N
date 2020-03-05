@@ -77,7 +77,7 @@ for myprocess in psutil.process_iter():
         mycmdline = myprocess.cmdline
     else:
         mycmdline = myprocess.cmdline()
-    if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+    if '/usr/sbin/nginx' in mycmdline:
         nginx_status = True
 
 # Get version of Nginx and plugin
