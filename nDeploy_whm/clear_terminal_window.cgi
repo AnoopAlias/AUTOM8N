@@ -3,7 +3,7 @@
 import cgi
 import cgitb
 import os
-from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
+from commoninclude import print_simple_header, print_simple_footer, terminal_call
 
 
 __author__ = "Budd P Grant"
@@ -24,6 +24,6 @@ form = cgi.FieldStorage()
 
 print_simple_header()
 
-terminal_call('echo "Terminal has been cleared..." > '+whm_terminal_log)
+terminal_call('echo "No terminal data detected or data cleared..." > '+whm_terminal_log)
 
 print_simple_footer()
