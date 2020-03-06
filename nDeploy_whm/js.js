@@ -98,8 +98,15 @@ jQuery(document).ready(function($) {
 
     $('[data-toggle="popover"]').popover();
 
-    //window.history.go(-1);
-
+    $('.clearTerminalWindow').click(function(){
+        // Clear the terminal window so we don't drag data around.
+        var termClear = new XMLHttpRequest();
+        console.log('Terminal Cleared...');
+        termClear.open("GET", "clear_terminal_window.cgi", true);
+        termClear.send();
+        window.terminalPanel = document.getElementById("terminal-panel");
+    });
+    
     $('.nav a.dropdown-item').click(function (e) {
         //get selected href
         var href = $(this).attr('href');
