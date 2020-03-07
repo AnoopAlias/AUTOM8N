@@ -49,9 +49,15 @@ if __name__ == "__main__":
         for myprocess in psutil.process_iter():
             # Workaround for Python 2.6
             if platform.python_version().startswith('2.6'):
-                myexe = myprocess.cmdline
+                try:
+                    myexe = myprocess.cmdline
+                except psutil.NoSuchprocess:
+                    myexe = None
             else:
-                myexe = myprocess.cmdline()
+                try:
+                    myexe = myprocess.cmdline()
+                except psutil.NoSuchprocess:
+                    myexe = None
             if 'php-fpm: master process (/opt/nDeploy/conf/php-fpm.conf)' in myexe:
                 running_process_count = running_process_count + 1
         if running_process_count == installed_php_count:
