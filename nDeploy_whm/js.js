@@ -96,6 +96,11 @@ jQuery(document).ready(function($) {
 
     $('[data-toggle="tooltip"]').tooltip();
 
+    // Clear tooltip when focus lost
+    $('[data-toggle="tooltip"]').on("mouseleave", function(){
+        $(this).tooltip("hide");
+    })
+
     $('[data-toggle="popover"]').popover();
 
     $('.clearTerminalWindow').click(function(){
@@ -106,7 +111,7 @@ jQuery(document).ready(function($) {
         termClear.send();
         window.terminalPanel = document.getElementById("terminal-panel");
     });
-    
+
     $('.nav a.dropdown-item').click(function (e) {
         //get selected href
         var href = $(this).attr('href');

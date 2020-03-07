@@ -25,7 +25,7 @@ if os.path.isfile(ndeploy_control_file):
     app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
     cpanel_documentation_link = yaml_parsed_ndeploy_control_settings.get("cpanel_documentation_link", "None")
     whm_documentation_link = yaml_parsed_ndeploy_control_settings.get("whm_documentation_link", "None")
-    
+
 else:
     ndeploy_theme_color = "light"
     primary_color = "#121212"
@@ -252,8 +252,8 @@ def display_term():
     if ndeploy_theme_color == 'light':
         print('                <div class="modal-content bg-light text-dark">')
     print('                    <div class="modal-header">')
-    print('                        <h4 class="modal-title">Command Output <span id="processing">- Processing: <i class="fas fa-spinner fa-spin"></i></span></h4>')
-    print('                        <button class="close modalMinimize"> <i class="fa fa-minus"><span class="sr-only">Close</span></i> </button>')
+    print('                        <h4 class="modal-title">Command Output <span id="processing"><i class="fas fa-spinner fa-spin"></i></span></h4>')
+    print('                        <button class="icon close modalMinimize"> <i class="fa fa-minus"><span class="sr-only">Close</span></i> </button>')
     print('                    </div>')
     print('                    <div id="terminal-panel" class="modal-body">')
     if os.path.isfile(cpanel_terminal_log):

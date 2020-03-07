@@ -36,7 +36,7 @@ else:
     cpanel_documentation_link = "None"
     whm_documentation_link = "None"
 
-    
+
 # Branding Support
 if os.path.isfile(branding_file):
     with open(branding_file, 'r') as brand_data_file:
@@ -222,10 +222,10 @@ def display_term():
     if ndeploy_theme_color == 'light':
         print('                <div class="modal-content bg-light text-dark">')
     print('                    <div class="modal-header">')
-    print('                        <h4 class="modal-title">Command Output <span id="processing">- Processing: <i class="fas fa-spinner fa-spin"></i></span></h4>')
-    print('                        <div>')
-    print('                            <button class="clearTerminalWindow" data-toggle="tooltip" data-original-title="Clear Terminal Window"><i class="fas fa-eraser"><span class="sr-only">Clear Terminal Window</span></i></button>')
-    print('                            <button class="close modalMinimize" data-toggle="tooltip" data-original-title="Minimize Terminal Window"><i class="fa fa-minus"><span class="sr-only">Close</span></i></button>')
+    print('                        <h4 class="modal-title">Command Output <span id="processing"><i class="fas fa-spinner fa-spin"></i></span></h4>')
+    print('                        <div class="btn-group">')
+    print('                            <button class="icon clearTerminalWindow" data-toggle="tooltip" data-original-title="Clear Terminal Window"><i class="fas fa-eraser"><span class="sr-only">Clear Terminal Window</span></i></button>')
+    print('                            <button class="icon close modalMinimize" data-toggle="tooltip" data-original-title="Minimize Terminal Window"><i class="fa fa-minus"><span class="sr-only">Close</span></i></button>')
     print('                        </div>')
     print('                    </div>')
     print('                    <div id="terminal-panel" class="modal-body">Retrieving last terminal function executed...</div>')
