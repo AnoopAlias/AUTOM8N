@@ -69,6 +69,11 @@ jQuery(document).ready(function($){
 
     $('[data-toggle="tooltip"]').tooltip();
 
+    // Clear tooltip when focus lost
+    $('[data-toggle="tooltip"]').on("mouseleave", function(){
+        $(this).tooltip("hide");
+    })
+
     $('[data-toggle="popover"]').popover();
 
     //window.history.go(-1);
