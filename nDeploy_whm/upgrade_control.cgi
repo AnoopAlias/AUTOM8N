@@ -49,7 +49,8 @@ if form.getvalue('upgrade_control'):
     elif form.getvalue('upgrade_control') == 'reinstall':
         if os.path.isfile(cluster_config_file):
 
-            terminal_call('yum -y --enablerepo=ndeploy reinstall *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy reinstall *nDeploy*\"', 'Reinstalling application cluster-wide...', 'Application has been reinstalled cluster-wide!')
+            terminal_call('yum -y --enablerepo=ndeploy reinstall *nDeploy*', 'Reinstalling application on Master...', 'Reinstalling application cluster-wide...')
+            terminal_call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy reinstall *nDeploy*\"', '', 'Application has been reinstalled cluster-wide!')
             terminal_call(installation_path+'/scripts/check_for_updates.sh', '', 'Checking for updates...')
             print_success('Application has been reinstalled cluster-wide!')
 
@@ -62,13 +63,17 @@ if form.getvalue('upgrade_control'):
     elif form.getvalue('upgrade_control') == 'upgrade':
         if os.path.isfile(cluster_config_file):
 
-            terminal_call('yum -y --enablerepo=ndeploy upgrade *nDeploy* && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy upgrade *nDeploy*\" && '+installation_path+'/scripts/attempt_autofix.sh')
+            terminal_call('yum -y --enablerepo=ndeploy upgrade *nDeploy*', 'Upgrading application on Master...', 'Upgrading application cluster-wide...')
+            terminal_call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"yum -y --enablerepo=ndeploy upgrade *nDeploy*\"', '', 'Application has been upgraded cluster-wide!')
+            terminal_call(installation_path+'/scripts/attempt_autofix.sh', '', 'Running AutoFix...')
             terminal_call(installation_path+'/scripts/check_for_updates.sh', '', 'Checking for updates...')
             print_success('Application has been upgraded cluster-wide!')
 
         else:
 
-            terminal_call('yum -y --enablerepo=ndeploy upgrade *nDeploy* && '+installation_path+'/scripts/attempt_autofix.sh && nginx -t && needs-restarting | grep nginx && service nginx restart')
+            terminal_call('yum -y --enablerepo=ndeploy upgrade *nDeploy*', 'Upgrading application...', 'Application has been upgraded!')
+            terminal_call(installation_path+'/scripts/attempt_autofix.sh', '', 'Running AutoFix...')
+            terminal_call('nginx -t && needs-restarting | grep nginx && service nginx restart', '', 'Reloading Nginx...')
             terminal_call(installation_path+'/scripts/check_for_updates.sh', '', 'Checking for updates...')
             print_success('Application has been upgraded!')
 
