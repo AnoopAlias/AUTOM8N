@@ -64,5 +64,5 @@ if __name__ == "__main__":
             php_status = True
         else:
             php_status = False
-    if not is_page_available('localhost', "/pingphpfpm") or not php_status:
-        subprocess.call('service ndeploy_backends restart', shell=True)
+        if not is_page_available('localhost', "/pingphpfpm") or not php_status:
+            subprocess.call('service ndeploy_backends restart', shell=True)
