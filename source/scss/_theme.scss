@@ -106,8 +106,8 @@
 		.modal-dialog {
 			.modal-content {
 				.modal-header {
-					.close {
-						color: $white;
+					.icon {
+						color: rgba(255,255,255,.7);
 					}
 				}
 			}
@@ -189,7 +189,7 @@
 		.modal-dialog {
 			.modal-content {
 				.modal-header {
-					.close {
+					.icon {
 						color: $black;
 					}
 				}

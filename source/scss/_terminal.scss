@@ -16,14 +16,23 @@
 			.modal-header {
 				padding: .45rem 1.25rem;
 				border: none;
-				.close {
+				.icon {
+					background-color: transparent;
+					border: none;
 					outline: none;
-					padding: .75rem;
+					padding: 0 .75rem;
 					.fa {
 						font-size: .9rem;
+					}
+					.fa-minus {
 						&:before {
 							content: "\f068";
+							position: relative;
+							top: -3px;
 						}
+					}
+					&:hover {
+						cursor: pointer;
 					}
 				}
 				h4 {
