@@ -82,7 +82,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
                 mycmdline = myprocess.cmdline
             else:
                 mycmdline = myprocess.cmdline()
-            if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
+            if '/usr/sbin/nginx' in mycmdline or 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
                 nginx_status = True
                 break
 
