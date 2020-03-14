@@ -453,7 +453,6 @@ print('                                <button id="restore-ndeploy-control-defau
 print('                                <button id="ndeploy-control-config-btn" class="btn btn-outline-primary" type="submit" form="ndeploy_control_config">Save</button>')
 print('                            </div>')
 
-
 print('                        </div> <!-- Card Body End -->')
 
 cardfooter('')
@@ -465,7 +464,7 @@ print('')
 print('                <!-- Nginx Autoswitch Tab -->')
 print('                <div class="tab-pane fade" id="v-pills-autoswitch" role="tabpanel" aria-labelledby="v-pills-autoswitch-tab">')
 
-# Set Default PHP for AutoConfig
+# Set Default PHP for AutoSwitcher
 cardheader('Nginx Autoswitch', 'fab fa-php')
 print('                 <div class="card-body p-0"> <!-- Card Body Start -->')
 print('                     <div id="autoswitch-php-status" class="row no-gutters row-2-col"> <!-- Row Start -->')
@@ -490,7 +489,7 @@ print('                                 <div class="col-md-9 alert">'+myphpversi
 print('                             </div>')
 print('                         </div>')
 
-print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Autoswitch via cPanel</div>')
+print('                         <div class="col-md-6 alert"><i class="fas fa-door-open"></i> Autoswitch via cPanel</div>')
 print('                         <div class="col-md-6">')
 print('                             <div class="row no-gutters">')
 
