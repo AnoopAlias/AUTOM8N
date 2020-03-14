@@ -296,6 +296,48 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $(document).on("submit","#autoswitch_enable", function(e){
+        var $loaderId        =   "#autoswitch-enable-btn";
+        var $loaderText      =   "Enabling...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "autoswitch.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-autoswitch .card-body > .no-gutters").load(($urlparam) + " #v-pills-autoswitch .card-body > .no-gutters > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on('submit','#autoswitch_disable', function(e){
+        var $loaderId        =   '#autoswitch-disable-btn';
+        var $loaderText      =   'Disabling...';
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "autoswitch.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-autoswitch .card-body > .no-gutters").load(($urlparam) + " #v-pills-autoswitch .card-body > .no-gutters > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
     $(document).on("submit","#cluster_soft_restart",function(e){
         var $loaderId        =   "#cluster-soft-restart-btn";
         var $loaderText      =   "Resetting...";
