@@ -267,6 +267,7 @@ print('                <!-- Secondary Navigation -->')
 print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
 print('                    <a class="nav-link active" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics">Aesthetics</a>')
 print('                    <a class="nav-link" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding">Branding</a>')
+print('                    <a class="nav-link" id="v-pills-autoswitch-tab" data-toggle="pill" href="#v-pills-autoswitch" role="tab" aria-controls="v-pills-autoswitch">Nginx Autoswitch</a>')
 print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">Advanced PHP</a>')
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
@@ -286,6 +287,7 @@ print('                        </button>')
 print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
 print('                            <a class="dropdown-item" id="v-pills-aesthetics-tab" data-toggle="pill" href="#v-pills-aesthetics" role="tab" aria-controls="v-pills-aesthetics" aria-pressed="false">Aesthetics</a>')
 print('                            <a class="dropdown-item" id="v-pills-branding-tab" data-toggle="pill" href="#v-pills-branding" role="tab" aria-controls="v-pills-branding" aria-pressed="false">Branding</a>')
+print('                            <a class="dropdown-item" id="v-pills-autoswitch-tab" data-toggle="pill" href="#v-pills-autoswitch" role="tab" aria-controls="v-pills-autoswitch" aria-pressed="false">Nginx Autoswitch</a>')
 print('                            <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">Advanced PHP</a>')
 print('                            <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
 print('                            <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
@@ -451,12 +453,97 @@ print('                                <button id="restore-ndeploy-control-defau
 print('                                <button id="ndeploy-control-config-btn" class="btn btn-outline-primary" type="submit" form="ndeploy_control_config">Save</button>')
 print('                            </div>')
 
-
 print('                        </div> <!-- Card Body End -->')
 
 cardfooter('')
 
 print('                    </div> <!-- End Aesthetics Tab -->')
+
+# Nginx Autoswitch Tab
+print('')
+print('                <!-- Nginx Autoswitch Tab -->')
+print('                <div class="tab-pane fade" id="v-pills-autoswitch" role="tabpanel" aria-labelledby="v-pills-autoswitch-tab">')
+
+# Set Default PHP for AutoSwitcher
+cardheader('Nginx Autoswitch', 'fab fa-php')
+print('                 <div class="card-body p-0"> <!-- Card Body Start -->')
+print('                     <div id="autoswitch-php-status" class="row no-gutters row-2-col"> <!-- Row Start -->')
+
+# Check if we have a Preferred PHP and allow selection.
+print('                         <div class="col-md-6 alert"><i class="fab fa-php"></i> Default PHP</div>')
+print('                         <div class="col-md-6">')
+print('                             <div class="row no-gutters">')
+
+if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
+    preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
+    preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
+    preferred_php_yaml.close()
+    phpversion = preferred_php_yaml_parsed.get('PHP')
+    myphpversion = phpversion.keys()[0]
+    print('                             <div class="col-md-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+else:
+    myphpversion = "Unset"
+    print('                             <div class="col-md-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+
+print('                                 <div class="col-md-9 alert">'+myphpversion+'</div>')
+print('                             </div>')
+print('                         </div>')
+
+print('                         <div class="col-md-6 alert"><i class="fas fa-door-open"></i> Autoswitch via cPanel</div>')
+print('                         <div class="col-md-6">')
+print('                             <div class="row no-gutters">')
+
+if not os.path.isfile(installation_path + '/conf/autoswitch.disabled'):
+    print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="autoswitch_disable" class="form" onsubmit="return false;">')
+    print('                                     <label hidden for="autoswitch_disabled">Autoswtich Disabled</label>')
+    print('                                     <input hidden name="autoswitch" id="autoswitch_disabled" value="disable">')
+    print('                                     <button id="autoswitch-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
+else:
+    print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="autoswitch_enable" class="form" onsubmit="return false;">')
+    print('                                     <label hidden for="autoswitch_enabled">Autoswitch Enabled</label>')
+    print('                                     <input hidden name="autoswitch" id="autoswitch_enabled" value="enable">')
+    print('                                     <button id="autoswitch-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
+
+print('                                     </form>')
+print('                                 </div>')
+print('                             </div>')
+print('                         </div>')
+
+print('                     </div>')
+print('                 </div> <!-- Card Body End -->')
+
+backend_config_file = installation_path+"/conf/backends.yaml"
+backend_data_yaml = open(backend_config_file, 'r')
+backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+backend_data_yaml.close()
+
+if "PHP" in backend_data_yaml_parsed:
+    print('             <div class="card-body"> <!-- Card Body Start -->')
+    print('                 <form class="form" id="default_php_autoswitch" onsubmit="return false;">')
+    print('                     <div class="input-group">')
+    print('                         <div class="input-group-prepend input-group-prepend-min">')
+    print('                             <label for="default_php_autoswitch_select" class="input-group-text">PHP</label>')
+    print('                         </div>')
+    print('                         <select name="phpversion" id="default_php_autoswitch_select" class="custom-select">')
+
+    php_backends_dict = backend_data_yaml_parsed["PHP"]
+    for versions_defined in list(php_backends_dict.keys()):
+        if versions_defined == myphpversion:
+            print('                     <option selected value="'+myphpversion+'">'+myphpversion+'</option>')
+        else:
+            print('                     <option value="'+versions_defined+'">'+versions_defined+'</option>')
+    print('                         </select>')
+    print('                     </div>')
+    print('                     <button id="default-php-autoswitch-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Set Default PHP</button>')
+    print('                 </form>')
+    print('             </div> <!-- Card Body End -->')
+cardfooter('Automatic switch to Nginx will use versions set in MultiPHP or if MultiPHP is not used the phpversion above')
+
+print('                </div> <!-- End Nginx Autoswitch Tab -->')
 
 # Advanced PHP Configuration
 print('')

@@ -203,7 +203,6 @@ print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-non
 print('                    <a class="nav-link active" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="true">System Health & Backup</a>')
 print('                    <a class="nav-link" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster" aria-selected="false">Cluster Status</a>')
 print('                    <a class="nav-link" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone" aria-selected="false">Cluster Sync</a>')
-print('                    <a class="nav-link" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php" aria-selected="false">Default PHP for Autoswitch</a>')
 print('                    <a class="nav-link" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos" aria-selected="false">DDOS Protection</a>')
 print('                    <a class="nav-link" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm" aria-selected="false">PHP-FPM Pool Editor</a>')
 print('                    <a class="nav-link" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map" aria-selected="false">Package Editor</a>')
@@ -221,7 +220,6 @@ print('                        <div class="dropdown-menu" aria-labelledby="dropd
 print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="true">System Health & Backup</a>')
 print('                            <a class="dropdown-item" id="v-pills-cluster-tab" data-toggle="pill" href="#v-pills-cluster" role="tab" aria-controls="v-pills-cluster" aria-selected="false">Cluster Status</a>')
 print('                            <a class="dropdown-item" id="v-pills-zone-tab" data-toggle="pill" href="#v-pills-zone" role="tab" aria-controls="v-pills-zone" aria-selected="false">Sync GDNSD Zone</a>')
-print('                            <a class="dropdown-item" id="v-pills-php-tab" data-toggle="pill" href="#v-pills-php" role="tab" aria-controls="v-pills-php" aria-selected="false">Default PHP for Autoswitch</a>')
 print('                            <a class="dropdown-item" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos" aria-selected="false">DDOS Protection</a>')
 print('                            <a class="dropdown-item" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm" aria-selected="false">PHP-FPM Pool Editor</a>')
 print('                            <a class="dropdown-item" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map" aria-selected="false">Package Editor</a>')
@@ -1027,66 +1025,6 @@ else:
     cardfooter('Cluster Sync is only available when cluster is setup')
 
 print('                </div> <!-- End Sync Tab -->')
-
-# PHP Tab
-print('')
-print('                <!-- PHP Tab -->')
-print('                <div class="tab-pane fade" id="v-pills-php" role="tabpanel" aria-labelledby="v-pills-php-tab">')
-
-# Set Default PHP for AutoConfig
-cardheader('Default PHP for Autoswitch', 'fab fa-php')
-print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
-print('                     <div id="autoswitch-php-status" class="row no-gutters row-1"> <!-- Row Start -->')
-
-# Check if we have a Preferred PHP and allow selection.
-print('                         <div class="col-md-6 alert"><i class="fab fa-php"></i> Default PHP</div>')
-print('                         <div class="col-md-6">')
-print('                             <div class="row no-gutters">')
-if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
-    preferred_php_yaml = open(installation_path+"/conf/preferred_php.yaml", 'r')
-    preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
-    preferred_php_yaml.close()
-    phpversion = preferred_php_yaml_parsed.get('PHP')
-    myphpversion = phpversion.keys()[0]
-    print('                             <div class="col-md-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
-else:
-    myphpversion = "Unset"
-    print('                             <div class="col-md-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
-
-print('                                 <div class="col-md-9 alert">'+myphpversion+'</div>')
-print('                             </div>')
-print('                         </div>')
-print('                     </div>')
-print('                 </div> <!-- Card Body End -->')
-
-backend_config_file = installation_path+"/conf/backends.yaml"
-backend_data_yaml = open(backend_config_file, 'r')
-backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
-backend_data_yaml.close()
-
-if "PHP" in backend_data_yaml_parsed:
-    print('             <div class="card-body"> <!-- Card Body Start -->')
-    print('                 <form class="form" id="default_php_autoswitch" onsubmit="return false;">')
-    print('                     <div class="input-group">')
-    print('                         <div class="input-group-prepend input-group-prepend-min">')
-    print('                             <label for="default_php_autoswitch_select" class="input-group-text">PHP</label>')
-    print('                         </div>')
-    print('                         <select name="phpversion" id="default_php_autoswitch_select" class="custom-select">')
-
-    php_backends_dict = backend_data_yaml_parsed["PHP"]
-    for versions_defined in list(php_backends_dict.keys()):
-        if versions_defined == myphpversion:
-            print('                     <option selected value="'+myphpversion+'">'+myphpversion+'</option>')
-        else:
-            print('                     <option value="'+versions_defined+'">'+versions_defined+'</option>')
-    print('                         </select>')
-    print('                     </div>')
-    print('                     <button id="default-php-autoswitch-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Set Default PHP</button>')
-    print('                 </form>')
-    print('             </div> <!-- Card Body End -->')
-cardfooter('Automatic switch to Nginx will use versions set in MultiPHP or if MultiPHP is not used the phpversion above')
-
-print('                </div> <!-- End PHP Tab -->')
 
 # DOS Tab
 print('')

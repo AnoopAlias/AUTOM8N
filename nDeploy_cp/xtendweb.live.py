@@ -134,20 +134,21 @@ print('')
 print('                <!-- Column Start -->')
 print('                <div class="col-lg-6">')
 
-# Auto Switch To Nginx
-cardheader('Auto Configuration','fas fa-cogs')
-print('                        <div class="card-body">  <!-- Card Body Start -->')
-
-if settings_lock == 'enabled':
-    print('                        <div class="text-center alert alert-info">Application Server settings are locked by the administrator</div>')
-else:
-    print('                            <form class="form" method="post" id="auto_switch_nginx" onsubmit="return false;">')
-    print('                                <input hidden name="cpaneluser" value="'+cpaneluser+'">')
-    print('                                <button id="auto-switch-nginx-btn" class="btn btn-outline-primary btn-block" type="submit">Auto Switch To Nginx</button>')
-    print('                            </form>')
-
-print('                        </div> <!-- Card Body End -->')
-cardfooter('')
+# Nginx Autoswitcher
+if not os.path.isfile(installation_path + '/conf/autoswitch.disabled'):
+    cardheader('Nginx Autoswitcher','fas fa-cogs')
+    print('                        <div class="card-body">  <!-- Card Body Start -->')
+    
+    if settings_lock == 'enabled':
+        print('                        <div class="text-center alert alert-info">Application Server settings are locked by the administrator</div>')
+    else:
+        print('                            <form class="form" method="post" id="auto_switch_nginx" onsubmit="return false;">')
+        print('                                <input hidden name="cpaneluser" value="'+cpaneluser+'">')
+        print('                                <button id="auto-switch-nginx-btn" class="btn btn-outline-primary btn-block" type="submit">Auto Switch To Nginx</button>')
+        print('                            </form>')
+    
+    print('                        </div> <!-- Card Body End -->')
+    cardfooter('')
 
 
 # Cluster manual file sync
