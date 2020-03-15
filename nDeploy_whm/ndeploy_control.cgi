@@ -480,12 +480,12 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml.close()
     phpversion = preferred_php_yaml_parsed.get('PHP')
     myphpversion = phpversion.keys()[0]
-    print('                             <div class="col-md-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
 else:
     myphpversion = "Unset"
-    print('                             <div class="col-md-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
 
-print('                                 <div class="col-md-9 alert">'+myphpversion+'</div>')
+print('                                 <div class="col-9 alert">'+myphpversion+'</div>')
 print('                             </div>')
 print('                         </div>')
 
