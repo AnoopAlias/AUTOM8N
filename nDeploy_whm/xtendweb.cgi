@@ -1035,6 +1035,7 @@ print('                <div class="tab-pane fade" id="v-pills-dos" role="tabpane
 cardheader('DDOS Protection', 'fas fa-user-shield')
 print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
 print('                     <div class="row no-gutters row-2-col row-no-btm"> <!-- Row Start -->')
+# Nginx DDOS
 print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Nginx</div>')
 print('                         <div class="col-md-6">')
 print('                             <div class="row no-gutters">')
@@ -1058,7 +1059,31 @@ print('                                     </form>')
 print('                                 </div>')
 print('                             </div>')
 print('                         </div>')
+# Direct IP Access
+print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Direct IP access</div>')
+print('                         <div class="col-md-6">')
+print('                             <div class="row no-gutters">')
 
+if os.path.isfile('/etc/nginx/conf.d/default_server_include.conf_ddos'):
+    print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="ddos_protection_nginx_disable" class="form" onsubmit="return false;">')
+    print('                                     <label hidden for="ip_access_disabled">IP Access Disabled</label>')
+    print('                                     <input hidden name="ipaccess" id="ip_access_disabled" value="disable">')
+    print('                                     <button id="ip-access-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
+else:
+    print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="ddos_protection_nginx_enable" class="form" onsubmit="return false;">')
+    print('                                     <label hidden for="ip_access_enabled">IP Access Enabled</label>')
+    print('                                     <input hidden name="ipaccess" id="ip_access_enabled" value="enable">')
+    print('                                     <button id="ip-access-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
+
+print('                                     </form>')
+print('                                 </div>')
+print('                             </div>')
+print('                         </div>')
+# SynProxy
 try:
     with open(os.devnull, 'w') as FNULL:
         subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
