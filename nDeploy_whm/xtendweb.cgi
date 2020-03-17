@@ -1060,7 +1060,7 @@ print('                                 </div>')
 print('                             </div>')
 print('                         </div>')
 # Direct IP Access
-print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Direct IP access</div>')
+print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i>Blackhole Direct IP access</div>')
 print('                         <div class="col-md-6">')
 print('                             <div class="row no-gutters">')
 
