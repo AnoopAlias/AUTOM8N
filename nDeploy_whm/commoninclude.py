@@ -4,6 +4,9 @@ import os
 import subprocess
 import yaml
 import random
+import platform
+import psutil
+import signal
 
 
 
@@ -16,6 +19,18 @@ autom8n_version_info_file = installation_path+"/conf/version.yaml"
 nginx_version_info_file = "/etc/nginx/version.yaml"
 whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
 
+
+def sighupnginx():
+    for myprocess in psutil.process_iter():
+
+        # Workaround for Python 2.6
+        if platform.python_version().startswith('2.6'):
+            mycmdline = myprocess.cmdline
+        else:
+            mycmdline = myprocess.cmdline()
+        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline or '/usr/sbin/nginx' in mycmdline:
+            nginxpid = myprocess.pid
+            os.kill(nginxpid, signal.SIGHUP)
 
 # nDeploy Control
 if os.path.isfile(ndeploy_control_file):

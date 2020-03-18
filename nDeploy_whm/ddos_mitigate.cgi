@@ -6,7 +6,7 @@ import psutil
 import platform
 import signal
 import os
-from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
+from commoninclude import sighupnginx, print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
 __author__ = "Anoop P Alias"
@@ -22,17 +22,6 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-def sighupnginx():
-    for myprocess in psutil.process_iter():
-
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
-            mycmdline = myprocess.cmdline()
-        if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
-            nginxpid = myprocess.pid
-            os.kill(nginxpid, signal.SIGHUP)
 
 print_simple_header()
 
@@ -58,6 +47,11 @@ if form.getvalue('ddos'):
             print_success('Nginx DDOS mitigation is now disabled cluster-wide!')
         else:
             print_success('Nginx DDOS mitigation is now disabled!')
+elif form.getvalue('ipaccess'):
+    if form.getvalue('ipaccess') == 'enable':
+        with open('/etc/nginx/conf.d/default_server_include.conf_ddos') as conf:
+            conf.write('return 444;\n')
+    elif form.getvalue('ipaccess') == 'disable':
 
 else:
     print_forbidden()
