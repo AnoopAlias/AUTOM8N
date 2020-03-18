@@ -17,14 +17,6 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
-
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 nginx_dir = "/etc/nginx/sites-enabled/"
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"

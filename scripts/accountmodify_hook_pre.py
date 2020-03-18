@@ -2,25 +2,17 @@
 
 
 import sys
-import os
 try:
     import simplejson as json
 except ImportError:
     import json
+from commoninclude import silentremove
 
 
 __author__ = "Anoop P Alias"
 __copyright__ = "Copyright Anoop P Alias"
 __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
-
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
 
 
 # This hook script is called by cPanel before an account is modified

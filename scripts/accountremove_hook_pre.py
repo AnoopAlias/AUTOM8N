@@ -2,11 +2,11 @@
 
 
 import sys
-import os
 try:
     import simplejson as json
 except ImportError:
     import json
+from commoninclude import silentremove
 
 
 __author__ = "Anoop P Alias"
@@ -17,14 +17,6 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 nginx_dir = "/etc/nginx/sites-enabled/"
-
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
 
 
 cpjson = json.load(sys.stdin)
