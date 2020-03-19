@@ -1142,7 +1142,7 @@ else:
 
 print('                     </div> <!-- Row End -->')
 print('                 </div> <!-- Card Body End -->')
-cardfooter('Turn these settings on when you are under a DDOS Attack but remember to disable CSF or any other firewall before turning on SYNPROXY (FireHol).')
+cardfooter('DDOS mitigation must only be enabled when you suspect an attack as this enforces various restrictions not suitable for normal operations. You must run <kbd>/opt/nDeploy/scripts/attempt_autofix.sh</kbd> after enabling/disabling \"Blackhole Suspended Accounts\" to apply the settings to already suspended accounts')
 
 print('                </div> <!-- End DOS Tab -->')
 
