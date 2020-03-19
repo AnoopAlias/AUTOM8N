@@ -9,7 +9,6 @@ import psutil
 import signal
 
 
-
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
@@ -18,6 +17,14 @@ homedir_config_file = installation_path+"/conf/nDeploy-cluster/group_vars/all"
 autom8n_version_info_file = installation_path+"/conf/version.yaml"
 nginx_version_info_file = "/etc/nginx/version.yaml"
 whm_terminal_log = installation_path+"/nDeploy_whm/term.log"
+
+
+# Define a function to silently remove files
+def silentremove(filename):
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
 
 
 def sighupnginx():
@@ -31,6 +38,7 @@ def sighupnginx():
         if 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline or '/usr/sbin/nginx' in mycmdline:
             nginxpid = myprocess.pid
             os.kill(nginxpid, signal.SIGHUP)
+
 
 # nDeploy Control
 if os.path.isfile(ndeploy_control_file):
