@@ -43,7 +43,7 @@ if form.getvalue('ddos'):
             print_success('Nginx DDOS mitigation is now disabled!')
 elif form.getvalue('ipaccess'):
     if form.getvalue('ipaccess') == 'enable':
-        with open('/etc/nginx/conf.d/default_server_include.conf_ddos', 'rw') as conf:
+        with open('/etc/nginx/conf.d/default_server_include.conf_ddos', 'w+') as conf:
             conf.write('return 444;\n')
         sighupnginx()
         # Do this clusterwide if we are on a cluster
