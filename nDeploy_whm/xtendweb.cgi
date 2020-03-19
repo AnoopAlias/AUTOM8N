@@ -1067,14 +1067,14 @@ print('                             <div class="row no-gutters">')
 if os.path.isfile('/etc/nginx/conf.d/default_server_include.conf_ddos'):
     print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
     print('                             <div class="col-9">')
-    print('                                 <form id="ddos_protection_nginx_disable" class="form" onsubmit="return false;">')
+    print('                                 <form id="direct_ipaccess_disable" class="form" onsubmit="return false;">')
     print('                                     <label hidden for="ip_access_disabled">IP Access Disabled</label>')
     print('                                     <input hidden name="ipaccess" id="ip_access_disabled" value="disable">')
     print('                                     <button id="ip-access-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
 else:
     print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
     print('                             <div class="col-9">')
-    print('                                 <form id="ddos_protection_nginx_enable" class="form" onsubmit="return false;">')
+    print('                                 <form id="direct_ipaccess_enable" class="form" onsubmit="return false;">')
     print('                                     <label hidden for="ip_access_enabled">IP Access Enabled</label>')
     print('                                     <input hidden name="ipaccess" id="ip_access_enabled" value="enable">')
     print('                                     <button id="ip-access-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
@@ -1088,17 +1088,17 @@ print('                         <div class="col-md-6 alert"><i class="fas fa-shi
 print('                         <div class="col-md-6">')
 print('                             <div class="row no-gutters">')
 
-if os.path.isfile('/etc/nginx/conf.d/default_server_include.conf_ddos'):
+if os.path.isfile('/etc/nginx/conf.d/default_server_include.conf_ddosxxx'):
     print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
     print('                             <div class="col-9">')
-    print('                                 <form id="ddos_protection_nginx_disable" class="form" onsubmit="return false;">')
+    print('                                 <form id="ddos_blackhole_suspended_disable" class="form" onsubmit="return false;">')
     print('                                     <label hidden for="blackhole_suspended_disabled">Blackhole Suspended Disabled</label>')
     print('                                     <input hidden name="blackholesuspended" id="blackhole_suspended_disabled" value="disable">')
     print('                                     <button id="blackhole-suspended-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
 else:
     print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
     print('                             <div class="col-9">')
-    print('                                 <form id="ddos_protection_nginx_enable" class="form" onsubmit="return false;">')
+    print('                                 <form id="ddos_blackhole_suspended_enable" class="form" onsubmit="return false;">')
     print('                                     <label hidden for="blackhole_suspended_enabled">Blackhole Suspended Enabled</label>')
     print('                                     <input hidden name="blackholesuspended" id="blackhole_suspended_enabled" value="enable">')
     print('                                     <button id="blackhole-suspended-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
