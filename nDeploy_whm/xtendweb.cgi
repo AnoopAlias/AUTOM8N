@@ -488,8 +488,6 @@ if os.path.isfile(cluster_config_file):
                 print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
                 print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", slave_dns, "slave_dns", "bind", "geodns")
 
-
-
                 print('                         <label hidden for="cluster_edit_slave">Cluster Edit Slave</label>')
                 print('                         <input hidden name="action" id="cluster_edit_slave" value="editslave">')
 
