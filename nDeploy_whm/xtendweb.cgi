@@ -1082,11 +1082,17 @@ print('                                 </div>')
 print('                             </div>')
 print('                         </div>')
 # Blackhole Suspended
+if os.path.isfile(installation_path + "/conf/domain_data_suspended_local.yaml"):
+    domain_data_file = installation_path + "/conf/domain_data_suspended_local.yaml"
+else:
+    domain_data_file = installation_path + "/conf/domain_data_suspended.yaml"
+with open(domain_data_file, 'r') as domain_data_stream:
+    yaml_parsed_domain_data = yaml.safe_load(domain_data_stream)
 print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Blackhole Suspended Accounts</div>')
 print('                         <div class="col-md-6">')
 print('                             <div class="row no-gutters">')
 
-if os.path.isfile('/etc/nginx/conf.d/default_server_include.conf_ddosxxx'):
+if yaml_parsed_domain_data.get('apptemplate_code') == 'blackhole.j2':
     print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
     print('                             <div class="col-9">')
     print('                                 <form id="ddos_blackhole_suspended_disable" class="form" onsubmit="return false;">')

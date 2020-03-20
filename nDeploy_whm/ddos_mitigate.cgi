@@ -3,6 +3,7 @@
 import cgitb
 import cgi
 import os
+import yaml
 from commoninclude import silentremove, sighupnginx, print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
@@ -63,6 +64,27 @@ elif form.getvalue('ipaccess'):
             print_success('Blackhole Direct IP access is now disabled cluster-wide!')
         else:
             print_success('Blackhole Direct IP access is now disabled!')
+elif form.getvalue('blackholesuspended'):
+    if form.getvalue('blackholesuspended') == 'enable':
+        if os.path.isfile(installation_path + "/conf/domain_data_suspended_local.yaml"):
+            domain_data_file = installation_path + "/conf/domain_data_suspended_local.yaml"
+        else:
+            domain_data_file = installation_path + "/conf/domain_data_suspended.yaml"
+        with open(domain_data_file, 'r') as domain_data_stream:
+            yaml_parsed_domain_data = yaml.safe_load(domain_data_stream)
+        yaml_parsed_domain_data['apptemplate_code'] = 'blackhole.j2'
+        with open(domain_data_file, 'w') as domain_data_stream:
+            yaml.dump(yaml_parsed_domain_data, domain_data_stream, default_flow_style=False)
+    elif form.getvalue('blackholesuspended') == 'disable':
+        if os.path.isfile(installation_path + "/conf/domain_data_suspended_local.yaml"):
+            domain_data_file = installation_path + "/conf/domain_data_suspended_local.yaml"
+        else:
+            domain_data_file = installation_path + "/conf/domain_data_suspended.yaml"
+        with open(domain_data_file, 'r') as domain_data_stream:
+            yaml_parsed_domain_data = yaml.safe_load(domain_data_stream)
+        yaml_parsed_domain_data['apptemplate_code'] = 'suspended.j2'
+        with open(domain_data_file, 'w') as domain_data_stream:
+            yaml.dump(yaml_parsed_domain_data, domain_data_stream, default_flow_style=False)
 else:
     print_forbidden()
 
