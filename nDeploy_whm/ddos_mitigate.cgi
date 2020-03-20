@@ -75,6 +75,7 @@ elif form.getvalue('blackholesuspended'):
         yaml_parsed_domain_data['apptemplate_code'] = 'blackhole.j2'
         with open(domain_data_file, 'w') as domain_data_stream:
             yaml.dump(yaml_parsed_domain_data, domain_data_stream, default_flow_style=False)
+        print_success('Any accounts suspended further will be blackholed.Run autofix to apply this to all')
     elif form.getvalue('blackholesuspended') == 'disable':
         if os.path.isfile(installation_path + "/conf/domain_data_suspended_local.yaml"):
             domain_data_file = installation_path + "/conf/domain_data_suspended_local.yaml"
@@ -85,6 +86,7 @@ elif form.getvalue('blackholesuspended'):
         yaml_parsed_domain_data['apptemplate_code'] = 'suspended.j2'
         with open(domain_data_file, 'w') as domain_data_stream:
             yaml.dump(yaml_parsed_domain_data, domain_data_stream, default_flow_style=False)
+        print_success('Any accounts suspended further will NOT be blackholed.Run autofix to apply this to all')
 else:
     print_forbidden()
 
