@@ -13,6 +13,7 @@ from lxml import etree
 import jinja2
 from hashlib import md5
 import json
+from commoninclude import silentremove
 
 
 __author__ = "Anoop P Alias"
@@ -26,14 +27,6 @@ nginx_bin = "/usr/sbin/nginx"
 
 
 # Function definitions
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
 
 def railo_vhost_add_tomcat(domain_name, document_root, domain_aname_list):
     """Add a vhost to tomcat and restart railo-tomcat app server"""

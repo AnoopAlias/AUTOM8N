@@ -10,6 +10,7 @@ import os
 import sys
 import pwd
 import yaml
+from commoninclude import silentremove
 
 
 __author__ = "Anoop P Alias"
@@ -22,13 +23,6 @@ installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 
 # Function defs
-
-# Define a function to silently remove files
-def silentremove(filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
 
 
 def merge_logs(domain, slavelist):

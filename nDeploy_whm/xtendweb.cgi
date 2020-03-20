@@ -488,8 +488,6 @@ if os.path.isfile(cluster_config_file):
                 print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
                 print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", slave_dns, "slave_dns", "bind", "geodns")
 
-
-
                 print('                         <label hidden for="cluster_edit_slave">Cluster Edit Slave</label>')
                 print('                         <input hidden name="action" id="cluster_edit_slave" value="editslave">')
 
@@ -1035,6 +1033,7 @@ print('                <div class="tab-pane fade" id="v-pills-dos" role="tabpane
 cardheader('DDOS Protection', 'fas fa-user-shield')
 print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
 print('                     <div class="row no-gutters row-2-col row-no-btm"> <!-- Row Start -->')
+# Nginx DDOS
 print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Nginx</div>')
 print('                         <div class="col-md-6">')
 print('                             <div class="row no-gutters">')
@@ -1058,7 +1057,61 @@ print('                                     </form>')
 print('                                 </div>')
 print('                             </div>')
 print('                         </div>')
+# Direct IP Access
+print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i>Blackhole Direct IP access</div>')
+print('                         <div class="col-md-6">')
+print('                             <div class="row no-gutters">')
 
+if os.path.isfile('/etc/nginx/conf.d/default_server_include.conf_ddos'):
+    print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="direct_ipaccess_disable" class="form" onsubmit="return false;">')
+    print('                                     <label hidden for="ip_access_disabled">IP Access Disabled</label>')
+    print('                                     <input hidden name="ipaccess" id="ip_access_disabled" value="disable">')
+    print('                                     <button id="ip-access-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
+else:
+    print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="direct_ipaccess_enable" class="form" onsubmit="return false;">')
+    print('                                     <label hidden for="ip_access_enabled">IP Access Enabled</label>')
+    print('                                     <input hidden name="ipaccess" id="ip_access_enabled" value="enable">')
+    print('                                     <button id="ip-access-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
+
+print('                                     </form>')
+print('                                 </div>')
+print('                             </div>')
+print('                         </div>')
+# Blackhole Suspended
+if os.path.isfile(installation_path + "/conf/domain_data_suspended_local.yaml"):
+    domain_data_file = installation_path + "/conf/domain_data_suspended_local.yaml"
+else:
+    domain_data_file = installation_path + "/conf/domain_data_suspended.yaml"
+with open(domain_data_file, 'r') as domain_data_stream:
+    yaml_parsed_domain_data = yaml.safe_load(domain_data_stream)
+print('                         <div class="col-md-6 alert"><i class="fas fa-shield-alt"></i> Blackhole Suspended Accounts</div>')
+print('                         <div class="col-md-6">')
+print('                             <div class="row no-gutters">')
+
+if yaml_parsed_domain_data.get('apptemplate_code') == 'blackhole.j2':
+    print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="ddos_blackhole_suspended_disable" class="form" onsubmit="return false;">')
+    print('                                     <label hidden for="blackhole_suspended_disabled">Blackhole Suspended Disabled</label>')
+    print('                                     <input hidden name="blackholesuspended" id="blackhole_suspended_disabled" value="disable">')
+    print('                                     <button id="blackhole-suspended-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
+else:
+    print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+    print('                             <div class="col-9">')
+    print('                                 <form id="ddos_blackhole_suspended_enable" class="form" onsubmit="return false;">')
+    print('                                     <label hidden for="blackhole_suspended_enabled">Blackhole Suspended Enabled</label>')
+    print('                                     <input hidden name="blackholesuspended" id="blackhole_suspended_enabled" value="enable">')
+    print('                                     <button id="blackhole-suspended-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
+
+print('                                     </form>')
+print('                                 </div>')
+print('                             </div>')
+print('                         </div>')
+# SynProxy
 try:
     with open(os.devnull, 'w') as FNULL:
         subprocess.call(['systemctl', '--version'], stdout=FNULL, stderr=subprocess.STDOUT)
@@ -1093,7 +1146,7 @@ else:
 
 print('                     </div> <!-- Row End -->')
 print('                 </div> <!-- Card Body End -->')
-cardfooter('Turn these settings on when you are under a DDOS Attack but remember to disable CSF or any other firewall before turning on SYNPROXY (FireHol).')
+cardfooter('DDOS protection must <b>only be enabled</b> when you suspect an attack as this enforces various restrictions not suitable for normal operations. You must run <kbd>/opt/nDeploy/scripts/attempt_autofix.sh</kbd> after enabling/disabling \"Blackhole Suspended Accounts\" to apply the settings to already suspended accounts')
 
 print('                </div> <!-- End DOS Tab -->')
 

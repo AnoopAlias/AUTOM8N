@@ -254,6 +254,90 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $(document).on("submit","#direct_ipaccess_enable",function(e){
+        var $loaderId        =   "#ip-access-enable-btn";
+        var $loaderText      =   "Enabling...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "ddos_mitigate.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-dos .card-body > .no-gutters").load(($urlparam) + " #v-pills-dos .card-body > .no-gutters > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on('submit','#direct_ipaccess_disable',function(e){
+        var $loaderId        =   '#ip-access-disable-btn';
+        var $loaderText      =   'Disabling...';
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "ddos_mitigate.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-dos .card-body > .no-gutters").load(($urlparam) + " #v-pills-dos .card-body > .no-gutters > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit","#ddos_blackhole_suspended_enable",function(e){
+        var $loaderId        =   "#blackhole-suspended-enable-btn";
+        var $loaderText      =   "Enabling...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "ddos_mitigate.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-dos .card-body > .no-gutters").load(($urlparam) + " #v-pills-dos .card-body > .no-gutters > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on('submit','#ddos_blackhole_suspended_disable',function(e){
+        var $loaderId        =   '#blackhole-suspended-disable-btn';
+        var $loaderText      =   'Disabling...';
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $('#' + $id);
+        var $url = "ddos_mitigate.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-dos .card-body > .no-gutters").load(($urlparam) + " #v-pills-dos .card-body > .no-gutters > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
     $(document).on('submit','#ddos_protection_synproxy_enable',function(e){
         var $loaderId        =   '#ddos-protection-synproxy-enable-btn';
         var $loaderText      =   'Enabling...';
