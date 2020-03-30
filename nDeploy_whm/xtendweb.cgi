@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import os
+import httplib
+import re
 import cgitb
 import subprocess
 import yaml
@@ -36,6 +38,22 @@ cgitb.enable()
 print_header('Home')
 bcrumb('Home')
 
+
+def is_page_available(host, path="/pingphpfpm"):
+    """ This function retreives the status code of a website by requesting
+        HEAD data from the host. This means that it only requests the headers.
+        If the host cannot be reached or something else goes wrong, it returns
+        False.
+    """
+    try:
+        conn = httplib.HTTPConnection(host)
+        conn.request("HEAD", path)
+        if re.match("^[23]\d\d$", str(conn.getresponse().status)):
+            return True
+    except StandardError:
+        return None
+
+
 nginx_status = False
 watcher_status = False
 for myprocess in psutil.process_iter():
@@ -54,23 +72,6 @@ for myprocess in psutil.process_iter():
 backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
-
-if not os.path.isfile(php_secure_mode_file):
-    if "PHP" in backend_data_yaml_parsed:
-        installed_php_count = len(backend_data_yaml_parsed["PHP"].keys())
-    else:
-        installed_php_count = 0
-
-    running_process_count = 0
-    for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            myexe = myprocess.cmdline
-        else:
-            myexe = myprocess.cmdline()
-        if 'php-fpm: master process (/opt/nDeploy/conf/php-fpm.conf)' in myexe:
-            running_process_count = running_process_count + 1
-
 
 # Get version of Nginx and plugin
 with open(autom8n_version_info_file, 'r') as autom8n_version_info_yaml:
@@ -162,24 +163,24 @@ print('                        <h2 class="mb-0">PHP Backends</h2>')
 print('                        <ul class="list-unstyled mb-0">')
 
 # Add real status to PHP Backend widget
-livePHPStatus = get('http://localhost/pingphpfpm')
-if livePHPStatus.status_code == 502:
-    print('                            <li><small>PHP-FPM Status: <span class="text-danger">'+str(livePHPStatus.status_code)+'</span></small></li>')
-elif livePHPStatus.status_code == 200:
-    print('                            <li><small>PHP-FPM Status: <span class="text-success">'+str(livePHPStatus.status_code)+'</span></small></li>')
+php_is_at_fault = False
+faulty_php = []
+if "PHP" in backend_data_yaml_parsed:
+    php_backends_dict = backend_data_yaml_parsed["PHP"]
+    for name, path in php_backends_dict.items():
+        statuspage = "/"+name
+        if not is_page_available('localhost', statuspage):
+            php_is_at_fault = True
+            faulty_php.append(name)
+if php_is_at_fault:
+    print('                            <li><small>PHP-FPM Status: <span class="text-danger">Fault: '+str(faulty_php)+'</span></small></li>')
 else:
-    print('                            <li><small>PHP-FPM Status: <span class="text-info">'+str(livePHPStatus.status_code)+'</span></small></li>')
-
+    print('                            <li><small>PHP-FPM Status: <span class="text-success">OK</span></small></li>')
 if not os.path.isfile(php_secure_mode_file):
-    if running_process_count == installed_php_count:
-        php_status = True
-    else:
-        php_status = False
-
-    if php_status:
+    if not php_is_at_fault:
         print('                        <li class="mt-2 text-success">Single Master <i class="fas fa-power-off ml-1"></i></li>')
     else:
-        print('                        <li class="mt-2 text-warning">Issue Detected <i class="fas fa-power-off ml-1"></i></li>')
+        print('                        <li class="mt-2 text-warning">Single Master(FAULT) <i class="fas fa-power-off ml-1"></i></li>')
 else:
     print('                        <li class="mt-2 text-success">Multi-Master <i class="fas fa-power-off ml-1"></i></li>')
 
