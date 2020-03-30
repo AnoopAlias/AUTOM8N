@@ -4,9 +4,7 @@ import httplib
 import re
 import subprocess
 import os
-import platform
 import yaml
-import psutil
 
 
 __author__ = "Anoop P Alias"
@@ -41,28 +39,9 @@ if __name__ == "__main__":
         backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
         backend_data_yaml.close()
         if "PHP" in backend_data_yaml_parsed:
-            installed_php_count = len(backend_data_yaml_parsed["PHP"].keys())
-        else:
-            installed_php_count = 0
-
-        running_process_count = 0
-        for myprocess in psutil.process_iter():
-            # Workaround for Python 2.6
-            if platform.python_version().startswith('2.6'):
-                try:
-                    myexe = myprocess.cmdline
-                except psutil.NoSuchprocess:
-                    myexe = None
-            else:
-                try:
-                    myexe = myprocess.cmdline()
-                except psutil.NoSuchprocess:
-                    myexe = None
-            if 'php-fpm: master process (/opt/nDeploy/conf/php-fpm.conf)' in myexe:
-                running_process_count = running_process_count + 1
-        if running_process_count == installed_php_count:
-            php_status = True
-        else:
-            php_status = False
-        if not is_page_available('localhost', "/pingphpfpm") or not php_status:
-            subprocess.call('service ndeploy_backends restart', shell=True)
+            php_backends_dict = backend_data_yaml_parsed["PHP"]
+            for name, path in php_backends_dict.items():
+                statuspage = "/"+name
+                if not is_page_available('localhost', statuspage):
+                    subprocess.call('service ndeploy_backends restart', shell=True)
+                    print(name+" PHP-FPM master process is not running")
