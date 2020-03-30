@@ -13,10 +13,12 @@ server {
             stub_status on;
             access_log off;
         }
-        location ~ ^/pingphpfpm$ {
+        {% for key, value in PHPDICT.iteritems() %}
+        location ~ ^/{{ key }}$ {
             include /etc/nginx/fastcgi_params*;
-            fastcgi_pass unix:/opt/cpanel/ea-php71/root/var/run/nobody.sock;
+            fastcgi_pass unix:{{ value }}/var/run/nobody.sock;
         }
+        {% endfor %}
 }
 
 {% for MYIP in CPIPLIST %}
@@ -77,7 +79,7 @@ server {
           }
           location /glances/ {
             auth_basic "Glances";
-            auth_basic_user_file /etc/nginx/conf.d/glances.password;          
+            auth_basic_user_file /etc/nginx/conf.d/glances.password;
             port_in_redirect off;
             rewrite /glances/(.*) /$1 break;
             proxy_pass http://127.0.0.1:61208/;

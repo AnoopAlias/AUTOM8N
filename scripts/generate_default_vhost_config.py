@@ -16,7 +16,15 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+backend_config_file = installation_path+"/conf/backends.yaml"
 
+backend_data_yaml = open(backend_config_file, 'r')
+backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
+backend_data_yaml.close()
+if "PHP" in backend_data_yaml_parsed:
+    php_backends_dict = backend_data_yaml_parsed["PHP"]
+else:
+    php_backends_dict = {}
 
 myhostname = socket.gethostname()
 iplist_json = json.loads(subprocess.Popen(['/usr/local/cpanel/bin/whmapi1', 'listips', '--output=json'], stdout=subprocess.PIPE).communicate()[0])
@@ -53,6 +61,7 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cl
 templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
 templateEnv = jinja2.Environment(loader=templateLoader)
 templateVars = {"CPIPLIST": cpanel_ip_list,
+                "PHPDICT": php_backends_dict,
                 "MAINIP": mainip,
                 "CPSRVDSSL": cpsrvdsslfile,
                 "SLAVEIPLIST": slaveiplist,
