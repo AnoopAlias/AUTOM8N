@@ -21,7 +21,6 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
-php_fpm_config = installation_path+"/conf/php-fpm.conf"
 
 
 # Function defs
@@ -55,9 +54,20 @@ def control_php_fpm(trigger):
                         print('VirtfsJailFix:: '+user)
                         subprocess.call('su - '+user+' -c "touch '+user_home+'/public_html"', shell=True)
         elif trigger == "start":
+            silentremove("/opt/nDeploy/php-fpm.d/nobody.conf")
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
             subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
-            for path in list(php_backends_dict.values()):
+            for name, path in php_backends_dict.items():
+                php_fpm_config = installation_path+"/conf/"+name
+                if not os.path.isfile(php_fpm_config):
+                    # Initiate Jinja2 templateEnv
+                    templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+                    templateEnv = jinja2.Environment(loader=templateLoader)
+                    templateVars = {"PHPNAME": name}
+                    default_php_fpm_config_template = templateEnv.get_template('php-fpm.conf')
+                    default_php_fpm_config = default_php_fpm_config_template.render(templateVars)
+                    with codecs.open(php_fpm_config, 'w', 'utf-8') as default_php_fpm_config_file:
+                        default_php_fpm_config_file.write(default_php_fpm_config)
                 if os.path.isfile(path+"/sbin/php-fpm"):
                     php_fpm_bin = path+"/sbin/php-fpm"
                 else:
@@ -83,7 +93,8 @@ def control_php_fpm(trigger):
                 except KeyError:
                     silentremove("/opt/nDeploy/php-fpm.d/"+user+".conf")
                     silentremove("/opt/nDeploy/secure-php-fpm.d/"+user+".conf")
-            for path in list(php_backends_dict.values()):
+            for name, path in php_backends_dict.items():
+                php_fpm_config = installation_path+"/conf/"+name
                 php_fpm_pid = path+"/var/run/php-fpm.pid"
                 if os.path.isfile(path+"/sbin/php-fpm"):
                     php_fpm_bin = path+"/sbin/php-fpm"

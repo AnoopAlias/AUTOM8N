@@ -27,12 +27,12 @@ server {
         listen {{ MYIP }}:80 default_server backlog=16384 reuseport deferred;
         server_name _;
         access_log off;
-        include /etc/nginx/conf.d/default_server_include.conf*;
         {% if DEFAULT_VHOST_DDOS == 'enabled' %}
         include /etc/nginx/conf.d/dos_mitigate.conf;
         {% endif %}
         include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
+           include /etc/nginx/conf.d/default_server_include.conf*;
            proxy_pass   http://{% if PROXY_TO_MASTER %}{{ MASTER_MAINIP }}{% else %}{{ MYIP }}{% endif %}:9999;
           }
         location /glances/ {
@@ -57,10 +57,12 @@ server {
               include /etc/nginx/conf.d/nginx_status_allow*;
               deny all;
           }
-          location ~ ^/pingphpfpm$ {
+          {% for key, value in PHPDICT.iteritems() %}
+          location ~ ^/{{ key }}$ {
               include /etc/nginx/fastcgi_params*;
-              fastcgi_pass unix:/opt/cpanel/ea-php71/root/var/run/nobody.sock;
+              fastcgi_pass unix:{{ value }}/var/run/nobody.sock;
           }
+          {% endfor %}
 }
 
 server {
@@ -69,12 +71,12 @@ server {
         ssl_certificate_key {{ CPSRVDSSL }};
         server_name _;
         access_log off;
-        include /etc/nginx/conf.d/default_server_include.conf*;
         {% if DEFAULT_VHOST_DDOS == 'enabled' %}
         include /etc/nginx/conf.d/dos_mitigate.conf;
         {% endif %}
         include /etc/nginx/conf.d/ErrorPages.conf;
         location / {
+           include /etc/nginx/conf.d/default_server_include.conf*;
            proxy_pass   https://{% if PROXY_TO_MASTER %}{{ MASTER_MAINIP }}{% else %}{{ MYIP }}{% endif %}:4430;
           }
           location /glances/ {
@@ -110,10 +112,12 @@ server {
           gzip_proxied any;
           gzip_types *;
           }
-        location ~ ^/pingphpfpm$ {
-            include /etc/nginx/fastcgi_params*;
-            fastcgi_pass unix:/opt/cpanel/ea-php71/root/var/run/nobody.sock;
-        }
+          {% for key, value in PHPDICT.iteritems() %}
+          location ~ ^/{{ key }}$ {
+              include /etc/nginx/fastcgi_params*;
+              fastcgi_pass unix:{{ value }}/var/run/nobody.sock;
+          }
+          {% endfor %}
 }
 
 {% endfor %}
