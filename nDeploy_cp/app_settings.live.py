@@ -91,6 +91,7 @@ if form.getvalue('domain'):
         set_expire_static = yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
 
         # Server Settings
+        dev_mode = yaml_parsed_profileyaml.get('dev_mode', 'disabled')
         autoindex = yaml_parsed_profileyaml.get('autoindex', 'disabled')
         pagespeed = yaml_parsed_profileyaml.get('pagespeed', 'disabled')
         brotli = yaml_parsed_profileyaml.get('brotli', 'disabled')
@@ -361,6 +362,29 @@ if form.getvalue('domain'):
             print('                                        </label>')
             print('                                        <label class="btn btn-light active">')
             print('                                            <input type="radio" name="auth_basic" value="disabled" id="AuthBasicOff" autocomplete="off" checked> Disabled')
+
+        print('                                        </label>')
+        print('                                    </div>')
+        print('                                </div>')
+
+        # dev_mode
+        dev_mode_hint = " Disable Open File Cache,Expires and Enable Proxy to master"
+        print('                                '+return_label("Dev Mode", dev_mode_hint))
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+
+        if dev_mode == 'enabled':
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="dev_mode" value="enabled" id="DevModeOn" autocomplete="off" checked> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="dev_mode" value="disabled" id="DevModeOff" autocomplete="off"> Disabled')
+        else:
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="dev_mode" value="enabled" id="DevModeOn" autocomplete="off"> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="dev_mode" value="disabled" id="DevModeOff" autocomplete="off" checked> Disabled')
 
         print('                                        </label>')
         print('                                    </div>')
