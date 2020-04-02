@@ -3,6 +3,7 @@ backend_path: '9999'
 backend_version: httpd
 apptemplate_code: 1000.j2
 autoindex: disabled
+dev_mode: disabled
 ssl_offload: disabled
 pagespeed: disabled
 pagespeed_filter: CoreFilters

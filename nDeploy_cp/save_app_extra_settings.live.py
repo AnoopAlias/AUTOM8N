@@ -289,6 +289,21 @@ else:
     else:
         commoninclude.print_error('Error: Forbidden::append_requesturi')
         sys.exit(0)
+    # dev_mode
+    if 'dev_mode' in form.keys():
+        dev_mode = form.getvalue('dev_mode')
+        yaml_parsed_profileyaml['dev_mode'] = dev_mode
+        if dev_mode == 'enabled':
+            yaml_parsed_profileyaml['open_file_cache'] = 'disabled'
+            yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
+            yaml_parsed_profileyaml['proxy_to_master'] = 'enabled'
+        else:
+            yaml_parsed_profileyaml['open_file_cache'] = 'enabled'
+            yaml_parsed_profileyaml['set_expire_static'] = 'enabled'
+            yaml_parsed_profileyaml['proxy_to_master'] = 'disabled'
+    else:
+        commoninclude.print_error('Error: Forbidden::autoindex')
+        sys.exit(0)
 with open(profileyaml, 'w') as yaml_file:
     yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
 commoninclude.print_success('Server settings saved')
