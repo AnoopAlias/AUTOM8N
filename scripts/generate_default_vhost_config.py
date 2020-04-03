@@ -21,8 +21,11 @@ backend_config_file = installation_path+"/conf/backends.yaml"
 backend_data_yaml = open(backend_config_file, 'r')
 backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
 backend_data_yaml.close()
-if "PHP" in backend_data_yaml_parsed:
-    php_backends_dict = backend_data_yaml_parsed["PHP"]
+if backend_data_yaml_parsed is not None:
+    if "PHP" in backend_data_yaml_parsed:
+        php_backends_dict = backend_data_yaml_parsed["PHP"]
+    else:
+        php_backends_dict = {}
 else:
     php_backends_dict = {}
 
