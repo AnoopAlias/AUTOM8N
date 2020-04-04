@@ -250,7 +250,7 @@ if os.path.isdir('/etc/borgmatic'):
             print('                                    <div class="input-group-prepend">')
             print('                                        <span class="input-group-text">'+path+'</span>')
             print('                                    </div>')
-            if path not in ['/home', backup_path]:
+            if path not in [backup_path]:
                 print('                                    <div class="input-group-append">')
                 print('                                        <form class="form borg-rm-dir-wrap" method="post" id="borg_rm_dir-'+str(mykeypos)+'" onsubmit="return false;">')
                 print('                                            <input hidden name="thehomedir" value="'+path+'">')
