@@ -168,11 +168,17 @@ jQuery(document).ready(function($) {
         localStorage.setItem("minimizeClick", "minimized")
         $("#main-container").addClass("modal-minimized");
         $("#terminal").addClass("modal-min");
+        var termClear = new XMLHttpRequest();
+        termClear.open("GET", "clear_terminal_window.cgi", true);
+        termClear.send();
     } else {
         localStorage.getItem("minimizeClick")
         if (localStorage.getItem("minimizeClick") == "minimized") {
           $("#main-container").addClass("modal-minimized");
           $("#terminal").addClass("modal-min");
+          var termClear = new XMLHttpRequest();
+          termClear.open("GET", "clear_terminal_window.cgi", true);
+          termClear.send();
         } else {
           $("#main-container").removeClass("modal-minimized");
           $("#terminal").removeClass("modal-min");
