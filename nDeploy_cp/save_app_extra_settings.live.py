@@ -316,15 +316,11 @@ else:
             yaml_parsed_profileyaml['open_file_cache'] = 'disabled'
             yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
             yaml_parsed_profileyaml['proxy_to_master'] = 'enabled'
-            commoninclude.print_success('Enabled')
-            
-
         elif dev_mode == 'disabled' and current_dev_mode == 'enabled':
             yaml_parsed_profileyaml['dev_mode'] = 'disabled'
-            yaml_parsed_profileyaml['open_file_cache'] = yaml_parsed_profileyaml.get('dev_open_file_cache')
-            yaml_parsed_profileyaml['set_expire_static'] = yaml_parsed_profileyaml.get('dev_set_expire_static')
-            yaml_parsed_profileyaml['proxy_to_master'] = yaml_parsed_profileyaml.get('dev_proxy_to_master')
-            commoninclude.print_success('Disabled')
+            yaml_parsed_profileyaml['open_file_cache'] = yaml_parsed_profileyaml.get('dev_open_file_cache', 'enabled')
+            yaml_parsed_profileyaml['set_expire_static'] = yaml_parsed_profileyaml.get('dev_set_expire_static', 'enabled')
+            yaml_parsed_profileyaml['proxy_to_master'] = yaml_parsed_profileyaml.get('dev_proxy_to_master', 'disabled')
     else:
         commoninclude.print_error('Error: Forbidden::dev_mode')
         sys.exit(0)
