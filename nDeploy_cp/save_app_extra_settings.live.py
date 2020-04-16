@@ -128,7 +128,11 @@ else:
     # set_expire_static
     if 'set_expire_static' in form.keys():
         set_expire_static = form.getvalue('set_expire_static')
-        yaml_parsed_profileyaml['set_expire_static'] = set_expire_static
+        dev_check = yaml_parsed_profileyaml.get('dev_mode', 'disabled')
+        if dev_check == 'enabled':
+            set_expire_static = 'disabled'
+        else:
+            yaml_parsed_profileyaml['set_expire_static'] = set_expire_static
     else:
         commoninclude.print_error('Error: Forbidden::set_expire_static')
         sys.exit(0)
@@ -194,12 +198,15 @@ else:
         yaml_parsed_profileyaml['access_log'] = access_log
     else:
         commoninclude.print_error('Error: Forbidden::access_log')
-
         sys.exit(0)
     # open_file_cache
     if 'open_file_cache' in form.keys():
         open_file_cache = form.getvalue('open_file_cache')
-        yaml_parsed_profileyaml['open_file_cache'] = open_file_cache
+        dev_check = yaml_parsed_profileyaml.get('dev_mode', 'disabled')
+        if dev_check == 'enabled':
+            open_file_cache = 'disabled'
+        else:
+            yaml_parsed_profileyaml['open_file_cache'] = open_file_cache
     else:
         commoninclude.print_error('Error: Forbidden::open_file_cache')
         sys.exit(0)
@@ -241,7 +248,11 @@ else:
     # proxy_to_master
     if 'proxy_to_master' in form.keys():
         proxy_to_master = form.getvalue('proxy_to_master')
-        yaml_parsed_profileyaml['proxy_to_master'] = proxy_to_master
+        dev_check = yaml_parsed_profileyaml.get('dev_mode', 'disabled')
+        if dev_check == 'enabled':
+            proxy_to_master = 'disabled'
+        else:
+            yaml_parsed_profileyaml['proxy_to_master'] = proxy_to_master
     else:
         commoninclude.print_error('Error: Forbidden::proxy_to_master')
         sys.exit(0)
@@ -305,17 +316,21 @@ else:
             yaml_parsed_profileyaml['open_file_cache'] = 'disabled'
             yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
             yaml_parsed_profileyaml['proxy_to_master'] = 'enabled'
+            commoninclude.print_success('Enabled')
+            
 
         elif dev_mode == 'disabled' and current_dev_mode == 'enabled':
             yaml_parsed_profileyaml['dev_mode'] = 'disabled'
             yaml_parsed_profileyaml['open_file_cache'] = yaml_parsed_profileyaml.get('dev_open_file_cache')
             yaml_parsed_profileyaml['set_expire_static'] = yaml_parsed_profileyaml.get('dev_set_expire_static')
             yaml_parsed_profileyaml['proxy_to_master'] = yaml_parsed_profileyaml.get('dev_proxy_to_master')
+            commoninclude.print_success('Disabled')
     else:
         commoninclude.print_error('Error: Forbidden::dev_mode')
         sys.exit(0)
 with open(profileyaml, 'w') as yaml_file:
     yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-commoninclude.print_success('Server settings saved')
+
+commoninclude.print_success('Server settings saved!')
 
 print_simple_footer()
