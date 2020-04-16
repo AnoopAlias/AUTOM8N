@@ -289,18 +289,6 @@ else:
     else:
         commoninclude.print_error('Error: Forbidden::append_requesturi')
         sys.exit(0)
-
-
-if os.path.isfile(ndeploy_control_file):
-    with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
-        yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
-    ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light")
-    primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#121212")
-    logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "None")
-    app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
-    cpanel_documentation_link = yaml_parsed_ndeploy_control_settings.get("cpanel_documentation_link", "None")
-    whm_documentation_link = yaml_parsed_ndeploy_control_settings.get("whm_documentation_link", "None")
-
     # dev_mode
     if 'dev_mode' in form.keys():
         dev_mode = form.getvalue('dev_mode')
