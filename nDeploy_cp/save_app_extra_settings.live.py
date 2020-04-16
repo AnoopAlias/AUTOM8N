@@ -296,15 +296,17 @@ else:
     # dev_mode
     if 'dev_mode' in form.keys():
         dev_mode = form.getvalue('dev_mode')
-        yaml_parsed_profileyaml['dev_mode'] = dev_mode
-        if dev_mode == 'enabled':
-            yaml_parsed_profileyaml['open_file_cache'] = 'disabled'
-            yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
-            yaml_parsed_profileyaml['proxy_to_master'] = 'enabled'
-        else:
-            yaml_parsed_profileyaml['open_file_cache'] = 'enabled'
-            yaml_parsed_profileyaml['set_expire_static'] = 'enabled'
-            yaml_parsed_profileyaml['proxy_to_master'] = 'disabled'
+        #Match with prev value
+        if dev_mode is not current_dev_mode:
+            yaml_parsed_profileyaml['dev_mode'] = dev_mode
+            if dev_mode == 'enabled':
+                yaml_parsed_profileyaml['open_file_cache'] = 'disabled'
+                yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
+                yaml_parsed_profileyaml['proxy_to_master'] = 'enabled'
+            else:
+                yaml_parsed_profileyaml['open_file_cache'] = 'enabled'
+                yaml_parsed_profileyaml['set_expire_static'] = 'enabled'
+                yaml_parsed_profileyaml['proxy_to_master'] = 'disabled'
     else:
         commoninclude.print_error('Error: Forbidden::autoindex')
         sys.exit(0)
