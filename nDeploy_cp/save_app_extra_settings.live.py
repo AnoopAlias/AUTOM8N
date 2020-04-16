@@ -292,18 +292,19 @@ else:
     # dev_mode
     if 'dev_mode' in form.keys():
         dev_mode = form.getvalue('dev_mode')
-        current_dev_mode=yaml_parsed_profileyaml.get('dev_mode', 'disabled')
-        current_open_file_cache=yaml_parsed_profileyaml.get('open_file_cache', 'disabled')
-        current_set_expire_static=yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
-        current_proxy_to_master=yaml_parsed_profileyaml.get('proxy_to_master', 'disabled')
-        if dev_mode == 'enabled':
+        current_dev_mode = yaml_parsed_profileyaml.get['dev_mode', 'disabled']
+        if dev_mode == 'enabled' and current_dev_mode == 'disabled':
+            yaml_parsed_profileyaml['dev_open_file_cache'] = yaml_parsed_profileyaml['open_file_cache']
+            yaml_parsed_profileyaml['dev_set_expire_static'] = yaml_parsed_profileyaml['set_expire_static']
+            yaml_parsed_profileyaml['dev_proxy_to_master'] = yaml_parsed_profileyaml['proxy_to_master']
             yaml_parsed_profileyaml['open_file_cache'] = 'disabled'
             yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
             yaml_parsed_profileyaml['proxy_to_master'] = 'enabled'
-        else:
-            yaml_parsed_profileyaml['open_file_cache'] = current_open_file_cache
-            yaml_parsed_profileyaml['set_expire_static'] = current_set_expire_static
-            yaml_parsed_profileyaml['proxy_to_master'] = current_proxy_to_master
+
+        elseif dev_mode == 'disabled' and current_dev_mode == 'enabled':
+            yaml_parsed_profileyaml['open_file_cache'] = yaml_parsed_profileyaml['dev_open_file_cache']
+            yaml_parsed_profileyaml['set_expire_static'] = yaml_parsed_profileyaml['dev_set_expire_static']
+            yaml_parsed_profileyaml['proxy_to_master'] = yaml_parsed_profileyaml['dev_proxy_to_master']
     else:
         commoninclude.print_error('Error: Forbidden::autoindex')
         sys.exit(0)
