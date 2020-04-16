@@ -296,21 +296,23 @@ else:
     # dev_mode
     if 'dev_mode' in form.keys():
         dev_mode = form.getvalue('dev_mode')
-        current_dev_mode = yaml_parsed_profileyaml.get['dev_mode', 'disabled']
+        current_dev_mode = yaml_parsed_profileyaml.get('dev_mode', 'disabled')
         if dev_mode == 'enabled' and current_dev_mode == 'disabled':
-            yaml_parsed_profileyaml['dev_open_file_cache'] = yaml_parsed_profileyaml['open_file_cache']
-            yaml_parsed_profileyaml['dev_set_expire_static'] = yaml_parsed_profileyaml['set_expire_static']
-            yaml_parsed_profileyaml['dev_proxy_to_master'] = yaml_parsed_profileyaml['proxy_to_master']
+            yaml_parsed_profileyaml['dev_open_file_cache'] = yaml_parsed_profileyaml.get('open_file_cache')
+            yaml_parsed_profileyaml['dev_set_expire_static'] = yaml_parsed_profileyaml.get('set_expire_static')
+            yaml_parsed_profileyaml['dev_proxy_to_master'] = yaml_parsed_profileyaml.get('proxy_to_master')
+            yaml_parsed_profileyaml['dev_mode'] = 'enabled'
             yaml_parsed_profileyaml['open_file_cache'] = 'disabled'
             yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
             yaml_parsed_profileyaml['proxy_to_master'] = 'enabled'
 
-        elseif dev_mode == 'disabled' and current_dev_mode == 'enabled':
-            yaml_parsed_profileyaml['open_file_cache'] = yaml_parsed_profileyaml['dev_open_file_cache']
-            yaml_parsed_profileyaml['set_expire_static'] = yaml_parsed_profileyaml['dev_set_expire_static']
-            yaml_parsed_profileyaml['proxy_to_master'] = yaml_parsed_profileyaml['dev_proxy_to_master']
+        elif dev_mode == 'disabled' and current_dev_mode == 'enabled':
+            yaml_parsed_profileyaml['dev_mode'] = 'disabled'
+            yaml_parsed_profileyaml['open_file_cache'] = yaml_parsed_profileyaml.get('dev_open_file_cache')
+            yaml_parsed_profileyaml['set_expire_static'] = yaml_parsed_profileyaml.get('dev_set_expire_static')
+            yaml_parsed_profileyaml['proxy_to_master'] = yaml_parsed_profileyaml.get('dev_proxy_to_master')
     else:
-        commoninclude.print_error('Error: Forbidden::autoindex')
+        commoninclude.print_error('Error: Forbidden::dev_mode')
         sys.exit(0)
 with open(profileyaml, 'w') as yaml_file:
     yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
