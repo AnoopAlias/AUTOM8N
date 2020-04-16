@@ -289,18 +289,33 @@ else:
     else:
         commoninclude.print_error('Error: Forbidden::append_requesturi')
         sys.exit(0)
+
+
+if os.path.isfile(ndeploy_control_file):
+    with open(ndeploy_control_file, 'r') as ndeploy_control_data_file:
+        yaml_parsed_ndeploy_control_settings = yaml.safe_load(ndeploy_control_data_file)
+    ndeploy_theme_color = yaml_parsed_ndeploy_control_settings.get("ndeploy_theme_color", "light")
+    primary_color = yaml_parsed_ndeploy_control_settings.get("primary_color", "#121212")
+    logo_url = yaml_parsed_ndeploy_control_settings.get("logo_url", "None")
+    app_email = yaml_parsed_ndeploy_control_settings.get("app_email", "None")
+    cpanel_documentation_link = yaml_parsed_ndeploy_control_settings.get("cpanel_documentation_link", "None")
+    whm_documentation_link = yaml_parsed_ndeploy_control_settings.get("whm_documentation_link", "None")
+
     # dev_mode
     if 'dev_mode' in form.keys():
         dev_mode = form.getvalue('dev_mode')
-        yaml_parsed_profileyaml['dev_mode'] = dev_mode
+        current_dev_mode=yaml_parsed_profileyaml.get('dev_mode', 'disabled')
+        current_open_file_cache=yaml_parsed_profileyaml.get('open_file_cache', 'disabled')
+        current_set_expire_static=yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
+        current_proxy_to_master=yaml_parsed_profileyaml.get('proxy_to_master', 'disabled')
         if dev_mode == 'enabled':
             yaml_parsed_profileyaml['open_file_cache'] = 'disabled'
             yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
             yaml_parsed_profileyaml['proxy_to_master'] = 'enabled'
         else:
-            yaml_parsed_profileyaml['open_file_cache'] = 'enabled'
-            yaml_parsed_profileyaml['set_expire_static'] = 'enabled'
-            yaml_parsed_profileyaml['proxy_to_master'] = 'disabled'
+            yaml_parsed_profileyaml['open_file_cache'] = current_open_file_cache
+            yaml_parsed_profileyaml['set_expire_static'] = current_set_expire_static
+            yaml_parsed_profileyaml['proxy_to_master'] = current_proxy_to_master
     else:
         commoninclude.print_error('Error: Forbidden::autoindex')
         sys.exit(0)
