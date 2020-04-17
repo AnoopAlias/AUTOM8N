@@ -20,6 +20,7 @@ setup_ea4_php_cloudlinux(){
 		else
 			/opt/nDeploy/scripts/generate_default_vhost_config_slave.py
 		fi
+		nginx -s reload
 	}
 
 setup_ea4_php(){
@@ -40,6 +41,7 @@ setup_ea4_php(){
 		else
 			/opt/nDeploy/scripts/generate_default_vhost_config_slave.py
 		fi
+		nginx -s reload
 	}
 
 setup_remi_php(){
@@ -67,6 +69,7 @@ setup_remi_php(){
 		else
 			/opt/nDeploy/scripts/generate_default_vhost_config_slave.py
 		fi
+		nginx -s reload
 	}
 
 auto_setup(){
