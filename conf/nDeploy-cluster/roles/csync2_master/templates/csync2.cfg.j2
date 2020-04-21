@@ -42,6 +42,7 @@ group nDeployCluster
         include /opt/cpanel/ea-php71/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php72/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php73/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php74/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php54/root/etc/php.ini;
         include /opt/cpanel/ea-php55/root/etc/php.ini;
         include /opt/cpanel/ea-php56/root/etc/php.ini;
@@ -49,6 +50,7 @@ group nDeployCluster
         include /opt/cpanel/ea-php71/root/etc/php.ini;
         include /opt/cpanel/ea-php72/root/etc/php.ini;
         include /opt/cpanel/ea-php73/root/etc/php.ini;
+        include /opt/cpanel/ea-php74/root/etc/php.ini;
         exclude /var/spool/cron/root;
         action
         {
@@ -90,6 +92,7 @@ group nDeployCluster
                 pattern /opt/cpanel/ea-php71/root/etc/php-fpm.d/*;
                 pattern /opt/cpanel/ea-php72/root/etc/php-fpm.d/*;
                 pattern /opt/cpanel/ea-php73/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php74/root/etc/php-fpm.d/*;
                 exec "/scripts/restartsrv_apache_php_fpm";
                 logfile "/var/log/csync2_action.log";
         }
@@ -102,6 +105,7 @@ group nDeployCluster
                 pattern /opt/cpanel/ea-php71/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php72/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php73/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php74/root/etc/php.ini;
                 exec "/opt/nDeploy/scripts/init_backends.py reload";
                 logfile "/var/log/csync2_action.log";
                 do-local;

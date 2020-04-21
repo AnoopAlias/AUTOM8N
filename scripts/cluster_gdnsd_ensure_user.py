@@ -89,6 +89,12 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                         if str(line).rstrip() == domainname:
                             mx_skip_flag = True
                             break
+                if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
+                    with open(installation_path+"/conf/dnscluster.exclude") as excludes:
+                        for line in excludes:
+                            if str(line).rstrip() == domainname:
+                                mx_skip_flag = True
+                                break
                 if not mx_skip_flag:
                     myhostname = socket.gethostname()
                     gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
