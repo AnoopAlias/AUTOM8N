@@ -172,7 +172,7 @@ if "PHP" in backend_data_yaml_parsed:
         if not is_page_available('localhost', statuspage):
             php_is_at_fault = True
             faulty_php.append(name)
-if php_is_at_fault:
+if php_is_at_fault and not os.path.isfile(php_secure_mode_file):
     print('                            <li><small>PHP-FPM Status: <span class="text-danger">Fault: '+str(faulty_php)+'</span></small></li>')
 else:
     print('                            <li><small>PHP-FPM Status: <span class="text-success">OK</span></small></li>')
