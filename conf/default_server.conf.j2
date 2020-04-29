@@ -31,6 +31,23 @@ server {
         include /etc/nginx/conf.d/dos_mitigate.conf;
         {% endif %}
         include /etc/nginx/conf.d/ErrorPages.conf;
+
+        # Allow "Well-Known URIs" as per RFC 5785
+        location ~* ^/.well-known/ {
+        allow all;
+        proxy_pass   $scheme://{{ MYIP }}:$cpport;
+        }
+        # cPanel internal DCV checks
+        location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+        allow all;
+        proxy_pass   $scheme://{{ MYIP }}:$cpport;
+        }
+        # Comodo
+        location ~* "^/[A-F0-9]{32}\.txt$" {
+        allow all;
+        proxy_pass   $scheme://{{ MYIP }}:$cpport;
+        }
+
         location / {
            include /etc/nginx/conf.d/default_server_include.conf*;
            proxy_pass   http://{% if PROXY_TO_MASTER %}{{ MASTER_MAINIP }}{% else %}{{ MYIP }}{% endif %}:9999;
@@ -75,6 +92,23 @@ server {
         include /etc/nginx/conf.d/dos_mitigate.conf;
         {% endif %}
         include /etc/nginx/conf.d/ErrorPages.conf;
+
+        # Allow "Well-Known URIs" as per RFC 5785
+        location ~* ^/.well-known/ {
+        allow all;
+        proxy_pass   $scheme://{{ MYIP }}:$cpport;
+        }
+        # cPanel internal DCV checks
+        location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+        allow all;
+        proxy_pass   $scheme://{{ MYIP }}:$cpport;
+        }
+        # Comodo
+        location ~* "^/[A-F0-9]{32}\.txt$" {
+        allow all;
+        proxy_pass   $scheme://{{ MYIP }}:$cpport;
+        }
+
         location / {
            include /etc/nginx/conf.d/default_server_include.conf*;
            proxy_pass   https://{% if PROXY_TO_MASTER %}{{ MASTER_MAINIP }}{% else %}{{ MYIP }}{% endif %}:4430;
