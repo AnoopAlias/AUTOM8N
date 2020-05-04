@@ -165,7 +165,7 @@ def generate_zone(username, domainname, ipaddress, resourcename, slavelist):
                                 gdnsdzone.append(rr['name']+' TYPE257 '+rr['value_legacy']+'\n')
                             else:
                                 pass
-                else:
+                elif domaintype == 'main':
                     subzonedatajson = "/var/cpanel/userdata/" + domainuser + "/main.cache"
                     with open(subzonedatajson) as subzone_data_stream:
                         json_parsed_subzone = json.load(subzone_data_stream)
@@ -260,6 +260,9 @@ if __name__ == "__main__":
         parked_domains = json_parsed_cpaneluser.get('parked_domains')
         addon_domains_dict = json_parsed_cpaneluser.get('addon_domains')     # So we know which addon is mapped to which sub-domain
         sub_domains = json_parsed_cpaneluser.get('sub_domains')
+        # We always have a zone for main domain,addon-domains and Alias domains
+        # We can have subzone of a main domain as a main domain ( eg: sub1.example.com and example.com can both exist as main )
+        # We can have subzone of a main domain as a parked domain( eg sub1.example.com can be added as a parked domain on top of example.com main domain)
         # Begin DNS zone add .Do it first for the main domain
         with open("/var/cpanel/userdata/"+cpaneluser+"/"+main_domain+".cache") as maindomain_data_stream:
             maindomain_data_stream_parsed = json.load(maindomain_data_stream)
