@@ -1016,7 +1016,12 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('                     </div>')
     print('                     <button id="sync-geodns-zone-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Sync GeoDNS Zone</button>')
     print('                 </form>')
+
+    print('             </div> <!-- Card Body End -->')
+    cardfooter('Choose a user to sync dns zone or web files')
+
     # Clean DNS Zone
+    cardheader('Map cPanel Package to NGINX', 'fas fa-box-open')
     print('                 <div class="card-body p-0"> <!-- Card Body Start -->')
     print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
     print('                         <div class="col-md-6 alert"><i class="fas fa-box"></i> NGINX -> Package</div>')
@@ -1047,9 +1052,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('                         </div>')
     print('                     </div> <!-- Row End -->')
     print('                 </div> <!-- Card Body End -->')
-
-    print('             </div> <!-- Card Body End -->')
-    cardfooter('Choose a user to sync dns zone or web files')
+    cardfooter('xxx')
 else:
     cardheader('Cluster Sync Disabled', 'fas fa-sync')
     cardfooter('Cluster Sync is only available when cluster is setup')
