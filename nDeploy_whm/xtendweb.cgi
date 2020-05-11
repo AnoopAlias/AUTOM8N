@@ -1021,14 +1021,14 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     cardfooter('Choose a user to sync dns zone or web files')
 
     # Clean DNS Zone
-    cardheader('Map cPanel Package to NGINX', 'fas fa-box-open')
+    cardheader('Clean additional A records in DNS Zone', 'fas fa-undo')
     print('                 <div class="card-body p-0"> <!-- Card Body Start -->')
     print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
-    print('                         <div class="col-md-6 alert"><i class="fas fa-box"></i> NGINX -> Package</div>')
+    print('                         <div class="col-md-6 alert"><i class="fas fa-undo"></i> Set Zone cleanup lock</div>')
     print('                         <div class="col-md-6">')
     print('                             <div class="row no-gutters">')
 
-    if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
+    if os.path.isfile(installation_path+'/conf/DECLUSTER_DNSZONE'):
         print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
         print('                             <div class="col-9">')
         print('                                 <form class="form" method="post" id="package_lock_disable" onsubmit="return false;">')
