@@ -1016,6 +1016,35 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('                     </div>')
     print('                     <button id="sync-geodns-zone-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Sync GeoDNS Zone</button>')
     print('                 </form>')
+    # Clean DNS Zone
+    print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
+    print('                         <div class="col-md-6 alert"><i class="fas fa-box"></i> NGINX -> Package</div>')
+    print('                         <div class="col-md-6">')
+    print('                             <div class="row no-gutters">')
+
+    if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
+        print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+        print('                             <div class="col-9">')
+        print('                                 <form class="form" method="post" id="package_lock_disable" onsubmit="return false;">')
+        print('                                     <label hidden for="lock_domaindata_to_package">Lock Domaindata To Package</label>')
+        print('                                     <input hidden name="package_lock" id="lock_domaindata_to_package" value="disabled">')
+        print('                                     <button id="package-lock-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
+        print('                                 </form>')
+        print('                             </div>')
+        print('                         </div>')
+    else:
+        print('                         <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+        print('                             <div class="col-9">')
+        print('                                 <form class="form" method="post" id="package_lock_enable" onsubmit="return false;">')
+        print('                                     <label hidden for="lock_domaindata_to_package">Lock Domaindata To Package</label>')
+        print('                                     <input hidden name="package_lock" id="lock_domaindata_to_package" value="enabled">')
+        print('                                     <button id="package-lock-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
+        print('                                 </form>')
+        print('                             </div>')
+        print('                         </div>')
+
+    print('                         </div>')
+    print('                     </div> <!-- Row End -->')
 
     print('             </div> <!-- Card Body End -->')
     cardfooter('Choose a user to sync dns zone or web files')
@@ -1232,10 +1261,9 @@ else:
 print('                         </div>')
 print('                     </div> <!-- Row End -->')
 print('                 </div> <!-- Card Body End -->')
+
 print('                 <div class="card-body"> <!-- Card Body Start -->')
-
 cpanpackage_hint = " Map a NGINX configuration to an installed cPanel package. "
-
 # Workaround for python 2.6
 if platform.python_version().startswith('2.6'):
     listpkgs = subprocess.Popen('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', stdout=subprocess.PIPE, shell=True).communicate()[0]
