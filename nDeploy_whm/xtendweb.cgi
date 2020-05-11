@@ -1035,7 +1035,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
         if os.path.isfile(installation_path+'/conf/DECLUSTER_DNSZONE'):
             print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
             print('                             <div class="col-9">')
-            print('                                 <form class="form" method="post" id="sync_geodns_zone" onsubmit="return false;">')
+            print('                                 <form class="form" method="post" id="dns_decluster_zone_disable" onsubmit="return false;">')
             print('                                     <input hidden name="action" id="lock_decluster_zone" value="disabled">')
             print('                                     <button id="decluster-lock-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
             print('                                 </form>')
@@ -1044,7 +1044,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
         else:
             print('                         <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
             print('                             <div class="col-9">')
-            print('                                 <form class="form" method="post" id="sync_geodns_zone" onsubmit="return false;">')
+            print('                                 <form class="form" method="post" id="dns_decluster_zone_enable" onsubmit="return false;">')
             print('                                     <input hidden name="action" id="lock_decluster_zone" value="enabled">')
             print('                                     <button id="decluster-lock-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
             print('                                 </form>')
