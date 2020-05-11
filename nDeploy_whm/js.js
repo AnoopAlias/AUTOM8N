@@ -548,7 +548,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-zone #sync_geodns_zone").load(($urlparam) + " #v-pills-zone #sync_geodns_zone > *");
+                $("#v-pills-map .card-body > .no-gutters").load(($urlparam) + " #v-pills-map .card-body > .no-gutters > *");
+                $($loaderId).html('Enable');
                 $.toast({
                     autohide: 'true',
                 });
@@ -569,7 +570,8 @@ jQuery(document).ready(function($) {
         $.ajax({
             url: $url,
             success: function(result) {
-                $("#v-pills-zone #sync_geodns_zone").load(($urlparam) + " #v-pills-zone #sync_geodns_zone > *");
+                $("#v-pills-map .card-body > .no-gutters").load(($urlparam) + " #v-pills-map .card-body > .no-gutters > *");
+                $($loaderId).html('Enable');
                 $.toast({
                     autohide: 'true',
                 });
