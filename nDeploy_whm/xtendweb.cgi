@@ -1017,6 +1017,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     print('                     <button id="sync-geodns-zone-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Sync GeoDNS Zone</button>')
     print('                 </form>')
     # Clean DNS Zone
+    print('                 <div class="card-body p-0"> <!-- Card Body Start -->')
     print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
     print('                         <div class="col-md-6 alert"><i class="fas fa-box"></i> NGINX -> Package</div>')
     print('                         <div class="col-md-6">')
@@ -1045,6 +1046,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
 
     print('                         </div>')
     print('                     </div> <!-- Row End -->')
+    print('                 </div> <!-- Card Body End -->')
 
     print('             </div> <!-- Card Body End -->')
     cardfooter('Choose a user to sync dns zone or web files')
