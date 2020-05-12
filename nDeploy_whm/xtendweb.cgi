@@ -1014,11 +1014,47 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
             print('                     <option value="'+cpuser+'">'+cpuser+'</option>')
     print('                         </select>')
     print('                     </div>')
-    print('                     <button id="sync-geodns-zone-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Sync GeoDNS Zone</button>')
+    if os.path.isfile(installation_path+'/conf/skip_geodns'):
+        print('                     <button id="sync-geodns-zone-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Sync DNS Zone</button>')
+    else:
+        print('                     <button id="sync-geodns-zone-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Sync GeoDNS Zone</button>')
     print('                 </form>')
 
     print('             </div> <!-- Card Body End -->')
     cardfooter('Choose a user to sync dns zone or web files')
+
+    # Clean DNS Zone
+    if os.path.isfile(installation_path+'/conf/skip_geodns'):
+        cardheader('Clean additional A records in DNS Zone', 'fas fa-undo')
+        print('                 <div class="card-body p-0"> <!-- Card Body Start -->')
+        print('                     <div class="row no-gutters row-1"> <!-- Row Start -->')
+        print('                         <div class="col-md-6 alert"><i class="fas fa-undo"></i> Set Zone cleanup lock</div>')
+        print('                         <div class="col-md-6">')
+        print('                             <div class="row no-gutters">')
+
+        if os.path.isfile(installation_path+'/conf/DECLUSTER_DNSZONE'):
+            print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
+            print('                             <div class="col-9">')
+            print('                                 <form class="form" method="post" id="dns_decluster_zone_disable" onsubmit="return false;">')
+            print('                                     <input hidden name="action" id="lock_decluster_zone" value="disabled">')
+            print('                                     <button id="decluster-lock-disable-btn" type="submit" class="alert btn btn-secondary">Disable</button>')
+            print('                                 </form>')
+            print('                             </div>')
+            print('                         </div>')
+        else:
+            print('                         <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
+            print('                             <div class="col-9">')
+            print('                                 <form class="form" method="post" id="dns_decluster_zone_enable" onsubmit="return false;">')
+            print('                                     <input hidden name="action" id="lock_decluster_zone" value="enabled">')
+            print('                                     <button id="decluster-lock-enable-btn" type="submit" class="alert btn btn-secondary">Enable</button>')
+            print('                                 </form>')
+            print('                             </div>')
+            print('                         </div>')
+
+        print('                         </div>')
+        print('                     </div> <!-- Row End -->')
+        print('                 </div> <!-- Card Body End -->')
+        cardfooter('Before account transfer enable the lock and synchronize DNS zone for the user. Once transfer is complete, disable the lock')
 else:
     cardheader('Cluster Sync Disabled', 'fas fa-sync')
     cardfooter('Cluster Sync is only available when cluster is setup')
@@ -1232,10 +1268,9 @@ else:
 print('                         </div>')
 print('                     </div> <!-- Row End -->')
 print('                 </div> <!-- Card Body End -->')
+
 print('                 <div class="card-body"> <!-- Card Body Start -->')
-
 cpanpackage_hint = " Map a NGINX configuration to an installed cPanel package. "
-
 # Workaround for python 2.6
 if platform.python_version().startswith('2.6'):
     listpkgs = subprocess.Popen('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', stdout=subprocess.PIPE, shell=True).communicate()[0]

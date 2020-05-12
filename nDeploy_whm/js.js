@@ -537,6 +537,50 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $(document).on("submit","#dns_decluster_zone_enable",function(e){
+        var $loaderId        =   "#decluster-lock-enable-btn";
+        var $loaderText      =   "Enabling...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "sync_gdnsd_zone.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-zone .card-body > .no-gutters").load(($urlparam) + " #v-pills-zone .card-body > .no-gutters > *");
+                $($loaderId).html('Enable');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
+    $(document).on("submit","#dns_decluster_zone_disable",function(e){
+        var $loaderId        =   "#decluster-lock-disable-btn";
+        var $loaderText      =   "Disabling...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "sync_gdnsd_zone.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-zone .card-body > .no-gutters").load(($urlparam) + " #v-pills-zone .card-body > .no-gutters > *");
+                $($loaderId).html('Enable');
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
     $(document).on("submit","#package_lock_disable",function(e){
         var $loaderId        =   "#package-lock-disable-btn";
         var $loaderText      =   "Disabling...";
