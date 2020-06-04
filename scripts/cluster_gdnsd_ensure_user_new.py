@@ -276,7 +276,8 @@ if __name__ == "__main__":
         print("tldextract: "+str(ext))
         if not ext.subdomain:
             print("NOT A SUBDOMAIN")
-            generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
+            if os.path.isfile("/var/named/"+main_domain+".db"):
+                generate_zone(cpaneluser, main_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
         else:
             print("GENERATE SUBZONE MAP")
             # Generate subzone map if this is a subzone
@@ -310,7 +311,8 @@ if __name__ == "__main__":
                 addondomain_data_stream_parsed = json.load(addondomain_data_stream)
             addondomain_ip = addondomain_data_stream_parsed.get('ip')
             print(the_addon_domain)
-            generate_zone(cpaneluser, the_addon_domain, get_dns_ip(addondomain_ip), resourcemap[addondomain_ip], serverlist)
+            if os.path.isfile("/var/named/"+the_addon_domain+".db"):
+                generate_zone(cpaneluser, the_addon_domain, get_dns_ip(addondomain_ip), resourcemap[addondomain_ip], serverlist)
         # We dont check sub-domains as they are handled in the other zones
         # iterate over parked domains and add DNS RR for it . IP being that of main domain
         print("GENERATE FOR PARKED")
@@ -320,7 +322,8 @@ if __name__ == "__main__":
             print("tldextract:parked: "+str(extpark))
             if not extpark.subdomain:
                 print("PARKED DOMAIN NOT SUBZONE")
-                generate_zone(cpaneluser, the_parked_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
+                if os.path.isfile("/var/named/"+the_parked_domain+".db"):
+                    generate_zone(cpaneluser, the_parked_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
             else:
                 print("PARKED IS A SUBZONE")
                 reg_domain = extpark.registered_domain
