@@ -317,7 +317,7 @@ if __name__ == "__main__":
         for the_parked_domain in parked_domains:
             print(the_parked_domain)
             extpark = tldextract.extract(the_parked_domain)
-            print("tldextract:parked: "+str(extpark)
+            print("tldextract:parked: "+str(extpark))
             if not extpark.subdomain:
                 print("PARKED DOMAIN NOT SUBZONE")
                 generate_zone(cpaneluser, the_parked_domain, get_dns_ip(maindomain_ip), resourcemap[maindomain_ip], serverlist)
