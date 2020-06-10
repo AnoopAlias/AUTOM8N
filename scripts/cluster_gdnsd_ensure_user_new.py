@@ -144,7 +144,7 @@ def generate_zone(domainname, slavelist):
                             if rr['type'] == 'SOA':
                                 pass
                             elif rr['type'] == 'NS':
-                                gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
+                                pass
                             elif rr['type'] == "A":
                                 if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddresssub:
                                     gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
