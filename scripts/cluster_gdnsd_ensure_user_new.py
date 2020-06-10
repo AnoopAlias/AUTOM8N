@@ -89,7 +89,8 @@ def generate_zone(domainname, slavelist):
                             pass
                             # gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
                     else:
-                        gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+                        pass
+                        # gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                 elif rr['type'] == 'CNAME':
                     if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == domainname:
                         gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
@@ -160,7 +161,8 @@ def generate_zone(domainname, slavelist):
                                         pass
                                         # gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
                                 else:
-                                    gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+                                    pass
+                                    # gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                             elif rr['type'] == 'CNAME':
                                 if rr['name'] == 'mail.'+subzonedom+"." and rr['cname'] == subzonedom:
                                     gdnsdzone.append(rr['name']+' A '+ipaddresssub+'\n')
