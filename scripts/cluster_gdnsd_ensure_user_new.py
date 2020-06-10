@@ -140,7 +140,7 @@ def generate_zone(domainname, slavelist):
             for rr in resource_record:
                 if rr['type'] != ':RAW' or rr['type'] != '$TTL':
                     if rr['type'] == 'SOA':
-                        gdnsdzone.insert(0, '@ SOA '+rr['mname']+'. '+rr['rname']+'. (1 7200 30M 3D 900)\n')
+                        pass
                     elif rr['type'] == 'NS':
                         gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
                     elif rr['type'] == "A":
