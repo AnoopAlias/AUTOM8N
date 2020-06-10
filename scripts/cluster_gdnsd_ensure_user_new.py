@@ -86,7 +86,8 @@ def generate_zone(domainname, slavelist):
                         if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
                             gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                         else:
-                            gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
+                            pass
+                            # gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
                     else:
                         gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                 elif rr['type'] == 'CNAME':
@@ -156,7 +157,8 @@ def generate_zone(domainname, slavelist):
                                     if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
                                         gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                                     else:
-                                        gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
+                                        pass
+                                        # gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
                                 else:
                                     gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                             elif rr['type'] == 'CNAME':
