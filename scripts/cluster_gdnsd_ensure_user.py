@@ -76,7 +76,7 @@ def generate_zone(domainname, slavelist):
                 elif rr['type'] == 'NS':
                     gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
                 elif rr['type'] == "A":
-                    if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
+                    if rr["name"].startswith(("mail.", "autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
                         gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                     else:
                         gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
@@ -148,7 +148,7 @@ def generate_zone(domainname, slavelist):
                             elif rr['type'] == 'NS':
                                 pass
                             elif rr['type'] == "A":
-                                if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddresssub:
+                                if rr["name"].startswith(("mail.", "autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddresssub:
                                     gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                                 else:
                                     gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcenamesub+'\n')
