@@ -65,137 +65,143 @@ def generate_zone(domainname, slavelist):
     mx_loop_skip = False
     with open("/etc/userdatadomains.json", "r") as myuserdatadomains:
         myjson_parsed_userdata = json.load(myuserdatadomains)
-    myipaddress = myjson_parsed_userdata.get(domainname)[5].split(':')[0]
-    ipaddress = get_dns_ip(myipaddress)
-    resourcename = resourcemap[ipaddress]
-    for rr in resource_record:
-        if rr['type'] != ':RAW' or rr['type'] != '$TTL':
-            if rr['type'] == 'SOA':
-                gdnsdzone.insert(0, '@ SOA '+rr['mname']+'. '+rr['rname']+'. (1 7200 30M 3D 900)\n')
-            elif rr['type'] == 'NS':
-                gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
-            elif rr['type'] == "A":
-                if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
-                    gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
-                else:
-                    gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
-            elif rr['type'] == 'AAAA':
-                # we add ipv6 only if there is a mapping
-                if rr['address'] in resourcemap.keys():
-                    if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
-                        gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+    if domainname in myjson_parsed_userdata.keys():
+        myipaddress = myjson_parsed_userdata.get(domainname)[5].split(':')[0]
+        ipaddress = get_dns_ip(myipaddress)
+        resourcename = resourcemap[ipaddress]
+        for rr in resource_record:
+            if rr['type'] != ':RAW' or rr['type'] != '$TTL':
+                if rr['type'] == 'SOA':
+                    gdnsdzone.insert(0, '@ SOA '+rr['mname']+'. '+rr['rname']+'. (1 7200 30M 3D 900)\n')
+                elif rr['type'] == 'NS':
+                    gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
+                elif rr['type'] == "A":
+                    if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
+                        gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                     else:
-                        gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
-                else:
-                    gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
-            elif rr['type'] == 'CNAME':
-                if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == domainname:
-                    gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
-                else:
-                    gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
-            elif rr['type'] == "MX" and not mx_loop_skip:
-                with open('/etc/remotedomains') as mx_excludes:
-                    for line in mx_excludes:
-                        if str(line).rstrip() == domainname:
-                            mx_skip_flag = True
-                            break
-                if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
-                    with open(installation_path+"/conf/dnscluster.exclude") as excludes:
-                        for line in excludes:
+                        gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
+                elif rr['type'] == 'AAAA':
+                    # we add ipv6 only if there is a mapping
+                    if rr['address'] in resourcemap.keys():
+                        if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
+                            gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+                        else:
+                            gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
+                    else:
+                        gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+                elif rr['type'] == 'CNAME':
+                    if rr['name'] == 'mail.'+domainname+"." and rr['cname'] == domainname:
+                        gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
+                    else:
+                        gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
+                elif rr['type'] == "MX" and not mx_loop_skip:
+                    with open('/etc/remotedomains') as mx_excludes:
+                        for line in mx_excludes:
                             if str(line).rstrip() == domainname:
                                 mx_skip_flag = True
                                 break
-                if not mx_skip_flag:
-                    myhostname = socket.gethostname()
-                    gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
-                    for server in slavelist:
-                        gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
-                    mx_loop_skip = True
-                else:
-                    gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
-            elif rr['type'] == "TXT":
-                gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
-            elif rr['type'] == 'SRV':
-                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
-            elif rr['type'] == 'TYPE257':
-                gdnsdzone.append(rr['name']+' TYPE257 '+rr['value_legacy']+'\n')
-            else:
-                pass
-    # Append subzone RR's
-    if os.path.isfile('/etc/gdnsd/'+domainname+'_subzone'):
-        with open('/etc/gdnsd/'+domainname+'_subzone', "r") as mysubzone:
-            json_parsed_subzone = json.load(mysubzone)
-            mysubzonelist = json_parsed_subzone.get(domainname)
-        for subzonedom in mysubzonelist:
-            myipaddresssub = myjson_parsed_userdata.get(subzonedom)[5].split(':')[0]
-            ipaddresssub = get_dns_ip(myipaddresssub)
-            resourcenamesub = resourcemap[ipaddresssub]
-            subzonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+subzonedom, shell=True, stdout=subprocess.PIPE)
-            subzone_datafeed = subzonedump.stdout.read()
-            subzonedump_parsed = json.loads(subzone_datafeed)
-            thezone = subzonedump_parsed['data']['zone'][0]
-            resource_record = thezone['record']
-            mx_skip_flag = False
-            mx_loop_skip = False
-            for rr in resource_record:
-                if rr['type'] != ':RAW' or rr['type'] != '$TTL':
-                    if rr['type'] == 'SOA':
-                        pass
-                    elif rr['type'] == 'NS':
-                        gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
-                    elif rr['type'] == "A":
-                        if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddresssub:
-                            gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
-                        else:
-                            gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcenamesub+'\n')
-                    elif rr['type'] == 'AAAA':
-                        # we add ipv6 only if there is a mapping
-                        if rr['address'] in resourcemap.keys():
-                            if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
-                                gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
-                            else:
-                                gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
-                        else:
-                            gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
-                    elif rr['type'] == 'CNAME':
-                        if rr['name'] == 'mail.'+subzonedom+"." and rr['cname'] == subzonedom:
-                            gdnsdzone.append(rr['name']+' A '+ipaddresssub+'\n')
-                        else:
-                            gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
-                    elif rr['type'] == "MX" and not mx_loop_skip:
-                        with open('/etc/remotedomains') as mx_excludes:
-                            for line in mx_excludes:
-                                if str(line).rstrip() == subzonedom:
+                    if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
+                        with open(installation_path+"/conf/dnscluster.exclude") as excludes:
+                            for line in excludes:
+                                if str(line).rstrip() == domainname:
                                     mx_skip_flag = True
                                     break
-                        if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
-                            with open(installation_path+"/conf/dnscluster.exclude") as excludes:
-                                for line in excludes:
-                                    if str(line).rstrip() == subzonedom:
-                                        mx_skip_flag = True
-                                        break
-                        if not mx_skip_flag:
-                            myhostname = socket.gethostname()
-                            gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
-                            for server in slavelist:
-                                gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
-                            mx_loop_skip = True
-                        else:
-                            gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
-                    elif rr['type'] == "TXT":
-                        gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
-                    elif rr['type'] == 'SRV':
-                        gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
-                    elif rr['type'] == 'TYPE257':
-                        gdnsdzone.append(rr['name']+' TYPE257 '+rr['value_legacy']+'\n')
+                    if not mx_skip_flag:
+                        myhostname = socket.gethostname()
+                        gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
+                        for server in slavelist:
+                            gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
+                        mx_loop_skip = True
                     else:
-                        pass
-    with codecs.open('/etc/gdnsd/zones/'+domainname, "w", 'utf-8') as confout:
-        confout.writelines(gdnsdzone)
-    gdnsd_uid = pwd.getpwnam('nobody').pw_uid
-    gdnsd_gid = grp.getgrnam('nobody').gr_gid
-    os.chown('/etc/gdnsd/zones/'+domainname, gdnsd_uid, gdnsd_gid)
-    os.chmod('/etc/gdnsd/zones/'+domainname, 0o660)
+                        gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
+                elif rr['type'] == "TXT":
+                    gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
+                elif rr['type'] == 'SRV':
+                    gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
+                elif rr['type'] == 'TYPE257':
+                    gdnsdzone.append(rr['name']+' TYPE257 '+rr['value_legacy']+'\n')
+                else:
+                    pass
+        # Append subzone RR's
+        if os.path.isfile('/etc/gdnsd/'+domainname+'_subzone'):
+            with open('/etc/gdnsd/'+domainname+'_subzone', "r") as mysubzone:
+                json_parsed_subzone = json.load(mysubzone)
+                mysubzonelist = json_parsed_subzone.get(domainname)
+            for subzonedom in mysubzonelist:
+                if subzonedom in myjson_parsed_userdata.keys():
+                    myipaddresssub = myjson_parsed_userdata.get(subzonedom)[5].split(':')[0]
+                    ipaddresssub = get_dns_ip(myipaddresssub)
+                    resourcenamesub = resourcemap[ipaddresssub]
+                    subzonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+subzonedom, shell=True, stdout=subprocess.PIPE)
+                    subzone_datafeed = subzonedump.stdout.read()
+                    subzonedump_parsed = json.loads(subzone_datafeed)
+                    thezone = subzonedump_parsed['data']['zone'][0]
+                    resource_record = thezone['record']
+                    mx_skip_flag = False
+                    mx_loop_skip = False
+                    for rr in resource_record:
+                        if rr['type'] != ':RAW' or rr['type'] != '$TTL':
+                            if rr['type'] == 'SOA':
+                                pass
+                            elif rr['type'] == 'NS':
+                                gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
+                            elif rr['type'] == "A":
+                                if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddresssub:
+                                    gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                                else:
+                                    gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcenamesub+'\n')
+                            elif rr['type'] == 'AAAA':
+                                # we add ipv6 only if there is a mapping
+                                if rr['address'] in resourcemap.keys():
+                                    if rr["name"].startswith(("ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
+                                        gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+                                    else:
+                                        gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
+                                else:
+                                    gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
+                            elif rr['type'] == 'CNAME':
+                                if rr['name'] == 'mail.'+subzonedom+"." and rr['cname'] == subzonedom:
+                                    gdnsdzone.append(rr['name']+' A '+ipaddresssub+'\n')
+                                else:
+                                    gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
+                            elif rr['type'] == "MX" and not mx_loop_skip:
+                                with open('/etc/remotedomains') as mx_excludes:
+                                    for line in mx_excludes:
+                                        if str(line).rstrip() == subzonedom:
+                                            mx_skip_flag = True
+                                            break
+                                if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
+                                    with open(installation_path+"/conf/dnscluster.exclude") as excludes:
+                                        for line in excludes:
+                                            if str(line).rstrip() == subzonedom:
+                                                mx_skip_flag = True
+                                                break
+                                if not mx_skip_flag:
+                                    myhostname = socket.gethostname()
+                                    gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
+                                    for server in slavelist:
+                                        gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
+                                    mx_loop_skip = True
+                                else:
+                                    gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
+                            elif rr['type'] == "TXT":
+                                gdnsdzone.append(rr['name']+' TXT "'+rr['txtdata']+'"\n')
+                            elif rr['type'] == 'SRV':
+                                gdnsdzone.append(rr['name']+' SRV '+rr['priority']+' '+rr['weight']+' '+rr['port']+' '+rr['target']+'.\n')
+                            elif rr['type'] == 'TYPE257':
+                                gdnsdzone.append(rr['name']+' TYPE257 '+rr['value_legacy']+'\n')
+                            else:
+                                pass
+                else:
+                    print("ERROR::userdata::subzone::"+subzonedom)
+        with codecs.open('/etc/gdnsd/zones/'+domainname, "w", 'utf-8') as confout:
+            confout.writelines(gdnsdzone)
+        gdnsd_uid = pwd.getpwnam('nobody').pw_uid
+        gdnsd_gid = grp.getgrnam('nobody').gr_gid
+        os.chown('/etc/gdnsd/zones/'+domainname, gdnsd_uid, gdnsd_gid)
+        os.chmod('/etc/gdnsd/zones/'+domainname, 0o660)
+    else:
+        print("ERROR::userdata::"+domainname)
 
 
 if __name__ == "__main__":
