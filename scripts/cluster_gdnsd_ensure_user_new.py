@@ -76,14 +76,14 @@ def generate_zone(domainname, slavelist):
                 elif rr['type'] == 'NS':
                     gdnsdzone.append(rr['name']+" NS "+rr['nsdname']+".\n")
                 elif rr['type'] == "A":
-                    if rr["name"].startswith(("autoconfig.","autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
+                    if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
                         gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                     else:
                         gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
                 elif rr['type'] == 'AAAA':
                     # we add ipv6 only if there is a mapping
                     if rr['address'] in resourcemap.keys():
-                        if rr["name"].startswith(("autoconfig.","autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
+                        if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
                             gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                         else:
                             gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
@@ -146,14 +146,14 @@ def generate_zone(domainname, slavelist):
                             elif rr['type'] == 'NS':
                                 pass
                             elif rr['type'] == "A":
-                                if rr["name"].startswith(("autoconfig.","autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddresssub:
+                                if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddresssub:
                                     gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                                 else:
                                     gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcenamesub+'\n')
                             elif rr['type'] == 'AAAA':
                                 # we add ipv6 only if there is a mapping
                                 if rr['address'] in resourcemap.keys():
-                                    if rr["name"].startswith(("autoconfig.","autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
+                                    if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
                                         gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                                     else:
                                         gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcemap.get(rr['address'])+'\n')
