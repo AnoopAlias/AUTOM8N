@@ -242,7 +242,7 @@ if __name__ == "__main__":
                         # Its not a subzone
                         # Lets check if the zone file actually exists
                         if os.path.isfile("/var/named/"+mydomain+".db"):
-                            generate_zone(mydomain, get_dns_ip(myip), resourcemap[myip], serverlist)
+                            generate_zone(mydomain, serverlist)
                     else:
                         # This is a subzone we check and generate the main zone if it exists
                         reg_domain = ext.registered_domain
@@ -262,9 +262,9 @@ if __name__ == "__main__":
                             subzone_dict = {reg_domain: subzone_list}
                             with open('/etc/gdnsd/'+reg_domain+'_subzone', 'w') as subzone:
                                 json.dump(subzone_dict, subzone)
-                            generate_zone(reg_domain, get_dns_ip(myip), resourcemap[myip], serverlist)
+                            generate_zone(reg_domain, serverlist)
                         else:
                             # The main domain zone does not exist, we are good to generate
                             # a seperate zone for this subzone
                             if os.path.isfile("/var/named/"+mydomain+".db"):
-                                generate_zone(mydomain, get_dns_ip(myip), resourcemap[myip], serverlist)
+                                generate_zone(mydomain, serverlist)
