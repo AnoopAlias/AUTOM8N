@@ -22,6 +22,22 @@ def shorthostname(myhostname):
     return myhostname.split('.')[0]
 
 
+def get_dns_ip(ipaddress):
+    dnsip = ipaddress
+    if os.path.isfile('/var/cpanel/cpnat'):
+        with open('/var/cpanel/cpnat') as f:
+            content = f.readlines()
+        content = [x.strip() for x in content]
+        if content:
+            for line in content:
+                internalip, externalip = line.split()
+                if internalip == ipaddress:
+                    dnsip = externalip
+                    break
+    return dnsip
+
+
+
 if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
     cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
     cluster_data_yaml = open(cluster_config_file, 'r')
@@ -35,6 +51,9 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
         master_data_yaml.close()
         master_server = master_data_yaml_parsed.keys()[0]
         master_dnsmap = master_data_yaml_parsed.get(master_server).get('dnsmap')
+        master_natmap = {}
+        for ip in master_dnsmap.keys():
+            master_natmap[ip] = get_dns_ip(ip)
         # Lets generate the metafo_resources file
         templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
         templateEnv = jinja2.Environment(loader=templateLoader)
@@ -53,7 +72,8 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
         templateVars = {"dnsmap": master_dnsmap,
                         "clustermap": cluster_data_yaml_parsed,
                         "master_server": master_server,
-                        "cluster_serverlist": cluster_serverlist
+                        "cluster_serverlist": cluster_serverlist,
+                        "natpmap": master_natmap
                         }
         generated_config = template.render(templateVars)
         with codecs.open(geoip_res_file, 'w', 'utf-8') as confout:
