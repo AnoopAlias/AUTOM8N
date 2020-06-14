@@ -5,6 +5,6 @@ rpm -Uvh https://repository.pentestit.ru/nw/centos/nwaf-release-centos-7-1-6.noa
 # Keeping the repo disabled by default
 yum-config-manager --disable NemesidaWAF
 export TMPDIR=/root/tmp
-yum --enablerepo=NemesidaWAF install nwaf-dyn-1.17
+yum --enablerepo=NemesidaWAF install nwaf-dyn-1.19
 yum --enablerepo=ndeploy install nginx-nDeploy-module-nemesida
 echo 'Setup: Ok'
