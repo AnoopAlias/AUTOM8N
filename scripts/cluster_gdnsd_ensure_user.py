@@ -68,7 +68,7 @@ def generate_zone(domainname, slavelist):
     if domainname in myjson_parsed_userdata.keys():
         myipaddress = myjson_parsed_userdata.get(domainname)[5].split(':')[0]
         ipaddress = get_dns_ip(myipaddress)
-        resourcename = resourcemap[ipaddress]
+        resourcename = resourcemap[myipaddress]
         for rr in resource_record:
             if rr['type'] != ':RAW' or rr['type'] != '$TTL':
                 if rr['type'] == 'SOA':
@@ -133,7 +133,7 @@ def generate_zone(domainname, slavelist):
                 if subzonedom in myjson_parsed_userdata.keys():
                     myipaddresssub = myjson_parsed_userdata.get(subzonedom)[5].split(':')[0]
                     ipaddresssub = get_dns_ip(myipaddresssub)
-                    resourcenamesub = resourcemap[ipaddresssub]
+                    resourcenamesub = resourcemap[myipaddresssub]
                     subzonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+subzonedom, shell=True, stdout=subprocess.PIPE)
                     subzone_datafeed = subzonedump.stdout.read()
                     subzonedump_parsed = json.loads(subzone_datafeed)
