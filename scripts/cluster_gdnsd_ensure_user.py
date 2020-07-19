@@ -63,6 +63,7 @@ def generate_zone(domainname, slavelist):
     gdnsdzone = []
     mx_skip_flag = False
     mx_loop_skip = False
+    geo_skip_flag = False
     with open("/etc/userdatadomains.json", "r") as myuserdatadomains:
         myjson_parsed_userdata = json.load(myuserdatadomains)
     if domainname in myjson_parsed_userdata.keys():
@@ -79,7 +80,17 @@ def generate_zone(domainname, slavelist):
                     if rr["name"].startswith(("mail.", "autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddress:
                         gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                     else:
-                        gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
+                        if os.path.isfile(installation_path+"/conf/geodns.exclude"):
+                            with open(installation_path+"/conf/geodns.exclude") as excludes:
+                                for line in excludes:
+                                    if str(line).rstrip() == rr["name"]:
+                                        geo_skip_flag = True
+                                        break
+                        if not geo_skip_flag:
+                            gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
+                        else:
+                            gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                            geo_skip_flag = False
                 elif rr['type'] == 'AAAA':
                     # we add ipv6 only if there is a mapping
                     if rr['address'] in resourcemap.keys():
@@ -151,7 +162,17 @@ def generate_zone(domainname, slavelist):
                                 if rr["name"].startswith(("mail.", "autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")) or rr["address"] != ipaddresssub:
                                     gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                                 else:
-                                    gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcenamesub+'\n')
+                                    if os.path.isfile(installation_path+"/conf/geodns.exclude"):
+                                        with open(installation_path+"/conf/geodns.exclude") as excludes:
+                                            for line in excludes:
+                                                if str(line).rstrip() == rr["name"]:
+                                                    geo_skip_flag = True
+                                                    break
+                                    if not geo_skip_flag:
+                                        gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcenamesub+'\n')
+                                    else:
+                                        gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
+                                        geo_skip_flag = False
                             elif rr['type'] == 'AAAA':
                                 # we add ipv6 only if there is a mapping
                                 if rr['address'] in resourcemap.keys():
