@@ -7,15 +7,6 @@
   with_fileglob:
     - "/root/xtendweb_*"
 
-- name: Remove zone templates setup by previous versions
-  file:
-    path: "/var/cpanel/zonetemplates/{{ item }}"
-    state: absent
-  with_items:
-    - root_simple
-    - root_standard
-    - root_standardvirtualftp
-
 - name: Restart crond on master
   service: name=crond enabled=yes state=restarted
 
