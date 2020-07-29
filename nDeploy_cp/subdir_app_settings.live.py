@@ -115,6 +115,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 backend_version = the_subdir_dict.get('backend_version')
                 backend_path = the_subdir_dict.get('backend_path')
                 apptemplate_code = the_subdir_dict.get('apptemplate_code')
+                proxy_to_master = the_subdir_dict.get('proxy_to_master', 'disabled')
                 mod_security = the_subdir_dict.get('mod_security', 'disabled')
                 auth_basic = the_subdir_dict.get('auth_basic', 'disabled')
                 set_expire_static = the_subdir_dict.get('set_expire_static', 'disabled')
