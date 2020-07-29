@@ -372,6 +372,29 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                        </div>')
                 print('                                    </div>')
 
+                # proxy_to_master
+                proxy_to_master_hint = " When running in a cluster, PROXY to MASTER instead of local server. "
+                print('                                '+return_label("Proxy to Master", proxy_to_master_hint))
+                print('                                <div class="col-md-6">')
+                print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+
+                if proxy_to_master == 'enabled':
+                    print('                                        <label class="btn btn-light active">')
+                    print('                                            <input type="radio" name="proxy_to_master" value="enabled" id="ProxyToMasterOn" autocomplete="off" checked> Enabled')
+                    print('                                        </label>')
+                    print('                                        <label class="btn btn-light">')
+                    print('                                            <input type="radio" name="proxy_to_master" value="disabled" id="ProxyToMasterOff" autocomplete="off"> Disabled')
+                else:
+                    print('                                        <label class="btn btn-light">')
+                    print('                                            <input type="radio" name="proxy_to_master" value="enabled" id="ProxyToMasterOn" autocomplete="off"> Enabled')
+                    print('                                        </label>')
+                    print('                                        <label class="btn btn-light active">')
+                    print('                                            <input type="radio" name="proxy_to_master" value="disabled" id="ProxyToMasterOff" autocomplete="off" checked> Disabled')
+
+                print('                                        </label>')
+                print('                                    </div>')
+                print('                                </div>')
+
                 # set_expire_static
                 set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
                 print('                                    '+return_label("Expires / Cache-Control", set_expire_static_hint))
