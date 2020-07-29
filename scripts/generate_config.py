@@ -595,6 +595,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             subdir_backend_version = the_subdir_app_dict.get('backend_version')
             subdir_apptemplate_code = the_subdir_app_dict.get('apptemplate_code')
             subdir_auth_basic = the_subdir_app_dict.get('auth_basic', 'disabled')
+            subdir_proxy_to_master = the_subdir_app_dict.get('proxy_to_master', 'disabled')
             if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
                 subdir_mod_security = the_subdir_app_dict.get('mod_security', 'disabled')
             else:
@@ -713,8 +714,10 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
                     else:
                         remote_domain_ipv6 = None
                     cluster_subdir_app_config_out = "/etc/nginx/"+server+"/" + kwargs.get('configdomain') + "_" + subdir_apps_uniq.get(subdir) + ".subinclude"
-                    if proxy_to_master == 'disabled':
+                    if subdir_proxy_to_master == 'disabled':
                         subdirApptemplateVars["APPSERVERIP"] = remote_domain_ipv4
+                    else:
+                        subdirApptemplate = templateEnv.get_template('proxy_to_master_subdir.j2')
                     cluster_generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
                     with codecs.open(cluster_subdir_app_config_out, "w", 'utf-8') as confout:
                         confout.write(cluster_generated_subdir_app_config)
