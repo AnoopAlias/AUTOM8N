@@ -8,6 +8,9 @@
   service: name=xinetd enabled=yes state=restarted
   when: ansible_distribution_major_version == "6"
 
+- name: Reset csync2 config
+  shell: /opt/nDeploy/scripts/fix_csync2_configsync.sh
+
 - name: remove old csync2 cron job
   cron:
     name: nDeploy csync2
