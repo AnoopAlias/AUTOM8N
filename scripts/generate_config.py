@@ -755,12 +755,12 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             # ok all seems good we copy the user_configs to /etc/nginx/sites-enabled
             if os.path.isfile(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test"):
                 shutil.copyfile(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test", "/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user")
-                os.chown("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user", 0o644)
+                os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user", 0o644)
             if subdir_apps:
                 for subdir in subdir_apps.keys():
                     if os.path.isfile(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test"):
                         shutil.copyfile(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test", "/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user")
-                        os.chown("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user", 0o644)
+                        os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user", 0o644)
         # Remove all the temporary files we created for the test
         silentremove(domain_nginx_test)
         silentremove(installation_path+"/lock/"+kwargs.get('configdomain')+".conf")
