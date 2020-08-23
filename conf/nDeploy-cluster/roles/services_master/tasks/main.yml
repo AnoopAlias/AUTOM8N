@@ -10,6 +10,7 @@
 
 - name: Reset csync2 config
   shell: /opt/nDeploy/scripts/fix_csync2_configsync.sh
+  ignore_errors: yes
 
 - name: remove old csync2 cron job
   cron:
