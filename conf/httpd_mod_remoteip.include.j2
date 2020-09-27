@@ -8,3 +8,4 @@
   RemoteIPTrustedProxy {{ MYIP }}
   {% endfor %}
 </IfModule>
+SetEnvIf X-Forwarded-Proto https HTTPS=on

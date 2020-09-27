@@ -21,9 +21,7 @@
      - unison-nDeploy
      - nginx-nDeploy
      - python-pip
-     - stunnel
      - redis
-     - haproxy
      - gdnsd-nDeploy
      - MySQL-python
      - gnusys-monitoring

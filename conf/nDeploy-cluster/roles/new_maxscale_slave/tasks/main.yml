@@ -19,7 +19,7 @@
 
 - name: Install MaxScale rpm
   yum:
-    name: https://dlm.mariadb.com/987791/MaxScale/2.4.8/centos/7/x86_64/maxscale-2.4.8-1.centos.7.x86_64.rpm
+    name: https://dlm.mariadb.com/1067184/MaxScale/2.4.10/centos/7/x86_64/maxscale-2.4.10-1.centos.7.x86_64.rpm
     state: present
     validate_certs: no
   when:
@@ -28,7 +28,7 @@
 
 - name: Install MaxScale rpm
   yum:
-    name: https://dlm.mariadb.com/987820/MaxScale/2.4.8/centos/6/x86_64/maxscale-2.4.8-1.centos.6.x86_64.rpm
+    name: https://dlm.mariadb.com/1067196/MaxScale/2.4.10/centos/6/x86_64/maxscale-2.4.10-1.centos.6.x86_64.rpm
     state: present
     validate_certs: no
   when:

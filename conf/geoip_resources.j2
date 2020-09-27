@@ -3,7 +3,7 @@
         map => auto_map,
         service_types => [ xtendweb ],
         dcmap => {
-          {{ master_server|genshorthostname }} => {{ ip }},
+          {{ master_server|genshorthostname }} => {{ natpmap[ip] }},
           {% for slave in clustermap.keys() %}
           {{ slave|genshorthostname }} => {{ clustermap[slave]['dnsmap'][ip] }},
           {% endfor %}

@@ -25,19 +25,6 @@
     - copyrepos_slave
     - mkaccesshash_slave
 
-- name: Setup Stunnel and HAProxy
-  hosts: ndeploymaster
-  connection: local
-  roles:
-    - stunnel_master
-    - haproxy_master
-
-- name: Setup Stunnel and HAProxy
-  hosts: ndeployslaves
-  roles:
-    - stunnel_slave
-    - haproxy_slave
-
 - name: Setup DNS cluster config on slaves
   hosts: ndeployslaves
   vars:
@@ -144,16 +131,6 @@
   roles:
     - php_slave
     - httpd_slave
-
-- name: Setup HHVM extras for master
-  hosts: ndeploymaster
-  roles:
-    - hhvm_master
-
-- name: Setup HHVM extras for slaves
-  hosts: ndeployslaves
-  roles:
-    - hhvm_slave
 
 - name: Remove temp files from master
   hosts: ndeploymaster

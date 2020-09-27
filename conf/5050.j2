@@ -1,0 +1,27 @@
+#Silverstripe4
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+if ($http_x_forwarded_host) {
+return 400;
+}
+
+location / {
+try_files $uri /index.php?$query_string;
+}
+
+location ~ ^/assets/.*\.(?i:css|js|ace|arc|arj|asf|au|avi|bmp|bz2|cab|cda|csv|dmg|doc|docx|dotx|flv|gif|gpx|gz|hqx|ico|jpeg|jpg|kml|m4a|m4v|mid|midi|mkv|mov|mp3|mp4|mpa|mpeg|mpg|ogg|ogv|pages|pcx|pdf|png|pps|ppt|pptx|potx|ra|ram|rm|rtf|sit|sitx|tar|tgz|tif|tiff|txt|wav|webm|wma|wmv|xls|xlsx|xltx|zip|zipx)$ {
+sendfile on;
+try_files $uri /index.php?$query_string;
+}
+
+location ~ ^/assets/ {
+return 403;
+}
+
+location /index.php {
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+}

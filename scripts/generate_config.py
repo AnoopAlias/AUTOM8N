@@ -50,6 +50,7 @@ def railo_vhost_add_tomcat(domain_name, document_root, domain_aname_list):
                     node2.remove(node3)
             node2.append(new_xml_element)
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
+    os.chmod(tomcat_conf, 0o644)
     # enabling shell as Railo probably needs shell vars like CATALINA_HOME
     if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload'):
         subprocess.call('/opt/lucee/lucee_ctl restart', shell=True)
@@ -78,6 +79,7 @@ def java_vhost_add_tomcat(domain_name, document_root, domain_aname_list):
                     node2.remove(node3)
             node2.append(new_xml_element)
     xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
+    os.chmod(tomcat_conf, 0o644)
     # enabling shell as Railo probably needs shell vars like CATALINA_HOME
     if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload'):
         subprocess.Popen('service tomcat restart', shell=True)
@@ -137,6 +139,7 @@ def php_backend_add(user_name, phpmaxchildren, domain_home):
         generated_config = template.render(templateVars)
         with codecs.open(phppool_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
+        os.chmod(phppool_file, 0o644)
         if not os.path.isfile(installation_path+'/conf/skip_php-fpm_reload'):
             control_script = installation_path+"/scripts/init_backends.py"
             subprocess.Popen([control_script, 'reload'])
@@ -164,6 +167,7 @@ def hhvm_backend_add(user_name, domain_home, clusterenabled, cluster_serverlist)
         generated_config = template.render(templateVars)
         with codecs.open(hhvm_server_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
+        os.chmod(hhvm_server_file, 0o644)
         subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
         subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
         # Sync cluster config and call systemd remotely
@@ -194,6 +198,7 @@ def php_secure_backend_add(user_name, phpmaxchildren, domain_home, clusterenable
         generated_config = template.render(templateVars)
         with codecs.open(phpfpm_conf_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
+        os.chmod(phpfpm_conf_file, 0o644)
         if clusterenabled:
             subprocess.call('/usr/sbin/csync2 -x', shell=True)
     backend_config_file = installation_path+"/conf/backends.yaml"
@@ -478,6 +483,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     generated_config = server_template.render(templateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
         confout.write(generated_config)
+    os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", 0o644)
     # generate a temp server config which we will use for custom nginx.conf testing
     if os.path.isfile(installation_path+'/conf/server_test_local.j2'):
         TEST_TEMPLATE_FILE = "server_test_local.j2"
@@ -487,6 +493,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     generated_config = test_server_template.render(templateVars)
     with codecs.open(installation_path+"/lock/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
         confout.write(generated_config)
+    os.chmod(installation_path+"/lock/"+kwargs.get('configdomain')+".conf", 0o644)
     # If a cluster is setup.Generate nginx config for other servers as well
     if clusterenabled:
         for server in cluster_serverlist:
@@ -504,6 +511,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             cluster_generated_config = server_template.render(templateVars)
             with codecs.open(cluster_config_out, "w", 'utf-8') as confout:
                 confout.write(cluster_generated_config)
+            os.chmod(cluster_config_out, 0o644)
     # Generate the rest of the config(domain.include) based on the application template
     app_template = templateEnv.get_template(apptemplate_code)
     # We configure the backends first if necessary
@@ -550,6 +558,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     generated_app_config = app_template.render(apptemplateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", "w", 'utf-8') as confout:
         confout.write(generated_app_config)
+    os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".include", 0o644)
     # if cluster is enabled generate .include for the clustered servers as well
     if clusterenabled:
         for server in cluster_serverlist:
@@ -568,6 +577,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             cluster_generated_app_config = app_template.render(apptemplateVars)
             with codecs.open(cluster_app_config_out, "w", 'utf-8') as confout:
                 confout.write(cluster_generated_app_config)
+            os.chmod(cluster_app_config_out, 0o644)
     # Copy the user config for testing if present
     if os.path.isfile(document_root+"/nginx.conf"):
         # SecFilter
@@ -595,6 +605,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             subdir_backend_version = the_subdir_app_dict.get('backend_version')
             subdir_apptemplate_code = the_subdir_app_dict.get('apptemplate_code')
             subdir_auth_basic = the_subdir_app_dict.get('auth_basic', 'disabled')
+            subdir_proxy_to_master = the_subdir_app_dict.get('proxy_to_master', 'disabled')
             if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
                 subdir_mod_security = the_subdir_app_dict.get('mod_security', 'disabled')
             else:
@@ -640,6 +651,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             generated_config = subdir_server_template.render(subdirtemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subconf", "w", 'utf-8') as confout:
                 confout.write(generated_config)
+            os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subconf", 0o644)
             # Copy the user config for testing if present
             if os.path.isfile(document_root+'/'+subdir+"/nginx.conf"):
                 # SecFilter
@@ -702,6 +714,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
             with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", "w", 'utf-8') as confout:
                 confout.write(generated_subdir_app_config)
+            os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".subinclude", 0o644)
             # if cluster is enabled generate .subinclude for the clustered servers as well
             if clusterenabled:
                 for server in cluster_serverlist:
@@ -713,11 +726,14 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
                     else:
                         remote_domain_ipv6 = None
                     cluster_subdir_app_config_out = "/etc/nginx/"+server+"/" + kwargs.get('configdomain') + "_" + subdir_apps_uniq.get(subdir) + ".subinclude"
-                    if proxy_to_master == 'disabled':
+                    if subdir_proxy_to_master == 'disabled':
                         subdirApptemplateVars["APPSERVERIP"] = remote_domain_ipv4
+                    else:
+                        subdirApptemplate = templateEnv.get_template('proxy_to_master_subdir.j2')
                     cluster_generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
                     with codecs.open(cluster_subdir_app_config_out, "w", 'utf-8') as confout:
                         confout.write(cluster_generated_subdir_app_config)
+                    os.chmod(cluster_subdir_app_config_out, 0o644)
     # If we have a user_config.Lets generate the test confg
     if user_config is True and is_unsafe is not True:
         # generate a temp nginx config
@@ -728,6 +744,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
         domain_nginx_test = installation_path+"/lock/"+kwargs.get('configdomain')+".nginx_test"
         with codecs.open(domain_nginx_test, "w", 'utf-8') as confout:
             confout.write(generated_nginx_config)
+        os.chmod(domain_nginx_test, 0o644)
         # test the temp confg and if all ok activate the user_configs
         with open(domain_home+'/logs/nginx.log', 'a') as nginx_test_log:
             nginx_conf_test = subprocess.call("/usr/sbin/nginx -c " + domain_nginx_test + " -t ", stdout=nginx_test_log, stderr=subprocess.STDOUT, shell=True)
@@ -738,10 +755,12 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             # ok all seems good we copy the user_configs to /etc/nginx/sites-enabled
             if os.path.isfile(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test"):
                 shutil.copyfile(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test", "/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user")
+                os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user", 0o644)
             if subdir_apps:
                 for subdir in subdir_apps.keys():
                     if os.path.isfile(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test"):
                         shutil.copyfile(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test", "/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user")
+                        os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user", 0o644)
         # Remove all the temporary files we created for the test
         silentremove(domain_nginx_test)
         silentremove(installation_path+"/lock/"+kwargs.get('configdomain')+".conf")

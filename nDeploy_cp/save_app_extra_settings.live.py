@@ -62,6 +62,13 @@ if form.getvalue('thesubdir'):
             else:
                 commoninclude.print_error('Error: Forbidden::auth_basic')
                 sys.exit(0)
+            # proxy_to_master
+            if 'proxy_to_master' in form.keys():
+                proxy_to_master = form.getvalue('proxy_to_master')
+                the_subdir_dict['proxy_to_master'] = proxy_to_master
+            else:
+                commoninclude.print_error('Error: Forbidden::proxy_to_master')
+                sys.exit(0)
             # mod_security
             if 'mod_security' in form.keys():
                 mod_security = form.getvalue('mod_security')

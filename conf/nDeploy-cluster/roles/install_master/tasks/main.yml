@@ -15,9 +15,7 @@
      - unison-nDeploy
      - python-pip
      - redhat-lsb-core
-     - stunnel
      - redis
-     - haproxy
      - gdnsd-nDeploy
      - MySQL-python
      - gnusys-monitoring

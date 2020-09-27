@@ -6,6 +6,7 @@ import yaml
 import os
 import sys
 import re
+import subprocess
 from requests import get
 from commoninclude import print_simple_header, print_simple_footer, print_success, print_error, print_forbidden, terminal_call
 
@@ -254,6 +255,11 @@ if form.getvalue('action'):
             yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
+        subprocess.call('/opt/nDeploy/scripts/update_gdnsd_config.py', shell=True)
+        subprocess.call('/usr/bin/systemctl restart gdnsd', shell=True)
+        if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
+            with open(os.devnull, 'w') as FNULL:
+                subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl restart gdnsd"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
         print_success('IP mapping updated!')
 
     elif form.getvalue('action') == 'delip':
@@ -270,6 +276,11 @@ if form.getvalue('action'):
             yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
+        subprocess.call('/opt/nDeploy/scripts/update_gdnsd_config.py', shell=True)
+        subprocess.call('/usr/bin/systemctl restart gdnsd', shell=True)
+        if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
+            with open(os.devnull, 'w') as FNULL:
+                subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl restart gdnsd"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
         print_success('IP resource deleted!')
 
     elif form.getvalue('action') == 'addip':
@@ -286,6 +297,11 @@ if form.getvalue('action'):
             yaml.dump(cluster_data_yaml_parsed, cluster_data_yaml, default_flow_style=False)
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
+        subprocess.call('/opt/nDeploy/scripts/update_gdnsd_config.py', shell=True)
+        subprocess.call('/usr/bin/systemctl restart gdnsd', shell=True)
+        if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
+            with open(os.devnull, 'w') as FNULL:
+                subprocess.Popen('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -a "/usr/bin/systemctl restart gdnsd"', stdout=FNULL, stderr=subprocess.STDOUT, shell=True)
         print_success('IP mapping added!')
 
     elif form.getvalue('action') == 'deletehomedir':
@@ -325,7 +341,7 @@ if form.getvalue('action'):
             print_success('Home directory added to sync!')
 
     elif form.getvalue('action') == 'releasethekraken':
-        
+
         terminal_call('/usr/bin/ansible-playbook -i '+installation_path+'/conf/nDeploy-cluster/hosts '+installation_path+'/conf/nDeploy-cluster/cluster.yml', 'Running cluster setup playbook...', 'Cluster setup playbook completed!')
         print_success('Cluster setup playbook completed!')
 

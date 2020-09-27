@@ -21,6 +21,31 @@ server {
         {% endfor %}
 }
 
+server {
+        listen 127.0.0.1:443 ssl backlog=16384 reuseport deferred;
+        ssl_certificate {{ CPSRVDSSL }};
+        ssl_certificate_key {{ CPSRVDSSL }};
+        server_name localhost;
+        access_log off;
+        location / {
+           proxy_pass   http://127.0.0.1:9999;
+          }
+
+          location /whm-server-status/ {
+             proxy_pass   http://127.0.0.1:9999;
+            }
+        location /nginx_status {
+            stub_status on;
+            access_log off;
+        }
+        {% for key, value in PHPDICT.iteritems() %}
+        location ~ ^/{{ key }}$ {
+            include /etc/nginx/fastcgi_params*;
+            fastcgi_pass unix:{{ value }}/var/run/nobody.sock;
+        }
+        {% endfor %}
+}
+
 {% for MYIP in CPIPLIST %}
 
 server {
