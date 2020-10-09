@@ -1,27 +1,51 @@
-#Silverstripe4
+#Silverstripe 4
 
-root {{ DOCUMENTROOT }};
+root {{ DOCUMENTROOT }}/public;
 index index.php index.html index.htm;
 
 if ($http_x_forwarded_host) {
-return 400;
+    return 400;
 }
 
 location / {
-try_files $uri /index.php?$query_string;
+    try_files $uri /index.php?$query_string;
 }
 
+error_page 404 /assets/error-404.html;
+error_page 500 /assets/error-500.html;
+
+# Support assets & resources #
+
+# Never serve .gitignore, .htaccess, or .method
+location ~ /\.(gitignore|htaccess|method)$ {
+    return 403;
+}
+
+# Protect the .protected folder
+location ~ ^/assets/.protected/ {
+    return 403;
+}
+
+# Handle allowed file types (see caveats)
+# Pass unfound files to SilverStripe to check draft images
 location ~ ^/assets/.*\.(?i:css|js|ace|arc|arj|asf|au|avi|bmp|bz2|cab|cda|csv|dmg|doc|docx|dotx|flv|gif|gpx|gz|hqx|ico|jpeg|jpg|kml|m4a|m4v|mid|midi|mkv|mov|mp3|mp4|mpa|mpeg|mpg|ogg|ogv|pages|pcx|pdf|png|pps|ppt|pptx|potx|ra|ram|rm|rtf|sit|sitx|tar|tgz|tif|tiff|txt|wav|webm|wma|wmv|xls|xlsx|xltx|zip|zipx)$ {
-sendfile on;
-try_files $uri /index.php?$query_string;
+    sendfile on;
+    try_files $uri /index.php?$query_string;
 }
 
+# Allow the error pages. Fail with 404 Not found.
+location ~ ^/assets/error-\d\d\d\.html$ {
+    try_files $uri =404;
+}
+
+# Fail all other assets requests as 404 Not found
+# Could also use 403 Forbidden or 444 (nginx drops the connection)
 location ~ ^/assets/ {
-return 403;
+    return 404;
 }
 
 location /index.php {
-fastcgi_pass unix:{{ SOCKETFILE }};
-fastcgi_index index.php;
-include /etc/nginx/fastcgi_params*;
+    fastcgi_pass unix:{{ SOCKETFILE }};
+    fastcgi_index index.php;
+    include /etc/nginx/fastcgi_params*;
 }
