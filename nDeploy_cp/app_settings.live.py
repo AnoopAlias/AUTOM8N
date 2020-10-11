@@ -199,7 +199,8 @@ if form.getvalue('domain'):
         print('                    <a class="nav-link" id="v-pills-security-tab" data-toggle="pill" href="#v-pills-security" role="tab" aria-controls="v-pills-security">Security Settings</a>')
         print('                    <a class="nav-link" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations">Content Optimizations</a>')
         print('                    <a class="nav-link" id="v-pills-redirections-tab" data-toggle="pill" href="#v-pills-redirections" role="tab" aria-controls="v-pills-redirections">Redirections</a>')
-        print('                    <a class="nav-link mb-4" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
+        print('                    <a class="nav-link" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory">Subdirectory Applications</a>')
+        print('                    <a class="nav-link mb-4" id="waf-panel-tab" data-toggle="pill" href="#waf-panel" role="tab" aria-controls="waf-panel">WAF</a>')
 
         # Save Settings
         print('                    <button class="btn btn-primary btn-block app-backend-settings-btn" type="submit" form="app_backend_settings">Apply Settings</button>')
@@ -222,6 +223,7 @@ if form.getvalue('domain'):
         print('                            <a class="dropdown-item" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations" aria-selected="false">Content Optimizations</a>')
         print('                            <a class="dropdown-item" id="v-pills-redirections-tab" data-toggle="pill" href="#v-pills-redirections" role="tab" aria-controls="v-pills-redirections" aria-selected="false">Redirections</a>')
         print('                            <a class="dropdown-item" id="v-pills-subdirectory-tab" data-toggle="pill" href="#v-pills-subdirectory" role="tab" aria-controls="v-pills-subdirectory" aria-selected="false">Subdirectory Applications</a>')
+        print('                            <a class="dropdown-item" id="waf-panel-tab" data-toggle="pill" href="#waf-panel" role="tab" aria-controls="waf-panel">WAF</a>')
         print('                        </div>')
 
         # Save Settings
@@ -1031,9 +1033,177 @@ if form.getvalue('domain'):
 
         print('                    </div> <!-- Subdirectory Tab End -->')
 
+        #namesida WAF
+        print('             <div class="tab-pane fade show" id="waf-panel" role="tabpanel" aria-labelledby="waf-panel-tab">')
+        cardheader('Manage WAF', 'fas fa-level-down-alt')
+        print('                <div  class="card-body" id="whitelist-panel">  <!-- Card Body Start -->')
+        print('                     <div><h3>WhiteList Rule</h3></div>')
+        print('                     <div class="container"><!-- Container Starts -->')
+        print('                    <form class="form" id="whitelistWaf"  onsubmit="return false;">')
+        print('                     <div class="row">')
+        print('                         <div class="col-sm"> <!-- First column starts -->')
+        print('                             <div class="input-group mb-3" >')
+        # print('                                 <div class="input-group-prepend">')
+        print('                                     <label class="input-group-text" for="wafselect01">Rule ID</label>')
+        # print('                                 </div>')
+        print('                                 <select  style="width:150px; overflow: auto;" size="0" name="RuleId" id="wafselect01">')
+        for i in range(3000):
+            print('                                   <option  value="'+str(i)+'">'+str(i)+'</option>')
+        print('                                 </select>')
+        print('                              </div>')
+
+        print('                     </div> <!-- First column ends -->')
+        print('                         <div class="col-sm"> <!-- Second column starts -->')
+        print('                     <div class="input-group mb-3">')
+        # print('                         <div class="input-group-prepend">')
+        print('                             <label class="input-group-text" for="wafselect02">Zone</label>')
+        # print('                         </div>')
+        print('                         <select style="width:150px;" name="Zone" id="wafselect02">')
+        print('                             <option selected>Select</option>')
+        print('                                 <option value="BODY">BODY</option>')
+        print('                                 <option value="URL">URL</option>')
+        print('                                 <option value="ARGS">ARGS</option>')
+        print('                                 <option value="HEADERS">HEADERS</option>')
+        print('                                 <option value="$HEADERS_VAR:Cookie">$HEADERS_VAR:Cookie</option>')
+        print('                                 <option value="$HEADERS_VAR:User-Agent">$HEADERS_VAR:User-Agent</option>')
+        print('                                 <option value="MLA">MLA</option>')
+        print('                                 <option value="$HEADERS_VAR:Referer">$HEADERS_VAR:Referer</option>')
+        print('                                 <option value="$HEADERS_VAR:Content-Type">$HEADERS_VAR:Content-Type</option>')
+        print('                                 <option value="$HEADERS_VAR:Origin">$HEADERS_VAR:Origin</option>')
+        print('                                 <option value="$HEADERS_VAR:X-Forward-For">$HEADERS_VAR:X-Forward-For</option>')
+        print('                                 <option value="$URL:/components/com_hdflvplayer/hdflvplayer/download.php">$URL:/components/com_hdflvplayer/hdflvplayer/download.php</option>')
+        print('                                 <option value="$URL:/uploader/server/php/">$URL:/uploader/server/php/</option>')
+        print('                                 <option value="$URL:/wp-admin/admin-post.php">$URL:/wp-admin/admin-post.php</option>')
+        print('                                 <option value="$URL:/xmlrpc.php">$URL:/xmlrpc.php</option>')
+        print('                                 <option value="$HEADERS_VAR:Content-Disposition">$HEADERS_VAR:Content-Disposition</option>')
+        print('                         </select>')
+        print('                     </div>')
+        print('                     </div> <!-- Second column ends -->')
+        print('                         <div class="col-sm"> <!-- Third column starts -->')
+        print('                  <button class="btn btn-primary btn-block " id="whitelistWaf-btn" type="submit">Submit</button>')
+        print('                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+        print('                 </div><!-- third column end-->')
+        print('                     </div> <!--row ends-->')
+
+        print('                 </form>')
+        print('                  </div><!-- Container end -->')
+        print('             <br/>')
+        if os.path.isfile(profileyaml):
+            with open(profileyaml,'r') as profileyaml_data_stream:
+                yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+            if 'nemesida_wl' in yaml_parsed_profileyaml.keys():
+                nemesida_wl_list = yaml_parsed_profileyaml.get('nemesida_wl')
+                if nemesida_wl_list:
+                    print('                     <h3>Existing Rule WhiteLists</h3>')
+                    print('                 <div class="container">')
+                    #Delete WhiteList
+                    if os.path.isfile(profileyaml):
+                        with open(profileyaml, 'r') as profileyaml_data_stream:
+                            yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+                        if 'nemesida_wl' in yaml_parsed_profileyaml.keys():
+                            nemesida_wl_list = yaml_parsed_profileyaml.get('nemesida_wl')
+                            mykeypos=0
+                            for i in nemesida_wl_list:
+                                print('   <form class="form" id="removeWhitelist'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                                # print('                        <div class="input-group-append">')
+                                print('     <div class="container"><!-- Container starts-->')
+                                print('          <div class="row "><!-- Row starts-->')
+                                # print('  <span class="border border-secondary"></span>')
+                                print('                 <div class="col-sm-9 form-control" style="overflow: hidden;"><!--First column starts -->')
+                                print('                     <input hidden name="whiteList-to-delete" value="'+str(mykeypos)+'">')
+                                print('                         '+i+'')
+                                print('                 </div><!--First column ends-->')
+                                print('                 <div class="col-sm"><!--Second column starts -->')
+                                print('                         <button id="removeWhitelist-btn'+'-'+str(mykeypos)+'" form="removeWhitelist'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">')
+                                print('                         <span class="sr-only">Delete</span>')
+                                print('                         <i class="fas fa-times"></i>')
+                                print('                         </button>')
+                                mykeypos = mykeypos + 1
+                                print('                         <input hidden name="profileyaml" value="'+profileyaml+'">')
+                                print('                 </div><!--Second column ends -->')
+                                print('     </form>')
+                                print('             </div><!-- Row ends-->')
+                                print('      </div><!-- Container ends-->')
+
+
+                    print('   </div>')
+        print('   <br/>')
+        print('                                  <h3>WhiteList IP Address </h3>')
+        print('                 <div class="container"><!-- container starts-->')
+
+        print('                         <form class="form" id="ipaddressvalidate"  onsubmit="return false;" >  ')
+        print('                     <div class="row"><!--Row starts -->')
+
+
+
+        print('                             <div class="col-sm"><!--First column-->')
+        print('                                 <input type="text" class="form-control"  name="ip" id="ip" value="" required pattern = "((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){3}$">')
+        print('                             </div><!--First column ends-->')
+        print('                             <div class="col-sm">')
+        print('                                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+        print('                                 <button class="btn btn-primary btn-block " id="submit_btn" type="submit" >submit</button>')
+        # print('                             <input type="submit" name="submit" value="Submit" onclick="ValidateIPaddress(document.form1.text1)"/>')
+
+        print('                             </div>')
+        print('                     </div><!--Row ends -->')
+        print('                         </form>')
+        print('                 </div><!--Container ends -->')
+        print('   <br/>')
+        if os.path.isfile(profileyaml):
+            with open(profileyaml,'r') as profileyaml_data_stream:
+                yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+            if 'nemesida_ip_wl' in yaml_parsed_profileyaml.keys():
+                nemesida_ip_wl_list = yaml_parsed_profileyaml.get('nemesida_ip_wl')
+                if nemesida_ip_wl_list:
+
+                    print('                     <h3>Existing IP WhiteLists</h3>')
+                    print('                 <div class="container">')
+
+                    #list ipaddress
+                    if os.path.isfile(profileyaml):
+                        with open(profileyaml, 'r') as profileyaml_data_stream:
+                            yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+                        if 'nemesida_ip_wl' in yaml_parsed_profileyaml.keys():
+                            nemesida_ip_wl_list = yaml_parsed_profileyaml.get('nemesida_ip_wl')
+                            mykeypos=0
+                            for i in nemesida_ip_wl_list:
+
+                                print('   <form class="form" id="removeIpaddress'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                                # print('                        <div class="input-group-append">')
+                                print('    <div class="container"><!-- Container starts-->')
+                                print('   <div class="row "><!-- Row starts-->')
+                                # print('  <span class="border border-secondary"></span>')
+                                print('    <div class="col-sm form-control"><!--First column starts -->')
+                                print('    <input hidden name="ipaddress-to-delete" value="'+str(mykeypos)+'">')
+                                print('    '+i+'')
+                                print('    </div><!--First column ends-->')
+                                print('     <div class="col-sm"><!--Second column starts -->')
+
+                                print('                                <button id="removeIpaddress-btn'+'-'+str(mykeypos)+'" form="removeIpaddress'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">')
+                                print('                                    <span class="sr-only">Delete</span>')
+                                print('                                    <i class="fas fa-times"></i>')
+                                print('                                </button>')
+                                mykeypos = mykeypos + 1
+                                print('                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+                                print('       </div><!--Second column ends -->')
+                                print('</form>')
+
+                                print(' </div><!-- Row ends-->')
+                                print(' </div><!-- Container ends-->')
+
+
+                    print('   </div>')
+
+
+
+
+
+
+        print('                </div> <!-- Card Body End -->')
         print('                </div> <!-- Container Tabs End -->')
 
         print('            </div> <!-- CP Row End -->')
+
 
     else:
         print_nontoast_error('Error!', 'Domain Data File IO Error!')
