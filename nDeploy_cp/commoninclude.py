@@ -216,13 +216,16 @@ def print_header(title=''):
     print('        <header id="main-header" class="d-flex justify-content-between align-items-center">')
     print('            <div class="logo">')
     print('                <h4>')
+
     if logo_url != 'None':
-        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+'" class="logo-url" src="'+logo_url+'"></a>')
-    else:
-        if ndeploy_theme_color == 'dark':
-            print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+'" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>')
-        else:
-            print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+'" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>')
+        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" class="logo-url" src="'+logo_url+'"></a>')
+    elif brand_logo != 'xtendweb.png':
+        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>')
+    elif ndeploy_theme_color == 'dark':
+        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>')
+    elif ndeploy_theme_color == 'light':
+        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>')
+
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')

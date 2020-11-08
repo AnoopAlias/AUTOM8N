@@ -95,7 +95,7 @@ def print_domain_stacks(mydomain, mydomainvisual):
             apptemplate_description = 'Application Template IO Error!'
 
     # Card Output
-    cardheader(mydomainvisual, 'fas fa-cogs')
+    cardheader('<a target="_blank" href="https://'+mydomainvisual+'">'+mydomainvisual+'</a>', 'fas fa-cogs')
     print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
     print('                     <div id="'+mydomainvisual+'-stack-status" class="row no-gutters row-1"> <!-- Row Start -->')
 
