@@ -201,6 +201,17 @@ return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
 {% endif %}
 ################### Redirects ###################
+################## NWAF ######################
+{% for item in NEMESIDA_WL %}
+{{ item }};
+{% endfor %}
+{% for item in NEMESIDA_IP_WL %}
+nwaf_ip_wl {{ item }};
+{% endfor %}
+#{% for item in NEMESIDAIPV6_WL %}
+#{{ item }}
+#{% endfor %}
+################## NWAF ######################
 
 ################### vhosts ###################
 server {

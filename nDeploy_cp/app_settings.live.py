@@ -1036,6 +1036,7 @@ if form.getvalue('domain'):
         #namesida WAF
         print('             <div class="tab-pane fade show" id="waf-panel" role="tabpanel" aria-labelledby="waf-panel-tab">')
         cardheader('Manage WAF', 'fas fa-level-down-alt')
+        #Whitelist Rule ID and Zone
         print('                <div  class="card-body" id="whitelist-panel">  <!-- Card Body Start -->')
         print('                     <div><h3>WhiteList Rule</h3></div>')
         print('                     <div class="container"><!-- Container Starts -->')
@@ -1088,6 +1089,7 @@ if form.getvalue('domain'):
         print('                 </form>')
         print('                  </div><!-- Container end -->')
         print('             <br/>')
+        #remove WhiteList Rule Id and Zone
         if os.path.isfile(profileyaml):
             with open(profileyaml,'r') as profileyaml_data_stream:
                 yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
@@ -1128,6 +1130,7 @@ if form.getvalue('domain'):
 
                     print('   </div>')
         print('   <br/>')
+        #WhiteList IP address
         print('                                  <h3>WhiteList IP Address </h3>')
         print('                 <div class="container"><!-- container starts-->')
 
@@ -1137,18 +1140,22 @@ if form.getvalue('domain'):
 
 
         print('                             <div class="col-sm"><!--First column-->')
-        print('                                 <input type="text" class="form-control"  name="ip" id="ip" value="" required pattern = "((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){3}$">')
+        print('                                 <input type="text" class="form-control" name="ip" id="ip" value="" required>')
         print('                             </div><!--First column ends-->')
         print('                             <div class="col-sm">')
         print('                                 <input hidden name="profileyaml" value="'+profileyaml+'">')
-        print('                                 <button class="btn btn-primary btn-block " id="submit_btn" type="submit" >submit</button>')
+        print('                                 <button class="btn btn-primary btn-block" id="submit_btn" type="submit" >submit</button>')
+
         # print('                             <input type="submit" name="submit" value="Submit" onclick="ValidateIPaddress(document.form1.text1)"/>')
 
         print('                             </div>')
+
         print('                     </div><!--Row ends -->')
+        print('                   <div id="notify" style="color: red;"></div>')
         print('                         </form>')
         print('                 </div><!--Container ends -->')
         print('   <br/>')
+        #Remove IP address
         if os.path.isfile(profileyaml):
             with open(profileyaml,'r') as profileyaml_data_stream:
                 yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
@@ -1194,6 +1201,78 @@ if form.getvalue('domain'):
 
                     print('   </div>')
 
+
+        print('   <br/>')
+        #WhiteList IPV6 address
+        print('                                  <h3>WhiteList IPV6 Address </h3>')
+        print('                 <div class="container"><!-- container starts-->')
+
+        print('                         <form class="form" id="ipv6Validation"  onsubmit="return false;" >  ')
+        print('                     <div class="row"><!--Row starts -->')
+
+
+
+        print('                             <div class="col-sm"><!--First column-->')
+        print('                                 <input type="text" class="form-control" name="ipv6" id="ipv6" value="" required>')
+        print('                             </div><!--First column ends-->')
+        print('                             <div class="col-sm">')
+        print('                                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+        print('                                 <button class="btn btn-primary btn-block" id="ipv6_submit_btn" type="submit" >submit</button>')
+
+        # print('                             <input type="submit" name="submit" value="Submit" onclick="ValidateIPaddress(document.form1.text1)"/>')
+
+        print('                             </div>')
+
+        print('                     </div><!--Row ends -->')
+        # print('                   <div id="notify" style="color: red;"></div>')
+        print('                         </form>')
+        print('                 </div><!--Container ends -->')
+        print('   <br/>')
+        #Remove IPV6 address
+        if os.path.isfile(profileyaml):
+            with open(profileyaml,'r') as profileyaml_data_stream:
+                yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+            if 'nemesidaipv6_wl' in yaml_parsed_profileyaml.keys():
+                nemesidaipv6_wl_list = yaml_parsed_profileyaml.get('nemesidaipv6_wl')
+                if nemesidaipv6_wl_list:
+
+                    print('                     <h3>Existing IPV6 WhiteLists</h3>')
+                    print('                 <div class="container">')
+
+                    #list ipaddress
+                    if os.path.isfile(profileyaml):
+                        with open(profileyaml, 'r') as profileyaml_data_stream:
+                            yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
+                        if 'nemesidaipv6_wl' in yaml_parsed_profileyaml.keys():
+                            nemesidaipv6_wl_list = yaml_parsed_profileyaml.get('nemesidaipv6_wl')
+                            mykeypos=0
+                            for i in nemesidaipv6_wl_list:
+
+                                print('   <form class="form" id="removeIpv6address'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                                # print('                        <div class="input-group-append">')
+                                print('    <div class="container"><!-- Container starts-->')
+                                print('   <div class="row "><!-- Row starts-->')
+                                # print('  <span class="border border-secondary"></span>')
+                                print('    <div class="col-sm form-control"><!--First column starts -->')
+                                print('    <input hidden name="ipv6address_delete" value="'+str(mykeypos)+'">')
+                                print('    '+i+'')
+                                print('    </div><!--First column ends-->')
+                                print('     <div class="col-sm"><!--Second column starts -->')
+
+                                print('                                <button id="removeIpv6address-btn'+'-'+str(mykeypos)+'" form="removeIpv6address'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">')
+                                print('                                    <span class="sr-only">Delete</span>')
+                                print('                                    <i class="fas fa-times"></i>')
+                                print('                                </button>')
+                                mykeypos = mykeypos + 1
+                                print('                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+                                print('       </div><!--Second column ends -->')
+                                print('</form>')
+
+                                print(' </div><!-- Row ends-->')
+                                print(' </div><!-- Container ends-->')
+
+
+                    print('   </div>')
 
 
 
