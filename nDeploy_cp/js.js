@@ -262,28 +262,40 @@ jQuery(document).ready(function($){
         });
     });
 
-
     $(document).on("submit","#ipaddressvalidate",function(e){
-        var $loaderId        =   "#submit_btn";
-        var $loaderText      =   "Updating...";
-        $($loaderId).prop("disabled", true);
-        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
-        var $id = e.target.id;
-        var $f = $("#" + $id);
-        var $url = "save_nemesida.live.py?" + $f.serialize();
-        $.ajax({
-            url: $url,
-            success: function(result) {
+        var str = $("#ip").val();
+        var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+        if(str.match(ipformat)){
+            var $loaderId        =   "#submit_btn";
+            var $loaderText      =   "Updating...";
+            $($loaderId).prop("disabled", true);
+            $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+            var $id = e.target.id;
+            var $f = $("#" + $id);
+            var $url = "save_nemesida.live.py?" + $f.serialize();
+            $.ajax({
+              url: $url,
+              success: function(result) {
                 // $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
-                window.location.reload();
-                $.toast({
-                    autohide: 'true',
+                  window.location.reload();
+                  $.toast({
+                      autohide: 'true',
+                    });
+                    $(".toast-new").toast("show").html(result);
+                    $(".toast").removeClass("toast-new");
+                  }
                 });
-                $(".toast-new").toast("show").html(result);
-                $(".toast").removeClass("toast-new");
-            }
-        });
-    });
+
+        }else{
+          $.toast({
+              autohide: 'true',
+          });
+          $(".toast-new").toast("show").html('<div class="alert alert-danger"><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button><p>Enter a valid IP!</p></div>');
+          $(".toast").removeClass("toast-new");
+
+          }
+
+      });
 
     $(document).on("submit","form[id^='removeIpaddress-']",function(e){
         var $formId          =   $(this).attr('id');
@@ -306,6 +318,64 @@ jQuery(document).ready(function($){
             }
         });
     });
+
+    $(document).on("submit","#ipv6Validation",function(e){
+        var str = $("#ipv6").val();
+        var ipformat = /^((?:[0-9A-Fa-f]{1,4}))((?::[0-9A-Fa-f]{1,4}))*::((?:[0-9A-Fa-f]{1,4}))((?::[0-9A-Fa-f]{1,4}))*|((?:[0-9A-Fa-f]{1,4}))((?::[0-9A-Fa-f]{1,4})){7}$/;
+        if(str.match(ipformat)){
+            var $loaderId        =   "#ipv6_submit_btn";
+            var $loaderText      =   "Updating...";
+            $($loaderId).prop("disabled", true);
+            $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+            var $id = e.target.id;
+            var $f = $("#" + $id);
+            var $url = "save_nemesida.live.py?" + $f.serialize();
+            $.ajax({
+              url: $url,
+              success: function(result) {
+                // $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
+                  window.location.reload();
+                  $.toast({
+                      autohide: 'true',
+                    });
+                    $(".toast-new").toast("show").html(result);
+                    $(".toast").removeClass("toast-new");
+                  }
+                });
+
+        }else{
+          $.toast({
+              autohide: 'true',
+          });
+          $(".toast-new").toast("show").html('<div class="alert alert-danger"><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button><p>Enter a valid IP!</p></div>');
+          $(".toast").removeClass("toast-new");
+
+          }
+
+    });
+
+    $(document).on("submit","form[id^='removeIpv6address-']",function(e){
+        var $formId          =   $(this).attr('id');
+        var $loaderId        =   '#removeIpv6address-btn-'+$formId.split('-')[1];
+        var $loaderText      =   "Deleting...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "save_nemesida.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#whitelist-panel").load(($urlparam) + " #whitelist-panel > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
 
     $(document).on("submit","#view_nginx_log",function(e){
         var $loaderId        =   "#view-nginx-log-btn";

@@ -401,6 +401,18 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     symlink_protection = yaml_parsed_domain_data.get('symlink_protection', 'disabled')
     redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', 'disabled')
     auth_basic = yaml_parsed_domain_data.get('auth_basic', 'disabled')
+    if 'nemesida_wl' in yaml_parsed_domain_data.keys():
+        nemesida_wl = yaml_parsed_domain_data.get('nemesida_wl')
+    else:
+        nemesida_wl = []
+    if 'nemesida_ip_wl' in yaml_parsed_domain_data.keys():
+        nemesida_ip_wl = yaml_parsed_domain_data.get('nemesida_ip_wl')
+    else:
+        nemesida_ip_wl = []
+    if 'nemesidaipv6_wl' in yaml_parsed_domain_data.keys():
+        nemesidaipv6_wl = yaml_parsed_domain_data.get('nemesidaipv6_wl')
+    else:
+        nemesidaipv6_wl = []
     subdir_apps = yaml_parsed_domain_data.get('subdir_apps', None)
     if subdir_apps:
         subdir_apps_uniq = {}
@@ -478,7 +490,10 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
                     "APPEND_REQUESTURI": append_requesturi,
                     "DOSMITIGATE": dos_mitigate,
                     "BACKEND_CATEGORY": backend_category,
-                    "CLUSTER_LOG": cluster_log
+                    "CLUSTER_LOG": cluster_log,
+                    "NEMESIDA_WL": nemesida_wl,
+                    "NEMESIDA_IP_WL": nemesida_ip_wl,
+                    "NEMESIDAIPV6_WL": nemesidaipv6_wl
                     }
     generated_config = server_template.render(templateVars)
     with codecs.open("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".conf", "w", 'utf-8') as confout:
