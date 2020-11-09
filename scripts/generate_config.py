@@ -9,7 +9,6 @@ import sys
 import pwd
 import grp
 import shutil
-from lxml import etree
 import jinja2
 from hashlib import md5
 import json
@@ -27,100 +26,6 @@ nginx_bin = "/usr/sbin/nginx"
 
 
 # Function definitions
-
-def railo_vhost_add_tomcat(domain_name, document_root, domain_aname_list):
-    """Add a vhost to tomcat and restart railo-tomcat app server"""
-    tomcat_conf = "/opt/lucee/tomcat/conf/server.xml"
-    s1 = '<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'/" />'
-    s2 = ''
-    for domain in domain_aname_list:
-        s2 = s2+'<Alias>'+domain+'</Alias>'
-        s3 = '</Host>'
-        if s2:
-            xmlstring = s1+s2+s3
-        else:
-            xmlstring = s1+s3
-    new_xml_element = etree.fromstring(xmlstring)
-    xml_data_stream = etree.parse(tomcat_conf)
-    xml_root = xml_data_stream.getroot()
-    for node1 in xml_root.iter('Service'):
-        for node2 in node1.iter('Engine'):
-            for node3 in node2.iter('Host'):
-                if domain_name in list(node3.attrib.values()):
-                    node2.remove(node3)
-            node2.append(new_xml_element)
-    xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
-    os.chmod(tomcat_conf, 0o644)
-    # enabling shell as Railo probably needs shell vars like CATALINA_HOME
-    if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload'):
-        subprocess.call('/opt/lucee/lucee_ctl restart', shell=True)
-    return
-
-
-def java_vhost_add_tomcat(domain_name, document_root, domain_aname_list):
-    """Add a vhost to tomcat and restart tomcat app server"""
-    tomcat_conf = "/etc/tomcat/server.xml"
-    s1 = '<Host name="'+domain_name+'" appBase="webapps"><Context path="" docBase="'+document_root+'/" />'
-    s2 = ''
-    for domain in domain_aname_list:
-        s2 = s2+'<Alias>'+domain+'</Alias>'
-        s3 = '</Host>'
-        if s2:
-            xmlstring = s1+s2+s3
-        else:
-            xmlstring = s1+s3
-    new_xml_element = etree.fromstring(xmlstring)
-    xml_data_stream = etree.parse(tomcat_conf)
-    xml_root = xml_data_stream.getroot()
-    for node1 in xml_root.iter('Service'):
-        for node2 in node1.iter('Engine'):
-            for node3 in node2.iter('Host'):
-                if domain_name in list(node3.attrib.values()):
-                    node2.remove(node3)
-            node2.append(new_xml_element)
-    xml_data_stream.write(tomcat_conf, xml_declaration=True, encoding='utf-8', pretty_print=True)
-    os.chmod(tomcat_conf, 0o644)
-    # enabling shell as Railo probably needs shell vars like CATALINA_HOME
-    if not os.path.isfile(installation_path+'/conf/skip_tomcat_reload'):
-        subprocess.Popen('service tomcat restart', shell=True)
-    return
-
-
-# Railo is probably dead.Checkout http://lucee.org/ for a fork
-def railo_vhost_add_resin(user_name, domain_name, document_root, domain_aname_list):
-    """Add a vhost to resin and restart railo-resin app server"""
-    resin_conf_dir = "/var/resin/hosts/"
-    if not os.path.exists(document_root+"/WEB-INF"):
-        os.mkdir(document_root+"/WEB-INF", 0o770)
-    if not os.path.exists(document_root+"/log"):
-        os.mkdir(document_root+"/log", 0o770)
-    uid_user = pwd.getpwnam(user_name).pw_uid
-    uid_nobody = pwd.getpwnam("nobody").pw_uid
-    gid_nobody = grp.getgrnam("nobody").gr_gid
-    os.chown(document_root+"/WEB-INF", uid_user, gid_nobody)
-    os.chown(document_root+"/log", uid_user, gid_nobody)
-    os.chmod(document_root+"/WEB-INF", 0o770)
-    os.chmod(document_root+"/log", 0o770)
-    nsm = {None: "http://caucho.com/ns/resin"}
-    mydict = {'id': "/", 'root-directory': document_root}
-    page = etree.Element('host', nsmap=nsm)
-    doc = etree.ElementTree(page)
-    host_name = etree.SubElement(page, 'host-name')
-    host_name.text = domain_name
-    for domain in domain_aname_list:
-        host_alias = etree.SubElement(page, 'host-alias')
-        host_alias.text = domain
-    web_app = etree.SubElement(page, 'web-app', mydict)
-    if not os.path.exists(resin_conf_dir+domain_name):
-        os.mkdir(resin_conf_dir+domain_name, 0o755)
-    os.chown(resin_conf_dir+domain_name, uid_nobody, gid_nobody)
-    host_xml_file = resin_conf_dir+domain_name+"/host.xml"
-    outFile = open(host_xml_file, 'w')
-    doc.write(host_xml_file, method='xml', pretty_print=True)
-    outFile.close()
-    os.chown(host_xml_file, uid_nobody, gid_nobody)
-    return
-
 
 def php_backend_add(user_name, phpmaxchildren, domain_home):
     """Function to setup php-fpm pool for user and reload the master php-fpm"""
@@ -150,37 +55,6 @@ def php_backend_add(user_name, phpmaxchildren, domain_home):
         return
     else:
         return
-
-
-def hhvm_backend_add(user_name, domain_home, clusterenabled, cluster_serverlist):
-    """Function to setup hhvm for user """
-    hhvm_server_file = installation_path + "/hhvm.d/" + user_name + ".ini"
-    HHVM_MASTER_TEMPLATE = 'hhvm_secure.ini.j2'
-    # Generate hhvm ini files
-    if not os.path.isfile(hhvm_server_file):
-        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
-        templateEnv = jinja2.Environment(loader=templateLoader)
-        template = templateEnv.get_template(HHVM_MASTER_TEMPLATE)
-        templateVars = {"CPANELUSER": user_name,
-                        "HOMEDIR": domain_home
-                        }
-        generated_config = template.render(templateVars)
-        with codecs.open(hhvm_server_file, 'w', 'utf-8') as confout:
-            confout.write(generated_config)
-        os.chmod(hhvm_server_file, 0o644)
-        subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
-        subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
-        # Sync cluster config and call systemd remotely
-        if clusterenabled:
-            subprocess.call('/usr/sbin/csync2 -x', shell=True)
-            subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=started enabled=yes"', shell=True)
-    else:
-        subprocess.call(['systemctl', 'start', 'ndeploy_hhvm@'+user_name+'.service'])
-        subprocess.call(['systemctl', 'enable', 'ndeploy_hhvm@'+user_name+'.service'])
-        # Sync cluster config and call systemd remotely
-        if clusterenabled:
-            subprocess.call('ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m systemd -a "name=ndeploy_hhvm@'+user_name+'.service state=restarted enabled=yes"', shell=True)
-    return
 
 
 def php_secure_backend_add(user_name, phpmaxchildren, domain_home, clusterenabled, cluster_serverlist):
@@ -530,24 +404,13 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     # Generate the rest of the config(domain.include) based on the application template
     app_template = templateEnv.get_template(apptemplate_code)
     # We configure the backends first if necessary
-    if backend_category == 'PROXY':
-        if backend_version == 'railo_tomcat':
-            railo_vhost_add_tomcat(domain_server_name, document_root, domainalias_list)
-        elif backend_version == 'java_tomcat':
-            java_vhost_add_tomcat(domain_server_name, document_root, domainalias_list)
-        elif backend_version == 'railo_resin':
-            railo_vhost_add_resin(kwargs.get('configuser'), domain_server_name, document_root, domainalias_list)
-    elif backend_category == 'PHP':
+    if backend_category == 'PHP':
         fastcgi_socket = backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
         if not os.path.isfile(fastcgi_socket):
             if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
                 php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home, clusterenabled, cluster_serverlist)
             else:
                 php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
-    elif backend_category == 'HHVM':
-        fastcgi_socket = domain_home+"/hhvm.sock"
-        if not os.path.isfile(fastcgi_socket):
-            hhvm_backend_add(kwargs.get('configuser'), domain_home, clusterenabled, cluster_serverlist)
     # We generate the app config from template next
     apptemplateVars = {"SSL_OFFLOAD": ssl_offload,
                        "CPANELIP": cpanel_ipv4,
@@ -683,24 +546,13 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             # Generate the rest of the config(subdomain.subinclude) based on the application template
             subdirApptemplate = templateEnv.get_template(subdir_apptemplate_code)
             # We configure the backends first if necessary
-            if subdir_backend_category == 'PROXY':
-                if subdir_backend_version == 'railo_tomcat':
-                    railo_vhost_add_tomcat(domain_server_name, document_root, domainalias_list)
-                elif backend_version == 'java_tomcat':
-                    java_vhost_add_tomcat(domain_server_name, document_root, domainalias_list)
-                elif subdir_backend_version == 'railo_resin':
-                    railo_vhost_add_resin(kwargs.get('configuser'), domain_server_name, document_root, domainalias_list)
-            elif subdir_backend_category == 'PHP':
+            if subdir_backend_category == 'PHP':
                 fastcgi_socket = subdir_backend_path + "/var/run/" + kwargs.get('configuser') + ".sock"
                 if not os.path.isfile(fastcgi_socket):
                     if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
                         php_secure_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home, clusterenabled, cluster_serverlist)
                     else:
                         php_backend_add(kwargs.get('configuser'), phpmaxchildren, domain_home)
-            elif subdir_backend_category == 'HHVM':
-                fastcgi_socket = domain_home+"/hhvm.sock"
-                if not os.path.isfile(fastcgi_socket):
-                    hhvm_backend_add(kwargs.get('configuser'), domain_home, clusterenabled, cluster_serverlist)
             # We generate the app config from template next
             subdirApptemplateVars = {"NEWDOCUMENTROOT": document_root+'/'+subdir,
                                      "SUBDIR": subdir,

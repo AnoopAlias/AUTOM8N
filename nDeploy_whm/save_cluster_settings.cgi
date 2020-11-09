@@ -8,7 +8,7 @@ import sys
 import re
 import subprocess
 from requests import get
-from commoninclude import print_simple_header, print_simple_footer, print_success, print_error, print_forbidden, terminal_call
+from commoninclude import sighupnginx, print_simple_header, print_simple_footer, print_success, print_error, print_forbidden, terminal_call
 
 
 __author__ = "Anoop P Alias"
@@ -256,6 +256,8 @@ if form.getvalue('action'):
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
         subprocess.call('/opt/nDeploy/scripts/update_gdnsd_config.py', shell=True)
+        subprocess.call('/opt/nDeploy/scripts/update_nginx_status_allow.py', shell=True)
+        sighupnginx()
         subprocess.call('/usr/bin/systemctl restart gdnsd', shell=True)
         if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
             with open(os.devnull, 'w') as FNULL:
@@ -277,6 +279,8 @@ if form.getvalue('action'):
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
         subprocess.call('/opt/nDeploy/scripts/update_gdnsd_config.py', shell=True)
+        subprocess.call('/opt/nDeploy/scripts/update_nginx_status_allow.py', shell=True)
+        sighupnginx()
         subprocess.call('/usr/bin/systemctl restart gdnsd', shell=True)
         if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
             with open(os.devnull, 'w') as FNULL:
@@ -298,6 +302,8 @@ if form.getvalue('action'):
         with open(master_config_file, 'w') as master_data_yaml:
             yaml.dump(master_data_yaml_parsed, master_data_yaml, default_flow_style=False)
         subprocess.call('/opt/nDeploy/scripts/update_gdnsd_config.py', shell=True)
+        subprocess.call('/opt/nDeploy/scripts/update_nginx_status_allow.py', shell=True)
+        sighupnginx()
         subprocess.call('/usr/bin/systemctl restart gdnsd', shell=True)
         if os.path.isfile('/opt/nDeploy/conf/ndeploy_cluster.yaml'):
             with open(os.devnull, 'w') as FNULL:
