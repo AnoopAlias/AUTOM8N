@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import os
 import time
@@ -74,7 +74,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
 
         # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
-        time.sleep(2)       
+        time.sleep(2)
         print_success('Upstream settings saved!')
 
     else:

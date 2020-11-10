@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -f /opt/nDeploy/conf/CLUSTER_LOG ] && [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]; then
   # Sync the domlogs from the slaves

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import cgi
 import cgitb
@@ -66,7 +66,7 @@ if form.getvalue('poolfile') and form.getvalue('thekey') and form.getvalue('sect
                 terminal_call('kill -9 $(ps aux|grep php-fpm|grep secure-php-fpm.d|grep -v grep|awk "{print $2}")', 'Saving PHP-FPM pool settings...', 'PHP-FPM pool settings saved!')
 
             else:
-            
+
                 terminal_call('service ndeploy_backends restart', 'Saving PHP-FPM pool settings...', 'PHP-FPM pool settings saved!')
 
             print_success('PHP-FPM pool settings saved!')

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 try:
     import simplejson as json
@@ -66,7 +66,7 @@ def generate_zone(domainname, slavelist):
     geo_skip_flag = False
     with open("/etc/userdatadomains.json", "r") as myuserdatadomains:
         myjson_parsed_userdata = json.load(myuserdatadomains)
-    if domainname in myjson_parsed_userdata.keys():
+    if domainname in list(myjson_parsed_userdata.keys()):
         myipaddress = myjson_parsed_userdata.get(domainname)[5].split(':')[0]
         ipaddress = get_dns_ip(myipaddress)
         resourcename = resourcemap[myipaddress]
@@ -93,7 +93,7 @@ def generate_zone(domainname, slavelist):
                             geo_skip_flag = False
                 elif rr['type'] == 'AAAA':
                     # we add ipv6 only if there is a mapping
-                    if rr['address'] in resourcemap.keys():
+                    if rr['address'] in list(resourcemap.keys()):
                         if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
                             gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                         else:
@@ -141,7 +141,7 @@ def generate_zone(domainname, slavelist):
                 json_parsed_subzone = json.load(mysubzone)
                 mysubzonelist = json_parsed_subzone.get(domainname)
             for subzonedom in mysubzonelist:
-                if subzonedom in myjson_parsed_userdata.keys():
+                if subzonedom in list(myjson_parsed_userdata.keys()):
                     myipaddresssub = myjson_parsed_userdata.get(subzonedom)[5].split(':')[0]
                     ipaddresssub = get_dns_ip(myipaddresssub)
                     resourcenamesub = resourcemap[myipaddresssub]
@@ -175,7 +175,7 @@ def generate_zone(domainname, slavelist):
                                         geo_skip_flag = False
                             elif rr['type'] == 'AAAA':
                                 # we add ipv6 only if there is a mapping
-                                if rr['address'] in resourcemap.keys():
+                                if rr['address'] in list(resourcemap.keys()):
                                     if rr["name"].startswith(("autoconfig.", "autodiscover.", "ftp.", "webdisk.", "whm.", "cpcalendars.", "cpcontacts.", "webmail.", "cpanel.")):
                                         gdnsdzone.append(rr['name']+' AAAA '+rr['address']+'\n')
                                     else:
@@ -218,7 +218,7 @@ def generate_zone(domainname, slavelist):
                             else:
                                 pass
                 else:
-                    print("ERROR::userdata::subzone::"+subzonedom)
+                    print(("ERROR::userdata::subzone::"+subzonedom))
         with codecs.open('/etc/gdnsd/zones/'+domainname, "w", 'utf-8') as confout:
             confout.writelines(gdnsdzone)
         gdnsd_uid = pwd.getpwnam('nobody').pw_uid
@@ -226,7 +226,7 @@ def generate_zone(domainname, slavelist):
         os.chown('/etc/gdnsd/zones/'+domainname, gdnsd_uid, gdnsd_gid)
         os.chmod('/etc/gdnsd/zones/'+domainname, 0o660)
     else:
-        print("ERROR::userdata::"+domainname)
+        print(("ERROR::userdata::"+domainname))
 
 
 if __name__ == "__main__":
@@ -255,13 +255,13 @@ if __name__ == "__main__":
             cluster_data_yaml = open(cluster_config_file, 'r')
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             cluster_data_yaml.close()
-            serverlist = cluster_data_yaml_parsed.keys()
+            serverlist = list(cluster_data_yaml_parsed.keys())
         else:
             sys.exit(0)
         # We use /etc/userdatadomains.json to generate the domain list and populate zonefile
         with open("/etc/userdatadomains.json", "r") as userdatadomains:
             json_parsed_userdata = json.load(userdatadomains)
-            for mydomain in json_parsed_userdata.keys():
+            for mydomain in list(json_parsed_userdata.keys()):
                 mydata = json_parsed_userdata.get(mydomain)
                 mycpaneluser = mydata[0]
                 if mycpaneluser == cpaneluser:
@@ -281,7 +281,7 @@ if __name__ == "__main__":
                             # Ok the zone for main domain exist do we need to generate this zone
                             # and append the subzone data in there
                             subzone_list = []
-                            for mynewdomain in json_parsed_userdata.keys():
+                            for mynewdomain in list(json_parsed_userdata.keys()):
                                 newext = tldextract.extract(mynewdomain)
                                 if not newext.subdomain:
                                     pass

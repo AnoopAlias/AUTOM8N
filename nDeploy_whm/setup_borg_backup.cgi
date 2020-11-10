@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import cgi
 import cgitb
@@ -104,7 +104,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # system_files
     system_files_hint = " Enable to backup the cPanel system files. "
-    print('                                    '+return_label("System Files", system_files_hint))
+    print(('                                    '+return_label("System Files", system_files_hint)))
     print('                                    <div class="col-md-6">')
     print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
 
@@ -127,7 +127,7 @@ if os.path.isdir('/etc/borgmatic'):
 
     # mysql_backup
     mysql_backup_hint = " Enable MariaBackup to backup the FULL MySQL data directory. "
-    print('                                    '+return_label("Maria Backup", mysql_backup_hint))
+    print(('                                    '+return_label("Maria Backup", mysql_backup_hint)))
     print('                                    <div class="col-md-6">')
     print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -194,7 +194,7 @@ if os.path.isdir('/etc/borgmatic'):
                 yaml_parsed_restorepoint = yaml.safe_load(restore_point_conf)
             restore_point = yaml_parsed_restorepoint.get('restore_point', 'snapshot')
             print('                            <p class="text-center">Currently Mounted</p>')
-            print('                            <p class="mb-3 text-center"><kbd>'+restore_point+'</kbd></p><hr>')
+            print(('                            <p class="mb-3 text-center"><kbd>'+restore_point+'</kbd></p><hr>'))
             print('                            <form class="form mb-3" id="borg_unmount_restore_point" onsubmit="return false;">')
             print('                                <input hidden name="action" value="umount">')
             print('                                <button id="borg-unmount-restore-point-btn" type="submit" class="btn btn-outline-primary btn-block ">Umount Restore Point</button>')
@@ -205,7 +205,7 @@ if os.path.isdir('/etc/borgmatic'):
         proc = subprocess.Popen('borgmatic --list --json', shell=True, stdout=subprocess.PIPE)
         try:
             output = json.loads(proc.stdout.read())
-        except ValueError, e:
+        except ValueError as e:
             pass
         else:
             myarchives = output[0].get('archives')
@@ -214,12 +214,12 @@ if os.path.isdir('/etc/borgmatic'):
                 print('                            <div class="input-group">')
                 print('                                <select name="myarchives" class="custom-select">')
                 for backup in myarchives:
-                    print('                                    <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>')
+                    print(('                                    <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>'))
                 print('                                </select>')
                 if not mount_flag:
                     print('                                <div class="input-group-append">')
-                    print('                                    <form class="m-0 borg_mount_restore_point" id="borg_mount_restore_point'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-                    print('                                        <input hidden name="restorepoint" value="'+backup.get('archive')+'">')
+                    print(('                                    <form class="m-0 borg_mount_restore_point" id="borg_mount_restore_point'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">'))
+                    print(('                                        <input hidden name="restorepoint" value="'+backup.get('archive')+'">'))
                     print('                                        <input hidden name="action" value="mount">')
                     print('                                        <button id="borg-mount-restore-point-btn" class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
                     print('                                    </form>')
@@ -248,14 +248,14 @@ if os.path.isdir('/etc/borgmatic'):
         for path in backup_dir_list:
             print('                                <div class="input-group input-group-inline input-group-sm">')
             print('                                    <div class="input-group-prepend">')
-            print('                                        <span class="input-group-text">'+path+'</span>')
+            print(('                                        <span class="input-group-text">'+path+'</span>'))
             print('                                    </div>')
             if path not in [backup_path]:
                 print('                                    <div class="input-group-append">')
-                print('                                        <form class="form borg-rm-dir-wrap" method="post" id="borg_rm_dir-'+str(mykeypos)+'" onsubmit="return false;">')
-                print('                                            <input hidden name="thehomedir" value="'+path+'">')
+                print(('                                        <form class="form borg-rm-dir-wrap" method="post" id="borg_rm_dir-'+str(mykeypos)+'" onsubmit="return false;">'))
+                print(('                                            <input hidden name="thehomedir" value="'+path+'">'))
                 print('                                            <input hidden name="action" value="delete">')
-                print('                                            <button id="borg_rm_dir_btn-'+str(mykeypos)+'" class="btn btn-danger btn-sm" type="submit">')
+                print(('                                            <button id="borg_rm_dir_btn-'+str(mykeypos)+'" class="btn btn-danger btn-sm" type="submit">'))
                 print('                                                <span class="sr-only">Delete</span>')
                 print('                                                <i class="fas fa-times"></i>')
                 print('                                            </button>')

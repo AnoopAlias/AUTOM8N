@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import sys
@@ -37,7 +37,7 @@ if conversionstatus == 1:
     if os.path.isfile(cluster_config_file):
         with open(cluster_config_file, 'r') as cluster_data_yaml:
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-        for server in cluster_data_yaml_parsed.keys():
+        for server in list(cluster_data_yaml_parsed.keys()):
             silentremove("/etc/nginx/"+server+"/"+addonconfigdom+".conf")
             silentremove("/etc/nginx/"+server+"/"+addonconfigdom+".include")
     if os.path.exists('/var/resin/hosts/'+addonconfigdom):

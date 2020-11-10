@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import cgi
 import cgitb
@@ -128,7 +128,7 @@ if form.getvalue('cpanelpkg'):
     print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
     print('                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
     print('                        <ul class="list-unstyled mb-0">')
-    print('                            <li class="mt-2 text-success">'+backend_version+'</li>')
+    print(('                            <li class="mt-2 text-success">'+backend_version+'</li>'))
     print('                        </ul>')
     print('                    </div> <!-- Card Body End -->')
     cardfooter('')
@@ -140,7 +140,7 @@ if form.getvalue('cpanelpkg'):
     print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
     print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Template</h4>')
     print('                        <ul class="list-unstyled mb-0">')
-    print('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+    print(('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>'))
     print('                        </ul>')
     print('                    </div> <!-- Card Body End -->')
     cardfooter('')
@@ -213,17 +213,17 @@ if form.getvalue('cpanelpkg'):
     print('                            <div class="input-group">')
     print('                                <label hidden for="select_pkg_app_settings">Select Upstream Package</label>')
     print('                                <select name="backend" id="select_pkg_app_settings" class="custom-select">')
-    for backends_defined in backend_data_yaml_parsed.keys():
+    for backends_defined in list(backend_data_yaml_parsed.keys()):
         if backends_defined == backend_category:
-            print('                            <option selected value="'+backends_defined+'">'+backends_defined+'</option>')
+            print(('                            <option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
         else:
-            print('                            <option value="'+backends_defined+'">'+backends_defined+'</option>')
+            print(('                            <option value="'+backends_defined+'">'+backends_defined+'</option>'))
     print('                                </select>')
 
     #Pass on the domain name to the next stage
     print('                                <div class="input-group-append">')
     print('                                    <label hidden for="select_pkg_app_settings2">Select Upstream Package</label>')
-    print('                                    <input hidden id="select_pkg_app_settings2" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
+    print(('                                    <input hidden id="select_pkg_app_settings2" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
     print('                                    <button class="btn btn-outline-primary" type="submit">Select</button>')
     print('                                </div>')
     print('                            </div>')
@@ -239,7 +239,7 @@ if form.getvalue('cpanelpkg'):
 
     # General App Settings
     print('                    <form class="form" id="cpanel_pkg_profile" onsubmit="return false;" method="post"> <!-- Form Start -->')
-    print('                        <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'" form="cpanel_pkg_profile">')
+    print(('                        <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'" form="cpanel_pkg_profile">'))
 
     cardheader('General Application Settings','fas fa-sliders-h')
     print('                        <div class="card-body"> <!-- Card Body Start -->')
@@ -251,16 +251,16 @@ if form.getvalue('cpanelpkg'):
     print('                                        <div class="input-group-prepend">')
     print('                                            <span class="input-group-text">')
     phpmaxchildren_hint = " The Maximum amount of PHP processes that can be spawned. "
-    print('                                                '+return_prepend("PHP MAXCHILDREN", phpmaxchildren_hint))
+    print(('                                                '+return_prepend("PHP MAXCHILDREN", phpmaxchildren_hint)))
     print('                                            </span>')
     print('                                        </div>')
-    print('                                        <input class="form-control" placeholder='+phpmaxchildren+' value='+phpmaxchildren+' type="text" name="phpmaxchildren">')
+    print(('                                        <input class="form-control" placeholder='+phpmaxchildren+' value='+phpmaxchildren+' type="text" name="phpmaxchildren">'))
     print('                                    </div>')
     print('                                </div>')
 
     # autoindex
     autoindex_hint = " Enable for Native NGINX directory listing. "
-    print('                                '+return_label("AutoIndex", autoindex_hint))
+    print(('                                '+return_label("AutoIndex", autoindex_hint)))
     if autoindex == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -286,7 +286,7 @@ if form.getvalue('cpanelpkg'):
 
     # ssl_offload
     ssl_offload_hint = " Enable for a performance increase. Disable if a redirect loop error occurs. "
-    print('                                '+return_label("SSL Offload", ssl_offload_hint))
+    print(('                                '+return_label("SSL Offload", ssl_offload_hint)))
     if ssl_offload == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -312,7 +312,7 @@ if form.getvalue('cpanelpkg'):
 
     # proxy_to_master
     proxy_to_master_hint = " When running in a cluster, PROXY to MASTER instead of local server. "
-    print('                                '+return_label("Proxy to Master", proxy_to_master_hint))
+    print(('                                '+return_label("Proxy to Master", proxy_to_master_hint)))
     if proxy_to_master == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -338,7 +338,7 @@ if form.getvalue('cpanelpkg'):
 
     # access_log
     access_log_hint = " Disabling access_log will increase performance, but cPanel stats fail to work. "
-    print('                                '+return_label("Access Log", access_log_hint))
+    print(('                                '+return_label("Access Log", access_log_hint)))
     if access_log == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -364,7 +364,7 @@ if form.getvalue('cpanelpkg'):
 
     # open_file_cache
     open_file_cache_hint = " Enable for performance increase. Disable on development environment to not cache. "
-    print('                                '+return_label("Open File Cache", open_file_cache_hint))
+    print(('                                '+return_label("Open File Cache", open_file_cache_hint)))
     if open_file_cache == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
@@ -406,7 +406,7 @@ if form.getvalue('cpanelpkg'):
 
     # settings_lock
     settings_lock_hint = " Lock Application Server and Security Settings within cPanel. "
-    print('                                '+return_label("Settings Lock", settings_lock_hint))
+    print(('                                '+return_label("Settings Lock", settings_lock_hint)))
     if settings_lock == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
@@ -432,7 +432,7 @@ if form.getvalue('cpanelpkg'):
 
     # security_headers
     security_headers_hint = " X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, HSTS "
-    print('                                '+return_label("Security Headers", security_headers_hint))
+    print(('                                '+return_label("Security Headers", security_headers_hint)))
     if security_headers == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -458,7 +458,7 @@ if form.getvalue('cpanelpkg'):
 
     # dos_mitigate
     dos_mitigate_hint = " Enable ONLY when under a (D)DOS Attack. "
-    print('                                '+return_label("DOS Mitigate", dos_mitigate_hint))
+    print(('                                '+return_label("DOS Mitigate", dos_mitigate_hint)))
     if dos_mitigate == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -484,7 +484,7 @@ if form.getvalue('cpanelpkg'):
 
     # test_cookie
     test_cookie_hint = " Allow good bots in (like Google/Yahoo). Disable most bad bots by using a cookie challenge. "
-    print('                                '+return_label("Bot Mitigate", test_cookie_hint))
+    print(('                                '+return_label("Bot Mitigate", test_cookie_hint)))
     if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
         if test_cookie == 'enabled':
             print('                                <div class="col-md-6">')
@@ -510,11 +510,11 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print('                                <input hidden name="test_cookie" value="'+test_cookie+'">')
+        print(('                                <input hidden name="test_cookie" value="'+test_cookie+'">'))
 
     # symlink_protection
     symlink_protection_hint = " Access to a file is denied if any component of the pathname is a symbolic link, and if the link and object that the link points to has different owners. "
-    print('                                '+return_label("Symlink Protection", symlink_protection_hint))
+    print(('                                '+return_label("Symlink Protection", symlink_protection_hint)))
     if symlink_protection == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -540,7 +540,7 @@ if form.getvalue('cpanelpkg'):
 
     # mod_security
     mod_security_hint = " Mod Security v3 Web Application Firewall "
-    print('                                '+return_label("Mod Security", mod_security_hint))
+    print(('                                '+return_label("Mod Security", mod_security_hint)))
     if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
         if mod_security == 'enabled':
             print('                                <div class="col-md-6">')
@@ -566,7 +566,7 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print('                                <input hidden name="mod_security" value="'+mod_security+'">')
+        print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
 
     print('                            </div> <!-- Row End -->')
     print('                        </div> <!-- Card Body End -->')
@@ -585,7 +585,7 @@ if form.getvalue('cpanelpkg'):
 
     # set_expire_static
     set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
-    print('                                '+return_label("Expires / Cache-Control", set_expire_static_hint))
+    print(('                                '+return_label("Expires / Cache-Control", set_expire_static_hint)))
     if set_expire_static == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
@@ -611,7 +611,7 @@ if form.getvalue('cpanelpkg'):
 
     # pagespeed
     pagespeed_hint = " Delivers PageSpeed-optimized pages, but is resource intensive. "
-    print('                                '+return_label("PageSpeed", pagespeed_hint))
+    print(('                                '+return_label("PageSpeed", pagespeed_hint)))
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
         if pagespeed == 'enabled':
             print('                                <div class="col-md-6">')
@@ -637,11 +637,11 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print('                                <input hidden name="pagespeed" value="'+pagespeed+'">')
+        print(('                                <input hidden name="pagespeed" value="'+pagespeed+'">'))
 
     # pagespeed filter level
     pagespeed_filter_hint = " CoreFilters loads the Core Filters, PassThrough allows you to enable individual filters via a custom NGINX Configuration. "
-    print('                                '+return_label("PageSpeed Filters", pagespeed_filter_hint))
+    print(('                                '+return_label("PageSpeed Filters", pagespeed_filter_hint)))
     if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
         if pagespeed_filter == 'CoreFilters':
             print('                                <div class="col-md-6">')
@@ -667,12 +667,12 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">')
+        print(('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">'))
 
 
     # brotli
     brotli_hint = " A newer bandwidth optimization created by Google. It is resource intensive and applies to TLS (HTTPS) ONLY. "
-    print('                                '+return_label("Brotli", brotli_hint))
+    print(('                                '+return_label("Brotli", brotli_hint)))
     if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
         if brotli == 'enabled':
             print('                                <div class="col-md-6">')
@@ -698,12 +698,12 @@ if form.getvalue('cpanelpkg'):
             print('                                </div>')
     else:
         print_disabled()
-        print('                                <input hidden name="brotli" value="'+brotli+'">')
+        print(('                                <input hidden name="brotli" value="'+brotli+'">'))
 
 
     # gzip
     gzip_hint = " A bandwidth optimization that is mildly resource intensive. "
-    print('                                '+return_label("GZip", gzip_hint))
+    print(('                                '+return_label("GZip", gzip_hint)))
     if gzip == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -729,7 +729,7 @@ if form.getvalue('cpanelpkg'):
 
     # http2
     http2_hint = " A newer protocol that works with TLS (HTTPS) Only. "
-    print('                                '+return_label("HTTP/2", http2_hint))
+    print(('                                '+return_label("HTTP/2", http2_hint)))
     if http2 == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
@@ -771,7 +771,7 @@ if form.getvalue('cpanelpkg'):
 
     # redirect_to_ssl
     redirect_to_ssl_hint = " Redirect HTTP -> HTTPS. "
-    print('                                '+return_label("Redirect to SSL", redirect_to_ssl_hint))
+    print(('                                '+return_label("Redirect to SSL", redirect_to_ssl_hint)))
     if redirect_to_ssl == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
@@ -798,7 +798,7 @@ if form.getvalue('cpanelpkg'):
 
     # redirect_aliases
     redirect_aliases_hint = " Redirect all cPanel aliases to the main domain. "
-    print('                                '+return_label("Redirect Aliases", redirect_aliases_hint))
+    print(('                                '+return_label("Redirect Aliases", redirect_aliases_hint)))
     if redirect_aliases == 'enabled':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -824,7 +824,7 @@ if form.getvalue('cpanelpkg'):
 
     # www redirect
     www_redirect_hint = " Select WWW redirection mode. "
-    print('                                '+return_label("WWW Redirect", www_redirect_hint))
+    print(('                                '+return_label("WWW Redirect", www_redirect_hint)))
     print('                                <div class="col-md-6">')
     print('                                    <div class="input-group btn-group">')
     print('                                        <select name="wwwredirect" class="custom-select">')
@@ -846,7 +846,7 @@ if form.getvalue('cpanelpkg'):
 
     # URL Redirect
     url_redirect_hint = " Select URL redirection type. "
-    print('                                '+return_label("URL Redirect", url_redirect_hint))
+    print(('                                '+return_label("URL Redirect", url_redirect_hint)))
     print('                                <div class="col-md-6">')
     print('                                    <div class="input-group btn-group">')
     print('                                        <select name="redirectstatus" class="custom-select">')
@@ -868,7 +868,7 @@ if form.getvalue('cpanelpkg'):
 
     # Append request_uri to redirect
     append_requesturi_hint = ' Maintain the original Request URI ($request_uri (with arguments)). '
-    print('                                '+return_label("Append Redirect URL", append_requesturi_hint))
+    print(('                                '+return_label("Append Redirect URL", append_requesturi_hint)))
     if append_requesturi == 'enabled' and redirectstatus != 'none':
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
@@ -899,10 +899,10 @@ if form.getvalue('cpanelpkg'):
     print('                                    <div class="input-group btn-group mb-0">')
     print('                                        <div class="input-group-prepend">')
     print('                                            <span class="input-group-text">')
-    print('                                                '+return_prepend("Redirect to URL", redirecturl_hint))
+    print(('                                                '+return_prepend("Redirect to URL", redirecturl_hint)))
     print('                                            </span>')
     print('                                        </div>')
-    print('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">')
+    print(('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
     print('                                        </form>')
     print('                                    </div>')
     print('                                </div>')

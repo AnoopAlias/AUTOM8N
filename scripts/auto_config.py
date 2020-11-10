@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import yaml
@@ -38,7 +38,7 @@ def set_preferred_php():
             input = raw_input
         except NameError:
             pass
-        myinput = input("Provide the exact desired version string here and press ENTER: ")
+        myinput = eval(input("Provide the exact desired version string here and press ENTER: "))
         required_version = str(myinput)
         required_version_path = php_backends_dict.get(required_version)
         userdata_dict = {'PHP': {required_version: required_version_path}}
@@ -71,7 +71,7 @@ def nginx_conf_switch(user_name, domain_name):
                 for app_path in list(phpsigs.keys()):
                     if os.path.isfile(document_root+app_path):
                         # Ok we have a hit. Lets change the backend for this domain
-                        if phpversion in json_parsed_cpaneldomain.keys():
+                        if phpversion in list(json_parsed_cpaneldomain.keys()):
                             cpanel_phpversion = json_parsed_cpaneldomain.get('phpversion')
                             if cpanel_phpversion == 'ea-php73':
                                 my_phpversion = "CPANELPHP73"
@@ -108,7 +108,7 @@ def nginx_conf_switch(user_name, domain_name):
                             with open(domain_data_file, 'w') as yaml_file:
                                 yaml.dump(yaml_parsed_domaindata, yaml_file, default_flow_style=False)
                             yaml_file.close()
-                            print('switched '+domain_name+' to native Nginx mode using '+my_phpversion)
+                            print(('switched '+domain_name+' to native Nginx mode using '+my_phpversion))
                         else:
                             # Lets try using the default PHP version set by administrator
                             yaml_parsed_domaindata["backend_category"] = "PHP"
@@ -128,14 +128,14 @@ def nginx_conf_switch(user_name, domain_name):
                             with open(domain_data_file, 'w') as yaml_file:
                                 yaml.dump(yaml_parsed_domaindata, yaml_file, default_flow_style=False)
                             yaml_file.close()
-                            print('switched '+domain_name+' to native Nginx mode using '+default_phpversion)
-                print('Automatic config switch for '+domain_name+' under '+user_name+' completed')
+                            print(('switched '+domain_name+' to native Nginx mode using '+default_phpversion))
+                print(('Automatic config switch for '+domain_name+' under '+user_name+' completed'))
             else:
-                print("Error loading userdata file for domain: "+domain_name)
+                print(("Error loading userdata file for domain: "+domain_name))
         else:
-            print(domain_name+' is not using PROXY upstream')
+            print((domain_name+' is not using PROXY upstream'))
     else:
-        print("Error loading domain-data file for domain: "+domain_name)
+        print(("Error loading domain-data file for domain: "+domain_name))
 
     # End Function defs
 
@@ -174,7 +174,7 @@ if __name__ == "__main__":
                     with open(prefphpyaml, 'r') as prefphpyaml_data_stream:
                         yaml_parsed_prefphpyaml = yaml.safe_load(prefphpyaml_data_stream)
                     phpversion = yaml_parsed_prefphpyaml.get('PHP')
-                    default_phpversion = str(phpversion.keys()[0])
+                    default_phpversion = str(list(phpversion.keys())[0])
                     default_phppath = str(phpversion.get(default_phpversion))
                     sigsyaml = installation_path+"/conf/appsignatures.yaml"
                     with open(sigsyaml, 'r') as sigs_data_stream:
@@ -190,7 +190,7 @@ if __name__ == "__main__":
                     for domain_in_subdomains in sub_domains:
                         nginx_conf_switch(cpaneluser, domain_in_subdomains)  # Generate conf for sub domains which takes care of addon as well
                 else:
-                    print("Error loading userdata file for user: "+cpaneluser)
+                    print(("Error loading userdata file for user: "+cpaneluser))
     elif run_mode == 'setphp':
         set_preferred_php()
     else:

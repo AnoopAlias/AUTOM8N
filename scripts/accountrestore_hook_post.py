@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import sys
@@ -35,11 +35,11 @@ if os.getuid() == 0:
             subprocess.call(installation_path + "/scripts/cluster_gdnsd_ensure_user.py "+cpaneluser, shell=True)
         subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
         sighupnginx()
-        print("1 nDeploy:clusteraccountrestore:"+cpaneluser)
+        print(("1 nDeploy:clusteraccountrestore:"+cpaneluser))
     else:
         # We just need to generate config for the local machine
         subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
         sighupnginx()
-        print("1 nDeploy:accountrestore:"+cpaneluser)
+        print(("1 nDeploy:accountrestore:"+cpaneluser))
 else:
-    print("1 nDeploy:accountrestore:NoPrivilege:Restore"+cpaneluser)
+    print(("1 nDeploy:accountrestore:NoPrivilege:Restore"+cpaneluser))

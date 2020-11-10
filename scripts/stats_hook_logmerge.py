@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 try:
     import simplejson as json
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             cluster_data_yaml = open(cluster_config_file, 'r')
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             cluster_data_yaml.close()
-            serverlist = cluster_data_yaml_parsed.keys()
+            serverlist = list(cluster_data_yaml_parsed.keys())
         else:
             sys.exit(0)
     if os.path.isfile('/opt/nDeploy/conf/CLUSTER_LOG'):
@@ -77,11 +77,11 @@ if __name__ == "__main__":
         # Begin config generation .Do it first for the main domain
         merge_logs(main_domain, serverlist)
         # iterate over the addon-domain ,passing the subdomain as the configdomain
-        for the_addon_domain in addon_domains_dict.keys():
+        for the_addon_domain in list(addon_domains_dict.keys()):
             merge_logs(addon_domains_dict.get(the_addon_domain), serverlist)
         # iterate over sub-domains and generate config if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
-            if the_sub_domain not in addon_domains_dict.values():
+            if the_sub_domain not in list(addon_domains_dict.values()):
                 if the_sub_domain.startswith("*"):
                     subdom_config_dom = "_wildcard_."+the_sub_domain.replace('*.', '')
                     merge_logs(subdom_config_dom, serverlist)

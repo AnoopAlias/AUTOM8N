@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import cgi
 import cgitb
@@ -56,7 +56,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             with open(app_template_file, 'r') as apptemplate_data_yaml:
                 apptemplate_data_yaml_parsed = yaml.safe_load(apptemplate_data_yaml)
             apptemplate_dict = apptemplate_data_yaml_parsed.get(backend_category)
-            if apptemplate_code in apptemplate_dict.keys():
+            if apptemplate_code in list(apptemplate_dict.keys()):
                 apptemplate_description = apptemplate_dict.get(apptemplate_code)
         else:
             print_nontoast_error('Error!', 'Application Template Data File Error!')
@@ -95,11 +95,11 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
 
         # Backend
         print('                            <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
-        print('                            <div class="col-md-6 alert text-success">'+backend_version+'</div>')
+        print(('                            <div class="col-md-6 alert text-success">'+backend_version+'</div>'))
 
         # Description
         print('                            <div class="col-md-6 alert"><i class="fas fa-cog"></i>&nbsp;Current Template</div>')
-        print('                            <div class="col-md-6 alert text-success">'+apptemplate_description+'</div>')
+        print(('                            <div class="col-md-6 alert text-success">'+apptemplate_description+'</div>'))
 
         # .htaccess
         if backend_category == 'PROXY' and backend_version == 'httpd':
@@ -114,7 +114,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
 
         # New Upstream
         print('                            <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
-        print('                            <div class="col-md-6 alert text-warning text-center">'+mybackend+'</div>')
+        print(('                            <div class="col-md-6 alert text-warning text-center">'+mybackend+'</div>'))
 
         print('                        </div> <!-- Row End -->')
         print('                    </div> <!-- Card Body End -->')
@@ -122,7 +122,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         print('                    <div class="card-body"> <!-- Card Body Start -->')
 
         print('                        <div class="alert alert-info text-center mb-4">')
-        print('                            You selected <span class="p-2 badge badge-warning">'+mybackend+'</span> as the new upstream type <br>for the '+form.getvalue('cpanelpkg')+' package. Select the desired <br>version and template for this cPanel Package.')
+        print(('                            You selected <span class="p-2 badge badge-warning">'+mybackend+'</span> as the new upstream type <br>for the '+form.getvalue('cpanelpkg')+' package. Select the desired <br>version and template for this cPanel Package.'))
         print('                        </div>')
 
         backends_dict = backend_data_yaml_parsed.get(mybackend)
@@ -135,11 +135,11 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('                                <label class="input-group-text">Upstream</label>')
             print('                            </div>')
             print('                            <select name="backendversion" class="custom-select">')
-            for mybackend_version in backends_dict.keys():
+            for mybackend_version in list(backends_dict.keys()):
                 if mybackend_version == backend_version:
-                    print('                        <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                    print(('                        <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>'))
                 else:
-                    print('                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                    print(('                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
             print('                            </select>')
             print('                        </div>')
 
@@ -150,9 +150,9 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('                            <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 if myapptemplate == apptemplate_code:
-                    print('                        <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+                    print(('                        <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
                 else:
-                    print('                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+                    print(('                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
             print('                            </select>')
             print('                        </div>')
         else:
@@ -161,8 +161,8 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('                                <label class="input-group-text">Upstream</label>')
             print('                            </div>')
             print('                            <select name="backendversion" class="custom-select">')
-            for mybackend_version in backends_dict.keys():
-                print('                            <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+            for mybackend_version in list(backends_dict.keys()):
+                print(('                            <option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
             print('                            </select>')
             print('                        </div>')
             print('                        <div class="input-group">')
@@ -171,13 +171,13 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
             print('                            </div>')
             print('                            <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
-                print('                            <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+                print(('                            <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
             print('                            </select>')
             print('                        </div>')
 
         # Pass on the domain name to the next stage
-        print('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">')
-        print('                            <input hidden name="backend" value="'+mybackend+'">')
+        print(('                            <input hidden name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))
+        print(('                            <input hidden name="backend" value="'+mybackend+'">'))
         print('                            <button id="save-pkg-app-settings-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Update Package</button>')
         print('                        </form> <!-- save_pkg_app_settings end -->')
         print('                    </div> <!-- Card Body End -->')

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo -e '\e[93m Attempting to redo DNS updates  \e[0m'
 

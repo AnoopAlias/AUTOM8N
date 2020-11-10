@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import os
 import yaml
@@ -87,21 +87,21 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
                 print('                                <div class="alert alert-info text-center">')
                 print('                                    <p class="m-0 pb-1">Select upstream type for:</p>')
-                print('                                    <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>')
+                print(('                                    <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>'))
                 print('                                </div>')
                 print('                                <div class="input-group mb-3">')
                 print('                                    <div class="input-group-prepend input-group-prepend-min">')
                 print('                                        <label class="input-group-text">Upstream</label>')
                 print('                                    </div>')
                 print('                                    <select name="backend" class="custom-select">')
-                for backends_defined in backend_data_yaml_parsed.keys():
-                    print('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>')
+                for backends_defined in list(backend_data_yaml_parsed.keys()):
+                    print(('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>'))
                 print('                                    </select>')
                 print('                                </div>')
 
                 # Pass on the domain name to the next stage
-                print('                                <input hidden name="domain" value="'+mydomain+'">')
-                print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
+                print(('                                <input hidden name="domain" value="'+mydomain+'">'))
+                print(('                                <input hidden name="thesubdir" value="'+thesubdir+'">'))
                 print('                                <button class="btn btn-outline-primary btn-block" type="submit">Confirm Upstream</button>')
                 print('                            </form>')
                 print('                        </div> <!-- Card Body End -->')
@@ -136,10 +136,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         user_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(backend_category)
                     else:
                         user_apptemplate_dict = {}
-                    if apptemplate_code in apptemplate_dict.keys():
+                    if apptemplate_code in list(apptemplate_dict.keys()):
                         apptemplate_description = apptemplate_dict.get(apptemplate_code)
                     else:
-                        if apptemplate_code in user_apptemplate_dict.keys():
+                        if apptemplate_code in list(user_apptemplate_dict.keys()):
                             apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
                 else:
                     print_nontoast_error('Error!', 'Application Template Data File Error!')
@@ -181,7 +181,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
                 print('                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
                 print('                        <ul class="list-unstyled mb-0">')
-                print('                            <li class="mt-2 text-success">'+backend_version+'</li>')
+                print(('                            <li class="mt-2 text-success">'+backend_version+'</li>'))
                 print('                        </ul>')
                 print('                    </div> <!-- Card Body End -->')
                 cardfooter('')
@@ -193,7 +193,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
                 print('                        <h4 class="mb-0"><i class="fas fa-cog"></i> Configuration</h4>')
                 print('                        <ul class="list-unstyled mb-0">')
-                print('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+                print(('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>'))
                 print('                        </ul>')
                 print('                    </div> <!-- Card Body End -->')
                 cardfooter('')
@@ -213,8 +213,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                    <a class="nav-link mb-4" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general">General Settings</a>')
 
                 # Save Settings
-                print('                    <input hidden name="domain" value="'+mydomain+'" form="save_subdirectory_app_settings">')
-                print('                    <input hidden name="thesubdir" value="'+thesubdir+'" form="save_subdirectory_app_settings">')
+                print(('                    <input hidden name="domain" value="'+mydomain+'" form="save_subdirectory_app_settings">'))
+                print(('                    <input hidden name="thesubdir" value="'+thesubdir+'" form="save_subdirectory_app_settings">'))
                 print('                    <button id="save-subdirectory-app-settings-btn" class="btn btn-primary btn-block" type="submit" form="save_subdirectory_app_settings">Apply Settings</button>')
                 print('                </div>')
 
@@ -257,7 +257,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # User config reload
                 nginx_log_hint = document_root+"/"+thesubdir+"/nginx.conf"
-                print('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint))
+                print(('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)))
                 if os.path.isfile(nginx_log_hint):
                     if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+"_"+uniq_filename+".manualconfig_user"):
                         print('                        <div class="col-md-6 alert text-success"><i class="fas fa-check-circle"></i></div>')
@@ -270,7 +270,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                <div class="col-md-6 alert"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
                 print('                                <div class="col-md-6">')
                 print('                                    <form class="form" method="post" id="reload_nginx" onsubmit="return false;">')
-                print('                                        <input hidden name="domain" value="'+mydomain+'">')
+                print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
                 print('                                        <button id="reload-nginx-btn" class="btn btn-block text-center" type="submit">Reload</button>')
                 print('                                    </form>')
                 print('                                </div>')
@@ -279,7 +279,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                <div class="col-md-6 alert"><i class="fas fa-clipboard-list"></i>nginx.conf reload log</div>')
                 print('                                <div class="col-md-6">')
                 print('                                    <form class="form" method="post" id="view_nginx_log" onsubmit="return false;">')
-                print('                                        <input hidden name="domain" value="'+mydomain+'">')
+                print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
                 print('                                        <button id="view-nginx-log-btn" class="btn btn-block text-center" type="submit">View Log</button>')
                 print('                                    </form>')
                 print('                                </div>')
@@ -298,14 +298,14 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                         dep_file = document_root+'/'+thesubdir+'/requirements.txt'
                     elif backend_category == 'PHP':
                         dep_file = document_root+'/'+thesubdir+'/composer.json'
-                    print('                                <input hidden name="domain" value="'+mydomain+'/'+thesubdir+'">')
-                    print('                                <input hidden name="document_root" value="'+document_root+'/'+thesubdir+'">')
-                    print('                                <input hidden name="backend_category" value="'+backend_category+'">')
-                    print('                                <input hidden name="backend_version" value="'+backend_version+'">')
+                    print(('                                <input hidden name="domain" value="'+mydomain+'/'+thesubdir+'">'))
+                    print(('                                <input hidden name="document_root" value="'+document_root+'/'+thesubdir+'">'))
+                    print(('                                <input hidden name="backend_category" value="'+backend_category+'">'))
+                    print(('                                <input hidden name="backend_version" value="'+backend_version+'">'))
                     print('                            </form>')
 
                     print('                            <div class="btn-group btn-block mt-1">')
-                    print('                                <button id="dependency-installer-btn" class="btn btn-outline-warning btn-block" data-toggle="tooltip" data-placement="top" title="'+dep_file+'" type="submit" form="dependency_installer">Install '+backend_category+' Project Deps</button>')
+                    print(('                                <button id="dependency-installer-btn" class="btn btn-outline-warning btn-block" data-toggle="tooltip" data-placement="top" title="'+dep_file+'" type="submit" form="dependency_installer">Install '+backend_category+' Project Deps</button>'))
 
                     if backend_category == 'PHP':
                         print('                            <form class="form" id="view_php_log" onsubmit="return false;">')
@@ -320,17 +320,17 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
                 print('                                <div class="input-group mb-0">')
                 print('                                    <select name="backend" class="custom-select">')
-                for backends_defined in backend_data_yaml_parsed.keys():
+                for backends_defined in list(backend_data_yaml_parsed.keys()):
                     if backends_defined == backend_category:
-                        print('                                        <option selected value="'+backends_defined+'">'+backends_defined+'</option>')
+                        print(('                                        <option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
                     else:
-                        print('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>')
+                        print(('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>'))
                 print('                                    </select>')
 
                 # Pass on the domain name to the next stage
                 print('                                    <div class="input-group-append">')
-                print('                                        <input hidden name="domain" value="'+mydomain+'">')
-                print('                                        <input hidden name="thesubdir" value="'+thesubdir+'">')
+                print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
+                print(('                                        <input hidden name="thesubdir" value="'+thesubdir+'">'))
                 print('                                        <button class="btn btn-outline-primary" type="submit">Select</button>')
                 print('                                    </div>')
                 print('                                </div>')
@@ -351,7 +351,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # auth_basic
                 auth_basic_hint = " Setup password for "+document_root+"/"+thesubdir+" in cPanel -> Files -> Directory Privacy. "
-                print('                                    '+return_label("Password Protect Application", auth_basic_hint))
+                print(('                                    '+return_label("Password Protect Application", auth_basic_hint)))
                 print('                                    <div class="col-md-6">')
                 print('                                        <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
 
@@ -374,7 +374,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # proxy_to_master
                 proxy_to_master_hint = " When running in a cluster, PROXY to MASTER instead of local server. "
-                print('                                '+return_label("Proxy to Master", proxy_to_master_hint))
+                print(('                                '+return_label("Proxy to Master", proxy_to_master_hint)))
                 print('                                <div class="col-md-6">')
                 print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -397,7 +397,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # set_expire_static
                 set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
-                print('                                    '+return_label("Expires / Cache-Control", set_expire_static_hint))
+                print(('                                    '+return_label("Expires / Cache-Control", set_expire_static_hint)))
                 print('                                    <div class="col-md-6">')
                 print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -420,7 +420,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # mod_security
                 mod_security_hint = " Mod Security v3 Web Application Firewall "
-                print('                                    '+return_label("Mod Security", mod_security_hint))
+                print(('                                    '+return_label("Mod Security", mod_security_hint)))
 
                 if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
                     print('                                    <div class="col-md-6">')
@@ -445,11 +445,11 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 else:
                     print_disabled()
-                    print('                                <input hidden name="mod_security" value="'+mod_security+'">')
+                    print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
 
                 # URL Redirect
                 url_redirect_hint = " Select URL redirection type. "
-                print('                                '+return_label("URL Redirect", url_redirect_hint))
+                print(('                                '+return_label("URL Redirect", url_redirect_hint)))
                 print('                                <div class="col-md-6">')
                 print('                                    <div class="input-group btn-group">')
                 print('                                        <select name="redirectstatus" class="custom-select">')
@@ -473,7 +473,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
 
                 # Append request_uri to redirect
                 append_requesturi_hint = " Maintain the original Request URI ($request_uri (with arguments)). "
-                print('                                '+return_label("Append Redirect URL", append_requesturi_hint))
+                print(('                                '+return_label("Append Redirect URL", append_requesturi_hint)))
                 print('                                <div class="col-md-6">')
                 print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -501,10 +501,10 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                    <div class="input-group btn-group mb-0">')
                 print('                                        <div class="input-group-prepend">')
                 print('                                            <span class="input-group-text">')
-                print('                                                '+return_prepend("Redirect to URL", redirecturl_hint))
+                print(('                                                '+return_prepend("Redirect to URL", redirecturl_hint)))
                 print('                                            </span>')
                 print('                                        </div>')
-                print('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">')
+                print(('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
                 print('                                        </form>')
                 print('                                    </div>')
                 print('                                </div>')
@@ -528,7 +528,7 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('                            <form class="form mb-0" action="subdir_select_app_settings.live.py" method="get">')
             print('                                <div class="alert alert-info text-center">')
             print('                                    <p class="m-0 pb-1">Select upstream type for:</p>')
-            print('                                    <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>')
+            print(('                                    <kbd class="m-1">'+mydomain+'/'+thesubdir+'</kbd>'))
             print('                                </div>')
             print('                                <div class="input-group mb-3">')
             print('                                    <div class="input-group-prepend input-group-prepend-min">')
@@ -536,15 +536,15 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
             print('                                    </div>')
             print('                                    <select name="backend" class="custom-select">')
 
-            for backends_defined in backend_data_yaml_parsed.keys():
-                print('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>')
+            for backends_defined in list(backend_data_yaml_parsed.keys()):
+                print(('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>'))
 
             print('                                    </select>')
             print('                                </div>')
 
             # Pass on the domain and subdirectory to the next stage
-            print('                                <input hidden name="domain" value="'+mydomain+'">')
-            print('                                <input hidden name="thesubdir" value="'+thesubdir+'">')
+            print(('                                <input hidden name="domain" value="'+mydomain+'">'))
+            print(('                                <input hidden name="thesubdir" value="'+thesubdir+'">'))
             print('                                <button class="btn btn-outline-primary btn-block" type="submit">Confirm Upstream</button>')
             print('                            </form>')
             print('                        </div> <!-- Card Body End -->')

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import yaml
@@ -33,7 +33,7 @@ if os.path.isfile(cluster_config_file):
     cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     cluster_data_yaml.close()
     if cluster_data_yaml_parsed:
-        if hostname in cluster_data_yaml_parsed.keys():
+        if hostname in list(cluster_data_yaml_parsed.keys()):
             connect_server_dict = cluster_data_yaml_parsed.get(hostname)
             if selector == 'ipmap':
                 if 'ipmap' in connect_server_dict:

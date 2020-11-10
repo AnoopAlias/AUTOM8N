@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo -e '\e[93m Attempting to fix domain-data file permission  \e[0m'
 

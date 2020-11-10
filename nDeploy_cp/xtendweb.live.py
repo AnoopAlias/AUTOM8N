@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import cgitb
@@ -86,10 +86,10 @@ def print_domain_stacks(mydomain, mydomainvisual):
                 user_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(backend_category)
             else:
                 user_apptemplate_dict = {}
-            if apptemplate_code in apptemplate_dict.keys():
+            if apptemplate_code in list(apptemplate_dict.keys()):
                 apptemplate_description = apptemplate_dict.get(apptemplate_code)
             else:
-                if apptemplate_code in user_apptemplate_dict.keys():
+                if apptemplate_code in list(user_apptemplate_dict.keys()):
                     apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
         else:
             apptemplate_description = 'Application Template IO Error!'
@@ -97,10 +97,10 @@ def print_domain_stacks(mydomain, mydomainvisual):
     # Card Output
     cardheader('<a target="_blank" href="https://'+mydomainvisual+'">'+mydomainvisual+'</a>', 'fas fa-cogs')
     print('                 <div class="card-body p-0">  <!-- Card Body Start -->')
-    print('                     <div id="'+mydomainvisual+'-stack-status" class="row no-gutters row-1"> <!-- Row Start -->')
+    print(('                     <div id="'+mydomainvisual+'-stack-status" class="row no-gutters row-1"> <!-- Row Start -->'))
 
     # Htaccess quick show
-    print('                         <div class="col-8 alert text-left">Upstream: '+backend_category+'</div>')
+    print(('                         <div class="col-8 alert text-left">Upstream: '+backend_category+'</div>'))
     print('                         <div class="col-4">')
     if backend_category == 'PROXY':
         if backend_version == 'httpd':
@@ -109,14 +109,14 @@ def print_domain_stacks(mydomain, mydomainvisual):
         print('                            <div class="alert text-danger"><i class="fas fa-times-circle"></i> .htaccess</div>')
 
     print('                         </div>')
-    print('                                 <div class="col-md-12 alert d-flex align-items-center text-center justify-content-center template"> Configuration: '+apptemplate_description+'</div>')
+    print(('                                 <div class="col-md-12 alert d-flex align-items-center text-center justify-content-center template"> Configuration: '+apptemplate_description+'</div>'))
     print('                     </div>')
     print('                 </div> <!-- Card Body End -->')
 
     print('                        <div>  <!-- Card Body Start -->')
     print('                            <form class="form" action="app_settings.live.py" method="get">')
     print('                                <div class="input-group">')
-    print('                                    <input hidden name="domain" value="'+mydomain+'">')
+    print(('                                    <input hidden name="domain" value="'+mydomain+'">'))
     print('                                    <button class="btn btn-outline-warning btn-block btn-nb" type="submit">Configure</button>')
     print('                                </div>')
     print('                            </form>')
@@ -138,15 +138,15 @@ print('                <div class="col-lg-6">')
 if not os.path.isfile(installation_path + '/conf/autoswitch.disabled'):
     cardheader('Nginx Autoswitcher','fas fa-cogs')
     print('                        <div class="card-body">  <!-- Card Body Start -->')
-    
+
     if settings_lock == 'enabled':
         print('                        <div class="text-center alert alert-info">Application Server settings are locked by the administrator</div>')
     else:
         print('                            <form class="form" method="post" id="auto_switch_nginx" onsubmit="return false;">')
-        print('                                <input hidden name="cpaneluser" value="'+cpaneluser+'">')
+        print(('                                <input hidden name="cpaneluser" value="'+cpaneluser+'">'))
         print('                                <button id="auto-switch-nginx-btn" class="btn btn-outline-primary btn-block" type="submit">Auto Switch To Nginx</button>')
         print('                            </form>')
-    
+
     print('                        </div> <!-- Card Body End -->')
     cardfooter('')
 
@@ -165,7 +165,7 @@ if os.path.isfile(cluster_config_file):
 print_domain_stacks(main_domain, main_domain)
 
 for domain_in_subdomains in sub_domains:
-    if domain_in_subdomains not in addon_domains_dict.values():
+    if domain_in_subdomains not in list(addon_domains_dict.values()):
 
         if domain_in_subdomains.startswith("*"):
             wildcard_domain = "_wildcard_."+domain_in_subdomains.replace('*.', '')
@@ -174,7 +174,7 @@ for domain_in_subdomains in sub_domains:
         else:
             print_domain_stacks(domain_in_subdomains, domain_in_subdomains)
 
-for the_addon_domain in addon_domains_dict.keys():
+for the_addon_domain in list(addon_domains_dict.keys()):
     print_domain_stacks(addon_domains_dict.get(the_addon_domain), the_addon_domain)
 
 print('                        </div> <!-- Card Body End -->')

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #Author: Anoop P Alias
 
 which systemctl || exit 1

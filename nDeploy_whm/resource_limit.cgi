@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import cgitb
 import cgi
@@ -42,16 +42,16 @@ if form.getvalue('mode') and form.getvalue('unit'):
         if int(myio) == 18446744073709551615:
             print('                                    <li>BlockIOWeight = nolimit</li>')
         else:
-            print('                                    <li>BlockIOWeight = '+myio.rstrip()+'</li>')
+            print(('                                    <li>BlockIOWeight = '+myio.rstrip()+'</li>'))
         if int(mycpu) == 18446744073709551615:
             print('                                    <li>CPUShares = nolimit</li>')
         else:
-            print('                                    <li>CPUShares = '+mycpu.rstrip()+'</li>')
+            print(('                                    <li>CPUShares = '+mycpu.rstrip()+'</li>'))
         if int(mymem) == 18446744073709551615:
             print('                                    <li>MemoryLimit = nolimit</li>')
         else:
             mymem_inmb = float(mymem) / (1024.0 * 1024.0)
-            print('                                    <li>MemoryLimit = '+str(mymem_inmb).rstrip()+'Mb</li>')
+            print(('                                    <li>MemoryLimit = '+str(mymem_inmb).rstrip()+'Mb</li>'))
         print('                                </ul>')
         print('                            </div>')
 
@@ -74,16 +74,16 @@ if form.getvalue('mode') and form.getvalue('unit'):
             if int(myio) == 18446744073709551615:
                 print('                                    <li>BlockIOWeight = nolimit</li>')
             else:
-                print('                                    <li>BlockIOWeight = '+myio.rstrip()+'</li>')
+                print(('                                    <li>BlockIOWeight = '+myio.rstrip()+'</li>'))
             if int(mycpu) == 18446744073709551615:
                 print('                                    <li>CPUShares = nolimit</li>')
             else:
-                print('                                    <li>CPUShares = '+mycpu.rstrip()+'</li>')
+                print(('                                    <li>CPUShares = '+mycpu.rstrip()+'</li>'))
             if int(mymem) == 18446744073709551615:
                 print('                                    <li>MemoryLimit = nolimit</li>')
             else:
                 mymem_inmb = float(mymem) / (1024.0 * 1024.0)
-                print('                                    <li>MemoryLimit = '+str(mymem_inmb).rstrip()+'Mb</li>')
+                print(('                                    <li>MemoryLimit = '+str(mymem_inmb).rstrip()+'Mb</li>'))
             print('                                </ul>')
             print('                            </div>')
 
@@ -96,7 +96,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('                                    </div>')
     print('                                    <select name="cpu" class="custom-select">')
     for percentage in '100', '75', '50', '25':
-        print('                                        <option value="'+percentage+'">'+percentage+'%</option>')
+        print(('                                        <option value="'+percentage+'">'+percentage+'%</option>'))
     print('                                    </select>')
     print('                                </div>')
 
@@ -106,7 +106,7 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('                                    </div>')
     print('                                    <select name="memory" class="custom-select">')
     for percentage in '100', '75', '50', '25':
-        print('                                        <option value="'+percentage+'">'+percentage+'%</option>')
+        print(('                                        <option value="'+percentage+'">'+percentage+'%</option>'))
     print('                                    </select>')
     print('                                </div>')
 
@@ -116,12 +116,12 @@ if form.getvalue('mode') and form.getvalue('unit'):
     print('                                    </div>')
     print('                                    <select name="blockio" class="custom-select">')
     for percentage in '100', '75', '50', '25':
-        print('                                        <option value="'+percentage+'">'+percentage+'%</option>')
+        print(('                                        <option value="'+percentage+'">'+percentage+'%</option>'))
     print('                                    </select>')
     print('                                </div>')
 
-    print('                                <input hidden name="mode" value="'+form.getvalue('mode')+'">')
-    print('                                <input hidden name="unit" value="'+form.getvalue('unit')+'">')
+    print(('                                <input hidden name="mode" value="'+form.getvalue('mode')+'">'))
+    print(('                                <input hidden name="unit" value="'+form.getvalue('unit')+'">'))
     print('                                <button id="set-resource-limit-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
     print('                            </form>')
     print('                        </div> <!-- Card Body End -->') #Card Body End

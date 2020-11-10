@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import os
 import yaml
@@ -49,7 +49,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         subdir_apps_dict = yaml_parsed_profileyaml.get('subdir_apps')
-        if thesubdir in subdir_apps_dict.keys():
+        if thesubdir in list(subdir_apps_dict.keys()):
             the_subdir_dict = subdir_apps_dict.get(thesubdir)
         else:
             the_subdir_dict = {}

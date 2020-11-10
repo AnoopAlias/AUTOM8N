@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import commoninclude
 import cgi
@@ -47,10 +47,10 @@ for myprocess in psutil.process_iter():
                 # add it to Term along with current toast setup. - Budd
                 subprocess.call('killall -9 -u '+myusername, shell=True)
                 print('STATUS: <kbd>killed</kbd><br>')
-            print('PID: <kbd>'+str(mypid)+'</kbd><br>')
-            print('USER: <kbd>'+myusername+'</kbd><br>')
-            print('COMMANDLINE: <kbd>'+str(mycmdline)+'</kbd><br>')
-            print('EXE: <kbd>'+myexe+'</kbd>')
+            print(('PID: <kbd>'+str(mypid)+'</kbd><br>'))
+            print(('USER: <kbd>'+myusername+'</kbd><br>'))
+            print(('COMMANDLINE: <kbd>'+str(mycmdline)+'</kbd><br>'))
+            print(('EXE: <kbd>'+myexe+'</kbd>'))
             print('<hr>')
 if not malware:
     commoninclude.print_success('No suspicious processes found!')

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import subprocess
 import json
@@ -54,11 +54,11 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cl
     cluster_data_yaml = open(cluster_config_file, 'r')
     cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     cluster_data_yaml.close()
-    serverlist = cluster_data_yaml_parsed.keys()
+    serverlist = list(cluster_data_yaml_parsed.keys())
     for slaveserver in serverlist:
         server_dict = cluster_data_yaml_parsed.get(slaveserver)
         ipmap_dict = server_dict.get('dnsmap')
-        theiplist = ipmap_dict.values()
+        theiplist = list(ipmap_dict.values())
         slaveiplist = list(set(slaveiplist + theiplist))
 # Initiate Jinja2 templateEnv
 templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")

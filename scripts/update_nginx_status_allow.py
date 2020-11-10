@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import yaml
@@ -22,13 +22,13 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
     cluster_data_yaml = open(cluster_config_file, 'r')
     cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     cluster_data_yaml.close()
-    cluster_serverlist = cluster_data_yaml_parsed.keys()
+    cluster_serverlist = list(cluster_data_yaml_parsed.keys())
     mergedlist = []
     for server in cluster_serverlist:
         connect_server_dict = cluster_data_yaml_parsed.get(server)
         ipmap_dict = connect_server_dict.get("ipmap")
         dnsmap_dict = connect_server_dict.get("dnsmap")
-        mergedlist = mergedlist + ipmap_dict.keys() + ipmap_dict.values() + dnsmap_dict.keys() + dnsmap_dict.values()
+        mergedlist = mergedlist + list(ipmap_dict.keys()) + list(ipmap_dict.values()) + list(dnsmap_dict.keys()) + list(dnsmap_dict.values())
     the_iplist = list(set(mergedlist))
     templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
     templateEnv = jinja2.Environment(loader=templateLoader)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import sys
@@ -64,9 +64,9 @@ if os.path.exists(cluster_config_file):
         subprocess.call(installation_path + "/scripts/cluster_gdnsd_ensure_user.py "+cpaneluser, shell=True)
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
     sighupnginx()
-    print("1 nDeploy:clusteraccountcreate:"+cpaneluser)
+    print(("1 nDeploy:clusteraccountcreate:"+cpaneluser))
 else:
     # We just need to generate config for the local machine
     subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
     sighupnginx()
-    print("1 nDeploy:accountcreate:"+cpaneluser)
+    print(("1 nDeploy:accountcreate:"+cpaneluser))

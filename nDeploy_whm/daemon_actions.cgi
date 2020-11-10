@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import cgitb
 import cgi
@@ -85,25 +85,25 @@ if form.getvalue('action'):
                     output = output[:-2] + ' detected down. '
 
             if os.path.isfile(cluster_config_file):
-    
+
                 terminal_call('service ndeploy_backends restart && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"service ndeploy_backends restart\"', 'Restarting single master PHP backends cluster-wide...', output+'Single master PHP backends restarted cluster-wide!')
                 print_success(output+'Single master PHP backends restarted cluster-wide!')
-    
+
             else:
-    
+
                 terminal_call('service ndeploy_backends restart && service ndeploy_backends status', 'Restarting single master application backends...', output+'Single master PHP backends restarted!')
                 print_success(output+'Single master PHP backends restarted!')
-        
+
         # If multi-master PHP setup
         else:
 
             if os.path.isfile(cluster_config_file):
-    
+
                 terminal_call('killall -9 php-fpm && /scripts/restartsrv apache_php_fpm && ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"killall -9 php-fpm && /scripts/restartsrv apache_php_fpm\"', 'Restarting multi-master PHP backends cluster-wide...', 'Multi-master PHP backends restarted cluster-wide!')
                 print_success('Multi-Master PHP backends restarted cluster-wide!')
-    
+
             else:
-    
+
                 terminal_call('killall -9 php-fpm && /scripts/restartsrv apache_php_fpm', 'Restarting multi-master PHP backends...', 'Multi-master PHP backends restarted!')
                 print_success('Multi-Master PHP backends restarted!')
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import commoninclude
 import os
@@ -65,10 +65,10 @@ if form.getvalue('domain') and form.getvalue('backend'):
                 user_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(backend_category)
             else:
                 user_apptemplate_dict = {}
-            if apptemplate_code in apptemplate_dict.keys():
+            if apptemplate_code in list(apptemplate_dict.keys()):
                 apptemplate_description = apptemplate_dict.get(apptemplate_code)
             else:
-                if apptemplate_code in user_apptemplate_dict.keys():
+                if apptemplate_code in list(user_apptemplate_dict.keys()):
                     apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
         else:
             print_nontoast_error('Error!', 'Application Template Data File Error!')
@@ -91,11 +91,11 @@ if form.getvalue('domain') and form.getvalue('backend'):
 
         # Backend
         print('                                <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;Current&nbsp;Upstream</div>')
-        print('                                <div class="col-md-6 alert text-success">'+backend_version+'</div>')
+        print(('                                <div class="col-md-6 alert text-success">'+backend_version+'</div>'))
 
         # Description
         print('                                <div class="col-md-6 alert"><i class="fas fa-cog"></i>&nbsp;Current Configuration</div>')
-        print('                                <div class="col-md-6 alert text-success text-center">'+apptemplate_description+'</div>')
+        print(('                                <div class="col-md-6 alert text-success text-center">'+apptemplate_description+'</div>'))
 
         # .htaccess
         if backend_category == 'PROXY' and backend_version == 'httpd':
@@ -110,7 +110,7 @@ if form.getvalue('domain') and form.getvalue('backend'):
 
         # New Upstream
         print('                                <div class="col-md-6 alert"><i class="fas fa-server"></i>&nbsp;New&nbsp;Upstream&nbsp;Type</div>')
-        print('                                <div class="col-md-6 alert text-warning text-center">'+mybackend+'</div>')
+        print(('                                <div class="col-md-6 alert text-warning text-center">'+mybackend+'</div>'))
 
         print('                            </div> <!-- Row End -->')
         print('                        </div> <!-- Card Body End -->')
@@ -118,8 +118,8 @@ if form.getvalue('domain') and form.getvalue('backend'):
         print('                        <div class="card-body"> <!-- Card Body Start -->')
 
         print('                            <div class="alert alert-info text-center">')
-        print('                                <p class="m-0 pb-1">You selected <span class="badge badge-warning">'+mybackend+'</span> as the new upstream type for:</p>')
-        print('                                <kbd class="m-1">'+mydomain+'</kbd>')
+        print(('                                <p class="m-0 pb-1">You selected <span class="badge badge-warning">'+mybackend+'</span> as the new upstream type for:</p>'))
+        print(('                                <kbd class="m-1">'+mydomain+'</kbd>'))
         print('                                <p class="m-0 pt-1">Select the version and configuration for this upstream below.')
         print('                            </div>')
 
@@ -137,11 +137,11 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('                                        <label class="input-group-text">Upstream</label>')
             print('                                    </div>')
             print('                                    <select name="backendversion" class="custom-select">')
-            for mybackend_version in backends_dict.keys():
+            for mybackend_version in list(backends_dict.keys()):
                 if mybackend_version == backend_version:
-                    print('                                        <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                    print(('                                        <option selected value="'+mybackend_version+'">'+mybackend_version+'</option>'))
                 else:
-                    print('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+                    print(('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
             print('                                    </select>')
             print('                                </div>')
 
@@ -152,15 +152,15 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('                                    <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
                 if myapptemplate == apptemplate_code:
-                    print('                                <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+                    print(('                                <option selected value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
                 else:
-                    print('                                <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+                    print(('                                <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
             if user_new_apptemplate_dict:
                 for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
                     if user_myapptemplate == apptemplate_code:
-                        print('                            <option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+                        print(('                            <option selected value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
                     else:
-                        print('                            <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+                        print(('                            <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
             print('                                    </select>')
             print('                                </div>')
         else:
@@ -169,8 +169,8 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('                                        <label class="input-group-text">Upstream</label>')
             print('                                    </div>')
             print('                                    <select name="backendversion" class="custom-select">')
-            for mybackend_version in backends_dict.keys():
-                print('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>')
+            for mybackend_version in list(backends_dict.keys()):
+                print(('                                        <option value="'+mybackend_version+'">'+mybackend_version+'</option>'))
             print('                                    </select>')
             print('                                </div>')
 
@@ -180,16 +180,16 @@ if form.getvalue('domain') and form.getvalue('backend'):
             print('                                    </div>')
             print('                                    <select name="apptemplate" class="custom-select">')
             for myapptemplate in sorted(new_apptemplate_dict.keys()):
-                print('                                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>')
+                print(('                                        <option value="'+myapptemplate+'">'+new_apptemplate_dict.get(myapptemplate)+'</option>'))
             if user_new_apptemplate_dict:
                 for user_myapptemplate in sorted(user_new_apptemplate_dict.keys()):
-                    print('                                        <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>')
+                    print(('                                        <option value="'+user_myapptemplate+'">'+user_new_apptemplate_dict.get(user_myapptemplate)+'</option>'))
             print('                                    </select>')
             print('                                </div>')
 
         # Pass on the domain name to the next stage
-        print('                                <input hidden name="domain" value="'+mydomain+'">')
-        print('                                <input hidden name="backend" value="'+mybackend+'">')
+        print(('                                <input hidden name="domain" value="'+mydomain+'">'))
+        print(('                                <input hidden name="backend" value="'+mybackend+'">'))
         print('                                <button id="set-upstream-configuration-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Apply Upstream Configuration</button>')
         print('                            </form>')
         print('                        </div> <!-- Card Body End -->')

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import cgi
 import cgitb
@@ -112,7 +112,7 @@ cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
 print('                        <h2 class="mb-0">Plugin Status</h2>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>')
+print(('                            <li class="d-none d-sm-block d-md-block d-lg-block d-xl-block"><small>'+brand+' '+autom8n_version.replace("Autom8n ",'')+'</small></li>'))
 
 # Nginx Status
 if nginx_status:
@@ -315,30 +315,30 @@ print('                                <label class="small" for="brand">Personal
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_desc">')
-print('                                            '+return_prepend("Brand Name", brand_hint))
+print(('                                            '+return_prepend("Brand Name", brand_hint)))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="brand" value="'+brand+'" id="brand" aria-describedby="brand_desc">')
+print(('                                    <input type="text" class="form-control" name="brand" value="'+brand+'" id="brand" aria-describedby="brand_desc">'))
 print('                                </div>')
 
-print('                                <label class="small" for="brand_logo">Enter the filename of the 48x48 pixel brand icon that has been uploaded to the <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to properly brand cPanel, WHM, and this application.</label>')
+print(('                                <label class="small" for="brand_logo">Enter the filename of the 48x48 pixel brand icon that has been uploaded to the <kbd>'+installation_path+'/nDeploy_whm</kbd> and <kbd>'+installation_path+'/nDeploy_cp</kbd> folders to properly brand cPanel, WHM, and this application.</label>'))
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_logo_desc">')
-print('                                            '+return_prepend("Brand Icon", brand_logo_hint))
+print(('                                            '+return_prepend("Brand Icon", brand_logo_hint)))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="brand_logo" value="'+brand_logo+'" id="brand_logo" aria-describedby="brand_logo_desc">')
+print(('                                    <input type="text" class="form-control" name="brand_logo" value="'+brand_logo+'" id="brand_logo" aria-describedby="brand_logo_desc">'))
 print('                                </div>')
 
 print('                                <label class="small" for="brand_group">Enter the section you want this application to be placed in within each user\'s cPanel.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="brand_group_desc">')
-print('                                            '+return_prepend("cPanel Section", brand_group_hint))
+print(('                                            '+return_prepend("cPanel Section", brand_group_hint)))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="brand_group" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">')
+print(('                                    <input type="text" class="form-control" name="brand_group" value="'+brand_group+'" id="brand_group" aria-describedby="brand_group_desc">'))
 print('                                </div>')
 print('                            </form>')
 
@@ -378,25 +378,25 @@ print('                                <label class="small" for="primary_color">
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="primary_color_desc">')
-print('                                            '+return_prepend("Primary Color", primary_color_hint))
+print(('                                            '+return_prepend("Primary Color", primary_color_hint)))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="primary_color" value="'+primary_color+'" id="primary_color" aria-describedby="primary_color_desc">')
+print(('                                    <input type="text" class="form-control" name="primary_color" value="'+primary_color+'" id="primary_color" aria-describedby="primary_color_desc">'))
 print('                                </div>')
 
 print('                                <label class="small" for="ndeploy_theme_color">Select a theme to use with the application.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
-print('                                        <span class="input-group-text">'+return_prepend("Theme", ndeploy_theme_color_hint)+'</span>')
+print(('                                        <span class="input-group-text">'+return_prepend("Theme", ndeploy_theme_color_hint)+'</span>'))
 print('                                    </div>')
 print('                                    <select name="ndeploy_theme_color" id="ndeploy_theme_color" class="custom-select">')
 
 bootstrap_colors = ['light', 'dark']
 for color in bootstrap_colors:
     if ndeploy_theme_color != color:
-        print('                                <option value="'+color+'">'+color+'</option>')
+        print(('                                <option value="'+color+'">'+color+'</option>'))
     else:
-        print('                                <option selected value="'+color+'">'+color+'</option>')
+        print(('                                <option selected value="'+color+'">'+color+'</option>'))
 print('                                    </select>')
 print('                                </div>')
 
@@ -404,40 +404,40 @@ print('                                <label class="small" for="logo_url">Enter
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="logo_url_desc">')
-print('                                            '+return_prepend("Logo URL", logo_url_hint))
+print(('                                            '+return_prepend("Logo URL", logo_url_hint)))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="logo_url" value="'+logo_url+'" id="logo_url" aria-describedby="logo_url_desc">')
+print(('                                    <input type="text" class="form-control" name="logo_url" value="'+logo_url+'" id="logo_url" aria-describedby="logo_url_desc">'))
 print('                                </div>')
 
 print('                                <label class="small" for="app_email">Enter a support email for users if they run into various issues. Set this to <kbd>None</kbd> to disable.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="app_email_desc">')
-print('                                            '+return_prepend("Support E-mail", app_email_hint))
+print(('                                            '+return_prepend("Support E-mail", app_email_hint)))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="app_email" value="'+app_email+'" id="app_email" aria-describedby="app_email_desc">')
+print(('                                    <input type="text" class="form-control" name="app_email" value="'+app_email+'" id="app_email" aria-describedby="app_email_desc">'))
 print('                                </div>')
 
 print('                                <label class="small" for="cpanel_documentation_link">Enter an external documentation link for cPanel Docs. Set this to <kbd>None</kbd> to disable.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="cpanel_documentation_link_desc">')
-print('                                            '+return_prepend("cPanel Docs", cpanel_documentation_link_hint))
+print(('                                            '+return_prepend("cPanel Docs", cpanel_documentation_link_hint)))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="cpanel_documentation_link" value="'+cpanel_documentation_link+'" id="cpanel_documentation_link" aria-describedby="cpanel_documentation_link_desc">')
+print(('                                    <input type="text" class="form-control" name="cpanel_documentation_link" value="'+cpanel_documentation_link+'" id="cpanel_documentation_link" aria-describedby="cpanel_documentation_link_desc">'))
 print('                                </div>')
 
 print('                                <label class="small" for="whm_documentation_link">Enter an external documentation link for WHM Docs. Set this to <kbd>None</kbd> to disable.</label>')
 print('                                <div class="input-group">')
 print('                                    <div class="input-group-prepend input-group-prepend-min">')
 print('                                        <span class="input-group-text" id="whm_documentation_link_desc">')
-print('                                            '+return_prepend("WHM Docs", whm_documentation_link_hint))
+print(('                                            '+return_prepend("WHM Docs", whm_documentation_link_hint)))
 print('                                        </span>')
 print('                                    </div>')
-print('                                    <input type="text" class="form-control" name="whm_documentation_link" value="'+whm_documentation_link+'" id="whm_documentation_link" aria-describedby="whm_documentation_link_desc">')
+print(('                                    <input type="text" class="form-control" name="whm_documentation_link" value="'+whm_documentation_link+'" id="whm_documentation_link" aria-describedby="whm_documentation_link_desc">'))
 print('                                </div>')
 
 
@@ -479,13 +479,13 @@ if os.path.isfile(installation_path+"/conf/preferred_php.yaml"):
     preferred_php_yaml_parsed = yaml.safe_load(preferred_php_yaml)
     preferred_php_yaml.close()
     phpversion = preferred_php_yaml_parsed.get('PHP')
-    myphpversion = phpversion.keys()[0]
+    myphpversion = list(phpversion.keys())[0]
     print('                             <div class="col-3 alert text-success"><i class="fas fa-check-circle"><span class="sr-only sr-only-focusable">Enabled</span></i></div>')
 else:
     myphpversion = "Unset"
     print('                             <div class="col-3 alert text-secondary"><i class="fas fa-times-circle"><span class="sr-only sr-only-focusable">Disabled</span></i></div>')
 
-print('                                 <div class="col-9 alert">'+myphpversion+'</div>')
+print(('                                 <div class="col-9 alert">'+myphpversion+'</div>'))
 print('                             </div>')
 print('                         </div>')
 
@@ -533,9 +533,9 @@ if "PHP" in backend_data_yaml_parsed:
     php_backends_dict = backend_data_yaml_parsed["PHP"]
     for versions_defined in list(php_backends_dict.keys()):
         if versions_defined == myphpversion:
-            print('                     <option selected value="'+myphpversion+'">'+myphpversion+'</option>')
+            print(('                     <option selected value="'+myphpversion+'">'+myphpversion+'</option>'))
         else:
-            print('                     <option value="'+versions_defined+'">'+versions_defined+'</option>')
+            print(('                     <option value="'+versions_defined+'">'+versions_defined+'</option>'))
     print('                         </select>')
     print('                     </div>')
     print('                     <button id="default-php-autoswitch-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Set Default PHP</button>')
@@ -638,15 +638,15 @@ if not os.path.isfile('/etc/nginx/conf.d/netdata.password'):
     print('                            <div class="input-group">')
     print('                                <div class="input-group-prepend input-group-prepend-min">')
     print('                                    <span class="input-group-text" id="netdata_pass_desc">')
-    print('                                        '+return_prepend("Netdata Password", netdata_pass_hint))
+    print(('                                        '+return_prepend("Netdata Password", netdata_pass_hint)))
     print('                                    </span>')
     print('                                </div>')
-    print('                                <input type="text" class="form-control" name="netdata_pass" value="'+netdata_pass+'" id="netdata_pass" aria-describedby="netdata_pass_desc">')
+    print(('                                <input type="text" class="form-control" name="netdata_pass" value="'+netdata_pass+'" id="netdata_pass" aria-describedby="netdata_pass_desc">'))
     print('                            </div>')
 print('                                <label hidden for="install_netdata">Install Netdata</label>')
 print('                                <input hidden class="form-control" name="run_installer" id="install_netdata" value="enabled">')
 print('                                <label hidden for="netdata_pass2">Netdata Password</label>')
-print('                                <input hidden class="form-control" name="netdata_pass" id="netdata_pass2" value="'+netdata_pass+'">')
+print(('                                <input hidden class="form-control" name="netdata_pass" id="netdata_pass2" value="'+netdata_pass+'">'))
 print('                            </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/netdata.password'):
@@ -684,15 +684,15 @@ if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
     print('                            <div class="input-group">')
     print('                                <div class="input-group-prepend input-group-prepend-min">')
     print('                                    <span class="input-group-text" id="glances_pass_desc">')
-    print('                                        '+return_prepend("Glances Password", glances_pass_hint))
+    print(('                                        '+return_prepend("Glances Password", glances_pass_hint)))
     print('                                    </span>')
     print('                                </div>')
-    print('                                <input type="text" class="form-control" name="glances_pass" value="'+glances_pass+'" id="glances_pass" aria-describedby="glances_pass_desc">')
+    print(('                                <input type="text" class="form-control" name="glances_pass" value="'+glances_pass+'" id="glances_pass" aria-describedby="glances_pass_desc">'))
     print('                            </div>')
 print('                                <label hidden for="install_glances">Install Glances</label>')
 print('                                <input hidden class="form-control" name="run_installer" id="install_glances" value="enabled">')
 print('                                <label hidden for="glances_pass2">Glances Pass</label>')
-print('                                <input hidden class="form-control" name="glances_pass" id="glances_pass2" value="'+glances_pass+'">')
+print(('                                <input hidden class="form-control" name="glances_pass" id="glances_pass2" value="'+glances_pass+'">'))
 print('                            </form>')
 
 if os.path.isfile('/etc/nginx/conf.d/glances.password'):
@@ -732,7 +732,7 @@ passenger_hint = " Controls loading of nginx-nDeploy-module-passenger which inst
 print('                            <div class="card-body"> <!-- Card Body Start -->')
 print('                                <div class="row row-btn-group-toggle"> <!-- Row Start -->')
 
-print('                                    '+return_label("Bot Mitigate Module", test_cookie_hint))
+print(('                                    '+return_label("Bot Mitigate Module", test_cookie_hint)))
 print('                                    <div class="col-md-6">')
 print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
@@ -752,7 +752,7 @@ else:
 print('                                        </div>')
 print('                                    </div>')
 
-print('                                    '+return_label("ModSecurity V3 Module", mod_security_hint))
+print(('                                    '+return_label("ModSecurity V3 Module", mod_security_hint)))
 print('                                    <div class="col-md-6">')
 print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
@@ -772,7 +772,7 @@ else:
 print('                                        </div>')
 print('                                    </div>')
 
-print('                                    '+return_label("PageSpeed Module", pagespeed_hint))
+print(('                                    '+return_label("PageSpeed Module", pagespeed_hint)))
 print('                                    <div class="col-md-6">')
 print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
@@ -792,7 +792,7 @@ else:
 print('                                        </div>')
 print('                                    </div>')
 
-print('                                    '+return_label("Brotli Module", brotli_hint))
+print(('                                    '+return_label("Brotli Module", brotli_hint)))
 print('                                    <div class="col-md-6">')
 print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
@@ -812,7 +812,7 @@ else:
 print('                                        </div>')
 print('                                    </div>')
 
-print('                                    '+return_label("Geoip2 Module", geoip2_hint))
+print(('                                    '+return_label("Geoip2 Module", geoip2_hint)))
 print('                                    <div class="col-md-6">')
 print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/geoip2.load'):
@@ -832,7 +832,7 @@ else:
 print('                                        </div>')
 print('                                    </div>')
 
-print('                                    '+return_label("Passenger Module", passenger_hint))
+print(('                                    '+return_label("Passenger Module", passenger_hint)))
 print('                                    <div class="col-md-6">')
 print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 if os.path.isfile('/etc/nginx/modules.d/passenger.load'):
