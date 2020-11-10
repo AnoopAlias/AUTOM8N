@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import subprocess
@@ -27,7 +27,7 @@ def control_unison(trigger):
             with open(homedir_config_file, 'r') as homedir_data_yaml:
                 homedir_data_yaml_parsed = yaml.safe_load(homedir_data_yaml)
             homedir_list = homedir_data_yaml_parsed.get('homedir')
-            for server in cluster_data_yaml_parsed.keys():
+            for server in list(cluster_data_yaml_parsed.keys()):
                 for myhome in homedir_list:
                     proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison "+myhome+"_"+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
                 proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison phpsessions_"+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
@@ -40,7 +40,7 @@ def control_unison(trigger):
             with open(homedir_config_file, 'r') as homedir_data_yaml:
                 homedir_data_yaml_parsed = yaml.safe_load(homedir_data_yaml)
             homedir_list = homedir_data_yaml_parsed.get('homedir')
-            for server in cluster_data_yaml_parsed.keys():
+            for server in list(cluster_data_yaml_parsed.keys()):
                 for myhome in homedir_list:
                     proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison "+myhome+"_"+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
                 proc = subprocess.Popen("/usr/bin/nice -n 19 /usr/bin/ionice -c3 /usr/bin/unison phpsessions_"+server, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)

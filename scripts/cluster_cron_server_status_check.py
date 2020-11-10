@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import httplib
+import http.client
 import re
 import socket
 import os
@@ -23,11 +23,11 @@ def is_page_available(host, path="/nginx_status"):
         False.
     """
     try:
-        conn = httplib.HTTPConnection(host)
+        conn = http.client.HTTPConnection(host)
         conn.request("HEAD", path)
         if re.match("^[23]\d\d$", str(conn.getresponse().status)):
             return True
-    except StandardError:
+    except Exception:
         return None
 
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
         cluster_master_yaml = open(cluster_master_file, 'r')
         cluster_master_yaml_parsed = yaml.safe_load(cluster_master_yaml)
         cluster_master_yaml.close()
-        cluster_master = cluster_master_yaml_parsed.keys()[0]
+        cluster_master = list(cluster_master_yaml_parsed.keys())[0]
         if not is_page_available(cluster_master, "/nginx_status"):
             with open("/var/spool/cron/.cron.hostname", "w") as cronhost:
                 cronhost.write(socket.gethostname()+"\n")

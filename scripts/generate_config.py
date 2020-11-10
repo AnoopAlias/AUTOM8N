@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import codecs
 import yaml
@@ -80,7 +80,7 @@ def php_secure_backend_add(user_name, phpmaxchildren, domain_home, clusterenable
         backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     if "PHP" in backend_data_yaml_parsed:
         php_backends_dict = backend_data_yaml_parsed["PHP"]
-        for backend_name in php_backends_dict.keys():
+        for backend_name in list(php_backends_dict.keys()):
             subprocess.call(['systemctl', 'start', backend_name+'@'+user_name+'.socket'])
             subprocess.call(['systemctl', 'enable', backend_name+'@'+user_name+'.socket'])
             if clusterenabled:
@@ -158,7 +158,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             domain_list_proxy_subdomain = [domain_server_name]
     if json_parsed_cpaneldomain.get('ipv6'):
         try:
-            ipv6_addr_list = json_parsed_cpaneldomain.get('ipv6').keys()
+            ipv6_addr_list = list(json_parsed_cpaneldomain.get('ipv6').keys())
             ipv6_addr = str(ipv6_addr_list[0])
             hasipv6 = True
         except AttributeError:
@@ -275,15 +275,15 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     symlink_protection = yaml_parsed_domain_data.get('symlink_protection', 'disabled')
     redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', 'disabled')
     auth_basic = yaml_parsed_domain_data.get('auth_basic', 'disabled')
-    if 'nemesida_wl' in yaml_parsed_domain_data.keys():
+    if 'nemesida_wl' in list(yaml_parsed_domain_data.keys()):
         nemesida_wl = yaml_parsed_domain_data.get('nemesida_wl')
     else:
         nemesida_wl = []
-    if 'nemesida_ip_wl' in yaml_parsed_domain_data.keys():
+    if 'nemesida_ip_wl' in list(yaml_parsed_domain_data.keys()):
         nemesida_ip_wl = yaml_parsed_domain_data.get('nemesida_ip_wl')
     else:
         nemesida_ip_wl = []
-    if 'nemesidaipv6_wl' in yaml_parsed_domain_data.keys():
+    if 'nemesidaipv6_wl' in list(yaml_parsed_domain_data.keys()):
         nemesidaipv6_wl = yaml_parsed_domain_data.get('nemesidaipv6_wl')
     else:
         nemesidaipv6_wl = []
@@ -291,7 +291,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     if subdir_apps:
         subdir_apps_uniq = {}
         subdir_apps_passenger = {}
-        for key in subdir_apps.keys():
+        for key in list(subdir_apps.keys()):
             uniq_path = document_root+key
             uniq_filename = md5(uniq_path.encode("utf-8")).hexdigest()
             subdir_apps_uniq[key] = uniq_filename
@@ -313,7 +313,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
         for server in cluster_serverlist:
             silentremove("/etc/nginx/"+server+"/" + kwargs.get('configdomain') + ".manualconfig_user")
     if subdir_apps:
-        for subdir in subdir_apps.keys():
+        for subdir in list(subdir_apps.keys()):
             silentremove("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user")
             if clusterenabled:
                 for server in cluster_serverlist:
@@ -471,7 +471,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             user_config = True
     # Get the subdir config also rendered
     if subdir_apps:
-        for subdir in subdir_apps.keys():
+        for subdir in list(subdir_apps.keys()):
             the_subdir_app_dict = subdir_apps.get(subdir)
             subdir_backend_category = the_subdir_app_dict.get('backend_category')
             if subdir_backend_category == 'PROXY':
@@ -624,7 +624,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
                 shutil.copyfile(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test", "/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user")
                 os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+".manualconfig_user", 0o644)
             if subdir_apps:
-                for subdir in subdir_apps.keys():
+                for subdir in list(subdir_apps.keys()):
                     if os.path.isfile(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test"):
                         shutil.copyfile(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test", "/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user")
                         os.chmod("/etc/nginx/sites-enabled/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_user", 0o644)
@@ -633,7 +633,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
         silentremove(installation_path+"/lock/"+kwargs.get('configdomain')+".conf")
         silentremove(installation_path+"/lock/"+kwargs.get('configdomain')+".manualconfig_test")
         if subdir_apps:
-            for subdir in subdir_apps.keys():
+            for subdir in list(subdir_apps.keys()):
                 silentremove(installation_path+"/lock/"+kwargs.get('configdomain')+"_"+subdir_apps_uniq.get(subdir)+".manualconfig_test")
 
 # End Function defs
@@ -680,18 +680,18 @@ if __name__ == "__main__":
             cluster_data_yaml = open(cluster_config_file, 'r')
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             cluster_data_yaml.close()
-            cluster_serverlist = cluster_data_yaml_parsed.keys()
+            cluster_serverlist = list(cluster_data_yaml_parsed.keys())
         else:
             clusterenabled = False
             cluster_serverlist = []
         # Begin config generation .Do it first for the main domain
         nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=main_domain, maindomain=main_domain)  # Generate conf for main domain
         # iterate over the addon-domain ,passing the subdomain as the configdomain
-        for the_addon_domain in addon_domains_dict.keys():
+        for the_addon_domain in list(addon_domains_dict.keys()):
             nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=addon_domains_dict.get(the_addon_domain), maindomain=the_addon_domain)  # Generate conf for sub domains which takes care of addon as well
         # iterate over sub-domains and generate config if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
-            if the_sub_domain not in addon_domains_dict.values():
+            if the_sub_domain not in list(addon_domains_dict.values()):
                 if the_sub_domain.startswith("*"):
                     subdom_config_dom = "_wildcard_."+the_sub_domain.replace('*.', '')
                     nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, configuser=cpaneluser, configdomain=subdom_config_dom, maindomain=the_sub_domain)

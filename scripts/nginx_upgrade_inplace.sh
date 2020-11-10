@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 kill -s USR2 $(cat /var/run/nginx.pid)
 sleep 25
 kill -s WINCH $(cat /var/run/nginx.pid.oldbin)

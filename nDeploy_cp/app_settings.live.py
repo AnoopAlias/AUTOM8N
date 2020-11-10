@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import os
 import cgi
@@ -125,10 +125,10 @@ if form.getvalue('domain'):
                 user_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(backend_category)
             else:
                 user_apptemplate_dict = {}
-            if apptemplate_code in apptemplate_dict.keys():
+            if apptemplate_code in list(apptemplate_dict.keys()):
                 apptemplate_description = apptemplate_dict.get(apptemplate_code)
             else:
-                if apptemplate_code in user_apptemplate_dict.keys():
+                if apptemplate_code in list(user_apptemplate_dict.keys()):
                     apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
         else:
             print_nontoast_error('Forbidden!', 'Application Template IO Error!')
@@ -168,7 +168,7 @@ if form.getvalue('domain'):
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
         print('                        <h4 class="mb-0"><i class="fa fa-server"></i> Upstream</h4>')
         print('                        <ul class="list-unstyled mb-0">')
-        print('                            <li class="mt-2 text-success">'+backend_version+'</li>')
+        print(('                            <li class="mt-2 text-success">'+backend_version+'</li>'))
         print('                        </ul>')
         print('                    </div> <!-- Card Body End -->')
         cardfooter('')
@@ -179,7 +179,7 @@ if form.getvalue('domain'):
         print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
         print('                        <h4 class="mb-0"><i class="fas fa-cog"></i>Configuration</h4>')
         print('                        <ul class="list-unstyled mb-0">')
-        print('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>')
+        print(('                            <li class="mt-2 text-success">'+apptemplate_description+'</li>'))
         print('                        </ul>')
         print('                    </div> <!-- Card Body End -->')
         cardfooter('')
@@ -250,7 +250,7 @@ if form.getvalue('domain'):
 
         # User config reload
         nginx_log_hint = document_root + '/nginx.conf'
-        print('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint))
+        print(('                                '+return_sys_tip('<i class="fas fa-user-cog"></i> nginx.conf', nginx_log_hint)))
         if os.path.isfile(nginx_log_hint):
             if os.path.isfile("/etc/nginx/sites-enabled/"+mydomain+".manualconfig_user"):
                 print('                        <div class="col-6 alert text-success"><i class="fa fa-check-circle"></i> Valid</div>')
@@ -263,7 +263,7 @@ if form.getvalue('domain'):
         print('                                <div class="col-6 alert"><i class="fas fa-sync-alt"></i>nginx.conf reload</div>')
         print('                                <div class="col-6">')
         print('                                    <form class="form" method="post" id="reload_nginx" onsubmit="return false;">')
-        print('                                        <input hidden name="domain" value="'+mydomain+'">')
+        print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
         print('                                        <button id="reload-nginx-btn" class="btn btn-block text-center" type="submit">Reload</button>')
         print('                                    </form>')
         print('                                </div>')
@@ -273,7 +273,7 @@ if form.getvalue('domain'):
         print('                                <div class="col-6">')
         print('                                    <form class="form" method="post" id="view_nginx_log" onsubmit="return false;">')
         print('                                        <button id="view-nginx-log-btn" class="btn btn-block text-center" type="submit">View Log</button>')
-        print('                                        <input hidden name="domain" value="'+mydomain+'">')
+        print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
         print('                                    </form>')
         print('                                </div>')
         print('                            </div> <!-- Row End -->')
@@ -291,14 +291,14 @@ if form.getvalue('domain'):
                 dep_file = document_root + '/requirements.txt'
             elif backend_category == 'PHP':
                 dep_file = document_root + '/composer.json'
-            print('                                <input hidden name="domain" value="'+mydomain+'">')
-            print('                                <input hidden name="document_root" value="'+document_root+'">')
-            print('                                <input hidden name="backend_category" value="'+backend_category+'">')
-            print('                                <input hidden name="backend_version" value="'+backend_version+'">')
+            print(('                                <input hidden name="domain" value="'+mydomain+'">'))
+            print(('                                <input hidden name="document_root" value="'+document_root+'">'))
+            print(('                                <input hidden name="backend_category" value="'+backend_category+'">'))
+            print(('                                <input hidden name="backend_version" value="'+backend_version+'">'))
             print('                            </form>')
 
             print('                            <div class="btn-group btn-block mt-1">')
-            print('                                <button id="dependency-installer-btn" class="btn btn-outline-warning btn-block" data-toggle="tooltip" title="'+dep_file+'" type="submit" form="dependency_installer">Install '+backend_category+' Project Deps</button>')
+            print(('                                <button id="dependency-installer-btn" class="btn btn-outline-warning btn-block" data-toggle="tooltip" title="'+dep_file+'" type="submit" form="dependency_installer">Install '+backend_category+' Project Deps</button>'))
 
             if backend_category == 'PHP':
                 print('                            <form class="form" id="view_php_log" onsubmit="return false;"></form>')
@@ -315,16 +315,16 @@ if form.getvalue('domain'):
             print('                            <form class="mb-0" action="select_app_settings.live.py" method="get">')
             print('                                <div class="input-group">')
             print('                                    <select name="backend" class="custom-select">')
-            for backends_defined in backend_data_yaml_parsed.keys():
+            for backends_defined in list(backend_data_yaml_parsed.keys()):
                 if backends_defined == backend_category:
-                    print('                                        <option selected value="'+backends_defined+'">'+backends_defined+'</option>')
+                    print(('                                        <option selected value="'+backends_defined+'">'+backends_defined+'</option>'))
                 else:
-                    print('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>')
+                    print(('                                        <option value="'+backends_defined+'">'+backends_defined+'</option>'))
             print('                                    </select>')
 
             # Pass on the domain name to the next stage
             print('                                    <div class="input-group-append">')
-            print('                                        <input hidden name="domain" value="'+mydomain+'">')
+            print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
             print('                                        <button type="submit" class="btn btn-outline-primary">Select</button>')
             print('                                    </div>')
             print('                                </div>')
@@ -343,12 +343,12 @@ if form.getvalue('domain'):
         print('                        <div class="card-body">  <!-- Card Body Start -->')
 
         print('                        <form class="form" method="post" id="app_backend_settings" onsubmit="return false;">')
-        print('                            <input form="app_backend_settings" hidden name="domain" value="'+mydomain+'">')
+        print(('                            <input form="app_backend_settings" hidden name="domain" value="'+mydomain+'">'))
         print('                            <div class="row row-btn-group-toggle">')
 
         # auth_basic
         auth_basic_hint = " Setup password for "+document_root+" in cPanel -> Files -> Directory Privacy. "
-        print('                                '+return_label("Password Protect Application", auth_basic_hint))
+        print(('                                '+return_label("Password Protect Application", auth_basic_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
 
@@ -371,7 +371,7 @@ if form.getvalue('domain'):
 
         # dev_mode
         dev_mode_hint = " Disable Open File Cache,Expires and Enable Proxy to master"
-        print('                                '+return_label("Dev Mode", dev_mode_hint))
+        print(('                                '+return_label("Dev Mode", dev_mode_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -394,7 +394,7 @@ if form.getvalue('domain'):
 
         # autoindex
         autoindex_hint = " Enable for Native NGINX directory listing. "
-        print('                                '+return_label("AutoIndex", autoindex_hint))
+        print(('                                '+return_label("AutoIndex", autoindex_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -417,7 +417,7 @@ if form.getvalue('domain'):
 
         # ssl_offload
         ssl_offload_hint = " Enable for a performance increase. Disable if a redirect loop error occurs. "
-        print('                                '+return_label("SSL Offload", ssl_offload_hint))
+        print(('                                '+return_label("SSL Offload", ssl_offload_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -440,7 +440,7 @@ if form.getvalue('domain'):
 
         # access_log
         access_log_hint = " Disabling access_log will increase performance, but cPanel stats fail to work. "
-        print('                                '+return_label("Access Log", access_log_hint))
+        print(('                                '+return_label("Access Log", access_log_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -463,7 +463,7 @@ if form.getvalue('domain'):
 
         # open_file_cache
         open_file_cache_hint = " Enable for performance increase. Disable on development environment to not cache. "
-        print('                                '+return_label("Open File Cache", open_file_cache_hint))
+        print(('                                '+return_label("Open File Cache", open_file_cache_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
 
@@ -499,17 +499,17 @@ if form.getvalue('domain'):
 
         if settings_lock == 'enabled':
             print('                        <div class="alert alert-info text-center mb-0">Security settings have been disabled by your host. A customized messages needs to be added to nDeploy Control. </div>')
-            print('                        <input hidden name="security_headers" value="'+security_headers+'">')
-            print('                        <input hidden name="dos_mitigate" value="'+dos_mitigate+'">')
-            print('                        <input hidden name="test_cookie" value="'+test_cookie+'">')
-            print('                        <input hidden name="symlink_protection" value="'+symlink_protection+'">')
-            print('                        <input hidden name="mod_security" value="'+mod_security+'">')
+            print(('                        <input hidden name="security_headers" value="'+security_headers+'">'))
+            print(('                        <input hidden name="dos_mitigate" value="'+dos_mitigate+'">'))
+            print(('                        <input hidden name="test_cookie" value="'+test_cookie+'">'))
+            print(('                        <input hidden name="symlink_protection" value="'+symlink_protection+'">'))
+            print(('                        <input hidden name="mod_security" value="'+mod_security+'">'))
         else:
             print('                            <div class="row row-btn-group-toggle">')
 
             # security_headers
             security_headers_hint = " X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, HSTS "
-            print('                                '+return_label("Security Headers", security_headers_hint))
+            print(('                                '+return_label("Security Headers", security_headers_hint)))
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
 
@@ -532,7 +532,7 @@ if form.getvalue('domain'):
 
             # dos_mitigate
             dos_mitigate_hint = " Enable ONLY when under a (D)DOS Attack. "
-            print('                                '+return_label("DOS Mitigate", dos_mitigate_hint))
+            print(('                                '+return_label("DOS Mitigate", dos_mitigate_hint)))
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -555,7 +555,7 @@ if form.getvalue('domain'):
 
             # test_cookie
             test_cookie_hint = " Allow good bots in (like Google/Yahoo). Disable most bad bots by using a cookie challenge. "
-            print('                                '+return_label("Bot Mitigate", test_cookie_hint))
+            print(('                                '+return_label("Bot Mitigate", test_cookie_hint)))
 
             if os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
 
@@ -582,11 +582,11 @@ if form.getvalue('domain'):
 
             else:
                 print_disabled()
-                print('                                <input hidden name="test_cookie" value="'+test_cookie+'">')
+                print(('                                <input hidden name="test_cookie" value="'+test_cookie+'">'))
 
             # symlink_protection
             symlink_protection_hint = " Access to a file is denied if any component of the pathname is a symbolic link, and if the link and object that the link points to has different owners. "
-            print('                                '+return_label("Symlink Protection", symlink_protection_hint))
+            print(('                                '+return_label("Symlink Protection", symlink_protection_hint)))
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -609,7 +609,7 @@ if form.getvalue('domain'):
 
             # mod_security
             mod_security_hint = " Mod Security v3 Web Application Firewall "
-            print('                                '+return_label("Mod Security", mod_security_hint))
+            print(('                                '+return_label("Mod Security", mod_security_hint)))
 
             if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
                 print('                                <div class="col-md-6">')
@@ -634,7 +634,7 @@ if form.getvalue('domain'):
 
             else:
                 print_disabled()
-                print('                                <input hidden name="mod_security" value="'+mod_security+'">')
+                print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
 
             print('                            </div> <!-- Row End -->')
 
@@ -654,7 +654,7 @@ if form.getvalue('domain'):
 
         # set_expire_static
         set_expire_static_hint = " Set Expires/Cache-Control headers for STATIC content. "
-        print('                                '+return_label("Expires / Cache-Control", set_expire_static_hint))
+        print(('                                '+return_label("Expires / Cache-Control", set_expire_static_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
 
@@ -677,7 +677,7 @@ if form.getvalue('domain'):
 
         # pagespeed
         pagespeed_hint = " Delivers PageSpeed-optimized pages, but is resource intensive. "
-        print('                                '+return_label("PageSpeed", pagespeed_hint))
+        print(('                                '+return_label("PageSpeed", pagespeed_hint)))
 
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
             print('                                <div class="col-md-6">')
@@ -702,11 +702,11 @@ if form.getvalue('domain'):
 
         else:
             print_disabled()
-            print('                                <input hidden name="pagespeed" value="'+pagespeed+'">')
+            print(('                                <input hidden name="pagespeed" value="'+pagespeed+'">'))
 
         # pagespeed filter level
         pagespeed_filter_hint = " CoreFilters loads the Core Filters, PassThrough allows you to enable individual filters via a custom NGINX Configuration. "
-        print('                                '+return_label("PageSpeed Filters", pagespeed_filter_hint))
+        print(('                                '+return_label("PageSpeed Filters", pagespeed_filter_hint)))
 
         if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
             print('                                <div class="col-md-6">')
@@ -731,11 +731,11 @@ if form.getvalue('domain'):
 
         else:
             print_disabled()
-            print('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">')
+            print(('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">'))
 
         # brotli
         brotli_hint = " A newer bandwidth optimization created by Google. It is resource intensive and applies to TLS (HTTPS) ONLY. "
-        print('                                '+return_label("Brotli", brotli_hint))
+        print(('                                '+return_label("Brotli", brotli_hint)))
 
         if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
             print('                                <div class="col-md-6">')
@@ -760,11 +760,11 @@ if form.getvalue('domain'):
 
         else:
             print_disabled()
-            print('                                <input hidden name="brotli" value="'+brotli+'">')
+            print(('                                <input hidden name="brotli" value="'+brotli+'">'))
 
         # gzip
         gzip_hint = " A bandwidth optimization that is mildly resource intensive. "
-        print('                                '+return_label("GZip", gzip_hint))
+        print(('                                '+return_label("GZip", gzip_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -787,7 +787,7 @@ if form.getvalue('domain'):
 
         # http2
         http2_hint = " A newer protocol that works with TLS (HTTPS) Only. "
-        print('                                '+return_label("HTTP/2", http2_hint))
+        print(('                                '+return_label("HTTP/2", http2_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
 
@@ -824,7 +824,7 @@ if form.getvalue('domain'):
 
         # redirect_to_ssl
         redirect_to_ssl_hint = " Redirect HTTP -> HTTPS. "
-        print('                                '+return_label("Redirect to SSL", redirect_to_ssl_hint))
+        print(('                                '+return_label("Redirect to SSL", redirect_to_ssl_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle mt-0" data-toggle="buttons">')
 
@@ -847,7 +847,7 @@ if form.getvalue('domain'):
 
         # proxy_to_master
         proxy_to_master_hint = " When running in a cluster, PROXY to MASTER instead of local server. "
-        print('                                '+return_label("Proxy to Master", proxy_to_master_hint))
+        print(('                                '+return_label("Proxy to Master", proxy_to_master_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -870,7 +870,7 @@ if form.getvalue('domain'):
 
         # redirect_aliases
         redirect_aliases_hint = " Redirect all cPanel aliases to the main domain. "
-        print('                                '+return_label("Redirect Aliases", redirect_aliases_hint))
+        print(('                                '+return_label("Redirect Aliases", redirect_aliases_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -893,7 +893,7 @@ if form.getvalue('domain'):
 
         # wwwredirect
         www_redirect_hint = " Select WWW redirection mode. "
-        print('                                '+return_label("WWW Redirect", www_redirect_hint))
+        print(('                                '+return_label("WWW Redirect", www_redirect_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="input-group btn-group">')
         print('                                        <select name="wwwredirect" class="custom-select">')
@@ -917,7 +917,7 @@ if form.getvalue('domain'):
 
         # URL Redirect
         url_redirect_hint = " Select URL redirection type. "
-        print('                                '+return_label("URL Redirect", url_redirect_hint))
+        print(('                                '+return_label("URL Redirect", url_redirect_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="input-group btn-group">')
         print('                                        <select name="redirectstatus" class="custom-select">')
@@ -939,7 +939,7 @@ if form.getvalue('domain'):
 
         # Append request_uri to redirect
         append_requesturi_hint = " Maintain the original Request URI ($request_uri (with arguments)). "
-        print('                                '+return_label("Append Redirect URL", append_requesturi_hint))
+        print(('                                '+return_label("Append Redirect URL", append_requesturi_hint)))
         print('                                <div class="col-md-6">')
         print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
 
@@ -967,10 +967,10 @@ if form.getvalue('domain'):
         print('                                    <div class="input-group btn-group mb-0">')
         print('                                        <div class="input-group-prepend">')
         print('                                            <span class="input-group-text">')
-        print('                                                '+return_prepend("Redirect to URL", redirecturl_hint))
+        print(('                                                '+return_prepend("Redirect to URL", redirecturl_hint)))
         print('                                            </span>')
         print('                                        </div>')
-        print('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">')
+        print(('                                        <input class="form-control" value='+redirecturl+' type="text" name="redirecturl">'))
         print('                                        </form>')
         print('                                    </div>')
         print('                                </div>')
@@ -992,25 +992,25 @@ if form.getvalue('domain'):
         if subdir_apps:
             print('                            <div class="label label-default mt-2 mb-2">Current subdirectory apps:</div>')
             mykeypos=1
-            for thesubdir in subdir_apps.keys():
+            for thesubdir in list(subdir_apps.keys()):
                 print('                            <div class="input-group input-group-inline input-group">')
                 print('                                <div class="input-group-prepend">')
                 print('                                    <span class="input-group-text">')
-                print('                                        '+mydomain + '/' + thesubdir)
+                print(('                                        '+mydomain + '/' + thesubdir))
                 print('                                    </span>')
                 print('                                </div>')
                 print('                                <div class="input-group-append">')
-                print('                                    <form class="form" method="get" id="subdirectory_edit'+'-'+str(mykeypos)+'" action="subdir_app_settings.live.py">')
-                print('                                        <input hidden name="domain" value="'+mydomain+'">')
-                print('                                        <input hidden name="thesubdir" value="'+thesubdir+'">')
+                print(('                                    <form class="form" method="get" id="subdirectory_edit'+'-'+str(mykeypos)+'" action="subdir_app_settings.live.py">'))
+                print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
+                print(('                                        <input hidden name="thesubdir" value="'+thesubdir+'">'))
                 print('                                    </form>')
 
-                print('                                    <form class="form" method="post" id="subdirectory_delete'+'-'+str(mykeypos)+'" onsubmit="return false;">')
-                print('                                        <input hidden name="domain" value="'+mydomain+'">')
-                print('                                        <input hidden name="thesubdir" value="'+thesubdir+'">')
+                print(('                                    <form class="form" method="post" id="subdirectory_delete'+'-'+str(mykeypos)+'" onsubmit="return false;">'))
+                print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
+                print(('                                        <input hidden name="thesubdir" value="'+thesubdir+'">'))
                 print('                                    </form>')
-                print('                                    <button id="subdirectory-edit-btn'+'-'+str(mykeypos)+'" form="subdirectory_edit'+'-'+str(mykeypos)+'" class="btn btn-outline-primary" type="submit"><span class="sr-only">Edit</span><i class="fas fa-pen"></i></button>')
-                print('                                    <button id="subdirectory-delete-btn'+'-'+str(mykeypos)+'" form="subdirectory_delete'+'-'+str(mykeypos)+'" class="btn btn-outline-danger " type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+                print(('                                    <button id="subdirectory-edit-btn'+'-'+str(mykeypos)+'" form="subdirectory_edit'+'-'+str(mykeypos)+'" class="btn btn-outline-primary" type="submit"><span class="sr-only">Edit</span><i class="fas fa-pen"></i></button>'))
+                print(('                                    <button id="subdirectory-delete-btn'+'-'+str(mykeypos)+'" form="subdirectory_delete'+'-'+str(mykeypos)+'" class="btn btn-outline-danger " type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>'))
                 print('                                </div>')
                 print('                            </div>')
                 mykeypos = mykeypos + 1
@@ -1020,10 +1020,10 @@ if form.getvalue('domain'):
         print('                            <form class="form" method="get" action="subdir_app_settings.live.py">')
         print('                                <div class="input-group mb-0">')
         print('                                    <div class="input-group-prepend">')
-        print('                                        <span class="input-group-text">'+mydomain+'</span>')
+        print(('                                        <span class="input-group-text">'+mydomain+'</span>'))
         print('                                    </div>')
         print('                                    <input class="form-control" placeholder="/blog" type="text" name="thesubdir">')
-        print('                                    <input hidden name="domain" value="'+mydomain+'">')
+        print(('                                    <input hidden name="domain" value="'+mydomain+'">'))
         print('                                    <input hidden name="action" value="add">')
         print('                                    <div class="input-group-append"><button class="btn btn-outline-primary" type="submit"><span class="sr-only">Add</span><i class="fas fa-plus"></i></button></div>')
         print('                                </div>')
@@ -1049,7 +1049,7 @@ if form.getvalue('domain'):
         # print('                                 </div>')
         print('                                 <select  style="width:150px; overflow: auto;" size="0" name="RuleId" id="wafselect01">')
         for i in range(3000):
-            print('                                   <option  value="'+str(i)+'">'+str(i)+'</option>')
+            print(('                                   <option  value="'+str(i)+'">'+str(i)+'</option>'))
         print('                                 </select>')
         print('                              </div>')
 
@@ -1082,7 +1082,7 @@ if form.getvalue('domain'):
         print('                     </div> <!-- Second column ends -->')
         print('                         <div class="col-sm"> <!-- Third column starts -->')
         print('                  <button class="btn btn-primary btn-block " id="whitelistWaf-btn" type="submit">Submit</button>')
-        print('                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+        print(('                 <input hidden name="profileyaml" value="'+profileyaml+'">'))
         print('                 </div><!-- third column end-->')
         print('                     </div> <!--row ends-->')
 
@@ -1093,7 +1093,7 @@ if form.getvalue('domain'):
         if os.path.isfile(profileyaml):
             with open(profileyaml,'r') as profileyaml_data_stream:
                 yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-            if 'nemesida_wl' in yaml_parsed_profileyaml.keys():
+            if 'nemesida_wl' in list(yaml_parsed_profileyaml.keys()):
                 nemesida_wl_list = yaml_parsed_profileyaml.get('nemesida_wl')
                 if nemesida_wl_list:
                     print('                     <h3>Existing Rule WhiteLists</h3>')
@@ -1102,26 +1102,26 @@ if form.getvalue('domain'):
                     if os.path.isfile(profileyaml):
                         with open(profileyaml, 'r') as profileyaml_data_stream:
                             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-                        if 'nemesida_wl' in yaml_parsed_profileyaml.keys():
+                        if 'nemesida_wl' in list(yaml_parsed_profileyaml.keys()):
                             nemesida_wl_list = yaml_parsed_profileyaml.get('nemesida_wl')
                             mykeypos=0
                             for i in nemesida_wl_list:
-                                print('   <form class="form" id="removeWhitelist'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                                print(('   <form class="form" id="removeWhitelist'+'-'+str(mykeypos)+'" onsubmit="return false;">'))
                                 # print('                        <div class="input-group-append">')
                                 print('     <div class="container"><!-- Container starts-->')
                                 print('          <div class="row "><!-- Row starts-->')
                                 # print('  <span class="border border-secondary"></span>')
                                 print('                 <div class="col-sm-9 form-control" style="overflow: hidden;"><!--First column starts -->')
-                                print('                     <input hidden name="whiteList-to-delete" value="'+str(mykeypos)+'">')
-                                print('                         '+i+'')
+                                print(('                     <input hidden name="whiteList-to-delete" value="'+str(mykeypos)+'">'))
+                                print(('                         '+i+''))
                                 print('                 </div><!--First column ends-->')
                                 print('                 <div class="col-sm"><!--Second column starts -->')
-                                print('                         <button id="removeWhitelist-btn'+'-'+str(mykeypos)+'" form="removeWhitelist'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">')
+                                print(('                         <button id="removeWhitelist-btn'+'-'+str(mykeypos)+'" form="removeWhitelist'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">'))
                                 print('                         <span class="sr-only">Delete</span>')
                                 print('                         <i class="fas fa-times"></i>')
                                 print('                         </button>')
                                 mykeypos = mykeypos + 1
-                                print('                         <input hidden name="profileyaml" value="'+profileyaml+'">')
+                                print(('                         <input hidden name="profileyaml" value="'+profileyaml+'">'))
                                 print('                 </div><!--Second column ends -->')
                                 print('     </form>')
                                 print('             </div><!-- Row ends-->')
@@ -1143,7 +1143,7 @@ if form.getvalue('domain'):
         print('                                 <input type="text" class="form-control" name="ip" id="ip" value="" required>')
         print('                             </div><!--First column ends-->')
         print('                             <div class="col-sm">')
-        print('                                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+        print(('                                 <input hidden name="profileyaml" value="'+profileyaml+'">'))
         print('                                 <button class="btn btn-primary btn-block" id="submit_btn" type="submit" >submit</button>')
 
         # print('                             <input type="submit" name="submit" value="Submit" onclick="ValidateIPaddress(document.form1.text1)"/>')
@@ -1159,7 +1159,7 @@ if form.getvalue('domain'):
         if os.path.isfile(profileyaml):
             with open(profileyaml,'r') as profileyaml_data_stream:
                 yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-            if 'nemesida_ip_wl' in yaml_parsed_profileyaml.keys():
+            if 'nemesida_ip_wl' in list(yaml_parsed_profileyaml.keys()):
                 nemesida_ip_wl_list = yaml_parsed_profileyaml.get('nemesida_ip_wl')
                 if nemesida_ip_wl_list:
 
@@ -1170,28 +1170,28 @@ if form.getvalue('domain'):
                     if os.path.isfile(profileyaml):
                         with open(profileyaml, 'r') as profileyaml_data_stream:
                             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-                        if 'nemesida_ip_wl' in yaml_parsed_profileyaml.keys():
+                        if 'nemesida_ip_wl' in list(yaml_parsed_profileyaml.keys()):
                             nemesida_ip_wl_list = yaml_parsed_profileyaml.get('nemesida_ip_wl')
                             mykeypos=0
                             for i in nemesida_ip_wl_list:
 
-                                print('   <form class="form" id="removeIpaddress'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                                print(('   <form class="form" id="removeIpaddress'+'-'+str(mykeypos)+'" onsubmit="return false;">'))
                                 # print('                        <div class="input-group-append">')
                                 print('    <div class="container"><!-- Container starts-->')
                                 print('   <div class="row "><!-- Row starts-->')
                                 # print('  <span class="border border-secondary"></span>')
                                 print('    <div class="col-sm form-control"><!--First column starts -->')
-                                print('    <input hidden name="ipaddress-to-delete" value="'+str(mykeypos)+'">')
-                                print('    '+i+'')
+                                print(('    <input hidden name="ipaddress-to-delete" value="'+str(mykeypos)+'">'))
+                                print(('    '+i+''))
                                 print('    </div><!--First column ends-->')
                                 print('     <div class="col-sm"><!--Second column starts -->')
 
-                                print('                                <button id="removeIpaddress-btn'+'-'+str(mykeypos)+'" form="removeIpaddress'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">')
+                                print(('                                <button id="removeIpaddress-btn'+'-'+str(mykeypos)+'" form="removeIpaddress'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">'))
                                 print('                                    <span class="sr-only">Delete</span>')
                                 print('                                    <i class="fas fa-times"></i>')
                                 print('                                </button>')
                                 mykeypos = mykeypos + 1
-                                print('                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+                                print(('                 <input hidden name="profileyaml" value="'+profileyaml+'">'))
                                 print('       </div><!--Second column ends -->')
                                 print('</form>')
 
@@ -1216,7 +1216,7 @@ if form.getvalue('domain'):
         print('                                 <input type="text" class="form-control" name="ipv6" id="ipv6" value="" required>')
         print('                             </div><!--First column ends-->')
         print('                             <div class="col-sm">')
-        print('                                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+        print(('                                 <input hidden name="profileyaml" value="'+profileyaml+'">'))
         print('                                 <button class="btn btn-primary btn-block" id="ipv6_submit_btn" type="submit" >submit</button>')
 
         # print('                             <input type="submit" name="submit" value="Submit" onclick="ValidateIPaddress(document.form1.text1)"/>')
@@ -1232,7 +1232,7 @@ if form.getvalue('domain'):
         if os.path.isfile(profileyaml):
             with open(profileyaml,'r') as profileyaml_data_stream:
                 yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-            if 'nemesidaipv6_wl' in yaml_parsed_profileyaml.keys():
+            if 'nemesidaipv6_wl' in list(yaml_parsed_profileyaml.keys()):
                 nemesidaipv6_wl_list = yaml_parsed_profileyaml.get('nemesidaipv6_wl')
                 if nemesidaipv6_wl_list:
 
@@ -1243,28 +1243,28 @@ if form.getvalue('domain'):
                     if os.path.isfile(profileyaml):
                         with open(profileyaml, 'r') as profileyaml_data_stream:
                             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-                        if 'nemesidaipv6_wl' in yaml_parsed_profileyaml.keys():
+                        if 'nemesidaipv6_wl' in list(yaml_parsed_profileyaml.keys()):
                             nemesidaipv6_wl_list = yaml_parsed_profileyaml.get('nemesidaipv6_wl')
                             mykeypos=0
                             for i in nemesidaipv6_wl_list:
 
-                                print('   <form class="form" id="removeIpv6address'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                                print(('   <form class="form" id="removeIpv6address'+'-'+str(mykeypos)+'" onsubmit="return false;">'))
                                 # print('                        <div class="input-group-append">')
                                 print('    <div class="container"><!-- Container starts-->')
                                 print('   <div class="row "><!-- Row starts-->')
                                 # print('  <span class="border border-secondary"></span>')
                                 print('    <div class="col-sm form-control"><!--First column starts -->')
-                                print('    <input hidden name="ipv6address_delete" value="'+str(mykeypos)+'">')
-                                print('    '+i+'')
+                                print(('    <input hidden name="ipv6address_delete" value="'+str(mykeypos)+'">'))
+                                print(('    '+i+''))
                                 print('    </div><!--First column ends-->')
                                 print('     <div class="col-sm"><!--Second column starts -->')
 
-                                print('                                <button id="removeIpv6address-btn'+'-'+str(mykeypos)+'" form="removeIpv6address'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">')
+                                print(('                                <button id="removeIpv6address-btn'+'-'+str(mykeypos)+'" form="removeIpv6address'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">'))
                                 print('                                    <span class="sr-only">Delete</span>')
                                 print('                                    <i class="fas fa-times"></i>')
                                 print('                                </button>')
                                 mykeypos = mykeypos + 1
-                                print('                 <input hidden name="profileyaml" value="'+profileyaml+'">')
+                                print(('                 <input hidden name="profileyaml" value="'+profileyaml+'">'))
                                 print('       </div><!--Second column ends -->')
                                 print('</form>')
 

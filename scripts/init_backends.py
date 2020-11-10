@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import yaml
@@ -49,15 +49,15 @@ def control_php_fpm(trigger):
                     user_home = pwd.getpwnam(user).pw_dir
                     user_shell = pwd.getpwnam(user).pw_shell
                     if user_shell == '/usr/local/cpanel/bin/noshell':
-                        print('Please set Jailed shell for user: '+user)
+                        print(('Please set Jailed shell for user: '+user))
                     else:
-                        print('VirtfsJailFix:: '+user)
+                        print(('VirtfsJailFix:: '+user))
                         subprocess.call('su - '+user+' -c "touch '+user_home+'/public_html"', shell=True)
         elif trigger == "start":
             silentremove("/opt/nDeploy/php-fpm.d/nobody.conf")
             subprocess.call("sysctl -q -w net.core.somaxconn=4096", shell=True)
             subprocess.call("sysctl -q -w vm.max_map_count=131070", shell=True)
-            for name, path in php_backends_dict.items():
+            for name, path in list(php_backends_dict.items()):
                 php_fpm_config = installation_path+"/conf/"+name
                 if not os.path.isfile(php_fpm_config):
                     # Initiate Jinja2 templateEnv
@@ -93,7 +93,7 @@ def control_php_fpm(trigger):
                 except KeyError:
                     silentremove("/opt/nDeploy/php-fpm.d/"+user+".conf")
                     silentremove("/opt/nDeploy/secure-php-fpm.d/"+user+".conf")
-            for name, path in php_backends_dict.items():
+            for name, path in list(php_backends_dict.items()):
                 php_fpm_config = installation_path+"/conf/"+name
                 php_fpm_pid = path+"/var/run/php-fpm.pid"
                 if os.path.isfile(path+"/sbin/php-fpm"):

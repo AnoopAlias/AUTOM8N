@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import subprocess
 import json
@@ -54,18 +54,18 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):  # get the cl
     cluster_data_yaml = open(cluster_config_file, 'r')
     cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
     cluster_data_yaml.close()
-    serverlist = cluster_data_yaml_parsed.keys()
+    serverlist = list(cluster_data_yaml_parsed.keys())
     for slaveserver in serverlist:
         server_dict = cluster_data_yaml_parsed.get(slaveserver)
         ipmap_dict = server_dict.get('dnsmap')
-        theiplist = ipmap_dict.values()
+        theiplist = list(ipmap_dict.values())
         slaveiplist = list(set(slaveiplist + theiplist))
 if os.path.isfile(installation_path+"/conf/ndeploy_master.yaml"):  # get the cluster ipmap
     master_config_file = installation_path+"/conf/ndeploy_master.yaml"
     master_data_yaml = open(master_config_file, 'r')
     master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
     master_data_yaml.close()
-    master_data = master_data_yaml_parsed.get(master_data_yaml_parsed.keys()[0])
+    master_data = master_data_yaml_parsed.get(list(master_data_yaml_parsed.keys())[0])
     master_mainip = master_data.get('mainip')
     master_available = True
 # Initiate Jinja2 templateEnv

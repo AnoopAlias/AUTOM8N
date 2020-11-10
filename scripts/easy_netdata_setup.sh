@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #Author: Anoop P Alias
 
 yum -y install MySQL-python iproute autoconf automake curl gcc git libmnl-devel libuuid-devel lm-sensors make nc nmap-ncat pkgconfig python python-psycopg2 PyYAML zlib-devel python-pip

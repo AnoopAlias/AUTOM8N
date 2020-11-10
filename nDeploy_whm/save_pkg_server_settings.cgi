@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import cgi
 import cgitb
@@ -39,7 +39,7 @@ if form.getvalue('cpanelpkg'):
     current_redirecturl = yaml_parsed_profileyaml.get('redirecturl', "none")
 
     # Set_expire_static
-    if 'set_expire_static' in form.keys():
+    if 'set_expire_static' in list(form.keys()):
         set_expire_static = form.getvalue('set_expire_static')
         yaml_parsed_profileyaml['set_expire_static'] = set_expire_static
     else:
@@ -47,7 +47,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Settings_lock
-    if 'settings_lock' in form.keys():
+    if 'settings_lock' in list(form.keys()):
         settings_lock = form.getvalue('settings_lock')
         yaml_parsed_profileyaml['settings_lock'] = settings_lock
     else:
@@ -55,7 +55,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Phpmaxchildren
-    if 'phpmaxchildren' in form.keys():
+    if 'phpmaxchildren' in list(form.keys()):
         phpmaxchildren = form.getvalue('phpmaxchildren')
         yaml_parsed_profileyaml['phpmaxchildren'] = phpmaxchildren
     else:
@@ -63,7 +63,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Mod_security
-    if 'mod_security' in form.keys():
+    if 'mod_security' in list(form.keys()):
         mod_security = form.getvalue('mod_security')
         yaml_parsed_profileyaml['mod_security'] = mod_security
     else:
@@ -71,7 +71,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Autoindex
-    if 'autoindex' in form.keys():
+    if 'autoindex' in list(form.keys()):
         autoindex = form.getvalue('autoindex')
         yaml_parsed_profileyaml['autoindex'] = autoindex
     else:
@@ -79,7 +79,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Ssl_offload
-    if 'ssl_offload' in form.keys():
+    if 'ssl_offload' in list(form.keys()):
         ssl_offload = form.getvalue('ssl_offload')
         yaml_parsed_profileyaml['ssl_offload'] = ssl_offload
     else:
@@ -87,7 +87,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Pagespeed
-    if 'pagespeed' in form.keys():
+    if 'pagespeed' in list(form.keys()):
         pagespeed = form.getvalue('pagespeed')
         yaml_parsed_profileyaml['pagespeed'] = pagespeed
     else:
@@ -95,7 +95,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Pagespeed_filter
-    if 'pagespeed_filter' in form.keys():
+    if 'pagespeed_filter' in list(form.keys()):
         pagespeed_filter = form.getvalue('pagespeed_filter')
         yaml_parsed_profileyaml['pagespeed_filter'] = pagespeed_filter
     else:
@@ -103,7 +103,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Brotli
-    if 'brotli' in form.keys():
+    if 'brotli' in list(form.keys()):
         brotli = form.getvalue('brotli')
         yaml_parsed_profileyaml['brotli'] = brotli
     else:
@@ -111,7 +111,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Gzip
-    if 'gzip' in form.keys():
+    if 'gzip' in list(form.keys()):
         gzip = form.getvalue('gzip')
         yaml_parsed_profileyaml['gzip'] = gzip
     else:
@@ -119,7 +119,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Http2
-    if 'http2' in form.keys():
+    if 'http2' in list(form.keys()):
         http2 = form.getvalue('http2')
         yaml_parsed_profileyaml['http2'] = http2
     else:
@@ -128,7 +128,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Access_log
-    if 'access_log' in form.keys():
+    if 'access_log' in list(form.keys()):
         access_log = form.getvalue('access_log')
         yaml_parsed_profileyaml['access_log'] = access_log
     else:
@@ -136,7 +136,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Open_file_cache
-    if 'open_file_cache' in form.keys():
+    if 'open_file_cache' in list(form.keys()):
         open_file_cache = form.getvalue('open_file_cache')
         yaml_parsed_profileyaml['open_file_cache'] = open_file_cache
     else:
@@ -144,7 +144,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Clickjacking_protect
-    if 'security_headers' in form.keys():
+    if 'security_headers' in list(form.keys()):
         security_headers = form.getvalue('security_headers')
         yaml_parsed_profileyaml['security_headers'] = security_headers
     else:
@@ -152,7 +152,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Dos_mitigate
-    if 'dos_mitigate' in form.keys():
+    if 'dos_mitigate' in list(form.keys()):
         dos_mitigate = form.getvalue('dos_mitigate')
         yaml_parsed_profileyaml['dos_mitigate'] = dos_mitigate
     else:
@@ -160,7 +160,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Test_cookie
-    if 'test_cookie' in form.keys():
+    if 'test_cookie' in list(form.keys()):
         test_cookie = form.getvalue('test_cookie')
         yaml_parsed_profileyaml['test_cookie'] = test_cookie
     else:
@@ -168,7 +168,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Symlink_protection
-    if 'symlink_protection' in form.keys():
+    if 'symlink_protection' in list(form.keys()):
         symlink_protection = form.getvalue('symlink_protection')
         yaml_parsed_profileyaml['symlink_protection'] = symlink_protection
     else:
@@ -176,7 +176,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Redirect_to_ssl
-    if 'redirect_to_ssl' in form.keys():
+    if 'redirect_to_ssl' in list(form.keys()):
         redirect_to_ssl = form.getvalue('redirect_to_ssl')
         yaml_parsed_profileyaml['redirect_to_ssl'] = redirect_to_ssl
     else:
@@ -184,7 +184,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Proxy_to_master
-    if 'proxy_to_master' in form.keys():
+    if 'proxy_to_master' in list(form.keys()):
         proxy_to_master = form.getvalue('proxy_to_master')
         yaml_parsed_profileyaml['proxy_to_master'] = proxy_to_master
     else:
@@ -192,7 +192,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Redirect_aliases
-    if 'redirect_aliases' in form.keys():
+    if 'redirect_aliases' in list(form.keys()):
         redirect_aliases = form.getvalue('redirect_aliases')
         yaml_parsed_profileyaml['redirect_aliases'] = redirect_aliases
     else:
@@ -200,7 +200,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Wwwredirect
-    if 'wwwredirect' in form.keys():
+    if 'wwwredirect' in list(form.keys()):
         wwwredirect = form.getvalue('wwwredirect')
         yaml_parsed_profileyaml['wwwredirect'] = wwwredirect
     else:
@@ -208,7 +208,7 @@ if form.getvalue('cpanelpkg'):
         sys.exit(0)
 
     # Redirectstatus
-    if 'redirectstatus' in form.keys():
+    if 'redirectstatus' in list(form.keys()):
         redirectstatus = form.getvalue('redirectstatus')
         yaml_parsed_profileyaml['redirectstatus'] = redirectstatus
     else:
@@ -217,7 +217,7 @@ if form.getvalue('cpanelpkg'):
 
     # Redirecturl
     if redirectstatus != "none":
-        if 'redirecturl' in form.keys():
+        if 'redirecturl' in list(form.keys()):
             redirecturl = form.getvalue('redirecturl')
             if not redirecturl == "noredirection":
                 regex = re.compile(
@@ -237,7 +237,7 @@ if form.getvalue('cpanelpkg'):
                 yaml_parsed_profileyaml['redirecturl'] = current_redirecturl
 
     # Append_requesturi
-    if 'append_requesturi' in form.keys():
+    if 'append_requesturi' in list(form.keys()):
         append_requesturi = form.getvalue('append_requesturi')
         yaml_parsed_profileyaml['append_requesturi'] = append_requesturi
     else:

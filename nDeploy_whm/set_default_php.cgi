@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import cgi
 import cgitb
@@ -25,7 +25,7 @@ if form.getvalue('phpversion'):
     backend_data_yaml = open(backend_config_file, 'r')
     backend_data_yaml_parsed = yaml.safe_load(backend_data_yaml)
     backend_data_yaml.close()
-    
+
     if "PHP" in backend_data_yaml_parsed:
         php_backends_dict = backend_data_yaml_parsed["PHP"]
         required_version_path = php_backends_dict.get(form.getvalue('phpversion'))

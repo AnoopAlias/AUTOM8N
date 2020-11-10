@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import subprocess
@@ -90,10 +90,10 @@ def print_nontoast_error(thenotice, thereason):
     print('                        <span class="h1">')
     print('                            <i class="fas fa-exclamation"></i>')
     print('                        </span>')
-    print('                        <h3>'+thenotice+'</h3>')
-    print('                        <h5>'+thereason+'</h5>')
+    print(('                        <h3>'+thenotice+'</h3>'))
+    print(('                        <h5>'+thereason+'</h5>'))
     if app_email != 'None':
-        print('                    <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
+        print(('                    <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>'))
     print('                    </div>')
     print('                </div>')
     print('            </div>')
@@ -108,28 +108,28 @@ def print_close_button():
 def print_success_alert(themessage):
     print('<div class="alert alert-success">')
     print_close_button()
-    print('<p>'+themessage+'</p></div>')
+    print(('<p>'+themessage+'</p></div>'))
 
 
 # Error Toast DIV
 def print_error_alert(themessage):
     print('<div class="alert alert-danger">')
     print_close_button()
-    print('<p>'+themessage+'</p></div>')
+    print(('<p>'+themessage+'</p></div>'))
 
 
 # Warning Toast DIV
 def print_warning_alert(themessage):
     print('<div class="alert alert-warning">')
     print_close_button()
-    print('<p>'+themessage+'</p></div>')
+    print(('<p>'+themessage+'</p></div>'))
 
 
 # Info Toast DIV
 def print_info_alert(themessage):
     print('<div class="alert alert-info">')
     print_close_button()
-    print('<p>'+themessage+'</p></div>')
+    print(('<p>'+themessage+'</p></div>'))
 
 
 # Forbidden Toast with icon
@@ -161,9 +161,9 @@ def print_info(themessage):
 def print_disabled():
     print('                                <div class="col-md-6">')
     if app_email != 'None':
-        print('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div>')
+        print(('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div>'))
     else:
-        print('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. ">Not Installed</div>')
+        print(('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. ">Not Installed</div>'))
     print('                                </div>')
 
 
@@ -196,7 +196,7 @@ def print_header(title=''):
     print('        <!-- Required meta tags -->')
     print('        <meta charset="utf-8">')
     print('        <meta name="viewport" content="width=device-width, initial-scale=1">')
-    print('        <title>'+brand+' - '+title+'</title>')
+    print(('        <title>'+brand+' - '+title+'</title>'))
     print('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>')
     print('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>')
     print('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>')
@@ -207,29 +207,29 @@ def print_header(title=''):
     print('    </head>')
     print('')
     print('    <!-- Body Start -->')
-    print('    <body class="ndeploy-theme-'+ndeploy_theme_color+'">')
+    print(('    <body class="ndeploy-theme-'+ndeploy_theme_color+'">'))
     print('        <header id="main-header" class="d-flex justify-content-between align-items-center">')
     print('            <div class="logo">')
     print('                <h4>')
     if logo_url != 'None':
-        print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" class="logo-url" src="'+logo_url+'"></a>')
+        print(('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" class="logo-url" src="'+logo_url+'"></a>'))
     elif brand_logo != 'xtendweb.png':
-        print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>')
+        print(('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>'))
     elif ndeploy_theme_color == 'dark':
-        print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>')
+        print(('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>'))
     elif ndeploy_theme_color == 'light':
-        print('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>')
+        print(('                <a href="xtendweb.cgi"><img border="0" alt="'+brand+' Logo" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>'))
 
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
-    print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="ndeploy_control.cgi" data-toggle="tooltip" title="'+brand+'&nbsp;Control"><i class="fas fa-tools"></i> <span class="d-none d-lg-inline-block">'+brand+'&nbsp;Control</span></a></div>')
+    print(('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="ndeploy_control.cgi" data-toggle="tooltip" title="'+brand+'&nbsp;Control"><i class="fas fa-tools"></i> <span class="d-none d-lg-inline-block">'+brand+'&nbsp;Control</span></a></div>'))
     if app_email != 'None':
-        print('            <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>')
+        print(('            <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>'))
     if whm_documentation_link != "None":
-        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="'+whm_documentation_link+'" data-toggle="tooltip" title="WHM Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">WHM Docs</span></a></div>')
+        print(('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="'+whm_documentation_link+'" data-toggle="tooltip" title="WHM Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">WHM Docs</span></a></div>'))
     else:
-        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt" data-toggle="tooltip" title="WHM Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">WHM Docs</span></a></div>')
+        print(('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt" data-toggle="tooltip" title="WHM Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">WHM Docs</span></a></div>'))
 
     print('            </div>')
     print('        </header>')
@@ -278,19 +278,19 @@ def print_input_fn(label='Label', hint='Hint', inputValue='', inputName='', butt
     validateRandom = str(random.randint(0, 100000))
     print('                                        <div class="input-group">')
     print('                                            <div class="input-group-prepend input-group-prepend-min">')
-    print('                                                <label for="validate-'+validateRandom+'" class="input-group-text" data-toggle="tooltip" title="'+hint+'">'+label+'</label>')
+    print(('                                                <label for="validate-'+validateRandom+'" class="input-group-text" data-toggle="tooltip" title="'+hint+'">'+label+'</label>'))
     print('                                            </div>')
-    print('                                            <input class="form-control" id="validate-'+validateRandom+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>')
+    print(('                                            <input class="form-control" id="validate-'+validateRandom+'" value="'+str(inputValue)+'" type="text" name="'+inputName+'" required>'))
 
     if buttonID:
-        print('                                            <input hidden name="'+hiddenName+'" value="'+hiddenValue+'">')
+        print(('                                            <input hidden name="'+hiddenName+'" value="'+hiddenValue+'">'))
         print('                                            <div class="input-group-append">')
-        print('                                                <button id="'+buttonID+'" class="btn btn-outline-primary" type="submit">')
-        print('                                                    <span class="sr-only">'+hiddenValue+'</span><i class="fas fa-plus"></i>')
+        print(('                                                <button id="'+buttonID+'" class="btn btn-outline-primary" type="submit">'))
+        print(('                                                    <span class="sr-only">'+hiddenValue+'</span><i class="fas fa-plus"></i>'))
         print('                                                </button>')
         print('                                            </div>')
 
-    print('                                            <div class="invalid-tooltip">'+hint+'</div>')
+    print(('                                            <div class="invalid-tooltip">'+hint+'</div>'))
     print('                                        </div>')
 
 
@@ -325,14 +325,14 @@ def print_select_fn(label='Label', hint='Hint', selectQuery='', selectName='name
     validateRandom = str(random.randint(0, 100000))
     print('                         <div class="input-group">')
     print('                             <div class="input-group-prepend input-group-prepend-min">')
-    print('                                 <label for="validate-'+validateRandom+'" class="input-group-text" data-toggle="tooltip" title="'+hint+'">'+label+'</label>')
+    print(('                                 <label for="validate-'+validateRandom+'" class="input-group-text" data-toggle="tooltip" title="'+hint+'">'+label+'</label>'))
     print('                             </div>')
-    print('                             <select id="validate-'+validateRandom+'" name="'+selectName+'" class="custom-select">')
+    print(('                             <select id="validate-'+validateRandom+'" name="'+selectName+'" class="custom-select">'))
     for option in selectOptions:
         if selectQuery == option:
-            print('                         <option value="'+option+'" selected>'+option+'</option>')
+            print(('                         <option value="'+option+'" selected>'+option+'</option>'))
         else:
-            print('                         <option value="'+option+'">'+option+'</option>')
+            print(('                         <option value="'+option+'">'+option+'</option>'))
     print('                             </select>')
     print('                         </div>')
 
@@ -340,14 +340,14 @@ def print_select_fn(label='Label', hint='Hint', selectQuery='', selectName='name
 # Card Start
 def cardheader(header='Untitled Card', faicon='fas fa-cogs'):
     print('')
-    print('                    <!-- Bootstrap Card Start for '+header+' -->')
+    print(('                    <!-- Bootstrap Card Start for '+header+' -->'))
     if ndeploy_theme_color == 'dark':
-        print('                    <div class="card mb-4 text-white bg-'+ndeploy_theme_color+' shadow-sm">')
+        print(('                    <div class="card mb-4 text-white bg-'+ndeploy_theme_color+' shadow-sm">'))
     if ndeploy_theme_color == 'light':
-        print('                    <div class="card mb-4 text-dark bg-'+ndeploy_theme_color+' shadow-sm">')
+        print(('                    <div class="card mb-4 text-dark bg-'+ndeploy_theme_color+' shadow-sm">'))
     if header != '':
         print('                        <div class="card-header">')
-        print('                            <h3 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h3>')
+        print(('                            <h3 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h3>'))
         print('                        </div>')
     print('')
 
@@ -358,7 +358,7 @@ def cardfooter(text='Unmodified Footer Text'):
         print('')
         print('                        <!-- Card Footer Start -->')
         print('                        <div class="card-footer text-center">')
-        print('                            <small>'+text+'</small>')
+        print(('                            <small>'+text+'</small>'))
         print('                        </div>')
     print('')
     print('                    <!-- Bootstrap Card End -->')
@@ -374,9 +374,9 @@ def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-infinity"):
     print('                <ol class="breadcrumb justify-content-md-center">')
     if pagename != 'Home':
         print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
-        print('                    <li style="color:'+primary_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>')
+        print(('                    <li style="color:'+primary_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>'))
     else:
-        print('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+primary_color+' !important;" href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
+        print(('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+primary_color+' !important;" href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>'))
     print('                </ol>')
     print('            </nav>')
     print('')

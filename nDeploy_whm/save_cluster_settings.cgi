@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import cgi
 import cgitb
@@ -32,7 +32,7 @@ def check_unique_id(id):
         with open(ansible_inventory_file, 'r') as my_inventory:
             inventory = yaml.safe_load(my_inventory)
 
-    for myslave in inventory['all']['children']['ndeployslaves']['hosts'].keys():
+    for myslave in list(inventory['all']['children']['ndeployslaves']['hosts'].keys()):
         if inventory['all']['children']['ndeployslaves']['hosts'][myslave]['server_id'] == id:
             return False
             break
@@ -175,7 +175,7 @@ if form.getvalue('action'):
         slave_lon = slave_ipdata.get('lon')
 
         # Calculate slave server id
-        num_slaves = len(inventory['all']['children']['ndeployslaves']['hosts'].keys())
+        num_slaves = len(list(inventory['all']['children']['ndeployslaves']['hosts'].keys()))
         num_slaves = num_slaves + 2  # Server id for master is 1 and dbslave is 2
 
         # Check if the server id already exist, if yes we increment its value by 1
@@ -271,7 +271,7 @@ if form.getvalue('action'):
         with open(master_config_file, 'r') as master_data_yaml:
             master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
         del master_data_yaml_parsed[form.getvalue('master_hostname')]['dnsmap'][form.getvalue('master_lan_ip')]
-        for theslave in cluster_data_yaml_parsed.keys():
+        for theslave in list(cluster_data_yaml_parsed.keys()):
             cluster_data_yaml_parsed[theslave]['dnsmap'].pop(form.getvalue('master_lan_ip'), None)
             cluster_data_yaml_parsed[theslave]['ipmap'].pop(form.getvalue('master_lan_ip'), None)
         with open(cluster_config_file, 'w') as cluster_data_yaml:
@@ -294,7 +294,7 @@ if form.getvalue('action'):
         with open(master_config_file, 'r') as master_data_yaml:
             master_data_yaml_parsed = yaml.safe_load(master_data_yaml)
         master_data_yaml_parsed[form.getvalue('master_hostname')]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue('master_ip_resource')
-        for theslave in cluster_data_yaml_parsed.keys():
+        for theslave in list(cluster_data_yaml_parsed.keys()):
             cluster_data_yaml_parsed[theslave]['dnsmap'][form.getvalue('master_lan_ip')] = form.getvalue(theslave+"_wan_ip")
             cluster_data_yaml_parsed[theslave]['ipmap'][form.getvalue('master_lan_ip')] = form.getvalue(theslave+"_lan_ip")
         with open(cluster_config_file, 'w') as cluster_data_yaml:

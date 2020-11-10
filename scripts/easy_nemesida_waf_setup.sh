@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 #Author: Anoop P Alias
 
 rpm -Uvh https://repository.pentestit.ru/nw/centos/nwaf-release-centos-7-1-6.noarch.rpm

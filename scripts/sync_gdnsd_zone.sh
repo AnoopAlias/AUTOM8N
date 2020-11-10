@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ]; then
   # We proceed further only if its a zone files

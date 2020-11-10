@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import yaml
@@ -94,10 +94,10 @@ def print_nontoast_error(thenotice, thereason):
     print('                        <span class="h1">')
     print('                            <i class="fas fa-exclamation"></i>')
     print('                        </span>')
-    print('                        <h3>'+thenotice+'</h3>')
-    print('                        <h5>'+thereason+'</h5>')
+    print(('                        <h3>'+thenotice+'</h3>'))
+    print(('                        <h5>'+thereason+'</h5>'))
     if app_email != 'None':
-        print('                    <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>')
+        print(('                    <p>Please contact <a href="mailto:'+app_email+'">'+app_email+'</a> if you need assistance.</p>'))
     print('                    </div>')
     print('                </div>')
     print('            </div>')
@@ -112,28 +112,28 @@ def print_close_button():
 def print_success_alert(themessage):
     print('<div class="alert alert-success">')
     print_close_button()
-    print('<p>'+themessage+'</p></div>')
+    print(('<p>'+themessage+'</p></div>'))
 
 
 # Error Toast DIV
 def print_error_alert(themessage):
     print('<div class="alert alert-danger">')
     print_close_button()
-    print('<p>'+themessage+'</p></div>')
+    print(('<p>'+themessage+'</p></div>'))
 
 
 # Warning Toast DIV
 def print_warning_alert(themessage):
     print('<div class="alert alert-warning">')
     print_close_button()
-    print('<p>'+themessage+'</p></div>')
+    print(('<p>'+themessage+'</p></div>'))
 
 
 # Info Toast DIV
 def print_info_alert(themessage):
     print('<div class="alert alert-info">')
     print_close_button()
-    print('<p>'+themessage+'</p></div>')
+    print(('<p>'+themessage+'</p></div>'))
 
 
 # Forbidden Toast with icon
@@ -162,15 +162,15 @@ def print_info(themessage):
 
 
 def print_sys_tip(theoption, hint):
-    print('<div class="col-md-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>')
+    print(('<div class="col-md-6 alert" data-toggle="tooltip" title="'+hint+'">'+theoption+'</div>'))
 
 
 def print_disabled():
     print('                                <div class="col-md-6">')
     if app_email != 'None':
-        print('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div>')
+        print(('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. Contact '+app_email+' if you need assistance with this. ">Not Installed</div>'))
     else:
-        print('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. ">Not Installed</div>')
+        print(('                                <div class="btn btn-light btn-block" data-toggle="tooltip" title=" An additional '+brand+' module is required for this functionality. ">Not Installed</div>'))
     print('                                </div>')
 
 
@@ -179,11 +179,11 @@ def print_forbidden_wrapper():
 
 
 def print_error_wrapper(themessage):
-    print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>'+themessage+'</p></div></div>')
+    print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body"><i class="fas fa-exclamation"></i><p>'+themessage+'</p></div></div>'))
 
 
 def print_success_wrapper(themessage):
-    print('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>')
+    print(('<div class="card"><div class="card-header"><h5 class="card-title mb-0"><i class="fas fa-terminal float-right"></i> Command Output</h5></div><div class="card-body text-center"><i class="fas fa-thumbs-up"></i><p>'+themessage+'</p></div></div>'))
 
 
 def return_multi_input(theoption, hint):
@@ -201,7 +201,7 @@ def print_header(title=''):
     print('        <!-- Required meta tags -->')
     print('        <meta charset="utf-8">')
     print('        <meta name="viewport" content="width=device-width, initial-scale=1">')
-    print('        <title>'+brand+' - '+title+'</title>')
+    print(('        <title>'+brand+' - '+title+'</title>'))
     print('        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>')
     print('        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>')
     print('        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>')
@@ -212,29 +212,29 @@ def print_header(title=''):
     print('    </head>')
     print('')
     print('    <!-- Body Start -->')
-    print('    <body class="ndeploy-theme-'+ndeploy_theme_color+'">')
+    print(('    <body class="ndeploy-theme-'+ndeploy_theme_color+'">'))
     print('        <header id="main-header" class="d-flex justify-content-between align-items-center">')
     print('            <div class="logo">')
     print('                <h4>')
 
     if logo_url != 'None':
-        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" class="logo-url" src="'+logo_url+'"></a>')
+        print(('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" class="logo-url" src="'+logo_url+'"></a>'))
     elif brand_logo != 'xtendweb.png':
-        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>')
+        print(('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" src="'+brand_logo+'" width="48" height="48"></a><span>'+brand+'</span>'))
     elif ndeploy_theme_color == 'dark':
-        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>')
+        print(('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" src="xtendweb_light.png" width="48" height="48"></a><span>'+brand+'</span>'))
     elif ndeploy_theme_color == 'light':
-        print('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>')
+        print(('                <a href="xtendweb.live.py"><img border="0" alt="'+brand+' Logo" src="xtendweb_dark.png" width="48" height="48"></a><span>'+brand+'</span>'))
 
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
     if app_email != 'None':
-        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>')
+        print(('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>'))
     if cpanel_documentation_link != 'None':
-        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="'+cpanel_documentation_link+'" data-toggle="tooltip" title="cPanel Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">cPanel Docs</span></a></div>')
+        print(('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="'+cpanel_documentation_link+'" data-toggle="tooltip" title="cPanel Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">cPanel Docs</span></a></div>'))
     else:
-        print('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt" data-toggle="tooltip" title="cPanel Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">cPanel Docs</span></a></div>')
+        print(('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" target="_blank" href="help.txt" data-toggle="tooltip" title="cPanel Docs for '+brand+'"><i class="fas fa-book-open"></i> <span class="d-none d-lg-inline-block">cPanel Docs</span></a></div>'))
     print('            </div>')
     print('        </header>')
     print('')
@@ -267,7 +267,7 @@ def display_term():
                     line = line.replace(installation_path+'/lock/','')
                 elif installation_path in line:
                     line = line.replace(installation_path+'/','')
-                print('                        '+line.rstrip('\n'))
+                print(('                        '+line.rstrip('\n')))
     else:
         print('Retrieving last terminal function executed...')
     print('                    </div>')
@@ -326,14 +326,14 @@ def print_simple_footer():
 # Card Start
 def cardheader(header='Untitled Card', faicon='fas fa-cogs'):
     print('')
-    print('                    <!-- Bootstrap Card Start for '+header+' -->')
+    print(('                    <!-- Bootstrap Card Start for '+header+' -->'))
     if ndeploy_theme_color == 'dark':
-        print('                    <div class="card mb-4 text-white bg-'+ndeploy_theme_color+' shadow-sm">')
+        print(('                    <div class="card mb-4 text-white bg-'+ndeploy_theme_color+' shadow-sm">'))
     if ndeploy_theme_color == 'light':
-        print('                    <div class="card mb-4 text-dark bg-'+ndeploy_theme_color+' shadow-sm">')
+        print(('                    <div class="card mb-4 text-dark bg-'+ndeploy_theme_color+' shadow-sm">'))
     if header != '':
         print('                        <div class="card-header">')
-        print('                            <h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>')
+        print(('                            <h5 class="card-title mb-0"><i class="'+faicon+' float-right"></i>'+header+'</h5>'))
         print('                        </div>')
     print('')
 
@@ -344,7 +344,7 @@ def cardfooter(text='Unmodified Footer Text'):
         print('')
         print('                        <!-- Card Footer Start -->')
         print('                        <div class="card-footer">')
-        print('                            <small><center>'+text+'</center></small>')
+        print(('                            <small><center>'+text+'</center></small>'))
         print('                        </div>')
     print('')
     print('                    <!-- Bootstrap Card End -->')
@@ -360,9 +360,9 @@ def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-infinity"):
     print('                <ol class="breadcrumb justify-content-md-center">')
     if pagename != 'Home':
         print('                    <li class="breadcrumb-item"><a href="xtendweb.live.py"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
-        print('                    <li style="color:'+primary_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>')
+        print(('                    <li style="color:'+primary_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>'))
     else:
-        print('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+primary_color+' !important;" href="xtendweb.live.py"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
+        print(('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+primary_color+' !important;" href="xtendweb.live.py"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>'))
     print('                </ol>')
     print('            </nav>')
     print('')

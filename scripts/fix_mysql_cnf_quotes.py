@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
-import ConfigParser
+import configparser
 
 
 __author__ = "Anoop P Alias"
@@ -10,7 +10,7 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.read('/root/.my.cnf')
 mypass = config.get('client', 'password')
 if mypass.startswith('"') and mypass.endswith('"'):

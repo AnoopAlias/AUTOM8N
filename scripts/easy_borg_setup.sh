@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 #Author: Anoop P Alias
 
 yum --enablerepo=epel -y install borgbackup python36 python36-pip

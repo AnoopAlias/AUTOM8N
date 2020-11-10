@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import cgi
 import cgitb
@@ -43,25 +43,25 @@ if form.getvalue('poolfile') and form.getvalue('section'):
 
         myconfig = dict(config.items(config.sections()[mysection]))
         mykeypos = 1
-        for mykey in myconfig.keys():
-            print('                            <label for="'+mykey+'">'+mykey+'</label>')
+        for mykey in list(myconfig.keys()):
+            print(('                            <label for="'+mykey+'">'+mykey+'</label>'))
             print('                            <div class="input-group mb-4">')
-            print('                                <input class="form-control" form="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" value="'+myconfig.get(mykey)+'" type="text" name="thevalue">')
-            print('                                <form class="form m-0" id="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" method="post" onsubmit="return false;">')
-            print('                                    <input hidden name="poolfile" value="'+myphpini+'">')
-            print('                                    <input hidden name="section" value="'+form.getvalue('section')+'">')
-            print('                                    <input hidden name="thekey" value="'+mykey+'">')
+            print(('                                <input class="form-control" form="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" value="'+myconfig.get(mykey)+'" type="text" name="thevalue">'))
+            print(('                                <form class="form m-0" id="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" method="post" onsubmit="return false;">'))
+            print(('                                    <input hidden name="poolfile" value="'+myphpini+'">'))
+            print(('                                    <input hidden name="section" value="'+form.getvalue('section')+'">'))
+            print(('                                    <input hidden name="thekey" value="'+mykey+'">'))
             print('                                    <input hidden name="action" value="edit">')
             print('                                </form>')
-            print('                                <form class="form m-0" id="php_fpm_pool_editor_delete'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">')
-            print('                                    <input hidden name="poolfile" value="'+myphpini+'">')
-            print('                                    <input hidden name="section" value="'+form.getvalue('section')+'">')
-            print('                                    <input hidden name="thekey" value="'+mykey+'">')
+            print(('                                <form class="form m-0" id="php_fpm_pool_editor_delete'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">'))
+            print(('                                    <input hidden name="poolfile" value="'+myphpini+'">'))
+            print(('                                    <input hidden name="section" value="'+form.getvalue('section')+'">'))
+            print(('                                    <input hidden name="thekey" value="'+mykey+'">'))
             print('                                    <input hidden name="action" value="delete">')
             print('                                </form>')
             print('                                <div class="input-group-append">')
-            print('                                    <button id="php-fpm-pool-editor-save-btn'+'-'+str(mykeypos)+'" form="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" class="btn btn-outline-primary" type="submit"><span class="sr-only">Save</span><i class="fas fa-pen"></i></button>')
-            print('                                    <button id="php-fpm-pool-editor-delete-btn'+'-'+str(mykeypos)+'" form="php_fpm_pool_editor_delete'+'-'+str(mykeypos)+'" class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>')
+            print(('                                    <button id="php-fpm-pool-editor-save-btn'+'-'+str(mykeypos)+'" form="php_fpm_pool_editor_save'+'-'+str(mykeypos)+'" class="btn btn-outline-primary" type="submit"><span class="sr-only">Save</span><i class="fas fa-pen"></i></button>'))
+            print(('                                    <button id="php-fpm-pool-editor-delete-btn'+'-'+str(mykeypos)+'" form="php_fpm_pool_editor_delete'+'-'+str(mykeypos)+'" class="btn btn-outline-danger" type="submit"><span class="sr-only">Delete</span><i class="fas fa-times"></i></button>'))
             print('                                </div>')
             print('                            </div>')
             mykeypos = mykeypos + 1
@@ -81,8 +81,8 @@ if form.getvalue('poolfile') and form.getvalue('section'):
         print('                                    <input type="text" aria-label="Key" placeholder="Key" name="thekey" class="form-control">')
         print('                                    <input type="text" aria-label="Value" placeholder="Value" name="thevalue" class="form-control">')
         print('                                    <div class="input-group-append">')
-        print('                                        <input hidden name="section" value="'+form.getvalue('section')+'">')
-        print('                                        <input hidden name="poolfile" value="'+myphpini+'">')
+        print(('                                        <input hidden name="section" value="'+form.getvalue('section')+'">'))
+        print(('                                        <input hidden name="poolfile" value="'+myphpini+'">'))
         print('                                        <input hidden name="action" value="edit">')
         print('                                        <button id="add-php-pool-setting-btn" class="btn btn-outline-primary" type="submit">')
         print('                                             <span class="sr-only">Add</span>')

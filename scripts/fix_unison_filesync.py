@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import os
@@ -30,7 +30,7 @@ def fix_unison(trigger):
             with open(homedir_config_file, 'r') as homedir_data_yaml:
                 homedir_data_yaml_parsed = yaml.safe_load(homedir_data_yaml)
             homedir_list = homedir_data_yaml_parsed.get('homedir')
-            for servername in cluster_data_yaml_parsed.keys():
+            for servername in list(cluster_data_yaml_parsed.keys()):
                 for myhome in homedir_list:
                     filesync_ok = False
                     for myprocess in psutil.process_iter():
@@ -46,7 +46,7 @@ def fix_unison(trigger):
                     if not filesync_ok:
                         filesync_fail_count = filesync_fail_count+1
                         status.append(myhome+'_'+servername+":FAIL")
-            for servername in cluster_data_yaml_parsed.keys():
+            for servername in list(cluster_data_yaml_parsed.keys()):
                 filesync_ok = False
                 for myprocess in psutil.process_iter():
                     # Workaround for Python 2.6
@@ -62,7 +62,7 @@ def fix_unison(trigger):
                     filesync_fail_count = filesync_fail_count+1
                     status.append('phpsessions_'+servername+":FAIL")
             if filesync_fail_count > 0:
-                print("Unison filesync not running for - "+str(status)+" . Trying autofix:")
+                print(("Unison filesync not running for - "+str(status)+" . Trying autofix:"))
                 print("Trying an autorepair")
                 the_raw_cmd_slave = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m shell -a \"find /root/.unison/ -regextype sed -regex \'/root/.unison/lk[a-f0-9]\\{32\\}\' -delete\"'
                 the_raw_cmd_master = 'ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeploymaster -m shell -a \"find /root/.unison/ -regextype sed -regex \'/root/.unison/lk[a-f0-9]\\{32\\}\' -delete\"'

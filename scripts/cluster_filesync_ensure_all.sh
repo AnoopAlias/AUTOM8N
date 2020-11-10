@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo -e '\e[93m Attempting to sync document roots  \e[0m'
 

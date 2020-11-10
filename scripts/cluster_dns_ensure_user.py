@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 try:
     import simplejson as json
@@ -105,7 +105,7 @@ def cluster_ensure_mxrecord(zone_name, *serverlist):
             if not os.path.isfile(installation_path+"/conf/DECLUSTER_DNSZONE"):
                 myhostname = socket.gethostname()
                 subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=0 exchange="+myhostname+".", shell=True)
-                print("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=0 exchange="+myhostname+".")
+                print(("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=0 exchange="+myhostname+"."))
                 for server in serverlist:
                     subprocess.call("/usr/local/cpanel/bin/whmapi1 addzonerecord domain="+zone_name+" ttl=300 type=MX class=IN name="+zone_name+". preference=100 exchange="+server+".", shell=True)
             else:
@@ -130,7 +130,7 @@ if __name__ == "__main__":
             cluster_data_yaml = open(cluster_config_file, 'r')
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
             cluster_data_yaml.close()
-            serverlist = cluster_data_yaml_parsed.keys()
+            serverlist = list(cluster_data_yaml_parsed.keys())
         else:
             serverlist = []
         # Try loading the main userdata cache file
@@ -148,7 +148,7 @@ if __name__ == "__main__":
         cluster_ensure_arecord(main_domain, main_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed)
         cluster_ensure_mxrecord(main_domain, *serverlist)
         # iterate over the addon-domain and add DNS RR for it
-        for the_addon_domain in addon_domains_dict.keys():
+        for the_addon_domain in list(addon_domains_dict.keys()):
             with open("/var/cpanel/userdata/"+cpaneluser+"/"+addon_domains_dict.get(the_addon_domain)+".cache") as addondomain_data_stream:
                 addondomain_data_stream_parsed = json.load(addondomain_data_stream)
             addondomain_ip = addondomain_data_stream_parsed.get('ip')
@@ -156,7 +156,7 @@ if __name__ == "__main__":
             cluster_ensure_mxrecord(the_addon_domain, *serverlist)
         # iterate over sub-domains and add DNS RR if its not a linked sub-domain for addon-domain
         for the_sub_domain in sub_domains:
-            if the_sub_domain not in addon_domains_dict.values():
+            if the_sub_domain not in list(addon_domains_dict.values()):
                 cluster_ensure_arecord(main_domain, the_sub_domain, maindomain_ip, *serverlist, **cluster_data_yaml_parsed)
         # iterate over parked domains and add DNS RR for it . IP being that of main domain
         for the_parked_domain in parked_domains:

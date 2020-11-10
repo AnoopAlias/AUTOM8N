@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import sys
@@ -64,7 +64,7 @@ if os.path.exists(cpuserdatajson):
     if os.path.isfile(cluster_config_file):
         with open(cluster_config_file, 'r') as cluster_data_yaml:
             cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-        for server in cluster_data_yaml_parsed.keys():
+        for server in list(cluster_data_yaml_parsed.keys()):
             silentremove("/etc/nginx/"+server+"/"+main_domain+".conf")
             silentremove("/etc/nginx/"+server+"/"+main_domain+".include")
     if os.path.exists('/var/resin/hosts/'+main_domain):
@@ -78,7 +78,7 @@ if os.path.exists(cpuserdatajson):
         if os.path.isfile(cluster_config_file):
             with open(cluster_config_file, 'r') as cluster_data_yaml:
                 cluster_data_yaml_parsed = yaml.safe_load(cluster_data_yaml)
-            for server in cluster_data_yaml_parsed.keys():
+            for server in list(cluster_data_yaml_parsed.keys()):
                 silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".conf")
                 silentremove("/etc/nginx/"+server+"/"+domain_in_subdomains+".include")
         if os.path.exists('/var/resin/hosts/'+domain_in_subdomains):

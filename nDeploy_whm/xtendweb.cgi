@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
-import httplib
+import http.client
 import re
 import cgitb
 import subprocess
@@ -46,11 +46,11 @@ def is_page_available(host, path="/pingphpfpm"):
         False.
     """
     try:
-        conn = httplib.HTTPConnection(host)
+        conn = http.client.HTTPConnection(host)
         conn.request("HEAD", path)
         if re.match("^[23]\d\d$", str(conn.getresponse().status)):
             return True
-    except StandardError:
+    except Exception:
         return None
 
 
@@ -101,7 +101,7 @@ cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
 print('                        <h2 class="mb-0">Nginx Status</h2>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li><small>'+nginx_version+'</small></li>')
+print(('                            <li><small>'+nginx_version+'</small></li>'))
 if nginx_status:
     print('                        <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
@@ -122,7 +122,7 @@ cardheader('')
 print('                    <div class="card-body text-center"> <!-- Card Body Start -->')
 print('                        <h2 class="mb-0">Watcher Status</h2>')
 print('                        <ul class="list-unstyled mb-0">')
-print('                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n ", '')+'</small></li>')
+print(('                            <li><small>'+brand+' '+autom8n_version.replace("Autom8n ", '')+'</small></li>'))
 if watcher_status:
     print('                        <li class="mt-2 text-success">Running <i class="fas fa-power-off ml-1"></i></li>')
 else:
@@ -167,13 +167,13 @@ php_is_at_fault = False
 faulty_php = []
 if "PHP" in backend_data_yaml_parsed:
     php_backends_dict = backend_data_yaml_parsed["PHP"]
-    for name, path in php_backends_dict.items():
+    for name, path in list(php_backends_dict.items()):
         statuspage = "/"+name
         if not is_page_available('localhost', statuspage):
             php_is_at_fault = True
             faulty_php.append(name)
 if php_is_at_fault and not os.path.isfile(php_secure_mode_file):
-    print('                            <li><small>PHP-FPM Status: <span class="text-danger">Fault: '+str(faulty_php)+'</span></small></li>')
+    print(('                            <li><small>PHP-FPM Status: <span class="text-danger">Fault: '+str(faulty_php)+'</span></small></li>'))
 else:
     print('                            <li><small>PHP-FPM Status: <span class="text-success">OK</span></small></li>')
 if not os.path.isfile(php_secure_mode_file):
@@ -241,12 +241,12 @@ print('                            <div class="row no-gutters row-2-col row-no-b
 # Netdata
 myhostname = socket.gethostname()
 print('                                <div class="col-md-6">')
-print('                                    <a class="btn btn-block btn-icon" href="https://'+myhostname+'/netdata/" target="_blank"><i class="fas fa-heartbeat"></i> Netdata <i class="fas fa-external-link-alt"></i></a>')
+print(('                                    <a class="btn btn-block btn-icon" href="https://'+myhostname+'/netdata/" target="_blank"><i class="fas fa-heartbeat"></i> Netdata <i class="fas fa-external-link-alt"></i></a>'))
 print('                                </div>')
 
 # Glances
 print('                                <div class="col-md-6">')
-print('                                    <a class="btn btn-block btn-icon" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>')
+print(('                                    <a class="btn btn-block btn-icon" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>'))
 print('                                </div>')
 
 # Borg Backup
@@ -287,7 +287,7 @@ if os.path.isfile(cluster_config_file):
         homedir_data_yaml_parsed = yaml.safe_load(homedir_data_yaml)
     homedir_list = homedir_data_yaml_parsed.get('homedir')
 
-    for servername in cluster_data_yaml_parsed.keys():
+    for servername in list(cluster_data_yaml_parsed.keys()):
 
         for myhome in homedir_list:
 
@@ -304,10 +304,10 @@ if os.path.isfile(cluster_config_file):
                     break
 
             if filesync_status:
-                print('         <div class="col-6 col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
+                print(('         <div class="col-6 col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>'))
                 print('         <div class="col-6 col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
             else:
-                print('         <div class="col-6 col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>')
+                print(('         <div class="col-6 col-md-9 alert"><i class="fas fa-home"></i> '+myhome+'_'+servername.split('.')[0]+'</div>'))
                 print('         <div class="col-6 col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
 
         filesync_status = False
@@ -323,10 +323,10 @@ if os.path.isfile(cluster_config_file):
                 break
 
         if filesync_status:
-            print('             <div class="col-6 col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
+            print(('             <div class="col-6 col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>'))
             print('             <div class="col-6 col-md-3 alert text-success">In Sync <i class="fa fa-check-circle"></i></div>')
         else:
-            print('             <div class="col-6 col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>')
+            print(('             <div class="col-6 col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>'))
             print('             <div class="col-6 col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
 
     print('                 </div> <!-- Row End -->')
@@ -364,7 +364,7 @@ if os.path.isfile(cluster_config_file):
         # Parse the inventory and display its contents
         with open(ansible_inventory_file, 'r') as my_inventory:
             ansible_inventory_file_parsed = yaml.safe_load(my_inventory)
-        master_hostname = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'].keys()[0]
+        master_hostname = list(ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'].keys())[0]
         master_server_id = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['server_id']
         master_ssh_port = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['ansible_port']
         master_main_ip = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['mainip']
@@ -375,7 +375,7 @@ if os.path.isfile(cluster_config_file):
         master_repo = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['repo']
         master_dns = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dns']
 
-        dbslave_hostname = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'].keys()[0]
+        dbslave_hostname = list(ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'].keys())[0]
         dbslave_server_id = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['server_id']
         dbslave_ssh_port = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['ansible_port']
         dbslave_main_ip = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['mainip']
@@ -447,7 +447,7 @@ if os.path.isfile(cluster_config_file):
         print('                            </form>')
 
         # Additional slaves
-        for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
+        for myslave in list(ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys()):
             if myslave != dbslave_hostname:
 
                 # Lets get all the details of this slave server and present to the user for editing
@@ -463,19 +463,19 @@ if os.path.isfile(cluster_config_file):
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
 
                 # Slave data
-                print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
+                print(('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">'))
                 print('         <div class="card mb-0">')
-                print('             <div class="card-header" id="heading'+str(slave_server_id)+'">')
+                print(('             <div class="card-header" id="heading'+str(slave_server_id)+'">'))
                 print('                 <h2 class="mb-0">')
-                print('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+str(slave_server_id)+'" aria-expanded="false" aria-controls="collapse'+str(slave_server_id)+'">')
-                print('                         Slave #'+str(slave_server_id)+'')
+                print(('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+str(slave_server_id)+'" aria-expanded="false" aria-controls="collapse'+str(slave_server_id)+'">'))
+                print(('                         Slave #'+str(slave_server_id)+''))
                 print('                     </button>')
                 print('                 </h2>')
                 print('             </div>')
 
-                print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
+                print(('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">'))
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print(('                     <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>'))
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
@@ -495,15 +495,15 @@ if os.path.isfile(cluster_config_file):
                 print('                     </form>')
 
                 # Delete the Additional Slave
-                print('                     <form class="form delete_cluster_settings_slave" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print(('                     <form class="form delete_cluster_settings_slave" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">'))
                 print('                         <label hidden for="cluster_delete_slave">Cluster Delete Slave</label>')
                 print('                         <input hidden name="action" id="cluster_delete_slave" value="deleteslave">')
                 print('                         <label hidden for="cluster_slave_hostname2">Cluster Save Hostname</label>')
-                print('                         <input hidden name="slave_hostname" id="cluster_slave_hostname2" value="'+myslave+'">')
+                print(('                         <input hidden name="slave_hostname" id="cluster_slave_hostname2" value="'+myslave+'">'))
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave Settings</button>')
-                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave</button>')
+                print(('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave Settings</button>'))
+                print(('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave</button>'))
                 print('                     </div>')
 
                 print('                 </div>')
@@ -533,7 +533,7 @@ if os.path.isfile(cluster_config_file):
         # Tab Start / Tab4 ###########################
         # Display, Edit, Delete IPMapping
         print('                         <div class="tab-pane fade" id="ip-content" role="tabpanel" aria-labelledby="ip-tab">')
-        master_ip_list = master_data_yaml_parsed[myhostname]['dnsmap'].keys()
+        master_ip_list = list(master_data_yaml_parsed[myhostname]['dnsmap'].keys())
         for myip in master_ip_list:
             master_ip_resource = master_data_yaml_parsed[myhostname]['dnsmap'].get(myip)
 
@@ -557,23 +557,23 @@ if os.path.isfile(cluster_config_file):
 
             # Get corresponding slave IP for this master IP
             mykeypos = 1
-            for theslave in cluster_data_yaml_parsed.keys():
+            for theslave in list(cluster_data_yaml_parsed.keys()):
                 slave_mapped_dns_ip = cluster_data_yaml_parsed[theslave]['dnsmap'].get(myip, "NULL")
                 slave_mapped_web_ip = cluster_data_yaml_parsed[theslave]['ipmap'].get(myip, "NULL")
 
                 # Display form for IP address mapping
-                print('     <div class="accordion" id="accordionIps-'+master_ip_resource+'-'+str(mykeypos)+'">')
+                print(('     <div class="accordion" id="accordionIps-'+master_ip_resource+'-'+str(mykeypos)+'">'))
                 print('         <div class="card mb-0 text-white dg-dark">')
-                print('             <div class="card-header" id="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'">')
+                print(('             <div class="card-header" id="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'">'))
                 print('                 <h2 class="mb-0">')
-                print('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" aria-expanded="false" aria-controls="collapse'+'-'+str(mykeypos)+'">')
-                print('                         '+master_ip_resource+'-'+theslave+'')
+                print(('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" aria-expanded="false" aria-controls="collapse'+'-'+str(mykeypos)+'">'))
+                print(('                         '+master_ip_resource+'-'+theslave+''))
                 print('                     </button>')
                 print('                 </h2>')
                 print('             </div>')
-                print('             <div id="collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'" data-parent="#accordionIps-'+master_ip_resource+'-'+str(mykeypos)+'">')
+                print(('             <div id="collapse'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="collapse" aria-labelledby="heading'+'-'+master_ip_resource+'-'+str(mykeypos)+'" data-parent="#accordionIps-'+master_ip_resource+'-'+str(mykeypos)+'">'))
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation" method="post" id="edit_ip_resource'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;" novalidate>')
+                print(('                     <form class="form needs-validation" method="post" id="edit_ip_resource'+'-'+master_ip_resource+'-'+str(mykeypos)+'" onsubmit="return false;" novalidate>'))
 
                 # Master data
                 print_input_fn(" Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", master_ip_resource, "master_ip_resource")
@@ -585,13 +585,13 @@ if os.path.isfile(cluster_config_file):
                 print_input_fn(theslave, " Enter the slave server's Wide Area Network (WAN) IP. ", slave_mapped_dns_ip, "slave_wan_ip")
 
                 print('                         <label hidden for="cluster_master_hostname">Master Host Name</label>')
-                print('                         <input hidden name="master_hostname" id="cluster_master_hostname" value="'+myhostname+'">')
+                print(('                         <input hidden name="master_hostname" id="cluster_master_hostname" value="'+myhostname+'">'))
                 print('                         <label hidden for="cluster_slave_hostname">Slave Host Name</label>')
-                print('                         <input hidden name="slave_hostname" id="cluster_slave_hostname" value="'+theslave+'">')
+                print(('                         <input hidden name="slave_hostname" id="cluster_slave_hostname" value="'+theslave+'">'))
                 print('                         <label hidden for="cluster_edit_ip">Edit IP</label>')
                 print('                         <input hidden name="action" id="cluster_edit_ip" value="editip">')
 
-                print('                         <button id="edit-ip-resource'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="btn btn-outline-primary btn-block mt-4" type="submit">Edit IP resource</button>')
+                print(('                         <button id="edit-ip-resource'+'-'+master_ip_resource+'-'+str(mykeypos)+'" class="btn btn-outline-primary btn-block mt-4" type="submit">Edit IP resource</button>'))
                 print('                     </form>')
                 print('                 </div>')
                 print('             </div>')
@@ -601,14 +601,14 @@ if os.path.isfile(cluster_config_file):
             if master_ip_resource != "ip0":
 
                 # Display form for IP address deletion
-                print('                            <form class="form" method="post" id="delete_ip'+'-'+master_ip_resource+'" onsubmit="return false;">')
+                print(('                            <form class="form" method="post" id="delete_ip'+'-'+master_ip_resource+'" onsubmit="return false;">'))
                 print('                                <label hidden for="cluster_delete_ip_master_hostname">Delete Master Hostname IP</label>')
-                print('                                <input hidden name="master_hostname" id="cluster_delete_ip_master_hostname" value="'+myhostname+'">')
+                print(('                                <input hidden name="master_hostname" id="cluster_delete_ip_master_hostname" value="'+myhostname+'">'))
                 print('                                <label hidden for="cluster_delete_master_lan_ip">Delete Master LAN IP</label>')
-                print('                                <input hidden name="master_lan_ip" id="cluster_delete_master_lan_ip" value="'+myip+'">')
+                print(('                                <input hidden name="master_lan_ip" id="cluster_delete_master_lan_ip" value="'+myip+'">'))
                 print('                                <label hidden for="cluster_delete_ip">Cluster Delete IP</label>')
                 print('                                <input hidden name="action" id="cluster_delete_ip" value="delip">')
-                print('                                <button id="delete-ip-btn'+'-'+master_ip_resource+'" class="btn btn-outline-danger btn-block mt-4 mb-4" type="submit">Delete '+master_ip_resource+'</button>')
+                print(('                                <button id="delete-ip-btn'+'-'+master_ip_resource+'" class="btn btn-outline-danger btn-block mt-4 mb-4" type="submit">Delete '+master_ip_resource+'</button>'))
                 print('                            </form>')
 
             # Provide a seperation between each ip resource_
@@ -624,7 +624,7 @@ if os.path.isfile(cluster_config_file):
         print_input_fn("Master IP Resource Name", " Enter the IP address resource name (EG: IP1). ", "", "master_ip_resource")
         print_input_fn("Master LAN IP", " Enter the Local Area Network (LAN) IP. ", "", "master_lan_ip")
 
-        for theslave in cluster_data_yaml_parsed.keys():
+        for theslave in list(cluster_data_yaml_parsed.keys()):
 
             # Slave data
             print_input_fn("LAN_IP_"+theslave, " Enter the slave server's Local Area Network (LAN) IP. ", "", theslave+"_lan_ip")
@@ -633,7 +633,7 @@ if os.path.isfile(cluster_config_file):
         print('                                <label hidden for="cluster_add_ip">Cluster Add IP</label>')
         print('                                <input hidden name="action" id="cluster_add_ip" value="addip">')
         print('                                <label hidden for="cluster_add_master_hostname">Cluster Add Master Hostname</label>')
-        print('                                <input hidden name="master_hostname" id="cluster_add_master_hostname" value="'+myhostname+'">')
+        print(('                                <input hidden name="master_hostname" id="cluster_add_master_hostname" value="'+myhostname+'">'))
         print('                                <button id="add-ip-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Add IP Resource</button>')
         print('                            </form>')
         print('                         </div>')
@@ -652,13 +652,13 @@ if os.path.isfile(cluster_config_file):
             for path in home_dir_list:
                 print('                        <div class="input-group input-group-inline input-group-sm">')
                 print('                            <div class="input-group-prepend">')
-                print('                                <span class="input-group-text">'+path+'</span>')
+                print(('                                <span class="input-group-text">'+path+'</span>'))
                 print('                            </div>')
                 if path not in ['home']:
                     print('                        <div class="input-group-append">')
-                    print('                            <form class="form delete_cluster_settings_directory" method="post" id="delete_cluster_settings_directory'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                    print(('                            <form class="form delete_cluster_settings_directory" method="post" id="delete_cluster_settings_directory'+'-'+str(mykeypos)+'" onsubmit="return false;">'))
                     print('                                <label hidden for="cluster_the_home_dir">Cluster Home Directory</label>')
-                    print('                                <input hidden name="thehomedir" id="cluster_the_home_dir" value="'+path+'">')
+                    print(('                                <input hidden name="thehomedir" id="cluster_the_home_dir" value="'+path+'">'))
                     print('                                <label hidden for="cluster_delete_home_dir">Cluster Delete Home Directory</label>')
                     print('                                <input hidden name="action" id="cluster_delete_home_dir" value="deletehomedir">')
                     print('                                <button id="delete-cluster-settings-directory-btn" class="btn btn-danger btn-sm" type="submit">')
@@ -726,7 +726,7 @@ else:
         # Parse the inventory and display its contents
         with open(ansible_inventory_file, 'r') as my_inventory:
             ansible_inventory_file_parsed = yaml.safe_load(my_inventory)
-        master_hostname = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'].keys()[0]
+        master_hostname = list(ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'].keys())[0]
         master_server_id = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['server_id']
         master_ssh_port = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['ansible_port']
         master_main_ip = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['mainip']
@@ -737,7 +737,7 @@ else:
         master_repo = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['repo']
         master_dns = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dns']
 
-        dbslave_hostname = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'].keys()[0]
+        dbslave_hostname = list(ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'].keys())[0]
         dbslave_server_id = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['server_id']
         dbslave_ssh_port = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['ansible_port']
         dbslave_main_ip = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['mainip']
@@ -805,7 +805,7 @@ else:
         print('                            </form>')
 
         # Additional slaves
-        for myslave in ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys():
+        for myslave in list(ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'].keys()):
             if myslave != dbslave_hostname:
 
                 # Lets get all the details of this slave server and present to the user for editing
@@ -820,19 +820,19 @@ else:
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
                 # Slave data
-                print('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">')
+                print(('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">'))
                 print('         <div class="card mb-0">')
-                print('             <div class="card-header" id="heading'+str(slave_server_id)+'">')
+                print(('             <div class="card-header" id="heading'+str(slave_server_id)+'">'))
                 print('                 <h2 class="mb-0">')
-                print('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+str(slave_server_id)+'" aria-expanded="false" aria-controls="collapse'+str(slave_server_id)+'">')
-                print('                         Slave #'+str(slave_server_id)+'')
+                print(('                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'+str(slave_server_id)+'" aria-expanded="false" aria-controls="collapse'+str(slave_server_id)+'">'))
+                print(('                         Slave #'+str(slave_server_id)+''))
                 print('                     </button>')
                 print('                 </h2>')
                 print('             </div>')
 
-                print('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">')
+                print(('             <div id="collapse'+str(slave_server_id)+'" class="collapse" aria-labelledby="heading'+str(slave_server_id)+'" data-parent="#accordionSlaves-'+str(slave_server_id)+'">'))
                 print('                 <div class="card-body">')
-                print('                     <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>')
+                print(('                     <form class="form needs-validation" method="post" id="save_cluster_settings_slave_add-'+str(slave_server_id)+'" onsubmit="return false;" novalidate>'))
 
                 print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", slave_hostname, "slave_hostname")
                 print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", slave_main_ip, "slave_main_ip")
@@ -852,15 +852,15 @@ else:
                 print('                     </form>')
 
                 # Delete the Additional Slave
-                print('                     <form class="form" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">')
+                print(('                     <form class="form" method="post" id="delete_cluster_settings_slave-'+str(slave_server_id)+'" onsubmit="return false;">'))
                 print('                         <label hidden for="cluster_settings_delete_slave">Cluster Delete Slave</label>')
                 print('                         <input hidden name="action" id="cluster_settings_delete_slave" value="deleteslave">')
                 print('                         <label hidden for="cluster_settings_delete_slave_hostname">Cluster Delete Slave Hostname</label>')
-                print('                         <input hidden name="slave_hostname" id="cluster_settings_delete_slave_hostname" value="'+myslave+'">')
+                print(('                         <input hidden name="slave_hostname" id="cluster_settings_delete_slave_hostname" value="'+myslave+'">'))
                 print('                     </form>')
                 print('                     <div class="btn-group btn-block mt-4">')
-                print('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave Settings</button>')
-                print('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave</button>')
+                print(('                         <button id="save-cluster-settings-slave-add-btn-'+str(slave_server_id)+'" class="btn btn-outline-primary btn-block" type="submit" form="save_cluster_settings_slave_add-'+str(slave_server_id)+'">Save Slave Settings</button>'))
+                print(('                         <button id="delete-cluster-settings-slave-btn-'+str(slave_server_id)+'" class="btn btn-outline-danger btn-block" type="submit" form="delete_cluster_settings_slave-'+str(slave_server_id)+'">Delete Slave</button>'))
                 print('                     </div>')
 
                 print('                 </div>')
@@ -902,13 +902,13 @@ else:
             for path in home_dir_list:
                 print('                        <div class="input-group input-group-inline input-group-sm">')
                 print('                            <div class="input-group-prepend">')
-                print('                                <span class="input-group-text">'+path+'</span>')
+                print(('                                <span class="input-group-text">'+path+'</span>'))
                 print('                            </div>')
                 if path not in ['home']:
                     print('                        <div class="input-group-append">')
-                    print('                            <form class="form delete_cluster_settings_directory" method="post" id="delete_cluster_settings_directory'+'-'+str(mykeypos)+'" onsubmit="return false;">')
+                    print(('                            <form class="form delete_cluster_settings_directory" method="post" id="delete_cluster_settings_directory'+'-'+str(mykeypos)+'" onsubmit="return false;">'))
                     print('                                <label hidden for="cluster_settings_dir">Cluster Settings Home Directory</label>')
-                    print('                                <input hidden name="thehomedir" id="cluster_settings_dir" value="'+path+'">')
+                    print(('                                <input hidden name="thehomedir" id="cluster_settings_dir" value="'+path+'">'))
                     print('                                <label hidden for="cluster_settings_dir_delete">Cluster Settings Delete Home Directory</label>')
                     print('                                <input hidden name="action" id="cluster_settings_dir_delete" value="deletehomedir">')
                     print('                                <button id="delete-cluster-settings-directory-btn" class="btn btn-danger btn-sm" type="submit">')
@@ -996,7 +996,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     user_list = os.listdir("/var/cpanel/users")
     for cpuser in sorted(user_list):
         if cpuser != 'nobody' and cpuser != 'system':
-            print('                     <option value="'+cpuser+'">'+cpuser+'</option>')
+            print(('                     <option value="'+cpuser+'">'+cpuser+'</option>'))
     print('                         </select>')
     print('                     </div>')
     print('                     <button id="sync-web-files-btn" type="submit" class="btn btn-outline-primary btn-block mt-4">Sync web files</button>')
@@ -1011,7 +1011,7 @@ if os.path.isfile(cluster_config_file) and os.path.isfile(homedir_config_file):
     user_list = os.listdir("/var/cpanel/users")
     for cpuser in sorted(user_list):
         if cpuser != 'nobody' and cpuser != 'system':
-            print('                     <option value="'+cpuser+'">'+cpuser+'</option>')
+            print(('                     <option value="'+cpuser+'">'+cpuser+'</option>'))
     print('                         </select>')
     print('                     </div>')
     if os.path.isfile(installation_path+'/conf/skip_geodns'):
@@ -1200,7 +1200,7 @@ print('                     <form class="form" action="phpfpm_pool_editor.cgi" m
 print('                         <div class="input-group">')
 print('                             <div class="input-group-prepend input-group-prepend-min">')
 print('                                 <label for="phpfpm_pool_editor" class="input-group-text">')
-print('                                     '+return_prepend("cPanel User", phpfpmpool_hint))
+print(('                                     '+return_prepend("cPanel User", phpfpmpool_hint)))
 print('                                 </label>')
 print('                             </div>')
 print('                             <select name="poolfile" id="phpfpm_pool_editor" class="custom-select">')
@@ -1209,13 +1209,13 @@ if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
     for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
-            print('                     <option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>')
+            print(('                     <option value="/opt/nDeploy/secure-php-fpm.d/'+filename+'">'+user+'</option>'))
 else:
     conf_list = os.listdir("/opt/nDeploy/php-fpm.d")
     for filename in sorted(conf_list):
         user, extension = filename.split('.')
         if user != 'nobody':
-            print('                     <option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>')
+            print(('                     <option value="/opt/nDeploy/php-fpm.d/'+filename+'">'+user+'</option>'))
 print('                             </select>')
 print('                         </div>')
 if os.path.isfile(installation_path+"/conf/secure-php-enabled"):
@@ -1282,14 +1282,14 @@ print('                     <form class="form" action="pkg_profile.cgi" method="
 print('                         <div class="input-group">')
 print('                             <div class="input-group-prepend input-group-prepend-min">')
 print('                                 <label for="connect_cpanel_nginx" class="input-group-text">')
-print('                                     '+return_prepend("cPanel Package", cpanpackage_hint))
+print(('                                     '+return_prepend("cPanel Package", cpanpackage_hint)))
 print('                                 </label>')
 print('                             </div>')
 print('                             <select name="cpanelpkg" id="connect_cpanel_nginx" class="custom-select">')
 
 for thepkg in sorted(mypkgs.get('package')):
     pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
-    print('                             <option value="'+pkgname+'">'+pkgname+'</option>')
+    print(('                             <option value="'+pkgname+'">'+pkgname+'</option>'))
 
 print('                             </select>')
 print('                         </div>')
@@ -1326,7 +1326,7 @@ if not osrelease == 'CloudLinux':
 
             for cpuser in sorted(userlist):
                 if cpuser != 'nobody' and cpuser != 'system':
-                    print('                                <option value="'+cpuser+'">'+cpuser+'</option>')
+                    print(('                                <option value="'+cpuser+'">'+cpuser+'</option>'))
 
             print('                                    </select>')
             print('                                    <label hidden for="set_user_resource_limit">Set User Resource Limit</label>')
@@ -1343,7 +1343,7 @@ if not osrelease == 'CloudLinux':
             print('                                    <select name="unit" id="resource_limit_select" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print('                                        <option value="'+service+'">'+service+'</option>')
+                print(('                                        <option value="'+service+'">'+service+'</option>'))
 
             print('                                    </select>')
             print('                                    <label hidden for="set_resource_limit">Set Resource Limit</label>')
@@ -1360,7 +1360,7 @@ if not osrelease == 'CloudLinux':
             print('                                   <select name="unit" id="resource_limit_select" class="custom-select">')
 
             for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print('                                       <option value="'+service+'">'+service+'</option>')
+                print(('                                       <option value="'+service+'">'+service+'</option>'))
 
             print('                                   </select>')
             print('                                   <label hidden for="set_resource_limit">Set Resource Limit</label>')

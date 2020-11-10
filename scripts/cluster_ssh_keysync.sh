@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env python3
 
 if [ -f /opt/nDeploy/conf/ndeploy_cluster.yaml ];then
   for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1);

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import os
 import time
@@ -38,7 +38,7 @@ if form.getvalue('RuleId') and form.getvalue('Zone')and form.getvalue('profileya
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        if 'nemesida_wl' in yaml_parsed_profileyaml.keys():
+        if 'nemesida_wl' in list(yaml_parsed_profileyaml.keys()):
             nemesida_wl_list = yaml_parsed_profileyaml.get('nemesida_wl')
             if 'WL ID:'+myRuleId+' "Z:'+myZone+'"' not in nemesida_wl_list:
                 nemesida_wl_list.append('WL ID:'+myRuleId+' "Z:'+myZone+'"')
@@ -66,7 +66,7 @@ elif form.getvalue('whiteList-to-delete') and form.getvalue('profileyaml'):
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        if 'nemesida_wl' in yaml_parsed_profileyaml.keys():
+        if 'nemesida_wl' in list(yaml_parsed_profileyaml.keys()):
             nemesida_wl_list = yaml_parsed_profileyaml.get('nemesida_wl')
             # print_success(nemesida_wl_list['+deleting_list+'])
             nemesida_wl_list.pop(int(deleting_list))
@@ -86,7 +86,7 @@ elif form.getvalue('profileyaml') and form.getvalue('ip'):
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        if 'nemesida_ip_wl' in yaml_parsed_profileyaml.keys():
+        if 'nemesida_ip_wl' in list(yaml_parsed_profileyaml.keys()):
             nemesida_ip_wl_list = yaml_parsed_profileyaml.get('nemesida_ip_wl')
             if str(ipaddress) not in nemesida_ip_wl_list:
                 nemesida_ip_wl_list.append(str(ipaddress))
@@ -114,7 +114,7 @@ elif form.getvalue('ipaddress-to-delete') and form.getvalue('profileyaml'):
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        if 'nemesida_ip_wl' in yaml_parsed_profileyaml.keys():
+        if 'nemesida_ip_wl' in list(yaml_parsed_profileyaml.keys()):
             nemesida_ip_wl_list = yaml_parsed_profileyaml.get('nemesida_ip_wl')
             # print_success(nemesida_wl_list['+deleting_list+'])
             nemesida_ip_wl_list.pop(int(deleting_list))
@@ -134,7 +134,7 @@ elif form.getvalue('profileyaml') and form.getvalue('ipv6'):
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        if 'nemesidaipv6_wl' in yaml_parsed_profileyaml.keys():
+        if 'nemesidaipv6_wl' in list(yaml_parsed_profileyaml.keys()):
             nemesidaipv6_wl_list = yaml_parsed_profileyaml.get('nemesidaipv6_wl')
             if ipv6_address not in nemesidaipv6_wl_list:
                 nemesidaipv6_wl_list.append(ipv6_address)
@@ -162,7 +162,7 @@ elif form.getvalue('ipv6address_delete') and form.getvalue('profileyaml'):
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
-        if 'nemesidaipv6_wl' in yaml_parsed_profileyaml.keys():
+        if 'nemesidaipv6_wl' in list(yaml_parsed_profileyaml.keys()):
             nemesidaipv6_wl_list = yaml_parsed_profileyaml.get('nemesidaipv6_wl')
             # print_success(nemesida_wl_list['+deleting_list+'])
             nemesidaipv6_wl_list.pop(int(removing_list))

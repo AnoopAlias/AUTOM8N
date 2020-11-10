@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import sys
@@ -77,4 +77,4 @@ if new_pkg != cur_pkg:
             silentremove(installation_path+'/secure-php-fpm.d/'+cpaneluser+'.conf')
         subprocess.call(installation_path+"/scripts/generate_config.py "+cpaneluser, shell=True)
         sighupnginx()
-        print("1 nDeploy:account_change_package:"+cpaneluser)
+        print(("1 nDeploy:account_change_package:"+cpaneluser))

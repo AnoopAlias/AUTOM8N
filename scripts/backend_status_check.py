@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import httplib
+import http.client
 import re
 import subprocess
 import os
@@ -25,11 +25,11 @@ def is_page_available(host, path="/pingphpfpm"):
         False.
     """
     try:
-        conn = httplib.HTTPConnection(host)
+        conn = http.client.HTTPConnection(host)
         conn.request("HEAD", path)
         if re.match("^[23]\d\d$", str(conn.getresponse().status)):
             return True
-    except StandardError:
+    except Exception:
         return None
 
 
@@ -40,8 +40,8 @@ if __name__ == "__main__":
         backend_data_yaml.close()
         if "PHP" in backend_data_yaml_parsed:
             php_backends_dict = backend_data_yaml_parsed["PHP"]
-            for name, path in php_backends_dict.items():
+            for name, path in list(php_backends_dict.items()):
                 statuspage = "/"+name
                 if not is_page_available('localhost', statuspage):
                     subprocess.call('service ndeploy_backends restart', shell=True)
-                    print(name+" PHP-FPM master process is not running")
+                    print((name+" PHP-FPM master process is not running"))
