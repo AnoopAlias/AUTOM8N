@@ -13,7 +13,7 @@ server {
             stub_status on;
             access_log off;
         }
-        {% for key, value in PHPDICT.iteritems() %}
+        {% for key, value in PHPDICT.items() %}
         location ~ ^/{{ key }}$ {
             include /etc/nginx/fastcgi_params*;
             fastcgi_pass unix:{{ value }}/var/run/nobody.sock;
@@ -38,7 +38,7 @@ server {
             stub_status on;
             access_log off;
         }
-        {% for key, value in PHPDICT.iteritems() %}
+        {% for key, value in PHPDICT.items() %}
         location ~ ^/{{ key }}$ {
             include /etc/nginx/fastcgi_params*;
             fastcgi_pass unix:{{ value }}/var/run/nobody.sock;
@@ -99,7 +99,7 @@ server {
               include /etc/nginx/conf.d/nginx_status_allow*;
               deny all;
           }
-          {% for key, value in PHPDICT.iteritems() %}
+          {% for key, value in PHPDICT.items() %}
           location ~ ^/{{ key }}$ {
               include /etc/nginx/fastcgi_params*;
               fastcgi_pass unix:{{ value }}/var/run/nobody.sock;
@@ -171,7 +171,7 @@ server {
           gzip_proxied any;
           gzip_types *;
           }
-          {% for key, value in PHPDICT.iteritems() %}
+          {% for key, value in PHPDICT.items() %}
           location ~ ^/{{ key }}$ {
               include /etc/nginx/fastcgi_params*;
               fastcgi_pass unix:{{ value }}/var/run/nobody.sock;
