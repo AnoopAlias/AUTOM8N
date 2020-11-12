@@ -7,7 +7,7 @@ import cgitb
 import sys
 import psutil
 import platform
-from commoninclude import close_cpanel_liveapisock, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_prepend, return_label, print_header, print_footer, cardheader, cardfooter
+from commoninclude import close_cpanel_liveapisock, print_error_wrapper, print_nontoast_error, print_disabled, bcrumb, return_sys_tip, return_prepend, return_label, print_header, print_footer, cardheader, cardfooter
 
 
 __author__ = "Anoop P Alias"
@@ -50,7 +50,7 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
             with open(user_app_template_file, 'r') as user_apptemplate_data_yaml:
                 user_apptemplate_data_yaml_parsed = yaml.safe_load(user_apptemplate_data_yaml)
     else:
-        commoninclude.print_error_wrapper('Error: app template data file error')
+        print_error_wrapper('Error: app template data file error')
         sys.exit(0)
     if os.path.isfile(profileyaml):
 
@@ -133,7 +133,6 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('thesu
                     user_apptemplate_dict = user_apptemplate_data_yaml_parsed.get(backend_category)
                     if apptemplate_code in list(user_apptemplate_dict.keys()):
                         apptemplate_description = user_apptemplate_dict.get(apptemplate_code)
-
 
                 # Ok we are done with getting the settings,now lets present it to the user
                 print('            <!-- cPanel Starter Row -->')
