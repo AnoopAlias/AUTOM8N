@@ -30,6 +30,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend') and form.getvalue('ba
         pkgdomaindata = installation_path+'/conf/domain_data_default_local.yaml'
     else:
         pkgdomaindata = installation_path+'/conf/domain_data_default_local_'+form.getvalue('cpanelpkg')+'.yaml'
+    pkgdomaindata = pkgdomaindata.encode('utf-8')
     mybackend = form.getvalue('backend')
     mybackend = form.getvalue('backend')
     mybackendversion = form.getvalue('backendversion')

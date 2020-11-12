@@ -31,6 +31,7 @@ if form.getvalue('cpanelpkg'):
         pkgdomaindata = installation_path+'/conf/domain_data_default_local.yaml'
     else:
         pkgdomaindata = installation_path+'/conf/domain_data_default_local_'+form.getvalue('cpanelpkg')+'.yaml'
+    pkgdomaindata = pkgdomaindata.encode('utf-8')
     if os.path.isfile(pkgdomaindata):
 
         # Get all config settings from the domains domain-data config file
