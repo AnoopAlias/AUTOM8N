@@ -1113,7 +1113,7 @@ if form.getvalue('domain'):
                                 # print('  <span class="border border-secondary"></span>')
                                 print('                 <div class="col-sm-9 form-control" style="overflow: hidden;"><!--First column starts -->')
                                 print(('                     <input hidden name="whiteList-to-delete" value="'+str(mykeypos)+'">'))
-                                print(('                         '+i+''))
+                                print(('                        WL ID '+i[0]+' " Z: ' +i[1]+'";'))
                                 print('                 </div><!--First column ends-->')
                                 print('                 <div class="col-sm"><!--Second column starts -->')
                                 print(('                         <button id="removeWhitelist-btn'+'-'+str(mykeypos)+'" form="removeWhitelist'+'-'+str(mykeypos)+'"class="btn btn-outline-danger"  type="submit">'))

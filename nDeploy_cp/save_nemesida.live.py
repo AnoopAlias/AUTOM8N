@@ -33,19 +33,29 @@ if form.getvalue('RuleId') and form.getvalue('Zone')and form.getvalue('profileya
     myZone = form.getvalue('Zone')
     profileyaml = form.getvalue('profileyaml')
 
-    if os.path.isfile(profileyaml):
+    # wlList = []
+    # wl_list.append(+myRuleId+)
+    # wl_list.append(+myZone+)
+    # print_success(myZone)
 
+    if os.path.isfile(profileyaml):
+        wlist = []
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:
             yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
         if 'nemesida_wl' in list(yaml_parsed_profileyaml.keys()):
             nemesida_wl_list = yaml_parsed_profileyaml.get('nemesida_wl')
-            if 'WL ID:'+myRuleId+' "Z:'+myZone+'"' not in nemesida_wl_list:
-                nemesida_wl_list.append('WL ID:'+myRuleId+' "Z:'+myZone+'"')
-                yaml_parsed_profileyaml['nemesida_wl'] = nemesida_wl_list
+            wlist.append(myRuleId)
+            wlist.append(myZone)
+            nemesida_wl_list.append(wlist)
+            yaml_parsed_profileyaml['nemesida_wl'] = nemesida_wl_list
+
         else:
             nemesida_wl_list = []
-            nemesida_wl_list.append('WL ID:'+myRuleId+' "Z:'+myZone+'"')
+            wlist = []
+            wlist.append(myRuleId)
+            wlist.append(myZone)
+            nemesida_wl_list.append(wlist)
             yaml_parsed_profileyaml['nemesida_wl'] = nemesida_wl_list
 
 
