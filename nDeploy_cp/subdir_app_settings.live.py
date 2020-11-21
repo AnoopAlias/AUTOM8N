@@ -419,33 +419,33 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
                 print('                                    </div>')
 
                 # mod_security
-                mod_security_hint = " Mod Security v3 Web Application Firewall "
-                print(('                                    '+return_label("Mod Security", mod_security_hint)))
-
-                if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
-                    print('                                    <div class="col-md-6">')
-                    print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-
-                    if mod_security == 'enabled':
-                        print('                                            <label class="btn btn-light active">')
-                        print('                                                <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
-                        print('                                            </label>')
-                        print('                                            <label class="btn btn-light">')
-                        print('                                                <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
-                    else:
-                        print('                                            <label class="btn btn-light">')
-                        print('                                                <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
-                        print('                                            </label>')
-                        print('                                            <label class="btn btn-light active">')
-                        print('                                                <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
-
-                    print('                                            </label>')
-                    print('                                        </div>')
-                    print('                                    </div>')
-
-                else:
-                    print_disabled()
-                    print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
+                # mod_security_hint = " Mod Security v3 Web Application Firewall "
+                # print(('                                    '+return_label("Mod Security", mod_security_hint)))
+                #
+                # if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+                #     print('                                    <div class="col-md-6">')
+                #     print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+                #
+                #     if mod_security == 'enabled':
+                #         print('                                            <label class="btn btn-light active">')
+                #         print('                                                <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
+                #         print('                                            </label>')
+                #         print('                                            <label class="btn btn-light">')
+                #         print('                                                <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
+                #     else:
+                #         print('                                            <label class="btn btn-light">')
+                #         print('                                                <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
+                #         print('                                            </label>')
+                #         print('                                            <label class="btn btn-light active">')
+                #         print('                                                <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
+                #
+                #     print('                                            </label>')
+                #     print('                                        </div>')
+                #     print('                                    </div>')
+                #
+                # else:
+                #     print_disabled()
+                #     print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
 
                 # URL Redirect
                 url_redirect_hint = " Select URL redirection type. "
