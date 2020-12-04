@@ -33,7 +33,7 @@ setup_ea4_php() {
     do
       if [ -f /opt/cpanel/ea-php${ver}/enable ]; then
         yum -y --disableplugin=universal-hooks install ea-php${ver} ea-php${ver}-php-fpm ea-php${ver}-php-opcache ea-php${ver}-php-mysqlnd ea-php${ver}-php-gd ea-php${ver}-php-imap ea-php${ver}-php-intl ea-php${ver}-php-ioncube-loader ea-php${ver}-php-xmlrpc ea-php${ver}-php-xml ea-php${ver}-php-mcrypt ea-php${ver}-php-mbstring
-        if [ ! -d /opt/cpanel/php${ver}/root/var ];then
+        if [ ! -d /opt/cpanel/php${ver}/root/var ]; then
           mkdir -p /opt/cpanel/ea-php${ver}/root/var/log
           mkdir -p /opt/cpanel/ea-php${ver}/root/var/run
         fi
@@ -54,9 +54,9 @@ setup_ea4_php() {
 setup_remi_php() {
   yum -y install scl-utils libmcrypt
   osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
-  if [ ${osversion} -eq 6 ];then
+  if [ ${osversion} -eq 6 ]; then
     yum -y install http://rpms.remirepo.net/enterprise/remi-release-6.rpm
-  elif [ ${osversion} -eq 7 ];then
+  elif [ ${osversion} -eq 7 ]; then
     yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
   fi
   for ver in 54 55 56 70 71 72 73 74 80
@@ -80,15 +80,15 @@ setup_remi_php() {
 }
 
 auto_setup() {
-  if [ $(uname -r|grep lve) ];then
-    if [ -f /etc/cpanel/ea4/is_ea4 ];then
+  if [ $(uname -r|grep lve) ]; then
+    if [ -f /etc/cpanel/ea4/is_ea4 ]; then
       setup_ea4_php_cloudlinux
     else
       echo "EasyApache 4 is not enabled. Please enable EasyApache 4 and rerun this script."
       echo "You need ea-php* from the cloudlinux-updates-testing repo."
       echo "https://cloudlinux.com/cloudlinux-os-blog/entry/beta-easyapache-4-released-for-cloudlinux"
     fi
-  elif [ -f /etc/cpanel/ea4/is_ea4 ];then
+  elif [ -f /etc/cpanel/ea4/is_ea4 ]; then
     setup_ea4_php
   else
     echo "EasyApache4 is not enabled. Please enable EasyApache 4 and rerun this script."
