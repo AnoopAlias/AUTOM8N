@@ -416,27 +416,27 @@ if form.getvalue('domain'):
         print('                                </div>')
 
         # ssl_offload
-        ssl_offload_hint = " Enable for a performance increase. Disable if a redirect loop error occurs. "
-        print(('                                '+return_label("SSL Offload", ssl_offload_hint)))
-        print('                                <div class="col-md-6">')
-        print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-
-        if ssl_offload == 'enabled':
-            print('                                        <label class="btn btn-light active">')
-            print('                                            <input type="radio" name="ssl_offload" value="enabled" id="SslOffloadOn" autocomplete="off" checked> Enabled')
-            print('                                        </label>')
-            print('                                        <label class="btn btn-light">')
-            print('                                            <input type="radio" name="ssl_offload" value="disabled" id="SslOffloadOff" autocomplete="off"> Disabled')
-        else:
-            print('                                        <label class="btn btn-light">')
-            print('                                            <input type="radio" name="ssl_offload" value="enabled" id="SslOffloadOn" autocomplete="off"> Enabled')
-            print('                                        </label>')
-            print('                                        <label class="btn btn-light active">')
-            print('                                            <input type="radio" name="ssl_offload" value="disabled" id="SslOffloadOff" autocomplete="off" checked> Disabled')
-
-        print('                                        </label>')
-        print('                                    </div>')
-        print('                                </div>')
+        # ssl_offload_hint = " Enable for a performance increase. Disable if a redirect loop error occurs. "
+        # print(('                                '+return_label("SSL Offload", ssl_offload_hint)))
+        # print('                                <div class="col-md-6">')
+        # print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        #
+        # if ssl_offload == 'enabled':
+        #     print('                                        <label class="btn btn-light active">')
+        #     print('                                            <input type="radio" name="ssl_offload" value="enabled" id="SslOffloadOn" autocomplete="off" checked> Enabled')
+        #     print('                                        </label>')
+        #     print('                                        <label class="btn btn-light">')
+        #     print('                                            <input type="radio" name="ssl_offload" value="disabled" id="SslOffloadOff" autocomplete="off"> Disabled')
+        # else:
+        #     print('                                        <label class="btn btn-light">')
+        #     print('                                            <input type="radio" name="ssl_offload" value="enabled" id="SslOffloadOn" autocomplete="off"> Enabled')
+        #     print('                                        </label>')
+        #     print('                                        <label class="btn btn-light active">')
+        #     print('                                            <input type="radio" name="ssl_offload" value="disabled" id="SslOffloadOff" autocomplete="off" checked> Disabled')
+        #
+        # print('                                        </label>')
+        # print('                                    </div>')
+        # print('                                </div>')
 
         # access_log
         access_log_hint = " Disabling access_log will increase performance, but cPanel stats fail to work. "
@@ -608,33 +608,33 @@ if form.getvalue('domain'):
             print('                                </div>')
 
             # mod_security
-            mod_security_hint = " Mod Security v3 Web Application Firewall "
-            print(('                                '+return_label("Mod Security", mod_security_hint)))
-
-            if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
-                print('                                <div class="col-md-6">')
-                print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-
-                if mod_security == 'enabled':
-                    print('                                        <label class="btn btn-light active">')
-                    print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
-                    print('                                        </label>')
-                    print('                                        <label class="btn btn-light">')
-                    print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
-                else:
-                    print('                                        <label class="btn btn-light">')
-                    print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
-                    print('                                        </label>')
-                    print('                                        <label class="btn btn-light active">')
-                    print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
-
-                print('                                        </label>')
-                print('                                    </div>')
-                print('                                </div>')
-
-            else:
-                print_disabled()
-                print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
+            # mod_security_hint = " Mod Security v3 Web Application Firewall "
+            # print(('                                '+return_label("Mod Security", mod_security_hint)))
+            #
+            # if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+            #     print('                                <div class="col-md-6">')
+            #     print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+            #
+            #     if mod_security == 'enabled':
+            #         print('                                        <label class="btn btn-light active">')
+            #         print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
+            #         print('                                        </label>')
+            #         print('                                        <label class="btn btn-light">')
+            #         print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
+            #     else:
+            #         print('                                        <label class="btn btn-light">')
+            #         print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
+            #         print('                                        </label>')
+            #         print('                                        <label class="btn btn-light active">')
+            #         print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
+            #
+            #     print('                                        </label>')
+            #     print('                                    </div>')
+            #     print('                                </div>')
+            #
+            # else:
+            #     print_disabled()
+            #     print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
 
             print('                            </div> <!-- Row End -->')
 
@@ -676,91 +676,91 @@ if form.getvalue('domain'):
         print('                                </div>')
 
         # pagespeed
-        pagespeed_hint = " Delivers PageSpeed-optimized pages, but is resource intensive. "
-        print(('                                '+return_label("PageSpeed", pagespeed_hint)))
-
-        if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
-            print('                                <div class="col-md-6">')
-            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-
-            if pagespeed == 'enabled':
-                print('                                        <label class="btn btn-light active">')
-                print('                                            <input type="radio" name="pagespeed" value="enabled" id="PagespeedOn" autocomplete="off" checked> Enabled')
-                print('                                        </label>')
-                print('                                        <label class="btn btn-light">')
-                print('                                            <input type="radio" name="pagespeed" value="disabled" id="PagespeedOff" autocomplete="off"> Disabled')
-            else:
-                print('                                        <label class="btn btn-light">')
-                print('                                            <input type="radio" name="pagespeed" value="enabled" id="PagespeedOn" autocomplete="off"> Enabled')
-                print('                                        </label>')
-                print('                                        <label class="btn btn-light active">')
-                print('                                            <input type="radio" name="pagespeed" value="disabled" id="PagespeedOff" autocomplete="off" checked> Disabled')
-
-            print('                                        </label>')
-            print('                                    </div>')
-            print('                                </div>')
-
-        else:
-            print_disabled()
-            print(('                                <input hidden name="pagespeed" value="'+pagespeed+'">'))
-
-        # pagespeed filter level
-        pagespeed_filter_hint = " CoreFilters loads the Core Filters, PassThrough allows you to enable individual filters via a custom NGINX Configuration. "
-        print(('                                '+return_label("PageSpeed Filters", pagespeed_filter_hint)))
-
-        if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
-            print('                                <div class="col-md-6">')
-            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-
-            if pagespeed_filter == 'CoreFilters':
-                print('                                        <label class="btn btn-light active">')
-                print('                                            <input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off" checked> Core')
-                print('                                        </label>')
-                print('                                        <label class="btn btn-light">')
-                print('                                            <input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off"> Pass')
-            else:
-                print('                                        <label class="btn btn-light">')
-                print('                                            <input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off"> Core')
-                print('                                        </label>')
-                print('                                        <label class="btn btn-light active">')
-                print('                                            <input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off" checked> Pass')
-
-            print('                                        </label>')
-            print('                                    </div>')
-            print('                                </div>')
-
-        else:
-            print_disabled()
-            print(('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">'))
-
-        # brotli
-        brotli_hint = " A newer bandwidth optimization created by Google. It is resource intensive and applies to TLS (HTTPS) ONLY. "
-        print(('                                '+return_label("Brotli", brotli_hint)))
-
-        if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
-            print('                                <div class="col-md-6">')
-            print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-
-            if brotli == 'enabled':
-                print('                                        <label class="btn btn-light active">')
-                print('                                            <input type="radio" name="brotli" value="enabled" id="BrotliOn" autocomplete="off" checked> Enabled')
-                print('                                        </label>')
-                print('                                        <label class="btn btn-light">')
-                print('                                            <input type="radio" name="brotli" value="disabled" id="BrotliOff" autocomplete="off"> Disabled')
-            else:
-                print('                                        <label class="btn btn-light">')
-                print('                                            <input type="radio" name="brotli" value="enabled" id="BrotliOn" autocomplete="off"> Enabled')
-                print('                                        </label>')
-                print('                                        <label class="btn btn-light active">')
-                print('                                            <input type="radio" name="brotli" value="disabled" id="BrotliOff" autocomplete="off" checked> Disabled')
-
-            print('                                        </label>')
-            print('                                    </div>')
-            print('                                </div>')
-
-        else:
-            print_disabled()
-            print(('                                <input hidden name="brotli" value="'+brotli+'">'))
+        # pagespeed_hint = " Delivers PageSpeed-optimized pages, but is resource intensive. "
+        # print(('                                '+return_label("PageSpeed", pagespeed_hint)))
+        #
+        # if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
+        #     print('                                <div class="col-md-6">')
+        #     print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        #
+        #     if pagespeed == 'enabled':
+        #         print('                                        <label class="btn btn-light active">')
+        #         print('                                            <input type="radio" name="pagespeed" value="enabled" id="PagespeedOn" autocomplete="off" checked> Enabled')
+        #         print('                                        </label>')
+        #         print('                                        <label class="btn btn-light">')
+        #         print('                                            <input type="radio" name="pagespeed" value="disabled" id="PagespeedOff" autocomplete="off"> Disabled')
+        #     else:
+        #         print('                                        <label class="btn btn-light">')
+        #         print('                                            <input type="radio" name="pagespeed" value="enabled" id="PagespeedOn" autocomplete="off"> Enabled')
+        #         print('                                        </label>')
+        #         print('                                        <label class="btn btn-light active">')
+        #         print('                                            <input type="radio" name="pagespeed" value="disabled" id="PagespeedOff" autocomplete="off" checked> Disabled')
+        #
+        #     print('                                        </label>')
+        #     print('                                    </div>')
+        #     print('                                </div>')
+        #
+        # else:
+        #     print_disabled()
+        #     print(('                                <input hidden name="pagespeed" value="'+pagespeed+'">'))
+        #
+        # # pagespeed filter level
+        # pagespeed_filter_hint = " CoreFilters loads the Core Filters, PassThrough allows you to enable individual filters via a custom NGINX Configuration. "
+        # print(('                                '+return_label("PageSpeed Filters", pagespeed_filter_hint)))
+        #
+        # if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
+        #     print('                                <div class="col-md-6">')
+        #     print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        #
+        #     if pagespeed_filter == 'CoreFilters':
+        #         print('                                        <label class="btn btn-light active">')
+        #         print('                                            <input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off" checked> Core')
+        #         print('                                        </label>')
+        #         print('                                        <label class="btn btn-light">')
+        #         print('                                            <input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off"> Pass')
+        #     else:
+        #         print('                                        <label class="btn btn-light">')
+        #         print('                                            <input type="radio" name="pagespeed_filter" value="CoreFilters" id="PagespeedFilterOn" autocomplete="off"> Core')
+        #         print('                                        </label>')
+        #         print('                                        <label class="btn btn-light active">')
+        #         print('                                            <input type="radio" name="pagespeed_filter" value="PassThrough" id="PagespeedFilterOff" autocomplete="off" checked> Pass')
+        #
+        #     print('                                        </label>')
+        #     print('                                    </div>')
+        #     print('                                </div>')
+        #
+        # else:
+        #     print_disabled()
+        #     print(('                                <input hidden name="pagespeed_filter" value="'+pagespeed_filter+'">'))
+        #
+        # # brotli
+        # brotli_hint = " A newer bandwidth optimization created by Google. It is resource intensive and applies to TLS (HTTPS) ONLY. "
+        # print(('                                '+return_label("Brotli", brotli_hint)))
+        #
+        # if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
+        #     print('                                <div class="col-md-6">')
+        #     print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+        #
+        #     if brotli == 'enabled':
+        #         print('                                        <label class="btn btn-light active">')
+        #         print('                                            <input type="radio" name="brotli" value="enabled" id="BrotliOn" autocomplete="off" checked> Enabled')
+        #         print('                                        </label>')
+        #         print('                                        <label class="btn btn-light">')
+        #         print('                                            <input type="radio" name="brotli" value="disabled" id="BrotliOff" autocomplete="off"> Disabled')
+        #     else:
+        #         print('                                        <label class="btn btn-light">')
+        #         print('                                            <input type="radio" name="brotli" value="enabled" id="BrotliOn" autocomplete="off"> Enabled')
+        #         print('                                        </label>')
+        #         print('                                        <label class="btn btn-light active">')
+        #         print('                                            <input type="radio" name="brotli" value="disabled" id="BrotliOff" autocomplete="off" checked> Disabled')
+        #
+        #     print('                                        </label>')
+        #     print('                                    </div>')
+        #     print('                                </div>')
+        #
+        # else:
+        #     print_disabled()
+        #     print(('                                <input hidden name="brotli" value="'+brotli+'">'))
 
         # gzip
         gzip_hint = " A bandwidth optimization that is mildly resource intensive. "
