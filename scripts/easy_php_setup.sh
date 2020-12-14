@@ -7,7 +7,7 @@ setup_ea4_php_cloudlinux(){
 		do
 			if rpm -q ea-php$ver
 			then
-				yum -y --disableplugin=universal-hooks --enablerepo=cloudlinux-updates-testing install ea-php$ver ea-php$ver-php-fpm ea-php$ver-php-opcache ea-php$ver-php-mysqlnd ea-php$ver-php-gd ea-php$ver-php-imap ea-php$ver-php-intl ea-php$ver-php-ioncube-loader ea-php$ver-php-xmlrpc ea-php$ver-php-xml ea-php$ver-php-mcrypt ea-php$ver-php-mbstring
+				yum -y --disableplugin=universal-hooks --enablerepo=cloudlinux-updates-testing install ea-php$ver-php-fpm
 				if [ ! -d /opt/cpanel/php$ver/root/var ];then
 					mkdir -p /opt/cpanel/ea-php$ver/root/var/log
 					mkdir -p /opt/cpanel/ea-php$ver/root/var/run
@@ -31,7 +31,7 @@ setup_ea4_php(){
 		do
 			if rpm -q ea-php$ver
 			then
-				yum -y --disableplugin=universal-hooks install ea-php$ver ea-php$ver-php-fpm ea-php$ver-php-opcache ea-php$ver-php-mysqlnd ea-php$ver-php-gd ea-php$ver-php-imap ea-php$ver-php-intl ea-php$ver-php-ioncube-loader ea-php$ver-php-xmlrpc ea-php$ver-php-xml ea-php$ver-php-mcrypt ea-php$ver-php-mbstring
+				yum -y --disableplugin=universal-hooks install ea-php$ver-php-fpm
 				if [ ! -d /opt/cpanel/php$ver/root/var ];then
 					mkdir -p /opt/cpanel/ea-php$ver/root/var/log
 					mkdir -p /opt/cpanel/ea-php$ver/root/var/run
