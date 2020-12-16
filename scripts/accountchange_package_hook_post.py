@@ -2,6 +2,7 @@
 
 
 import sys
+import io
 import subprocess
 import os
 import pwd
@@ -24,12 +25,14 @@ __email__ = "anoopalias01@gmail.com"
 # This hook script is supposed to be called after account creation by cPanel
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8')
 # Loading the json in on stdin send by cPanel
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
 cpaneluser = mydict["user"]
-cur_pkg = mydict["cur_pkg"].encode('utf-8')
-new_pkg = mydict["new_pkg"].encode('utf-8')
+cur_pkg = mydict["cur_pkg"]
+new_pkg = mydict["new_pkg"]
 if new_pkg != cur_pkg:
     if os.path.isfile(installation_path+'/conf/lock_domaindata_to_package'):
         hostingplan_filename = new_pkg.replace(" ", "_")
