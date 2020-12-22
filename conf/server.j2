@@ -208,9 +208,9 @@ WL ID:{{ item[0] }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DO
 {% for item in NEMESIDA_IP_WL %}
 nwaf_ip_wl {{ item }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
 {% endfor %}
-#{% for item in NEMESIDAIPV6_WL %}
-#{{ item }}
-#{% endfor %}
+{% for item in NEMESIDAIPV6_WL %}
+nwaf_ipv6_wl {{ item }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
+{% endfor %}
 ################## NWAF ######################
 
 ################### vhosts ###################
