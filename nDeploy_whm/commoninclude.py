@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import os
+import sys
+import io
 import subprocess
 import yaml
 import random
@@ -188,6 +190,9 @@ def return_multi_input(theoption, hint):
 
 # Print Header
 def print_header(title=''):
+    # Set sys.stdout and sys.stderr to UTF-8
+    sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
     print('Content-Type: text/html')
     print('')
     print('<!doctype html>')

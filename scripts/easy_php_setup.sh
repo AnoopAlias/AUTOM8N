@@ -3,14 +3,17 @@
 
 #Function defs
 setup_ea4_php_cloudlinux(){
-		for ver in 54 55 56 70 71 72 73 74
+		for ver in 54 55 56 70 71 72 73 74 80
 		do
-			yum -y --disableplugin=universal-hooks --enablerepo=cloudlinux-updates-testing install ea-php$ver ea-php$ver-php-fpm ea-php$ver-php-opcache ea-php$ver-php-mysqlnd ea-php$ver-php-gd ea-php$ver-php-imap ea-php$ver-php-intl ea-php$ver-php-ioncube-loader ea-php$ver-php-xmlrpc ea-php$ver-php-xml ea-php$ver-php-mcrypt ea-php$ver-php-mbstring
-			if [ ! -d /opt/cpanel/php$ver/root/var ];then
-				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
-				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
+			if rpm -q ea-php$ver
+			then
+				yum -y --disableplugin=universal-hooks --enablerepo=cloudlinux-updates-testing install ea-php$ver-php-fpm
+				if [ ! -d /opt/cpanel/php$ver/root/var ];then
+					mkdir -p /opt/cpanel/ea-php$ver/root/var/log
+					mkdir -p /opt/cpanel/ea-php$ver/root/var/run
+				fi
+				/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 			fi
-			/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 		done
 		service ndeploy_backends stop || systemctl stop ndeploy_backends
 		service ndeploy_backends start || systemctl start ndeploy_backends
@@ -24,14 +27,17 @@ setup_ea4_php_cloudlinux(){
 	}
 
 setup_ea4_php(){
-		for ver in 54 55 56 70 71 72 73 74
+		for ver in 54 55 56 70 71 72 73 74 80
 		do
-			yum -y --disableplugin=universal-hooks install ea-php$ver ea-php$ver-php-fpm ea-php$ver-php-opcache ea-php$ver-php-mysqlnd ea-php$ver-php-gd ea-php$ver-php-imap ea-php$ver-php-intl ea-php$ver-php-ioncube-loader ea-php$ver-php-xmlrpc ea-php$ver-php-xml ea-php$ver-php-mcrypt ea-php$ver-php-mbstring
-			if [ ! -d /opt/cpanel/php$ver/root/var ];then
-				mkdir -p /opt/cpanel/ea-php$ver/root/var/log
-				mkdir -p /opt/cpanel/ea-php$ver/root/var/run
+			if rpm -q ea-php$ver
+			then
+				yum -y --disableplugin=universal-hooks install ea-php$ver-php-fpm
+				if [ ! -d /opt/cpanel/php$ver/root/var ];then
+					mkdir -p /opt/cpanel/ea-php$ver/root/var/log
+					mkdir -p /opt/cpanel/ea-php$ver/root/var/run
+				fi
+				/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 			fi
-			/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
 		done
 		service ndeploy_backends stop || systemctl stop ndeploy_backends
 		service ndeploy_backends start || systemctl start ndeploy_backends
@@ -52,7 +58,7 @@ setup_remi_php(){
 		elif [ ${osversion} -eq 7 ];then
 			yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 		fi
-		for ver in 54 55 56 70 71 72 73 74
+		for ver in 54 55 56 70 71 72 73 74 80
 		do
 			yum -y --disableexcludes=main --enablerepo=remi install php$ver php$ver-php-fpm php$ver-php-opcache php$ver-php-mysqlnd php$ver-php-gd php$ver-php-imap php$ver-php-intl php$ver-php-ioncube-loader php$ver-php-xmlrpc php$ver-php-xml php$ver-php-mcrypt php$ver-php-mbstring
 			ln -s /opt/remi/php$ver/root/usr/sbin /opt/remi/php$ver/root/
@@ -93,7 +99,7 @@ setup_ea4_cluster_php(){
 			if [ ! -f /opt/nDeploy/conf/XTENDWEB_PHP_SETUP_LOCK_DO_NOT_REMOVE ]; then
 				auto_setup
 			fi
-			for ver in 54 55 56 70 71 72 73 74
+			for ver in 54 55 56 70 71 72 73 74 80
 			do
 				if [ -f /opt/nDeploy/conf/zz_xtendweb.ini ]; then
 					rsync -a /opt/nDeploy/conf/zz_xtendweb.ini /opt/cpanel/ea-php$ver/root/etc/php.d/

@@ -290,7 +290,7 @@ deny all;
 }
 
 # Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+{% for KEY, VALUE in SUBDIRAPPS.items() %}
 {% if PASSENGERAPPS[KEY] == 'enabled' %}
 location ~ ^/{{ KEY }}(/.*|$) {
 {% else %}
@@ -425,7 +425,7 @@ deny all;
 }
 
 # Include any applications in subdirectory
-{% for KEY, VALUE in SUBDIRAPPS.iteritems() %}
+{% for KEY, VALUE in SUBDIRAPPS.items() %}
 {% if PASSENGERAPPS[KEY] == 'enabled' %}
 location ~ ^/{{ KEY }}(/.*|$) {
 {% else %}

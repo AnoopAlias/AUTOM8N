@@ -32,6 +32,7 @@ if form.getvalue('cpanelpkg'):
         pkgdomaindata = installation_path+'/conf/domain_data_default_local.yaml'
     else:
         pkgdomaindata = installation_path+'/conf/domain_data_default_local_'+form.getvalue('cpanelpkg')+'.yaml'
+    pkgdomaindata = pkgdomaindata.encode('utf-8')
     if not os.path.isfile(pkgdomaindata):
         shutil.copyfile(default_domain_data_file, pkgdomaindata)
 
@@ -220,7 +221,7 @@ if form.getvalue('cpanelpkg'):
             print(('                            <option value="'+backends_defined+'">'+backends_defined+'</option>'))
     print('                                </select>')
 
-    #Pass on the domain name to the next stage
+    # Pass on the domain name to the next stage
     print('                                <div class="input-group-append">')
     print('                                    <label hidden for="select_pkg_app_settings2">Select Upstream Package</label>')
     print(('                                    <input hidden id="select_pkg_app_settings2" name="cpanelpkg" value="'+form.getvalue('cpanelpkg')+'">'))

@@ -3,6 +3,7 @@
 
 import sys
 import subprocess
+import io
 import os
 import pwd
 import grp
@@ -23,13 +24,15 @@ __email__ = "anoopalias01@gmail.com"
 # This hook script is supposed to be called after account creation by cPanel
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
+sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8')
 # Loading the json in on stdin send by cPanel
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
 cpaneluser = mydict["user"]
 cpaneldomain = mydict["domain"]
 hostingplan = mydict["plan"]
-hostingplan_filename = hostingplan.encode('utf-8').replace(" ", "_")
+hostingplan_filename = hostingplan.replace(" ", "_")
 domain_data_file = installation_path+"/domain-data/"+cpaneldomain
 if not os.path.isfile(domain_data_file):
     if hostingplan_filename == 'undefined' or hostingplan_filename == 'default':

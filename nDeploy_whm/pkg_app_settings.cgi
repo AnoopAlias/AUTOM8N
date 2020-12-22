@@ -33,6 +33,7 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
         pkgdomaindata = installation_path+'/conf/domain_data_default_local.yaml'
     else:
         pkgdomaindata = installation_path+'/conf/domain_data_default_local_'+form.getvalue('cpanelpkg')+'.yaml'
+    pkgdomaindata = pkgdomaindata.encode('utf-8')
     mybackend = form.getvalue('backend')
 
     # Get data about the backends available
@@ -191,7 +192,7 @@ else:
     print_nontoast_error('Forbidden!', 'Missing cPanel Package or Backend Data!')
     sys.exit(0)
 
-#Column End
+# Column End
 print('                        </div> <!-- Column End -->')
 print('')
 print('                    </div> <!-- WHM End Row -->')

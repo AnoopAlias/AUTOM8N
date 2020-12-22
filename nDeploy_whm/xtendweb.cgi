@@ -1287,8 +1287,8 @@ print('                                 </label>')
 print('                             </div>')
 print('                             <select name="cpanelpkg" id="connect_cpanel_nginx" class="custom-select">')
 
-for thepkg in sorted(mypkgs.get('package')):
-    pkgname = thepkg.get('name').encode('utf-8').replace(' ', '_')
+for thepkg in mypkgs.get('package'):
+    pkgname = thepkg.get('name').replace(' ', '_')
     print(('                             <option value="'+pkgname+'">'+pkgname+'</option>'))
 
 print('                             </select>')
