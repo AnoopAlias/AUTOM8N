@@ -58,8 +58,8 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         # Lets deal with settings that are mutually exclusive
         if 'redis' in myapptemplate:
             yaml_parsed_profileyaml['pagespeed'] = 'disabled'
-            yaml_parsed_profileyaml['mod_security'] = 'disabled'
-            terminal_call('','Note: Turned off pagespeed and mod_security options as they are incompatible with Full Page cache. The cache will not work if you turn on these options!')
+            yaml_parsed_profileyaml['waf'] = 'disabled'
+            terminal_call('','Note: Turned off pagespeed and waf options as they are incompatible with Full Page cache. The cache will not work if you turn on these options!')
         if '5029' in myapptemplate or 'w3tc' in myapptemplate:
             yaml_parsed_profileyaml['set_expire_static'] = 'disabled'
             yaml_parsed_profileyaml['gzip'] = 'disabled'

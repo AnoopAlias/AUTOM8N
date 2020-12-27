@@ -63,8 +63,8 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         # Lets deal with settings that are mutually exclusive
         if 'redis' in myapptemplate:
             the_subdir_dict['pagespeed'] = 'disabled'
-            the_subdir_dict['mod_security'] = 'disabled'
-            terminal_call('','Note: Turned off pagespeed and mod_security options as they are incompatible with Full Page cache. The cache will not work if you turn on these options!')
+            the_subdir_dict['waf'] = 'disabled'
+            terminal_call('','Note: Turned off pagespeed and waf options as they are incompatible with Full Page cache. The cache will not work if you turn on these options!')
         if 'noextra' in myapptemplate:
             the_subdir_dict['set_expire_static'] = 'disabled'
             the_subdir_dict['gzip'] = 'disabled'
