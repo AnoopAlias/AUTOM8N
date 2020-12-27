@@ -69,13 +69,13 @@ if form.getvalue('thesubdir'):
             else:
                 commoninclude.print_error('Error: Forbidden::proxy_to_master')
                 sys.exit(0)
-            # mod_security
-            if 'mod_security' in list(form.keys()):
-                mod_security = form.getvalue('mod_security')
-                the_subdir_dict['mod_security'] = mod_security
-            else:
-                commoninclude.print_error('Error: Forbidden::mod_security')
-                sys.exit(0)
+            # waf
+            # if 'waf' in list(form.keys()):
+            #     waf = form.getvalue('waf')
+            #     the_subdir_dict['waf'] = waf
+            # else:
+            #     commoninclude.print_error('Error: Forbidden::waf')
+            #     sys.exit(0)
             # set_expire_static
             if 'set_expire_static' in list(form.keys()):
                 set_expire_static = form.getvalue('set_expire_static')
@@ -143,12 +143,12 @@ else:
     else:
         commoninclude.print_error('Error: Forbidden::set_expire_static')
         sys.exit(0)
-    # mod_security
-    if 'mod_security' in list(form.keys()):
-        mod_security = form.getvalue('mod_security')
-        yaml_parsed_profileyaml['mod_security'] = mod_security
+    # waf
+    if 'waf' in list(form.keys()):
+        waf = form.getvalue('waf')
+        yaml_parsed_profileyaml['waf'] = waf
     else:
-        commoninclude.print_error('Error: Forbidden::mod_security')
+        commoninclude.print_error('Error: Forbidden::waf')
         sys.exit(0)
     # autoindex
     if 'autoindex' in list(form.keys()):
@@ -157,34 +157,34 @@ else:
     else:
         commoninclude.print_error('Error: Forbidden::autoindex')
         sys.exit(0)
-    # ssl_offload
-    if 'ssl_offload' in list(form.keys()):
-        ssl_offload = form.getvalue('ssl_offload')
-        yaml_parsed_profileyaml['ssl_offload'] = ssl_offload
-    else:
-        commoninclude.print_error('Error: Forbidden::ssl_offload')
-        sys.exit(0)
+    # # ssl_offload
+    # if 'ssl_offload' in list(form.keys()):
+    #     ssl_offload = form.getvalue('ssl_offload')
+    #     yaml_parsed_profileyaml['ssl_offload'] = ssl_offload
+    # else:
+    #     commoninclude.print_error('Error: Forbidden::ssl_offload')
+    #     sys.exit(0)
     # pagespeed
-    if 'pagespeed' in list(form.keys()):
-        pagespeed = form.getvalue('pagespeed')
-        yaml_parsed_profileyaml['pagespeed'] = pagespeed
-    else:
-        commoninclude.print_error('Error: Forbidden::pagespeed')
-        sys.exit(0)
-    # pagespeed_filter
-    if 'pagespeed_filter' in list(form.keys()):
-        pagespeed_filter = form.getvalue('pagespeed_filter')
-        yaml_parsed_profileyaml['pagespeed_filter'] = pagespeed_filter
-    else:
-        commoninclude.print_error('Error: Forbidden::pagespeed_filter')
-        sys.exit(0)
-    # brotli
-    if 'brotli' in list(form.keys()):
-        brotli = form.getvalue('brotli')
-        yaml_parsed_profileyaml['brotli'] = brotli
-    else:
-        commoninclude.print_error('Error: Forbidden::brotli')
-        sys.exit(0)
+    # if 'pagespeed' in list(form.keys()):
+    #     pagespeed = form.getvalue('pagespeed')
+    #     yaml_parsed_profileyaml['pagespeed'] = pagespeed
+    # else:
+    #     commoninclude.print_error('Error: Forbidden::pagespeed')
+    #     sys.exit(0)
+    # # pagespeed_filter
+    # if 'pagespeed_filter' in list(form.keys()):
+    #     pagespeed_filter = form.getvalue('pagespeed_filter')
+    #     yaml_parsed_profileyaml['pagespeed_filter'] = pagespeed_filter
+    # else:
+    #     commoninclude.print_error('Error: Forbidden::pagespeed_filter')
+    #     sys.exit(0)
+    # # brotli
+    # if 'brotli' in list(form.keys()):
+    #     brotli = form.getvalue('brotli')
+    #     yaml_parsed_profileyaml['brotli'] = brotli
+    # else:
+    #     commoninclude.print_error('Error: Forbidden::brotli')
+    #     sys.exit(0)
     # gzip
     if 'gzip' in list(form.keys()):
         gzip = form.getvalue('gzip')

@@ -86,7 +86,7 @@ if form.getvalue('domain'):
         backend_version = yaml_parsed_profileyaml.get('backend_version')
         backend_path = yaml_parsed_profileyaml.get('backend_path')
         apptemplate_code = yaml_parsed_profileyaml.get('apptemplate_code')
-        mod_security = yaml_parsed_profileyaml.get('mod_security', 'disabled')
+        waf = yaml_parsed_profileyaml.get('waf', 'disabled')
         auth_basic = yaml_parsed_profileyaml.get('auth_basic', 'disabled')
         set_expire_static = yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
 
@@ -99,7 +99,7 @@ if form.getvalue('domain'):
         http2 = yaml_parsed_profileyaml.get('http2', 'disabled')
         access_log = yaml_parsed_profileyaml.get('access_log', 'enabled')
         open_file_cache = yaml_parsed_profileyaml.get('open_file_cache', 'disabled')
-        ssl_offload = yaml_parsed_profileyaml.get('ssl_offload', 'disabled')
+        # ssl_offload = yaml_parsed_profileyaml.get('ssl_offload', 'disabled')
         proxy_to_master = yaml_parsed_profileyaml.get('proxy_to_master', 'disabled')
         wwwredirect = yaml_parsed_profileyaml.get('wwwredirect', 'none')
         redirect_to_ssl = yaml_parsed_profileyaml.get('redirect_to_ssl', 'disabled')
@@ -503,7 +503,7 @@ if form.getvalue('domain'):
             print(('                        <input hidden name="dos_mitigate" value="'+dos_mitigate+'">'))
             print(('                        <input hidden name="test_cookie" value="'+test_cookie+'">'))
             print(('                        <input hidden name="symlink_protection" value="'+symlink_protection+'">'))
-            print(('                        <input hidden name="mod_security" value="'+mod_security+'">'))
+            print(('                        <input hidden name="waf" value="'+waf+'">'))
         else:
             print('                            <div class="row row-btn-group-toggle">')
 
@@ -607,34 +607,34 @@ if form.getvalue('domain'):
             print('                                    </div>')
             print('                                </div>')
 
-            # mod_security
-            # mod_security_hint = " Mod Security v3 Web Application Firewall "
-            # print(('                                '+return_label("Mod Security", mod_security_hint)))
-            #
-            # if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
-            #     print('                                <div class="col-md-6">')
-            #     print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-            #
-            #     if mod_security == 'enabled':
-            #         print('                                        <label class="btn btn-light active">')
-            #         print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off" checked> Enabled')
-            #         print('                                        </label>')
-            #         print('                                        <label class="btn btn-light">')
-            #         print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off"> Disabled')
-            #     else:
-            #         print('                                        <label class="btn btn-light">')
-            #         print('                                            <input type="radio" name="mod_security" value="enabled" id="ModSecurityOn" autocomplete="off"> Enabled')
-            #         print('                                        </label>')
-            #         print('                                        <label class="btn btn-light active">')
-            #         print('                                            <input type="radio" name="mod_security" value="disabled" id="ModSecurityOff" autocomplete="off" checked> Disabled')
-            #
-            #     print('                                        </label>')
-            #     print('                                    </div>')
-            #     print('                                </div>')
-            #
-            # else:
-            #     print_disabled()
-            #     print(('                                <input hidden name="mod_security" value="'+mod_security+'">'))
+            # waf
+            waf_hint = " WAF Application "
+            print(('                                '+return_label("waf", waf_hint)))
+
+            if os.path.isfile('/etc/nginx/modules.d/nemesida.load'):
+                print('                                <div class="col-md-6">')
+                print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+
+                if waf == 'enabled':
+                    print('                                        <label class="btn btn-light active">')
+                    print('                                            <input type="radio" name="waf" value="enabled" id="WafOn" autocomplete="off" checked> Enabled')
+                    print('                                        </label>')
+                    print('                                        <label class="btn btn-light">')
+                    print('                                            <input type="radio" name="waf" value="disabled" id="WafOff" autocomplete="off"> Disabled')
+                else:
+                    print('                                        <label class="btn btn-light">')
+                    print('                                            <input type="radio" name="waf" value="enabled" id="WafOn" autocomplete="off"> Enabled')
+                    print('                                        </label>')
+                    print('                                        <label class="btn btn-light active">')
+                    print('                                            <input type="radio" name="waf" value="disabled" id="WafOff" autocomplete="off" checked> Disabled')
+
+                print('                                        </label>')
+                print('                                    </div>')
+                print('                                </div>')
+
+            else:
+                print_disabled()
+                print(('                                <input hidden name="waf" value="'+waf+'">'))
 
             print('                            </div> <!-- Row End -->')
 
