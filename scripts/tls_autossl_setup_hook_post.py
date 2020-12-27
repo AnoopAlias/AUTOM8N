@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 
 import sys
@@ -18,9 +18,10 @@ cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
 
 cpjson = json.load(sys.stdin)
 mydict = cpjson["data"]
-domainname = mydict["web_vhost_name"]
-
-
+if "web_vhost_name" in mydict:
+    domainname = mydict["web_vhost_name"]
+else:
+    domainname = mydict["domain_set_name"]
 with open("/etc/userdatadomains.json", "r") as userdatadomains:
     json_parsed_userdata = json.load(userdatadomains)
 cpaneluserdata = json_parsed_userdata.get(domainname)
