@@ -275,6 +275,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     symlink_protection = yaml_parsed_domain_data.get('symlink_protection', 'disabled')
     redirect_aliases = yaml_parsed_domain_data.get('redirect_aliases', 'disabled')
     auth_basic = yaml_parsed_domain_data.get('auth_basic', 'disabled')
+    waf = yaml_parsed_domain_data.get('waf', 'disabled')
     if 'nemesida_wl' in list(yaml_parsed_domain_data.keys()):
         nemesida_wl = yaml_parsed_domain_data.get('nemesida_wl')
     else:
@@ -365,6 +366,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
                     "DOSMITIGATE": dos_mitigate,
                     "BACKEND_CATEGORY": backend_category,
                     "CLUSTER_LOG": cluster_log,
+                    "waf":waf,
                     "NEMESIDA_WL": nemesida_wl,
                     "NEMESIDA_IP_WL": nemesida_ip_wl,
                     "NEMESIDAIPV6_WL": nemesidaipv6_wl

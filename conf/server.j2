@@ -202,6 +202,9 @@ return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
 ################### Redirects ###################
 ################## NWAF ######################
+{% if waf == 'enabled' %}
+error_log {{ HOMEDIR }}/logs/nginx_error_log;
+nwaf_host_enable {% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
 {% for item in NEMESIDA_WL %}
 WL ID:{{ item[0] }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %} "Z:{{ item[1] }}";
 {% endfor %}
@@ -209,8 +212,9 @@ WL ID:{{ item[0] }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DO
 nwaf_ip_wl {{ item }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
 {% endfor %}
 {% for item in NEMESIDAIPV6_WL %}
-nwaf_ipv6_wl {{ item }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
+nwaf_ip_wl {{ item }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
 {% endfor %}
+{% endif %}
 ################## NWAF ######################
 
 ################### vhosts ###################
