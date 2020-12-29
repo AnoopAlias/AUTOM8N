@@ -1038,6 +1038,17 @@ if form.getvalue('domain'):
         cardheader('Manage WAF', 'fas fa-level-down-alt')
         #Whitelist Rule ID and Zone
         print('                <div  class="card-body" id="whitelist-panel">  <!-- Card Body Start -->')
+        print('                     <div class="container my-3 bg-light">')
+        print('                         <div class="col-md-12 align-left">')
+        print('                                    <form class="form" method="post" id="view_nwaf_log" onsubmit="return false;">')
+        print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
+
+        print('                                        <button id="view-nwaf-log-btn" style="" class="btn btn-block btn-primary text-center" type="submit">View nwaf Log</button>')
+
+        print('                                    </form>')
+        print('                             </div>')
+        print('                             </div>')
+        # print('                  <button class="btn btn-primary btn-block" id="" type="submit">Submit</button>')
         print('                     <div><h3>WhiteList Rule</h3></div>')
         print('                     <div class="container"><!-- Container Starts -->')
         print('                    <form class="form" id="whitelistWaf"  onsubmit="return false;">')
@@ -1155,7 +1166,7 @@ if form.getvalue('domain'):
         print('                         </form>')
         print('                 </div><!--Container ends -->')
         print('   <br/>')
-        #Remove IP address
+        #Remove IP address Whitelisted
         if os.path.isfile(profileyaml):
             with open(profileyaml,'r') as profileyaml_data_stream:
                 yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
