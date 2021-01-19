@@ -399,6 +399,28 @@ jQuery(document).ready(function($){
         });
     });
 
+    $(document).on("submit","#view_nwaf_log",function(e){
+        var $loaderId        =   "#view-nwaf-log-btn";
+        var $loaderText      =   "Loading...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "view_nwaf_log.live.py?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                // $("#v-pills-system .card-body > .no-gutters").load(($urlparam) + " #v-pills-system .card-body > .no-gutters > *");
+                window.location.reload();
+                $.toast({
+                    autohide: 'false',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
     $(document).on("submit","#dependency_installer",function(e){
         var $loaderId        =   "#dependency-installer-btn";
         var $loaderText      =   "Installing...";
