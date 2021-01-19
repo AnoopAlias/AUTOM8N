@@ -1038,16 +1038,13 @@ if form.getvalue('domain'):
         cardheader('Manage WAF', 'fas fa-level-down-alt')
         #Whitelist Rule ID and Zone
         print('                <div  class="card-body" id="whitelist-panel">  <!-- Card Body Start -->')
-        print('                     <div class="container my-3 bg-light">')
-        print('                         <div class="col-md-12 align-left">')
+        print('                        <div class="col-6">')
         print('                                    <form class="form" method="post" id="view_nwaf_log" onsubmit="return false;">')
+        print('                                        <button id="view-nwaf-log-btn" class="btn btn-block btn-primary text-center" type="submit">View nwaf Log</button>')
         print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
-
-        print('                                        <button id="view-nwaf-log-btn" style="" class="btn btn-block btn-primary text-center" type="submit">View nwaf Log</button>')
-
         print('                                    </form>')
-        print('                             </div>')
-        print('                             </div>')
+        print('                                </div>')
+        print('               <br>')
         # print('                  <button class="btn btn-primary btn-block" id="" type="submit">Submit</button>')
         print('                     <div><h3>WhiteList Rule</h3></div>')
         print('                     <div class="container"><!-- Container Starts -->')
