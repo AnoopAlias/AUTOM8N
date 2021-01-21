@@ -11,6 +11,7 @@ yum-config-manager --disable NemesidaWAF
 export TMPDIR=/root/tmp
 yum -y --enablerepo=NemesidaWAF install nwaf-dyn-1.${NGINX_MINOR_VERSION}
 yum -y --enablerepo=ndeploy install nginx-nDeploy-module-nemesida
+rsync -av /opt/nDeploy/conf/nwaf.conf /etc/nginx/nwaf/conf/global/nwaf.conf
 echo 'Setup: Ok'
 elif [ ${OSVERSION} -eq 8 ];then
 rpm -Uvh https://repository.pentestit.ru/nw/centos/nwaf-release-centos-8-1-6.noarch.rpm
@@ -21,6 +22,7 @@ export TMPDIR=/root/tmp
 curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash
 yum -y --enablerepo=NemesidaWAF install nwaf-dyn-1.${NGINX_MINOR_VERSION}
 yum -y --enablerepo=ndeploy install nginx-nDeploy-module-nemesida
+rsync -av /opt/nDeploy/conf/nwaf.conf /etc/nginx/nwaf/conf/global/nwaf.conf
 echo 'Setup: Ok'
 else
 echo "Setup: Failed"
