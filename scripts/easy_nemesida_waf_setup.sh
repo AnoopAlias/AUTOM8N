@@ -9,6 +9,7 @@ rpm -Uvh https://repository.pentestit.ru/nw/centos/nwaf-release-centos-7-1-6.noa
 # Keeping the repo disabled by default
 yum-config-manager --disable NemesidaWAF
 export TMPDIR=/root/tmp
+pip3 install cython # https://forum.nemesida-security.com/threads/scikit-learn-dependency-error-for-cython-in-centos7-and-centos8.51/
 yum -y --enablerepo=NemesidaWAF install nwaf-dyn-1.${NGINX_MINOR_VERSION}
 yum -y --enablerepo=ndeploy install nginx-nDeploy-module-nemesida
 rsync -av /opt/nDeploy/conf/nwaf.conf /etc/nginx/nwaf/conf/global/nwaf.conf
@@ -18,6 +19,7 @@ rpm -Uvh https://repository.pentestit.ru/nw/centos/nwaf-release-centos-8-1-6.noa
 # Keeping the repo disabled by default
 yum-config-manager --disable NemesidaWAF
 export TMPDIR=/root/tmp
+pip3 install cython # https://forum.nemesida-security.com/threads/scikit-learn-dependency-error-for-cython-in-centos7-and-centos8.51/
 # Setting up packagecloud.io for rabbitmq-server
 curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash
 yum -y --enablerepo=NemesidaWAF install nwaf-dyn-1.${NGINX_MINOR_VERSION}
