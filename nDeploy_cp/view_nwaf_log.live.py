@@ -3,7 +3,6 @@
 import os
 import cgi
 import cgitb
-import subprocess
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, terminal_call
 
 
