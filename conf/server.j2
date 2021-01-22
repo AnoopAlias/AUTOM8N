@@ -20,6 +20,9 @@ ssl_stapling on;
 server_name www.{{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
@@ -87,6 +90,9 @@ ssl_stapling on;
 server_name {{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
@@ -154,6 +160,9 @@ ssl_stapling on;
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
@@ -256,6 +265,9 @@ allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
@@ -394,6 +406,9 @@ allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
