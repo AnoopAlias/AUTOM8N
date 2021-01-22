@@ -203,7 +203,6 @@ return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 ################### Redirects ###################
 ################## NWAF ######################
 {% if waf == 'enabled' %}
-error_log {{ HOMEDIR }}/logs/nginx_error_log;
 nwaf_host_enable {% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
 {% for item in NEMESIDA_WL %}
 WL ID:{{ item[0] }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %} "Z:{{ item[1] }}";
@@ -224,6 +223,9 @@ listen    {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
+{% if waf == 'enabled' %}
+error_log {{ HOMEDIR }}/logs/nginx_error_log;
+{% endif %}
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_ACCESSLOG %}
 {% if CLUSTER_LOG %}
@@ -359,6 +361,9 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 ssl_stapling on;
 {% endif %}
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
+{% if waf == 'enabled' %}
+error_log {{ HOMEDIR }}/logs/nginx_error_log;
+{% endif %}
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_ACCESSLOG %}
 {% if CLUSTER_LOG %}
