@@ -2,7 +2,7 @@
 #Author: Anoop P Alias
 
 OSVERSION=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
-NGINX_MINOR_VERSION=$(rpm -qa|grep nginx-nDeploy|awk -F"." '{print $2}')
+NGINX_MINOR_VERSION=$(rpm -qa|egrep nginx-nDeploy-[0-9].*|awk -F"." '{print $2}')
 
 if [ ${OSVERSION} -eq 7 ];then
 rpm -Uvh https://repository.pentestit.ru/nw/centos/nwaf-release-centos-7-1-6.noarch.rpm
