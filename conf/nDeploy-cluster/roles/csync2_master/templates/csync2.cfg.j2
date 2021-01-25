@@ -35,6 +35,9 @@ group nDeployCluster
         include /etc/nginx/conf.d/nginx_status_allow.conf;
         include /etc/apache2/conf.d;
         include /etc/apache2/conf/httpd.conf;
+        include /opt/cpanel/ea-php51/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php52/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php53/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php54/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php55/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php56/root/etc/php-fpm.d;
@@ -43,6 +46,10 @@ group nDeployCluster
         include /opt/cpanel/ea-php72/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php73/root/etc/php-fpm.d;
         include /opt/cpanel/ea-php74/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php80/root/etc/php-fpm.d;
+        include /opt/cpanel/ea-php51/root/etc/php.ini;
+        include /opt/cpanel/ea-php52/root/etc/php.ini;
+        include /opt/cpanel/ea-php53/root/etc/php.ini;
         include /opt/cpanel/ea-php54/root/etc/php.ini;
         include /opt/cpanel/ea-php55/root/etc/php.ini;
         include /opt/cpanel/ea-php56/root/etc/php.ini;
@@ -51,6 +58,7 @@ group nDeployCluster
         include /opt/cpanel/ea-php72/root/etc/php.ini;
         include /opt/cpanel/ea-php73/root/etc/php.ini;
         include /opt/cpanel/ea-php74/root/etc/php.ini;
+        include /opt/cpanel/ea-php80/root/etc/php.ini;
         exclude /var/spool/cron/root;
         action
         {
@@ -85,6 +93,9 @@ group nDeployCluster
         }
         action
         {
+                pattern /opt/cpanel/ea-php51/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php52/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php53/root/etc/php-fpm.d/*;
                 pattern /opt/cpanel/ea-php54/root/etc/php-fpm.d/*;
                 pattern /opt/cpanel/ea-php55/root/etc/php-fpm.d/*;
                 pattern /opt/cpanel/ea-php56/root/etc/php-fpm.d/*;
@@ -93,11 +104,15 @@ group nDeployCluster
                 pattern /opt/cpanel/ea-php72/root/etc/php-fpm.d/*;
                 pattern /opt/cpanel/ea-php73/root/etc/php-fpm.d/*;
                 pattern /opt/cpanel/ea-php74/root/etc/php-fpm.d/*;
+                pattern /opt/cpanel/ea-php80/root/etc/php-fpm.d/*;
                 exec "/scripts/restartsrv_apache_php_fpm";
                 logfile "/var/log/csync2_action.log";
         }
         action
         {
+                pattern /opt/cpanel/ea-php51/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php52/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php53/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php54/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php55/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php56/root/etc/php.ini;
@@ -106,6 +121,7 @@ group nDeployCluster
                 pattern /opt/cpanel/ea-php72/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php73/root/etc/php.ini;
                 pattern /opt/cpanel/ea-php74/root/etc/php.ini;
+                pattern /opt/cpanel/ea-php80/root/etc/php.ini;
                 exec "/opt/nDeploy/scripts/init_backends.py reload";
                 logfile "/var/log/csync2_action.log";
                 do-local;

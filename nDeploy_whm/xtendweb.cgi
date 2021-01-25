@@ -207,7 +207,6 @@ print('                    <a class="nav-link" id="v-pills-zone-tab" data-toggle
 print('                    <a class="nav-link" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos" aria-selected="false">DDOS Protection</a>')
 print('                    <a class="nav-link" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm" aria-selected="false">PHP-FPM Pool Editor</a>')
 print('                    <a class="nav-link" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map" aria-selected="false">Package Editor</a>')
-print('                    <a class="nav-link" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit" aria-selected="false">System Resource Limit</a>')
 print('                </div>')
 print('')
 print('                <div class="tab-content col-md-12 col-lg-9" id="v-pills-tabContent">')
@@ -224,7 +223,6 @@ print('                            <a class="dropdown-item" id="v-pills-zone-tab
 print('                            <a class="dropdown-item" id="v-pills-dos-tab" data-toggle="pill" href="#v-pills-dos" role="tab" aria-controls="v-pills-dos" aria-selected="false">DDOS Protection</a>')
 print('                            <a class="dropdown-item" id="v-pills-php_fpm-tab" data-toggle="pill" href="#v-pills-php_fpm" role="tab" aria-controls="v-pills-php_fpm" aria-selected="false">PHP-FPM Pool Editor</a>')
 print('                            <a class="dropdown-item" id="v-pills-map-tab" data-toggle="pill" href="#v-pills-map" role="tab" aria-controls="v-pills-map" aria-selected="false">Package Editor</a>')
-print('                            <a class="dropdown-item" id="v-pills-limit-tab" data-toggle="pill" href="#v-pills-limit" role="tab" aria-controls="v-pills-limit" aria-selected="false">System Resource Limit</a>')
 print('                        </div>')
 print('                    </div>')
 
@@ -1300,78 +1298,6 @@ cardfooter('This option will automatically assign NGINX Config/Settings to a cPa
 
 print('                </div> <!-- End Map Tab -->')
 
-# Limit Tab
-print('')
-print('                <!-- Limit Tab -->')
-print('                <div class="tab-pane fade" id="v-pills-limit" role="tabpanel" aria-labelledby="v-pills-limit-tab">')
-
-# System Resource Limit
-cardheader('System Resource Limit', 'fas fa-compress')
-print('                        <div class="card-body"> <!-- Card Body Start -->')
-
-with open('/etc/redhat-release', 'r') as releasefile:
-    osrelease = releasefile.read().split(' ')[0]
-if not osrelease == 'CloudLinux':
-    if os.path.isfile('/usr/bin/systemctl'):
-
-        # Next sub-section start here
-        if os.path.isfile(installation_path+"/conf/secure-php-enabled"):  # if per user php-fpm master process is set
-            userlist = os.listdir("/var/cpanel/users")
-            print('                            <form class="form" action="resource_limit.cgi" method="get">')
-            print('                                <div class="input-group">')
-            print('                                    <div class="input-group-prepend input-group-prepend-min">')
-            print('                                        <label for="set_user_resource" class="input-group-text">User</label>')
-            print('                                    </div>')
-            print('                                    <select name="unit" id="set_user_resource" class="custom-select">')
-
-            for cpuser in sorted(userlist):
-                if cpuser != 'nobody' and cpuser != 'system':
-                    print(('                                <option value="'+cpuser+'">'+cpuser+'</option>'))
-
-            print('                                    </select>')
-            print('                                    <label hidden for="set_user_resource_limit">Set User Resource Limit</label>')
-            print('                                    <input hidden name="mode" id="set_user_resource_limit" value="user">')
-            print('                                </div>')
-            print('                                <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
-            print('                            </form>')
-
-            print('                            <form class="form mt-4" action="resource_limit.cgi" method="get">')
-            print('                                <div class="input-group">')
-            print('                                    <div class="input-group-prepend input-group-prepend-min">')
-            print('                                        <label for="resource_limit_select" class="input-group-text">Service</label>')
-            print('                                    </div>')
-            print('                                    <select name="unit" id="resource_limit_select" class="custom-select">')
-
-            for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print(('                                        <option value="'+service+'">'+service+'</option>'))
-
-            print('                                    </select>')
-            print('                                    <label hidden for="set_resource_limit">Set Resource Limit</label>')
-            print('                                    <input hidden name="mode" id="set_resource_limit" value="service">')
-            print('                               </div>')
-            print('                               <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
-            print('                           </form>')
-        else:
-            print('                           <form class="form" action="resource_limit.cgi" method="get">')
-            print('                               <div class="input-group">')
-            print('                                   <div class="input-group-prepend input-group-prepend-min">')
-            print('                                       <label for="resource_limit_select" class="input-group-text">Resource</label>')
-            print('                                   </div>')
-            print('                                   <select name="unit" id="resource_limit_select" class="custom-select">')
-
-            for service in "nginx", "httpd", "mysql", "ndeploy_backends", "ea-php54-php-fpm", "ea-php55-php-fpm", "ea-php56-php-fpm", "ea-php70-php-fpm", "ea-php71-php-fpm", "ea-php72-php-fpm", "ea-php73-php-fpm":
-                print(('                                       <option value="'+service+'">'+service+'</option>'))
-
-            print('                                   </select>')
-            print('                                   <label hidden for="set_resource_limit">Set Resource Limit</label>')
-            print('                                   <input hidden name="mode" id="set_resource_limit" value="service">')
-            print('                               </div>')
-            print('                               <button class="btn btn-outline-primary btn-block mt-4" type="submit">Set Limit</button>')
-            print('                           </form>')
-print('                        </div> <!-- Card Body End -->')
-cardfooter('BlockIOWeight range is 10-1000, CPUShares range is 0-1024, MemoryLimit range is calculated using available memory')
-
-print('                </div> <!-- End Limit Tab -->')
 print('            </div>')
 print('        </div> <!-- End WHM Tabs Row -->')
 

@@ -20,6 +20,9 @@ ssl_stapling on;
 server_name www.{{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
@@ -87,6 +90,9 @@ ssl_stapling on;
 server_name {{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
@@ -154,6 +160,9 @@ ssl_stapling on;
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
@@ -203,7 +212,6 @@ return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 ################### Redirects ###################
 ################## NWAF ######################
 {% if waf == 'enabled' %}
-error_log {{ HOMEDIR }}/logs/nginx_error_log;
 nwaf_host_enable {% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
 {% for item in NEMESIDA_WL %}
 WL ID:{{ item[0] }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %} "Z:{{ item[1] }}";
@@ -224,6 +232,9 @@ listen    {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
+{% if waf == 'enabled' %}
+error_log {{ HOMEDIR }}/logs/nginx_error_log;
+{% endif %}
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_ACCESSLOG %}
 {% if CLUSTER_LOG %}
@@ -254,6 +265,9 @@ allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
@@ -359,6 +373,9 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 ssl_stapling on;
 {% endif %}
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
+{% if waf == 'enabled' %}
+error_log {{ HOMEDIR }}/logs/nginx_error_log;
+{% endif %}
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_ACCESSLOG %}
 {% if CLUSTER_LOG %}
@@ -389,6 +406,9 @@ allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Allow "Well-Known URIs" as per RFC 5785
+location /cpanelwebcall/ {
+proxy_pass http://127.0.0.1:2082/cpanelwebcall;
+}
 location ~* ^/.well-known/ {
 {% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;

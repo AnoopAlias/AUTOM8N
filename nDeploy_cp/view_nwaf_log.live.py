@@ -3,7 +3,6 @@
 import os
 import cgi
 import cgitb
-import subprocess
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, terminal_call
 
 
@@ -25,8 +24,8 @@ print_simple_header()
 
 nwaf_log = cpanelhome+'/logs/nginx_error_log'
 if os.path.isfile(nwaf_log):
-    terminal_call('/usr/bin/tail -100 '+nwaf_log, 'Displaying last 100 lines of '+nwaf_log, 'nwaf log dump complete!')
-    print_success('Displaying last 100 lines in the terminal window below.')
+    terminal_call('grep "Nemesida WAF" '+nwaf_log, 'Displaying Nemesida WAF log '+nwaf_log, 'nwaf log dump complete!')
+    print_success('Displaying Nemesida WAF logs in the terminal window below.')
 else:
     print_error('nwaf log file is not present!')
 
