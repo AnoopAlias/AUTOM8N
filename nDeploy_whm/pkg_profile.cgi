@@ -483,6 +483,34 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
 
+    # waf
+    waf_hint = " WAF Application "
+    print(('                                '+return_label("waf", waf_hint)))
+    if os.path.isfile('/etc/nginx/modules.d/nemesida.load'):
+        print('                                <div class="col-md-6">')
+        print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+        if waf == 'enabled':
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="waf" value="enabled" id="WafOn" autocomplete="off" checked> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="waf" value="disabled" id="WafOff" autocomplete="off"> Disabled')
+        else:
+            print('                                        <label class="btn btn-light">')
+            print('                                            <input type="radio" name="waf" value="enabled" id="WafOn" autocomplete="off"> Enabled')
+            print('                                        </label>')
+            print('                                        <label class="btn btn-light active">')
+            print('                                            <input type="radio" name="waf" value="disabled" id="WafOff" autocomplete="off" checked> Disabled')
+
+    print('                                        </label>')
+    print('                                    </div>')
+    print('                                </div>')
+
+    else:
+      print_disabled()
+      print(('                                <input hidden name="waf" value="'+waf+'">'))
+
+
     # test_cookie
     test_cookie_hint = " Allow good bots in (like Google/Yahoo). Disable most bad bots by using a cookie challenge. "
     print(('                                '+return_label("Bot Mitigate", test_cookie_hint)))
