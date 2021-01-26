@@ -63,12 +63,12 @@ if form.getvalue('cpanelpkg'):
         print_error('Error: Forbidden::phpmaxchildren!')
         sys.exit(0)
 
-    # Mod_security
-    if 'mod_security' in list(form.keys()):
-        mod_security = form.getvalue('mod_security')
-        yaml_parsed_profileyaml['mod_security'] = mod_security
+    #waf
+    if 'waf' in list(form.keys()):
+        waf = form.getvalue('waf')
+        yaml_parsed_profileyaml['waf'] = waf
     else:
-        print_error('Error: Forbidden::mod_security!')
+        print_error('Error: Forbidden::waf!')
         sys.exit(0)
 
     # Autoindex
@@ -79,37 +79,37 @@ if form.getvalue('cpanelpkg'):
         print_error('Error: Forbidden::autoindex!')
         sys.exit(0)
 
-    # Ssl_offload
-    if 'ssl_offload' in list(form.keys()):
-        ssl_offload = form.getvalue('ssl_offload')
-        yaml_parsed_profileyaml['ssl_offload'] = ssl_offload
-    else:
-        print_error('Error: Forbidden::ssl_offload!')
-        sys.exit(0)
+    # # Ssl_offload
+    # if 'ssl_offload' in list(form.keys()):
+    #     ssl_offload = form.getvalue('ssl_offload')
+    #     yaml_parsed_profileyaml['ssl_offload'] = ssl_offload
+    # else:
+    #     print_error('Error: Forbidden::ssl_offload!')
+    #     sys.exit(0)
 
-    # Pagespeed
-    if 'pagespeed' in list(form.keys()):
-        pagespeed = form.getvalue('pagespeed')
-        yaml_parsed_profileyaml['pagespeed'] = pagespeed
-    else:
-        print_error('Error: Forbidden::pagespeed!')
-        sys.exit(0)
-
-    # Pagespeed_filter
-    if 'pagespeed_filter' in list(form.keys()):
-        pagespeed_filter = form.getvalue('pagespeed_filter')
-        yaml_parsed_profileyaml['pagespeed_filter'] = pagespeed_filter
-    else:
-        print_error('Error: Forbidden::pagespeed_filter!')
-        sys.exit(0)
-
-    # Brotli
-    if 'brotli' in list(form.keys()):
-        brotli = form.getvalue('brotli')
-        yaml_parsed_profileyaml['brotli'] = brotli
-    else:
-        print_error('Error: Forbidden::brotli!')
-        sys.exit(0)
+    # # Pagespeed
+    # if 'pagespeed' in list(form.keys()):
+    #     pagespeed = form.getvalue('pagespeed')
+    #     yaml_parsed_profileyaml['pagespeed'] = pagespeed
+    # else:
+    #     print_error('Error: Forbidden::pagespeed!')
+    #     sys.exit(0)
+    #
+    # # Pagespeed_filter
+    # if 'pagespeed_filter' in list(form.keys()):
+    #     pagespeed_filter = form.getvalue('pagespeed_filter')
+    #     yaml_parsed_profileyaml['pagespeed_filter'] = pagespeed_filter
+    # else:
+    #     print_error('Error: Forbidden::pagespeed_filter!')
+    #     sys.exit(0)
+    #
+    # # Brotli
+    # if 'brotli' in list(form.keys()):
+    #     brotli = form.getvalue('brotli')
+    #     yaml_parsed_profileyaml['brotli'] = brotli
+    # else:
+    #     print_error('Error: Forbidden::brotli!')
+    #     sys.exit(0)
 
     # Gzip
     if 'gzip' in list(form.keys()):
@@ -160,7 +160,7 @@ if form.getvalue('cpanelpkg'):
         print_error('Error: Forbidden::dos_mitigate!')
         sys.exit(0)
 
-    # Test_cookie
+    #Test_cookie
     if 'test_cookie' in list(form.keys()):
         test_cookie = form.getvalue('test_cookie')
         yaml_parsed_profileyaml['test_cookie'] = test_cookie

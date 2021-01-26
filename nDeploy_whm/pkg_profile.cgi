@@ -45,14 +45,14 @@ if form.getvalue('cpanelpkg'):
     backend_version = yaml_parsed_profileyaml.get('backend_version')
     backend_path = yaml_parsed_profileyaml.get('backend_path')
     apptemplate_code = yaml_parsed_profileyaml.get('apptemplate_code')
-    mod_security = yaml_parsed_profileyaml.get('mod_security', 'disabled')
+    waf = yaml_parsed_profileyaml.get('waf', 'disabled')
     auth_basic = yaml_parsed_profileyaml.get('auth_basic', 'disabled')
     set_expire_static = yaml_parsed_profileyaml.get('set_expire_static', 'disabled')
 
     # Server Settings
     autoindex = yaml_parsed_profileyaml.get('autoindex', 'disabled')
-    pagespeed = yaml_parsed_profileyaml.get('pagespeed', 'disabled')
-    brotli = yaml_parsed_profileyaml.get('brotli', 'disabled')
+    # pagespeed = yaml_parsed_profileyaml.get('pagespeed', 'disabled')
+    # brotli = yaml_parsed_profileyaml.get('brotli', 'disabled')
     gzip = yaml_parsed_profileyaml.get('gzip', 'disabled')
     http2 = yaml_parsed_profileyaml.get('http2', 'disabled')
     access_log = yaml_parsed_profileyaml.get('access_log', 'enabled')
@@ -64,7 +64,7 @@ if form.getvalue('cpanelpkg'):
     redirect_aliases = yaml_parsed_profileyaml.get('redirect_aliases', 'disabled')
     security_headers = yaml_parsed_profileyaml.get('security_headers', 'disabled')
     dos_mitigate = yaml_parsed_profileyaml.get('dos_mitigate', 'disabled')
-    pagespeed_filter = yaml_parsed_profileyaml.get('pagespeed_filter', 'CoreFilters')
+    # pagespeed_filter = yaml_parsed_profileyaml.get('pagespeed_filter', 'CoreFilters')
     redirecturl = yaml_parsed_profileyaml.get('redirecturl', 'none')
     redirectstatus = yaml_parsed_profileyaml.get('redirectstatus', 'none')
     append_requesturi = yaml_parsed_profileyaml.get('append_requesturi', 'disabled')
@@ -483,34 +483,6 @@ if form.getvalue('cpanelpkg'):
         print('                                    </div>')
         print('                                </div>')
 
-    # waf
-    waf_hint = " WAF Application "
-    print(('                                '+return_label("waf", waf_hint)))
-    if os.path.isfile('/etc/nginx/modules.d/nemesida.load'):
-        print('                                <div class="col-md-6">')
-        print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
-        if waf == 'enabled':
-            print('                                        <label class="btn btn-light active">')
-            print('                                            <input type="radio" name="waf" value="enabled" id="WafOn" autocomplete="off" checked> Enabled')
-            print('                                        </label>')
-            print('                                        <label class="btn btn-light">')
-            print('                                            <input type="radio" name="waf" value="disabled" id="WafOff" autocomplete="off"> Disabled')
-        else:
-            print('                                        <label class="btn btn-light">')
-            print('                                            <input type="radio" name="waf" value="enabled" id="WafOn" autocomplete="off"> Enabled')
-            print('                                        </label>')
-            print('                                        <label class="btn btn-light active">')
-            print('                                            <input type="radio" name="waf" value="disabled" id="WafOff" autocomplete="off" checked> Disabled')
-
-    print('                                        </label>')
-    print('                                    </div>')
-    print('                                </div>')
-
-    else:
-      print_disabled()
-      print(('                                <input hidden name="waf" value="'+waf+'">'))
-
-
     # test_cookie
     test_cookie_hint = " Allow good bots in (like Google/Yahoo). Disable most bad bots by using a cookie challenge. "
     print(('                                '+return_label("Bot Mitigate", test_cookie_hint)))
@@ -518,7 +490,7 @@ if form.getvalue('cpanelpkg'):
         if test_cookie == 'enabled':
             print('                                <div class="col-md-6">')
             print('                                    <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-            print('                                        label class="btn btn-light active">')
+            print('                                        <label class="btn btn-light active">')
             print('                                            <input type="radio" name="test_cookie" value="enabled" id="TestCookieOn" autocomplete="off" checked> Enabled')
             print('                                        </label>')
             print('                                        <label class="btn btn-light">')
@@ -566,6 +538,33 @@ if form.getvalue('cpanelpkg'):
         print('                                        </label>')
         print('                                    </div>')
         print('                                </div>')
+    # waf
+    waf_hint = " WAF Application "
+    print(('                                '+return_label("Waf", waf_hint)))
+    if os.path.isfile('/etc/nginx/modules.d/nemesida.load'):
+              print('                                <div class="col-md-6">')
+              print('                                    <div class="btn-group btn-block btn-group-toggle mb-0" data-toggle="buttons">')
+
+              if waf == 'enabled':
+                  print('                                        <label class="btn btn-light active">')
+                  print('                                            <input type="radio" name="waf" value="enabled" id="WafOn" autocomplete="off" checked> Enabled')
+                  print('                                        </label>')
+                  print('                                        <label class="btn btn-light">')
+                  print('                                            <input type="radio" name="waf" value="disabled" id="WafOff" autocomplete="off"> Disabled')
+              else:
+                  print('                                        <label class="btn btn-light">')
+                  print('                                            <input type="radio" name="waf" value="enabled" id="WafOn" autocomplete="off"> Enabled')
+                  print('                                        </label>')
+                  print('                                        <label class="btn btn-light active">')
+                  print('                                            <input type="radio" name="waf" value="disabled" id="WafOff" autocomplete="off" checked> Disabled')
+
+              print('                                        </label>')
+              print('                                    </div>')
+              print('                                </div>')
+    else:
+        print_disabled()
+        print(('                                <input hidden name="waf" value="'+waf+'">'))
+
 
     # # mod_security
     # mod_security_hint = " Mod Security v3 Web Application Firewall "

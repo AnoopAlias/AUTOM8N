@@ -609,7 +609,7 @@ if form.getvalue('domain'):
 
             # waf
             waf_hint = " WAF Application "
-            print(('                                '+return_label("waf", waf_hint)))
+            print(('                                '+return_label("Waf", waf_hint)))
 
             if os.path.isfile('/etc/nginx/modules.d/nemesida.load'):
                 print('                                <div class="col-md-6">')
