@@ -723,9 +723,9 @@ print('                        <form id="module_installer" class="form" onsubmit
 
 cardheader(brand+' Modules Setup', 'fab fa-centos')
 test_cookie_hint = " Controls loading of nginx-nDeploy-module-testcookie_access which allows good bots in while keeping bad bots out. "
-mod_security_hint = " Controls loading of nginx-nDeploy-module-modsecurity which installs the Mod Security v3 Web Application Firewall. "
-pagespeed_hint = " Controls loading of nginx-nDeploy-module-pagespeed which delivers PageSpeed-optimized pages. "
-brotli_hint = " Controls loading of nginx-nDeploy-module-brotli which is a newer bandwidth optimization created by Google. "
+# mod_security_hint = " Controls loading of nginx-nDeploy-module-modsecurity which installs the Mod Security v3 Web Application Firewall. "
+# pagespeed_hint = " Controls loading of nginx-nDeploy-module-pagespeed which delivers PageSpeed-optimized pages. "
+# brotli_hint = " Controls loading of nginx-nDeploy-module-brotli which is a newer bandwidth optimization created by Google. "
 geoip2_hint = " Controls loading of nginx-nDeploy-module-geoip2 which creates variables based on the client IP address. "
 passenger_hint = " Controls loading of nginx-nDeploy-module-passenger which installs Phusion Passenger web application server. "
 
@@ -752,65 +752,65 @@ else:
 print('                                        </div>')
 print('                                    </div>')
 
-print(('                                    '+return_label("ModSecurity V3 Module", mod_security_hint)))
-print('                                    <div class="col-md-6">')
-print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
-    print('                                        <label class="btn btn-light active">')
-    print('                                            <input type="radio" name="mod_security" value="enabled" autocomplete="off" checked> Installed')
-    print('                                        </label>')
-    print('                                        <label class="btn btn-light">')
-    print('                                            <input type="radio" name="mod_security" value="disabled" autocomplete="off"> Uninstalled')
-    print('                                        </label>')
-else:
-    print('                                        <label class="btn btn-light">')
-    print('                                            <input type="radio" name="mod_security" value="enabled" autocomplete="off"> Installed')
-    print('                                        </label>')
-    print('                                        <label class="btn btn-light active">')
-    print('                                            <input type="radio" name="mod_security" value="disabled" autocomplete="off" checked> Uninstalled')
-    print('                                        </label>')
-print('                                        </div>')
-print('                                    </div>')
-
-print(('                                    '+return_label("PageSpeed Module", pagespeed_hint)))
-print('                                    <div class="col-md-6">')
-print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
-    print('                                        <label class="btn btn-light active">')
-    print('                                            <input type="radio" name="pagespeed" value="enabled" autocomplete="off" checked> Installed')
-    print('                                        </label>')
-    print('                                        <label class="btn btn-light">')
-    print('                                            <input type="radio" name="pagespeed" value="disabled" autocomplete="off"> Uninstalled')
-    print('                                        </label>')
-else:
-    print('                                        <label class="btn btn-light">')
-    print('                                            <input type="radio" name="pagespeed" value="enabled" autocomplete="off"> Installed')
-    print('                                        </label>')
-    print('                                        <label class="btn btn-light active">')
-    print('                                            <input type="radio" name="pagespeed" value="disabled" autocomplete="off" checked> Uninstalled')
-    print('                                        </label>')
-print('                                        </div>')
-print('                                    </div>')
-
-print(('                                    '+return_label("Brotli Module", brotli_hint)))
-print('                                    <div class="col-md-6">')
-print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
-if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
-    print('                                        <label class="btn btn-light active">')
-    print('                                            <input type="radio" name="brotli" value="enabled" autocomplete="off" checked> Installed')
-    print('                                        </label>')
-    print('                                        <label class="btn btn-light">')
-    print('                                            <input type="radio" name="brotli" value="disabled" autocomplete="off"> Uninstalled')
-    print('                                        </label>')
-else:
-    print('                                        <label class="btn btn-light">')
-    print('                                            <input type="radio" name="brotli" value="enabled" autocomplete="off"> Installed')
-    print('                                        </label>')
-    print('                                        <label class="btn btn-light active">')
-    print('                                            <input type="radio" name="brotli" value="disabled" autocomplete="off" checked> Uninstalled')
-    print('                                        </label>')
-print('                                        </div>')
-print('                                    </div>')
+# print(('                                    '+return_label("ModSecurity V3 Module", mod_security_hint)))
+# print('                                    <div class="col-md-6">')
+# print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+# if os.path.isfile('/etc/nginx/modules.d/zz_modsecurity.load'):
+#     print('                                        <label class="btn btn-light active">')
+#     print('                                            <input type="radio" name="mod_security" value="enabled" autocomplete="off" checked> Installed')
+#     print('                                        </label>')
+#     print('                                        <label class="btn btn-light">')
+#     print('                                            <input type="radio" name="mod_security" value="disabled" autocomplete="off"> Uninstalled')
+#     print('                                        </label>')
+# else:
+#     print('                                        <label class="btn btn-light">')
+#     print('                                            <input type="radio" name="mod_security" value="enabled" autocomplete="off"> Installed')
+#     print('                                        </label>')
+#     print('                                        <label class="btn btn-light active">')
+#     print('                                            <input type="radio" name="mod_security" value="disabled" autocomplete="off" checked> Uninstalled')
+#     print('                                        </label>')
+# print('                                        </div>')
+# print('                                    </div>')
+#
+# print(('                                    '+return_label("PageSpeed Module", pagespeed_hint)))
+# print('                                    <div class="col-md-6">')
+# print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+# if os.path.isfile('/etc/nginx/modules.d/pagespeed.load'):
+#     print('                                        <label class="btn btn-light active">')
+#     print('                                            <input type="radio" name="pagespeed" value="enabled" autocomplete="off" checked> Installed')
+#     print('                                        </label>')
+#     print('                                        <label class="btn btn-light">')
+#     print('                                            <input type="radio" name="pagespeed" value="disabled" autocomplete="off"> Uninstalled')
+#     print('                                        </label>')
+# else:
+#     print('                                        <label class="btn btn-light">')
+#     print('                                            <input type="radio" name="pagespeed" value="enabled" autocomplete="off"> Installed')
+#     print('                                        </label>')
+#     print('                                        <label class="btn btn-light active">')
+#     print('                                            <input type="radio" name="pagespeed" value="disabled" autocomplete="off" checked> Uninstalled')
+#     print('                                        </label>')
+# print('                                        </div>')
+# print('                                    </div>')
+#
+# print(('                                    '+return_label("Brotli Module", brotli_hint)))
+# print('                                    <div class="col-md-6">')
+# print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+# if os.path.isfile('/etc/nginx/modules.d/brotli.load'):
+#     print('                                        <label class="btn btn-light active">')
+#     print('                                            <input type="radio" name="brotli" value="enabled" autocomplete="off" checked> Installed')
+#     print('                                        </label>')
+#     print('                                        <label class="btn btn-light">')
+#     print('                                            <input type="radio" name="brotli" value="disabled" autocomplete="off"> Uninstalled')
+#     print('                                        </label>')
+# else:
+#     print('                                        <label class="btn btn-light">')
+#     print('                                            <input type="radio" name="brotli" value="enabled" autocomplete="off"> Installed')
+#     print('                                        </label>')
+#     print('                                        <label class="btn btn-light active">')
+#     print('                                            <input type="radio" name="brotli" value="disabled" autocomplete="off" checked> Uninstalled')
+#     print('                                        </label>')
+# print('                                        </div>')
+# print('                                    </div>')
 
 print(('                                    '+return_label("Geoip2 Module", geoip2_hint)))
 print('                                    <div class="col-md-6">')
