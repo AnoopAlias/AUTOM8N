@@ -36,9 +36,12 @@ if __name__ == "__main__":
     cluster_dict_ipmap = cluster_dict.get('ipmap')
     with open('/etc/apache2/conf/httpd.conf', 'r') as apache_conf:
         theconf = apache_conf.read()
-    new_conf = multiple_replace(cluster_dict_ipmap, theconf)
+    for key in cluster_dict_ipmap.keys():
+        value = cluster_dict_ipmap.get(key)
+        theconf.replace(key+':', value+':')
+
     with open('/etc/apache2/conf/httpd.conf', 'w') as apache_conf:
-        apache_conf.write(new_conf)
+        apache_conf.write(theconf)
         httpd_status = False
     for myprocess in psutil.process_iter():
         # Workaround for Python 2.6
