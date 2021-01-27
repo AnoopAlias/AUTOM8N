@@ -4,15 +4,7 @@
 [mysqld]
 
 log-error=/var/lib/mysql/{{ ansible_nodename}}.err
-innodb_file_per_table=1
-performance-schema=0
-max_allowed_packet=268435456
-wait_timeout = 28800
-connect_timeout = 600
-max_connections =  1000
-table_open_cache = 10000
-tmp_table_size = 64M
-max_heap_table_size = 64M
+
 
 
 ssl-ca=/etc/mysql-ssl/ca-cert.pem
@@ -50,6 +42,7 @@ sync_master_info = 0
 # Parallel replication
 slave-parallel-threads={{ ansible_processor_vcpus }}
 slave-parallel-mode=optimistic
+slave_parallel_max_queued=8MB
 
 binlog-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
 replicate-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
