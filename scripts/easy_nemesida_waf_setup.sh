@@ -21,7 +21,9 @@ yum-config-manager --disable NemesidaWAF
 export TMPDIR=/root/tmp
 pip3 install cython # https://forum.nemesida-security.com/threads/scikit-learn-dependency-error-for-cython-in-centos7-and-centos8.51/
 # Setting up packagecloud.io for rabbitmq-server
-curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash
+wget -O /root/script.rpm.sh https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh
+bash /root/script.rpm.sh
+rm -f /root/script.rpm.sh
 yum -y --enablerepo=NemesidaWAF install nwaf-dyn-1.${NGINX_MINOR_VERSION}
 yum -y --enablerepo=ndeploy install nginx-nDeploy-module-nemesida
 rsync -av /opt/nDeploy/conf/nwaf.conf /etc/nginx/nwaf/conf/global/nwaf.conf

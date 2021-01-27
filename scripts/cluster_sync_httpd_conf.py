@@ -25,15 +25,14 @@ if __name__ == "__main__":
     myhostname = socket.gethostname()
     cluster_dict = cluster_data_yaml_parsed.get(myhostname)
     cluster_dict_ipmap = cluster_dict.get('ipmap')
-
-    with open('/etc/apache2/conf/httpd.conf', 'r+') as apache_conf:
-        theconf = apache_conf.read()
-        for key in cluster_dict_ipmap.keys():
-            value = cluster_dict_ipmap.get(key)
-            newconf=re.sub(key+':', value+':', theconf)
-        apache_conf.seek(0)
-        apache_conf.write(newconf)
-        apache_conf.truncate()
+    for key in cluster_dict_ipmap.keys():
+        value = cluster_dict_ipmap.get(key)
+        with open('/etc/apache2/conf/httpd.conf', 'r+') as apache_conf:
+            theconf = apache_conf.read()
+            newconf = re.sub(key+':', value+':', theconf)
+            apache_conf.seek(0)
+            apache_conf.write(newconf)
+            apache_conf.truncate()
     httpd_status = False
     for myprocess in psutil.process_iter():
         # Workaround for Python 2.6
