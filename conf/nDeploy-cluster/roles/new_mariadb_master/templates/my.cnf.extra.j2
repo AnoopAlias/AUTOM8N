@@ -1,0 +1,32 @@
+[mysqld]
+
+# Faster perf with less data reliability (slave can be reset from master anyways)
+innodb_flush_method=O_DIRECT
+innodb_flush_log_at_trx_commit=2
+
+innodb_file_per_table=1
+performance-schema=0
+max_allowed_packet=268435456
+wait_timeout = 28800
+connect_timeout = 600
+max_connections =  1000
+table_open_cache = 10000
+tmp_table_size = 64M
+max_heap_table_size = 64M
+
+max_allowed_packet=512M
+query_cache_size=0
+query_cache_type=0
+#query_cache_limit=2M
+join_buffer_size=2M
+tmp_table_size=256M
+max_heap_table_size=256M
+table_open_cache=15000
+innodb_buffer_pool_size=16384M
+innodb_log_file_size=1024M
+innodb_buffer_pool_instances=10
+key_buffer_size=10M
+open_files_limit=65000
+max_connect_errors = 100000000
+net_buffer_length = 1048576
+innodb_open_files=50000
