@@ -5,11 +5,6 @@
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
   register: mysqlsetup
 
-- name: check if my.cnf.extra is exists
-  stat:
-    path: /etc/my.cnf.extra
-  register: myextrasetup
-
 - name: check if Mysql dump is required
   stat:
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_DUMP_LOCK_DO_NOT_REMOVE
@@ -38,13 +33,6 @@
   shell: /root/xtendweb_mysql_secure.sh
   when:
     - mysqlsetup.stat.exists == false
-
-- name: Setup my.cnf.extra
-  template:
-    src: my.cnf.extra.j2
-    dest: /etc/my.cnf.extra
-  when:
-    - myextrasetup.stat.exists == false
 
 - name: Setup my.cnf
   template:

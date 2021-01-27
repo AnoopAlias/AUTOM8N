@@ -5,10 +5,6 @@
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
   register: mysqlsetup
 
-- name: check if my.cnf.extra is exists
-  stat:
-    path: /etc/my.cnf.extra
-  register: myextrasetup
 
 - name: disable MySQL monitoring
   shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=mysql enabled=1 monitored=0"
@@ -61,13 +57,6 @@
     src: /etc/mysql-ssl
     dest: /etc/
   when:  mysqlsetup.stat.exists == false
-
-- name: Setup my.cnf.extra
-  template:
-    src: my.cnf.extra.j2
-    dest: /etc/my.cnf.extra
-  when:
-    - myextrasetup.stat.exists == false
 
 - name: Setup my.cnf
   template:
