@@ -26,3 +26,11 @@
 - name: Restart monit
   service: name=monit enabled=yes state=restarted
   when: dns == "geodns"
+
+- name: Add MaxScale autorecovery in /etc/crontab
+  cron:
+    name: XtendWeb MaxScale autorecovery
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/opt/nDeploy/scripts/maxscale_master_autorecover.sh"
+    minute: "*/5"
