@@ -5,7 +5,7 @@
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
   register: mysqlsetup
 
-- name: check if my.cnf.extra is exists
+- name: check if my.cnf.extra exists
   stat:
     path: /etc/my.cnf.extra
   register: myextrasetup
