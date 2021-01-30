@@ -16,10 +16,10 @@ mypass = config.get('client', 'password')
 if mypass.startswith('"') and mypass.endswith('"'):
     temppass = mypass.lstrip('"').rstrip('"')
     config.set('client', 'password', "'"+temppass+"'")
-    with open('/root/.my.cnf', 'wb') as configfile:
+    with open('/root/.my.cnf', 'w') as configfile:
         config.write(configfile)
 else:
     if not mypass.startswith("'") and mypass.endswith("'"):
         config.set('client', 'password', "'"+mypass+"'")
-        with open('/root/.my.cnf', 'wb') as configfile:
+        with open('/root/.my.cnf', 'w') as configfile:
             config.write(configfile)
