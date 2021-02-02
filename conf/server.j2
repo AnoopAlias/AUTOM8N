@@ -214,13 +214,19 @@ return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% if waf == 'enabled' %}
 nwaf_host_enable {% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
 {% for item in NEMESIDA_WL %}
-WL ID:{{ item[0] }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %} "Z:{{ item[1] }}";
+{% for DOMAIN in DOMAINLIST %}
+WL ID:{{ item[0] }} domain={{ DOMAIN }} "Z:{{ item[1] }}";
+{% endfor %}
 {% endfor %}
 {% for item in NEMESIDA_IP_WL %}
-nwaf_ip_wl {{ item }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
+{% for DOMAIN in DOMAINLIST %}
+nwaf_ip_wl {{ item }} domain={{ DOMAIN }};
+{% endfor %}
 {% endfor %}
 {% for item in NEMESIDAIPV6_WL %}
-nwaf_ip_wl {{ item }} domain={% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
+{% for DOMAIN in DOMAINLIST %}
+nwaf_ip_wl {{ item }} domain={{ DOMAIN }};
+{% endfor %}
 {% endfor %}
 {% endif %}
 ################## NWAF ######################
