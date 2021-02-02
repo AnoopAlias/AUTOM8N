@@ -15,6 +15,14 @@
     job: "/opt/nDeploy/scripts/maxscale_master_autorecover.sh"
     minute: "*/5"
 
+- name: Add MaxScale status update in /etc/crontab
+  cron:
+    name: XtendWeb MaxScale status update
+    cron_file: "/etc/crontab"
+    user: root
+    job: "/opt/nDeploy/scripts/check_maxscale_status.sh"
+    minute: "*/5"
+
 - name: Restart crond on master
   service: name=crond enabled=yes state=restarted
 
