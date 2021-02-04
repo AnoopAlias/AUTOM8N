@@ -1038,7 +1038,7 @@ if form.getvalue('domain'):
         cardheader('Manage WAF', 'fas fa-level-down-alt')
         #Whitelist Rule ID and Zone
         print('                <div  class="card-body" id="whitelist-panel">  <!-- Card Body Start -->')
-        print('                        <div class="col-6">')
+        print('                        <div class="">')
         print('                                    <form class="form" method="post" id="view_nwaf_log" onsubmit="return false;">')
         print('                                        <button id="view-nwaf-log-btn" class="btn btn-block btn-primary text-center" type="submit">View nwaf Log</button>')
         print(('                                        <input hidden name="domain" value="'+mydomain+'">'))
@@ -1088,7 +1088,7 @@ if form.getvalue('domain'):
         print('                         </select>')
         print('                     </div>')
         print('                     </div> <!-- Second column ends -->')
-        print('                         <div class="col-sm"> <!-- Third column starts -->')
+        print('                         <div class="col-sm-3"> <!-- Third column starts -->')
         print('                  <button class="btn btn-primary btn-block " id="whitelistWaf-btn" type="submit">Submit</button>')
         print(('                 <input hidden name="profileyaml" value="'+profileyaml+'">'))
         print('                 </div><!-- third column end-->')
@@ -1119,7 +1119,7 @@ if form.getvalue('domain'):
                                 print('     <div class="container"><!-- Container starts-->')
                                 print('          <div class="row "><!-- Row starts-->')
                                 # print('  <span class="border border-secondary"></span>')
-                                print('                 <div class="col-sm-9 form-control" style="overflow: hidden;"><!--First column starts -->')
+                                print('                 <div class="col-sm-9 form-control" style="overflow: auto;"><!--First column starts -->')
                                 print(('                     <input hidden name="whiteList-to-delete" value="'+str(mykeypos)+'">'))
                                 print(('                        WL ID '+i[0]+' " Z: ' +i[1]+'";'))
                                 print('                 </div><!--First column ends-->')
@@ -1147,7 +1147,7 @@ if form.getvalue('domain'):
 
 
 
-        print('                             <div class="col-sm"><!--First column-->')
+        print('                             <div class="col-sm-9"><!--First column-->')
         print('                                 <input type="text" class="form-control" name="ip" id="ip" value="" required>')
         print('                             </div><!--First column ends-->')
         print('                             <div class="col-sm">')
@@ -1188,7 +1188,7 @@ if form.getvalue('domain'):
                                 print('    <div class="container"><!-- Container starts-->')
                                 print('   <div class="row "><!-- Row starts-->')
                                 # print('  <span class="border border-secondary"></span>')
-                                print('    <div class="col-sm form-control"><!--First column starts -->')
+                                print('    <div class="col-sm-9 form-control"><!--First column starts -->')
                                 print(('    <input hidden name="ipaddress-to-delete" value="'+str(mykeypos)+'">'))
                                 print(('    '+i+''))
                                 print('    </div><!--First column ends-->')
@@ -1220,7 +1220,7 @@ if form.getvalue('domain'):
 
 
 
-        print('                             <div class="col-sm"><!--First column-->')
+        print('                             <div class="col-sm-9"><!--First column-->')
         print('                                 <input type="text" class="form-control" name="ipv6" id="ipv6" value="" required>')
         print('                             </div><!--First column ends-->')
         print('                             <div class="col-sm">')
@@ -1261,7 +1261,7 @@ if form.getvalue('domain'):
                                 print('    <div class="container"><!-- Container starts-->')
                                 print('   <div class="row "><!-- Row starts-->')
                                 # print('  <span class="border border-secondary"></span>')
-                                print('    <div class="col-sm form-control"><!--First column starts -->')
+                                print('    <div class="col-sm-9 form-control"><!--First column starts -->')
                                 print(('    <input hidden name="ipv6address_delete" value="'+str(mykeypos)+'">'))
                                 print(('    '+i+''))
                                 print('    </div><!--First column ends-->')
