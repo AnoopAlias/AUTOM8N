@@ -272,7 +272,7 @@ print('                    <a class="nav-link" id="v-pills-php_backends-tab" dat
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
 print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">Nginx Mods</a>')
-
+print('                    <a class="nav-link" id="v-pills-waf-tab" data-toggle="pill" href="#v-pills-waf" role="tab" aria-controls="v-pills-waf">Nemesida Installer</a>')
 print('                </div>')
 print('')
 
@@ -292,7 +292,7 @@ print('                            <a class="dropdown-item" id="v-pills-php_back
 print('                            <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
 print('                            <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
 print('                            <a class="dropdown-item" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-pressed="false">Nginx Mods</a>')
-
+print('                            <a class="dropdown-item" id="v-pills-waf-tab" data-toggle="pill" href="#v-pills-waf" role="tab" aria-controls="v-pills-waf" aria-pressed="false">Nemesida Installer</a>')
 print('                        </div>')
 print('                    </div> <!-- End Secondary Mobile Navigation -->')
 
@@ -883,6 +883,31 @@ cardfooter('Note that each module increases NGINX size and processing requiremen
 
 print('                        </form>')
 print('                    </div> <!-- End Modules Tab -->')
+
+# Nemesida Tab
+print('')
+print('                    <!-- Nemesida Tab -->')
+print('                    <div class="tab-pane fade" id="v-pills-waf" role="tabpanel" aria-labelledby="v-pills-waf-tab">')
+
+cardheader('Namesida Setup', 'fab fa-centos')
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <form class="form" id="easy_nemesida_setup" method="post" onsubmit="return false;">')
+#print('                                <input hidden class="form-control" name="run_nemesida_installer" id="run_nemesida_installer" value="enabled">')
+print('                                <p class="small">Welcome to the Nemesida WAF Installer. Nemesida WAF Free provides the base web application security against OWASP class attacks based on the signature method. Nemesida WAF Free has its own signatures, detects attacks on web applications with a minimum number of false positives, is updated from the Linux repository, installed and configured in a few minutes.</em></p>')
+
+print('                            <div class="btn-group btn-block mt-3">')
+if os.path.isfile('/etc/nginx/modules/ngx_http_waf_module.so'):
+    print('                            <button id="easy-nemesida-setup-btn" class="btn btn-outline-primary btn-block" type="submit">Update and Enable Nemesida WAF</button>')
+else:
+    print('                            <button id="easy-nemesida-setup-btn" class="btn btn-outline-primary btn-block" type="submit">Install and Enable Nemesida WAF</button>')
+print('                            </div>')
+print('                            </form>')
+
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('')
+
+print('                    </div> <!-- End Nemesida Tab -->')
 
 print('                </div> <!-- Tabs End -->')
 print('')
