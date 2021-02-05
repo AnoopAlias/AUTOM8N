@@ -272,7 +272,7 @@ print('                    <a class="nav-link" id="v-pills-php_backends-tab" dat
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
 print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
 print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">Nginx Mods</a>')
-
+print('                    <a class="nav-link" id="v-pills-waf-tab" data-toggle="pill" href="#v-pills-waf" role="tab" aria-controls="v-pills-waf">Nemesida WAF</a>')
 print('                </div>')
 print('')
 
@@ -292,7 +292,7 @@ print('                            <a class="dropdown-item" id="v-pills-php_back
 print('                            <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
 print('                            <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
 print('                            <a class="dropdown-item" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-pressed="false">Nginx Mods</a>')
-
+print('                            <a class="dropdown-item" id="v-pills-waf-tab" data-toggle="pill" href="#v-pills-waf" role="tab" aria-controls="v-pills-waf" aria-pressed="false">Nemesida WAF</a>')
 print('                        </div>')
 print('                    </div> <!-- End Secondary Mobile Navigation -->')
 
@@ -728,6 +728,7 @@ test_cookie_hint = " Controls loading of nginx-nDeploy-module-testcookie_access 
 # brotli_hint = " Controls loading of nginx-nDeploy-module-brotli which is a newer bandwidth optimization created by Google. "
 geoip2_hint = " Controls loading of nginx-nDeploy-module-geoip2 which creates variables based on the client IP address. "
 passenger_hint = " Controls loading of nginx-nDeploy-module-passenger which installs Phusion Passenger web application server. "
+waf_hint = " Controls loading of nginx-nDeploy-module-nemesida which installs the Nemesida web application firewall. "
 
 print('                            <div class="card-body"> <!-- Card Body Start -->')
 print('                                <div class="row row-btn-group-toggle"> <!-- Row Start -->')
@@ -852,6 +853,29 @@ else:
 print('                                        </div>')
 print('                                    </div>')
 
+if os.path.isfile('/etc/nginx/modules/ngx_http_waf_module.so'):
+    print(('                                    '+return_label("Nemesida WAF Module", waf_hint)))
+    print('                                    <div class="col-md-6">')
+    print('                                        <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">')
+    if os.path.isfile('/etc/nginx/modules.d/nemesida.load'):
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="waf" value="enabled" autocomplete="off" checked> Installed')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="waf" value="disabled" autocomplete="off"> Uninstalled')
+        print('                                        </label>')
+    else:
+        print('                                        <label class="btn btn-light">')
+        print('                                            <input type="radio" name="waf" value="enabled" autocomplete="off"> Installed')
+        print('                                        </label>')
+        print('                                        <label class="btn btn-light active">')
+        print('                                            <input type="radio" name="waf" value="disabled" autocomplete="off" checked> Uninstalled')
+        print('                                        </label>')
+    print('                                        </div>')
+    print('                                    </div>')
+else:
+    print('                                    <input hidden type="radio" name="waf" value="disabled" checked>')
+
 print('                                    <div class="col-md-12">')
 print('                                        <button id="module-installer-btn" class="btn btn-outline-primary btn-block mt-4" type="submit">Apply Module Selection</button>')
 print('                                    </div>')
@@ -862,6 +886,31 @@ cardfooter('Note that each module increases NGINX size and processing requiremen
 
 print('                        </form>')
 print('                    </div> <!-- End Modules Tab -->')
+
+# Nemesida Tab
+print('')
+print('                    <!-- Nemesida Tab -->')
+print('                    <div class="tab-pane fade" id="v-pills-waf" role="tabpanel" aria-labelledby="v-pills-waf-tab">')
+
+cardheader('Namesida WAF Setup', 'fab fa-centos')
+print('                        <div class="card-body"> <!-- Card Body Start -->')
+print('                            <form class="form" id="easy_nemesida_setup" method="post" onsubmit="return false;">')
+print('                                <input hidden class="form-control" name="run_nemesida_installer" id="run_nemesida_installer" value="enabled">')
+print('                                <p class="small">Welcome to the Nemesida WAF Installer. Nemesida WAF Free provides the base web application security against OWASP class attacks based on the signature method. Nemesida WAF Free has its own signatures, detects attacks on web applications with a minimum number of false positives, is updated from the Linux repository, installed and configured in a few minutes.</em></p>')
+
+print('                            <div class="btn-group btn-block mt-3">')
+if os.path.isfile('/etc/nginx/modules/ngx_http_waf_module.so'):
+    print('                            <button id="easy-nemesida-setup-btn" class="btn btn-outline-primary btn-block" type="submit">Update and Enable Nemesida WAF</button>')
+else:
+    print('                            <button id="easy-nemesida-setup-btn" class="btn btn-outline-primary btn-block" type="submit">Install and Enable Nemesida WAF</button>')
+print('                            </div>')
+print('                            </form>')
+
+print('                        </div> <!-- Card Body End -->')
+
+cardfooter('')
+
+print('                    </div> <!-- End Nemesida Tab -->')
 
 print('                </div> <!-- Tabs End -->')
 print('')
