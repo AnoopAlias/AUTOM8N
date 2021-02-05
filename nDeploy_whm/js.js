@@ -1195,6 +1195,7 @@ jQuery(document).ready(function($) {
             url: $url,
             success: function(result) {
                 $("#v-pills-waf .card-body").load(($urlparam) + " #v-pills-waf .card-body > *");
+                $("#v-pills-modules .card-body").load(($urlparam) + " #v-pills-modules .card-body > *");
                 $.toast({
                     autohide: 'true',
                 });
