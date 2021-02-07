@@ -14,8 +14,8 @@ if [ -x /usr/bin/maxctrl ]; then
   fi
 
   if [ $maxctrl_fail -eq 1 ];then
-    echo "maxctrl: FAIL" > /home/${hostname}_maxctrl
+    echo "maxctrl: FAIL" > /home/$(/bin/hostname)_maxctrl
   else
-    echo "maxctrl: OK" > /home/${hostname}_maxctrl
+    echo "maxctrl: OK" > /home/$(/bin/hostname)_maxctrl
   fi
 fi
