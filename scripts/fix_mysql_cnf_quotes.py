@@ -10,7 +10,7 @@ __license__ = "GPL"
 __email__ = "anoopalias01@gmail.com"
 
 
-config = configparser.ConfigParser()
+config = configparser.ConfigParser(interpolation=None)
 config.read('/root/.my.cnf')
 mypass = config.get('client', 'password')
 if mypass.startswith('"') and mypass.endswith('"'):
