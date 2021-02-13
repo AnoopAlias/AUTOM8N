@@ -1183,6 +1183,28 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $(document).on("submit","#easy_nemesida_setup",function(e){
+        var $loaderId        =   "#easy-nemesida-setup-btn";
+        var $loaderText      =   "Processing...";
+        $($loaderId).prop("disabled", true);
+        $($loaderId).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;` + $loaderText);
+        var $id = e.target.id;
+        var $f = $("#" + $id);
+        var $url = "easy_nemesida_setup.cgi?" + $f.serialize();
+        $.ajax({
+            url: $url,
+            success: function(result) {
+                $("#v-pills-waf .card-body").load(($urlparam) + " #v-pills-waf .card-body > *");
+                $("#v-pills-modules .card-body").load(($urlparam) + " #v-pills-modules .card-body > *");
+                $.toast({
+                    autohide: 'true',
+                });
+                $(".toast-new").toast("show").html(result);
+                $(".toast").removeClass("toast-new");
+            }
+        });
+    });
+
     $(document).on("submit","#disable_ndeploy",function(e){
         var $loaderId        =   "#plugin-status-btn";
         var $loaderText      =   "Disabling...";

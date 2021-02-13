@@ -25,7 +25,7 @@ form = cgi.FieldStorage()
 
 print_simple_header()
 
-if form.getvalue('test_cookie') and form.getvalue('geoip2') and form.getvalue('passenger'):
+if form.getvalue('test_cookie') and form.getvalue('geoip2') and form.getvalue('passenger') and form.getvalue('waf'):
     cmd_install = ""
     cmd_uninstall = ""
     if form.getvalue('test_cookie') == 'enabled' and not os.path.isfile('/etc/nginx/modules.d/testcookie_access.load'):
@@ -40,6 +40,10 @@ if form.getvalue('test_cookie') and form.getvalue('geoip2') and form.getvalue('p
         cmd_install += "nginx-nDeploy-module-passenger "
     elif form.getvalue('passenger') == 'disabled' and os.path.isfile('/etc/nginx/modules.d/passenger.load'):
         cmd_uninstall += "nginx-nDeploy-module-passenger "
+    if form.getvalue('waf') == 'enabled' and not os.path.isfile('/etc/nginx/modules.d/nemesida.load'):
+        cmd_install += "nginx-nDeploy-module-nemesida "
+    elif form.getvalue('waf') == 'disabled' and os.path.isfile('/etc/nginx/modules.d/nemesida.load'):
+        cmd_uninstall += "nginx-nDeploy-module-nemesida "
     if cmd_install != "" or cmd_uninstall != "":
         if cmd_install == "" and cmd_uninstall != "":
             if os.path.isfile(cluster_config_file):
