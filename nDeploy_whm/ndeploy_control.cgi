@@ -66,8 +66,8 @@ else:
     brand = "AUTOM8N"
     brand_group = "NGINX AUTOMATION"
 
-print_header(brand+' Control Center')
-bcrumb(brand+' Control Center','fas fa-tools')
+print_header(' Extra')
+bcrumb(' Extra','fas fa-tools')
 
 # Plugin Status
 nginx_status = False
@@ -101,7 +101,7 @@ if os.path.isfile(php_secure_mode_file):
 if os.path.isfile(php_chroot_mode_file):
     php_chroot_status = True
 
-print('            <h1 class="sr-only">AUTOM8N Control Center</h1>')
+print('            <h1 class="sr-only">Extra</h1>')
 
 print('            <!-- Dash Widgets Start -->')
 print('            <div id="dashboard" class="row flex-row">')

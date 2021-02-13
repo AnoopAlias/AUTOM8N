@@ -35,8 +35,8 @@ ansible_inventory_file = "/opt/nDeploy/conf/nDeploy-cluster/hosts"
 php_secure_mode_file = installation_path+"/conf/secure-php-enabled"
 
 cgitb.enable()
-print_header('Home')
-bcrumb('Home')
+print_header('Main')
+bcrumb('Main')
 
 
 def is_page_available(host, path="/pingphpfpm"):
