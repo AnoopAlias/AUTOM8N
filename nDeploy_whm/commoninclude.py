@@ -228,7 +228,7 @@ def print_header(title=''):
     print('                </h4>')
     print('            </div>')
     print('            <div class="d-flex">')
-    print(('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="ndeploy_control.cgi" data-toggle="tooltip" title="'+brand+'&nbsp;Control"><i class="fas fa-tools"></i> <span class="d-none d-lg-inline-block">'+brand+'&nbsp;Control</span></a></div>'))
+    # print(('                <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="ndeploy_control.cgi" data-toggle="tooltip" title="'+brand+'&nbsp;Control"><i class="fas fa-tools"></i> <span class="d-none d-lg-inline-block">'+brand+'&nbsp;Control</span></a></div>'))
     if app_email != 'None':
         print(('            <div class="buttons p-2"><a class="btn btn-'+ndeploy_theme_color+'" href="mailto:'+app_email+'" data-toggle="tooltip" title="Support"><i class="fas fa-envelope"></i> <span class="d-none d-lg-inline-block">Support</span></a></div>'))
     if whm_documentation_link != "None":
@@ -377,11 +377,12 @@ def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-infinity"):
     print('            <!-- Navigation -->')
     print('            <nav aria-label="breadcrumb">')
     print('                <ol class="breadcrumb justify-content-md-center">')
-    if pagename != 'Home':
-        print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>')
+    if pagename != 'Main':
+        print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-tools"></i>&nbsp;Main</a></li>')
         print(('                    <li style="color:'+primary_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>'))
     else:
-        print(('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+primary_color+' !important;" href="xtendweb.cgi"><i class="fas fa-infinity"></i>&nbsp;Home</a></li>'))
+        print(('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+primary_color+' !important;" href="xtendweb.cgi"><i class="fas fa-tools"></i>&nbsp;Main</a></li>'))
+        print('                     <li class="breadcrumb-item"><a href="ndeploy_control.cgi"><i class="fas fa-tools"></i>&nbsp;Extra</a></li>')
     print('                </ol>')
     print('            </nav>')
     print('')
