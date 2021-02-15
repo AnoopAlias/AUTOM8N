@@ -4,5 +4,5 @@ root {{ DOCUMENTROOT }};
 
 location / {
 access_log  off;
-proxy_pass   $scheme://{{ UPSTREAM_IDENT }};
+proxy_pass   https://{{ UPSTREAM_IDENT }};
 }
