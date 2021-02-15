@@ -453,7 +453,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             if proxy_to_master == 'disabled':
                 apptemplateVars["APPSERVERIP"] = remote_domain_ipv4
             else:
-                upstream_ident = hashlib.md5((server+cpanel_ipv4).encode('utf-8')).hexdigest()
+                upstream_ident = md5((server+cpanel_ipv4).encode('utf-8')).hexdigest()
                 apptemplateVars["UPSTREAM_IDENT"] = upstream_ident
                 app_template = templateEnv.get_template('proxy_to_master.j2')
             cluster_generated_app_config = app_template.render(apptemplateVars)
@@ -600,7 +600,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
                     if subdir_proxy_to_master == 'disabled':
                         subdirApptemplateVars["APPSERVERIP"] = remote_domain_ipv4
                     else:
-                        upstream_ident = hashlib.md5((server+cpanel_ipv4).encode('utf-8')).hexdigest()
+                        upstream_ident = md5((server+cpanel_ipv4).encode('utf-8')).hexdigest()
                         subdirApptemplateVars["UPSTREAM_IDENT"] = upstream_ident
                         subdirApptemplate = templateEnv.get_template('proxy_to_master_subdir.j2')
                     cluster_generated_subdir_app_config = subdirApptemplate.render(subdirApptemplateVars)
