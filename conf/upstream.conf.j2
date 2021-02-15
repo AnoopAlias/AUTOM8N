@@ -1,0 +1,6 @@
+{% for key, value in UPSTREAM_SETUP_DICT.items() %}
+upstream {{ key }} {
+    server {{ value[0] }}:$nginxport;
+    server {{ value[1] }}:$cpport  backup;
+}
+{% endfor %}
