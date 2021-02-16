@@ -20,11 +20,17 @@
 - name: install PostFix server
   yum: name=postfix state=present
 
+- name: install postgrey greylisting service
+  yum: name=postgrey state=present
+
 - name: Setup Postfix configuration
   shell: "{{ item }}"
   with_items:
+    - postconf -e "smtpd_delay_reject = yes"
+    - postconf -e "smtpd_helo_required = yes"
+    - postconf -e "smtpd_helo_restrictions = permit_mynetworks, reject_non_fqdn_hostname, reject_invalid_hostname, permit"
     - postconf -e "smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination"
-    - postconf -e "smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination"
+    - postconf -e "smtpd_recipient_restrictions = reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unknown_recipient_domain, permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination, reject_rbl_client relays.ordb.org, reject_rbl_client list.dsbl.org, reject_rbl_client sbl-xbl.spamhaus.org, check_policy_service unix:postgrey/socket, permit"
     - postconf -e "relay_recipient_maps ="
     - postconf -e "relay_domains = hash:/etc/postfix/transportmaps"
     - postconf -e "recipient_bcc_maps = hash:/etc/postfix/recipient_bcc"
@@ -55,6 +61,9 @@
 
 - name: remove ssmtp from slave
   yum: name=ssmtp state=absent
+
+- name: Restart postgrey greylisting service
+  service: name=postgrey enabled=yes state=restarted
 
 - name: Restart Postfix server
   service: name=postfix enabled=yes state=restarted
