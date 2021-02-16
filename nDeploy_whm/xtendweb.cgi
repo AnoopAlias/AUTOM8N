@@ -238,24 +238,26 @@ print('                            <div class="row no-gutters row-2-col row-no-b
 
 # Netdata
 myhostname = socket.gethostname()
-print('                                <div class="col-md-6">')
+print('                                <div class="col-md">')
 print(('                                    <a class="btn btn-block btn-icon" href="https://'+myhostname+'/netdata/" target="_blank"><i class="fas fa-heartbeat"></i> Netdata <i class="fas fa-external-link-alt"></i></a>'))
 print('                                </div>')
-
-# Glances
-print('                                <div class="col-md-6">')
-print(('                                    <a class="btn btn-block btn-icon" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>'))
-print('                                </div>')
+# print('                            </div> <!-- Row End -->')
+# # Glances
+# print('                                <div class="col-md-6">')
+# print(('                                    <a class="btn btn-block btn-icon" href="https://'+myhostname+'/glances/" target="_blank"><i class="fas fa-eye"></i> Glances <i class="fas fa-external-link-alt"></i></a>'))
+# print('                                </div>')
 
 # Borg Backup
-print('                                <div class="col-md-6">')
+# print('                            <div class="row no-gutters row-2-col row-no-btm-bdr"> <!-- Row Start -->')
+print('                                <div class="col-md">')
 print('                                    <form class="form" method="get" action="setup_borg_backup.cgi">')
 print('                                        <button class="btn btn-block btn-icon" type="submit"><i class="fas fa-database"></i> Borg Backup</button>')
 print('                                    </form>')
 print('                                </div>')
-
+# print('                            </div> <!-- Row End -->')
 # Process Tracker
-print('                                <div class="col-md-6">')
+# print('                            <div class="row no-gutters row-2-col row-no-btm-bdr"> <!-- Row Start -->')
+print('                                <div class="col-md">')
 print('                                    <form class="form" id="check_process" onsubmit="return false;">')
 print('                                        <button id="check_process_btn" class="btn btn-block btn-icon" type="submit"><i class="fas fa-bug"></i> Check Processes</button>')
 print('                                    </form>')
@@ -382,8 +384,8 @@ if os.path.isfile(cluster_config_file):
     print('                 </form>')
 
     print('                 <div id="cluster-reset-btns" class="btn-group btn-block">')
-    print('                     <button id="cluster-soft-restart-btn" type="submit" class="btn btn-outline-primary" form="cluster_soft_restart">Soft Restart</button>')
-    print('                     <button id="cluster-hard-reset-btn" type="submit" class="btn btn-outline-primary" form="cluster_hard_reset">Hard Reset</button>')
+    print('                     <button id="cluster-soft-restart-btn" type="submit" class="btn btn-outline-primary" form="cluster_soft_restart">Restart Unison</button>')
+    print('                     <button id="cluster-hard-reset-btn" type="submit" class="btn btn-outline-primary" form="cluster_hard_reset">Reset Unison</button>')
     print('                     <button id="cluster-csync2-reset-btn" type="submit" class="btn btn-outline-primary" form="cluster_csync2_reset">Reset Csync2</button>')
     print('                 </div>')
 
@@ -744,7 +746,7 @@ if os.path.isfile(cluster_config_file):
 
     print('             </div> <!-- Card Body End -->')
 
-    cardfooter('Only perform a hard reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
+    cardfooter('Only perform a unison reset if the unison archive is corrupt as the unison archive rebuild can be time consuming.')
 else:
     cardheader('Setup Cluster', 'fas fa-align-justify')
 
