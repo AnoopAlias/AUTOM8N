@@ -270,7 +270,7 @@ print('                    <a class="nav-link" id="v-pills-branding-tab" data-to
 print('                    <a class="nav-link" id="v-pills-autoswitch-tab" data-toggle="pill" href="#v-pills-autoswitch" role="tab" aria-controls="v-pills-autoswitch">Nginx Autoswitch</a>')
 print('                    <a class="nav-link" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends">Advanced PHP</a>')
 print('                    <a class="nav-link" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata">Netdata</a>')
-print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
+# print('                    <a class="nav-link" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances">Glances</a>')
 print('                    <a class="nav-link" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules">Nginx Mods</a>')
 print('                    <a class="nav-link" id="v-pills-waf-tab" data-toggle="pill" href="#v-pills-waf" role="tab" aria-controls="v-pills-waf">Nemesida WAF</a>')
 print('                </div>')
@@ -290,7 +290,7 @@ print('                            <a class="dropdown-item" id="v-pills-branding
 print('                            <a class="dropdown-item" id="v-pills-autoswitch-tab" data-toggle="pill" href="#v-pills-autoswitch" role="tab" aria-controls="v-pills-autoswitch" aria-pressed="false">Nginx Autoswitch</a>')
 print('                            <a class="dropdown-item" id="v-pills-php_backends-tab" data-toggle="pill" href="#v-pills-php_backends" role="tab" aria-controls="v-pills-php_backends" aria-pressed="false">Advanced PHP</a>')
 print('                            <a class="dropdown-item" id="v-pills-netdata-tab" data-toggle="pill" href="#v-pills-netdata" role="tab" aria-controls="v-pills-netdata" aria-pressed="false">Netdata</a>')
-print('                            <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
+# print('                            <a class="dropdown-item" id="v-pills-glances-tab" data-toggle="pill" href="#v-pills-glances" role="tab" aria-controls="v-pills-glances" aria-pressed="false">Glances</a>')
 print('                            <a class="dropdown-item" id="v-pills-modules-tab" data-toggle="pill" href="#v-pills-modules" role="tab" aria-controls="v-pills-modules" aria-pressed="false">Nginx Mods</a>')
 print('                            <a class="dropdown-item" id="v-pills-waf-tab" data-toggle="pill" href="#v-pills-waf" role="tab" aria-controls="v-pills-waf" aria-pressed="false">Nemesida WAF</a>')
 print('                        </div>')
@@ -669,51 +669,51 @@ cardfooter('')
 print('                    </div> <!-- End Netdata Tab -->')
 
 # Glances Tab
-print('')
-print('                    <!-- Glances Tab -->')
-print('                    <div class="tab-pane fade" id="v-pills-glances" role="tabpanel" aria-labelledby="v-pills-glances-tab">')
+# print('')
+# print('                    <!-- Glances Tab -->')
+# print('                    <div class="tab-pane fade" id="v-pills-glances" role="tabpanel" aria-labelledby="v-pills-glances-tab">')
+#
+# cardheader('Glances Setup', 'fab fa-centos')
+# glances_pass = ""
+# glances_pass_hint = " Enter the password to access Glances. "
+# print('                        <div class="card-body"> <!-- Card Body Start -->')
+# print('                            <form class="form" id="easy_glances_setup" method="post" onsubmit="return false;">')
+# print('                                <p class="small">Welcome to the Glances Installer. Glances is a cross-platform system monitoring tool written in Python. <em>The Glances installation process can take up to a minute depending on processing power and connection speed.</em></p>')
+# if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
+#     print('                            <label class="small" for="glances_pass">The Glances username is <kbd>glances</kbd>. Enter the password you wish to use to access the Glances Monitoring System.</label>')
+#     print('                            <div class="input-group">')
+#     print('                                <div class="input-group-prepend input-group-prepend-min">')
+#     print('                                    <span class="input-group-text" id="glances_pass_desc">')
+#     print(('                                        '+return_prepend("Glances Password", glances_pass_hint)))
+#     print('                                    </span>')
+#     print('                                </div>')
+#     print(('                                <input type="text" class="form-control" name="glances_pass" value="'+glances_pass+'" id="glances_pass" aria-describedby="glances_pass_desc">'))
+#     print('                            </div>')
+# print('                                <label hidden for="install_glances">Install Glances</label>')
+# print('                                <input hidden class="form-control" name="run_installer" id="install_glances" value="enabled">')
+# print('                                <label hidden for="glances_pass2">Glances Pass</label>')
+# print(('                                <input hidden class="form-control" name="glances_pass" id="glances_pass2" value="'+glances_pass+'">'))
+# print('                            </form>')
+#
+# if os.path.isfile('/etc/nginx/conf.d/glances.password'):
+#     print('                        <form class="form" id="clear_glances_credentials" method="post" onsubmit="return false;">')
+#     print('                            <label hidden for="remove_glances_creds">Remove Glances</label>')
+#     print('                            <input hidden class="form-control" name="remove_glances_creds" id="remove_glances_creds" value="enabled">')
+#     print('                        </form>')
+#
+# print('                            <div class="btn-group btn-block mt-3">')
+# if os.path.isfile('/etc/nginx/conf.d/glances.password'):
+#     print('                            <button id="clear-glances-credentials-btn" class="btn btn-outline-primary btn-block" type="submit" form="clear_glances_credentials">Remove Credentials</button>')
+#     print('                            <button id="easy-glances-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Reinstall Monitoring System</button>')
+# else:
+#     print('                            <button id="easy-glances-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Install Monitoring System</button>')
+# print('                            </div>')
 
-cardheader('Glances Setup', 'fab fa-centos')
-glances_pass = ""
-glances_pass_hint = " Enter the password to access Glances. "
-print('                        <div class="card-body"> <!-- Card Body Start -->')
-print('                            <form class="form" id="easy_glances_setup" method="post" onsubmit="return false;">')
-print('                                <p class="small">Welcome to the Glances Installer. Glances is a cross-platform system monitoring tool written in Python. <em>The Glances installation process can take up to a minute depending on processing power and connection speed.</em></p>')
-if not os.path.isfile('/etc/nginx/conf.d/glances.password'):
-    print('                            <label class="small" for="glances_pass">The Glances username is <kbd>glances</kbd>. Enter the password you wish to use to access the Glances Monitoring System.</label>')
-    print('                            <div class="input-group">')
-    print('                                <div class="input-group-prepend input-group-prepend-min">')
-    print('                                    <span class="input-group-text" id="glances_pass_desc">')
-    print(('                                        '+return_prepend("Glances Password", glances_pass_hint)))
-    print('                                    </span>')
-    print('                                </div>')
-    print(('                                <input type="text" class="form-control" name="glances_pass" value="'+glances_pass+'" id="glances_pass" aria-describedby="glances_pass_desc">'))
-    print('                            </div>')
-print('                                <label hidden for="install_glances">Install Glances</label>')
-print('                                <input hidden class="form-control" name="run_installer" id="install_glances" value="enabled">')
-print('                                <label hidden for="glances_pass2">Glances Pass</label>')
-print(('                                <input hidden class="form-control" name="glances_pass" id="glances_pass2" value="'+glances_pass+'">'))
-print('                            </form>')
-
-if os.path.isfile('/etc/nginx/conf.d/glances.password'):
-    print('                        <form class="form" id="clear_glances_credentials" method="post" onsubmit="return false;">')
-    print('                            <label hidden for="remove_glances_creds">Remove Glances</label>')
-    print('                            <input hidden class="form-control" name="remove_glances_creds" id="remove_glances_creds" value="enabled">')
-    print('                        </form>')
-
-print('                            <div class="btn-group btn-block mt-3">')
-if os.path.isfile('/etc/nginx/conf.d/glances.password'):
-    print('                            <button id="clear-glances-credentials-btn" class="btn btn-outline-primary btn-block" type="submit" form="clear_glances_credentials">Remove Credentials</button>')
-    print('                            <button id="easy-glances-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Reinstall Monitoring System</button>')
-else:
-    print('                            <button id="easy-glances-setup-btn" class="btn btn-outline-primary btn-block" type="submit" form="easy_glances_setup">Install Monitoring System</button>')
-print('                            </div>')
-
-print('                        </div> <!-- Card Body End -->')
-
-cardfooter('')
-
-print('                    </div> <!-- End Glances Tab -->')
+# print('                        </div> <!-- Card Body End -->')
+#
+# cardfooter('')
+#
+# print('                    </div> <!-- End Glances Tab -->')
 
 # Modules Tab
 print('')
