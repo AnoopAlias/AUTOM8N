@@ -4,6 +4,16 @@ root {{ DOCUMENTROOT }};
 
 log_not_found off;
 
+# Throw a 403 forbidden error to some common bad bots and referer
+if ($bad_bot) { return 403; }
+if ($bad_referer) { return 403; }
+if ($bad_urls1) { return 403; }
+if ($bad_urls2) { return 403; }
+if ($bad_urls3) { return 403; }
+if ($bad_urls4) { return 403; }
+if ($bad_urls5) { return 403; }
+if ($bad_urls6) { return 403; }
+
 location / {
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
