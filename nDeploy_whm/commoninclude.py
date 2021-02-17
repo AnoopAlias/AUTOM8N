@@ -372,17 +372,17 @@ def cardfooter(text='Unmodified Footer Text'):
 
 
 # Breadcrumbs
-def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-infinity"):
+def bcrumb(pagename="Unnamed Page", active_fa_icon="fas fa-tools"):
     print('')
     print('            <!-- Navigation -->')
     print('            <nav aria-label="breadcrumb">')
     print('                <ol class="breadcrumb justify-content-md-center">')
     if pagename != 'Main':
         print('                    <li class="breadcrumb-item"><a href="xtendweb.cgi"><i class="fas fa-tools"></i>&nbsp;Main</a></li>')
-        print(('                    <li style="color:'+primary_color+'" class="breadcrumb-item active" aria-current="page"><i class="'+active_fa_icon+'"></i>&nbsp;'+pagename+'</li>'))
+        print('                     <li class="breadcrumb-item" aria-current="page"><a style="color:'+primary_color+';" href="ndeploy_control.cgi"><i class="fas fa-tools"></i>&nbsp;Extra</a></li>')
     else:
         print(('                    <li class="breadcrumb-item active" aria-current="page"><a style="color:'+primary_color+' !important;" href="xtendweb.cgi"><i class="fas fa-tools"></i>&nbsp;Main</a></li>'))
-        print('                     <li class="breadcrumb-item"><a href="ndeploy_control.cgi"><i class="fas fa-tools"></i>&nbsp;Extra</a></li>')
+        print('                     <li class="breadcrumb-item" aria-current="page"><a href="ndeploy_control.cgi"><i class="fas fa-tools"></i>&nbsp;Extra</a></li>')
     print('                </ol>')
     print('            </nav>')
     print('')
