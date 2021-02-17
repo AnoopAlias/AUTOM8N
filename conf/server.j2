@@ -529,6 +529,9 @@ ssl_stapling on;
 server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
 location / {
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "Upgrade";
 }
 }
 {% endif %}
