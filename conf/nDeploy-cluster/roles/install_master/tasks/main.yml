@@ -6,6 +6,7 @@
     packages:
       - nDeploy-release-centos
       - epel-release
+      - redhat-lsb-core
 
 - name: Install AUTOM8N rpm's on master
   yum: name={{ packages }} enablerepo={{ repo }},epel state=present
@@ -20,6 +21,26 @@
      - MySQL-python
      - gnusys-monitoring
      - monit
+  when:
+    - ansible_distribution_major_version|int == 7
+
+
+- name: Install AUTOM8N rpm's on master
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+     - csync2-nDeploy
+     - unison-nDeploy
+     - python3-pip
+     - redhat-lsb-core
+     - redis
+     - gdnsd-nDeploy
+     - python3-mysql
+     - gnusys-monitoring
+     - monit
+  when:
+    - ansible_distribution_major_version|int == 8
+
 
 - name: Setup nginx config directories on master
   file: path=/etc/nginx/{{ item }} state=directory

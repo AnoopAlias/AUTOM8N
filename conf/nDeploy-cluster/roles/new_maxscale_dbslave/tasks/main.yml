@@ -7,19 +7,21 @@
 
 - name: Install MaxScale rpm
   yum:
-    name: https://dlm.mariadb.com/1067184/MaxScale/2.4.10/centos/7/x86_64/maxscale-2.4.10-1.centos.7.x86_64.rpm
+    name: https://dlm.mariadb.com/1496729/MaxScale/2.5.7/packages/rhel/7/maxscale-2.5.7-1.rhel.7.x86_64.rpm
     state: present
     validate_certs: no
+    disable_gpg_check: yes
   when:
-    - ansible_lsb.major_release|int >= 7
+    - ansible_distribution_major_version|int == 7
 
 - name: Install MaxScale rpm
   yum:
-    name: https://dlm.mariadb.com/1067196/MaxScale/2.4.10/centos/6/x86_64/maxscale-2.4.10-1.centos.6.x86_64.rpm
+    name: https://dlm.mariadb.com/1496724/MaxScale/2.5.7/packages/rhel/8/maxscale-2.5.7-1.rhel.8.x86_64.rpm
     state: present
     validate_certs: no
+    disable_gpg_check: yes
   when:
-    - ansible_lsb.major_release|int < 7
+    - ansible_distribution_major_version|int == 8
 
 - synchronize:
     src: /var/lib/maxscale/.secrets
@@ -57,13 +59,6 @@
     name: maxscale
     enabled: yes
     state: started
-  when:
-    - ansible_lsb.major_release|int >= 7
-
-- name: Start maxscale
-  shell: service maxscale restart && chkconfig maxscale on
-  when:
-    - ansible_lsb.major_release|int < 7
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_MAXSCALE_SETUP_LOCK_DO_NOT_REMOVE

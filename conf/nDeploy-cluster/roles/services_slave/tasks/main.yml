@@ -7,11 +7,6 @@
 
 - name: Ensure csync2 on slave is started
   service: name=csync2.socket enabled=yes state=started
-  when: ansible_distribution_major_version == "7"
-
-- name: Ensure csync2 on slave is started
-  service: name=xinetd enabled=yes state=restarted
-  when: ansible_distribution_major_version == "6"
 
 - name: Start redis on slave
   service: name=redis enabled=yes state=started

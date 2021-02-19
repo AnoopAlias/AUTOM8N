@@ -39,6 +39,14 @@
   when:
     - mysqlsetup.stat.exists == false
 
+- file:
+    path: /etc/mysql-ssl/client-key.pem
+    mode: 0644
+
+- file:
+    path: /etc/mysql-ssl/server-key.pem
+    mode: 0644
+
 - name: Setup my.cnf.extra
   template:
     src: my.cnf.extra.j2
@@ -107,12 +115,6 @@
   shell: "mysql < /root/xtendweb_mysql_grants_ip_{{ item }}.sql"
   ignore_errors: yes
   with_items: "{{ groups.ndeployslaves }}"
-
-- name: Install required AUTOM8N rpm's on master
-  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
-  vars:
-    packages:
-     - MySQL-python
 
 - name: Drop the sys schema
   mysql_db:

@@ -65,6 +65,11 @@
   roles:
     - dbreplication_slave
 
+- name: Switch to GTID
+  hosts: ndeploymaster,ndeployslaves
+  roles:
+    - gtid_db
+
 - name: MaxScale setup init on master
   hosts: ndeploymaster
   vars:
@@ -95,17 +100,12 @@
   roles:
     - new_maxscale_slave
 
-- name: Switch to GTID
-  hosts: ndeploymaster,ndeployslaves
-  roles:
-    - gtid_db
-
 - name: BackupMX setup on master
   hosts: ndeploymaster
   roles:
     - backupmx_master
 
-- name: BackupMX setup on master
+- name: BackupMX setup on slave
   hosts: ndeployslaves
   roles:
     - backupmx_slave

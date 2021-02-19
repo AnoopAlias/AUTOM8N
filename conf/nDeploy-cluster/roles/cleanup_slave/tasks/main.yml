@@ -38,6 +38,7 @@
     path: /etc/yum/pluginconf.d/universal-hooks.conf
     regexp: '^enabled='
     line: 'enabled=0'
+  ignore_errors: yes
 
 - name: Setup monit for gdnsd
   template:

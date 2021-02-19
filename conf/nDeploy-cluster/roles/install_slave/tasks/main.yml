@@ -26,6 +26,24 @@
      - MySQL-python
      - gnusys-monitoring
      - monit
+  when:
+    - ansible_distribution_major_version|int == 7
+
+- name: Install AUTOM8N cluster rpm packages
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+     - csync2-nDeploy
+     - unison-nDeploy
+     - nginx-nDeploy
+     - python3-pip
+     - redis
+     - gdnsd-nDeploy
+     - python3-mysql
+     - gnusys-monitoring
+     - monit
+  when:
+    - ansible_distribution_major_version|int == 8      
 
 - name: Install AUTOM8N cluster slave rpm package
   yum: name={{ packages }} enablerepo={{ repo }},epel state=present

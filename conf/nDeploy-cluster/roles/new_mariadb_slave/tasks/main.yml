@@ -18,6 +18,7 @@
   yum:
     name: MySQL*
     state: absent
+  ignore_errors: yes
 
 - name: Remove MySQL rpm
   yum:
@@ -28,6 +29,21 @@
       - compat-MySQL51-shared
       - compat-MySQL50-shared
       - mysql-community-common
+
+- name: remove mysql install folder
+  file:
+    state: absent
+    path: /var/lib/mysql/
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: remove .my.cnf file
+  file:
+    state: absent
+    path: /root/.my.cnf
+  when:
+    - mysqlsetup.stat.exists == false
+
 
 - name: Install MariaDB rpm
   yum:
@@ -88,12 +104,6 @@
     backup: yes
   when:
     - mysqlsetup.stat.exists == false
-
-- name: Install required AUTOM8N rpm's on master
-  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
-  vars:
-    packages:
-     - MySQL-python
 
 - name: Import mysqldump from master
   mysql_db:

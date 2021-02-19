@@ -9,7 +9,7 @@
   ignore_errors: yes
 
 - name: remove exim from slave
-  yum: name=exim state=absent
+  yum: name=exim state=absent disable_excludes=all
 
 - name: Ensure  redhat-lsb-core is present
   yum: name={{ packages }} state=present
