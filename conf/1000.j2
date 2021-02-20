@@ -12,92 +12,92 @@ try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /user {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /user/login {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /user/register {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /admin {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /administrator {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /login {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /wp-admin {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /search {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /admin/ {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /administrator/ {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /login/ {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /wp-admin/ {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /search/ {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /admin.php {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /wp-login.php {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /xmlrpc.php {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /customer/account/create/ {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
 location = /customer/account/create {
-limit_req   zone=one  burst=2 nodelay;
+limit_req   zone=one  burst=1 nodelay;
 try_files /XTENDWEB_BFD_IGNORE_ERROR @cphttpd;
 }
 
