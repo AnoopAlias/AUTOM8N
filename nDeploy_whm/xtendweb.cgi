@@ -337,13 +337,13 @@ if os.path.isfile(cluster_config_file):
           maxctrlmas_data_yaml_parsed = yaml.safe_load(maxctrlmas_data_yaml)
       maxctrlmas_status_now = maxctrlmas_data_yaml_parsed.get('maxctrl')
       if maxctrlmas_status_now == 'OK':
-        print(('             <div class="col-6 col-md-9 alert"> Mysql status '+myhostname+'</div>'))
+        print(('             <div class="col-6 col-md-9 alert"> MySQL/MAXSCALE on '+myhostname+'</div>'))
         print('             <div class="col-6 col-md-3 alert text-success">'+maxctrlmas_status_now+' <i class="fa fa-check-circle"></i></div>')
       else:
-        print(('              <div class="col-6 col-md-9 alert">Mysql status '+myhostname+'</div>'))
+        print(('              <div class="col-6 col-md-9 alert">MySQL/MAXSCALE on '+myhostname+'</div>'))
         print('               <div class="col-6 col-md-3 alert text-danger">'+maxctrlmas_status_now+'</div>')
     else:
-      print(('             <div class="col-6 col-md-9 alert">Mysql status '+servername+'</div>'))
+      print(('             <div class="col-6 col-md-9 alert">MySQL/MAXSCALE on '+servername+'</div>'))
       print('             <div class="col-6 col-md-3 alert text-center text-gray">Unknown</div>')
 
 
@@ -353,13 +353,13 @@ if os.path.isfile(cluster_config_file):
               maxctrl_data_yaml_parsed = yaml.safe_load(maxctrl_data_yaml)
           maxctrl_status_now = maxctrl_data_yaml_parsed.get('maxctrl')
           if maxctrl_status_now == 'OK':
-            print(('              <div class="col-6 col-md-9 alert">Mysql status '+servername+'</div>'))
+            print(('              <div class="col-6 col-md-9 alert">MySQL/MAXSCALE on '+servername+'</div>'))
             print('               <div class="col-6 col-md-3 alert text-success">'+maxctrl_status_now+'<i class="fa fa-check-circle"></i></div>')
           else:
-            print(('              <div class="col-6 col-md-9 alert">Mysql status '+servername+'</div>'))
+            print(('              <div class="col-6 col-md-9 alert">MySQL/MAXSCALE on '+servername+'</div>'))
             print('               <div class="col-6 col-md-3 alert text-danger">'+maxctrl_status_now+'</div>')
         else:
-          print(('             <div class="col-6 col-md-9 alert">Mysql status '+servername+'</div>'))
+          print(('             <div class="col-6 col-md-9 alert">MySQL/MAXSCALE on '+servername+'</div>'))
           print('             <div class="col-6 col-md-3 alert text-center text-gray">Unknown</div>')
     print('                 </div> <!-- Row End -->')
     print('             </div> <!-- Card Body End -->')
