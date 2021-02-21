@@ -36,6 +36,8 @@
     path: /var/lib/mysql/
   when:
     - mysqlsetup.stat.exists == false
+    - ansible_distribution_major_version|int == 8
+
 
 - name: remove .my.cnf file
   file:
@@ -43,7 +45,7 @@
     path: /root/.my.cnf
   when:
     - mysqlsetup.stat.exists == false
-
+    - ansible_distribution_major_version|int == 8
 
 - name: Install MariaDB rpm
   yum:
