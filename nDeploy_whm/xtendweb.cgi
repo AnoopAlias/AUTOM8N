@@ -332,37 +332,35 @@ if os.path.isfile(cluster_config_file):
         else:
             print(('             <div class="col-6 col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>'))
             print('             <div class="col-6 col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
-        if os.path.isfile('/home/'+myhostname+'_maxctrl'):
-          with open('/home/'+myhostname+'_maxctrl', 'r') as maxctrlmas_data_yaml:
-              maxctrlmas_data_yaml_parsed = yaml.safe_load(maxctrlmas_data_yaml)
-          maxctrlmas_list = maxctrlmas_data_yaml_parsed.get('maxctrl')
-          if maxctrlmas_list == 'OK':
-            print(('             <div class="col-6 col-md-9 alert"> Mysql status '+myhostname+'</div>'))
-            print('             <div class="col-6 col-md-3 alert text-success">'+maxctrlmas_list+' <i class="fa fa-check-circle"></i></div>')
-          else:
-            print(('              <div class="col-6 col-md-9 alert">Mysql status '+myhostname+'</div>'))
-            print('               <div class="col-6 col-md-3 alert text-danger">'+maxctrlmas_list+'</div>')
-        else:
-          print(('             <div class="col-6 col-md-9 alert">Mysql status '+servername+'</div>'))
-          print('             <div class="col-6 col-md-3 alert text-center text-gray">Unknown</div>')
+    if os.path.isfile('/home/'+myhostname+'_maxctrl'):
+      with open('/home/'+myhostname+'_maxctrl', 'r') as maxctrlmas_data_yaml:
+          maxctrlmas_data_yaml_parsed = yaml.safe_load(maxctrlmas_data_yaml)
+      maxctrlmas_status_now = maxctrlmas_data_yaml_parsed.get('maxctrl')
+      if maxctrlmas_status_now == 'OK':
+        print(('             <div class="col-6 col-md-9 alert"> Mysql status '+myhostname+'</div>'))
+        print('             <div class="col-6 col-md-3 alert text-success">'+maxctrlmas_status_now+' <i class="fa fa-check-circle"></i></div>')
+      else:
+        print(('              <div class="col-6 col-md-9 alert">Mysql status '+myhostname+'</div>'))
+        print('               <div class="col-6 col-md-3 alert text-danger">'+maxctrlmas_status_now+'</div>')
+    else:
+      print(('             <div class="col-6 col-md-9 alert">Mysql status '+servername+'</div>'))
+      print('             <div class="col-6 col-md-3 alert text-center text-gray">Unknown</div>')
 
+
+    for servername in list(cluster_data_yaml_parsed.keys()):
         if os.path.isfile('/home/'+servername+'_maxctrl'):
           with open('/home/'+servername+'_maxctrl', 'r') as maxctrl_data_yaml:
               maxctrl_data_yaml_parsed = yaml.safe_load(maxctrl_data_yaml)
-          maxctrl_list = maxctrl_data_yaml_parsed.get('maxctrl')
-          if maxctrl_list == 'OK':
+          maxctrl_status_now = maxctrl_data_yaml_parsed.get('maxctrl')
+          if maxctrl_status_now == 'OK':
             print(('              <div class="col-6 col-md-9 alert">Mysql status '+servername+'</div>'))
-            print('               <div class="col-6 col-md-3 alert text-success">'+maxctrl_list+'<i class="fa fa-check-circle"></i></div>')
+            print('               <div class="col-6 col-md-3 alert text-success">'+maxctrl_status_now+'<i class="fa fa-check-circle"></i></div>')
           else:
             print(('              <div class="col-6 col-md-9 alert">Mysql status '+servername+'</div>'))
-            print('               <div class="col-6 col-md-3 alert text-danger">'+maxctrl_list+'</div>')
-
+            print('               <div class="col-6 col-md-3 alert text-danger">'+maxctrl_status_now+'</div>')
         else:
           print(('             <div class="col-6 col-md-9 alert">Mysql status '+servername+'</div>'))
           print('             <div class="col-6 col-md-3 alert text-center text-gray">Unknown</div>')
-
-
-
     print('                 </div> <!-- Row End -->')
     print('             </div> <!-- Card Body End -->')
 
