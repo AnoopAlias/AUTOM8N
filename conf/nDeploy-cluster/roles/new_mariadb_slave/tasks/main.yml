@@ -30,6 +30,14 @@
       - compat-MySQL50-shared
       - mysql-community-common
 
+- name: Install MySQL-python
+  yum: name={{ packages }} enablerepo={{ repo }},epel state=present
+  vars:
+    packages:
+     - MySQL-python
+  when:
+    - ansible_distribution_major_version|int == 7
+
 - name: remove mysql install folder
   file:
     state: absent
