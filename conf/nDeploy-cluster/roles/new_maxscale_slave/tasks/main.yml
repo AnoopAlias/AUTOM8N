@@ -19,7 +19,7 @@
 
 - name: Install MaxScale rpm
   yum:
-    name: https://dlm.mariadb.com/1496729/MaxScale/2.5.7/packages/rhel/7/maxscale-2.5.7-1.rhel.7.x86_64.rpm
+    name: https://dlm.mariadb.com/1513946/MaxScale/2.4.16/centos/7/x86_64/maxscale-2.4.16-1.rhel.7.x86_64.rpm
     state: present
     validate_certs: no
     disable_gpg_check: yes
@@ -29,7 +29,7 @@
 
 - name: Install MaxScale rpm
   yum:
-    name: https://dlm.mariadb.com/1496724/MaxScale/2.5.7/packages/rhel/8/maxscale-2.5.7-1.rhel.8.x86_64.rpm
+    name: https://dlm.mariadb.com/1513928/MaxScale/2.4.16/centos/8/x86_64/maxscale-2.4.16-1.rhel.8.x86_64.rpm
     state: present
     validate_certs: no
     disable_gpg_check: yes
