@@ -8,7 +8,6 @@ return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %
 {% if SET_EXPIRE_STATIC == 'enabled' %}
 include /etc/nginx/conf.d/files_with_expire.conf;
 {% endif %}
-{% if MODSECURITY_MAINDIR == 'enabled' %}{% if MODSECURITY == 'disabled' %}modsecurity off;{% endif %}{% endif %}
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ SUBDIRAPPSUNIQUE }}.subinclude;
 {% endif %}
 {% if ENABLEACCESSLOG == 'disabled' %}

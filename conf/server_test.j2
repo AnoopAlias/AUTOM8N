@@ -1,3 +1,4 @@
+
 ################### Redirects ###################
 {% if WWWREDIRECT == "tononwww" %}
 server {
@@ -12,10 +13,19 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
+{% if OCSPSTAPLE %}
+ssl_stapling on;
+{% endif %}
 {% endif %}
 server_name www.{{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
+location /cpanelwebcall/ {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location ~* ^/.well-known/ {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
@@ -30,6 +40,28 @@ location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* nginx\.conf$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
+}
+
 
 location / {
 {% if REDIRECT_TO_SSL == 'enabled' and SSL %}
@@ -54,10 +86,19 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
+{% if OCSPSTAPLE %}
+ssl_stapling on;
+{% endif %}
 {% endif %}
 server_name {{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
+location /cpanelwebcall/ {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location ~* ^/.well-known/ {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
@@ -71,6 +112,27 @@ proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* nginx\.conf$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
 }
 
 location / {
@@ -97,10 +159,19 @@ listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
+{% if OCSPSTAPLE %}
+ssl_stapling on;
+{% endif %}
 {% endif %}
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
+location /cpanelwebcall/ {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location ~* ^/.well-known/ {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
@@ -114,6 +185,27 @@ proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 location ~* "^/[A-F0-9]{32}\.txt$" {
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* nginx\.conf$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
 }
 
 location / {
@@ -127,6 +219,27 @@ return 301 $scheme://{{ MAINDOMAINNAME }}$request_uri;
 {% endif %}
 {% endif %}
 ################### Redirects ###################
+################## NWAF ######################
+{% if waf == 'enabled' %}
+nwaf_host_enable {% for DOMAIN in DOMAINLIST %}{% if loop.last %}{{ DOMAIN }}{% else %}{{ DOMAIN+"," }}{% endif %}{% endfor %};
+{% for item in NEMESIDA_WL %}
+{% for DOMAIN in DOMAINLIST %}
+WL ID:{{ item[0] }} domain={{ DOMAIN }} "Z:{{ item[1] }}";
+{% endfor %}
+{% endfor %}
+{% for item in NEMESIDA_IP_WL %}
+{% for DOMAIN in DOMAINLIST %}
+nwaf_ip_wl {{ item }} domain={{ DOMAIN }};
+{% endfor %}
+{% endfor %}
+{% for item in NEMESIDAIPV6_WL %}
+{% for DOMAIN in DOMAINLIST %}
+nwaf_ip_wl {{ item }} domain={{ DOMAIN }};
+{% endfor %}
+{% endfor %}
+{% endif %}
+################## NWAF ######################
+
 ################### vhosts ###################
 server {
 listen    {{ CPANELIP }}:80 ;
@@ -134,35 +247,82 @@ listen    {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
+{% if waf == 'enabled' %}
+error_log {{ HOMEDIR }}/logs/nginx_error_log;
+{% endif %}
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}
 {% else %}
 {% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }} combined buffer=4k flush=5m;
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }} combined buffer=4k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}
 {% endif %}
 
+# Proxy cPanel/WHM URLs
+location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)($|/) {
+allow all;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
+location /cpanelwebcall/ {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location ~* ^/.well-known/ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* nginx\.conf$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
 }
 
 # Include any applications in subdirectory
@@ -184,23 +344,27 @@ return 301 https://$host$request_uri;
 }
 {% else %}
 {% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+location / {
 return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+}
 {% else %}
-{% if PAGESPEED == 'enabled' %}
-{% if PAGESPEED_FILTER == 'CoreFilters' %}
-include /etc/nginx/conf.d/pagespeed.conf;
-{% elif PAGESPEED_FILTER == 'PassThrough' %}
-include /etc/nginx/conf.d/pagespeed_passthrough.conf;
-{% endif %}
-{% endif %}
+#{% if PAGESPEED == 'enabled' %}
+#{% if PAGESPEED_FILTER == 'CoreFilters' %}
+#include /etc/nginx/conf.d/pagespeed.conf;
+#{% elif PAGESPEED_FILTER == 'PassThrough' %}
+#include /etc/nginx/conf.d/pagespeed_passthrough.conf;
+#{% endif %}
+#{% endif %}
 {% if not OPEN_FILE_CACHE == 'enabled' %}open_file_cache off;{% endif %}
 {% if AUTOINDEX == 'enabled' %}autoindex on;{% endif %}
-{% if CLICKJACKING_PROTECT == 'enabled' %}add_header X-Frame-Options SAMEORIGIN;{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}add_header X-Content-Type-Options nosniff;{% endif %}
-{% if XSS_FILTER == 'enabled' %}add_header X-XSS-Protection "1; mode=block";{% endif %}
+{% if SECURITY_HEADERS == 'enabled' %}
+add_header X-Frame-Options SAMEORIGIN;
+add_header X-Content-Type-Options nosniff;
+add_header X-XSS-Protection "1; mode=block";
+{% endif %}
 {% if GZIP == 'enabled' %}include /etc/nginx/conf.d/gzip.conf;{% endif %}
 {% if DOSMITIGATE == 'enabled' %}include /etc/nginx/conf.d/dos_mitigate.conf;{% endif %}
-{% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
+#{% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
 {% if TEST_COOKIE == 'enabled' %}testcookie on;{% endif %}
 {% if SYMLINK_PROTECTION == 'enabled' %}disable_symlinks if_not_owner;{% endif %}
 {% if AUTH_BASIC == 'enabled' %}
@@ -223,37 +387,86 @@ listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
 {% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
+{% if OCSPSTAPLE %}
+ssl_stapling on;
+{% endif %}
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
+{% if waf == 'enabled' %}
+error_log {{ HOMEDIR }}/logs/nginx_error_log;
+{% endif %}
 {% if ENABLEACCESSLOG == 'disabled' %}
 {% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}
 {% else %}
 {% if FOPEN_ACCESSLOG %}
+{% if CLUSTER_LOG %}
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=4k flush=5m;
+access_log /var/log/nginx/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% else %}
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-ssl_log combined buffer=4k flush=5m;
 access_log /usr/local/apache/domlogs/{{ CONFIGDOMAINNAME }}-bytes_log bytes_log buffer=4k flush=5m;
+{% endif %}
 {% else %}
 access_log  off;
 {% endif %}
 {% endif %}
 
-
+# Proxy cPanel/WHM URLs
+location ~* ^/(?:autodiscover|cgi-bin|cgi-sys|controlpanel|cpanel|kpanel|securecontrolpanel|securecpanel|securewhm|webmail|whm|bandwidth|img-sys|java-sys|pipermail|sys_cpanel|mailman)($|/) {
+allow all;
+proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
+location /cpanelwebcall/ {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location ~* ^/.well-known/ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # cPanel internal DCV checks
 location ~* ^/[0-9]+\..+\.cpaneldcv$ {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Comodo
 location ~* "^/[A-F0-9]{32}\.txt$" {
+{% if TEST_COOKIE == 'enabled' %}testcookie off;{% endif %}
 allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
+}
+location ~* \.user\.ini$ {
+deny all;
+}
+location ~* php\.ini$ {
+deny all;
+}
+location ~* nginx\.conf$ {
+deny all;
+}
+location ~* \.htaccess$ {
+deny all;
+}
+location ~ /\.git {
+deny all;
+}
+location ~ \.log$ {
+deny all;
+}
+location ~ error_log$ {
+deny all;
 }
 
 # Include any applications in subdirectory
@@ -261,7 +474,7 @@ proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 {% if PASSENGERAPPS[KEY] == 'enabled' %}
 location ~ ^/{{ KEY }}(/.*|$) {
 {% else %}
-location ^~ /{{ KEY }}/ {
+location ^~ /{{ KEY }} {
 {% endif %}
 include /opt/nDeploy/lock/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.manualconfig*;
 include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subconf;
@@ -270,28 +483,30 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}_{{ VALUE }}.subconf;
 # End Include any applications in subdirectory
 
 {% if REDIRECTSTATUS != 'none' and REDIRECT_URL != 'none'  %}
+location / {
 return {{REDIRECTSTATUS}} {{REDIRECT_URL}}{% if APPEND_REQUESTURI == 'enabled' %}$request_uri{% endif %};
+}
 {% else %}
-{% if PAGESPEED == 'enabled' %}
-{% if PAGESPEED_FILTER == 'CoreFilters' %}
-include /etc/nginx/conf.d/pagespeed.conf;
-{% elif PAGESPEED_FILTER == 'PassThrough' %}
-include /etc/nginx/conf.d/pagespeed_passthrough.conf;
-{% endif %}
-{% endif %}
-{% if BROTLI == 'enabled' %}
-include /etc/nginx/conf.d/brotli.conf;
-{% elif GZIP == 'enabled' %}
+#{% if PAGESPEED == 'enabled' %}
+#{% if PAGESPEED_FILTER == 'CoreFilters' %}
+#include /etc/nginx/conf.d/pagespeed.conf;
+#{% elif PAGESPEED_FILTER == 'PassThrough' %}
+#include /etc/nginx/conf.d/pagespeed_passthrough.conf;
+#{% endif %}
+#{% endif %}
+{% if GZIP == 'enabled' %}
 include /etc/nginx/conf.d/gzip.conf;
 {% endif %}
 {% if not OPEN_FILE_CACHE == 'enabled' %}open_file_cache off;{% endif %}
 {% if AUTOINDEX == 'enabled' %}autoindex on;{% endif %}
-{% if HSTS == 'enabled' %}add_header Strict-Transport-Security "max-age=31536000" always;{% endif %}
-{% if CLICKJACKING_PROTECT == 'enabled' %}add_header X-Frame-Options SAMEORIGIN;{% endif %}
-{% if DISABLE_CONTENTTYPE_SNIFFING == 'enabled' %}add_header X-Content-Type-Options nosniff;{% endif %}
-{% if XSS_FILTER == 'enabled' %}add_header X-XSS-Protection "1; mode=block";{% endif %}
+{% if SECURITY_HEADERS == 'enabled' %}
+add_header X-Frame-Options SAMEORIGIN;
+add_header X-Content-Type-Options nosniff;
+add_header X-XSS-Protection "1; mode=block";
+add_header Strict-Transport-Security "max-age=31536000" always;
+{% endif %}
 {% if DOSMITIGATE == 'enabled' %}include /etc/nginx/conf.d/dos_mitigate.conf;{% endif %}
-{% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
+#{% if MODSECURITY == 'enabled' %}modsecurity on;{% endif %}
 {% if SET_EXPIRE_STATIC == 'enabled' %}include /etc/nginx/conf.d/files_with_expire.conf;{% endif %}
 {% if TEST_COOKIE == 'enabled' %}testcookie on;{% endif %}
 {% if SYMLINK_PROTECTION == 'enabled' %}disable_symlinks if_not_owner;{% endif %}

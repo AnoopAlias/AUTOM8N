@@ -20,6 +20,9 @@ ssl_stapling on;
 server_name www.{{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location /cpanelwebcall/ {
 proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
 }
@@ -90,6 +93,9 @@ ssl_stapling on;
 server_name {{ MAINDOMAINNAME }};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location /cpanelwebcall/ {
 proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
 }
@@ -160,6 +166,9 @@ ssl_stapling on;
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location /cpanelwebcall/ {
 proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
 }
@@ -271,6 +280,9 @@ allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location /cpanelwebcall/ {
 proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
 }
@@ -412,6 +424,9 @@ allow all;
 proxy_pass   $scheme://{{ HTTPDIP }}:$cpport;
 }
 # Allow "Well-Known URIs" as per RFC 5785
+location /autodiscover/autodiscover.xml {
+proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
+}
 location /cpanelwebcall/ {
 proxy_pass $scheme://{{ HTTPDIP }}:$cpport;
 }
