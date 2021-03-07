@@ -892,7 +892,7 @@ print('')
 print('                    <!-- Nemesida Tab -->')
 print('                    <div class="tab-pane fade" id="v-pills-waf" role="tabpanel" aria-labelledby="v-pills-waf-tab">')
 
-cardheader('Namesida WAF Setup', 'fab fa-centos')
+cardheader('Nemesida WAF Setup', 'fab fa-centos')
 print('                        <div class="card-body"> <!-- Card Body Start -->')
 print('                            <form class="form" id="easy_nemesida_setup" method="post" onsubmit="return false;">')
 print('                                <input hidden class="form-control" name="run_nemesida_installer" id="run_nemesida_installer" value="enabled">')
