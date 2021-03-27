@@ -670,7 +670,7 @@ if __name__ == "__main__":
             sub_domains = json_parsed_cpaneluser.get('sub_domains')
             # Check if a user is suspended and set a flag accordingly
             if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
-                with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
+                with open("/var/cpanel/users.cache/" + cpaneluser, encoding='utf-8') as users_file:
                     json_parsed_cpusersfile = json.load(users_file)
                 if json_parsed_cpusersfile.get('SUSPENDED') == "1":
                     is_suspended = True
