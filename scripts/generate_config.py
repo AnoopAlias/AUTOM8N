@@ -205,7 +205,7 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             else:
                 TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
         else:
-            if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
+            if os.path.isfile((installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml").encode("utf-8")):
                 TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
             else:
                 if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
