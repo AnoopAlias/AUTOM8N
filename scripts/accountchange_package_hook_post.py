@@ -43,15 +43,15 @@ if new_pkg != cur_pkg:
             else:
                 TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
         else:
-            if os.path.isfile(installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"):
+            if os.path.isfile((installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml").encode('utf-8')):
                 TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local_"+hostingplan_filename+".yaml"
             else:
                 if os.path.isfile(installation_path+"/conf/domain_data_default_local.yaml"):
                     TEMPLATE_FILE = installation_path+"/conf/domain_data_default_local.yaml"
                 else:
                     TEMPLATE_FILE = installation_path+"/conf/domain_data_default.yaml"
-        if os.path.isfile(cpuserdatajson) and os.path.isfile(TEMPLATE_FILE):
-            with open(TEMPLATE_FILE, 'r') as profileyaml_data_stream:
+        if os.path.isfile(cpuserdatajson) and os.path.isfile(TEMPLATE_FILE.encode('utf-8')):
+            with open(TEMPLATE_FILE, 'r', encoding='utf-8') as profileyaml_data_stream:
                 yaml_parsed_profileyaml = yaml.safe_load(profileyaml_data_stream)
             phpmaxchildren = yaml_parsed_profileyaml.get('phpmaxchildren', '8')
             with open(cpuserdatajson) as cpaneluser_data_stream:
