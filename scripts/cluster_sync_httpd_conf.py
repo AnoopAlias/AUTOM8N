@@ -27,7 +27,7 @@ if __name__ == "__main__":
     cluster_dict_ipmap = cluster_dict.get('ipmap')
     for key in cluster_dict_ipmap.keys():
         value = cluster_dict_ipmap.get(key)
-        with open('/etc/apache2/conf/httpd.conf', 'r+') as apache_conf:
+        with open('/etc/apache2/conf/httpd.conf', 'r+', encoding="utf-8") as apache_conf:
             theconf = apache_conf.read()
             newconf = re.sub(key+':', value+':', theconf)
             apache_conf.seek(0)
