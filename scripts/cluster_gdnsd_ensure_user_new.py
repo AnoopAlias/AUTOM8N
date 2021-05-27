@@ -107,24 +107,27 @@ def generate_zone(domainname, slavelist):
                         gdnsdzone.append(rr['name']+' A '+ipaddress+'\n')
                     else:
                         gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
-                elif rr['type'] == "MX" and not mx_loop_skip:
-                    with open('/etc/remotedomains') as mx_excludes:
-                        for line in mx_excludes:
-                            if str(line).rstrip() == domainname:
-                                mx_skip_flag = True
-                                break
-                    if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
-                        with open(installation_path+"/conf/dnscluster.exclude") as excludes:
-                            for line in excludes:
+                elif rr['type'] == "MX":
+                    if rr['name'] == domainname and not mx_loop_skip:
+                        with open('/etc/remotedomains') as mx_excludes:
+                            for line in mx_excludes:
                                 if str(line).rstrip() == domainname:
                                     mx_skip_flag = True
                                     break
-                    if not mx_skip_flag:
-                        myhostname = socket.gethostname()
-                        gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
-                        for server in slavelist:
-                            gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
-                        mx_loop_skip = True
+                        if os.path.isfile(installation_path+"/conf/dnscluster.exclude"):
+                            with open(installation_path+"/conf/dnscluster.exclude") as excludes:
+                                for line in excludes:
+                                    if str(line).rstrip() == domainname:
+                                        mx_skip_flag = True
+                                        break
+                        if not mx_skip_flag:
+                            myhostname = socket.gethostname()
+                            gdnsdzone.append(rr['name']+' MX  0 '+myhostname+'.\n')
+                            for server in slavelist:
+                                gdnsdzone.append(rr['name']+' MX  100 '+server+'.\n')
+                            mx_loop_skip = True
+                        else:
+                            gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
                     else:
                         gdnsdzone.append(rr['name']+' MX '+rr['preference']+' '+rr['exchange']+'.\n')
                 elif rr['type'] == "TXT":
