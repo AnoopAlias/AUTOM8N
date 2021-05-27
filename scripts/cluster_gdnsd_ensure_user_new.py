@@ -108,7 +108,7 @@ def generate_zone(domainname, slavelist):
                     else:
                         gdnsdzone.append(rr['name']+' CNAME '+rr['cname']+'.\n')
                 elif rr['type'] == "MX":
-                    if rr['name'] == domainname and not mx_loop_skip:
+                    if rr['name'] == domainname+"." and not mx_loop_skip:
                         with open('/etc/remotedomains') as mx_excludes:
                             for line in mx_excludes:
                                 if str(line).rstrip() == domainname:
