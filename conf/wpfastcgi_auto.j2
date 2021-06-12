@@ -1,5 +1,8 @@
 # Wordpress with FastCGI cache and 10 minute cache validity time
 
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
 if ($request_uri ~* "/(cart|checkout|my-account)/*$") {
     set $skip_cache 1;
 }
