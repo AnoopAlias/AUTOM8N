@@ -212,21 +212,20 @@ if os.path.isdir('/etc/borgmatic'):
             if myarchives:
                 mykeypos = 1
                 print('                            <div class="input-group">')
-                print('                                <select name="myarchives" class="custom-select">')
-                for backup in myarchives:
-                    print(('                                    <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>'))
-                print('                                </select>')
                 if not mount_flag:
+                  for backup in myarchives:
                     print('                                <div class="input-group-append">')
                     print(('                                    <form class="m-0 borg_mount_restore_point" id="borg_mount_restore_point'+'-'+str(mykeypos)+'"  method="post" onsubmit="return false;">'))
+                    print('                                       <select name="myarchives" class="custom-select">')
+                    print(('                                        <option selected value="'+backup.get('archive')+'">'+backup.get('archive')+'</option>'))
                     print(('                                        <input hidden name="restorepoint" value="'+backup.get('archive')+'">'))
-                    print('                                        <input hidden name="action" value="mount">')
-                    print('                                        <button id="borg-mount-restore-point-btn" class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
-                    print('                                    </form>')
+                    print('                                         <input hidden name="action" value="mount">')
+                    print('                                       </select>')
+                    print('                                       <button id="borg-mount-restore-point-btn" class="btn btn-outline-primary btn-block" type="submit">Mount <i class="fas fa-upload"></i></button>')
+                    print('                                      </form>')
                     print('                                </div>')
                     mykeypos = mykeypos + 1
                 print('                            </div>')
-
         print('                        </div> <!-- Card Body End -->')
         cardfooter('Mount point: <kbd>/root/borg_restore_point</kbd>')
 
