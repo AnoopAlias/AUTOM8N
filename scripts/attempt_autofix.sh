@@ -49,7 +49,7 @@ fi
 if [ -f /etc/cpanel/ea4/is_ea4 ];then
 	echo -e ' !!! Removing conflicting mod_evasive ea-apache24-mod_evasive ea-apache24-mod_ruid2 ea-apache24-mod_http2 rpm '
 	yum -y remove ea-apache24-mod_ruid2 ea-apache24-mod_http2 ea-apache24-mod_evasive mod_evasive
-	yum -y install ea-apache24-mod_remoteip
+	yum -y install ea-apache24-mod_remoteip ea-apache24-mod_lsapi ea-apache24-mod_suexec
 fi
 
 # Reloading nginx
