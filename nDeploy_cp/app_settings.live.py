@@ -194,7 +194,7 @@ if form.getvalue('domain'):
         print('')
         print('                <!-- Secondary Navigation -->')
         print('                <div class="pl-3 col-md-3 nav flex-column nav-pills d-none d-lg-block d-xl-block d-xs-none d-sm-none" id="v-pills-tab" role="tablist" aria-orientation="vertical">')
-        print('                    <a class="nav-link active" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab">Application Status</a>')
+        print('                    <a class="nav-link active" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab">Application Settings</a>')
         print('                    <a class="nav-link" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general">General Settings</a>')
         print('                    <a class="nav-link" id="v-pills-security-tab" data-toggle="pill" href="#v-pills-security" role="tab" aria-controls="v-pills-security">Security Settings</a>')
         print('                    <a class="nav-link" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations">Content Optimizations</a>')
@@ -217,7 +217,7 @@ if form.getvalue('domain'):
         print('                            Menu')
         print('                        </button>')
         print('                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">')
-        print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">Application Status</a>')
+        print('                            <a class="dropdown-item" id="v-pills-system-tab" data-toggle="pill" href="#v-pills-system" role="tab" aria-controls="v-pills-system-tab" aria-selected="false">Application Settings</a>')
         print('                            <a class="dropdown-item" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general" aria-selected="false">General Settings</a>')
         print('                            <a class="dropdown-item" id="v-pills-security-tab" data-toggle="pill" href="#v-pills-security" role="tab" aria-controls="v-pills-security" aria-selected="false">Security Settings</a>')
         print('                            <a class="dropdown-item" id="v-pills-optimizations-tab" data-toggle="pill" href="#v-pills-optimizations" role="tab" aria-controls="v-pills-optimizations" aria-selected="false">Content Optimizations</a>')
@@ -235,7 +235,7 @@ if form.getvalue('domain'):
         print('                    <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">')
 
         # System Setup
-        cardheader('Application Status', 'fas fa-users-cog')
+        cardheader('Application Settings', 'fas fa-users-cog')
         print('                        <div class="card-body p-0"> <!-- Card Body Start -->')
         print('                            <div class="row no-gutters row-2-col"> <!-- Row Start -->')
 
