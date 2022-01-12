@@ -51,19 +51,19 @@
   roles:
     - new_mariadb_slave
 
-- name: Start MySQL replication on master
-  hosts: ndeploymaster
-  vars:
-    MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
-  roles:
-    - dbreplication_master
-
 - name: Start MySQL replication on slave
   hosts: ndeployslaves
   vars:
     MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
   roles:
     - dbreplication_slave
+
+- name: Start MySQL replication on master
+  hosts: ndeploymaster
+  vars:
+    MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
+  roles:
+    - dbreplication_master
 
 - name: Switch to GTID
   hosts: ndeploymaster,ndeployslaves

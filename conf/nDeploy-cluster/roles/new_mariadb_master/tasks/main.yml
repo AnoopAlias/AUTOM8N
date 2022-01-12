@@ -121,22 +121,46 @@
     name: sys
     state: absent
 
-- name: get the master log and pos
-  mysql_replication: mode=getmaster
-  register: masterrepl
+#- name: get the master log and pos
+#  mysql_replication: mode=getmaster
+#  register: masterrepl
 
-- name: Dump all databases
-  mysql_db:
-    state: dump
-    name: all
-    target: /root/xtendweb_mysql_all.sql
-    single_transaction: True
+#- name: Dump all databases
+#  mysql_db:
+#    state: dump
+#    name: all
+#    target: /root/xtendweb_mysql_all.sql
+#    single_transaction: True
+#  when:
+#    - mysqldumplock.stat.exists == false
+
+- name: Ensure MariaDB-backup rpm
+  yum: name={{ packages }} enablerepo=epel state=present
+  vars:
+    packages:
+     - MariaDB-backup
+
+- name: Create /backup directory if it does not exist
+  file:
+    path: /backup
+    state: directory
+    mode: '0755'
+
+- name: Delete previous mariabackup's
+  file:
+    state: absent
+    path: /backup/autom8n_mysqlbackup
   when:
     - mysqldumplock.stat.exists == false
 
-- set_fact:
-    masterlog: "{{ masterrepl.File }}"
-    masterpos: "{{ masterrepl.Position }}"
+- name: Dump all databases
+  shell: mariabackup --backup --target-dir=/backup/autom8n_mysqlbackup
+  when:
+    - mysqldumplock.stat.exists == false
+
+#- set_fact:
+#    masterlog: "{{ masterrepl.File }}"
+#    masterpos: "{{ masterrepl.Position }}"
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE

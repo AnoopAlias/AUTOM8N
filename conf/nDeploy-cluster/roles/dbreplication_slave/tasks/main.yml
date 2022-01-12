@@ -5,6 +5,10 @@
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_REPLICATION_LOCK_DO_NOT_REMOVE
   register: mysqlreplsetup
 
+- name: register gtid pos
+  shell: cat /backup/autom8n_mysqlbackup/xtrabackup_binlog_info|awk '{print $3}'
+  register: GTIDPOS
+
 - name: generate start replication query
   template:
     src: replication.j2
@@ -14,6 +18,14 @@
   shell: mysql < /root/xtendweb_mysql_replication.sql
   when:
     - mysqlreplsetup.stat.exists == false
+
+- name: get the master log and pos
+  mysql_replication: mode=getmaster
+  register: masterrepl
+
+- set_fact:
+    masterlog: "{{ masterrepl.File }}"
+    masterpos: "{{ masterrepl.Position }}"
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_REPLICATION_LOCK_DO_NOT_REMOVE

@@ -66,15 +66,58 @@
       - MariaDB-shared
       - MariaDB-server
       - MariaDB-client
+      - MariaDB-backup
 
-- name: Restart MariaDB server
-  service: name=mariadb enabled=yes state=started
+- name: Stop MariaDB server
+  service: name=mariadb state=stopped
 
-- name: Copy database dump
-  copy:
-    src: /root/xtendweb_mysql_all.sql
-    dest: /root/xtendweb_mysql_all.sql
+- name: remove MariaDB install folder
+  file:
+    state: absent
+    path: /var/lib/mysql/
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: Create /backup directory if it does not exist
+  file:
+    path: /backup
+    state: directory
+    mode: '0755'
+
+- name: Copy mariabackup folder from master
+  synchronize:
+    src: /backup/autom8n_mysqlbackup
+    dest: /backup/
   when:  mysqlsetup.stat.exists == false
+
+- name: mariabackup prepare
+  shell: mariabackup --prepare --target-dir=/backup/autom8n_mysqlbackup
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: mariabackup copy back
+  shell: mariabackup --copy-back --target-dir=/backup/autom8n_mysqlbackup
+  when:
+    - mysqlsetup.stat.exists == false
+
+- name: set mysql folder ownership
+  file:
+    path: /var/lib/mysql
+    owner: mysql
+    group: mysql
+    recurse: yes
+
+- name: set mysql folder permission
+  file:
+    path: /var/lib/mysql
+    mode: 0755
+
+
+#- name: Copy database dump
+#  copy:
+#    src: /root/xtendweb_mysql_all.sql
+#    dest: /root/xtendweb_mysql_all.sql
+#  when:  mysqlsetup.stat.exists == false
 
 - name: create the mysql-ssl directory
   file:
@@ -102,25 +145,22 @@
   when:
     - mysqlsetup.stat.exists == false
 
-- name: Restart MariaDB server
-  service: name=mariadb enabled=yes state=restarted
+#- name: Update socket path in /root/.my.cnf
+#  ini_file:
+#    path: /root/.my.cnf
+#    section: client
+#    option: socket
+#    value: /var/lib/mysql/mysql.sock
+#    backup: yes
+#  when:
+#    - mysqlsetup.stat.exists == false
 
-- name: Update socket path in /root/.my.cnf
-  ini_file:
-    path: /root/.my.cnf
-    section: client
-    option: socket
-    value: /var/lib/mysql/mysql.sock
-    backup: yes
-  when:
-    - mysqlsetup.stat.exists == false
-
-- name: Import mysqldump from master
-  mysql_db:
-    state: import
-    name: all
-    target: /root/xtendweb_mysql_all.sql
-  when:  mysqlsetup.stat.exists == false
+#- name: Import mysqldump from master
+#  mysql_db:
+#    state: import
+#    name: all
+#    target: /root/xtendweb_mysql_all.sql
+#  when:  mysqlsetup.stat.exists == false
 
 - name: Copy .my.cnf
   copy:
@@ -131,13 +171,6 @@
 - name: Restart MariaDB server
   service: name=mariadb enabled=yes state=restarted
 
-- name: get the master log and pos
-  mysql_replication: mode=getmaster
-  register: masterrepl
-
-- set_fact:
-    masterlog: "{{ masterrepl.File }}"
-    masterpos: "{{ masterrepl.Position }}"
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_MYSQL_SETUP_LOCK_DO_NOT_REMOVE
