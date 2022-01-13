@@ -1,6 +1,6 @@
 [maxscale]
 threads=2
-auth_read_timeout=5
+auth_read_timeout=8s
 max_auth_errors_until_block=5000000
 
 # cPanel master
@@ -9,13 +9,13 @@ type=server
 address={{ hostvars[groups['ndeploymaster'][0]]['dbip'] }}
 port=13306
 protocol=MariaDBBackend
-ssl=required
+ssl=1
 ssl_version=MAX
 ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
 ssl_cert=/etc/mysql-ssl/client-cert.pem
 ssl_key=/etc/mysql-ssl/client-key.pem
 persistpoolmax=100
-persistmaxtime=3600
+persistmaxtime=3600s
 
 # DBslave
 [server2]
@@ -23,13 +23,13 @@ type=server
 address={{ hostvars[groups['ndeploydbslave'][0]]['dbip'] }}
 port=13306
 protocol=MariaDBBackend
-ssl=required
+ssl=1
 ssl_version=MAX
 ssl_ca_cert=/etc/mysql-ssl/ca-cert.pem
 ssl_cert=/etc/mysql-ssl/client-cert.pem
 ssl_key=/etc/mysql-ssl/client-key.pem
 persistpoolmax=100
-persistmaxtime=3600
+persistmaxtime=3600s
 
 [MySQL-Monitor]
 type=monitor
@@ -45,7 +45,7 @@ type=service
 router=readwritesplit
 master_accept_reads=true
 master_failure_mode=fail_on_write
-connection_keepalive=600
+connection_keepalive=600s
 use_sql_variables_in=master
 master_reconnection=true
 slave_selection_criteria=ADAPTIVE_ROUTING
@@ -56,7 +56,7 @@ router_options=master
 servers=server1,server2
 user=maxscale
 password={{ MAXSCALEPASS }}
-connection_timeout=600
+connection_timeout=600s
 max_connections=1024
 auth_all_servers=false
 
