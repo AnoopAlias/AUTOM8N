@@ -7,7 +7,8 @@
 
 - name: Install MaxScale rpm
   yum:
-    name: {{ MAXSCALE7URL }}
+    name:
+      - "{{ MAXSCALE7URL }}"
     state: present
     validate_certs: no
     disable_gpg_check: yes
@@ -16,7 +17,8 @@
 
 - name: Install MaxScale rpm
   yum:
-    name: {{ MAXSCALE8URL }}
+    name:
+      - "{{ MAXSCALE8URL }}"
     state: present
     validate_certs: no
     disable_gpg_check: yes
