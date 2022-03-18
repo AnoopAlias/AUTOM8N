@@ -12,7 +12,8 @@ yum -y install MySQL-python iproute autoconf automake curl gcc git libmnl-devel 
 ### netdata compile from source ###
 
 ### netdata static build ###
-curl -Ss 'https://my-netdata.io/kickstart-static64.sh' >/tmp/kickstart.sh && /bin/bash /tmp/kickstart.sh --non-interactive
+export TMPDIR="/root/tmp"
+curl -Ss 'https://my-netdata.io/kickstart-static64.sh' >/tmp/kickstart.sh && /bin/bash /tmp/kickstart.sh --non-interactive --stable-channel --build-only --install /opt
 ### netdata static build ###
 
 if [ ! -f /etc/nginx/conf.d/netdata.password ]; then
