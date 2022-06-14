@@ -6,7 +6,7 @@
   register: mysqlreplsetup
 
 - name: register gtid pos
-  shell: cat /backup/autom8n_mysqlbackup/xtrabackup_binlog_info|awk '{print $3}'
+  shell: cat /backup/autom8n_mysqlbackup/xtrabackup_binlog_info|grep "."|tail -1|awk '{print $3}'
   register: GTIDPOS
 
 - name: generate start replication query
