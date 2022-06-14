@@ -12,10 +12,10 @@
     name: nDeploy csync2
     state: absent
 
-- name: Add csync2 cron job in /etc/crontab
+- name: Add csync2 cron job in /etc/cron.d/xtendweb-cron
   cron:
     name: XtendWeb csync2
-    cron_file: "/etc/crontab"
+    cron_file: "/etc/cron.d/xtendweb-cron"
     user: root
     job: "/usr/sbin/csync2 -x"
 

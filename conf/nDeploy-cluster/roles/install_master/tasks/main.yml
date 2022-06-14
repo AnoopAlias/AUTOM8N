@@ -61,17 +61,17 @@
 - name: Set cluster cron master
   shell: "echo $HOSTNAME > /var/spool/cron/.cron.hostname"
 
-- name: Add cluster cron failover job in /etc/crontab
+- name: Add cluster cron failover job in /etc/cron.d/xtendweb-cron
   cron:
     name: XtendWeb crond failover
-    cron_file: "/etc/crontab"
+    cron_file: "/etc/cron.d/xtendweb-cron"
     user: root
     job: "/usr/bin/touch /var/spool/cron/.cron.hostname"
 
-- name: Add purge mysql binlog job in /etc/crontab
+- name: Add purge mysql binlog job in /etc/cron.d/xtendweb-cron
   cron:
     name: XtendWeb binlog purge
-    cron_file: "/etc/crontab"
+    cron_file: "/etc/cron.d/xtendweb-cron"
     user: root
     job: "/opt/nDeploy/scripts/purgemysqllogs_master.sh"
     minute: "0"

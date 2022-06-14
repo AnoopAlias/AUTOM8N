@@ -7,18 +7,18 @@
   with_fileglob:
     - "/root/xtendweb_*"
 
-- name: Add MaxScale autorecovery in /etc/crontab
+- name: Add MaxScale autorecovery in /etc/cron.d/xtendweb-cron
   cron:
     name: XtendWeb MaxScale autorecovery
-    cron_file: "/etc/crontab"
+    cron_file: "/etc/cron.d/xtendweb-cron"
     user: root
     job: "/opt/nDeploy/scripts/maxscale_master_autorecover.sh"
     minute: "*/5"
 
-- name: Add MaxScale status update in /etc/crontab
+- name: Add MaxScale status update in /etc/cron.d/xtendweb-cron
   cron:
     name: XtendWeb MaxScale status update
-    cron_file: "/etc/crontab"
+    cron_file: "/etc/cron.d/xtendweb-cron"
     user: root
     job: "/opt/nDeploy/scripts/check_maxscale_status.sh"
     minute: "*/5"
