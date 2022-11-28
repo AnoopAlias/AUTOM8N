@@ -1,0 +1,49 @@
+# Wordpress with FastCGI cache and 10 minute cache validity time
+
+root {{ DOCUMENTROOT }};
+index index.php index.html index.htm;
+
+if ($request_uri ~* "/(cart|checkout|my-account)/*$") {
+    set $skip_cache 1;
+}
+
+if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|wordpress_logged_in") {
+    set $skip_cache 1;
+}
+
+location / {
+try_files $uri $uri/ /index.php?q=$uri&$args;
+}
+
+location ~ ^/pingphpfpm$ {
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location = /wp-login.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location = /xmlrpc.php {
+limit_req   zone=one  burst=1 nodelay;
+include /etc/nginx/fastcgi_params*;
+fastcgi_pass unix:{{ SOCKETFILE }};
+}
+
+location ~ [^/]\.php(/|$) {
+fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+if (!-f $document_root$fastcgi_script_name) {
+return 404;
+}
+fastcgi_cache_bypass $skip_cache;
+fastcgi_no_cache $skip_cache;
+fastcgi_cache FASTCGICACHE;
+fastcgi_cache_valid 10m;
+add_header X-Cache $upstream_cache_status;
+
+fastcgi_pass unix:{{ SOCKETFILE }};
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params*;
+}
