@@ -56,12 +56,4 @@ But add the header additionally
 add_header name value;
 https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header
 
-
-Or
-If you wish to clear upstream header and add a new header you can use
-
-more_set_headers    "Name: value";
-
-https://github.com/openresty/headers-more-nginx-module#more_set_headers
-
 ###############################################################################
