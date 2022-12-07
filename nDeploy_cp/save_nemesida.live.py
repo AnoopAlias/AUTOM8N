@@ -6,6 +6,8 @@ import yaml
 import cgi
 import cgitb
 import sys
+from celery import Celery
+from autom8ntaskq import regen_nginx_conf
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden
 
 
@@ -16,6 +18,7 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+cpaneluser = os.environ["USER"]
 
 cgitb.enable()
 
@@ -61,6 +64,7 @@ if form.getvalue('RuleId') and form.getvalue('Zone')and form.getvalue('profileya
 
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+        regen_nginx_conf.delay(cpaneluser)
 
         # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
@@ -83,6 +87,7 @@ elif form.getvalue('whiteList-to-delete') and form.getvalue('profileyaml'):
             yaml_parsed_profileyaml['nemesida_wl'] = nemesida_wl_list
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+        regen_nginx_conf.delay(cpaneluser)
         # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         # time.sleep(2)
         print_success('Deleted whitelisted successfully.')
@@ -109,6 +114,7 @@ elif form.getvalue('profileyaml') and form.getvalue('ip'):
     #
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+        regen_nginx_conf.delay(cpaneluser)
     #
     #     # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
@@ -131,6 +137,7 @@ elif form.getvalue('ipaddress-to-delete') and form.getvalue('profileyaml'):
             yaml_parsed_profileyaml['nemesida_ip_wl'] = nemesida_ip_wl_list
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+        regen_nginx_conf.delay(cpaneluser)
     #     # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
         print_success('Deleted Ipadress successfully.')
@@ -157,6 +164,7 @@ elif form.getvalue('profileyaml') and form.getvalue('ipv6'):
     # #
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+        regen_nginx_conf.delay(cpaneluser)
     # #
     # #     # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
@@ -179,6 +187,7 @@ elif form.getvalue('ipv6address_delete') and form.getvalue('profileyaml'):
             yaml_parsed_profileyaml['nemesidaipv6_wl'] = nemesidaipv6_wl_list
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+        regen_nginx_conf.delay(cpaneluser)
     #     # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
         print_success('Deleted Ipadress successfully.')
