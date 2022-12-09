@@ -6,6 +6,7 @@ import yaml
 import cgi
 import cgitb
 import sys
+from autom8ntaskq import regen_nginx_conf
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden, terminal_call
 
 
@@ -17,6 +18,7 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 backend_config_file = installation_path+"/conf/backends.yaml"
+cpaneluser = os.environ["USER"]
 
 cgitb.enable()
 
@@ -72,6 +74,8 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
             terminal_call('','Note: Turned off gzip, brotli and set_expire_static options as they are incompatible with the template generated nginx.conf. The config will not work if you turn on these options!')
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+
+        regen_nginx_conf.delay(cpaneluser)
 
         # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
