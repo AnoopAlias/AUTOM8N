@@ -1,7 +1,7 @@
 ---
 
 - name: get the slave status
-  mysql_replication: mode=getslave
+  mysql_replication: mode=getreplica
   register: slavestatus
 
 - name: Setup gtid replication

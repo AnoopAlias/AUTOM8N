@@ -20,7 +20,7 @@
     - mysqlreplsetup.stat.exists == false
 
 - name: get the master log and pos
-  mysql_replication: mode=getmaster
+  mysql_replication: mode=getprimary
   register: masterrepl
 
 - set_fact:
