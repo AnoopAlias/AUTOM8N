@@ -7,8 +7,8 @@ import cgi
 import cgitb
 import sys
 import re
-from celery import Celery
-from autom8ntaskq import regen_nginx_conf
+# from celery import Celery
+# from autom8ntaskq import regen_nginx_conf
 from commoninclude import print_simple_header, print_simple_footer
 
 
@@ -335,7 +335,7 @@ else:
         sys.exit(0)
 with open(profileyaml, 'w') as yaml_file:
     yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-regen_nginx_conf.delay(cpaneluser)
+# regen_nginx_conf.delay(cpaneluser)
 
 commoninclude.print_success('Server settings saved!')
 

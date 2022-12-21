@@ -6,8 +6,8 @@ import yaml
 import cgi
 import cgitb
 import sys
-from celery import Celery
-from autom8ntaskq import regen_nginx_conf
+# from celery import Celery
+# from autom8ntaskq import regen_nginx_conf
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden
 
 
@@ -28,7 +28,7 @@ form = cgi.FieldStorage()
 print_simple_header()
 
 
-#nemesida_wl  RuleId and Zone
+# nemesida_wl  RuleId and Zone
 if form.getvalue('RuleId') and form.getvalue('Zone')and form.getvalue('profileyaml'):
 
     # Get the Rule ID from form data
@@ -64,14 +64,14 @@ if form.getvalue('RuleId') and form.getvalue('Zone')and form.getvalue('profileya
 
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        regen_nginx_conf.delay(cpaneluser)
+        # regen_nginx_conf.delay(cpaneluser)
 
         # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
         print_success('Rule whitelisted successfully')
     else:
         print_error('Domain-data file I/O error!')
-#delete Whitelisted Rule ID and Zone
+# delete Whitelisted Rule ID and Zone
 elif form.getvalue('whiteList-to-delete') and form.getvalue('profileyaml'):
 
     deleting_list = form.getvalue('whiteList-to-delete')
@@ -87,13 +87,13 @@ elif form.getvalue('whiteList-to-delete') and form.getvalue('profileyaml'):
             yaml_parsed_profileyaml['nemesida_wl'] = nemesida_wl_list
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        regen_nginx_conf.delay(cpaneluser)
+        # regen_nginx_conf.delay(cpaneluser)
         # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         # time.sleep(2)
         print_success('Deleted whitelisted successfully.')
     else:
         print_error('Domain-data file I/O error!')
-#whitelist ip address
+# whitelist ip address
 elif form.getvalue('profileyaml') and form.getvalue('ip'):
     profileyaml = form.getvalue('profileyaml')
     ipaddress = form.getvalue('ip')
@@ -114,14 +114,14 @@ elif form.getvalue('profileyaml') and form.getvalue('ip'):
     #
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        regen_nginx_conf.delay(cpaneluser)
+        # regen_nginx_conf.delay(cpaneluser)
     #
     #     # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
         print_success('Ipaddress updated successfully')
     else:
         print_error('Domain-data file I/O error!')
-#delete Whitelisted ip addess
+# delete Whitelisted ip addess
 elif form.getvalue('ipaddress-to-delete') and form.getvalue('profileyaml'):
 
     deleting_list = form.getvalue('ipaddress-to-delete')
@@ -137,13 +137,13 @@ elif form.getvalue('ipaddress-to-delete') and form.getvalue('profileyaml'):
             yaml_parsed_profileyaml['nemesida_ip_wl'] = nemesida_ip_wl_list
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        regen_nginx_conf.delay(cpaneluser)
+        # regen_nginx_conf.delay(cpaneluser)
     #     # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
         print_success('Deleted Ipadress successfully.')
     else:
         print_error('Domain-data file I/O error!')
-#whitelist Ipv6
+# whitelist Ipv6
 elif form.getvalue('profileyaml') and form.getvalue('ipv6'):
     profileyaml = form.getvalue('profileyaml')
     ipv6_address = form.getvalue('ipv6')
@@ -164,14 +164,14 @@ elif form.getvalue('profileyaml') and form.getvalue('ipv6'):
     # #
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        regen_nginx_conf.delay(cpaneluser)
+        # regen_nginx_conf.delay(cpaneluser)
     # #
     # #     # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
         print_success('Ipaddress updated successfully')
     else:
         print_error('Domain-data file I/O error!')
-#delete Whitelisted ipv6 addess
+# delete Whitelisted ipv6 addess
 elif form.getvalue('ipv6address_delete') and form.getvalue('profileyaml'):
 
     removing_list= form.getvalue('ipv6address_delete')
@@ -187,15 +187,12 @@ elif form.getvalue('ipv6address_delete') and form.getvalue('profileyaml'):
             yaml_parsed_profileyaml['nemesidaipv6_wl'] = nemesidaipv6_wl_list
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
-        regen_nginx_conf.delay(cpaneluser)
+        # regen_nginx_conf.delay(cpaneluser)
     #     # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
         time.sleep(2)
         print_success('Deleted Ipadress successfully.')
     else:
         print_error('Domain-data file I/O error!')
-
-
-
 
 else:
     print_forbidden()
