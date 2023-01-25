@@ -3,7 +3,7 @@
 
 yum -y install MySQL-python iproute autoconf automake curl gcc git libmnl-devel libuuid-devel lm-sensors make nc nmap-ncat pkgconfig python python-psycopg2 PyYAML zlib-devel python-pip
 
-curl https://my-netdata.io/kickstart.sh > /tmp/netdata-kickstart.sh && sh /tmp/netdata-kickstart.sh
+curl https://my-netdata.io/kickstart.sh > /tmp/netdata-kickstart.sh && sh /tmp/netdata-kickstart.sh --stable-channel
 
 if [ ! -f /etc/nginx/conf.d/netdata.password ]; then
 
