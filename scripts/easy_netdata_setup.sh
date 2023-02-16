@@ -3,7 +3,7 @@
 
 yum -y install MySQL-python iproute autoconf automake curl gcc git libmnl-devel libuuid-devel lm-sensors make nc nmap-ncat pkgconfig python python-psycopg2 PyYAML zlib-devel python-pip
 
-curl https://my-netdata.io/kickstart.sh > /tmp/netdata-kickstart.sh && sh /tmp/netdata-kickstart.sh
+curl https://my-netdata.io/kickstart.sh > /tmp/netdata-kickstart.sh && sh /tmp/netdata-kickstart.sh --stable-channel
 
 if [ ! -f /etc/nginx/conf.d/netdata.password ]; then
 
@@ -20,7 +20,7 @@ chmod 400 /etc/nginx/conf.d/netdata.password
 chown nobody /etc/nginx/conf.d/netdata.password
 
 
-conflineno=$(wc -l /opt/netdata/etc/netdata/netdata.conf|awk '{print $1}')
+conflineno=$(wc -l /etc/netdata/netdata.conf|awk '{print $1}')
 
 if [ ${conflineno} -lt 40 ];then
   curl -o /etc/netdata/netdata.conf http://localhost:19999/netdata.conf

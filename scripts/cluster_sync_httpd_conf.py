@@ -17,7 +17,6 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 
 if __name__ == "__main__":
-    subprocess.call('chattr -i /etc/apache2/conf/httpd.conf', shell=True)
     if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
         cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
         cluster_data_yaml = open(cluster_config_file, 'r')
@@ -48,4 +47,4 @@ if __name__ == "__main__":
         subprocess.call(['/usr/sbin/apachectl', 'graceful'])
     else:
         subprocess.call('systemctl restart httpd', shell=True)
-    subprocess.call('chattr +i /etc/apache2/conf/httpd.conf', shell=True)
+    subprocess.call('rsync -a /etc/apache2/conf/httpd.conf /etc/apache2/conf/httpd.conf.autom8n.backup', shell=True)
