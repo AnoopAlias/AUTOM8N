@@ -1,16 +1,5 @@
 ---
 
-- name: disable named service
-  shell: "/usr/local/cpanel/bin/whmapi1 configureservice service=named enabled=0 monitored=0"
-  ignore_errors: yes
-  when: dns == "geodns"
-
-- name: Stop named
-  service:
-    name: named
-    state: stopped
-  when: dns == "geodns"
-
 - name: Initialize MaxMind GeoLite database
   shell: /etc/gdnsd/geoip/geoip_update.sh
   when: dns == "geodns"

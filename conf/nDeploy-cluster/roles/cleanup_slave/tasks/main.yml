@@ -23,10 +23,6 @@
 - name: Restart crond on slave
   service: name=crond enabled=yes state=restarted
 
-- name: Restart gdnsd on slave
-  service: name=gdnsd enabled=yes state=restarted
-  when: dns == "geodns"
-
 - name: Restart cpanel on slave
   service: name=cpanel enabled=yes state=restarted
 
