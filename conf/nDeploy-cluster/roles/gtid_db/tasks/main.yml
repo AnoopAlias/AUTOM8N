@@ -3,6 +3,14 @@
 - name: get the slave status
   mysql_replication: mode=getreplica
   register: slavestatus
+  when:
+    - ansible_distribution_major_version|int == 8
+
+- name: get the slave status
+  mysql_replication: mode=getslave
+  register: slavestatus
+  when:
+    - ansible_distribution_major_version|int == 7 
 
 - name: Setup gtid replication
   shell: mysql -e "STOP SLAVE;"
