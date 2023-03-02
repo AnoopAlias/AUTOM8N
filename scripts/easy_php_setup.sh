@@ -3,7 +3,7 @@
 
 #Function defs
 setup_ea4_php_cloudlinux(){
-		for ver in 54 55 56 70 71 72 73 74 80 81
+		for ver in 54 55 56 70 71 72 73 74 80 81 82
 		do
 			if rpm -q ea-php$ver
 			then
@@ -27,7 +27,7 @@ setup_ea4_php_cloudlinux(){
 	}
 
 setup_ea4_php(){
-		for ver in 54 55 56 70 71 72 73 74 80 81
+		for ver in 54 55 56 70 71 72 73 74 80 81 82
 		do
 			if rpm -q ea-php$ver
 			then
@@ -58,7 +58,7 @@ setup_remi_php(){
 		elif [ ${osversion} -eq 7 ];then
 			yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 		fi
-		for ver in 54 55 56 70 71 72 73 74 80 81
+		for ver in 54 55 56 70 71 72 73 74 80 81 82
 		do
 			yum -y --disableexcludes=main --enablerepo=remi install php$ver php$ver-php-fpm php$ver-php-opcache php$ver-php-mysqlnd php$ver-php-gd php$ver-php-imap php$ver-php-intl php$ver-php-ioncube-loader php$ver-php-xmlrpc php$ver-php-xml php$ver-php-mcrypt php$ver-php-mbstring
 			ln -s /opt/remi/php$ver/root/usr/sbin /opt/remi/php$ver/root/
@@ -99,7 +99,7 @@ setup_ea4_cluster_php(){
 			if [ ! -f /opt/nDeploy/conf/XTENDWEB_PHP_SETUP_LOCK_DO_NOT_REMOVE ]; then
 				auto_setup
 			fi
-			for ver in 54 55 56 70 71 72 73 74 80 81
+			for ver in 54 55 56 70 71 72 73 74 80 81 82
 			do
 				if [ -f /opt/nDeploy/conf/zz_xtendweb.ini ]; then
 					rsync -a /opt/nDeploy/conf/zz_xtendweb.ini /opt/cpanel/ea-php$ver/root/etc/php.d/
