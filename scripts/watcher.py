@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/local/cpanel/3rdparty/python/2.7/bin/python2.7
 # Copyright (c) 2010 Greggory Hernandez
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
