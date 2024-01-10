@@ -59,6 +59,15 @@ service nginx reload
 osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 
 ##Restart ndeploy_watcher
+# Setting up cpanel internal python2 deps
+/usr/local/cpanel/3rdparty/python/2.7/bin/python -m ensurepip --upgrade
+/usr/local/cpanel/3rdparty/python/2.7/bin/pip install pyyaml==5.2
+/usr/local/cpanel/3rdparty/python/2.7/bin/pip install tldextract
+/usr/local/cpanel/3rdparty/python/2.7/bin/pip install psutil
+/usr/local/cpanel/3rdparty/python/2.7/bin/pip install jinja2
+/usr/local/cpanel/3rdparty/python/2.7/bin/pip install simplejson
+/usr/local/cpanel/3rdparty/python/2.7/bin/pip install pyinotify
+
 echo -e ' Attempting to restart ndeploy_watcher daemon '
 if [ ${osversion} -le 6 ];then
   service ndeploy_watcher stop
