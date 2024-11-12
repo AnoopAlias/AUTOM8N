@@ -7,10 +7,11 @@ listen  {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 {% if SSL %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen  {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen  [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
+{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
@@ -80,10 +81,11 @@ listen  {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 {% if SSL %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen  {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen  [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
+{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
@@ -153,10 +155,11 @@ listen  {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 {% if SSL %}
-listen  {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen  {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
-listen  [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen  [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
+{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
@@ -381,10 +384,11 @@ include /etc/nginx/sites-enabled/{{ CONFIGDOMAINNAME }}.include;
 
 {% if SSL %}
 server {
-listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen    {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
-listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen    [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
+{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
@@ -531,10 +535,11 @@ listen    {{ CPANELIP }}:80 ;
 listen  [{{ CPIPVSIX }}]:80 ;
 {% endif %}
 {% if SSL %}
-listen    {{ CPANELIP }}:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen    {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
-listen    [{{ CPIPVSIX }}]:443 ssl {% if HTTP2 == 'enabled' %}http2{% endif %} ;
+listen    [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
+{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
