@@ -57,11 +57,10 @@ def is_page_available(host, path="/pingphpfpm"):
 nginx_status = False
 watcher_status = False
 for myprocess in psutil.process_iter():
-    # Workaround for Python 2.6
-    if platform.python_version().startswith('2.6'):
-        mycmdline = myprocess.cmdline
-    else:
+    try:
         mycmdline = myprocess.cmdline()
+    except (psutil.ZombieProcess, psutil.NoSuchProcess):
+        continue
     if '/usr/sbin/nginx' in mycmdline or 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
         nginx_status = True
     if '/opt/nDeploy/scripts/watcher.py' in mycmdline:
@@ -297,12 +296,10 @@ if os.path.isfile(cluster_config_file):
 
             filesync_status = False
             for myprocess in psutil.process_iter():
-
-                # Workaround for Python 2.6
-                if platform.python_version().startswith('2.6'):
-                    mycmdline = myprocess.cmdline
-                else:
+                try:
                     mycmdline = myprocess.cmdline()
+                except (psutil.ZombieProcess, psutil.NoSuchProcess):
+                    continue
                 if '/usr/bin/unison' in mycmdline and myhome+'_'+servername in mycmdline:
                     filesync_status = True
                     break
@@ -316,12 +313,10 @@ if os.path.isfile(cluster_config_file):
 
         filesync_status = False
         for myprocess in psutil.process_iter():
-
-            # Workaround for Python 2.6
-            if platform.python_version().startswith('2.6'):
-                mycmdline = myprocess.cmdline
-            else:
+            try:
                 mycmdline = myprocess.cmdline()
+            except (psutil.ZombieProcess, psutil.NoSuchProcess):
+                continue
             if '/usr/bin/unison' in mycmdline and 'phpsessions_'+servername in mycmdline:
                 filesync_status = True
                 break
@@ -1303,11 +1298,7 @@ print('                 </div> <!-- Card Body End -->')
 
 print('                 <div class="card-body"> <!-- Card Body Start -->')
 cpanpackage_hint = " Map a NGINX configuration to an installed cPanel package. "
-# Workaround for python 2.6
-if platform.python_version().startswith('2.6'):
-    listpkgs = subprocess.Popen('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', stdout=subprocess.PIPE, shell=True).communicate()[0]
-else:
-    listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
+listpkgs = subprocess.check_output('/usr/local/cpanel/bin/whmapi0 listpkgs --output=json', shell=True)
 mypkgs = json.loads(listpkgs)
 
 print('                     <form class="form" action="pkg_profile.cgi" method="get">')

@@ -78,11 +78,10 @@ if form.getvalue('cpanelpkg') and form.getvalue('backend'):
 
         nginx_status = False
         for myprocess in psutil.process_iter():
-            # Workaround for Python 2.6
-            if platform.python_version().startswith('2.6'):
-                mycmdline = myprocess.cmdline
-            else:
+            try:
                 mycmdline = myprocess.cmdline()
+            except (psutil.ZombieProcess, psutil.NoSuchProcess):
+                continue
             if '/usr/sbin/nginx' in mycmdline or 'nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf' in mycmdline:
                 nginx_status = True
                 break

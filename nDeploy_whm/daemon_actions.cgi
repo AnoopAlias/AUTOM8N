@@ -67,11 +67,10 @@ if form.getvalue('action'):
                 php_backends_dict = backend_data_yaml_parsed["PHP"]
                 for php,path in list(php_backends_dict.items()):
                     for myprocess in psutil.process_iter():
-                        # Workaround for Python 2.6
-                        if platform.python_version().startswith('2.6'):
-                            myexe = myprocess.exe
-                        else:
+                        try:
                             myexe = myprocess.exe()
+                        except (psutil.ZombieProcess, psutil.NoSuchProcess):
+                            continue
                         if path+"/usr/sbin/php-fpm" in myexe:
                             php_status_dict[php] = "ACTIVE"
                             break
