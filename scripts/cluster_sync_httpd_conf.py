@@ -35,11 +35,10 @@ if __name__ == "__main__":
             apache_conf.truncate()
     httpd_status = False
     for myprocess in psutil.process_iter():
-        # Workaround for Python 2.6
-        if platform.python_version().startswith('2.6'):
-            mycmdline = myprocess.cmdline
-        else:
+        try:
             mycmdline = myprocess.cmdline()
+        except (psutil.ZombieProcess, psutil.NoSuchProcess):
+            continue
         if '/usr/sbin/httpd' in mycmdline:
             httpd_status = True
             break

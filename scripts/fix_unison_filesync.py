@@ -34,11 +34,10 @@ def fix_unison(trigger):
                 for myhome in homedir_list:
                     filesync_ok = False
                     for myprocess in psutil.process_iter():
-                        # Workaround for Python 2.6
-                        if platform.python_version().startswith('2.6'):
-                            mycmdline = myprocess.cmdline
-                        else:
+                        try:
                             mycmdline = myprocess.cmdline()
+                        except (psutil.ZombieProcess, psutil.NoSuchProcess):
+                            continue
                         if '/usr/bin/unison' in mycmdline and myhome+'_'+servername in mycmdline:
                             filesync_ok = True
                         else:
@@ -49,11 +48,10 @@ def fix_unison(trigger):
             for servername in list(cluster_data_yaml_parsed.keys()):
                 filesync_ok = False
                 for myprocess in psutil.process_iter():
-                    # Workaround for Python 2.6
-                    if platform.python_version().startswith('2.6'):
-                        mycmdline = myprocess.cmdline
-                    else:
+                    try:
                         mycmdline = myprocess.cmdline()
+                    except (psutil.ZombieProcess, psutil.NoSuchProcess):
+                        continue
                     if '/usr/bin/unison' in mycmdline and 'phpsessions_'+servername in mycmdline:
                         filesync_ok = True
                     else:
