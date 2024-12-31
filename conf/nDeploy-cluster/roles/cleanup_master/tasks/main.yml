@@ -35,6 +35,11 @@
     dest: /etc/monit.d/gdnsd.conf
   when: dns == "geodns"
 
+- name: Setup monit for maxscale
+  template:
+    src: maxscale.conf.j2
+    dest: /etc/monit.d/maxscale.conf
+
 - name: Restart monit
   service: name=monit enabled=yes state=restarted
   when: dns == "geodns"
