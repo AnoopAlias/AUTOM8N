@@ -96,7 +96,7 @@
     cron_file: "/etc/cron.d/xtendweb-cron"
     user: root
     job: "/opt/nDeploy/scripts/purgemysqllogs_dbslave.sh"
-    minute: "0"
+    minute: "*/5"
   when:
     - inventory_hostname == groups['ndeploydbslave'][0]
 
