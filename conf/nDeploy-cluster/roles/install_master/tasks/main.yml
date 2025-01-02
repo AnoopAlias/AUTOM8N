@@ -74,7 +74,7 @@
     cron_file: "/etc/cron.d/xtendweb-cron"
     user: root
     job: "/opt/nDeploy/scripts/purgemysqllogs_master.sh"
-    minute: "0"
+    minute: "*/5"
 
 - name: check if CSF is active
   stat:
