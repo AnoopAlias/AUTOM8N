@@ -8,4 +8,8 @@ if [ -x /usr/bin/maxctrl ]; then
 fi
 if [ $maxctrl_fail -eq 1 ];then
   mysql --defaults-file=/root/.my.cnf -e "STOP SLAVE;"
+  ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeploydbslave -a "/usr/bin/systemctl stop mariadb"
+  sleep 10
+  ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeploydbslave -a "/usr/bin/systemctl start mariadb"
+  mysql --defaults-file=/root/.my.cnf -e "START SLAVE;"
 fi
