@@ -7,6 +7,7 @@ import yaml
 import subprocess
 import argparse
 import platform
+import time
 
 
 __author__ = "Anoop P Alias"
@@ -67,6 +68,11 @@ def fix_unison(trigger):
                 subprocess.call(the_raw_cmd_slave, shell=True)
                 subprocess.call(the_raw_cmd_master, shell=True)
                 subprocess.call('service ndeploy_unison restart', shell=True)
+                with open('/tmp/unison.chk', 'a'):
+                    os.utime('/tmp/unison.chk', None)
+            else:
+                if os.path.exists("/tmp/unison.chk"):
+                    os.remove("/tmp/unison.chk")
         elif trigger == 'reset':
             print("Trying a full reset of the cluster, resync will take sometime")
             subprocess.call('service ndeploy_unison stop', shell=True)
@@ -88,4 +94,13 @@ if __name__ == "__main__":
     parser.add_argument("control_command")
     args = parser.parse_args()
     trigger = args.control_command
-    fix_unison(trigger)
+    if trigger == 'restart' or trigger == 'reset':
+        fix_unison(trigger)
+    elif trigger == 'auto':
+        fix_unison('restart')
+        time.sleep(300)
+        fix_unison('restart')
+        if os.path.isfile("/tmp/unison.chk"):
+            fix_unison('reset')
+            if os.path.exists("/tmp/unison.chk"):
+                    os.remove("/tmp/unison.chk")
