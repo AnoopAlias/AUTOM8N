@@ -24,13 +24,6 @@
     - domlog_rotate_slave
     - copyrepos_slave
 
-- name: Setup DNS cluster config on slaves
-  hosts: ndeployslaves
-  vars:
-     accesshash: "{{ lookup('file', '/root/xtendweb_accesshash_temp_{{ ansible_nodename }}') }}"
-  roles:
-    - dnscluster_slave
-
 - name: setup csync2 service on master
   hosts: ndeploymaster
   roles:
