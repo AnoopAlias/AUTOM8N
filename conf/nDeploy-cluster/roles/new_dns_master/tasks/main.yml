@@ -32,9 +32,3 @@
     path: /etc/gdnsd/geoip_maps
     state: touch
   when: dns == "geodns"
-
-- name: Disable geodns
-  file:
-    path: /opt/nDeploy/conf/skip_geodns
-    state: touch
-  when: dns == "named"
