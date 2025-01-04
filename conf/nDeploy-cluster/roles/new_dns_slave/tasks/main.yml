@@ -2,12 +2,9 @@
 
 - name: disable named service
   shell: "/scripts/setupnameserver --force disabled"
-  ignore_errors: yes
-  when: dns == "geodns"
 
 - name: Initialize MaxMind GeoLite database
   shell: /etc/gdnsd/geoip/geoip_update.sh
-  when: dns == "geodns"
 
 - name: Remove old server status check cron job
   cron:
