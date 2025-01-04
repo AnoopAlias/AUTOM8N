@@ -36,11 +36,13 @@
     line: 'enabled=0'
   ignore_errors: yes
 
+- name: disable named service
+  shell: "/scripts/setupnameserver --force disabled"
+
 - name: Setup monit for gdnsd
   template:
     src: gdnsd.conf.j2
     dest: /etc/monit.d/gdnsd.conf
-  when: dns == "geodns"
 
 - name: Setup monit for maxscale
   template:
@@ -49,4 +51,3 @@
 
 - name: Restart monit
   service: name=monit enabled=yes state=restarted
-  when: dns == "geodns"
