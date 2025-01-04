@@ -1,8 +1,5 @@
 ---
 
-- name: disable named service
-  shell: "/scripts/setupnameserver --force disabled"
-
 - name: Initialize MaxMind GeoLite database
   shell: /etc/gdnsd/geoip/geoip_update.sh
   when: dns == "geodns"
