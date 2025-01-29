@@ -399,6 +399,7 @@ if os.path.isfile(cluster_config_file):
         master_dbmode = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dbmode']
         master_lat = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['latitude']
         master_lon = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['longitude']
+        master_server_weight = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['server_weight']
         master_repo = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['repo']
         master_dns = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dns']
 
@@ -410,6 +411,7 @@ if os.path.isfile(cluster_config_file):
         dbslave_dbmode = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dbmode']
         dbslave_lat = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['latitude']
         dbslave_lon = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['longitude']
+        dbslave_server_weight = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['server_weight']
         dbslave_repo = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['repo']
         dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
 
@@ -438,10 +440,11 @@ if os.path.isfile(cluster_config_file):
         print_input_fn("Master Server ID", " Enter the master server's ID (Usually 1). ", master_server_id, "master_server_id")
         print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", master_lat, "master_lat")
         print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", master_lon, "master_lon")
+        print_input_fn("Master Server Weight", " Enter the master server's weight. ", master_server_weight, "master_server_weight")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", master_repo, "master_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
-        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "bind", "geodns")
+        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "server_weight", "geodns")
 
         print('                                <label hidden for="cluster_edit_master">Cluster Edit Master</label>')
         print('                                <input hidden name="action" id="cluster_edit_master" value="editmaster">')
@@ -462,10 +465,11 @@ if os.path.isfile(cluster_config_file):
         print_input_fn("DBSlave Server ID", " Enter the slave server's ID (Usually 2). ", dbslave_server_id, "dbslave_server_id")
         print_input_fn("DBSlave Latitude", " Enter the slave server's latitude coordinate. ", dbslave_lat, "dbslave_lat")
         print_input_fn("DBSlave Longitude", " Enter the slave server's longitude coordinate. ", dbslave_lon, "dbslave_lon")
+        print_input_fn("DBSlave Server weight", " Enter the slave server's weight. ", dbslave_server_weight, "dbslave_server_weight")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", dbslave_repo, "dbslave_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
-        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
+        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "server_weight", "geodns")
 
         print('                                <label hidden for="cluster_edit_db_slave">Cluster Edit DB Slave</label>')
         print('                                <input hidden name="action" id="cluster_edit_db_slave" value="editdbslave">')
@@ -486,6 +490,7 @@ if os.path.isfile(cluster_config_file):
                 slave_dbmode = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dbmode']
                 slave_lat = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['latitude']
                 slave_lon = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['longitude']
+                slave_server_weight = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['server_weight']
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
 
@@ -511,6 +516,7 @@ if os.path.isfile(cluster_config_file):
                 print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 1). ", slave_server_id, "slave_server_id")
                 print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", slave_lat, "slave_lat")
                 print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", slave_lon, "slave_lon")
+                print_input_fn("Slave Server Weight", " Enter the slave server's weight. ", slave_server_weight, "slave_server_weight")
 
                 print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", slave_repo, "slave_repo", "ndeploy", "ndeploy-edge")
                 print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
@@ -549,6 +555,7 @@ if os.path.isfile(cluster_config_file):
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "", "slave_main_ip")
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
         print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
+        print_input_fn("Slave Server Weight", " Enter the slave server's DNS weight. ", "", "slave_server_weight")
 
         print('                                <label hidden for="cluster_add_additional_slave">Cluster Add Additional Slave</label>')
         print('                                <input hidden name="action" id="cluster_add_additional_slave" value="addadditionalslave">')
@@ -763,6 +770,7 @@ else:
         master_lon = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['longitude']
         master_repo = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['repo']
         master_dns = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dns']
+        master_server_weight = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['server_weight']
 
         dbslave_hostname = list(ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'].keys())[0]
         dbslave_server_id = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['server_id']
@@ -774,6 +782,7 @@ else:
         dbslave_lon = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['longitude']
         dbslave_repo = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['repo']
         dbslave_dns = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['dns']
+        dbslave_server_weight = ansible_inventory_file_parsed['all']['children']['ndeploydbslave']['hosts'][dbslave_hostname]['server_weight']
 
         # Navigation tabs start here
         print('             <ul class="nav nav-tabs mb-4" id="clusterTabs" role="tablist">')
@@ -797,6 +806,8 @@ else:
         print_input_fn("Master Server ID", " Enter the master server's ID (Usually 1). ", master_server_id, "master_server_id")
         print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", master_lat, "master_lat")
         print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", master_lon, "master_lon")
+        print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", master_lon, "master_lon")
+        print_input_fn("Master Server Weight", " Enter the master server's weight. ", master_server_weight, "master_server_weight")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", master_repo, "master_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
@@ -821,6 +832,7 @@ else:
         print_input_fn("DBSlave Server ID", " Enter the slave server's ID (Usually 2). ", dbslave_server_id, "dbslave_server_id")
         print_input_fn("DBSlave Latitude", " Enter the slave server's latitude coordinate. ", dbslave_lat, "dbslave_lat")
         print_input_fn("DBSlave Longitude", " Enter the slave server's longitude coordinate. ", dbslave_lon, "dbslave_lon")
+        print_input_fn("DBSlave Server Weight", " Enter the slave server's Weight. ", dbslave_server_weight, "dbslave_server_weight")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", dbslave_repo, "dbslave_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
@@ -846,6 +858,7 @@ else:
                 slave_lon = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['longitude']
                 slave_repo = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['repo']
                 slave_dns = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['dns']
+                slave_server_weight = ansible_inventory_file_parsed['all']['children']['ndeployslaves']['hosts'][myslave]['server_weight']
                 # Slave data
                 print(('     <div class="accordion mt-4" id="accordionSlaves-'+str(slave_server_id)+'">'))
                 print('         <div class="card mb-0">')
@@ -868,10 +881,11 @@ else:
                 print_input_fn("Slave Server ID", " Enter the slave server's ID (Usually 1). ", slave_server_id, "slave_server_id")
                 print_input_fn("Slave Latitude", " Enter the slave server's latitude coordinate. ", slave_lat, "slave_lat")
                 print_input_fn("Slave Longitude", " Enter the slave server's longitude coordinate. ", slave_lon, "slave_lon")
+                print_input_fn("Slave Server Weight", " Enter the slave server's weight. ", slave_server_weight, "slave_server_weight")
 
                 print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", slave_repo, "slave_repo", "ndeploy", "ndeploy-edge")
                 print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", slave_dbmode, "slave_dbmode", "readconnroute", "rwsplit")
-                print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", slave_dns, "slave_dns", "bind", "geodns")
+                print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", slave_dns, "slave_dns", "server_weight", "geodns")
 
                 print('                         <label hidden for="cluster_settings_edit_slave_add">Cluster Settings Slave Add</label>')
                 print('                         <input hidden name="action" id="cluster_settings_edit_slave_add" value="editslave">')
@@ -906,6 +920,7 @@ else:
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "", "slave_main_ip")
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
         print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
+        print_input_fn("Slave Server Weight", " Enter the slave server's DNS Weight. ", "", "slave_server_weight")
 
         print('                                <label hidden for="cluster_settings_addi_slave_add">Cluster Settings Add Additional Slave</label>')
         print('                                <input hidden name="action" id="cluster_settings_addi_slave_add" value="addadditionalslave">')
@@ -987,10 +1002,12 @@ else:
         print_input_fn("Master Main IP", " Enter the master server's main IP address. ", myip, "master_main_ip")
         print_input_fn("Master DB IP", " Enter the master server's database IP address. ", myip, "master_db_ip")
         print_input_fn("Master SSH Port", " Enter the master server's SSH port. ", "", "master_ssh_port")
+        print_input_fn("Master Server Weight", " Enter the master server's DNS weight. ", "", "master_server_weight")
         print_input_fn("Slave Node FQDN", " Enter the slave server's fully qualified domain name. ", "", "slave_hostname")
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "", "slave_main_ip")
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
         print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
+        print_input_fn("Slave Server Weight", " Enter the slave server's DNS weight. ", "", "slave_server_weight")
 
         print('                                <label hidden for="cluster_setup2">Cluster Setup</label>')
         print('                                <input hidden name="action" id="cluster_setup2" value="setup">')
