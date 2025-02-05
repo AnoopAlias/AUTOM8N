@@ -1,0 +1,14 @@
+options => {
+  username => nobody
+  }
+service_types => {
+  xtendweb => { plugin => http_status, vhost => xtendweb.status, url_path => "/nginx_status", down_thresh => 3, interval => 5, ok_thresh => 3,up_thresh => 6 }
+}
+plugins => {
+  weighted => {
+    multi = false # default
+    service_types = up
+    up_thresh => 0.5 # default
+    $include{weight_config}
+  }
+}

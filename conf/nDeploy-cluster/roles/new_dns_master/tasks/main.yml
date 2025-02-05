@@ -4,16 +4,23 @@
   shell: /etc/gdnsd/geoip/geoip_update.sh
   when: dns == "geodns"
 
-- name: Remove old server status check cron job
-  cron:
-    name: nDeploy status check
-    state: absent
-
 - name: Create gdnsd config
   template:
     src: gdnsd.config.j2
     dest: /etc/gdnsd/config
   when: dns == "geodns"
+
+- name: Create gdnsd config
+  template:
+    src: gdnsd.config_weight.j2
+    dest: /etc/gdnsd/config
+  when: dns == "server_weight"
+
+- name: Create /etc/gdnsd/weight_config
+  file:
+    path: /etc/gdnsd/weight_config
+    state: touch
+  when: dns == "server_weight"
 
 - name: Create /etc/gdnsd/geoip_resources
   file:
