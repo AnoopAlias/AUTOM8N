@@ -15,6 +15,13 @@
 
 - name: Setup gdnsd config resources
   shell: /opt/nDeploy/scripts/update_gdnsd_config.py
+  when:
+    - dns == 'geodns'
+
+- name: Setup gdnsd config resources
+  shell: /opt/nDeploy/scripts/update_gdnsd_config.py
+  when:
+    - dns == 'server_weight'
 
 - name: Setup nginx_status_allow_file
   shell: /opt/nDeploy/scripts/update_nginx_status_allow.py
@@ -23,7 +30,6 @@
   shell: "for CPANELUSER in $(cat /etc/domainusers|cut -d: -f1); do /opt/nDeploy/scripts/cluster_gdnsd_ensure_user.py $CPANELUSER; done"
   when:
     - dnssync.stat.exists == false
-    - dns == 'geodns'
 
 - file:
     path: /opt/nDeploy/conf/XTENDWEB_DNS_SYNC_LOCK_DO_NOT_REMOVE
