@@ -5,6 +5,8 @@ import yaml
 import cgi
 import cgitb
 import sys
+from celery import Celery
+from autom8ntaskq import regen_nginx_conf
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden, terminal_call
 
 
@@ -74,6 +76,10 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
         subdir_apps_dict[thesubdir] = the_subdir_dict
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+        regen_nginx_conf.delay(cpaneluser)
+
+        # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
+        time.sleep(2)
         print_success('Sub-directory app settings saved!')
 
     else:

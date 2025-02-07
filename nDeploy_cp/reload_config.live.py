@@ -5,6 +5,8 @@ import time
 import yaml
 import cgi
 import cgitb
+from celery import Celery
+from autom8ntaskq import regen_nginx_conf
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden
 
 
@@ -38,6 +40,7 @@ if form.getvalue('domain'):
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
 
         # Delay Ajax end so nginx reloads before we refresh otherwise we see invalid status
+        regen_nginx_conf.delay(cpaneluser)
         time.sleep(2)
         print_success('Nginx configuration successfully reloaded!')
     else:

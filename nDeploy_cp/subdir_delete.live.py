@@ -5,6 +5,8 @@ import os
 import yaml
 import cgi
 import cgitb
+from celery import Celery
+from autom8ntaskq import regen_nginx_conf
 from commoninclude import print_simple_header, print_simple_footer
 
 
@@ -43,6 +45,8 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
         yaml_parsed_profileyaml['subdir_apps'] = subdir_apps_dict
         with open(profileyaml, 'w') as yaml_file:
             yaml.dump(yaml_parsed_profileyaml, yaml_file, default_flow_style=False)
+        regen_nginx_conf.delay(cpaneluser)
+        time.sleep(2)
         commoninclude.print_success('Successfully removed sub-directory')
     else:
         commoninclude.print_error('domain-data file i/o error')
