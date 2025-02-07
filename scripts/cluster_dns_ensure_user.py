@@ -114,6 +114,7 @@ def cluster_ensure_mxrecord(zone_name, *serverlist):
 
 
 if __name__ == "__main__":
+    sys.exit("Legacy script.You should be using gdnsd instead.")
     parser = argparse.ArgumentParser(description="add additional DNS A and MX resource record for cluster")
     parser.add_argument("CPANELUSER")
     args = parser.parse_args()
