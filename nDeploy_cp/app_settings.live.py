@@ -51,7 +51,7 @@ if form.getvalue('domain'):
     if os.path.exists("/var/cpanel/users.cache/" + cpaneluser):
         with open("/var/cpanel/users.cache/" + cpaneluser) as users_file:
             json_parsed_cpusersfile = json.load(users_file)
-        hostingplan_filename = json_parsed_cpusersfile.get('PLAN', 'default').encode('utf-8').replace(' ', '_')
+        hostingplan_filename = json_parsed_cpusersfile.get('PLAN', 'default').replace(' ', '_')
     else:
         hostingplan_filename = 'default'
     if hostingplan_filename == 'undefined' or hostingplan_filename == 'default':
