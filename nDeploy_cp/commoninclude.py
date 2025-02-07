@@ -67,7 +67,7 @@ def close_cpanel_liveapisock():
     cp_socket = os.environ["CPANEL_CONNECT_SOCKET"]
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     sock.connect(cp_socket)
-    sock.sendall('<cpanelxml shutdown="1" />')
+    sock.sendall('<cpanelxml shutdown="1" />'.encode('utf-8'))
     sock.close()
 
 
