@@ -17,6 +17,7 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+cpaneluser = os.environ["USER"]
 
 cgitb.enable()
 
