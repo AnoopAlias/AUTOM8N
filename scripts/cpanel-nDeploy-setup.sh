@@ -52,6 +52,10 @@ else
 	systemctl restart nginx
 	systemctl restart ndeploy_watcher
 	systemctl restart ndeploy_backends
+ 	systemctl restart autom8n_broker.service
+  	systemctl restart autom8n_taskq.service
+   	systemctl enable autom8n_broker.service
+    	systemctl enable autom8n_taskq.service
 	systemctl enable nginx
 	systemctl enable ndeploy_watcher
 	systemctl enable ndeploy_backends
@@ -81,6 +85,10 @@ else
 	systemctl stop nginx
 	systemctl stop ndeploy_watcher
 	systemctl stop ndeploy_backends
+  	systemctl stop autom8n_broker.service
+  	systemctl stop autom8n_taskq.service
+   	systemctl disable autom8n_broker.service
+    	systemctl disable autom8n_taskq.service
 	systemctl disable nginx
 	systemctl disable ndeploy_watcher
 	systemctl disable ndeploy_backends
