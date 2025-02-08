@@ -3,7 +3,7 @@ import subprocess, yaml, os
 
 cpaneluser = os.environ["USER"]
 
-app = Celery('autom8ntaskq', broker='redis://localhost:6379/0', backend="redis://localhost:6379/0")
+app = Celery('autom8ntaskq', broker='redis://localhost:16380/0', backend="redis://localhost:16380/0")
 
 
 @app.task
