@@ -61,7 +61,7 @@ osversion=$(cat /etc/redhat-release | grep -oE '[0-9]+\.[0-9]+'|cut -d"." -f1)
 
 ##Restart ndeploy_watcher
 
-echo -e ' Attempting to restart ndeploy_watcher daemon '
+echo -e ' Attempting to restart AUTOM8N daemons '
 if [ ${osversion} -le 6 ];then
   service ndeploy_watcher stop
   /bin/rm -f /opt/nDeploy/watcher.pid
@@ -70,4 +70,6 @@ else
   systemctl stop ndeploy_watcher
   /bin/rm -f /opt/nDeploy/watcher.pid
   systemctl start ndeploy_watcher
+  systemctl restart autom8n_broker.service autom8n_taskq.service
+  systemctl enable autom8n_broker.service autom8n_taskq.service
 fi
