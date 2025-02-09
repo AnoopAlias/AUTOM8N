@@ -1,0 +1,10 @@
+{% for ip in dnsmap.keys() %}
+      {{ dnsmap[ip] }} => {
+        service_types => [ xtendweb ],
+        up_thresh => 0.01,
+        {{ master_server|genshorthostname }} = [ {{ natpmap[ip] }}, {{ hosts_file['all']['children']['ndeploymaster']['hosts'][master_server]['server_weight']  ]
+        {% for slave in clustermap.keys() %}
+        {{ slave|genshorthostname }} = [ {{ clustermap[slave]['dnsmap'][ip] }}, {{ hosts_file['all']['children']['ndeployslaves']['hosts'][slave]['server_weight'] }} ]
+        {% endfor %}
+      },
+{% endfor %}

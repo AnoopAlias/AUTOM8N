@@ -16,6 +16,7 @@ __email__ = "anoopalias01@gmail.com"
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 geoip_res_file = "/etc/gdnsd/geoip_resources"
 metafo_res_file = "/etc/gdnsd/metafo_resources"
+weight_config_file = "/etc/gdnsd/weight_config"
 
 
 def shorthostname(myhostname):
@@ -36,8 +37,11 @@ def get_dns_ip(ipaddress):
                     break
     return dnsip
 
-
-
+if os.path.isfile(installation_path+"/conf/nDeploy-cluster/hosts"):
+    ansible_hosts_file = installation_path+"/conf/nDeploy-cluster/hosts"
+    hosts_data_yaml = open(ansible_hosts_file, 'r')
+    hosts_data_yaml_parsed = yaml.safe_load(hosts_data_yaml)
+    hosts_data_yaml.close()
 if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
     cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
     cluster_data_yaml = open(cluster_config_file, 'r')
@@ -78,3 +82,19 @@ if os.path.isfile(installation_path+"/conf/ndeploy_cluster.yaml"):
         generated_config = template.render(templateVars)
         with codecs.open(geoip_res_file, 'w', 'utf-8') as confout:
             confout.write(generated_config)
+        # Lets generate the weight_config
+        templateLoader = jinja2.FileSystemLoader(installation_path + "/conf/")
+        templateEnv = jinja2.Environment(loader=templateLoader)
+        templateEnv.filters['genshorthostname'] = shorthostname
+        TEMPLATE_FILE = "weight_config.j2"
+        template = templateEnv.get_template(TEMPLATE_FILE)
+        templateVars = {"dnsmap": master_dnsmap,
+                        "clustermap": cluster_data_yaml_parsed,
+                        "master_server": master_server,
+                        "cluster_serverlist": cluster_serverlist,
+                        "hosts_file": hosts_data_yaml_parsed,
+                        "natpmap": master_natmap
+                        }
+        generated_config = template.render(templateVars)
+        with codecs.open(weight_config_file, 'w', 'utf-8') as confout:
+            confout.write(generated_config)       
