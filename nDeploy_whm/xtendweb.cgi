@@ -806,12 +806,11 @@ else:
         print_input_fn("Master Server ID", " Enter the master server's ID (Usually 1). ", master_server_id, "master_server_id")
         print_input_fn("Master Latitude", " Enter the master server's latitude coordinate. ", master_lat, "master_lat")
         print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", master_lon, "master_lon")
-        print_input_fn("Master Longitude", " Enter the master server's longitude coordinate. ", master_lon, "master_lon")
         print_input_fn("Master Server Weight", " Enter the master server's weight. ", master_server_weight, "master_server_weight")
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", master_repo, "master_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", master_dbmode, "master_dbmode", "readconnroute", "rwsplit")
-        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "bind", "geodns")
+        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", master_dns, "master_dns", "server_weight", "geodns")
 
         print('                                <label hidden for="cluster_settings_save_master">Cluster Settings Save Master</label>')
         print('                                <input hidden name="action" id="cluster_settings_save_master" value="editmaster">')
@@ -836,7 +835,7 @@ else:
 
         print_select_fn("RPM Repo", " Select desired RPM Repo for the application's cluster build process. ", dbslave_repo, "dbslave_repo", "ndeploy", "ndeploy-edge")
         print_select_fn("DB Mode", " Select desired MaxScale database mode for this node. ", dbslave_dbmode, "dbslave_dbmode", "readconnroute", "rwsplit")
-        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "bind", "geodns")
+        print_select_fn("DNS Type", " Select desired MaxScale Mode for this node. ", dbslave_dns, "dbslave_dns", "server_weight", "geodns")
 
         print('                                <label hidden for="cluster_settings_save_slave_db">Cluster Settings Save Slave</label>')
         print('                                <input hidden name="action" id="cluster_settings_save_slave_db" value="editdbslave">')
