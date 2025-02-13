@@ -1007,7 +1007,7 @@ else:
         print_input_fn("Slave Main IP", " Enter the slave server's main IP address. ", "", "slave_main_ip")
         print_input_fn("Slave DB IP", " Enter the slave server's database IP address. ", "", "slave_db_ip")
         print_input_fn("Slave SSH Port", " Enter the slave server's SSH port. ", "", "slave_ssh_port")
-        print_input_fn("Slave Server Weight", " Enter the slave server's DNS weight. ", "", "slave_server_weight")
+        print_input_fn("Slave Server Weight", " Enter the slave server's DNS weight. ", "", "dbslave_server_weight")
 
         print('                                <label hidden for="cluster_setup2">Cluster Setup</label>')
         print('                                <input hidden name="action" id="cluster_setup2" value="setup">')
