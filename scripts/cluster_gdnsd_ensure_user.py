@@ -23,6 +23,7 @@ __email__ = "anoopalias01@gmail.com"
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+ansible_inventory_file = "/opt/nDeploy/conf/nDeploy-cluster/hosts"
 
 
 # Function defs
@@ -53,6 +54,11 @@ def generate_zone(domainname, slavelist):
         cluster_data_yaml.close()
         myhostname = socket.gethostname()
         resourcemap = cluster_data_yaml_parsed[myhostname]['dnsmap']
+        # Parse the inventory and display its contents
+        with open(ansible_inventory_file, 'r') as my_inventory:
+            ansible_inventory_file_parsed = yaml.safe_load(my_inventory)
+        master_hostname = list(ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'].keys())[0]
+        master_dns = ansible_inventory_file_parsed['all']['children']['ndeploymaster']['hosts'][master_hostname]['dns']
     else:
         sys.exit(0)
     zonedump = subprocess.Popen("/usr/local/cpanel/bin/whmapi1 --output=json dumpzone domain="+domainname, shell=True, stdout=subprocess.PIPE)
@@ -87,7 +93,10 @@ def generate_zone(domainname, slavelist):
                                         geo_skip_flag = True
                                         break
                         if not geo_skip_flag:
-                            gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
+                            if master_dns == 'geodns':
+                                gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcename+'\n')
+                            else:
+                                gdnsdzone.append(rr['name']+' 60 DYNA weighted!'+resourcename+'\n')
                         else:
                             gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                             geo_skip_flag = False
@@ -172,7 +181,10 @@ def generate_zone(domainname, slavelist):
                                                     geo_skip_flag = True
                                                     break
                                     if not geo_skip_flag:
-                                        gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcenamesub+'\n')
+                                        if master_dns == 'geodns':
+                                            gdnsdzone.append(rr['name']+' 60 DYNA metafo!'+resourcenamesub+'\n')
+                                        else:
+                                            gdnsdzone.append(rr['name']+' 60 DYNA weighted!'+resourcenamesub+'\n')
                                     else:
                                         gdnsdzone.append(rr['name']+' A '+rr['address']+'\n')
                                         geo_skip_flag = False
