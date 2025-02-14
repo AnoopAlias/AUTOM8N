@@ -43,6 +43,12 @@ sync_master_info = 0
 slave-parallel-threads={{ ansible_processor_vcpus }}
 slave-parallel-mode=optimistic
 slave_parallel_max_queued=8MB
+slave_max_allowed_packet = 512M
+slave_pending_jobs_size_max = 1024M
+
+# Optimization for slow network and binlog disk usage
+# log_bin_compress=1
+
 
 binlog-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
 replicate-ignore-db=cphulkd,eximstats,leechprotect,modsec,roundcube,information_schema,performance_schema
