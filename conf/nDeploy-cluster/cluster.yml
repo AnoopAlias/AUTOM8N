@@ -67,7 +67,7 @@
   vars:
     MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
     MAXSCALE7URL: "https://dlm.mariadb.com/1936962/maxscale/6.2.0/yum/centos/7/x86_64/maxscale-6.2.0-1.rhel.7.x86_64.rpm"
-    MAXSCALE8URL: "https://dlm.mariadb.com/1936932/maxscale/6.2.0/yum/centos/8/x86_64/maxscale-6.2.0-1.rhel.8.x86_64.rpm"
+    MAXSCALE8URL: "https://dlm.mariadb.com/3993858/MaxScale/24.02.4/rhel/8/x86_64/maxscale-24.02.4-1.rhel.8.x86_64.rpm"
     MAXSCALE9URL: "https://dlm.mariadb.com/3993917/MaxScale/24.02.4/rhel/9/x86_64/maxscale-24.02.4-1.rhel.9.x86_64.rpm"
   roles:
     - new_maxscale_initmaster
@@ -77,7 +77,7 @@
   vars:
     MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
     MAXSCALE7URL: "https://dlm.mariadb.com/1936962/maxscale/6.2.0/yum/centos/7/x86_64/maxscale-6.2.0-1.rhel.7.x86_64.rpm"
-    MAXSCALE8URL: "https://dlm.mariadb.com/1936932/maxscale/6.2.0/yum/centos/8/x86_64/maxscale-6.2.0-1.rhel.8.x86_64.rpm"
+    MAXSCALE8URL: "https://dlm.mariadb.com/3993858/MaxScale/24.02.4/rhel/8/x86_64/maxscale-24.02.4-1.rhel.8.x86_64.rpm"
     MAXSCALE9URL: "https://dlm.mariadb.com/3993917/MaxScale/24.02.4/rhel/9/x86_64/maxscale-24.02.4-1.rhel.9.x86_64.rpm"
   roles:
     - new_maxscale_master
@@ -88,7 +88,7 @@
     MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
     MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
     MAXSCALE7URL: "https://dlm.mariadb.com/1936962/maxscale/6.2.0/yum/centos/7/x86_64/maxscale-6.2.0-1.rhel.7.x86_64.rpm"
-    MAXSCALE8URL: "https://dlm.mariadb.com/1936932/maxscale/6.2.0/yum/centos/8/x86_64/maxscale-6.2.0-1.rhel.8.x86_64.rpm"
+    MAXSCALE8URL: "https://dlm.mariadb.com/3993858/MaxScale/24.02.4/rhel/8/x86_64/maxscale-24.02.4-1.rhel.8.x86_64.rpm"
     MAXSCALE9URL: "https://dlm.mariadb.com/3993917/MaxScale/24.02.4/rhel/9/x86_64/maxscale-24.02.4-1.rhel.9.x86_64.rpm"
   roles:
     - new_maxscale_dbslave
@@ -99,7 +99,7 @@
     MYSQLPASS: "{{ lookup('ini', 'password section=client file=/root/.my.cnf') }}"
     MAXSCALEPASS: "{{ lookup('file', '/root/xtendweb_maxscale') }}"
     MAXSCALE7URL: "https://dlm.mariadb.com/1936962/maxscale/6.2.0/yum/centos/7/x86_64/maxscale-6.2.0-1.rhel.7.x86_64.rpm"
-    MAXSCALE8URL: "https://dlm.mariadb.com/1936932/maxscale/6.2.0/yum/centos/8/x86_64/maxscale-6.2.0-1.rhel.8.x86_64.rpm"
+    MAXSCALE8URL: "https://dlm.mariadb.com/3993858/MaxScale/24.02.4/rhel/8/x86_64/maxscale-24.02.4-1.rhel.8.x86_64.rpm"
     MAXSCALE9URL: "https://dlm.mariadb.com/3993917/MaxScale/24.02.4/rhel/9/x86_64/maxscale-24.02.4-1.rhel.9.x86_64.rpm"
   roles:
     - new_maxscale_slave
