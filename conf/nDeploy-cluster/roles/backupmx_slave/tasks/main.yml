@@ -11,11 +11,11 @@
 - name: remove exim from slave
   yum: name=cpanel-exim state=absent disable_excludes=all
 
-- name: Ensure  redhat-lsb-core is present
-  yum: name={{ packages }} state=present
-  vars:
-    packages:
-      - redhat-lsb-core
+# - name: Ensure  redhat-lsb-core is present
+#   yum: name={{ packages }} state=present
+#   vars:
+#     packages:
+#       - redhat-lsb-core
 
 - name: install PostFix server
   yum: name=postfix state=present
