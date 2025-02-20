@@ -5,7 +5,6 @@
   vars:
     packages:
       - epel-release
-      - redhat-lsb-core
 
 - name: Install AUTOM8N repo
   yum: name={{ packages }} state=present disable_gpg_check=yes validate_certs=False

@@ -6,7 +6,6 @@
     packages:
       - nDeploy-release-centos
       - epel-release
-      - redhat-lsb-core
 
 
 - name: Install AUTOM8N rpm's on master
@@ -16,7 +15,6 @@
      - csync2-nDeploy
      - unison-nDeploy
      - python3-pip
-     - redhat-lsb-core
      - redis
      - gdnsd-nDeploy
      - python3-mysql

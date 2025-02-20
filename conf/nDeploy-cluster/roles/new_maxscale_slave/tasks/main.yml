@@ -39,6 +39,18 @@
     - ansible_distribution_major_version|int == 8
     - inventory_hostname != groups['ndeploydbslave'][0]
 
+- name: Install MaxScale rpm
+  yum:
+    name:
+      - "{{ MAXSCALE9URL }}"
+    state: present
+    validate_certs: no
+    disable_gpg_check: yes
+  when:
+    - ansible_distribution_major_version|int == 9
+    - inventory_hostname != groups['ndeploydbslave'][0]
+
+
 - synchronize:
     src: /var/lib/maxscale/.secrets
     dest: /var/lib/maxscale/.secrets
