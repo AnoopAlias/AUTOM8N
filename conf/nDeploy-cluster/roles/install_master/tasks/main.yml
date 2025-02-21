@@ -17,7 +17,7 @@
      - python3-pip
      - redis
      - gdnsd-nDeploy
-     - python3-mysql
+     - python3-mysqlclient
      - gnusys-monitoring
      - monit
 
