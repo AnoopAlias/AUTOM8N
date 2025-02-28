@@ -3,7 +3,7 @@
 
 #Function defs
 setup_ea4_php_cloudlinux(){
-		for ver in $(rpm -qa|egrep "ea-php"|sed 's/-[0-9].*//'|egrep "[0-9]$"|sed 's/ea-php//')
+		for ver in $(rpm -qa|egrep "ea-php"|sed 's/-[0-9].*//'|egrep "ea-php[0-9]{2}$"|sed 's/ea-php//')
 		do
 				yum -y --disableplugin=universal-hooks install ea-php$ver-php-fpm
 				if [ ! -d /opt/cpanel/php$ver/root/var ];then
@@ -24,17 +24,14 @@ setup_ea4_php_cloudlinux(){
 	}
 
 setup_ea4_php(){
-		for ver in $(rpm -qa|egrep "ea-php"|sed 's/-[0-9].*//'|egrep "[0-9]$"|sed 's/ea-php//')
+		for ver in $(rpm -qa|egrep "ea-php"|sed 's/-[0-9].*//'|egrep "ea-php[0-9]{2}$"|sed 's/ea-php//')
 		do
-			if rpm -q ea-php$ver
-			then
 				yum -y --disableplugin=universal-hooks install ea-php$ver-php-fpm
 				if [ ! -d /opt/cpanel/php$ver/root/var ];then
 					mkdir -p /opt/cpanel/ea-php$ver/root/var/log
 					mkdir -p /opt/cpanel/ea-php$ver/root/var/run
 				fi
 				/opt/nDeploy/scripts/update_backend.py add PHP CPANELPHP$ver /opt/cpanel/ea-php$ver/root
-			fi
 		done
 		service ndeploy_backends stop || systemctl stop ndeploy_backends
 		service ndeploy_backends start || systemctl start ndeploy_backends
@@ -96,7 +93,7 @@ setup_ea4_cluster_php(){
 			if [ ! -f /opt/nDeploy/conf/XTENDWEB_PHP_SETUP_LOCK_DO_NOT_REMOVE ]; then
 				auto_setup
 			fi
-			for ver in $(rpm -qa|egrep "ea-php"|sed 's/-[0-9].*//'|egrep "[0-9]$"|sed 's/ea-php//')
+			for ver in $(rpm -qa|egrep "ea-php"|sed 's/-[0-9].*//'|egrep "ea-php[0-9]{2}$"|sed 's/ea-php//')
 			do
 				if [ -f /opt/nDeploy/conf/zz_xtendweb.ini ]; then
 					rsync -a /opt/nDeploy/conf/zz_xtendweb.ini /opt/cpanel/ea-php$ver/root/etc/php.d/
