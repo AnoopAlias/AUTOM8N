@@ -17,7 +17,7 @@
     name: XtendWeb csync2
     cron_file: "/etc/cron.d/xtendweb-cron"
     user: root
-    job: "/usr/sbin/csync2 -x > /dev/null"
+    job: "/usr/sbin/csync2 -x"
 
 - name: Restart crond on master
   service: name=crond enabled=yes state=restarted
