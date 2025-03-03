@@ -88,11 +88,11 @@
     dest: /root/xtendweb_mysql_grants_ip.sql
 
 - name: Setup mysql grants for master
-  shell: mysql < /root/xtendweb_mysql_grants.sql
+  shell: mariadb < /root/xtendweb_mysql_grants.sql
   ignore_errors: yes
 
 - name: Setup mysql grants for master
-  shell: mysql < /root/xtendweb_mysql_grants_ip.sql
+  shell: mariadb < /root/xtendweb_mysql_grants_ip.sql
   ignore_errors: yes
 
 - name: Generate mysql grants for slaves
@@ -108,12 +108,12 @@
   with_items: "{{ groups.ndeployslaves }}"
 
 - name: Setup mysql grants for slaves
-  shell: "mysql < /root/xtendweb_mysql_grants_{{ item }}.sql"
+  shell: "mariadb < /root/xtendweb_mysql_grants_{{ item }}.sql"
   ignore_errors: yes
   with_items: "{{ groups.ndeployslaves }}"
 
 - name: Setup mysql grants for slaves
-  shell: "mysql < /root/xtendweb_mysql_grants_ip_{{ item }}.sql"
+  shell: "mariadb < /root/xtendweb_mysql_grants_ip_{{ item }}.sql"
   ignore_errors: yes
   with_items: "{{ groups.ndeployslaves }}"
 
