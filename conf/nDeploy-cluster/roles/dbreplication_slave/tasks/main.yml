@@ -15,7 +15,7 @@
     dest: /root/xtendweb_mysql_replication.sql
 
 - name: Setup mysql replication
-  shell: mysql < /root/xtendweb_mysql_replication.sql
+  shell: mariadb < /root/xtendweb_mysql_replication.sql
   when:
     - mysqlreplsetup.stat.exists == false
 
