@@ -31,9 +31,9 @@ fi
 
 
 echo -e ' setting up nginx httpd and mysql monitoring '
-mysql -e "create user 'netdata'@'localhost';"
-mysql -e "grant usage on *.* to 'netdata'@'localhost' with grant option;"
-mysql -e "flush privileges;"
+mariadb -e "create user 'netdata'@'localhost';"
+mariadb -e "grant usage on *.* to 'netdata'@'localhost' with grant option;"
+mariadb -e "flush privileges;"
 
 sed -i 's/\/server-status/\/whm-server-status/' /usr/lib/netdata/conf.d/go.d/apache.conf
 sed -i 's/\/access_log/\/access_log_disabled/' /usr/lib/netdata/conf.d/go.d/web_log.conf
