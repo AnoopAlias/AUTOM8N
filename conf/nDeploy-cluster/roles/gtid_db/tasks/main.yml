@@ -11,16 +11,16 @@
 #    - ansible_distribution_major_version|int == 7 
 
 - name: Setup gtid replication
-  shell: mysql -e "STOP SLAVE;"
+  shell: mariadb -e "STOP SLAVE;"
   when:
     - slavestatus.Using_Gtid == "No"
 
 - name: Setup gtid replication
-  shell: mysql -e "CHANGE MASTER TO MASTER_USE_GTID=slave_pos;"
+  shell: mariadb -e "CHANGE MASTER TO MASTER_USE_GTID=slave_pos;"
   when:
     - slavestatus.Using_Gtid == "No"
 
 - name: Setup gtid replication
-  shell: mysql -e "START SLAVE;"
+  shell: mariadb -e "START SLAVE;"
   when:
     - slavestatus.Using_Gtid == "No"
