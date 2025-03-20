@@ -19,3 +19,7 @@ if [ -x /usr/bin/maxctrl ]; then
     echo "maxctrl: OK" > /home/$(/bin/hostname)_maxctrl
   fi
 fi
+# Check the status of slave nodes
+if [ -f /opt/nDeploy/conf/nDeploy-cluster/hosts ] ; then
+        ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m fetch -a "src=/home/{{ inventory_hostname }}_maxctrl dest=/home/{{ inventory_hostname }}_maxctrl flat=yes"
+fi
