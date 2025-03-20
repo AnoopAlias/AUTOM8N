@@ -343,8 +343,8 @@ if os.path.isfile(cluster_config_file):
 
 
     for servername in list(cluster_data_yaml_parsed.keys()):
-        if os.path.isfile('/home/'+servername+'_maxctrl'):
-          with open('/home/'+servername+'_maxctrl', 'r') as maxctrl_data_yaml:
+        if os.path.isfile('/var/lib/maxscale/'+servername+'_maxctrl'):
+          with open('/var/lib/maxscale/'+servername+'_maxctrl', 'r') as maxctrl_data_yaml:
               maxctrl_data_yaml_parsed = yaml.safe_load(maxctrl_data_yaml)
           maxctrl_status_now = maxctrl_data_yaml_parsed.get('maxctrl')
           if maxctrl_status_now == 'OK':
