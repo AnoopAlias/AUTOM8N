@@ -14,12 +14,12 @@ if [ -x /usr/bin/maxctrl ]; then
   fi
 
   if [ $maxctrl_fail -eq 1 ];then
-    echo "maxctrl: FAIL" > /home/$(/bin/hostname)_maxctrl
+    echo "maxctrl: FAIL" > /var/lib/maxscale/$(/bin/hostname)_maxctrl
   else
-    echo "maxctrl: OK" > /home/$(/bin/hostname)_maxctrl
+    echo "maxctrl: OK" > /var/lib/maxscale/$(/bin/hostname)_maxctrl
   fi
 fi
 # Check the status of slave nodes
 if [ -f /opt/nDeploy/conf/nDeploy-cluster/hosts ] ; then
-        ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m fetch -a "src=/home/{{ inventory_hostname }}_maxctrl dest=/home/{{ inventory_hostname }}_maxctrl flat=yes"
+        ansible -i /opt/nDeploy/conf/nDeploy-cluster/hosts ndeployslaves -m fetch -a "src=/var/lib/maxscale/{{ inventory_hostname }}_maxctrl dest=/var/lib/maxscale/{{ inventory_hostname }}_maxctrl flat=yes"
 fi
