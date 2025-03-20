@@ -327,8 +327,8 @@ if os.path.isfile(cluster_config_file):
         else:
             print(('             <div class="col-6 col-md-9 alert"><i class="fab fa-php"></i> phpsessions_'+servername.split('.')[0]+'</div>'))
             print('             <div class="col-6 col-md-3 alert text-danger">Out of Sync <i class="fa fa-times-circle"></i></div>')
-    if os.path.isfile('/home/'+myhostname+'_maxctrl'):
-      with open('/home/'+myhostname+'_maxctrl', 'r') as maxctrlmas_data_yaml:
+    if os.path.isfile('/var/lib/maxscale/'+myhostname+'_maxctrl'):
+      with open('/var/lib/maxscale/'+myhostname+'_maxctrl', 'r') as maxctrlmas_data_yaml:
           maxctrlmas_data_yaml_parsed = yaml.safe_load(maxctrlmas_data_yaml)
       maxctrlmas_status_now = maxctrlmas_data_yaml_parsed.get('maxctrl')
       if maxctrlmas_status_now == 'OK':
