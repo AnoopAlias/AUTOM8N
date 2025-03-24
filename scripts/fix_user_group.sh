@@ -9,3 +9,5 @@ if [ -d ${HOMEDIR} ]; then
   find /home/${user}/ -not -user ${user} -print -exec chown chgrp ${user} {} \;
 
   echo "***  Done..   ***"
+
+fi
