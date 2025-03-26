@@ -9,7 +9,7 @@ if [ -d ${HOMEDIR} ]; then
   echo "*** Fixing ownership and group of account ${CPANELUSER} in home ${HOMEDIR}  ***"
 
   find ${HOMEDIR}/ -not \( -group ${CPANELUSER} -o -group nobody -o -group mail  \) -print -exec chgrp ${CPANELUSER} {} \;
-  find ${HOMEDIR}/ -not -user ${CPANELUSER} -print -exec chown ${CPANELUSER} {} \;
+  find ${HOMEDIR}/ -not \( -user ${CPANELUSER} -o -user nobody \) -print -exec chown ${CPANELUSER} {} \;
 
   echo "***  Done..   ***"
 
