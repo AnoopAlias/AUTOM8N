@@ -11,7 +11,7 @@ listen  {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
-{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
+{% if HTTP2 == 'enabled' %}http2 on ;{% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
@@ -85,7 +85,7 @@ listen  {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
-{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
+{% if HTTP2 == 'enabled' %}http2 on ;{% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
@@ -159,7 +159,7 @@ listen  {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
 listen  [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
-{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
+{% if HTTP2 == 'enabled' %}http2 on ;{% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
@@ -388,7 +388,7 @@ listen    {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
 listen    [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
-{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
+{% if HTTP2 == 'enabled' %}http2 on ;{% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
@@ -539,7 +539,7 @@ listen    {{ CPANELIP }}:443 ssl ;
 {% if IPVSIX %}
 listen    [{{ CPIPVSIX }}]:443 ssl ;
 {% endif %}
-{% if HTTP2 == 'enabled' %}http2 on{% endif %} ;
+{% if HTTP2 == 'enabled' %}http2 on ;{% endif %}
 ssl_certificate {{ CPANELSSLCRT }};
 ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
