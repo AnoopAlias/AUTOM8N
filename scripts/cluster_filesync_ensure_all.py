@@ -23,4 +23,4 @@ if __name__ == "__main__":
             yaml_parsed_hosts = yaml.safe_load(hosts_file)
         for host in yaml_parsed_hosts['all']['children']['ndeployslaves']['hosts'].keys():
             ssh_port = yaml_parsed_hosts['all']['children']['ndeployslaves']['hosts'][host].get('ansible_port')
-            subprocess.call('for dir in $(cat /etc/userdatadomains|awk -F"==" \'{print $5}\'); do rsync -av -e "ssh -p '+ssh_port+'" ${dir}/ root@'+host+':${dir}/; done', shell=True)
+            subprocess.call('for dir in $(cat /etc/userdatadomains|awk -F"==" \'{print $5}\'); do rsync -av -u -x -e "ssh -p '+ssh_port+'" ${dir}/ root@'+host+':${dir}/; done', shell=True)
