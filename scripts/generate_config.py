@@ -228,6 +228,8 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
         access_log_fopen = True
     apptemplate_code = yaml_parsed_domain_data.get('apptemplate_code', None)
     backend_path = yaml_parsed_domain_data.get('backend_path', None)
+    if '\\' in backend_path:
+        sys.exit("Error: domain data file syntax")
     backend_version = yaml_parsed_domain_data.get('backend_version', None)
     user_config = False
     is_unsafe = False
@@ -487,6 +489,8 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
             else:
                 subdir_access_log_fopen = True
             subdir_backend_path = the_subdir_app_dict.get('backend_path')
+            if '\\' in subdir_backend_path:
+                sys.exit("Error: domain data file syntax")
             subdir_backend_version = the_subdir_app_dict.get('backend_version')
             subdir_apptemplate_code = the_subdir_app_dict.get('apptemplate_code')
             subdir_auth_basic = the_subdir_app_dict.get('auth_basic', 'disabled')
