@@ -219,6 +219,8 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
         os.chmod(domain_data_file, 0o660)
     with open(domain_data_file, 'r') as domain_data_stream:
         yaml_parsed_domain_data = yaml.safe_load(domain_data_stream)
+    if any('\\' in str(val) for val in yaml_parsed_domain_data.values()):
+        sys.exit("Error: domain data file syntax")
     # Following are the backend details that can be changed from the UI
     backend_category = yaml_parsed_domain_data.get('backend_category', None)
     if backend_category == "PROXY":
@@ -482,6 +484,8 @@ def nginx_confgen(is_suspended, myplan, clusterenabled, cluster_serverlist, **kw
     if subdir_apps:
         for subdir in list(subdir_apps.keys()):
             the_subdir_app_dict = subdir_apps.get(subdir)
+            if any('\\' in str(val) for val in the_subdir_app_dict.values()):
+                sys.exit("Error: domain data file syntax")
             subdir_backend_category = the_subdir_app_dict.get('backend_category')
             if subdir_backend_category == 'PROXY':
                 # Lets disable access_log file open in nginx for efficiency
