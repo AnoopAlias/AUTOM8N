@@ -3,6 +3,7 @@
 import cgitb
 import cgi
 import os
+import shlex
 from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_warning, print_forbidden
 
 
@@ -32,7 +33,8 @@ if form.getvalue('run_installer') == 'enabled':
 
     elif form.getvalue('glances_pass') != None:
 
-        terminal_call(installation_path+'/scripts/easy_glances_setup.sh '+form.getvalue('glances_pass'), 'Glances is being set up using glances::'+form.getvalue('glances_pass')+' for credentials. Please keep this data for your records...', 'Glances has been reinstalled using the new credentials!')
+        glances_pass = form.getvalue('glances_pass')
+        terminal_call(installation_path+'/scripts/easy_glances_setup.sh '+shlex.quote(glances_pass), 'Setting up Glances with the supplied credentials...', 'Glances has been reinstalled using the new credentials!')
         print_success('Glances installed!')
 
     else:

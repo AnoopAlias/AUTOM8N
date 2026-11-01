@@ -3,6 +3,7 @@
 import cgi
 import cgitb
 import os
+import shlex
 from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_warning, print_forbidden
 
 
@@ -32,7 +33,8 @@ if form.getvalue('run_installer') == 'enabled':
 
     elif form.getvalue('netdata_pass') != None:
 
-        terminal_call(installation_path+'/scripts/easy_netdata_setup.sh '+form.getvalue('netdata_pass'), 'Netdata is being set up using netdata::'+form.getvalue('netdata_pass')+' for credentials. Please keep this data for your records...', 'Netdata has been reinstalled using existing the new credentials!')
+        netdata_pass = form.getvalue('netdata_pass')
+        terminal_call(installation_path+'/scripts/easy_netdata_setup.sh '+shlex.quote(netdata_pass), 'Setting up Netdata with the supplied credentials...', 'Netdata has been reinstalled using existing the new credentials!')
         print_success('Netdata installed!')
 
     else:
