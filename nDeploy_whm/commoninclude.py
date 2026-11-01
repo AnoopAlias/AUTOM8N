@@ -9,6 +9,10 @@ import random
 import platform
 import psutil
 import signal
+import socket
+import html
+import re
+import shlex
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
@@ -266,14 +270,26 @@ def display_term():
 # Adding a preEcho clears terminal window
 def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment=''):
     if preEcho:
-        procExe = subprocess.Popen('echo -e "<em>$(date) [$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        try:
+            hostname = socket.gethostname()
+            date_str = subprocess.check_output(['date']).decode('utf-8', errors='ignore').strip()
+            with open(whm_terminal_log, 'w') as f:
+                f.write('<em>' + date_str + ' [' + hostname + '] -> <strong>' + html.escape(str(preEcho)) + '</strong></em>\n\n')
+        except Exception:
+            pass
     if runCmd != '':
         if shellEnvironment != '':
             procExe = subprocess.Popen(runCmd+' >> '+whm_terminal_log, env=shellEnvironment, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
         else:
             procExe = subprocess.Popen(runCmd+' >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if postEcho:
-        procExe = subprocess.Popen('echo -e "\n<em>$(date) [$(hostname)] -> <strong>'+postEcho+'</strong></em>" >> '+whm_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        try:
+            hostname = socket.gethostname()
+            date_str = subprocess.check_output(['date']).decode('utf-8', errors='ignore').strip()
+            with open(whm_terminal_log, 'a') as f:
+                f.write('\n<em>' + date_str + ' [' + hostname + '] -> <strong>' + html.escape(str(postEcho)) + '</strong></em>\n')
+        except Exception:
+            pass
 
 
 # Input Display

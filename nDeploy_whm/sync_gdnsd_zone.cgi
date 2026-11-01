@@ -3,6 +3,8 @@
 import cgi
 import cgitb
 import os
+import re
+import shlex
 from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
@@ -29,17 +31,26 @@ def silentremove(filename):
 
 print_simple_header()
 
-if form.getvalue('user'):
-    if os.path.isfile(installation_path+'/conf/skip_geodns'):
-        terminal_call(installation_path+'/scripts/cluster_dns_ensure_user.py '+form.getvalue('user'), 'Syncing DNS zones...', 'DNS zones synced successfully!')
+user = form.getvalue('user')
+action = form.getvalue('action')
+
+if user:
+    # Sanitize username - strictly alphanumeric and safe characters
+    if re.match(r'^[a-zA-Z0-9_\.\-]+$', user):
+        safe_user = shlex.quote(user)
+        if os.path.isfile(installation_path+'/conf/skip_geodns'):
+            terminal_call(installation_path+'/scripts/cluster_dns_ensure_user.py '+safe_user, 'Syncing DNS zones...', 'DNS zones synced successfully!')
+        else:
+            terminal_call(installation_path+'/scripts/cluster_gdnsd_ensure_user.py '+safe_user, 'Syncing GeoDNS zones...', 'GeoDNS zones synced successfully!')
+        print_success('DNS zones synced successfully!')
     else:
-        terminal_call(installation_path+'/scripts/cluster_gdnsd_ensure_user.py '+form.getvalue('user'), 'Syncing GeoDNS zones...', 'GeoDNS zones synced successfully!')
-    print_success('DNS zones synced successfully!')
-elif form.getvalue('action'):
-    if form.getvalue('action') == 'enabled':
+        print_forbidden()
+elif action:
+    # Sanitize action against allowlist
+    if action == 'enabled':
         terminal_call('touch '+installation_path+'/conf/DECLUSTER_DNSZONE', 'Enabling DNS cleanup lock...', 'DNS cleanup lock enabled!')
         print_success('DNS cleanup lock is set.Run sync zone now')
-    elif form.getvalue('action') == 'disabled':
+    elif action == 'disabled':
         silentremove(installation_path+'/conf/DECLUSTER_DNSZONE')
         print_success('DNS cleanup lock removed')
     else:

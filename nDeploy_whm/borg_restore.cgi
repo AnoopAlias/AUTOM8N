@@ -3,6 +3,8 @@
 import cgitb
 import cgi
 import os
+import re
+import shlex
 import yaml
 from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
@@ -21,7 +23,14 @@ form = cgi.FieldStorage()
 
 print_simple_header()
 
-if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
+action = form.getvalue('action')
+
+if action and os.path.isfile(borgmatic_config_file):
+    # Sanitize action input against allowlist
+    if action not in ('umount', 'mount'):
+        print_forbidden()
+        print_simple_footer()
+        exit(0)
 
     # We will retrive the borg repo details from borgmatic config
     # Get all config settings from the borgmatic config file
@@ -34,21 +43,23 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
     my_env["BORG_PASSPHRASE"] = encryption_passphrase
     my_env["BORG_RSH"] = ssh_command
     my_env["LANG"] = 'en_US.UTF-8'
-    if form.getvalue('action') == 'umount':
 
+    if action == 'umount':
         the_raw_cmd = 'borg umount /root/borg_restore_point'
         terminal_call(the_raw_cmd, 'Unmounting restore point...', 'Restore point unmounted!', my_env)
         print_success('Restore Point Unmounted!')
 
-    elif form.getvalue('action') == 'mount':
-        if form.getvalue('restorepoint'):
-            restore_point_dict = {'restore_point': form.getvalue('restorepoint')}
+    elif action == 'mount':
+        raw_restorepoint = form.getvalue('restorepoint')
+        # Sanitize restorepoint - must only contain valid archive name characters
+        if raw_restorepoint and re.match(r'^[a-zA-Z0-9_.:\-]+$', raw_restorepoint):
+            restore_point = raw_restorepoint
+            restore_point_dict = {'restore_point': restore_point}
             with open('/etc/borgmatic/BORG_SETUP_LOCK_DO_NOT_REMOVE', 'w') as restore_point_conf:
                 yaml.dump(restore_point_dict, restore_point_conf, default_flow_style=False)
-            the_raw_cmd = 'borg mount '+borg_repo+'::'+form.getvalue('restorepoint')+' /root/borg_restore_point'
-            terminal_call(the_raw_cmd, 'Mounting restore point: '+form.getvalue('restorepoint')+'...', 'Restore point '+form.getvalue('restorepoint')+' mounted!', my_env)
+            the_raw_cmd = 'borg mount ' + shlex.quote(borg_repo + '::' + restore_point) + ' /root/borg_restore_point'
+            terminal_call(the_raw_cmd, 'Mounting restore point: ' + restore_point + '...', 'Restore point ' + restore_point + ' mounted!', my_env)
             print_success('Restore Point Mounted!')
-
         else:
             print_forbidden()
             print_simple_footer()
@@ -59,4 +70,5 @@ if form.getvalue('action') and os.path.isfile(borgmatic_config_file):
         exit(0)
 else:
     print_forbidden()
+
 print_simple_footer()

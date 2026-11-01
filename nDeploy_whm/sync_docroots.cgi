@@ -2,6 +2,8 @@
 
 import cgi
 import cgitb
+import re
+import shlex
 from commoninclude import print_simple_header, print_simple_footer, terminal_call, print_success, print_forbidden
 
 
@@ -19,8 +21,10 @@ form = cgi.FieldStorage()
 
 print_simple_header()
 
-if form.getvalue('user'):
-    terminal_call(installation_path+'/scripts/cluster_filesync_ensure_user.py '+form.getvalue('user'), 'Syncing web files...', 'Web files synchronization complete!')
+user = form.getvalue('user')
+
+if user and re.match(r'^[a-zA-Z0-9_\.\-]+$', user):
+    terminal_call(installation_path+'/scripts/cluster_filesync_ensure_user.py '+shlex.quote(user), 'Syncing web files...', 'Web files synchronization complete!')
     print_success('Web files synchronization complete!')
 else:
     print_forbidden()
