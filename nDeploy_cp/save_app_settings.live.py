@@ -7,7 +7,7 @@ import cgi
 import cgitb
 import sys
 from autom8ntaskq import regen_nginx_conf
-from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden, terminal_call
+from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden, terminal_call, safe_domain_data_path
 
 
 __author__ = "Anoop P Alias"
@@ -34,7 +34,11 @@ if form.getvalue('domain') and form.getvalue('backend') and form.getvalue('backe
     mybackend = form.getvalue('backend')
     mybackendversion = form.getvalue('backendversion')
     myapptemplate = form.getvalue('apptemplate')
-    profileyaml = installation_path + "/domain-data/" + mydomain
+    profileyaml = safe_domain_data_path(mydomain)
+    if not profileyaml:
+        print_error('Invalid domain')
+        print_simple_footer()
+        sys.exit(0)
 
     # Get data about the backends available
     if os.path.isfile(backend_config_file):

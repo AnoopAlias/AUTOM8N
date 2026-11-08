@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
 import os
+import re
 import time
 import yaml
 import cgi
 import cgitb
 import sys
+from ipaddress import ip_address
 from celery import Celery
 from autom8ntaskq import regen_nginx_conf
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden
@@ -19,6 +21,17 @@ __email__ = "anoopalias01@gmail.com"
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
 cpaneluser = os.environ["USER"]
+
+
+def safe_profileyaml(path):
+    """Return a canonical domain-data path, or None if it escapes that directory."""
+    if not path:
+        return None
+    base = os.path.realpath(installation_path + "/domain-data")
+    real = os.path.realpath(path)
+    if os.path.dirname(real) != base:
+        return None
+    return real
 
 cgitb.enable()
 
@@ -34,7 +47,13 @@ if form.getvalue('RuleId') and form.getvalue('Zone')and form.getvalue('profileya
     # Get the Rule ID from form data
     myRuleId = form.getvalue('RuleId')
     myZone = form.getvalue('Zone')
-    profileyaml = form.getvalue('profileyaml')
+    if not re.match(r'^[0-9]+$', myRuleId) or not re.match(r'^[0-9]+$', myZone):
+        print_error('Invalid rule id or zone')
+        sys.exit(0)
+    profileyaml = safe_profileyaml(form.getvalue('profileyaml'))
+    if not profileyaml:
+        print_error('Invalid profile path')
+        sys.exit(0)
 
     # wlList = []
     # wl_list.append(+myRuleId+)
@@ -75,7 +94,10 @@ if form.getvalue('RuleId') and form.getvalue('Zone')and form.getvalue('profileya
 elif form.getvalue('whiteList-to-delete') and form.getvalue('profileyaml'):
 
     deleting_list = form.getvalue('whiteList-to-delete')
-    profileyaml = form.getvalue('profileyaml')
+    profileyaml = safe_profileyaml(form.getvalue('profileyaml'))
+    if not profileyaml:
+        print_error('Invalid profile path')
+        sys.exit(0)
     # print_success(str(deleting_list))
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:
@@ -95,8 +117,16 @@ elif form.getvalue('whiteList-to-delete') and form.getvalue('profileyaml'):
         print_error('Domain-data file I/O error!')
 # whitelist ip address
 elif form.getvalue('profileyaml') and form.getvalue('ip'):
-    profileyaml = form.getvalue('profileyaml')
+    profileyaml = safe_profileyaml(form.getvalue('profileyaml'))
+    if not profileyaml:
+        print_error('Invalid profile path')
+        sys.exit(0)
     ipaddress = form.getvalue('ip')
+    try:
+        ip_address(ipaddress)
+    except ValueError:
+        print_error('Invalid IP address')
+        sys.exit(0)
     # print_success(str(ipaddress))
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:
@@ -125,7 +155,10 @@ elif form.getvalue('profileyaml') and form.getvalue('ip'):
 elif form.getvalue('ipaddress-to-delete') and form.getvalue('profileyaml'):
 
     deleting_list = form.getvalue('ipaddress-to-delete')
-    profileyaml = form.getvalue('profileyaml')
+    profileyaml = safe_profileyaml(form.getvalue('profileyaml'))
+    if not profileyaml:
+        print_error('Invalid profile path')
+        sys.exit(0)
     # print_success(str(deleting_list))
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:
@@ -145,8 +178,17 @@ elif form.getvalue('ipaddress-to-delete') and form.getvalue('profileyaml'):
         print_error('Domain-data file I/O error!')
 # whitelist Ipv6
 elif form.getvalue('profileyaml') and form.getvalue('ipv6'):
-    profileyaml = form.getvalue('profileyaml')
+    profileyaml = safe_profileyaml(form.getvalue('profileyaml'))
+    if not profileyaml:
+        print_error('Invalid profile path')
+        sys.exit(0)
     ipv6_address = form.getvalue('ipv6')
+    try:
+        if ip_address(ipv6_address).version != 6:
+            raise ValueError
+    except ValueError:
+        print_error('Invalid IPv6 address')
+        sys.exit(0)
     # print_success(str(ipv6_address))
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:
@@ -175,7 +217,10 @@ elif form.getvalue('profileyaml') and form.getvalue('ipv6'):
 elif form.getvalue('ipv6address_delete') and form.getvalue('profileyaml'):
 
     removing_list= form.getvalue('ipv6address_delete')
-    profileyaml = form.getvalue('profileyaml')
+    profileyaml = safe_profileyaml(form.getvalue('profileyaml'))
+    if not profileyaml:
+        print_error('Invalid profile path')
+        sys.exit(0)
     # print_success(str(deleting_list))
     if os.path.isfile(profileyaml):
         with open(profileyaml, 'r') as profileyaml_data_stream:

@@ -2,6 +2,7 @@
 
 import commoninclude
 import os
+import sys
 import yaml
 import cgi
 import cgitb
@@ -32,7 +33,11 @@ if form.getvalue('domain') and form.getvalue('thesubdir'):
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
     thesubdir = form.getvalue('thesubdir')
-    profileyaml = installation_path + "/domain-data/" + mydomain
+    profileyaml = commoninclude.safe_domain_data_path(mydomain)
+    if not profileyaml:
+        commoninclude.print_error('Invalid domain')
+        print_simple_footer()
+        sys.exit(0)
     if os.path.isfile(profileyaml):
         # Get all config settings from the domains domain-data config file
         with open(profileyaml, 'r') as profileyaml_data_stream:

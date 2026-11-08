@@ -38,7 +38,10 @@ else:
     commoninclude.print_error('Error: Forbidden::domain')
     sys.exit(0)
 # Getting the current domain data
-profileyaml = installation_path + "/domain-data/" + mydomain
+profileyaml = commoninclude.safe_domain_data_path(mydomain)
+if not profileyaml:
+    commoninclude.print_error('Error: Invalid domain')
+    sys.exit(0)
 if os.path.isfile(profileyaml):
     # Get all config settings from the domains domain-data config file
     with open(profileyaml, 'r') as profileyaml_data_stream:
@@ -88,6 +91,9 @@ if form.getvalue('thesubdir'):
             # redirectstatus
             if 'redirectstatus' in list(form.keys()):
                 redirectstatus = form.getvalue('redirectstatus')
+                if redirectstatus not in ('none', '301', '302', '307', '308'):
+                    commoninclude.print_error('Error: Invalid redirect status')
+                    sys.exit(0)
                 the_subdir_dict['redirectstatus'] = redirectstatus
             else:
                 commoninclude.print_error('Error: Forbidden::redirectstatus')
@@ -282,6 +288,9 @@ else:
     # redirectstatus
     if 'redirectstatus' in list(form.keys()):
         redirectstatus = form.getvalue('redirectstatus')
+        if redirectstatus not in ('none', '301', '302', '307', '308'):
+            commoninclude.print_error('Error: Invalid redirect status')
+            sys.exit(0)
         yaml_parsed_profileyaml['redirectstatus'] = redirectstatus
     else:
         commoninclude.print_error('Error: Forbidden::redirectstatus')

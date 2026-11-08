@@ -1,12 +1,27 @@
 #!/usr/bin/env python3
 
 import os
+import re
+import shlex
 import yaml
 import socket
 import subprocess
 
 
 installation_path = "/opt/nDeploy"  # Absolute Installation Path
+
+
+def safe_domain_data_path(domain):
+    """Return the canonical domain-data path for a validated domain name, or None."""
+    if not isinstance(domain, str) or not re.match(r'^[A-Za-z0-9][A-Za-z0-9._-]*$', domain):
+        return None
+    base = os.path.realpath(installation_path + "/domain-data")
+    path = os.path.realpath(os.path.join(base, domain))
+    if os.path.dirname(path) != base:
+        return None
+    return path
+
+
 ndeploy_control_file = installation_path+"/conf/ndeploy_control.yaml"
 branding_file = installation_path+"/conf/branding.yaml"
 cluster_config_file = installation_path+"/conf/ndeploy_cluster.yaml"
@@ -282,19 +297,21 @@ def terminal_call(runCmd='', preEcho='', postEcho='', shellEnvironment='', docum
     cpaneluser = os.environ["USER"]
     cpanelhome = os.environ["HOME"]
     cpanel_terminal_log = cpanelhome+'/logs/'+cpaneluser+'-term.log'
+    terminal_log_q = shlex.quote(cpanel_terminal_log)
+    cpaneluser_q = shlex.quote(cpaneluser)
     if preEcho:
-        procExe = subprocess.Popen('echo -e "<em>$(date) ['+cpaneluser+'@$(hostname)] -> <strong>'+preEcho+'</strong></em>\n" > '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        procExe = subprocess.Popen('echo -e "<em>$(date) ['+cpaneluser_q+'@$(hostname)] -> <strong>"'+shlex.quote(preEcho)+'"</strong></em>\n" > '+terminal_log_q, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if runCmd != '':
         if shellEnvironment != '' and documentRoot != '':
-            procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, env=shellEnvironment, cwd=documentRoot, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+            procExe = subprocess.Popen(runCmd+' >> '+terminal_log_q, env=shellEnvironment, cwd=documentRoot, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
         elif shellEnvironment != '':
-            procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, env=shellEnvironment, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+            procExe = subprocess.Popen(runCmd+' >> '+terminal_log_q, env=shellEnvironment, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
         elif documentRoot != '':
-            procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, cwd=documentRoot, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+            procExe = subprocess.Popen(runCmd+' >> '+terminal_log_q, cwd=documentRoot, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
         else:
-            procExe = subprocess.Popen(runCmd+' >> '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+            procExe = subprocess.Popen(runCmd+' >> '+terminal_log_q, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
     if postEcho:
-        procExe = subprocess.Popen('echo -e "\n<em>$(date) ['+cpaneluser+'@$(hostname)] -> <strong>'+postEcho+'</strong></em>" >> '+cpanel_terminal_log, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+        procExe = subprocess.Popen('echo -e "\n<em>$(date) ['+cpaneluser_q+'@$(hostname)] -> <strong>"'+shlex.quote(postEcho)+'"</strong></em>" >> '+terminal_log_q, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
 
 
 # Footer Section

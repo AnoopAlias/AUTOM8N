@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import time
 import yaml
 import cgi
 import cgitb
 from celery import Celery
 from autom8ntaskq import regen_nginx_conf
-from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden
+from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, print_forbidden, safe_domain_data_path
 
 
 __author__ = "Anoop P Alias"
@@ -31,7 +32,11 @@ if form.getvalue('domain'):
 
     # Get the domain name from form data
     mydomain = form.getvalue('domain')
-    profileyaml = installation_path + "/domain-data/" + mydomain
+    profileyaml = safe_domain_data_path(mydomain)
+    if not profileyaml:
+        print_error('Invalid domain')
+        print_simple_footer()
+        sys.exit(0)
     if os.path.isfile(profileyaml):
 
         # Get all config settings from the domains domain-data config file

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import os
+import re
+import shlex
+import sys
 import cgi
 import cgitb
 from commoninclude import print_simple_header, print_simple_footer, close_cpanel_liveapisock, print_success, print_error, terminal_call, print_forbidden
@@ -24,6 +27,19 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
     mybackend = form.getvalue('backend_category')
     mybackendversion = form.getvalue('backend_version')
     mydocroot = form.getvalue('document_root')
+    # SECURITY: only accept a version string made of safe path characters.
+    if not re.match(r'^[A-Za-z0-9][A-Za-z0-9._-]*$', mybackendversion):
+        print_error('Invalid backend version')
+        print_simple_footer()
+        sys.exit(0)
+    # SECURITY: the document root must resolve inside the account home.
+    cpanelhome = os.environ.get('HOME', '')
+    real_docroot = os.path.realpath(mydocroot)
+    if not cpanelhome or not real_docroot.startswith(cpanelhome + os.sep):
+        print_error('Invalid document root')
+        print_simple_footer()
+        sys.exit(0)
+    mydocroot = real_docroot
     terminal_call('','Project root: '+mydocroot,'')
 
     if mybackend == 'RUBY':
@@ -31,7 +47,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
         if os.path.isfile(mydocroot+'/Gemfile'):
 
             if os.path.isfile('/usr/local/rvm/gems/'+mybackendversion+'/bin/bundle'):
-                install_cmd = '/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle'
+                install_cmd = '/usr/local/rvm/bin/rvm '+shlex.quote(mybackendversion)+' do bundle install --path vendor/bundle'
                 terminal_call(install_cmd, 'Installing Ruby project dependencies','Ruby project dependencies install complete!','',mydocroot)
                 terminal_call('','','If the install failed, run the following command in your shell to proceed with manual installation: <kbd>cd '+mydocroot+';/usr/local/rvm/bin/rvm '+mybackendversion+' do bundle install --path vendor/bundle</kbd>')
                 print_success('Ruby project dependencies install complete!')
@@ -46,7 +62,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
 
         if os.path.isfile(mydocroot+'/package.json'):
             if os.path.isfile('/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm'):
-                install_cmd = '/usr/local/nvm/versions/node/'+mybackendversion+'/bin/npm -q install --production'
+                install_cmd = '/usr/local/nvm/versions/node/'+shlex.quote(mybackendversion)+'/bin/npm -q install --production'
                 my_env = os.environ.copy()
                 my_env["PATH"] = "/usr/local/nvm/versions/node/"+mybackendversion+"/bin:"+my_env["PATH"]
                 terminal_call(install_cmd, 'Installing NodeJS project dependencies','NodeJS project dependencies install complete!', my_env, mydocroot)
@@ -63,7 +79,7 @@ if form.getvalue('domain') and form.getvalue('backend_category') and form.getval
 
         if os.path.isfile(mydocroot+'/requirements.txt'):
             if os.path.isfile('/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip'):
-                install_cmd = '/usr/local/pythonz/pythons/'+mybackendversion+'/bin/pip install --user -r requirements.txt'
+                install_cmd = '/usr/local/pythonz/pythons/'+shlex.quote(mybackendversion)+'/bin/pip install --user -r requirements.txt'
                 terminal_call(install_cmd, 'Installing Python project dependencies','Python project dependencies install complete!','', mydocroot)
                 terminal_call('','','If the install failed, run the following command in your shell to proceed with manual installation: <kbd>export PATH="/usr/local/pythonz/pythons/'+mybackendversion+'/bin:$PATH";cd '+mydocroot+';pip install --user -r requirements.txt</kbd>')
                 print_success('Python project dependencies install complete!')
