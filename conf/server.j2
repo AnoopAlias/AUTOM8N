@@ -17,6 +17,8 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
 ssl_stapling on;
 {% endif %}
+proxy_ssl_server_name on;
+proxy_ssl_name $host;
 {% endif %}
 server_name www.{{ MAINDOMAINNAME }};
 
@@ -91,6 +93,8 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
 ssl_stapling on;
 {% endif %}
+proxy_ssl_server_name on;
+proxy_ssl_name $host;
 {% endif %}
 server_name {{ MAINDOMAINNAME }};
 
@@ -165,6 +169,8 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
 ssl_stapling on;
 {% endif %}
+proxy_ssl_server_name on;
+proxy_ssl_name $host;
 {% endif %}
 server_name {% for DOMAIN in REDIRECTALIASES_LIST %}{{ DOMAIN+" " }}{% endfor %};
 
@@ -394,6 +400,8 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
 ssl_stapling on;
 {% endif %}
+proxy_ssl_server_name on;
+proxy_ssl_name $host;
 server_name  {% for DOMAIN in DOMAINLIST %}{{ DOMAIN+" " }}{% endfor %};
 {% if waf == 'enabled' %}
 error_log {{ HOMEDIR }}/logs/nginx_error_log;
@@ -545,6 +553,8 @@ ssl_certificate_key {{ CPANELSSLCRT }};
 {% if OCSPSTAPLE %}
 ssl_stapling on;
 {% endif %}
+proxy_ssl_server_name on;
+proxy_ssl_name $host;
 {% endif %}
 server_name {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpanel."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "webmail."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "whm."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST_PROXY_SUBDOMAIN %}{{ "cpcontacts."+DOMAIN+" " }}{% endfor %} {% for DOMAIN in DOMAINLIST %}{{ "cpcalendars."+DOMAIN+" " }}{% endfor %};
 location / {
